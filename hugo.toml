@@ -1,0 +1,96 @@
+baseURL = 'https://huffmanwrites.org'
+defaultContentLanguage = 'en'
+languageCode = 'en-us'
+title = 'Huffman Writes'
+theme = 'PaperMod'
+pluralizeListTitles = false
+
+[params]
+  author = 'Phil Huffman'
+  keywords = ["Stoicism", "philosophy", "books", "writing", "critical thinking", "civics", "virtue", "personal development", "wisdom", "ethics"]
+  description = 'Writings on Stoicism, philosophy, and life'
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
+  disableSpecial1stPost = false
+  disableScrollToTop = false
+  comments = false
+  hidemeta = false
+  hideSummary = false
+  showtoc = true
+  tocopen = false
+
+  [params.schema]
+    publisherType = 'Person'
+    sameAs = ['https://huffmanwrites.org']
+
+  [params.homeInfoParams]
+    Title = "Huffman Writes"
+    Content = "Writings on Stoicism, philosophy, and the pursuit of a well-lived life"
+
+  [params.assets]
+    favicon = "favicon.ico"
+    favicon16x16 = "favicon.ico"
+    favicon32x32 = "favicon.ico"
+    apple_touch_icon = "apple-touch-icon.png"
+    safari_pinned_tab = "favicon.svg"
+    theme_color = "#1a1a1a"
+    msapplication_TileColor = "#1a1a1a"
+
+  [[params.socialIcons]]
+    name = 'Explore Books'
+    url = '/books/'
+  [[params.socialIcons]]
+    name = 'rss'
+    url = 'https://huffmanwrites.org/index.xml'
+  [[params.socialIcons]]
+    name = 'Latest Posts'
+    url = '/posts/'
+  [[params.socialIcons]]
+    name = 'amazon'
+    url = 'https://www.amazon.com/author/philip.huffman'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+
+[sitemap]
+  changefreq = 'monthly'
+  filename = 'sitemap.xml'
+  priority = 0.5
+
+[outputs]
+  home = ['HTML', 'RSS']
+  page = ['HTML']
+
+[menu]
+  [[menu.main]]
+    identifier = 'home'
+    name = 'Home'
+    url = '/'
+    weight = 10
+  [[menu.main]]
+    identifier = 'about'
+    name = 'About'
+    url = '/about/'
+    weight = 15
+  [[menu.main]]
+    identifier = 'books'
+    name = 'Books'
+    url = '/books/'
+    weight = 18
+  [[menu.main]]
+    identifier = 'posts'
+    name = 'Posts'
+    url = '/posts/'
+    weight = 20
+  [[menu.main]]
+    identifier = 'tags'
+    name = 'Tags'
+    url = '/tags/'
+    weight = 30
