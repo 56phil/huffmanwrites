@@ -1,6 +1,6 @@
 baseURL = 'https://huffmanwrites.org'
 defaultContentLanguage = 'en'
-languageCode = 'en-us'
+locale = 'en-us'
 title = 'Huffman Writes'
 theme = 'PaperMod'
 pluralizeListTitles = false
