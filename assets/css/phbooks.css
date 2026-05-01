@@ -21,7 +21,7 @@
 }
 .phbooks .phbooks-cover {
     flex: 0 0 90px !important;
-    width: 90px !important;
+    width: 60px !important;
 }
 .phbooks .phbooks-cover a {
     display: block;
