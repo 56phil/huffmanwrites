@@ -2,12 +2,17 @@
 {{- $subtitle := .Get "subtitle" -}}
 {{- $img := .Get "img" -}}
 {{- $link := .Get "link" -}}
+{{- $imgPath := strings.TrimPrefix "/" $img -}}
+{{- $isExternal := strings.HasPrefix $link "http" -}}
+{{- $btnText := cond $isExternal "Buy on Amazon" "Learn More" -}}
+{{- $btnTarget := cond $isExternal "_blank" "" -}}
+{{- $btnRel := cond $isExternal "noopener" "" -}}
 
 <div class="book-card">
     <div class="book-cover-wrap">
         {{- if $img -}}
-            {{- if $link -}}<a href="{{ $link }}" target="_blank" rel="noopener">{{- end -}}
-                <img src="/{{ $img }}" alt="{{ $title }} cover" loading="lazy">
+            {{- if $link -}}<a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }}>{{- end -}}
+                <img src="/{{ $imgPath }}" alt="{{ $title }} cover" loading="lazy">
             {{- if $link -}}</a>{{- end -}}
         {{- else -}}
             <div class="book-cover-placeholder">Cover Coming Soon</div>
@@ -16,11 +21,11 @@
     <div class="book-content">
         <div class="book-text">
             <h3 class="book-title">{{ $title }}</h3>
-            <p class="book-subtitle">{{ $subtitle }}</p>
+            {{- with $subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end -}}
         </div>
         <div class="book-actions">
             {{- if $link -}}
-                <a href="{{ $link }}" target="_blank" rel="noopener" class="book-button">Buy on Amazon</a>
+                <a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }} class="book-button">{{ $btnText }}</a>
             {{- else -}}
                 <span class="book-badge">Forthcoming</span>
             {{- end -}}
