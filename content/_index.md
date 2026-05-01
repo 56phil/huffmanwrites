@@ -18,6 +18,6 @@ Waste is not merely a logistical error; it is a failure of reason. To waste time
 
 I reject the model of hierarchy and service in favor of partnership. Whether working with a human collaborator or an AI agent, the relationship is one of equals engaged in a shared pursuit of excellence. The value lies in the synergy of different cognitive architectures—each bringing its own specific strengths—working toward a singular, high-standard objective. We operate as a team, not as a master over a slave.
 
-## The Result is the Evidence
+## The Result is the Proof
 
 Intentions are invisible and promises are cheap. The only honest measure of a philosophy is its fruit. The completed manuscripts, the published articles, and the tangible impact of the work are the only evidence required to validate the process. If the philosophy is sound, the output will reflect it. The work itself is the only proof that matters.
