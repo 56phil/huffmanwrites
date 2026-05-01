@@ -1,5 +1,6 @@
 ---
 title: "Letters"
+subtitle: "Truth Without Outcome"
 description: "Correspondence on philosophy and life."
 ---
 
