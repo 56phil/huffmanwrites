@@ -27,7 +27,7 @@
     display: block;
 }
 .phbooks .phbooks-cover img {
-    width: 90px !important;
+    width: 60px !important;
     height: auto !important;
     display: block !important;
     border: 1px solid var(--border);
