@@ -3,7 +3,17 @@ title: "The Stoic Citizen"
 description: "Virtue in a complex world."
 image: "/img/books/stoic-citizen.jpg"
 ---
+## Foundations
 
-# The Stoic Citizen
+## Principles in Practice
 
-[Buy on Amazon](https://www.amazon.com)
+## The Citizen in Community
+
+## The Value of Virtue
+
+## Letters to Future Citizens
+
+
+<p align="center">
+  <a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a>
+</p>

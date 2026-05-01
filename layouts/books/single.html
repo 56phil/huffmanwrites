@@ -1,29 +1,145 @@
 {{ define "main" }}
-<article class="post-single book-page">
-    <header class="post-header">
-        <h1 class="post-title">{{ .Title }}</h1>
-        {{ if .Params.subtitle }}
-        <p class="post-subtitle">{{ .Params.subtitle }}</p>
-        {{ end }}
+<style>
+.book-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+.book-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.book-header h1 {
+    margin-bottom: 0.25rem;
+}
+.book-subtitle {
+    font-style: italic;
+    color: var(--secondary);
+    font-size: 1.1rem;
+    margin-top: 0;
+}
+.book-cover-wrap {
+    text-align: center;
+    margin: 2rem 0;
+}
+.book-cover {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.book-toc {
+    margin: 2rem 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0;
+    background: var(--code-bg);
+}
+.book-toc summary {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.book-toc summary::-webkit-details-marker {
+    display: none;
+}
+.book-toc summary::before {
+    content: "▶";
+    font-size: 0.75rem;
+    transition: transform 0.2s;
+}
+.book-toc[open] summary::before {
+    content: "▼";
+}
+.book-toc ul {
+    margin: 0;
+    padding: 0 1rem 1rem 2.5rem;
+    list-style: decimal;
+}
+.book-toc ul li {
+    padding: 0.25rem 0;
+}
+.book-toc ul li a {
+    text-decoration: none;
+    color: var(--primary);
+}
+.book-toc ul li a:hover {
+    text-decoration: underline;
+}
+.book-content {
+    margin: 2rem 0;
+}
+.book-content h2 {
+    margin-top: 2.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+.book-amazon {
+    text-align: center;
+    margin: 3rem 0;
+}
+.book-amazon a {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: var(--primary);
+    color: var(--theme);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.book-amazon a:hover {
+    opacity: 0.9;
+}
+.book-meta {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+</style>
+
+<article class="book-page">
+
+    <header class="book-header">
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end }}
     </header>
 
-    {{ if .Params.image }}
-    <div class="book-cover-main">
-        <img src="{{ .Params.image }}" alt="Cover of {{ .Title }}" loading="eager">
+    {{ with .Params.image }}
+    <div class="book-cover-wrap">
+        <img src="{{ . }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
     </div>
     {{ end }}
 
-    <div class="post-content">
+    <details class="book-toc">
+        <summary>Table of Contents</summary>
+        <ul>
+        {{ range .Fragments.Headings }}
+            <li><a href="#{{ .ID }}">{{ .Text }}</a></li>
+        {{ end }}
+        </ul>
+    </details>
+
+    <div class="book-content">
         {{ .Content }}
     </div>
 
-    <footer class="post-footer">
-        <p class="book-meta">
-            <span class="book-author">By Philip Huffman</span>
-            {{ if .Params.publish_date }}
-            <span class="book-date">&middot; Published {{ .Params.publish_date | time.Format "January 2006" }}</span>
-            {{ end }}
-        </p>
-    </footer>
+    <div class="book-amazon">
+        <a href="{{ .Params.link }}" target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
+    </div>
+
+    <div class="book-meta">
+        {{ if .Params.author }}<p>By {{ .Params.author }}</p>{{ end }}
+        <p>Published: {{ .Params.publish_date | time.Format ":date_long" }}<br/>
+        {{ if ne .Params.publish_date .Params.updated_date }}
+        Updated: {{ .Params.updated_date | time.Format ":date_long" }}{{ end }}</p>
+    </div>
+
 </article>
 {{ end }}

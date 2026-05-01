@@ -4,7 +4,15 @@ subtitle: "A Data-Driven Guide to Reinventing Yourself After Sixty"
 description: "Applying Stoicism to health and chronic management."
 image: "/img/books/stoic-cgm.jpg"
 ---
+## The Republic of Glucose
 
-# The Stoic CGM
+## The Discipline of Action
 
-[Buy on Amazon](https://www.amazon.com)
+## The Discipline of Will
+
+## The Stoic Citizen of the Body
+
+
+<p align="center">
+  <a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a>
+</p>
