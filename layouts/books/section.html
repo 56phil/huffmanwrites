@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div class="book-library">
+  <h2>{{ .Title }}</h2>
+  {{ if .Params.subtitle }}<p class="library-intro">{{ .Params.subtitle }}</p>{{ end }}
+  
+  {{ .Content }}
+  
+</div>
+{{ end }}
