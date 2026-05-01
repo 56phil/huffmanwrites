@@ -12,7 +12,7 @@ Philosophy is a toolkit for survival and flourishing, not a performance of intel
 
 ## Efficiency as Ethics
 
-Waste is not merely a logistical error; it is a failure of reason. To waste time, energy, or potential is to disregard the finite nature of our existence and the dictates of logic. Efficiency is the active practice of minimizing the gap between intent and outcome. When a process is bloated or communication is padded with fluff, it is a sign of intellectual laziness. Precision is the only acceptable standard.
+Waste is not merely a logistical error; it is a failure of reason. To waste time, energy, or potential is to disregard the finite nature of our existence and the dictates of logic. Efficiency is the active practice of minimizing the gap between intent and outcome. When a process is bloated or communication is padded with fluff, it is a sign of intellectual laziness. Precision is the best way.
 
 ## Collaborative Equality
 
