@@ -1,0 +1,29 @@
+{{ define "main" }}
+<article class="post-single book-page">
+    <header class="post-header">
+        <h1 class="post-title">{{ .Title }}</h1>
+        {{ if .Params.subtitle }}
+        <p class="post-subtitle">{{ .Params.subtitle }}</p>
+        {{ end }}
+    </header>
+
+    {{ if .Params.image }}
+    <div class="book-cover-main">
+        <img src="{{ .Params.image }}" alt="Cover of {{ .Title }}" loading="eager">
+    </div>
+    {{ end }}
+
+    <div class="post-content">
+        {{ .Content }}
+    </div>
+
+    <footer class="post-footer">
+        <p class="book-meta">
+            <span class="book-author">By Philip Huffman</span>
+            {{ if .Params.publish_date }}
+            <span class="book-date">&middot; Published {{ .Params.publish_date | time.Format "January 2006" }}</span>
+            {{ end }}
+        </p>
+    </footer>
+</article>
+{{ end }}
