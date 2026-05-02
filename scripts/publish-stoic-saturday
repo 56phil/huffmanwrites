@@ -1,0 +1,196 @@
+#!/usr/bin/env python3
+"""
+Publish a Stoic Saturday newsletter from Obsidian Inbox to the Hugo site.
+
+Reads the latest Stoic-Saturday-Letter-*.md from ~/Vault/_Inbox/,
+generates a Hugo post, commits/pushes, and outputs email-ready HTML.
+"""
+
+import argparse
+import os
+import re
+import glob
+import subprocess
+import datetime
+from pathlib import Path
+
+# ─── Config ───────────────────────────────────────────────────────────────────
+SCRIPT_DIR = Path(__file__).resolve().parent
+SITE_DIR = SCRIPT_DIR.parent
+POSTS_DIR = SITE_DIR / "content" / "posts"
+EMAIL_OUT_DIR = SITE_DIR / "static" / "email"
+VAULT_INBOX = Path.home() / "Vault" / "_Inbox"
+
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+def latest_draft():
+    """Return the newest Stoic-Saturday-Letter-*.md file."""
+    files = sorted(glob.glob(str(VAULT_INBOX / "Stoic-Saturday-Letter-*.md")))
+    return files[-1] if files else None
+
+def extract_title(content):
+    """Pull the subject line from the first line."""
+    for line in content.splitlines()[:5]:
+        if line.startswith("Subject:"):
+            return line.replace("Subject:", "").strip()
+    # fallback: strip # heading from body
+    m = re.search(r"^#\s*(.+)", content, re.MULTILINE)
+    return m.group(1).strip() if m else "Stoic Saturday"
+
+def count_existing_posts():
+    """Count existing stoic-saturday-*.md posts to determine the next number."""
+    existing = glob.glob(str(POSTS_DIR / "stoic-saturday-*.md"))
+    numbers = []
+    for p in existing:
+        m = re.search(r"stoic-saturday-(\d+)", os.path.basename(p))
+        if m:
+            numbers.append(int(m.group(1)))
+    return max(numbers) if numbers else 0
+
+def generate_hugo_post(number, title, body, date):
+    """Write the Hugo markdown post."""
+    slug = f"stoic-saturday-{number}"
+    out_path = POSTS_DIR / f"{slug}.md"
+    front_matter = f"""---
+title: "Stoic Saturday #{number}: {title}"
+date: {date.isoformat()}\ntags: ["stoic-saturday"]
+draft: false
+---
+
+"""
+    out_path.write_text(front_matter + body, encoding="utf-8")
+    return out_path
+
+def generate_email_html(number, title, body, date):
+    """Generate standalone email HTML with inline-friendly styling."""
+    lines = body.splitlines()
+    out_lines = []
+    in_para = False
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            if in_para:
+                out_lines.append("</p>")
+                in_para = False
+            continue
+        if stripped.startswith("#"):
+            if in_para:
+                out_lines.append("</p>")
+                in_para = False
+            level = len(stripped) - len(stripped.lstrip("#"))
+            text = stripped.lstrip("#").strip()
+            tag = f"h{level}" if level <= 6 else "h6"
+            out_lines.append(f"<{tag}>{text}</{tag}>")
+            continue
+        if stripped.startswith(">"):
+            if in_para:
+                out_lines.append("</p>")
+                in_para = False
+            out_lines.append(f"<blockquote>{stripped.lstrip('>').strip()}</blockquote>")
+            continue
+        if not in_para:
+            out_lines.append("<p>")
+            in_para = True
+        out_lines.append(stripped)
+    if in_para:
+        out_lines.append("</p>")
+
+    html_body = "\n".join(out_lines)
+    html_body = re.sub(r"</p>\n<p>", " ", html_body)
+    # fix nested blockquotes from lazy markdown
+    html_body = html_body.replace("</blockquote>\n<blockquote>", "\n")
+
+    html = f"""\<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stoic Saturday #{number}: {title}</title>
+</head>
+<body style="margin:0;padding:0;font-family:Georgia,serif;font-size:16px;line-height:1.6;color:#333;background:#ffffff;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f5f5f5;">
+<tr><td align="center" style="padding:20px;">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+<tr><td style="padding:32px;">
+<h1 style="font-size:22px;margin:0 0 16px;color:#000;">Stoic Saturday #{number}: {title}</h1>
+<p style="font-size:12px;color:#666;margin:0 0 24px;">{date.strftime("%B %d, %Y")}</p>
+{html_body}
+<p style="margin-top:32px;font-size:13px;color:#666;border-top:1px solid #e5e5e5;padding-top:16px;">
+You received this because you signed up at <a href="https://huffmanwrites.org">huffmanwrites.org</a>.</p>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>"""
+
+    EMAIL_OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_path = EMAIL_OUT_DIR / f"stoic-saturday-{number}.html"
+    out_path.write_text(html, encoding="utf-8")
+    return out_path
+
+# ─── Main ─────────────────────────────────────────────────────────────────────
+def main():
+    parser = argparse.ArgumentParser(
+        description="Publish Stoic Saturday from Obsidian Inbox to Hugo site + email HTML."
+    )
+    parser.add_argument(
+        "number", nargs="?", type=int, default=None,
+        help="Issue number (defaults to next available)"
+    )
+    parser.add_argument(
+        "--no-push", action="store_true",
+        help="Generate files but do not git commit/push"
+    )
+    args = parser.parse_args()
+
+    draft_path = latest_draft()
+    if not draft_path:
+        print("No Stoic-Saturday-Letter-*.md found in", VAULT_INBOX)
+        return 1
+
+    content = Path(draft_path).read_text(encoding="utf-8")
+    title = extract_title(content)
+
+    # Body: skip Subject: line and subsequent blank lines
+    lines = content.splitlines()
+    body_lines = []
+    skip = True
+    for line in lines:
+        if line.startswith("Subject:"):
+            skip = True
+            continue
+        if skip and line.strip() == "":
+            continue
+        skip = False
+        body_lines.append(line)
+    body = "\n".join(body_lines).strip()
+
+    number = args.number if args.number is not None else (count_existing_posts() + 1)
+    date = datetime.datetime.now()
+
+    post = generate_hugo_post(number, title, body, date)
+    email = generate_email_html(number, title, body, date)
+
+    os.chdir(SITE_DIR)
+    if not args.no_push:
+        subprocess.run(["git", "add", str(post.relative_to(SITE_DIR))], check=True)
+        subprocess.run(["git", "commit", "-m", f"Stoic Saturday #{number}: {title}"], check=False)
+        subprocess.run(["git", "push"], check=False)
+        # Build locally for preview
+        subprocess.run(["hugo"], check=False)
+
+    print(f"""\
+✅ Stoic Saturday #{number} ready.
+
+Post:     {post}
+Email:    {email}
+{"Preview:  http://localhost:1313/posts/" + post.stem + "/" if not args.no_push else "Build:    hugo server (to preview)"}
+
+Next steps:
+  1. Preview the post at the URL above.
+  2. Open the email HTML file and copy-paste into SendFox.
+  3. Send.
+""")
+    return 0
+
+if __name__ == "__main__":
+    exit(main())
