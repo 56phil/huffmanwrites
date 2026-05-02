@@ -7,7 +7,7 @@ link: "https://www.amazon.com"
 author: "Philip R. Huffman"
 ---
 
-Stoic Backgammon\
+Stoic Backgammon
 A Profitable Pastime
 
 ## **Copyright**
