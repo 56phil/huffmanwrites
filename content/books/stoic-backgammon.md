@@ -12,7 +12,7 @@ A Profitable Pastime
 
 ## **Copyright**
 
-**Stoic Backgammon**\
+**Stoic Backgammon**
 A Profitable Pastime\
 Copyright ©2026 by Philip Huffman. All rights reserved. No part of this
 book may be reproduced, stored in a retrieval system, or transmitted in
