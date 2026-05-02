@@ -26,7 +26,7 @@ of the content. The reader assumes full responsibility for their actions
 based on this material. For permissions or inquiries, contact:
 Philip.R.Huffman@gmail.com\
 
-i ISBN\
+ISBN\
 
 Published by PRH
 ### Dedication
