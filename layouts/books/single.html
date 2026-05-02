@@ -71,19 +71,11 @@
 .book-toc ul li a:hover {
    text-decoration: underline;
 }
-.book-content {
+.book-buy {
+   text-align: center;
    margin: 2rem 0;
 }
-.book-content h2 {
-   margin-top: 2.5rem;
-   padding-bottom: 0.5rem;
-   border-bottom: 1px solid var(--border);
-}
-.book-amazon {
-   text-align: center;
-   margin: 3rem 0;
-}
-.book-amazon a {
+.book-buy a {
    display: inline-block;
    padding: 0.75rem 2rem;
    background: var(--primary);
@@ -92,15 +84,8 @@
    border-radius: 4px;
    font-weight: 600;
 }
-.book-amazon a:hover {
+.book-buy a:hover {
    opacity: 0.9;
-}
-.book-meta {
-   margin-top: 3rem;
-   padding-top: 1.5rem;
-   border-top: 1px solid var(--border);
-   font-size: 0.85rem;
-   color: var(--secondary);
 }
 </style>
 
@@ -122,23 +107,9 @@
        {{ .TableOfContents }}
    </details>
 
-   <div class="book-content">
-       {{ .Content }}
-   </div>
-
-   <div class="book-amazon">
-       <a href="{{ .Params.link }}" target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
-   </div>
-
-  <div class="book-meta">
-      {{ if .Params.author }}<p>By {{ .Params.author }}</p>{{ end }}
-      {{ if .Params.publish_date }}
-      <p>Published: {{ .Params.publish_date | time.Format ":date_long" }}<br/>
-      {{ if and .Params.updated_date (ne .Params.publish_date .Params.updated_date) }}
-      Updated: {{ .Params.updated_date | time.Format ":date_long" }}{{ end }}</p>
-      {{ end }}
-  </div>
+   {{ if .Params.link }}
+   <p class="book-buy"><a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a></p>
+   {{ end }}
 
 </article>
 {{ end }}
-

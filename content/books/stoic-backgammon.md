@@ -24,7 +24,7 @@ This book is provided for informational purposes only. The author makes
 no representations or warranties regarding the accuracy or applicability
 of the content. The reader assumes full responsibility for their actions
 based on this material. For permissions or inquiries, contact:
-Philip.R.Huffman@gmail.com\
+Philip.R.Huffman@gmail.com
 
 ISBN
 
