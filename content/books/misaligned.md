@@ -3,6 +3,7 @@ title: "Misaligned"
 subtitle: "Right Subject, Wrong Adjective, Disastrous Result"
 description: "The gap between internal reality and external expectation."
 image: "/img/books/misaligned.jpg"
+link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/B0GLX9JS3V/"
 ---
 ## The Future Is Bright and Full of Possibilities
 
