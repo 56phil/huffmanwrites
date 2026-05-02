@@ -1,146 +1,142 @@
-     1|{{ define "main" }}
-     2|<style>
-     3|.book-page {
-     4|    max-width: 720px;
-     5|    margin: 0 auto;
-     6|    padding: 2rem 1rem;
-     7|}
-     8|.book-header {
-     9|    text-align: center;
-    10|    margin-bottom: 1.5rem;
-    11|}
-    12|.book-header h1 {
-    13|    margin-bottom: 0.25rem;
-    14|}
-    15|.book-subtitle {
-    16|    font-style: italic;
-    17|    color: var(--secondary);
-    18|    font-size: 1.1rem;
-    19|    margin-top: 0;
-    20|}
-    21|.book-cover-wrap {
-    22|    text-align: center;
-    23|    margin: 2rem 0;
-    24|}
-    25|.book-cover {
-    26|    max-width: 300px;
-    27|    width: 100%;
-    28|    height: auto;
-    29|    border-radius: 4px;
-    30|    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    31|}
-    32|.book-toc {
-    33|    margin: 2rem 0;
-    34|    border: 1px solid var(--border);
-    35|    border-radius: 6px;
-    36|    padding: 0;
-    37|    background: var(--code-bg);
-    38|}
-    39|.book-toc summary {
-    40|    cursor: pointer;
-    41|    padding: 0.75rem 1rem;
-    42|    font-weight: 600;
-    43|    list-style: none;
-    44|    display: flex;
-    45|    align-items: center;
-    46|    gap: 0.5rem;
-    47|}
-    48|.book-toc summary::-webkit-details-marker {
-    49|    display: none;
-    50|}
-    51|.book-toc summary::before {
-    52|    content: "▶";
-    53|    font-size: 0.75rem;
-    54|    transition: transform 0.2s;
-    55|}
-    56|.book-toc[open] summary::before {
-    57|    content: "▼";
-    58|}
-    59|.book-toc ul {
-    60|    margin: 0;
-    61|    padding: 0 1rem 1rem 2.5rem;
-    62|    list-style: decimal;
-    63|}
-    64|.book-toc ul li {
-    65|    padding: 0.25rem 0;
-    66|}
-    67|.book-toc ul li a {
-    68|    text-decoration: none;
-    69|    color: var(--primary);
-    70|}
-    71|.book-toc ul li a:hover {
-    72|    text-decoration: underline;
-    73|}
-    74|.book-content {
-    75|    margin: 2rem 0;
-    76|}
-    77|.book-content h2 {
-    78|    margin-top: 2.5rem;
-    79|    padding-bottom: 0.5rem;
-    80|    border-bottom: 1px solid var(--border);
-    81|}
-    82|.book-amazon {
-    83|    text-align: center;
-    84|    margin: 3rem 0;
-    85|}
-    86|.book-amazon a {
-    87|    display: inline-block;
-    88|    padding: 0.75rem 2rem;
-    89|    background: var(--primary);
-    90|    color: var(--theme);
-    91|    text-decoration: none;
-    92|    border-radius: 4px;
-    93|    font-weight: 600;
-    94|}
-    95|.book-amazon a:hover {
-    96|    opacity: 0.9;
-    97|}
-    98|.book-meta {
-    99|    margin-top: 3rem;
-   100|    padding-top: 1.5rem;
-   101|    border-top: 1px solid var(--border);
-   102|    font-size: 0.85rem;
-   103|    color: var(--secondary);
-   104|}
-   105|</style>
-   106|
-   107|<article class="book-page">
-   108|
-   109|    <header class="book-header">
-   110|        <h1>{{ .Title }}</h1>
-   111|        {{ with .Params.subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end }}
-   112|    </header>
-   113|
-   114|    {{ with .Params.image }}
-   115|    <div class="book-cover-wrap">
-   116|        <img src="{{ . }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
-   117|    </div>
-   118|    {{ end }}
-   119|
-   120|    <details class="book-toc">
-   121|        <summary>Table of Contents</summary>
-   122|        <ul>
-   123|        {{ range .Fragments.Headings }}
-   124|            <li><a href="#{{ .ID }}">{{ .Plain }}</a></li>
-   125|        {{ end }}
-   126|        </ul>
-   127|    </details>
-   128|
-   129|    <div class="book-content">
-   130|        {{ .Content }}
-   131|    </div>
-   132|
-   133|    <div class="book-amazon">
-   134|        <a href="{{ .Params.link }}" target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
-   135|    </div>
-   136|
-   137|    <div class="book-meta">
-   138|        {{ if .Params.author }}<p>By {{ .Params.author }}</p>{{ end }}
-   139|        <p>Published: {{ .Params.publish_date | time.Format ":date_long" }}<br/>
-   140|        {{ if ne .Params.publish_date .Params.updated_date }}
-   141|        Updated: {{ .Params.updated_date | time.Format ":date_long" }}{{ end }}</p>
-   142|    </div>
-   143|
-   144|</article>
-   145|{{ end }}
-   146|
+{{ define "main" }}
+<style>
+.book-page {
+   max-width: 720px;
+   margin: 0 auto;
+   padding: 2rem 1rem;
+}
+.book-header {
+   text-align: center;
+   margin-bottom: 1.5rem;
+}
+.book-header h1 {
+   margin-bottom: 0.25rem;
+}
+.book-subtitle {
+   font-style: italic;
+   color: var(--secondary);
+   font-size: 1.1rem;
+   margin-top: 0;
+}
+.book-cover-wrap {
+   text-align: center;
+   margin: 2rem 0;
+}
+.book-cover {
+   max-width: 300px;
+   width: 100%;
+   height: auto;
+   border-radius: 4px;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.book-toc {
+   margin: 2rem 0;
+   border: 1px solid var(--border);
+   border-radius: 6px;
+   padding: 0;
+   background: var(--code-bg);
+}
+.book-toc summary {
+   cursor: pointer;
+   padding: 0.75rem 1rem;
+   font-weight: 600;
+   list-style: none;
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+}
+.book-toc summary::-webkit-details-marker {
+   display: none;
+}
+.book-toc summary::before {
+   content: "▶";
+   font-size: 0.75rem;
+   transition: transform 0.2s;
+}
+.book-toc[open] summary::before {
+   content: "▼";
+}
+.book-toc ul {
+   margin: 0;
+   padding: 0 1rem 1rem 2.5rem;
+   list-style: decimal;
+}
+.book-toc ul li {
+   padding: 0.25rem 0;
+}
+.book-toc ul li a {
+   text-decoration: none;
+   color: var(--primary);
+}
+.book-toc ul li a:hover {
+   text-decoration: underline;
+}
+.book-content {
+   margin: 2rem 0;
+}
+.book-content h2 {
+   margin-top: 2.5rem;
+   padding-bottom: 0.5rem;
+   border-bottom: 1px solid var(--border);
+}
+.book-amazon {
+   text-align: center;
+   margin: 3rem 0;
+}
+.book-amazon a {
+   display: inline-block;
+   padding: 0.75rem 2rem;
+   background: var(--primary);
+   color: var(--theme);
+   text-decoration: none;
+   border-radius: 4px;
+   font-weight: 600;
+}
+.book-amazon a:hover {
+   opacity: 0.9;
+}
+.book-meta {
+   margin-top: 3rem;
+   padding-top: 1.5rem;
+   border-top: 1px solid var(--border);
+   font-size: 0.85rem;
+   color: var(--secondary);
+}
+</style>
+
+<article class="book-page">
+
+   <header class="book-header">
+       <h1>{{ .Title }}</h1>
+       {{ with .Params.subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end }}
+   </header>
+
+   {{ with .Params.image }}
+   <div class="book-cover-wrap">
+       <img src="{{ . }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
+   </div>
+   {{ end }}
+
+   <details class="book-toc">
+       <summary>Table of Contents</summary>
+       {{ .TableOfContents }}
+   </details>
+
+   <div class="book-content">
+       {{ .Content }}
+   </div>
+
+   <div class="book-amazon">
+       <a href="{{ .Params.link }}" target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
+   </div>
+
+   <div class="book-meta">
+       {{ if .Params.author }}<p>By {{ .Params.author }}</p>{{ end }}
+       <p>Published: {{ .Params.publish_date | time.Format ":date_long" }}<br/>
+       {{ if ne .Params.publish_date .Params.updated_date }}
+       Updated: {{ .Params.updated_date | time.Format ":date_long" }}{{ end }}</p>
+   </div>
+
+</article>
+{{ end }}
+
