@@ -130,12 +130,14 @@
        <a href="{{ .Params.link }}" target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
    </div>
 
-   <div class="book-meta">
-       {{ if .Params.author }}<p>By {{ .Params.author }}</p>{{ end }}
-       <p>Published: {{ .Params.publish_date | time.Format ":date_long" }}<br/>
-       {{ if ne .Params.publish_date .Params.updated_date }}
-       Updated: {{ .Params.updated_date | time.Format ":date_long" }}{{ end }}</p>
-   </div>
+  <div class="book-meta">
+      {{ if .Params.author }}<p>By {{ .Params.author }}</p>{{ end }}
+      {{ if .Params.publish_date }}
+      <p>Published: {{ .Params.publish_date | time.Format ":date_long" }}<br/>
+      {{ if and .Params.updated_date (ne .Params.publish_date .Params.updated_date) }}
+      Updated: {{ .Params.updated_date | time.Format ":date_long" }}{{ end }}</p>
+      {{ end }}
+  </div>
 
 </article>
 {{ end }}

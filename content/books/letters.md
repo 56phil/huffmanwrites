@@ -16,7 +16,3 @@ image: "/img/books/letters.jpg"
 
 ## Art & Interior Strength
 
-
-<p align="center">
-  <a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a>
-</p>

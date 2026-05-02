@@ -20,7 +20,3 @@ image: "/img/books/unstuck.jpg"
 
 ## Don't Miss Twice
 
-
-<p align="center">
-  <a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a>
-</p>
