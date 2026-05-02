@@ -4,7 +4,7 @@ subtitle: "A Profitable Pastime"
 description: "Finding equilibrium through the game of chance."
 image: "/img/books/stoic-backgammon.jpg"
 link: "https://www.amazon.com"
-author: "Philip T. Huffman"
+author: "Philip R. Huffman"
 ---
 
 Stoic Backgammon
