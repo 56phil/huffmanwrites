@@ -1,6 +1,7 @@
 ---
 title: "Stoic Backgammon"
 subtitle: "A Profitable Pastime"
+weight: 7
 description: |
   Stoic Backgammon treats the ancient game as a practice of philosophy — not metaphorically, but literally. Each chapter pairs a phase of play with a Stoic principle, demonstrating that the board enforces what the *Enchiridion* describes: some things are up to us, others are not. The dice are not; the move is.
 
@@ -2046,6 +2047,11 @@ The board is the teacher. These exercises are practice. The real test is
 at your board, dice in hand, opponent waiting.
 
 Play accordingly.
+
+---
+
+**Book Navigation:**  
+Previous: [← Letters](/books/letters/) | Next: [On Proportion →](/books/on-proportion/)
 
 ## Colophon
 

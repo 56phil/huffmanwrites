@@ -1,5 +1,6 @@
 ---
 title: "Raise'm Right"
+weight: 9
 description: |
   Raise'm Right draws on sixteen years of step-parenting to argue that the central task of raising children is not protection or instruction but the cultivation of independent judgment. The book treats critical thinking and healthy skepticism as learnable skills — not innate gifts or rebellious postures — and examines how adults can model these capacities without performing them.
 
@@ -12,3 +13,8 @@ image: "/img/books/raisem-right.jpg"
 # Raise'm Right
 
 [Buy on Amazon](https://www.amazon.com)
+
+---
+
+**Book Navigation:**  
+Previous: [← On Proportion](/books/on-proportion/)
