@@ -158,10 +158,10 @@
    {{ end }}
 
    {{/* Render only the Book Navigation section from content */}}
-   {{ $nav := findRE `(?m)\*\*Book Navigation:\*\*.*\n.*Previous.*Next.*` .Content }}
+   {{ $nav := findRE `(?s)<strong>Book Navigation:</strong>.*?</p>` .Content }}
    {{ with $nav }}
    <div class="book-navigation" style="margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
-      {{ range . }}{{ . | markdownify }}{{ end }}
+      {{- range . }}{{ . | replaceRE `^<strong>Book Navigation:</strong><br>` "" | replaceRE `</p>$` "" | safeHTML }}{{- end -}}
    </div>
    {{ end }}
 
