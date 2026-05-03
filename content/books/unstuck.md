@@ -30,3 +30,5 @@ link: "https://www.amazon.com/Unstuck-Brutal-Guidance-Getting-Your-ebook/dp/B0DY
 
 **Book Navigation:**  
 Next: [A Life Made Whole →](/books/life-made-whole/)
+
+<!-- nav-test -->
