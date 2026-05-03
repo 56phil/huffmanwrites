@@ -26,3 +26,7 @@ link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/
 
 ## Coda: What This Book Is (and Is Not)
 
+---
+
+**Book Navigation:**  
+Previous: [← The Stoic CGM](/books/stoic-cgm/) | Next: [Letters →](/books/letters/)

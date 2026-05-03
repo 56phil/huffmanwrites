@@ -22,3 +22,7 @@ link: "https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4
 
 ## Art & Interior Strength
 
+---
+
+**Book Navigation:**  
+Previous: [← Misaligned](/books/misaligned/) | Next: [On Proportion →](/books/on-proportion/)

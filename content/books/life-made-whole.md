@@ -30,3 +30,7 @@ link: "https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2G
 
 ## Temperance
 
+---
+
+**Book Navigation:**  
+Previous: [← Unstuck](/books/unstuck/) | Next: [The Stoic Citizen →](/books/stoic-citizen/)

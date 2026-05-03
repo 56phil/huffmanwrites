@@ -18,3 +18,7 @@ link: "https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Yourself/dp/B0G6
 
 ## The Stoic Citizen of the Body
 
+---
+
+**Book Navigation:**  
+Previous: [← The Stoic Citizen](/books/stoic-citizen/) | Next: [Misaligned →](/books/misaligned/)

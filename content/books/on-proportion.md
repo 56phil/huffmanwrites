@@ -16,3 +16,7 @@ image: "/img/books/on-proportion.jpg"
 
 ## Reckoning
 
+---
+
+**Book Navigation:**  
+Previous: [← Letters](/books/letters/)
