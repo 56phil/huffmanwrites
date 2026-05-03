@@ -157,7 +157,13 @@
    <p class="book-buy"><a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a></p>
    {{ end }}
 
-   {{ .Content }}
+   {{/* Render only the Book Navigation section from content */}}
+   {{ $nav := findRE "**Book Navigation:**[\\s\\S]*?" .Content }}
+   {{ with $nav }}
+   <div class="book-navigation" style="margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
+      {{ range . }}{{ . | markdownify }}{{ end }}
+   </div>
+   {{ end }}
 
 </article>
 {{ end }}
