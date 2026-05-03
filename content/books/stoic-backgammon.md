@@ -4,7 +4,7 @@ subtitle: "A Profitable Pastime"
 description: "Finding equilibrium through the game of chance."
 image: "/img/books/stoic-backgammon.jpg"
 link: "https://www.amazon.com"
-author: "Philip R. Huffman"
+author: "Philip Huffman"
 ---
 
 Stoic Backgammon
@@ -1628,7 +1628,7 @@ The next game is waiting.
 
 ## About the Author
 
-Philip R. Huffman is the author of eight books on Stoic philosophy and
+Philip Huffman is the author of eight books on Stoic philosophy and
 its application to modern life, including *Unstuck*, *The Stoic
 Citizen*, and *Stoic Backgammon*. A U.S. Army veteran who grew up in
 Springfield, Illinois, during the Cold War, he spent years in
