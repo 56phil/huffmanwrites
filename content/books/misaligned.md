@@ -1,6 +1,7 @@
 ---
 title: "Misaligned"
 subtitle: "Right Subject, Wrong Adjective, Disastrous Result"
+weight: 5
 description: |
   Misaligned begins with a personal diagnosis received late in life and follows its implications outward: through a first marriage that ended in miscommunication rather than malice, through a career built on containment, and through the slow recognition that many strengths become liabilities when context changes. The book treats the gap between internal experience and external expectation as a structural problem, not a personal failure.
 

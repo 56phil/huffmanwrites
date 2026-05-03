@@ -1,6 +1,7 @@
 ---
 title: "The Stoic CGM"
 subtitle: "A Data-Driven Guide to Reinventing Yourself After Sixty"
+weight: 4
 description: |
   The Stoic CGM treats continuous glucose monitoring as a practice of self-knowledge — not merely a medical intervention, but a discipline of attention applied to the body’s own politics. The book examines what happens when Stoic principles meet metabolic data: how to respond to information without being ruled by it, and how to govern the self when the self is constantly in motion.
 

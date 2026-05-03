@@ -1,6 +1,7 @@
 ---
 title: "Letters"
 subtitle: "Truth Without Outcome"
+weight: 6
 description: |
   Letters collects correspondence on the difficult topics that most public discourse avoids: what it means to speak the truth when outcomes are uncertain, how conscience functions under pressure, and whether interior strength has any public value. The essays are written as letters — direct, addressed, unguarded — because the subject matter demands intimacy rather than performance.
 

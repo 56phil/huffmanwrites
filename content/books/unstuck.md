@@ -1,6 +1,7 @@
 ---
 title: "Unstuck"
 subtitle: "Brutal Guidance for Getting Out of Your Own Way"
+weight: 1
 description: |
   Unstuck is not a gentle book. It is a direct challenge to the habits of delay, justification, and self-deception that keep capable people from moving forward. Drawing on Stoic discipline and decades of lived experience, it argues that most obstacles are not external — they are internal negotiations we have learned to accept.
 
