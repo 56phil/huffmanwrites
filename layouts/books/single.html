@@ -88,6 +88,19 @@
    background-color: rgb(0, 0, 0);
    color: rgb(46, 204, 113) !important;
 }
+.book-blurb {
+   font-size: 1.05rem;
+   line-height: 1.7;
+   color: var(--primary);
+   margin: 2rem 0;
+   padding: 0 0.5rem;
+}
+.book-blurb p {
+   margin-bottom: 1.25em;
+}
+.book-blurb p:last-child {
+   margin-bottom: 0;
+}
 </style>
 
 <article class="book-page">
@@ -100,6 +113,12 @@
    {{ with .Params.image }}
    <div class="book-cover-wrap">
        <img src="{{ . }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
+   </div>
+   {{ end }}
+
+   {{ with .Params.description }}
+   <div class="book-blurb">
+       {{ . | markdownify }}
    </div>
    {{ end }}
 
