@@ -8,7 +8,7 @@ title = "Mission"
 
 ## Truth over Tradition
 
-Philosophy is a toolkit for survival and flourishing, not a performance of intellectualism. I have no interest in reciting old texts for the sake of tradition if they do not solve a concrete problem. The goal is to apply Stoic rigor to the actual friction of a neurodivergent life, stripping away academic pretension to find the utility. If a practice doesn't provide a lever for real-world improvement, it is useless.
+Philosophy is a toolkit for survival and flourishing, not a performance of intellectualism. I have no interest in reciting old texts for the sake of tradition if they do not solve a concrete problem. The goal is to apply Stoic rigor to the actual friction of a neurodivergent life, stripping away academic pretension to find the utility. If a practice doesn't provide a lever for real-world improvement, it has no value.
 
 ## Efficiency as Ethics
 
