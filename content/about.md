@@ -2,7 +2,7 @@
 title: "About Philip Huffman"
 description: "Who I am, what I write, and why."
 date: 2026-04-28T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-04-28T00:00:00Z
 tags:
   - about

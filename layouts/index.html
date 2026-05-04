@@ -68,14 +68,12 @@
 
   <section class="latest-posts">
     <h2>Latest Insights</h2>
-    {{ range first 1 .Site.RegularPages }}
-      {{ if ne .Type "books" }}
+    {{ range first 1 (where .Site.RegularPages "Params.tags" "intersect" (slice "stoic-saturday")) }}
         <article>
           <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
           <time>{{ .Date.Format "2006-01-02" }}</time>
           <p>{{ .Summary }}</p>
         </article>
-      {{ end }}
     {{ end }}
   </section>
 
