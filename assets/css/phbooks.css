@@ -165,9 +165,9 @@
     transition: all 0.2s ease;
 }
 .book-nav-btn:hover {
-    background: var(--primary);
-    color: var(--theme) !important;
-    border-color: var(--primary);
+    background: #000 !important;
+    color: #2ecc71 !important;
+    border-color: #000;
     text-decoration: none !important;
 }
 .book-nav-btn.prev::before {
