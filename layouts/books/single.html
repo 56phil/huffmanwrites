@@ -169,15 +169,15 @@
          {{ with $prevMatch }}
             {{ range . }}
                {{ $href := replaceRE `.*href="([^"]+)".*` "$1" . }}
-               {{ $text := replaceRE `.*>([^<]+)</a>` "$1" . }}
-               <a href="{{ $href }}" class="book-nav-btn prev">{{ $text }}</a>
+               {{ $text := replaceRE `.*>([^<]+)</a>` "$1" . | htmlUnescape }}
+               <a href="{{ $href }}" class="book-nav-btn prev">{{ $text | safeHTML }}</a>
             {{ end }}
          {{ end }}
          {{ with $nextMatch }}
             {{ range . }}
                {{ $href := replaceRE `.*href="([^"]+)".*` "$1" . }}
-               {{ $text := replaceRE `.*>([^<]+)</a>` "$1" . }}
-               <a href="{{ $href }}" class="book-nav-btn next">{{ $text }}</a>
+               {{ $text := replaceRE `.*>([^<]+)</a>` "$1" . | htmlUnescape }}
+               <a href="{{ $href }}" class="book-nav-btn next">{{ $text | safeHTML }}</a>
             {{ end }}
          {{ end }}
       {{- end -}}
