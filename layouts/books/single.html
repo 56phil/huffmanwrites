@@ -163,20 +163,20 @@
    <div class="book-navigation" style="margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
       {{- range . }}
          {{ $navContent := . | replaceRE `^<strong>Book Navigation:</strong><br>` "" | replaceRE `</p>$` "" }}
-         {{/* Extract Previous and Next links and wrap in button spans */}}
-         {{ $prevMatch := findRE `<a href="(/books/[^"]+/)">\[← [^\]]+\]</a>` $navContent }}
-         {{ $nextMatch := findRE `<a href="(/books/[^"]+/)">\[[^\]]+ →\]</a>` $navContent }}
+         {{/* Extract Previous links (←) and Next links (→) */}}
+         {{ $prevMatch := findRE `<a href="(/books/[^"]+/)">← [^<]+</a>` $navContent }}
+         {{ $nextMatch := findRE `<a href="(/books/[^"]+/)">[^<]+ →</a>` $navContent }}
          {{ with $prevMatch }}
             {{ range . }}
                {{ $href := replaceRE `.*href="([^"]+)".*` "$1" . }}
-               {{ $text := replaceRE `.*>\[([^]]+)\].*` "$1" . }}
+               {{ $text := replaceRE `.*>([^<]+)</a>` "$1" . }}
                <a href="{{ $href }}" class="book-nav-btn prev">{{ $text }}</a>
             {{ end }}
          {{ end }}
          {{ with $nextMatch }}
             {{ range . }}
                {{ $href := replaceRE `.*href="([^"]+)".*` "$1" . }}
-               {{ $text := replaceRE `.*>\[([^]]+)\].*` "$1" . }}
+               {{ $text := replaceRE `.*>([^<]+)</a>` "$1" . }}
                <a href="{{ $href }}" class="book-nav-btn next">{{ $text }}</a>
             {{ end }}
          {{ end }}
