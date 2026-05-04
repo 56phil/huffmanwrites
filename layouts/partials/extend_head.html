@@ -132,7 +132,7 @@
     }
   }
 </style>
-{{- if or (eq .RelPermalink "/books/") (eq .RelPermalink "/posts/all-my-books/") }}
+{{- if or (eq .RelPermalink "/books/") (eq .RelPermalink "/posts/all-my-books/") (eq .Type "books") }}
   {{- $phbooks := resources.Get "css/phbooks.css" | resources.Minify | fingerprint }}
   <link rel="stylesheet" href="{{ $phbooks.RelPermalink }}" integrity="{{ $phbooks.Data.Integrity }}">
 {{- end }}
