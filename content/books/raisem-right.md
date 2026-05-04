@@ -8,7 +8,7 @@ description: |
 
   The chapters move through the practical work: how to teach a child to question without destabilizing, how to introduce uncertainty as a feature rather than a bug, and how to distinguish between productive skepticism and reflexive contrarianism. The writing is grounded in lived experience and avoids both the sentimentality of parenting manuals and the abstraction of philosophy texts. It treats the parent-child relationship as a long negotiation between guidance and autonomy.
 
-  Written for parents, step-parents, and anyone who influences how a young mind encounters the world, Raise'm Right offers a framework for raising children who can think — not children who agree. The central claim is that skepticism, taught well, is a form of care: the belief that the person you are raising will eventually need to make decisions you cannot make for them, and that your job is to prepare them for that moment.
+  Written for parents, step-parents, and anyone who influences how a young mind encounters the world, Raise'm Right offers a framework for raising children who can think — not children who simply comply to get along. The central claim is that skepticism, taught well, is a form of care: the belief that the person you are raising will eventually need to make decisions you cannot make for them, and that your job is to prepare them for that moment.
 image: "/img/books/raisem-right.jpg"
 ---
 
