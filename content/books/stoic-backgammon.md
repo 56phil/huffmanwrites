@@ -9,7 +9,7 @@ description: |
 
   Written for readers who do not need to know backgammon or Stoicism to begin, the book teaches both as it proceeds. The central claim is that every roll is a small encounter with fate, and every move is a decision made with incomplete information. The right response to uncertainty is not prediction but character — and the board, played repeatedly, is one way to build it.
 image: "/img/books/stoic-backgammon.jpg"
-link: "https://www.amazon.com"
+link: "https://www.amazon.com/dp/B0GXW6KRDH/"
 author: "Philip Huffman"
 ---
 
