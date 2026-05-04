@@ -1,5 +1,6 @@
 ---
 title: "Raise'm Right"
+subtitle: "Raising Children of Character, Judgment, and Agency in the 21st Century"
 weight: 9
 description: |
   Expected: June 2027.
