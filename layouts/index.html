@@ -72,7 +72,7 @@
         <article>
           <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
           <time>{{ .Date.Format "2006-01-02" }}</time>
-          <p>{{ .Summary }}</p>
+          <p>{{ .Content }}</p>
         </article>
     {{ end }}
   </section>
