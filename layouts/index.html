@@ -59,7 +59,7 @@
           <div class="book-card">
             <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
             {{ with .Params.subtitle }}<p class="subtitle">{{ . }}</p>{{ end }}
-            {{ if .Params.description }}<p>{{ .Params.description }}</p>{{ end }}
+            {{ if .Params.description }}<p>{{ .Params.description | markdownify }}</p>{{ end }}
           </div>
         {{ end }}
       {{ end }}
