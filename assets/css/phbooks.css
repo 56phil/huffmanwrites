@@ -142,23 +142,21 @@
    margin: 2rem 0;
    border: 1px solid var(--border);
    border-radius: 6px;
-   padding: 0;
    background: var(--code-bg);
-   font-size: 0.85rem;
 }
 
 .book-toc summary {
    cursor: pointer;
-   padding: 0.75rem 1rem;
+   padding: 0.6rem 1rem;
    font-weight: 600;
+   font-size: 0.8rem;
+   text-transform: uppercase;
+   letter-spacing: 0.06em;
+   color: var(--tertiary);
    list-style: none;
    display: flex;
    align-items: center;
    gap: 0.5rem;
-   color: var(--secondary);
-   font-size: 0.9rem;
-   text-transform: uppercase;
-   letter-spacing: 0.05em;
 }
 
 .book-toc summary::-webkit-details-marker {
@@ -166,14 +164,13 @@
 }
 
 .book-toc summary::before {
-   content: "▼";
+   content: "▸";
    font-size: 0.65rem;
-   transition: transform 0.2s;
-   color: var(--tertiary);
+   transition: transform 0.15s;
 }
 
-.book-toc:not([open]) summary::before {
-   content: "▶";
+.book-toc[open] summary::before {
+   transform: rotate(90deg);
 }
 
 .book-toc nav {
@@ -182,38 +179,43 @@
 
 .book-toc ul {
    margin: 0;
-   padding: 0.75rem 1.5rem;
+   padding: 0.6rem 1rem;
    list-style: none;
-   columns: 2;
-   column-gap: 1.5rem;
 }
 
 .book-toc ul li {
-   padding: 0.15rem 0;
-   break-inside: avoid;
+   padding: 0.18rem 0;
 }
 
 .book-toc ul li a {
    text-decoration: none;
    color: var(--secondary);
-   font-size: 0.82rem;
-   line-height: 1.4;
+   font-size: 0.8rem;
    transition: color 0.15s;
 }
 
 .book-toc ul li a:hover {
    color: var(--primary);
-   text-decoration: underline;
 }
 
 .book-content-body {
    margin-top: 2.5rem;
+   counter-reset: chapter;
 }
 
 .book-content-body h2 {
+   counter-increment: chapter;
    border-bottom: 1px solid var(--border);
    padding-bottom: 0.3rem;
-   margin-top: 2rem;
+   margin-top: 2.2rem;
+   font-size: 1.3rem;
+}
+
+.book-content-body h2::before {
+   content: counter(chapter) ". ";
+   color: var(--tertiary);
+   font-weight: 400;
+   font-size: 0.85em;
 }
 
 .book-buy {
