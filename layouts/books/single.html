@@ -7,27 +7,28 @@
        {{ with .Params.subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end }}
    </header>
 
-   {{ with .Params.image }}
-   {{- $img := resources.Get .Params.image }}
-   {{- $processed := "" }}
-   {{- if $img }}
-     {{- $processed = $img.Resize "800x WebP" }}
-   {{- end }}
-   <div class="book-media">
-      <div class="book-cover-wrap">
-         {{ if $processed }}
-           <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
-         {{ else }}
-           <img src="{{ . }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
-         {{ end }}
-      </div>
-      {{ with $.Params.description }}
-      <div class="book-blurb">
-         {{ . | markdownify }}
-      </div>
-      {{ end }}
-   </div>
-   {{ end }}
+    {{- $imgPath := .Params.image -}}
+    {{- $img := resources.Get $imgPath -}}
+    {{- $processed := "" -}}
+    {{- if $img -}}
+      {{- $processed = $img.Resize "800x WebP" -}}
+    {{- end -}}
+    {{ if $imgPath }}
+    <div class="book-media">
+       <div class="book-cover-wrap">
+           {{ if $processed }}
+             <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} book cover" class="book-cover" loading="lazy">
+           {{ else }}
+             <img src="{{ $imgPath }}" alt="{{ .Title }} book cover" class="book-cover" loading="lazy">
+           {{ end }}
+        </div>
+        {{ with .Params.description }}
+        <div class="book-blurb">
+           {{ . | markdownify }}
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
 
    {{ if and .Params.description (not .Params.image) }}
    <div class="book-blurb">
