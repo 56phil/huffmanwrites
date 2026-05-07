@@ -11,8 +11,13 @@
 <div class="book-card">
     <div class="book-cover-wrap">
         {{- if $img -}}
+            {{- $asset := resources.Get (strings.TrimPrefix "/" $img) -}}
             {{- if $link -}}<a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }}>{{- end -}}
-                <img src="/{{ $imgPath }}" alt="{{ $title }} cover" loading="lazy">
+                {{- if $asset -}}
+                    <img src="{{ ($asset.Resize "140x webp").RelPermalink }}" alt="{{ $title }} cover" loading="lazy">
+                {{- else -}}
+                    <img src="/{{ $imgPath }}" alt="{{ $title }} cover" loading="lazy">
+                {{- end -}}
             {{- if $link -}}</a>{{- end -}}
         {{- else -}}
             <div class="book-cover-placeholder">Cover Coming Soon</div>
