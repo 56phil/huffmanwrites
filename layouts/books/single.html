@@ -8,9 +8,18 @@
    </header>
 
    {{ with .Params.image }}
+   {{- $img := resources.Get .Params.image }}
+   {{- $processed := "" }}
+   {{- if $img }}
+     {{- $processed = $img.Resize "800x WebP" }}
+   {{- end }}
    <div class="book-media">
       <div class="book-cover-wrap">
-         <img src="{{ . }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
+         {{ if $processed }}
+           <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
+         {{ else }}
+           <img src="{{ . }}" alt="{{ $.Title }} book cover" class="book-cover" loading="lazy">
+         {{ end }}
       </div>
       {{ with $.Params.description }}
       <div class="book-blurb">
@@ -42,10 +51,18 @@
    {{ $prev := "" }}
    {{ $next := "" }}
    {{ range $i, $p := $books }}
-     {{ if eq $p $currentPage }}
-       {{ if gt $i 0 }}{{ $prev = index $books (sub $i 1) }}{{ end }}
-       {{ if lt (add $i 1) (len $books) }}{{ $next = index $books (add $i 1) }}{{ end }}
-     {{ end }}
+        {{ if eq $p $currentPage }}
+          {{ if gt $i 0 }}
+            {{ $prev = index $books (sub $i 1) }}
+          {{ else }}
+            {{ $prev = index $books (sub (len $books) 1) }}
+          {{ end }}
+          {{ if lt (add $i 1) (len $books) }}
+            {{ $next = index $books (add $i 1) }}
+          {{ else }}
+            {{ $next = index $books 0 }}
+          {{ end }}
+        {{ end }}
    {{ end }}
 
    {{ if or $prev $next }}

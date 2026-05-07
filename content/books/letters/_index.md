@@ -8,7 +8,7 @@ description: |
   Each section examines a tension: witness against voice, conscience against thought, science against scale, leadership against power, art against survival. The writing does not resolve these tensions. It inhabits them, tracing what it costs to hold a position and what it costs to abandon one.
 
   Written for readers who have grown skeptical of certainty and still need to communicate, Letters argues that honest speech is not a strategy for winning but a practice of remaining present. The final question is not whether truth changes outcomes, but whether silence changes the speaker.
-image: "/img/books/letters.jpg"
+image: "img/books/letters.jpg"
 link: "https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4N7/"
 ---
 ## Prologue
