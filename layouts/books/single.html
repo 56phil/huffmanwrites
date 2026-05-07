@@ -44,37 +44,27 @@
    <p class="book-buy"><a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a></p>
    {{ end }}
 
-   {{ $currentPage := . }}
-   {{ $books := where .Site.RegularPages "Section" "books" }}
-   {{ $books = $books.ByWeight }}
-   
-   {{ $prev := "" }}
-   {{ $next := "" }}
-   {{ range $i, $p := $books }}
-        {{ if eq $p $currentPage }}
-          {{ if gt $i 0 }}
-            {{ $prev = index $books (sub $i 1) }}
-          {{ else }}
-            {{ $prev = index $books (sub (len $books) 1) }}
-          {{ end }}
-          {{ if lt (add $i 1) (len $books) }}
-            {{ $next = index $books (add $i 1) }}
-          {{ else }}
-            {{ $next = index $books 0 }}
-          {{ end }}
-        {{ end }}
-   {{ end }}
+    {{ $currentPage := . }}
+    {{ $books := where .Site.Pages "Section" "books" }}
+    {{ $books = $books.ByWeight }}
+    {{ $count := len $books }}
 
-   {{ if or $prev $next }}
-   <div class="book-navigation" style="margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
-      {{ with $prev }}
-         <a href="{{ .RelPermalink }}" class="book-nav-btn prev">{{ .Title }}</a>
+    {{ $currentIndex := 0 }}
+    {{ range $i, $p := $books }}
+      {{ if eq $p $currentPage }}
+        {{ $currentIndex = $i }}
       {{ end }}
-      {{ with $next }}
-         <a href="{{ .RelPermalink }}" class="book-nav-btn next">{{ .Title }}</a>
-      {{ end }}
-   </div>
-   {{ end }}
+    {{ end }}
+
+    {{ $prevIndex := sub (add $currentIndex $count) 1 | mod $count }}
+    {{ $nextIndex := add $currentIndex 1 | mod $count }}
+    {{ $prev := index $books $prevIndex }}
+    {{ $next := index $books $nextIndex }}
+
+    <div class="book-navigation" style="margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
+       <a href="{{ $prev.RelPermalink }}" class="book-nav-btn prev">{{ $prev.Title }}</a>
+       <a href="{{ $next.RelPermalink }}" class="book-nav-btn next">{{ $next.Title }}</a>
+    </div>
 
 </article>
 {{ end }}
