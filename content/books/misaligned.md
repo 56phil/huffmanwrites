@@ -29,5 +29,3 @@ link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/
 
 ---
 
-**Book Navigation:**  
-Previous: [← The Stoic CGM](/books/stoic-cgm/) | Next: [Letters →](/books/letters/)

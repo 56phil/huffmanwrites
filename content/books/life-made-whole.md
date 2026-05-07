@@ -33,5 +33,3 @@ link: "https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2G
 
 ---
 
-**Book Navigation:**  
-Previous: [← Unstuck](/books/unstuck/) | Next: [The Stoic Citizen →](/books/stoic-citizen/)

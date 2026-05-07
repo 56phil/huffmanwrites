@@ -157,30 +157,26 @@
    <p class="book-buy"><a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a></p>
    {{ end }}
 
-   {{/* Render only the Book Navigation section from content */}}
-   {{ $nav := findRE `(?s)<strong>Book Navigation:</strong>.*?</p>` .Content }}
-   {{ with $nav }}
+   {{ $books := where .Site.RegularPages "Section" "books" }}
+   {{ $books = $books.ByWeight }}
+   
+   {{ $prev := "" }}
+   {{ $next := "" }}
+   {{ range $i, $p := $books }}
+     {{ if eq $p . }}
+       {{ if gt $i 0 }}{{ $prev = index $books (sub $i 1) }}{{ end }}
+       {{ if lt (add $i 1) (len $books) }}{{ $next = index $books (add $i 1) }}{{ end }}
+     {{ end }}
+   {{ end }}
+
+   {{ if or $prev $next }}
    <div class="book-navigation" style="margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
-      {{- range . }}
-         {{ $navContent := . | replaceRE `^<strong>Book Navigation:</strong><br>` "" | replaceRE `</p>$` "" }}
-         {{/* Extract Previous links (←) and Next links (→) */}}
-         {{ $prevMatch := findRE `<a href="(/books/[^"]+/)">← [^<]+</a>` $navContent }}
-         {{ $nextMatch := findRE `<a href="(/books/[^"]+/)">[^<]+ →</a>` $navContent }}
-         {{ with $prevMatch }}
-            {{ range . }}
-               {{ $href := replaceRE `.*href="([^"]+)".*` "$1" . }}
-               {{ $text := replaceRE `.*>([^<]+)</a>` "$1" . | htmlUnescape }}
-               <a href="{{ $href }}" class="book-nav-btn prev">{{ $text | safeHTML }}</a>
-            {{ end }}
-         {{ end }}
-         {{ with $nextMatch }}
-            {{ range . }}
-               {{ $href := replaceRE `.*href="([^"]+)".*` "$1" . }}
-               {{ $text := replaceRE `.*>([^<]+)</a>` "$1" . | htmlUnescape }}
-               <a href="{{ $href }}" class="book-nav-btn next">{{ $text | safeHTML }}</a>
-            {{ end }}
-         {{ end }}
-      {{- end -}}
+      {{ with $prev }}
+         <a href="{{ .RelPermalink }}" class="book-nav-btn prev">{{ .Title }}</a>
+      {{ end }}
+      {{ with $next }}
+         <a href="{{ .RelPermalink }}" class="book-nav-btn next">{{ .Title }}</a>
+      {{ end }}
    </div>
    {{ end }}
 

@@ -19,5 +19,3 @@ image: "/img/books/on-proportion.jpg"
 
 ---
 
-**Book Navigation:**  
-Previous: [← Stoic Backgammon](/books/stoic-backgammon/) | Next: [Raise'm Right →](/books/raisem-right/)

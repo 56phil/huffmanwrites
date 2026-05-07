@@ -19,5 +19,3 @@ image: "/img/books/raisem-right.jpg"
 
 ---
 
-**Book Navigation:**  
-Previous: [← On Proportion](/books/on-proportion/)

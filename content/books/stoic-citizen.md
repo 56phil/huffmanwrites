@@ -22,5 +22,3 @@ link: "https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/"
 
 ---
 
-**Book Navigation:**  
-Previous: [← A Life Made Whole](/books/life-made-whole/) | Next: [The Stoic CGM →](/books/stoic-cgm/)

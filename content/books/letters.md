@@ -25,5 +25,3 @@ link: "https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4
 
 ---
 
-**Book Navigation:**  
-Previous: [← Misaligned](/books/misaligned/) | Next: [Stoic Backgammon →](/books/stoic-backgammon/)
