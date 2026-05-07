@@ -1,5 +1,5 @@
 <div class="phbooks">
-  {{- $books := .Site.RegularPages.Where "Section" "books" }}
+  {{- $books := where .Site.RegularPages "Section" "books" }}
   {{- $books = $books.ByWeight }}
   {{- range $books }}
     <div class="phbooks-book">
