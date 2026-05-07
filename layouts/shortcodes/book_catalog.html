@@ -1,0 +1,35 @@
+<div class="phbooks">
+  {{- $books := .Site.RegularPages.Where "Section" "books" }}
+  {{- $books = $books.ByWeight }}
+  {{- range $books }}
+    <div class="phbooks-book">
+      <div class="phbooks-cover">
+        {{- if .Params.link }}
+          <a href="{{ .Params.link }}" target="_blank">
+            <img src="{{ .Params.image }}" alt="{{ .Title }} cover">
+          </a>
+        {{- else }}
+          <img src="{{ .Params.image }}" alt="{{ .Title }} cover">
+        {{- end }}
+      </div>
+      <div class="phbooks-info">
+        <div class="phbooks-title">
+          {{- if .Params.link }}
+            <a href="{{ .Params.link }}" target="_blank">{{ .Title }}</a>
+          {{- else }}
+            {{ .Title }}
+          {{- end }}
+          {{- if not .Params.link }}
+            <span class="phbooks-badge">Forthcoming</span>
+          {{- end }}
+        </div>
+        <div class="phbooks-desc">
+          {{ .Params.description | markdownify }}
+        </div>
+        {{- if .Params.link }}
+          <a href="{{ .Params.link }}" class="phbooks-link" target="_blank">Buy on Amazon</a>
+        {{- end }}
+      </div>
+    </div>
+  {{- end }}
+</div>
