@@ -30,6 +30,3 @@ link: "https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2G
 ## Endurance
 
 ## Temperance
-
----
-

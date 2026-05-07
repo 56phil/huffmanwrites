@@ -16,6 +16,3 @@ image: "img/books/on-proportion.jpg"
 ## Cost
 
 ## Reckoning
-
----
-

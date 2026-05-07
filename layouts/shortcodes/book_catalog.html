@@ -2,12 +2,13 @@
   {{- $books := where .Site.Pages "Section" "books" }}
   {{- $books = $books.ByWeight }}
   {{- range $books }}
+    {{- if .Params.image }}
     <div class="phbooks-book">
       <div class="phbooks-cover">
         {{- $img := resources.Get .Params.image }}
         {{- $processed := "" }}
         {{- if $img }}
-          {{- $processed = $img.Resize "120x WebP" }}
+          {{- $processed = $img.Resize "120x webp" }}
         {{- end }}
         
         {{- if .Params.link }}
@@ -15,14 +16,14 @@
             {{ if $processed }}
               <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} cover">
             {{ else }}
-              <img src="{{ .Params.image }}" alt="{{ .Title }} cover">
+              <img src="/{{ .Params.image }}" alt="{{ .Title }} cover">
             {{ end }}
           </a>
         {{- else }}
           {{ if $processed }}
             <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} cover">
           {{ else }}
-            <img src="{{ .Params.image }}" alt="{{ .Title }} cover">
+            <img src="/{{ .Params.image }}" alt="{{ .Title }} cover">
           {{ end }}
         {{- end }}
       </div>
@@ -45,5 +46,6 @@
         {{- end }}
       </div>
     </div>
+    {{- end }}
   {{- end }}
 </div>

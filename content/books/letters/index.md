@@ -22,6 +22,3 @@ link: "https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4
 ## Leadership & Power
 
 ## Art & Interior Strength
-
----
-

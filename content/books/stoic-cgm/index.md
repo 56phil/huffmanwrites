@@ -18,6 +18,3 @@ link: "https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Yourself/dp/B0G6
 ## The Discipline of Will
 
 ## The Stoic Citizen of the Body
-
----
-

@@ -11,7 +11,7 @@
     {{- $img := resources.Get $imgPath -}}
     {{- $processed := "" -}}
     {{- if $img -}}
-      {{- $processed = $img.Resize "800x WebP" -}}
+      {{- $processed = $img.Resize "800x webp" -}}
     {{- end -}}
     {{ if $imgPath }}
     <div class="book-media">
@@ -19,7 +19,7 @@
            {{ if $processed }}
              <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} book cover" class="book-cover" loading="lazy">
            {{ else }}
-             <img src="{{ $imgPath }}" alt="{{ .Title }} book cover" class="book-cover" loading="lazy">
+             <img src="/{{ $imgPath }}" alt="{{ .Title }} book cover" class="book-cover" loading="lazy">
            {{ end }}
         </div>
         {{ with .Params.description }}

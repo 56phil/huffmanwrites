@@ -26,6 +26,3 @@ link: "https://www.amazon.com/Unstuck-Brutal-Guidance-Getting-Your-ebook/dp/B0DY
 ## Persistence Over Perfection
 
 ## Don't Miss Twice
-
----
-

@@ -26,6 +26,3 @@ link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/
 ## Agency, Not Repair
 
 ## Coda: What This Book Is (and Is Not)
-
----
-

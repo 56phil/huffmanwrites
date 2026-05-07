@@ -19,6 +19,3 @@ link: "https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/"
 ## The Value of Virtue
 
 ## Letters to Future Citizens
-
----
-
