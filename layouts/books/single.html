@@ -157,13 +157,14 @@
    <p class="book-buy"><a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a></p>
    {{ end }}
 
-   {{ $books := where .Site.RegularPages "Section" "books" }}
+   {{ $currentPage := . }}
+   {{ $books := .Site.RegularPages.Where "Section" "books" }}
    {{ $books = $books.ByWeight }}
    
    {{ $prev := "" }}
    {{ $next := "" }}
    {{ range $i, $p := $books }}
-     {{ if eq $p . }}
+     {{ if eq $p $currentPage }}
        {{ if gt $i 0 }}{{ $prev = index $books (sub $i 1) }}{{ end }}
        {{ if lt (add $i 1) (len $books) }}{{ $next = index $books (add $i 1) }}{{ end }}
      {{ end }}
