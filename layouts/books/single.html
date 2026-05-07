@@ -42,7 +42,8 @@
    </details>
 
    <div class="book-content-body">
-       {{ .Content }}
+       {{ $content := .Content | replaceRE `<h2\s+id="([^"]+)"[^>]*>.*?</h2>` `<span id="$1"></span>` }}
+       {{ $content | safeHTML }}
    </div>
 
    {{ if .Params.link }}
