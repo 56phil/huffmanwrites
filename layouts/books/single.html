@@ -158,7 +158,7 @@
    {{ end }}
 
    {{ $currentPage := . }}
-   {{ $books := .Site.RegularPages.Where "Section" "books" }}
+   {{ $books := where .Site.RegularPages "Section" "books" }}
    {{ $books = $books.ByWeight }}
    
    {{ $prev := "" }}
