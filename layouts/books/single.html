@@ -41,31 +41,37 @@
        {{ .TableOfContents }}
    </details>
 
+   <div class="book-content-body">
+       {{ .Content }}
+   </div>
+
    {{ if .Params.link }}
    <p class="book-buy"><a href="{{ .Params.link }}" target="_blank">Buy on Amazon</a></p>
    {{ end }}
 
     {{ $currentPage := . }}
-    {{ $books := where .Site.Pages "Section" "books" }}
+    {{ $books := where .Site.RegularPages "Section" "books" }}
     {{ $books = $books.ByWeight }}
     {{ $count := len $books }}
 
-    {{ $currentIndex := 0 }}
+    {{ $currentIndex := -1 }}
     {{ range $i, $p := $books }}
-      {{ if eq $p $currentPage }}
+      {{ if eq $p.RelPermalink $currentPage.RelPermalink }}
         {{ $currentIndex = $i }}
       {{ end }}
     {{ end }}
 
-    {{ $prevIndex := sub (add $currentIndex $count) 1 | mod $count }}
-    {{ $nextIndex := add $currentIndex 1 | mod $count }}
+    {{ $prevIndex := mod (sub (add $currentIndex $count) 1) $count }}
+    {{ $nextIndex := mod (add $currentIndex 1) $count }}
     {{ $prev := index $books $prevIndex }}
     {{ $next := index $books $nextIndex }}
 
+    {{ if and $prev $next }}
     <div class="book-navigation" style="margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
-       <a href="{{ $prev.RelPermalink }}" class="book-nav-btn prev">{{ $prev.Title }}</a>
-       <a href="{{ $next.RelPermalink }}" class="book-nav-btn next">{{ $next.Title }}</a>
+       <a href="{{ $prev.RelPermalink }}" class="book-nav-btn prev">← {{ $prev.Title }}</a>
+       <a href="{{ $next.RelPermalink }}" class="book-nav-btn next">{{ $next.Title }} →</a>
     </div>
+    {{ end }}
 
 </article>
 {{ end }}
