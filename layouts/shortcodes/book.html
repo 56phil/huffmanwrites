@@ -14,7 +14,7 @@
             {{- $asset := resources.Get (strings.TrimPrefix "/" $img) -}}
             {{- if $link -}}<a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }}>{{- end -}}
                 {{- if $asset -}}
-                    <img src="{{ ($asset.Resize "140x webp").RelPermalink }}" alt="{{ $title }} cover" loading="lazy">
+                    <img src="{{ ($asset.Resize "600x webp").RelPermalink }}" alt="{{ $title }} cover" loading="lazy">
                 {{- else -}}
                     <img src="/{{ $imgPath }}" alt="{{ $title }} cover" loading="lazy">
                 {{- end -}}
