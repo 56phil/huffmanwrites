@@ -28,12 +28,12 @@
 }
 
 .phbooks .phbooks-cover {
-    flex: 0 0 96px;
-    width: 96px;
+    flex: 0 0 60px;
+    width: 60px;
 }
 
 .phbooks .phbooks-cover img {
-    width: 96px;
+    width: 60px;
     border: 1px solid var(--border);
 }
 
