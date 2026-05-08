@@ -5,7 +5,7 @@ description: "The works of Philip Huffman."
 
 The following is a comprehensive list of my books, exploring the intersections of Stoicism, neurodivergence, and the human experience.
 
-{{< book title="Unstuck" link="/books/unstuck/" subtitle="Brutal Guidance for Getting Out of Your Own Way" img="/img/books/unstuck.jpg" >}}
+{{< book title="Unstuck" link="/books/unstuck/" subtitle="Brutal Guidance for Getting Out of Your Own Way" img="/img/books/unstuck-v2.jpg" >}}
 {{< book title="A Life Made Whole" link="/books/life-made-whole/" subtitle="Essays on Inner Strength and Resilience" img="/img/books/life-made-whole.jpg" >}}
 {{< book title="The Stoic Citizen" link="/books/stoic-citizen/" img="/img/books/stoic-citizen.jpg" >}}
 {{< book title="The Stoic CGM" link="/books/stoic-cgm/" subtitle="A Data-Driven Guide to Reinventing Yourself After Sixty" img="/img/books/stoic-cgm.jpg" >}}
