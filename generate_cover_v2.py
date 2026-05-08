@@ -88,14 +88,14 @@ for _ in range(80000):
 
 crack_pts = [
     # (x, y, width)  -- y from top
-    (back_left + int(1.0 * DPI),   int(7.6 * DPI),  6),
-    (back_left + int(2.5 * DPI),   int(7.2 * DPI),  10),
-    (spine_left + spine_px//3,     int(6.0 * DPI),  20),
-    (spine_right,                    int(4.5 * DPI),  45),
-    (front_left + int(1.0 * DPI),   int(3.2 * DPI),  140),
-    (front_left + int(3.0 * DPI),   int(2.4 * DPI),  260),
-    (front_left + int(5.2 * DPI),   int(1.6 * DPI),  180),
-    (front_right - int(0.6 * DPI),  int(1.1 * DPI),  60),
+    (back_left + int(1.0 * DPI),   int(8.85 * DPI),  6),
+    (back_left + int(2.5 * DPI),   int(8.45 * DPI),  10),
+    (spine_left + spine_px//3,     int(7.25 * DPI),  20),
+    (spine_right,                    int(5.75 * DPI),  45),
+    (front_left + int(1.0 * DPI),   int(4.85 * DPI),  140),
+    (front_left + int(3.0 * DPI),   int(4.05 * DPI),  260),
+    (front_left + int(5.2 * DPI),   int(3.25 * DPI),  180),
+    (front_right + 100,  int(0 * DPI),  120),
 ]
 
 def draw_smooth_polygon(draw, pts_left, pts_right, fill, outline=None):
@@ -217,7 +217,7 @@ draw.polygon(inner_poly, fill=C_ACCENT_GLOW)
 
 font_title = load_font(FONT_ARIAL_BLACK, 240)
 font_subtitle = load_font(FONT_ARIAL_BOLD, 44)
-font_author = load_font(FONT_ARIAL_BOLD, 38)
+font_author = load_font(FONT_ARIAL_BOLD, 42)
 font_spine = load_font(FONT_ARIAL_BOLD, 48)
 font_spine_small = load_font(FONT_ARIAL, 34)
 font_back = load_font(FONT_ARIAL, 30)
@@ -255,7 +255,7 @@ author = "PHILIP HUFFMAN"
 ab = draw.textbbox((0, 0), author, font=font_author)
 aw = ab[2] - ab[0]
 ax = front_left + (trim_w_px - aw) // 2
-ay = bleed_px + int(5.0 * DPI)
+ay = bleed_px + trim_h_px - int(0.75 * DPI) - ab[3]
 draw.text((ax, ay), author, font=font_author, fill=C_TEXT_DIM)
 
 # ==================== SPINE ====================
