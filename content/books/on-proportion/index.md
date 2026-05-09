@@ -7,7 +7,7 @@ description: |
 
   The book treats proportion not as moderation but as judgment — the capacity to sense the true size of an event and to resist the distortions of urgency, outrage, and habit.
 weight: 8
-image: "img/books/on-proportion.jpg"
+image: "img/books/on-proportion-v2.jpg"
 ---
 ## Formation
 
