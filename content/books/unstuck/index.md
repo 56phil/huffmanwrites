@@ -12,6 +12,7 @@ image: "img/books/unstuck-v3.jpg"
 image_desktop: "img/articles/Unstuck 16x9.png"
 image_mobile: "img/articles/Unstuck 4x5.png"
 image_alt: "A massive, weathered stone block on a blinding white salt flat under a navy sky, fracturing as it is struck by a brilliant bolt of gold lightning."
+hero_caption: "A stone breaks open under lightning — the moment action shatters inertia."
 image_caption: "The moment of breakthrough: breaking the stasis of the self."
 link: "https://www.amazon.com/Unstuck-Brutal-Guidance-Getting-Your-ebook/dp/B0DYL1G7HQ/"
 ---

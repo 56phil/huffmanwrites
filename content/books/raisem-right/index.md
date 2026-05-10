@@ -14,6 +14,7 @@ image: "img/books/raisem-right.jpg"
 image_desktop: "img/articles/rtr 16x9.png"
 image_mobile: "img/articles/rtr 4x5.png"
 image_alt: "A fragile white marble seedling growing inside an ornate gold lantern, providing a sanctuary of warm light amidst a chaotic void of digital glitch noise."
+hero_caption: "A marble seedling sheltered in a golden lantern amidst digital chaos."
 image_caption: "Cultivating character and agency within a fragmented world."
 ---
 

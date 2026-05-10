@@ -12,6 +12,7 @@ image: "img/books/misaligned-v2.jpg"
 image_desktop: "img/articles/misaligned 16x9.png"
 image_mobile: "img/articles/misaligned 4x5.png"
 image_alt: "A dissonant sea of gold-leaf parchment maps shifting in a navy void, with a single minimalist gold compass needle pointing stubbornly in one direction."
+hero_caption: "A sea of shifting maps, one compass needle holding its direction."
 image_caption: "Navigating the gap between intention and outcome."
 link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/B0GLX9JS3V/"
 ---

@@ -11,6 +11,7 @@ image: "img/books/on-proportion-v2.jpg"
 image_desktop: "img/articles/op 16x9.png"
 image_mobile: "img/articles/op 4x5.png"
 image_alt: "Intricate gold-filigree vines and flowers climbing and blooming across a massive, oppressive Cold War-era brutalist concrete wall."
+hero_caption: "Gold filigree vines climb a brutalist wall — the organic against the rigid."
 image_caption: "The organic growth of the spirit against the cold architecture of an era."
 ---
 ## Formation
