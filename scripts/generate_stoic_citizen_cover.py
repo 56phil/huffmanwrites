@@ -1,35 +1,30 @@
 #!/usr/bin/env python3
 """
-Book Cover Generator Toolkit - "Misaligned" Hardcover Edition
-Theme: The experience of neurodivergence (Traveling with the wrong map).
-Visual: Earth tones, shifted grids, and topographic dissonance.
-Dimensions: 6" x 9" Trim, 152 Pages.
+Book Cover Generator Toolkit - "The Stoic Citizen"
+Theme: Honoring the past while appealing to the modern reader.
+Visual: Classical architectural elements blended with modern minimalist layout.
+Dimensions: 6" x 9" Trim, 136 Pages.
 """
 
 import math
-import random
 import io
 from PIL import Image, ImageDraw, ImageFont
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 
 class BookCoverGenerator:
-    def __init__(self, page_count=152): 
-        # --- Base Dimensions ---
+    def __init__(self, page_count=136): 
+        # --- Base Dimensions (6x9) ---
         self.TRIM_W = 6.0
         self.TRIM_H = 9.0
-        # Hardcover wrap requires specific dimensions. 
-        # KDP expects 14.104 x 10.417 for 6x9 152pg
-        # We set these as totals directly to ensure precision.
-        self.total_w = 14.104
-        self.total_h = 10.417
+        self.BLEED = 0.125
         self.DPI = 300
         self.PAGE_COUNT = page_count
         self.PAPER_THICKNESS = 0.002252
 
         self.spine = self.PAGE_COUNT * self.PAPER_THICKNESS
-        # Calculate bleed from the total dimensions provided by KDP
-        self.BLEED = (self.total_w - (self.TRIM_W * 2 + self.spine)) / 2
+        self.total_w = self.TRIM_W * 2 + self.spine + self.BLEED * 2
+        self.total_h = self.TRIM_H + self.BLEED * 2
 
         self.W = int(round(self.total_w * self.DPI))
         self.H = int(round(self.total_h * self.DPI))
@@ -47,14 +42,13 @@ class BookCoverGenerator:
         self.front_right = self.front_left + self.trim_w_px
         self.safe_margin = int(round(0.25 * self.DPI))
 
-        # --- Design Palette: Earth Tones ---
+        # --- Design Palette ---
         self.colors = {
-            'BG': (85, 76, 62),          # Deep Umber/Earth Brown
-            'ACCENT': (184, 134, 11),   # Dark Goldenrod / Ochre
-            'ACCENT_GLOW': (210, 180, 140), # Tan / Parchment glow
-            'TEXT': (235, 230, 210),    # Soft Cream/Parchment
-            'SUBTITLE': (160, 150, 130),# Muted Taupe
-            'TEXT_DIM': (120, 110, 90)  # Dark Olive/Brown
+            'BG': (20, 30, 50),          # Deep Midnight Navy
+            'GOLD': (184, 134, 11),     # Classic Gold
+            'GOLD_LIGHT': (218, 165, 32),# Goldenrod
+            'TEXT': (245, 245, 240),    # Alabaster/Cream
+            'TEXT_DIM': (160, 170, 190) # Muted Silver-Blue
         }
         
         self.fonts = {
@@ -72,72 +66,103 @@ class BookCoverGenerator:
         except Exception:
             return ImageFont.load_default()
 
-    def generate(self, output_png="misaligned_cover.png", output_pdf="misaligned_kdp.pdf"):
+    def generate(self, output_png="stoic_citizen_cover.png", output_pdf="stoic_citizen_kdp.pdf"):
         img = Image.new("RGB", (self.W, self.H), self.colors['BG'])
         draw = ImageDraw.Draw(img)
 
-        # Background subtle grid and contour lines (Topological Map)
-        grid_spacing = int(0.75 * self.DPI)
-        for x in range(0, self.W, grid_spacing):
-            draw.line([x, 0, x, self.H], fill=(0, 0, 0), width=1)
-        for y in range(0, self.H, grid_spacing):
-            draw.line([0, y, self.W, y], fill=(0, 0, 0), width=1)
+        # --- Visual Element: Four Cardinal Virtues ---
+        # We avoid a simple centered grid to stay away from "Holiday-esque" graphics.
+        # Instead, we place the virtues in the four corners of the front cover, 
+        # tied together by a subtle, large gold border that is open at the center.
+        
+        virtues = [
+            ("WISDOM", "Top Left"),
+            ("JUSTICE", "Top Right"),
+            ("COURAGE", "Bottom Left"),
+            ("TEMPERANCE", "Bottom Right")
+        ]
+        
+        font_virtue = self._load_font('TITLE', 48)
+        v_margin = int(0.6 * self.DPI)
+        
+        # Coordinates for the virtues
+        v_coords = [
+            (self.front_left + v_margin, self.bleed_px + v_margin), # TL
+            (self.front_right - v_margin, self.bleed_px + v_margin), # TR
+            (self.front_left + v_margin, self.bleed_px + self.trim_h_px - v_margin), # BL
+            (self.front_right - v_margin, self.bleed_px + self.trim_h_px - v_margin), # BR
+        ]
+        
+        # Note: we need to handle text alignment for the right side
+        for i, (text, pos) in enumerate(virtues):
+            vb = draw.textbbox((0, 0), text, font=font_virtue)
+            vw, vh = vb[2] - vb[0], vb[3] - vb[1]
+            
+            # Center point of the text
+            cx, cy = v_coords[i]
+            
+            # Handle specific requested overrides for rotations and positions
+            rotation = 45
+            if text == "WISDOM" or text == "TEMPERANCE":
+                rotation = -45
+            
+            if text == "COURAGE":
+                cx += int(0.30 * self.DPI) # 0.35 (prev) - 0.05 = 0.30
+                cy -= int(0.4 * self.DPI) # 0.5 (prev) - 0.1 = 0.4
+            elif text == "JUSTICE":
+                cx -= int(0.36 * self.DPI)
+                cy += int(0.275 * self.DPI)
+            elif text == "WISDOM":
+                rotation = -45
+                cx += int(0.275 * self.DPI)
+                cy += int(0.20 * self.DPI)
+            elif text == "TEMPERANCE":
+                rotation = -45
+                cx -= int(0.44 * self.DPI) # 0.46 (prev) - 0.02 = 0.44
+                cy -= int(0.532 * self.DPI) # 0.55 (prev) - 0.018 = 0.532
 
-        line_count = 20
-        for i in range(line_count):
-            points = []
-            seed = i * 150
-            base_offset = (self.H // line_count) * i
-            for px in range(0, self.W + 1, 100):
-                amplitude = (self.H // line_count) // 3
-                py = base_offset + math.sin(px * 0.005 + seed) * amplitude + math.cos(px * 0.002 + seed) * (amplitude // 2)
-                points.append((px, py))
-            draw.line(points, fill=(0, 0, 0), width=1)
+            # Create a separate image for the text to rotate it
+            # Add generous padding to prevent truncation during rotation
+            padding = 100
+            txt_img = Image.new("RGBA", (vw + padding, vh + padding), (0, 0, 0, 0))
+            txt_draw = ImageDraw.Draw(txt_img)
+            txt_draw.text((padding//2, padding//2), text, font=font_virtue, fill=self.colors['GOLD'])
+            
+            # Rotate
+            rotated_txt = txt_img.rotate(rotation, expand=True, resample=Image.BICUBIC)
+            
+            # Position the rotated image so the target coordinate (cx, cy) is the center
+            paste_x = cx - rotated_txt.width // 2
+            paste_y = cy - rotated_txt.height // 2
 
-        # Draw the "Misaligned Area" - a gold-toned shifted block
-        warp_center_x = self.front_left + (self.trim_w_px // 2)
-        warp_center_y = (self.H // 2) - int(0.125 * self.DPI)
-        warp_w = int(2.0 * self.DPI)
-        warp_h = int(4.0 * self.DPI)
+            img.paste(rotated_txt, (paste_x, paste_y), rotated_txt)
+
+        # Subtle gold border that frames the center but doesn't enclose it strictly
+        border_w = int(0.06 * self.DPI)
+        frame_margin = int(0.4 * self.DPI)
+        f_l, f_t = self.front_left + frame_margin, self.bleed_px + frame_margin
+        f_r, f_b = self.front_right - frame_margin, self.bleed_px + self.trim_h_px - frame_margin
         
-        rect_img = Image.new("RGBA", (warp_w + 100, warp_h + 100), (0, 0, 0, 0))
-        rect_draw = ImageDraw.Draw(rect_img)
-        rect_draw.rectangle([50, 50, 50 + warp_w, 50 + warp_h], fill=self.colors['ACCENT'], outline=self.colors['ACCENT_GLOW'], width=3)
-        
-        rotated_rect = rect_img.rotate(3, resample=Image.BICUBIC, expand=True)
-        paste_x = warp_center_x - rotated_rect.width // 2
-        paste_y = warp_center_y - rotated_rect.height // 2
-        img.paste(rotated_rect, (paste_x, paste_y), rotated_rect)
-        
-        # --- Text ---
-        font_title = self._load_font('TITLE', 160)
-        font_subtitle = self._load_font('BOLD', 40)
+        # Draw a thin, elegant double-line border
+        draw.rectangle([f_l, f_t, f_r, f_b], outline=self.colors['GOLD'], width=2)
+        draw.rectangle([f_l + 5, f_t + 5, f_r - 5, f_b - 5], outline=self.colors['GOLD'], width=1)
+
+        # --- Text Layout ---
+        font_title = self._load_font('TITLE', 150)
         font_author = self._load_font('BOLD', self.author_font_size)
         
-        title_text = "MISALIGNED"
-        tb = draw.textbbox((0, 0), title_text, font=font_title)
-        tw, th = tb[2]-tb[0], tb[3]-tb[1]
-        tx = self.front_left + (self.trim_w_px - tw) // 2
-        ty = self.bleed_px + int(1.5 * self.DPI)
-        draw.text((tx, ty), title_text, font=font_title, fill=self.colors['TEXT'])
+        # Title: THE STOIC CITIZEN
+        title_text = "THE STOIC\nCITIZEN"
+        lines = title_text.split('\n')
+        curr_y = self.bleed_px + int(2.0 * self.DPI)
+        for line in lines:
+            tb = draw.textbbox((0, 0), line, font=font_title)
+            tw, th = tb[2]-tb[0], tb[3]-tb[1]
+            tx = self.front_left + (self.trim_w_px - tw) // 2
+            draw.text((tx, curr_y), line, font=font_title, fill=self.colors['TEXT'])
+            curr_y += th + int(0.2 * self.DPI)
 
-        subtitle = "Right Subject\nWrong Adjective\nDisastrous Result"
-        sub_lines = subtitle.split('\n')
-        sub_img = Image.new("RGBA", (self.trim_w_px, int(3 * self.DPI)), (0, 0, 0, 0))
-        sub_draw = ImageDraw.Draw(sub_img)
-        curr_sub_y = int(0.2 * self.DPI)
-        for line in sub_lines:
-            sb = sub_draw.textbbox((0, 0), line, font=font_subtitle)
-            sw = sb[2]-sb[0]
-            sx = (self.trim_w_px - sw) // 2
-            sub_draw.text((sx, curr_sub_y), line, font=font_subtitle, fill=(60, 50, 40))
-            curr_sub_y += int(0.5 * self.DPI)
-
-        rotated_sub = sub_img.rotate(3, resample=Image.BICUBIC, expand=True)
-        sub_paste_x = self.front_left + (self.trim_w_px - rotated_sub.width) // 2
-        sub_paste_y = ty + th + int(0.6 * self.DPI)
-        img.paste(rotated_sub, (sub_paste_x, sub_paste_y), rotated_sub)
-
+        # Author
         author = "PHILIP HUFFMAN"
         ab = draw.textbbox((0, 0), author, font=font_author)
         aw = ab[2]-ab[0]
@@ -148,7 +173,7 @@ class BookCoverGenerator:
         # Spine
         font_spine = self._load_font('BOLD', 44)
         font_spine_small = self._load_font('REGULAR', 30)
-        spine_title = "MISALIGNED"
+        spine_title = "THE STOIC CITIZEN"
         stb = draw.textbbox((0, 0), spine_title, font=font_spine)
         stw, sth = stb[2]-stb[0], stb[3]-stb[1]
         st_img = Image.new("RGBA", (stw + 10, sth + 10), (0, 0, 0, 0))
@@ -160,19 +185,20 @@ class BookCoverGenerator:
         sab = draw.textbbox((0, 0), spine_auth, font=font_spine_small)
         saw, sah = sab[2]-sab[0], sab[3]-sab[1]
         sa_img = Image.new("RGBA", (saw + 10, sah + 10), (0, 0, 0, 0))
-        ImageDraw.Draw(sa_img).text((5, 5), spine_auth, font=font_spine_small, fill=self.colors['ACCENT_GLOW'])
+        ImageDraw.Draw(sa_img).text((5, 5), spine_auth, font=font_spine_small, fill=self.colors['GOLD'])
         sa_img = sa_img.rotate(270, expand=True)
         img.paste(sa_img, (self.spine_left + (self.spine_px - sa_img.width)//2, self.bleed_px + self.trim_h_px - sa_img.height - int(0.6 * self.DPI)), sa_img)
 
         # --- Back Cover ---
         font_size_back = 32
         color_text_back = self.colors['TEXT']
-        line_spacing_back = int(0.3 * self.DPI)
+        line_spacing_back = int(0.35 * self.DPI)
+        
         font_back = self._load_font('REGULAR', font_size_back)
         font_quote = self._load_font('BOLD', 24)
 
         max_blurb_w = self.trim_w_px - self.safe_margin * 2 - int(0.5 * self.DPI) 
-        blurb_text = ("Misaligned is an exploration of the dissonant experience of navigating a neurotypical world with a neurodivergent mind. It is a study of the 'wrong map'—the internal blueprints that fail to align with external expectations, and the subsequent struggle to find a way home.\n\nThrough an examination of character, cognitive dissonance, and survival, it seeks to reconcile the gap between who we are told we should be and who we actually are, offering a path toward a more authentic self-governance.")
+        blurb_text = ("The Stoic Citizen is a modern manual for the ancient art of civic virtue. It explores how the timeless principles of Stoicism can be applied to the complexities of modern citizenship, leadership, and individual responsibility. It suggests that the cultivation of the internal character is the only prerequisite for effective participation in the external world, and that true freedom is found not in the absence of constraint, but in the mastery of the self.\n\nBy bridging the gap between the Agora of Athens and the digital forums of today, this work provides a framework for maintaining internal tranquility while actively engaged in the pursuit of the common good. It provides a rigorous path toward a life of purpose, duty, and unwavering integrity, regardless of the prevailing winds of cultural volatility.")
         
         blurb_lines = []
         for paragraph in blurb_text.split('\n\n'):
@@ -186,18 +212,18 @@ class BookCoverGenerator:
                 else:
                     current_line = test_line
             blurb_lines.append(current_line.strip())
-            blurb_lines.append("")
+            blurb_lines.append("") 
 
-        # Raise by 0.75"
-        blurb_x, blurb_y = self.back_left + self.safe_margin, self.bleed_px + int(1.1 * self.DPI) - int(0.75 * self.DPI)
+        blurb_x, blurb_y = self.back_left + self.safe_margin, self.bleed_px + int(1.1 * self.DPI)
         for i, line in enumerate(blurb_lines):
             draw.text((blurb_x, blurb_y + i * line_spacing_back), line, font=font_back, fill=color_text_back)
         
-        quote = '"The only map that matters is the one that actually describes the terrain.'
         blurb_bottom = blurb_y + len(blurb_lines) * line_spacing_back
-        qy = blurb_bottom + int(0.5 * self.DPI)
-        draw.text((blurb_x, qy), quote, font=font_quote, fill=self.colors['ACCENT_GLOW'])
+        quote = '"He who is brave is free." — Seneca'
+        qy = blurb_bottom + int(0.6 * self.DPI) - int(0.8 * self.DPI) 
+        draw.text((blurb_x, qy), quote, font=font_quote, fill=self.colors['GOLD'])
 
+        # Author Photo
         try:
             photo_path = "/Users/prh/texmf/tex/latex/miscImages/cPhilHuffman.jpg"
             photo = Image.open(photo_path)
@@ -215,6 +241,7 @@ class BookCoverGenerator:
         except Exception:
             pass
 
+        # Author Bio (from Misaligned)
         bio_text = ("Philip Huffman is a veteran of the United States Army, technologist, an "
             "essayist exploring the intersection of character and citizenship in "
             "modern America. Born in southern Illinois and raised in Springfield, he "
@@ -235,12 +262,12 @@ class BookCoverGenerator:
         bio_lines.append(current_line.strip())
 
         bio_x = blurb_x
-        bio_y = self.bleed_px + (self.trim_h_px // 2) + int(1.0 * self.DPI) - int(0.75 * self.DPI)
+        bio_y = self.bleed_px + (self.trim_h_px // 2) + int(1.0 * self.DPI)
         for i, line in enumerate(bio_lines):
             draw.text((bio_x, bio_y + i * line_spacing_back), line, font=font_back, fill=color_text_back)
 
         barcode_w, barcode_h = int(2.0 * self.DPI), int(1.2 * self.DPI)
-        barcode_x, barcode_y = self.back_right - self.safe_margin - barcode_w - int(0.5 * self.DPI), self.bleed_px + self.trim_h_px - self.safe_margin - barcode_h - int(0.175 * self.DPI)
+        barcode_x, barcode_y = self.back_right - self.safe_margin - barcode_w, self.bleed_px + self.trim_h_px - self.safe_margin - barcode_h
         draw.rectangle([(barcode_x, barcode_y), (barcode_x + barcode_w, barcode_y + barcode_h)], fill=(245, 245, 245), outline=(180, 180, 180), width=2)
 
         img.save(output_png, "PNG")
@@ -256,4 +283,4 @@ class BookCoverGenerator:
 if __name__ == "__main__":
     gen = BookCoverGenerator()
     gen.generate()
-    print("Misaligned Hardcover Cover generated successfully.")
+    print("The Stoic Citizen Cover generated successfully.")
