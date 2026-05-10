@@ -42,6 +42,7 @@
         </picture>
         <div class="hero-overlay"></div>
     </div>
+    {{ with .Params.image_caption }}<p class="hero-caption">{{ . }}</p>{{ end }}
     {{ end }}
 
     {{- $imgPath := .Params.image -}}
@@ -58,6 +59,7 @@
            {{ else }}
              <img src="/{{ $imgPath }}" alt="{{ .Title }} book cover" class="book-cover" loading="lazy">
            {{ end }}
+           {{ with .Params.image_caption }}<p class="book-caption">{{ . }}</p>{{ end }}
         </div>
         {{ with .Params.description }}
         <div class="book-blurb">

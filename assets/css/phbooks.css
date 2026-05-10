@@ -12,6 +12,24 @@
     display: block;
 }
 
+.book-caption {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    font-style: italic;
+    text-align: center;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
+.hero-caption {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    font-style: italic;
+    text-align: center;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
 /* --- Book Catalog (The "All My Books" list) --- */
 .phbooks {
     font-family: Georgia, serif;

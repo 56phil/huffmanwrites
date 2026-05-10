@@ -2,6 +2,7 @@
 {{- $subtitle := .Get "subtitle" -}}
 {{- $img := .Get "img" -}}
 {{- $link := .Get "link" -}}
+{{- $caption := .Get "caption" -}}
 {{- $imgPath := strings.TrimPrefix "/" $img -}}
 {{- $isExternal := strings.HasPrefix $link "http" -}}
 {{- $btnText := cond $isExternal "Buy on Amazon" "Learn More" -}}
@@ -19,6 +20,7 @@
                     <img src="/{{ $imgPath }}" alt="{{ $title }} cover" loading="lazy">
                 {{- end -}}
             {{- if $link -}}</a>{{- end -}}
+        {{- with $caption }}<p class="book-caption">{{ . }}</p>{{- end -}}
         {{- else -}}
             <div class="book-cover-placeholder">Cover Coming Soon</div>
         {{- end -}}
