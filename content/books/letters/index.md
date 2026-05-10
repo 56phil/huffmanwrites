@@ -9,6 +9,10 @@ description: |
 
   Written for readers who have grown skeptical of certainty and still need to communicate, Letters argues that honest speech is not a strategy for winning but a practice of remaining present. The final question is not whether truth changes outcomes, but whether silence changes the speaker.
 image: "img/books/letters.jpg"
+image_desktop: "img/articles/letters 16x9.png"
+image_mobile: "img/articles/letters 4x5.png"
+image_alt: "An ascending spiral of floating ancient papyrus scrolls with glowing gold ink, stretching upward into a midnight navy cosmic abyss."
+image_caption: "A timeless dialogue with the ghosts of history."
 link: "https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4N7/"
 ---
 ## Prologue

@@ -9,6 +9,10 @@ description: |
 
   Written for readers who already know what they should do and need something firmer than encouragement, Unstuck treats self-improvement as a practice of judgment under uncertainty — not a product to consume, but a position to play.
 image: "img/books/unstuck-v3.jpg"
+image_desktop: "img/articles/Unstuck 16x9.png"
+image_mobile: "img/articles/Unstuck 4x5.png"
+image_alt: "A massive, weathered stone block on a blinding white salt flat under a navy sky, fracturing as it is struck by a brilliant bolt of gold lightning."
+image_caption: "The moment of breakthrough: breaking the stasis of the self."
 link: "https://www.amazon.com/Unstuck-Brutal-Guidance-Getting-Your-ebook/dp/B0DYL1G7HQ/"
 ---
 ## Stop Stalling

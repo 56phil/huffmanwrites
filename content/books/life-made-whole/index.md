@@ -9,6 +9,10 @@ description: |
 
   The book is structured for readers who do not need persuasion that life is difficult, but who want a framework for meeting difficulty without collapse or performance. It argues that wholeness is not a state to reach but a direction to hold, maintained by small, repeated choices in the face of what cannot be controlled.
 image: "img/books/life-made-whole.jpg"
+image_desktop: "img/articles/almw 16x9.png"
+image_mobile: "img/articles/almw 4x5.png"
+image_alt: "A shattered Parian marble sphere floating in a navy and gold void, its fragments fusing together with glowing, molten liquid gold in a kintsugi style."
+image_caption: "Integration through resilience: the art of becoming whole."
 link: "https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2GLKKCQ/"
 ---
 ## Personal Growth

@@ -10,6 +10,8 @@ description: |
 image: "img/books/stoic-citizen.jpg"
 image_desktop: "img/articles/Marcus-16x9.png"
 image_mobile: "img/articles/Marcus-4x5.png"
+image_alt: "A cinematic portrait of Marcus Aurelius in Parian marble, highlighted with subtle golden light against a deep midnight navy backdrop."
+image_caption: "The enduring discipline of the public man."
 link: "https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/"
 ---
 ## Foundations

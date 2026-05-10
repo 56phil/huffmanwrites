@@ -9,6 +9,10 @@ description: |
 
   Written for readers who are managing chronic conditions, aging metabolisms, or the simple desire to understand what their bodies are doing, The Stoic CGM offers a framework for using technology without surrendering to it. The central claim is that the body is not an enemy to defeat but a system to comprehend — and that comprehension, sustained over time, is the beginning of genuine self-governance.
 image: "img/books/stoic-cgm-v2.jpg"
+image_desktop: "img/articles/cgm 16x9.png"
+image_mobile: "img/articles/cgm 4x5.png"
+image_alt: "A classical stone-textured hand interacting with a floating holographic data-grid of glowing gold nodes against a deep midnight navy background."
+image_caption: "Bridging ancient wisdom and futuristic precision in the pursuit of health."
 link: "https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Yourself/dp/B0G6G12GPW/"
 ---
 ## The Republic of Glucose
