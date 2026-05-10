@@ -4,6 +4,10 @@ description: "I’m chasing a better use of my remaining time."
 date: 2025-08-19T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-08-19T00:00:00Z
+hero_desktop: "img/articles/10 albania 16x9.png"
+hero_mobile: "img/articles/10 albania 4x5.png"
+hero_alt: "A marble-rendered Mediterranean street at golden hour, an empty café chair with a notebook, sea in the distance."
+hero_caption: "The architecture of a slower, more human life."
 tags:
   - ai
   - announcement

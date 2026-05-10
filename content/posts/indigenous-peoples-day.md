@@ -4,6 +4,10 @@ description: "Honoring Indigenous Peoples Day and confronting the erasure of nat
 date: 2025-10-13T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-10-13T00:00:00Z
+hero_desktop: "img/articles/2 ipd 16x9.png"
+hero_mobile: "img/articles/2 ipd 4x5.png"
+hero_alt: "An ancient indigenous stone calendar partially buried under layers of colonial parchment maps, with gold ink lines bleeding through like veins and native plants growing toward light."
+hero_caption: "The world that was here before the maps arrived."
 tags:
   - ai
   - books

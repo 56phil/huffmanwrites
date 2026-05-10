@@ -4,6 +4,10 @@ description: "How liberty erodes incrementally—and what citizens must do to re
 date: 2025-04-10T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-04-10T00:00:00Z
+hero_desktop: "img/articles/9 coj 16x9.png"
+hero_mobile: "img/articles/9 coj 4x5.png"
+hero_alt: "A marble justice column being slowly encased by creeping gold wire with cold light nodes."
+hero_caption: "Liberty does not collapse — it is slowly wrapped in wire we mistake for protection."
 tags:
   - ai
   - politics

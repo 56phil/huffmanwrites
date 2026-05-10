@@ -4,6 +4,10 @@ description: "A nation without kings: why Americans reject authoritarianism."
 date: 2025-06-16T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-06-16T00:00:00Z
+hero_desktop: "img/articles/4 ans 16x9.png"
+hero_mobile: "img/articles/4 ans 4x5.png"
+hero_alt: "Thousands of raised marble hands holding gold flames beneath a crumbling empty throne."
+hero_caption: "When the people remember they are sovereign, thrones don't last."
 tags:
   - ai
   - civics

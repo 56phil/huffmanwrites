@@ -4,6 +4,10 @@ description: "How to borrow wisdom from remarkable people without losing yoursel
 date: 2025-04-05T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-04-05T00:00:00Z
+hero_desktop: "img/articles/3 lfg 16x9.png"
+hero_mobile: "img/articles/3 lfg 4x5.png"
+hero_alt: "A lone traveler with a lantern walks a path flanked by giant marble statues, neither lost in nor fleeing their shadows."
+hero_caption: "Walk among giants, but carry your own light."
 tags:
   - ai
   - books
