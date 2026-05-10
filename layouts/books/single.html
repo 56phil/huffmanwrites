@@ -1,11 +1,48 @@
 {{ define "main" }}
 
+<style>
+  .article-hero-container {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: var(--theme);
+    position: relative;
+  }
+  .responsive-hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+  .hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(transparent, var(--theme));
+    pointer-events: none;
+  }
+</style>
+
 <article class="book-page">
 
    <header class="book-header">
        <h1>{{ .Title }}</h1>
        {{ with .Params.subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end }}
    </header>
+
+    {{ if or .Params.image_desktop .Params.image_mobile }}
+    <div class="article-hero-container">
+        <picture>
+            <source srcset="/{{ .Params.image_mobile }}" media="(max-width: 767px)">
+            <img src="/{{ .Params.image_desktop }}" alt="{{ .Title }} Art" class="responsive-hero-img" loading="eager">
+        </picture>
+        <div class="hero-overlay"></div>
+    </div>
+    {{ end }}
 
     {{- $imgPath := .Params.image -}}
     {{- $img := resources.Get $imgPath -}}

@@ -8,6 +8,8 @@ description: |
 
   Written for readers who are exhausted by performative politics but not willing to retreat, The Stoic Citizen offers a framework for durable engagement: neither surrender nor combat, but the steady maintenance of judgment under pressure.
 image: "img/books/stoic-citizen.jpg"
+image_desktop: "img/articles/Marcus-16x9.png"
+image_mobile: "img/articles/Marcus-4x5.png"
 link: "https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/"
 ---
 ## Foundations
