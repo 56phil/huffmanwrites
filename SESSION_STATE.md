@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-Hugo site (`huffmanwrites`) using PaperMod theme. Domain: huffmanwrites.com  
+Hugo site (`huffmanwrites`) using PaperMod theme. Domain: huffmanwrites.org  
 Primary content: books (Stoicism/civics), standalone articles, weekly newsletters.
 
 ---
@@ -83,7 +83,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - `static/img/articles/` — article/newsletter hero images
 
 ### Build
-- `hugo --gc` builds cleanly (131 pages, 0 errors)
+- `hugo --minify` builds cleanly (144 pages, 0 errors)
 - Hugo v0.161.1+extended
 - Two deprecation warnings (`.Language.LanguageDirection` and `.Language.LanguageCode`) — non-breaking
 
