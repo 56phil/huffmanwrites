@@ -4,6 +4,10 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-05-23T00:00:00Z
 tags: [News]
 author: Phil Huffman
+hero_desktop: "img/articles/18 Endurance 16x9.webp"
+hero_mobile: "img/articles/18 Endurance 4x5.webp"
+hero_alt: "A single worn marble oar half-submerged in still navy water, sending small gold ripples outward."
+hero_caption: "Endurance doesn't announce itself — it simply keeps making ripples."
 lastmod: 2025-05-23T00:00:00Z
 ---
 

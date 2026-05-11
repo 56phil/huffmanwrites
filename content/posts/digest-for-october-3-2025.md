@@ -4,6 +4,10 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-10-03T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-10-03T00:00:00Z
+hero_desktop: "img/articles/9 The Balance 16x9.webp"
+hero_mobile: "img/articles/9 The Balance 4x5.webp"
+hero_alt: "A marble scale balanced between a gold-veined brain and a stack of gold coins in a navy void."
+hero_caption: "The hardest part of investing isn't math — it's the mind holding the scale."
 tags:
   - ai
   - investing

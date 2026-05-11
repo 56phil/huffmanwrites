@@ -4,6 +4,10 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-04-25T00:00:00Z
 tags: [News]
 author: Phil Huffman
+hero_desktop: "img/articles/16 Last Chance 16x9.webp"
+hero_mobile: "img/articles/16 Last Chance 4x5.webp"
+hero_alt: "Weathered and young marble hands planting a glowing sapling together, roots touching future cities in the soil."
+hero_caption: "We are the ancestors of what follows — what we plant, they will inherit."
 lastmod: 2025-04-25T00:00:00Z
 ---
 

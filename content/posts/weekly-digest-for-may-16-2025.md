@@ -4,6 +4,10 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-05-16T00:00:00Z
 tags: [News]
 author: Phil Huffman
+hero_desktop: "img/articles/17 Temperance 16x9.webp"
+hero_mobile: "img/articles/17 Temperance 4x5.webp"
+hero_alt: "A relaxed marble hand reaching toward but not touching a glowing gold orb of temptation, calm gold patterns forming in the navy mist."
+hero_caption: "Temperance is not the absence of desire — it is the discipline to stop before the flame burns."
 lastmod: 2025-05-16T00:00:00Z
 ---
 

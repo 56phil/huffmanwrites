@@ -4,6 +4,10 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-06-15T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-06-15T00:00:00Z
+hero_desktop: "img/articles/13 tall 16x9.webp"
+hero_mobile: "img/articles/13 tall 4x5.webp"
+hero_alt: "A calm marble figure stands on a gold island amid a storm of navy debris, gold flowers growing at their feet."
+hero_caption: "Hope is not a feeling — it is a posture you choose in the storm."
 tags:
   - ai
   - neurodivergence

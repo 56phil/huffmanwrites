@@ -4,6 +4,10 @@ description: "On kleptocracy, corruption, and the cost of staying silent in a fa
 date: 2025-05-02T00:00:00Z
 tags: [News]
 author: Phil Huffman
+hero_desktop: "img/articles/20 Kleptocracy 19x6.webp"
+hero_mobile: "img/articles/20 Kleptocracy 4x5.webp"
+hero_alt: "A polished marble Comedy mask with a darker tragic face visible behind it, gold coins spilling from its smiling mouth."
+hero_caption: "In an age where corruption wears a mask of legitimacy, silence is no longer neutrality — it is complicity."
 lastmod: 2025-05-02T00:00:00Z
 ---
 

@@ -4,6 +4,10 @@ description: "Weekly digest: a collection of observations, recommendations, and 
 date: 2025-04-11T00:00:00Z
 tags: [News]
 author: Phil Huffman
+hero_desktop: "img/articles/15 The Price 16x9.webp"
+hero_mobile: "img/articles/15 The Price 4x5.webp"
+hero_alt: "A weary marble Liberty with a dimming torch, navy wire chains coiling politely at her feet."
+hero_caption: "Liberty doesn't vanish all at once — it fades quietly, with our consent."
 lastmod: 2025-04-11T00:00:00Z
 ---
 

@@ -4,6 +4,10 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-11-14T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-11-14T00:00:00Z
+hero_desktop: "img/articles/5 Reflecting on Power 16x9.webp"
+hero_mobile: "img/articles/5 Reflecting on Power 4x5.webp"
+hero_alt: "A gilded mirror showing two reflections of the same figure — one in warm gold dignity, one in cold navy cruelty."
+hero_caption: "Power does not corrupt; it reveals what was already there."
 tags:
   - ai
   - civics
