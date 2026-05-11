@@ -26,8 +26,8 @@ lastmod: 2025-04-25T00:00:00Z
  
 ---
  **This Week’s Articles**
- •&nbsp;[To Save the World Together](https://www.huffmanwrites.org/to-save-a-world-together/)
- •&nbsp;[We Are the Ancestors of Follows](https://www.huffmanwrites.org/we-are-the-ancestors-of-what-follows/)
+ •&nbsp;[To Save the World Together](/posts/to-save-a-world-together/)
+ •&nbsp;[We Are the Ancestors of Follows](/posts/we-are-the-ancestors-of-what-follows/)
 
  
 ---

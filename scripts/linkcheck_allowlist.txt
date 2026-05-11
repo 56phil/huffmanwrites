@@ -1,0 +1,16 @@
+# Known legacy same-domain links that point to articles not currently present
+# in the repo. Keep this list small; remove entries when the articles are
+# restored, redirected, or intentionally removed from source content.
+https://www.huffmanwrites.org/what-you-feed-grows/
+https://www.huffmanwrites.org/holding-on-without-letting-go-of-yourself/
+https://www.huffmanwrites.org/the-quiet-power/
+https://www.huffmanwrites.org/letting-go/
+https://www.huffmanwrites.org/when-to-let-go/
+https://www.huffmanwrites.org/stand-tall-in-the-storm/
+https://www.huffmanwrites.org/the-price-of-silence-in-a-corrupt-nation-2/
+https://www.huffmanwrites.org/kleptocracy-how-the-few-plunder-the-many/
+https://www.huffmanwrites.org/why-i-wrote-unstuck/
+https://www.huffmanwrites.org/liberty-or-tyranny-the-choice-that-defines-us/
+https://www.huffmanwrites.org/the-false-lure-of-escape/
+https://www.huffmanwrites.org/endurance-over-escape/
+https://www.huffmanwrites.org/reclaiming-the-word-justice/

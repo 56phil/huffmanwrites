@@ -47,7 +47,7 @@ lastmod: 2025-05-16T00:00:00Z
  -  [The Virtue of Temperance: Holding the Line When Everything Pulls You Off It](https://www.huffmanwrites.org/the-virtue-of-temperance-holding-the-line-when-everything-pulls-you-off-it/)
 
  
- -  [The Virtue of Temperance](https://www.huffmanwrites.org/the-virtue-of-temperance/)
+ -  [The Virtue of Temperance](/posts/the-virtue-of-temperance/)
 
  
  

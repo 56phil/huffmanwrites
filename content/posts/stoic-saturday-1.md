@@ -1,5 +1,6 @@
 ---
 title: "Stoic Saturday #1: Expect the Storm"
+description: "Premeditatio malorum as a practical way to meet setbacks without surrendering agency."
 date: 2026-05-02T14:03:55.362373
 tags: ["stoic-saturday"]
 draft: false

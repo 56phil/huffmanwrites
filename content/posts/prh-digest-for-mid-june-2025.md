@@ -42,7 +42,7 @@ tags:
 
  📝 [Stand Tall in the Storm](https://www.huffmanwrites.org/stand-tall-in-the-storm/)
 
- 📝 [Stand Tall for Democracy](https://www.huffmanwrites.org/stand-tall-for-democracy/)
+ 📝 [Stand Tall for Democracy](/posts/stand-tall-for-democracy/)
 
  
 ---

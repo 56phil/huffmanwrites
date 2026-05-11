@@ -13,7 +13,7 @@ This week, I’ve been thinking about what we’re losing—and why. Not just in
 
  Liberty doesn’t vanish all at once. It fades. Quietly. Gradually. With every compromise we make in the name of safety, convenience, or comfort. The danger isn’t always in the laws—it’s in the silence. The normalization. The learned helplessness.
 
- This week’s long-form article,&nbsp;**[*The Erosion of Liberty: How We Got Here—and What We Must Do About It*](https://www.huffmanwrites.org/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it/)**, is a look at how we got here—and what it will take to pull us back. Not slogans. Not outrage. But participation, vigilance, and grit.
+ This week’s long-form article,&nbsp;**[*The Erosion of Liberty: How We Got Here—and What We Must Do About It*](/posts/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it/)**, is a look at how we got here—and what it will take to pull us back. Not slogans. Not outrage. But participation, vigilance, and grit.
 
  Because the price of liberty is more than vigilance.
  It’s attention.
@@ -25,7 +25,7 @@ This week, I’ve been thinking about what we’re losing—and why. Not just in
  ### 📌 In Case You Missed It:
 
  
- - 📝&nbsp;**Long-form**:&nbsp;[The Erosion of Liberty](https://www.huffmanwrites.org/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it/)
+ - 📝&nbsp;**Long-form**:&nbsp;[The Erosion of Liberty](/posts/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it/)
  - 📝&nbsp;**Long-form**:&nbsp;[Liberty or Tyranny: The Choice That Defines Us](https://www.huffmanwrites.org/liberty-or-tyranny-the-choice-that-defines-us/)
  
  

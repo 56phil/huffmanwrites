@@ -40,11 +40,11 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [Why I'm Looking at Albania](https://www.huffmanwrites.org/why-i-am-looking-at-albania/)
+ 📝 [Why I'm Looking at Albania](/posts/why-i-am-looking-at-albania/)
 
- 📝 [Proud to be Woke](https://www.huffmanwrites.org/proud-to-be-woke/)
+ 📝 [Proud to be Woke](/posts/proud-to-be-woke/)
 
- 📝 [No KIngs Rallies](https://www.huffmanwrites.org/no-kings-a-nation-speaks/)
+ 📝 [No KIngs Rallies](/posts/no-kings-a-nation-speaks/)
 
  
 ---

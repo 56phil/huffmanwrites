@@ -10,8 +10,6 @@ tags:
   - civics
   - essays
   - games
-customCSS:
-  - /css/phbooks.css
 ---
 
 Eight books. Different subjects, different tones — but the same underlying preoccupations: clarity, proportion, and the work of living well. Browse below, and if something catches your attention, the cover image will take you to Amazon.

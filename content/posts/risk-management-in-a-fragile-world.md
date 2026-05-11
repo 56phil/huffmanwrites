@@ -4,8 +4,8 @@ description: "Managing risk in a fragile world: what investors and citizens need
 date: 2025-09-17T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-09-17T00:00:00Z
-hero_desktop: "img/articles/6 fragile 16x9.png"
-hero_mobile: "img/articles/6 fragile 4x5.png"
+hero_desktop: "img/articles/6 fragile 16x9.webp"
+hero_mobile: "img/articles/6 fragile 4x5.webp"
 hero_alt: "A delicate gold spiderweb between cracked marble columns, holding steady against a navy storm."
 hero_caption: "Resilience is not refusal to break — it is preparation for the storm."
 tags:

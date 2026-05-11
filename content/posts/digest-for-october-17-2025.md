@@ -31,7 +31,7 @@ tags:
 ---
  ## 📘 Recent Posts
 
- 📝 [Indigenous Peoples Day](https://www.huffmanwrites.org/indigenous-peoples-day/)
+ 📝 [Indigenous Peoples Day](/posts/indigenous-peoples-day/)
 
  
 ---

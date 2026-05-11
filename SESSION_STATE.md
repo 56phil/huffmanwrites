@@ -37,8 +37,15 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ### Image Assignments
 - Master doc: `image-assignments.md` (29 assignments: 10 articles + 20 newsletters)
-- 10 article pairs DONE and wired
+- 10 article pairs DONE and wired as WebP
 - **20 newsletter pairs NOT YET generated**
+
+### Maintenance — May 11, 2026
+- Added `scripts/check_site.py` for frontmatter validation and built internal-link checks.
+- Added `scripts/linkcheck_allowlist.txt` for known legacy same-domain links whose target articles are not currently present.
+- Converted existing article/book hero images in `static/img/articles/` from PNG to WebP; references in content now use `.webp`.
+- Updated PaperMod language template calls to Hugo's current `.Language.Direction` and `.Language.Locale` APIs.
+- Added `static/favicon.svg` so the configured mask icon resolves.
 
 ---
 
@@ -48,7 +55,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 **Status:** Prompts written, images not generated.  
 **File:** `image-assignments.md` lines ~150–380  
 **Action needed:** Generate 20 image pairs (16x9 + 4x5) and place in `static/img/articles/`  
-**Naming convention:** Continue numbering from 11 (e.g., `11 newsletter-title 16x9.png`)
+**Naming convention:** Continue numbering from 11 (e.g., `11 newsletter-title 16x9.webp`)
 
 ### 2. Wire Newsletter Hero Images
 **Status:** Layout ready (`layouts/_default/single.html`), but no frontmatter yet  
@@ -80,12 +87,13 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ### Image Directories
 - `static/img/books/` — book covers
-- `static/img/articles/` — article/newsletter hero images
+- `static/img/articles/` — article/newsletter hero images; use WebP for new hero assets
 
 ### Build
 - `hugo --minify` builds cleanly (144 pages, 0 errors)
+- `scripts/check_site.py` passes after `hugo --minify`
 - Hugo v0.161.1+extended
-- Two deprecation warnings (`.Language.LanguageDirection` and `.Language.LanguageCode`) — non-breaking
+- PaperMod language deprecation warnings fixed May 11, 2026.
 
 ---
 
@@ -120,6 +128,7 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 - Tone: Personal stakes + historical context + contemporary urgency. Not yelling, not lecturing. Think *with* the reader.
 - First Amendment gets full essay length; narrower amendments get shorter explainers.
 - `hero_caption` for hero images, `image_caption` for book covers. Never mix them.
+- Use WebP for new hero images unless there is a specific reason not to.
 - Keep `all-my-books.md` as alternate entry point.
 - Delete empty stubs unless Constitution-related.
 
@@ -129,9 +138,10 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 
 - `upg` = user alias for updating tools (not available in assistant shell)
 - Session continuity = this file + compacted summary
-- Site root: `/Users/prh/Developer/huffmanwrites/`
+- Primary local checkout: `/Users/prh/Developer/huffmanwrites/`
+- Codex may work from detached worktrees under `/Users/prh/.codex/worktrees/...`; push with `git push origin HEAD:main` when appropriate.
 
 ---
 
 ## Last Updated
-2026-05-10 (Session ended after wiring 10 article heroes)
+2026-05-11 (site maintenance: WebP heroes, validation/link checks, Hugo warning cleanup)

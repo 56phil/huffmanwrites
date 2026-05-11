@@ -4,8 +4,8 @@ description: "The responsibility of stewardship in an age of environmental crisi
 date: 2025-11-03T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-11-03T00:00:00Z
-hero_desktop: "img/articles/7 pbd 16x9.png"
-hero_mobile: "img/articles/7 pbd 4x5.png"
+hero_desktop: "img/articles/7 pbd 16x9.webp"
+hero_mobile: "img/articles/7 pbd 4x5.webp"
 hero_alt: "A marble Earth traced with gold light, suspended in navy space, a gentle hand nearly touching it."
 hero_caption: "Our pale blue dot — small enough to hold, large enough to honor."
 tags:

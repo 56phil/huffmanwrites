@@ -34,9 +34,9 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [Risk Management in a Fragile World](https://www.huffmanwrites.org/risk-management-in-a-fragile-world/)
+ 📝 [Risk Management in a Fragile World](/posts/risk-management-in-a-fragile-world/)
 
- 📝 [Risk Management: The Investor’s Lifeline](https://www.huffmanwrites.org/risk-management-the-investors-lifeline/)
+ 📝 [Risk Management: The Investor’s Lifeline](/posts/risk-management-the-investors-lifeline/)
 
  
 ---

@@ -4,8 +4,8 @@ description: "Remembering Carl Sagan, his cosmic perspective, and what it means 
 date: 2025-11-10T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-11-10T00:00:00Z
-hero_desktop: "img/articles/8 rcs 16x9.png"
-hero_mobile: "img/articles/8 rcs 4x5.png"
+hero_desktop: "img/articles/8 rcs 16x9.webp"
+hero_mobile: "img/articles/8 rcs 4x5.webp"
 hero_alt: "A translucent marble human figure with starstuff flowing through and around them against a navy cosmos."
 hero_caption: "We are a way for the cosmos to know itself."
 tags:

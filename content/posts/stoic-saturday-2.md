@@ -1,5 +1,6 @@
 ---
 title: "Stoic Saturday #2: Stoic Saturday #2: The Art of Negative Space"
+description: "Using negative visualization to build steadiness before the storm arrives."
 date: 2026-05-09T15:48:22.024387
 tags: ["stoic-saturday"]
 draft: false

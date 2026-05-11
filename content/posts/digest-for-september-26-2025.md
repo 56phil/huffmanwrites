@@ -30,9 +30,9 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [Discount vs. Traditional Brokerages](https://www.huffmanwrites.org/discount-vs-traditional-brokerages/)
+ 📝 [Discount vs. Traditional Brokerages](/posts/discount-vs-traditional-brokerages/)
 
- 📝 [A Comparison of Discount Brokerages](https://www.huffmanwrites.org/a-comparison-of-discount-brokerages/)
+ 📝 [A Comparison of Discount Brokerages](/posts/a-comparison-of-discount-brokerages/)
 
  
 ---

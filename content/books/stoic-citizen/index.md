@@ -8,8 +8,8 @@ description: |
 
   Written for readers who are exhausted by performative politics but not willing to retreat, The Stoic Citizen offers a framework for durable engagement: neither surrender nor combat, but the steady maintenance of judgment under pressure.
 image: "img/books/stoic-citizen-v2.jpg"
-image_desktop: "img/articles/Marcus-16x9.png"
-image_mobile: "img/articles/Marcus-4x5.png"
+image_desktop: "img/articles/Marcus-16x9.webp"
+image_mobile: "img/articles/Marcus-4x5.webp"
 image_alt: "A cinematic portrait of Marcus Aurelius in Parian marble, highlighted with subtle golden light against a deep midnight navy backdrop."
 hero_caption: "Marcus Aurelius in marble and gold — the steady gaze of public virtue."
 image_caption: "The enduring discipline of the public man."

@@ -40,7 +40,7 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [The Psychology of Investing](https://www.huffmanwrites.org/the-psychology-of-investing/)
+ 📝 [The Psychology of Investing](/posts/the-psychology-of-investing/)
 
  📝 [The Stoic Investor](https://www.huffmanwrites.org/the-stoic-investor-holding-steady-when-the-market-panics/)
 

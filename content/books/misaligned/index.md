@@ -9,8 +9,8 @@ description: |
 
   Written for readers who have performed well and still found themselves at a loss, Misaligned offers a framework for recognizing when alignment itself becomes the problem — and for rebuilding with different assumptions. The final argument is not repair but agency: the capacity to choose what to preserve, what to release, and what to construct differently.
 image: "img/books/misaligned-v2.jpg"
-image_desktop: "img/articles/misaligned 16x9.png"
-image_mobile: "img/articles/misaligned 4x5.png"
+image_desktop: "img/articles/misaligned 16x9.webp"
+image_mobile: "img/articles/misaligned 4x5.webp"
 image_alt: "A dissonant sea of gold-leaf parchment maps shifting in a navy void, with a single minimalist gold compass needle pointing stubbornly in one direction."
 hero_caption: "A sea of shifting maps, one compass needle holding its direction."
 image_caption: "Navigating the gap between intention and outcome."

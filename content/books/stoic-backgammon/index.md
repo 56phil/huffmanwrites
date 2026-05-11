@@ -9,8 +9,8 @@ description: |
 
   Written for readers who do not need to know backgammon or Stoicism to begin, the book teaches both as it proceeds. The central claim is that every roll is a small encounter with fate, and every move is a decision made with incomplete information. The right response to uncertainty is not prediction but character — and the board, played repeatedly, is one way to build it.
 image: "img/books/stoic-backgammon.jpg"
-image_desktop: "img/articles/sg 16x9.png"
-image_mobile: "img/articles/sg 4x5.png"
+image_desktop: "img/articles/sg 16x9.webp"
+image_mobile: "img/articles/sg 4x5.webp"
 image_alt: "A polished obsidian and inlaid gold backgammon board in a symmetrical navy void, with a single white marble checker perfectly balanced on its edge."
 hero_caption: "An obsidian board in the void, one checker balanced on its edge."
 image_caption: "Finding the still point in a game of chance."

@@ -11,8 +11,8 @@ description: |
 
   Written for parents, step-parents, and anyone who influences how a young mind encounters the world, Raise'm Right offers a framework for raising children who can think — not children who simply comply to get along. The central claim is that skepticism, taught well, is a form of care: the belief that the person you are raising will eventually need to make decisions you cannot make for them, and that your job is to prepare them for that moment.
 image: "img/books/raisem-right.jpg"
-image_desktop: "img/articles/rtr 16x9.png"
-image_mobile: "img/articles/rtr 4x5.png"
+image_desktop: "img/articles/rtr 16x9.webp"
+image_mobile: "img/articles/rtr 4x5.webp"
 image_alt: "A fragile white marble seedling growing inside an ornate gold lantern, providing a sanctuary of warm light amidst a chaotic void of digital glitch noise."
 hero_caption: "A marble seedling sheltered in a golden lantern amidst digital chaos."
 image_caption: "Cultivating character and agency within a fragmented world."
