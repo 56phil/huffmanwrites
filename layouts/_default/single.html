@@ -29,17 +29,20 @@
     {{- end }}
   </header>
 
-  {{- if or .Params.hero_desktop .Params.hero_mobile }}
-  {{- $heroDesktop := replace .Params.hero_desktop " " "%20" }}
-  {{- $heroMobile := replace .Params.hero_mobile " " "%20" }}
+  {{- with .Params.hero_desktop }}
+  {{- $heroDesktop := replace . " " "%20" }}
+  {{- $heroMobile := "" }}
+  {{- with $.Params.hero_mobile }}
+    {{- $heroMobile = replace . " " "%20" }}
+  {{- end }}
   <div class="post-hero">
     <picture>
-      {{- if .Params.hero_mobile }}
+      {{- with $heroMobile }}
       <source srcset="/{{ $heroMobile }}" media="(max-width: 767px)">
       {{- end }}
-      <img src="/{{ $heroDesktop }}" alt="{{ .Params.hero_alt | default .Title }}" class="post-hero-img" loading="eager">
+      <img src="/{{ $heroDesktop }}" alt="{{ $.Params.hero_alt | default $.Title }}" class="post-hero-img" loading="eager">
     </picture>
-    {{- with .Params.hero_caption }}
+    {{- with $.Params.hero_caption }}
     <p class="post-hero-caption">{{ . }}</p>
     {{- end }}
   </div>
