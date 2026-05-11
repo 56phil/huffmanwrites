@@ -44,7 +44,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Added `scripts/check_site.py` for frontmatter validation and built internal-link checks.
 - Added `scripts/linkcheck_allowlist.txt` for known legacy same-domain links whose target articles are not currently present.
 - Converted existing article/book hero images in `static/img/articles/` from PNG to WebP; references in content now use `.webp`.
-- Updated PaperMod language template calls to Hugo's current `.Language.Direction` and `.Language.Locale` APIs.
+- Kept PaperMod language template calls on `.Language.LanguageDirection` and `.Language.LanguageCode` for GitHub Actions compatibility with Hugo 0.147.0.
 - Added `static/favicon.svg` so the configured mask icon resolves.
 
 ---
@@ -93,7 +93,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - `hugo --minify` builds cleanly (144 pages, 0 errors)
 - `scripts/check_site.py` passes after `hugo --minify`
 - Hugo v0.161.1+extended
-- PaperMod language deprecation warnings fixed May 11, 2026.
+- Local Hugo 0.161+ emits PaperMod language deprecation warnings, but GitHub Actions currently uses Hugo 0.147.0 and requires the older APIs.
 
 ---
 
@@ -144,4 +144,4 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 ---
 
 ## Last Updated
-2026-05-11 (site maintenance: WebP heroes, validation/link checks, Hugo warning cleanup)
+2026-05-11 (site maintenance: WebP heroes, validation/link checks, CI-compatible Hugo language APIs)
