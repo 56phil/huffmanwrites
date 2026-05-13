@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-04-18T00:00:00Z
 tags: [News]
 author: Phil Huffman
-hero_desktop: "img/articles/14 The Plan 13x9.webp"
-hero_mobile: "img/articles/14 The Plan 4x5.webp"
+hero_desktop: "img/articles/14-The-Plan-13x9.webp"
+hero_mobile: "img/articles/14-The-Plan-4x5.webp"
 hero_alt: "A cracked marble rotunda with dark vines consuming gold coins on the floor, a single beam of light through the dome."
 hero_caption: "Not all collapses are sudden — some are slow, silent, and self-inflicted."
 lastmod: 2025-04-18T00:00:00Z

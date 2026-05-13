@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-09-26T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-09-26T00:00:01Z
-hero_desktop: "img/articles/12 Advice 16x9.webp"
-hero_mobile: "img/articles/12 Advice 4x5.webp"
+hero_desktop: "img/articles/12-Advice-16x9.webp"
+hero_mobile: "img/articles/12-Advice-4x5.webp"
 hero_alt: "A figure stepping from an ornate mahogany desk with a single coin toward a clean marble desk with streaming gold data."
 hero_caption: "The pitch wasn't romance; it was math."
 tags:

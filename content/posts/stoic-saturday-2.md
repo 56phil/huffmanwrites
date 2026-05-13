@@ -4,8 +4,8 @@ description: "Using negative visualization to build steadiness before the storm 
 date: 2026-05-09T15:48:22.024387
 tags: ["stoic-saturday"]
 draft: false
-hero_desktop: "img/articles/22 Negative Space 16x9.webp"
-hero_mobile: "img/articles/22 Negative Space 4x5.webp"
+hero_desktop: "img/articles/22-Negative-Space-16x9.webp"
+hero_mobile: "img/articles/22-Negative-Space-4x5.webp"
 hero_alt: "A seated marble figure contemplates a deliberate empty space amid faint gold outlines of a home, work, money, and family."
 hero_caption: "Negative space teaches us what remains when certainty is removed."
 ---

@@ -4,8 +4,8 @@ description: "If caring about people makes me woke, then I’ll wear the word li
 date: 2025-08-11T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-08-11T00:00:00Z
-hero_desktop: "img/articles/5 woke 16x9.webp"
-hero_mobile: "img/articles/5 woke 4x5.webp"
+hero_desktop: "img/articles/5-woke-16x9.webp"
+hero_mobile: "img/articles/5-woke-4x5.webp"
 hero_alt: "A marble eye with a golden iris radiating light through navy darkness, stirring sleeping faces toward wakefulness."
 hero_caption: "Awareness is not arrogance — it is the courage to see."
 tags:

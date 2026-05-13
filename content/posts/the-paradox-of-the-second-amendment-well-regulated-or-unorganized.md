@@ -7,8 +7,8 @@ lastmod: 2025-03-13T00:00:00Z
 tags:
   - civics
   - constitution
-hero_desktop: "img/articles/36 most-contested-27-words 16x9.webp"
-hero_mobile: "img/articles/36 most-contested-27-words 4x5.webp"
+hero_desktop: "img/articles/36-most-contested-27-words-16x9.webp"
+hero_mobile: "img/articles/36-most-contested-27-words-4x5.webp"
 hero_alt: "Two marble hands holding a musket that transforms into a rifle, sharing the same unseen wrist — regulation and rights as one body."
 hero_caption: "The Second Amendment is not a blank check. It is a specific compromise written into a specific historical moment."
 ---

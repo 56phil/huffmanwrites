@@ -9,8 +9,8 @@ tags:
   - philosophy
   - stoicism
   - technology
-hero_desktop: "img/articles/42 scalpel-not-sledgehammer 16x9.webp"
-hero_mobile: "img/articles/42 scalpel-not-sledgehammer 4x5.webp"
+hero_desktop: "img/articles/42-scalpel-not-sledgehammer-16x9.webp"
+hero_mobile: "img/articles/42-scalpel-not-sledgehammer-4x5.webp"
 hero_alt: "A marble figure at a crossroads between a massive sledgehammer over rubble and a delicate scalpel over a glowing gold vein."
 hero_caption: "The discipline required to use the scalpel instead of the sledgehammer."
 ---

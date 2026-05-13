@@ -4,8 +4,8 @@ description: "Premeditatio malorum as a practical way to meet setbacks without s
 date: 2026-05-02T14:03:55.362373
 tags: ["stoic-saturday"]
 draft: false
-hero_desktop: "img/articles/21 Expect the Storm 16x9.webp"
-hero_mobile: "img/articles/21 Expect the Storm 4x5.webp"
+hero_desktop: "img/articles/21-Expect-the-Storm-16x9.webp"
+hero_mobile: "img/articles/21-Expect-the-Storm-4x5.webp"
 hero_alt: "A calm marble figure places a glowing gold block into a simple fortress wall while a navy storm gathers in the distance."
 hero_caption: "You don't build a fortress during the siege. You build it in peace."
 ---

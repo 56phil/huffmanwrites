@@ -9,8 +9,8 @@ tags:
   - philosophy
   - politics
   - stoicism
-hero_desktop: "img/articles/31 roots-of-violence 16x9.webp"
-hero_mobile: "img/articles/31 roots-of-violence 4x5.webp"
+hero_desktop: "img/articles/31-roots-of-violence-16x9.webp"
+hero_mobile: "img/articles/31-roots-of-violence-4x5.webp"
 hero_alt: "A marble figure at a dark chasm's edge, a fraying gold thread connecting them to a distant figure — the moment before the thread snaps."
 hero_caption: "Violence begins long before the act, in roots most of us refuse to examine."
 ---

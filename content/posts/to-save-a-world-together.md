@@ -10,8 +10,8 @@ tags:
   - essays
   - parenting
   - politics
-hero_desktop: "img/articles/40 pale-blue-dot 16x9.webp"
-hero_mobile: "img/articles/40 pale-blue-dot 4x5.webp"
+hero_desktop: "img/articles/40-pale-blue-dot-16x9.webp"
+hero_mobile: "img/articles/40-pale-blue-dot-4x5.webp"
 hero_alt: "A marble Earth traced with gold light in navy space, multiple marble hands reaching toward it from all directions in protective care."
 hero_caption: "No one can save the world alone. But no one should feel alone in trying."
 ---

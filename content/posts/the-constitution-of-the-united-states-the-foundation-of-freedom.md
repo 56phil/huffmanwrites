@@ -7,8 +7,8 @@ lastmod: 2025-03-28T00:00:00Z
 tags:
   - civics
   - constitution
-hero_desktop: "img/articles/32 compact-not-crown 16x9.webp"
-hero_mobile: "img/articles/32 compact-not-crown 4x5.webp"
+hero_desktop: "img/articles/32-compact-not-crown-16x9.webp"
+hero_mobile: "img/articles/32-compact-not-crown-4x5.webp"
 hero_alt: "A monumental marble building of three merged architectural styles, gold light flowing through the joints, modern figures entering below."
 hero_caption: "The Constitution is not a list of suggestions. It is the operating system of the republic."
 ---

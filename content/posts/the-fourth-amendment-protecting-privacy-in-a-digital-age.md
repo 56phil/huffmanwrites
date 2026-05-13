@@ -7,8 +7,8 @@ lastmod: 2025-03-17T00:00:00Z
 tags:
   - civics
   - constitution
-hero_desktop: "img/articles/35 right-to-be-let-alone 16x9.webp"
-hero_mobile: "img/articles/35 right-to-be-let-alone 4x5.webp"
+hero_desktop: "img/articles/35-right-to-be-let-alone-16x9.webp"
+hero_mobile: "img/articles/35-right-to-be-let-alone-4x5.webp"
 hero_alt: "A transparent marble house with a warm family inside, surrounded by creeping navy surveillance wire, a cracked shield above."
 hero_caption: "The Fourth Amendment draws a wall between the state's investigative power and the citizen's private life."
 ---

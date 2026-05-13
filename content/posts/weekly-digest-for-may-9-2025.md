@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-05-09T00:00:00Z
 tags: [News]
 author: Phil Huffman
-hero_desktop: "img/articles/19 Justice.png 16x9.webp"
-hero_mobile: "img/articles/19 Justice 4x5.webp"
+hero_desktop: "img/articles/19-Justice.png-16x9.webp"
+hero_mobile: "img/articles/19-Justice-4x5.webp"
 hero_alt: "A marble figure sits in contemplation on a bench, surrounded by faint gold outlines of others in a silent circle."
 hero_caption: "Justice walks soft-soled and slow-paced, woven into the silence between our words."
 lastmod: 2025-05-09T00:00:00Z

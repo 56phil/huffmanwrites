@@ -10,8 +10,8 @@ tags:
   - books
   - health
   - investing
-hero_desktop: "img/articles/41 next-chapter 16x9.webp"
-hero_mobile: "img/articles/41 next-chapter 4x5.webp"
+hero_desktop: "img/articles/41-next-chapter-16x9.webp"
+hero_mobile: "img/articles/41-next-chapter-4x5.webp"
 hero_alt: "A worn marble bridge lined with gold lanterns spans a navy chasm, a solitary figure walking slowly toward warm light."
 hero_caption: "Retirement isn't the finish line — it's the start of a new chapter."
 ---

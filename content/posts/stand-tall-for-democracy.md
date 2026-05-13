@@ -10,8 +10,8 @@ tags:
   - civics
   - essays
   - politics
-hero_desktop: "img/articles/37 standing-tall 16x9.webp"
-hero_mobile: "img/articles/37 standing-tall 4x5.webp"
+hero_desktop: "img/articles/37-standing-tall-16x9.webp"
+hero_mobile: "img/articles/37-standing-tall-4x5.webp"
 hero_alt: "A field of diverse marble figures standing upright in navy darkness, a falling crown above them, gold light rising from their feet."
 hero_caption: "Democracy may look invincible, but it isn't. It fades when citizens stop holding power to account."
 ---

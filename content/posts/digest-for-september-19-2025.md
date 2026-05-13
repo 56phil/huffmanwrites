@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-09-19T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-09-19T00:00:00Z
-hero_desktop: "img/articles/11 Risk Management 16x9.webp"
-hero_mobile: "img/articles/11 Risk Management 4x5.webp"
+hero_desktop: "img/articles/11-Risk-Management-16x9.webp"
+hero_mobile: "img/articles/11-Risk-Management-4x5.webp"
 hero_alt: "A translucent marble tightrope walker with gold-tipped pole, suspended over a navy chasm between earth and stars."
 hero_caption: "Life is a series of wagers; the balance is the discipline."
 tags:

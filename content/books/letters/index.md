@@ -9,8 +9,8 @@ description: |
 
   Written for readers who have grown skeptical of certainty and still need to communicate, Letters argues that honest speech is not a strategy for winning but a practice of remaining present. The final question is not whether truth changes outcomes, but whether silence changes the speaker.
 image: "img/books/letters.jpg"
-image_desktop: "img/articles/letters 16x9.webp"
-image_mobile: "img/articles/letters 4x5.webp"
+image_desktop: "img/articles/letters-16x9.webp"
+image_mobile: "img/articles/letters-4x5.webp"
 image_alt: "An ascending spiral of floating ancient papyrus scrolls with glowing gold ink, stretching upward into a midnight navy cosmic abyss."
 hero_caption: "Scrolls ascending through the void — a dialogue across time."
 image_caption: "A timeless dialogue with the ghosts of history."

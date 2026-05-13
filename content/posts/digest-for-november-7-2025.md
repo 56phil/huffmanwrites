@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-11-07T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-11-07T00:00:00Z
-hero_desktop: "img/articles/6 Stoic Candle 16x9.webp"
-hero_mobile: "img/articles/6 Stoic Candle 4x5.webp"
+hero_desktop: "img/articles/6-Stoic-Candle-16x9.webp"
+hero_mobile: "img/articles/6-Stoic-Candle-4x5.webp"
 hero_alt: "A gold candle flame held by a marble hand in navy darkness, with star maps etched on the illuminated floor."
 hero_caption: "A candle in the dark — science as moral stance, not escape."
 tags:

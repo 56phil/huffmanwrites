@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-10-10T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-10-10T00:00:00Z
-hero_desktop: "img/articles/7 Government Building 16x9.webp"
-hero_mobile: "img/articles/7 Government Building 4x5.webp"
+hero_desktop: "img/articles/7-Government-Building-16x9.webp"
+hero_mobile: "img/articles/7-Government-Building-4x5.webp"
 hero_alt: "A beautiful marble government building with a collapsed roof, gold dust falling through the breach into navy sky."
 hero_caption: "Even beautiful institutions crumble when performance replaces purpose."
 tags:

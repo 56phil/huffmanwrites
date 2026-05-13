@@ -4,8 +4,8 @@ description: "America at the crossroads: reckoning with corruption or renewing d
 date: 2025-05-18T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-05-18T00:00:00Z
-hero_desktop: "img/articles/1 ror 16x9.webp"
-hero_mobile: "img/articles/1 ror 4x5.webp"
+hero_desktop: "img/articles/1-ror-16x9.webp"
+hero_mobile: "img/articles/1-ror-4x5.webp"
 hero_alt: "A monumental cracked marble Roman-style archway split down the middle, half crumbling into dust and half being rebuilt with glowing gold mortar, set against a deep midnight navy sky."
 hero_caption: "The crossroads of a nation — between what falls and what rises."
 tags:

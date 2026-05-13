@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-08-22T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-08-22T00:00:00Z
-hero_desktop: "img/articles/2 The Choice 16x9.webp"
-hero_mobile: "img/articles/2 The Choice 4x5.webp"
+hero_desktop: "img/articles/2-The-Choice-16x9.webp"
+hero_mobile: "img/articles/2-The-Choice-4x5.webp"
 hero_alt: "A marble figure at a three-way crossroads of gold, stone, and glass paths, holding a lantern in navy fog."
 hero_caption: "The option of choice is always on the table."
 tags:

@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-09-12T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-09-12T00:00:00Z
-hero_desktop: "img/articles/10 Fibonacci 16x9.webp"
-hero_mobile: "img/articles/10 Fibonacci 4x5.webp"
+hero_desktop: "img/articles/10-Fibonacci-16x9.webp"
+hero_mobile: "img/articles/10-Fibonacci-4x5.webp"
 hero_alt: "A spiraling marble staircase growing exponentially larger, traced with a gold thread, ascending into navy darkness."
 hero_caption: "What begins small and dull becomes extraordinary through patience."
 tags:

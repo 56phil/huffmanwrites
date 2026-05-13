@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-10-20T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-10-20T00:00:00Z
-hero_desktop: "img/articles/8 Books and Stone 16x9.webp"
-hero_mobile: "img/articles/8 Books and Stone 4x5.webp"
+hero_desktop: "img/articles/8-Books-and-Stone-16x9.webp"
+hero_mobile: "img/articles/8-Books-and-Stone-4x5.webp"
 hero_alt: "Ornate colonial books crushing an indigenous stone carving, with green shoots pushing through the cracks toward light."
 hero_caption: "The maps we wrote over the ones that were already here."
 tags:

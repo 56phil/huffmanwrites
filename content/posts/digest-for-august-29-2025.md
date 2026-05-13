@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2025-08-29T00:00:00Z
 author: Phil Huffman
 lastmod: 2025-08-29T00:00:00Z
-hero_desktop: "img/articles/3 What we feed 16x9.webp"
-hero_mobile: "img/articles/3 What we feed 4x5.webp"
+hero_desktop: "img/articles/3-What-we-feed-16x9.webp"
+hero_mobile: "img/articles/3-What-we-feed-4x5.webp"
 hero_alt: "A marble human head as a planter, with a thorny navy vine and a luminous gold vine growing from the same soil."
 hero_caption: "What you feed, grows — choose the garden you tend."
 tags:
