@@ -1,0 +1,104 @@
+{{ define "main" }}
+
+<style>
+  .gallery-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--gap);
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .gallery-card {
+    background: var(--entry);
+    border: 1px solid hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .gallery-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  .gallery-img-wrapper {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #222;
+  }
+  .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-content {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .gallery-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: var(--primary);
+  }
+  .gallery-caption {
+    font-size: 0.9rem;
+    color: var(--secondary);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+  .gallery-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: background 0.2s ease;
+  }
+  .gallery-link:hover {
+    background: var(--primary);
+    color: #fff;
+  }
+  @media (max-width: 600px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="gallery-container">
+  <h1>{{ .Title }}</h1>
+  <p class="lead">{{ .Description }}</p>
+
+  <div class="gallery-grid">
+    {{ range .Site.Data.gallery }}
+    <div class="gallery-card">
+      <div class="gallery-img-wrapper">
+        <img src="{{ .image }}" alt="{{ .title }}" class="gallery-img" loading="lazy">
+      </div>
+      <div class="gallery-content">
+        <h3 class="gallery-title">{{ .title }}</h3>
+        <p class="gallery-caption">{{ .caption }}</p>
+        <a href="{{ .link }}" class="gallery-link">Read Post</a>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+
+  <div style="margin-top: 3rem;">
+    {{ .Content }}
+  </div>
+</div>
+
+{{ end }}

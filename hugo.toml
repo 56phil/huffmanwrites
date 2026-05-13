@@ -93,6 +93,11 @@ pluralizeListTitles = false
     url = '/posts/'
     weight = 20
   [[menu.main]]
+    identifier = 'gallery'
+    name = 'Gallery'
+    url = '/gallery/'
+    weight = 25
+  [[menu.main]]
     identifier = 'tags'
     name = 'Tags'
     url = '/tags/'
