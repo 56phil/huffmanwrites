@@ -7,6 +7,10 @@ lastmod: 2025-03-28T00:00:00Z
 tags:
   - civics
   - constitution
+hero_desktop: "img/articles/32 compact-not-crown 16x9.webp"
+hero_mobile: "img/articles/32 compact-not-crown 4x5.webp"
+hero_alt: "A monumental marble building of three merged architectural styles, gold light flowing through the joints, modern figures entering below."
+hero_caption: "The Constitution is not a list of suggestions. It is the operating system of the republic."
 ---
 
 > *"We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America."*

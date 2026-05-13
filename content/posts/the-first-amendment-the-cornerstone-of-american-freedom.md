@@ -7,6 +7,10 @@ lastmod: 2025-03-12T00:00:00Z
 tags:
   - civics
   - constitution
+hero_desktop: "img/articles/34 forty-five-words 16x9.webp"
+hero_mobile: "img/articles/34 forty-five-words 4x5.webp"
+hero_alt: "A glowing marble wall inscribed with the First Amendment curves around figures reading and speaking in gold light, while shadows press against it from outside."
+hero_caption: "The First Amendment is not a favor granted by government. It is a boundary drawn around it."
 ---
 
 > *"If there be any among us who would wish to dissolve this Union or to change its republican form, let them stand undisturbed as monuments of the safety with which error of opinion may be tolerated where reason is left free to combat it."*

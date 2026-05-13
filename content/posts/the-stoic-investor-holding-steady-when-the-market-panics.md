@@ -10,6 +10,10 @@ tags:
   - investing
   - philosophy
   - stoicism
+hero_desktop: "img/articles/39 holding-steady 16x9.webp"
+hero_mobile: "img/articles/39 holding-steady 4x5.webp"
+hero_alt: "A calm marble figure sits on gold ground amid a storm of falling red market fragments, gold flowers growing at their feet."
+hero_caption: "The Stoic investor does not pretend markets are calm. It is a reason to prepare."
 ---
 
 Markets are very good at finding the weak joint in a man's composure.

@@ -9,6 +9,10 @@ tags:
   - philosophy
   - politics
   - stoicism
+hero_desktop: "img/articles/31 roots-of-violence 16x9.webp"
+hero_mobile: "img/articles/31 roots-of-violence 4x5.webp"
+hero_alt: "A marble figure at a dark chasm's edge, a fraying gold thread connecting them to a distant figure — the moment before the thread snaps."
+hero_caption: "Violence begins long before the act, in roots most of us refuse to examine."
 ---
 
 There is a moment before violence. It is invisible to everyone except the person holding it. I have stood in that threshold. Not as a soldier, not as a protester, but as a man who discovered, without warning, that the life he thought he was living had been hollowed out from behind. The betrayal was specific—a wife, a friend of a friend, a blunt truth delivered without mercy. But the violence that followed was not directed at either of them. It filled the room. It became the air. I remember my hands shaking, my vision narrowing to a tunnel, and something ancient rising in my chest that wanted not justice but annihilation.

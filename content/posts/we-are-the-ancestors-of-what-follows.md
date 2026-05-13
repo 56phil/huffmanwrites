@@ -9,6 +9,10 @@ tags:
   - announcement
   - parenting
   - politics
+hero_desktop: "img/articles/38 the-ancestors 16x9.webp"
+hero_mobile: "img/articles/38 the-ancestors 4x5.webp"
+hero_alt: "Weathered and young marble hands plant a glowing sapling together, its roots touching future cities in the soil beneath a navy sky."
+hero_caption: "We are not just descendants — we are ancestors, too."
 ---
 
 We often think of ourselves as the end result of history’s long arc. The inheritors. The living echoes of those who came before. And while that’s true, it’s not the whole truth.

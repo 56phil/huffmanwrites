@@ -10,6 +10,10 @@ tags:
   - books
   - health
   - investing
+hero_desktop: "img/articles/41 next-chapter 16x9.webp"
+hero_mobile: "img/articles/41 next-chapter 4x5.webp"
+hero_alt: "A worn marble bridge lined with gold lanterns spans a navy chasm, a solitary figure walking slowly toward warm light."
+hero_caption: "Retirement isn't the finish line — it's the start of a new chapter."
 ---
 
 I used to believe investing was something you did while you worked. You built a nest egg, retired, and lived off it. Simple. But when retirement arrived, I quickly learned the story doesn’t end there. Retirement isn’t the finish line—it’s the start of a new chapter. And in this chapter, investing takes on a different purpose.

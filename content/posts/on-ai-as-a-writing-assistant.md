@@ -10,6 +10,10 @@ tags:
   - essays
   - politics
   - stoicism
+hero_desktop: "img/articles/43 the-collaborator 16x9.webp"
+hero_mobile: "img/articles/43 the-collaborator 4x5.webp"
+hero_alt: "A marble desk with a gold-traced notebook, a faint translucent gold figure pointing at the page while a human hand writes."
+hero_caption: "AI does not replace the writer. It holds the lantern while the writer finds the path."
 ---
 
 I did not set out to use artificial intelligence as part of my writing process.

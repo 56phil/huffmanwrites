@@ -11,6 +11,10 @@ tags:
   - philosophy
   - politics
   - stoicism
+hero_desktop: "img/articles/33 when-justice-bends 16x9.webp"
+hero_mobile: "img/articles/33 when-justice-bends 4x5.webp"
+hero_alt: "A marble scale of justice with one pan cushioned by gold silk, the other holding a rough stone — unequal justice in a navy void."
+hero_caption: "Justice rarely disappears in a single dramatic act. More often, it bends."
 ---
 
 Justice rarely disappears in a single dramatic act. More often, it bends.
