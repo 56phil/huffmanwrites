@@ -85,12 +85,12 @@
     {{ range .Site.Data.gallery }}
     <div class="gallery-card">
       <div class="gallery-img-wrapper">
-        <img src="{{ .image }}" alt="{{ .title }}" class="gallery-img" loading="lazy">
+        <img src="{{ .image | relURL }}" alt="{{ .title }}" class="gallery-img" loading="lazy">
       </div>
       <div class="gallery-content">
         <h3 class="gallery-title">{{ .title }}</h3>
         <p class="gallery-caption">{{ .caption }}</p>
-        <a href="{{ .link }}" class="gallery-link">Read Post</a>
+        <a href="{{ .link | relURL }}" class="gallery-link">Read Post</a>
       </div>
     </div>
     {{ end }}
