@@ -91,7 +91,7 @@ class BookCoverGenerator:
             draw.line(points, fill=(0, 0, 0), width=1)
 
         # --- The "Misaligned Area" (Rotated Box) ---
-        warp_center_x = self.front_left + (self.trim_w_px // 2) - int(0.4 * self.DPI) + int(0.5 * self.DPI) + int(0.2 * self.DPI)
+        warp_center_x = self.front_left + (self.trim_w_px // 2) - int(0.4 * self.DPI) + int(0.5 * self.DPI) + int(0.2 * self.DPI) - int(0.33 * self.DPI)
         warp_center_y = (self.H // 2) - int(0.125 * self.DPI)
         warp_w = int(2.0 * self.DPI)
         warp_h = int(4.0 * self.DPI)
@@ -114,7 +114,7 @@ class BookCoverGenerator:
         title_text = "MISALIGNED"
         tb = draw.textbbox((0, 0), title_text, font=font_title)
         tw, th = tb[2]-tb[0], tb[3]-tb[1]
-        tx = self.front_left + (self.trim_w_px - tw) // 2 + int(0.3 * self.DPI)
+        tx = self.front_left + (self.trim_w_px - tw) // 2 + int(0.3 * self.DPI) - int(0.33 * self.DPI)
         ty = self.bleed_px + int(1.5 * self.DPI) - int(0.75 * self.DPI)
         draw.text((tx, ty), title_text, font=font_title, fill=self.colors['TEXT'])
 
@@ -133,7 +133,7 @@ class BookCoverGenerator:
             curr_sub_y += int(0.5 * self.DPI)
 
         rotated_sub = sub_img.rotate(3, resample=Image.BICUBIC, expand=True)
-        sub_paste_x = self.front_left + (self.trim_w_px - rotated_sub.width) // 2 + int(0.3 * self.DPI)
+        sub_paste_x = self.front_left + (self.trim_w_px - rotated_sub.width) // 2 + int(0.3 * self.DPI) - int(0.33 * self.DPI)
         sub_paste_y = ty + th + int(0.6 * self.DPI)
         img.paste(rotated_sub, (sub_paste_x, sub_paste_y), rotated_sub)
 
@@ -141,7 +141,7 @@ class BookCoverGenerator:
         author = "PHILIP HUFFMAN"
         ab = draw.textbbox((0, 0), author, font=font_author)
         aw = ab[2]-ab[0]
-        ax = self.front_left + (self.trim_w_px - aw) // 2 + int(0.3 * self.DPI)
+        ax = self.front_left + (self.trim_w_px - aw) // 2 + int(0.3 * self.DPI) - int(0.33 * self.DPI)
         ay = self.bleed_px + self.trim_h_px - int(self.author_bottom_margin * self.DPI) - ab[3]
         draw.text((ax, ay), author, font=font_author, fill=self.colors['TEXT_DIM'])
 
@@ -154,7 +154,7 @@ class BookCoverGenerator:
         st_img = Image.new("RGBA", (stw + 10, sth + 10), (0, 0, 0, 0))
         ImageDraw.Draw(st_img).text((5, 5), spine_title, font=font_spine, fill=self.colors['TEXT'])
         st_img = st_img.rotate(270, expand=True)
-        img.paste(st_img, (self.spine_left + (self.spine_px - st_img.width)//2 - int(0.25 * self.DPI) + int(0.25 * self.DPI) + int(0.05 * self.DPI), self.bleed_px + int(1.0 * self.DPI) - int(0.75 * self.DPI)), st_img)
+        img.paste(st_img, (self.spine_left + (self.spine_px - st_img.width)//2 - int(0.25 * self.DPI) + int(0.25 * self.DPI) + int(0.05 * self.DPI) - int(0.04 * self.DPI), self.bleed_px + int(1.0 * self.DPI) - int(0.75 * self.DPI) + int(1.0 * self.DPI)), st_img)
 
         spine_auth = "PHILIP HUFFMAN"
         sab = draw.textbbox((0, 0), spine_auth, font=font_spine_small)
@@ -162,7 +162,7 @@ class BookCoverGenerator:
         sa_img = Image.new("RGBA", (saw + 10, sah + 10), (0, 0, 0, 0))
         ImageDraw.Draw(sa_img).text((5, 5), spine_auth, font=font_spine_small, fill=self.colors['ACCENT_GLOW'])
         sa_img = sa_img.rotate(270, expand=True)
-        img.paste(sa_img, (self.spine_left + (self.spine_px - sa_img.width)//2 - int(0.25 * self.DPI) + int(0.25 * self.DPI) + int(0.05 * self.DPI), self.bleed_px + self.trim_h_px - sa_img.height - int(0.6 * self.DPI)), sa_img)
+        img.paste(sa_img, (self.spine_left + (self.spine_px - sa_img.width)//2 - int(0.25 * self.DPI) + int(0.25 * self.DPI) + int(0.05 * self.DPI) - int(0.04 * self.DPI), self.bleed_px + self.trim_h_px - sa_img.height - int(0.6 * self.DPI)), sa_img)
 
         # --- Back Cover Implementation ---
         font_size_back = 40
@@ -191,7 +191,7 @@ class BookCoverGenerator:
             blurb_lines.append(current_line.strip())
             blurb_lines.append("")
 
-        blurb_x, blurb_y = self.back_left + self.safe_margin + int(0.75 * self.DPI) - int(0.5 * self.DPI), self.bleed_px + int(1.1 * self.DPI) - int(0.75 * self.DPI)
+        blurb_x, blurb_y = self.back_left + self.safe_margin + int(0.75 * self.DPI) - int(0.5 * self.DPI) + int(1.5 * self.DPI) - int(1.4 * self.DPI), self.bleed_px + int(1.1 * self.DPI) - int(0.75 * self.DPI)
         for i, line in enumerate(blurb_lines):
             draw.text((blurb_x, blurb_y + i * line_spacing_back), line, font=font_back, fill=color_text_back)
         
@@ -213,7 +213,7 @@ class BookCoverGenerator:
             top = (h - min_dim) / 2
             photo = photo.crop((left, top, left + min_dim, top + min_dim))
             photo = photo.resize((photo_size, photo_size), Image.LANCZOS)
-            px = self.back_left + self.safe_margin + int(0.75 * self.DPI) - int(0.5 * self.DPI)
+            px = self.back_left + self.safe_margin + int(0.75 * self.DPI) - int(0.5 * self.DPI) + int(1.5 * self.DPI) - int(1.4 * self.DPI)
             py = self.bleed_px + self.trim_h_px - photo_size - self.safe_margin
             img.paste(photo, (px, py))
         except Exception as e:

@@ -1,0 +1,12 @@
+{{ $desktop := .Get "desktop" }}
+{{ $mobile  := .Get "mobile" }}
+{{ $alt     := .Get "alt" | default .Page.Title }}
+{{ $caption := .Get "caption" }}
+<div class="article-hero-container">
+    <picture>
+        <source srcset="/{{ $mobile }}" media="(max-width: 767px)">
+        <img src="/{{ $desktop }}" alt="{{ $alt }}" class="responsive-hero-img" loading="lazy">
+    </picture>
+    <div class="hero-overlay"></div>
+</div>
+{{ with $caption }}<p class="hero-caption">{{ . }}</p>{{ end }}

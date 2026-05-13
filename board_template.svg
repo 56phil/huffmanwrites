@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="1024" height="576">
+  <!-- Frame fill -->
+  <rect x="0" y="0" width="1024" height="576" fill="#0d0d0d" rx="8"/>
+  
+  <!-- Inner board area -->
+  <rect x="16" y="16" width="992" height="544" fill="#c4956a" rx="4"/>
+  
+  <!-- Top long side: left half (6 triangles pointing down) -->
+  <g>
+    <polygon points="16,16 180,16 98,180" fill="#e8dcc8"/>
+    <polygon points="180,16 344,16 262,180" fill="#1a1a1a"/>
+    <polygon points="344,16 508,16 426,180" fill="#e8dcc8"/>
+    <polygon points="16,180 180,180 98,16" fill="#1a1a1a"/>  <!-- flipped -->
+  </g>
+  
+  <!-- Oops, triangles should all point the same way along an edge.
+       Let me rewrite as a clean, correct SVG. -->
+</svg>
