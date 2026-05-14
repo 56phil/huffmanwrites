@@ -62,8 +62,6 @@ author: "Philip Huffman"
 
 ## The Bear-Off
 
-{{< section-hero desktop="img/articles/sb-twa 16x9.png" mobile="img/articles/sb-twa 4x5.png" alt="Final checkers poised to exit the board" caption="White has two anchors deep in enemy teritory." >}}
-
 ## The Board Is the Teacher
 
 ## Coda: On Proportion
