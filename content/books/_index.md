@@ -8,7 +8,7 @@ The following is a comprehensive list of my books, exploring the intersections o
 {{< book title="Unstuck" link="/books/unstuck/" subtitle="Brutal Guidance for Getting Out of Your Own Way" img="/img/books/unstuck-v3.jpg" caption="The moment of breakthrough: breaking the stasis of the self." >}}
 {{< book title="A Life Made Whole" link="/books/life-made-whole/" subtitle="Essays on Inner Strength and Resilience" img="/img/books/life-made-whole.jpg" caption="Integration through resilience: the art of becoming whole." >}}
 {{< book title="The Stoic Citizen" link="/books/stoic-citizen/" img="/img/books/stoic-citizen-v2.jpg" caption="The enduring discipline of the public man." >}}
-{{< book title="The Stoic CGM" link="/books/stoic-cgm/" subtitle="A Data-Driven Guide to Reinventing Yourself After Sixty" img="/img/books/stoic-cgm-v2.jpg" caption="Bridging ancient wisdom and futuristic precision in the pursuit of health." >}}
+{{< book title="The Stoic CGM" link="/books/stoic-cgm/" subtitle="A Data-Driven Guide to Reinventing Yourself" img="/img/books/stoic-cgm-v3.jpg" caption="Bridging ancient wisdom and futuristic precision in the pursuit of health." >}}
 {{< book title="Misaligned" link="/books/misaligned/" subtitle="Right Subject, Wrong Adjective, Disastrous Result" img="/img/books/misaligned-v2.jpg" caption="Navigating the gap between intention and outcome." >}}
 {{< book title="Letters" link="/books/letters/" subtitle="Truth Without Outcome" img="/img/books/letters.jpg" caption="A timeless dialogue with the ghosts of history." >}}
 {{< book title="Stoic Backgammon" link="/books/stoic-backgammon/" subtitle="Finding equilibrium through the game of chance." img="/img/books/stoic-backgammon.jpg" caption="Finding the still point in a game of chance." >}}
