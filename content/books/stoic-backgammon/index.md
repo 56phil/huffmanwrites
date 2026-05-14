@@ -26,59 +26,43 @@ author: "Philip Huffman"
 
 ## The Roll
 
-{{< section-hero desktop="img/articles/sb-the-roll-16x9.webp" mobile="img/articles/sb-the-roll-4x5.webp" alt="Dice mid-roll on the backgammon opening position" caption="The roll: chance announces itself." >}}
+{{< section-hero desktop="img/articles/sb-starting-position 16x9.png" mobile="img/articles/sb-starting-position 4x5.png" alt="Dice mid-roll on the backgammon opening position" caption="The roll: chance announces itself." >}}
 
 ## Interlude I: On Indifference
 
-{{< section-hero desktop="img/articles/sb-interlude-1-16x9.webp" mobile="img/articles/sb-interlude-1-4x5.webp" alt="A single checker standing apart from the board" caption="Indifference is not disengagement; it is clarity." >}}
-
 ## The Dichotomy
 
-{{< section-hero desktop="img/articles/sb-the-dichotomy-16x9.webp" mobile="img/articles/sb-the-dichotomy-4x5.webp" alt="Board split between orderly white and disrupted black" caption="Some things are up to us; others are not." >}}
+{{< section-hero desktop="img/articles/sb-order-disorder 16x9.png" mobile="img/articles/sb-order-disorder 4x5.png" alt="Board split between orderly white and disrupted black" caption="Some things are up to us; others are not." >}}
 
 ## The Anchor
 
-{{< section-hero desktop="img/articles/sb-the-anchor-16x9.webp" mobile="img/articles/sb-the-anchor-4x5.webp" alt="A lone white checker anchored deep in enemy territory" caption="The anchor holds where the storm passes through." >}}
-
 ## Interlude II: On the Inner Citadel
 
-{{< section-hero desktop="img/articles/sb-interlude-2-16x9.webp" mobile="img/articles/sb-interlude-2-4x5.webp" alt="The board viewed through a translucent golden lens" caption="What no one can take is what you have built inside." >}}
+{{< section-hero desktop="img/articles/sb-gtl 16x9.png" mobile="img/articles/sb-gtl 4x5.png" alt="The board viewed through a translucent golden lens" caption="What no one can take is what you have built inside." >}}
 
 ## The Blitz
 
-{{< section-hero desktop="img/articles/sb-the-blitz-16x9.webp" mobile="img/articles/sb-the-blitz-4x5.webp" alt="Aggressive white advance, black checkers scattered" caption="The blitz: speed and pressure as a test of character." >}}
+{{< section-hero desktop="img/articles/sb-awp 16x9.png" mobile="img/articles/sb-awp 4x5.png" alt="Aggressive white advance, black checkers scattered" caption="The blitz: speed and pressure as a test of character." >}}
 
 ## The Back Game
 
-{{< section-hero desktop="img/articles/sb-the-back-game-16x9.webp" mobile="img/articles/sb-the-back-game-4x5.webp" alt="Two white anchors deep, black primes forming" caption="Patience is not passivity; it is disciplined waiting." >}}
-
 ## Interlude III: On Time and the Board
-
-{{< section-hero desktop="img/articles/sb-interlude-3-16x9.webp" mobile="img/articles/sb-interlude-3-4x5.webp" alt="An hourglass beside the board, sand flowing" caption="Time is not the enemy; haste is." >}}
 
 ## The Prime
 
-{{< section-hero desktop="img/articles/sb-the-prime-16x9.webp" mobile="img/articles/sb-the-prime-4x5.webp" alt="Six consecutive blocked points forming a prime wall" caption="The prime: a wall built one point at a time." >}}
+{{< section-hero desktop="img/articles/wpw 16x9.png" mobile="img/articles/wpw 4x5.png" alt="Six consecutive blocked points forming a prime wall" caption="The prime: a wall built one point at a time." >}}
 
 ## The Hit
 
-{{< section-hero desktop="img/articles/sb-the-hit-16x9.webp" mobile="img/articles/sb-the-hit-4x5.webp" alt="A white checker landing on a lone black blot" caption="The hit: consequence made visible." >}}
-
 ## Interlude IV: On Practicing Philosophy
-
-{{< section-hero desktop="img/articles/sb-interlude-4-16x9.webp" mobile="img/articles/sb-interlude-4-4x5.webp" alt="The board reflected perfectly in still water" caption="Philosophy practiced is philosophy lived." >}}
 
 ## The Race
 
-{{< section-hero desktop="img/articles/sb-the-race-16x9.webp" mobile="img/articles/sb-the-race-4x5.webp" alt="Checkers streaming toward their home boards" caption="The race: when calculation replaces confrontation." >}}
-
 ## The Double
-
-{{< section-hero desktop="img/articles/sb-the-double-16x9.webp" mobile="img/articles/sb-the-double-4x5.webp" alt="A doubling cube showing 64 elevated above the board" caption="The double: when the stakes match the courage." >}}
 
 ## The Bear-Off
 
-{{< section-hero desktop="img/articles/sb-the-bear-off-16x9.webp" mobile="img/articles/sb-the-bear-off-4x5.webp" alt="Final checkers poised to exit the board" caption="The bear-off: completion without complacency." >}}
+{{< section-hero desktop="img/articles/sb-twa 16x9.png" mobile="img/articles/sb-twa 4x5.png" alt="Final checkers poised to exit the board" caption="The bear-off: completion without complacency." >}}
 
 ## The Board Is the Teacher
 
