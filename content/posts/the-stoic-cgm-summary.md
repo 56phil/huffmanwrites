@@ -14,7 +14,7 @@ tags:
 
 # *The Stoic CGM*
 
-### A Data-Driven Guide to Reinventing Yourself After Sixty
+### A Data-Driven Guide to Reinventing Yourself
 
 
 ---
