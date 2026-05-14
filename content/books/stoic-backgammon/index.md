@@ -26,7 +26,7 @@ author: "Philip Huffman"
 
 ## The Roll
 
-{{< section-hero desktop="img/articles/sb-starting-position 16x9.png" mobile="img/articles/sb-starting-position 4x5.png" alt="Dice mid-roll on the backgammon opening position" caption="The roll: chance announces itself." >}}
+{{< section-hero desktop="img/articles/sb-starting-position 16x9.png" mobile="img/articles/sb-starting-position 4x5.png" alt="A backgammon board in starting position." caption="The roll: chance announces itself." >}}
 
 ## Interlude I: On Indifference
 
@@ -50,19 +50,19 @@ author: "Philip Huffman"
 
 ## The Prime
 
-{{< section-hero desktop="img/articles/wpw 16x9.png" mobile="img/articles/wpw 4x5.png" alt="Six consecutive blocked points forming a prime wall" caption="The prime: a wall built one point at a time." >}}
+{{< section-hero desktop="img/articles/wpw 16x9.png" mobile="img/articles/wpw 4x5.png" alt="Six consecutive blocked points forming a prime wall" caption="The prime: White built an impassable wall built one point at a time." >}}
 
 ## The Hit
 
 ## Interlude IV: On Practicing Philosophy
-
+{{< section-hero desktop="img/articles/sb-twa 16x9.png" mobile="img/articles/sb-twa 4x5.png" alt="Final checkers poised to exit the board" caption="White has two anchors deep in enemy territory." >}}
 ## The Race
 
 ## The Double
 
 ## The Bear-Off
 
-{{< section-hero desktop="img/articles/sb-twa 16x9.png" mobile="img/articles/sb-twa 4x5.png" alt="Final checkers poised to exit the board" caption="The bear-off: completion without complacency." >}}
+{{< section-hero desktop="img/articles/sb-twa 16x9.png" mobile="img/articles/sb-twa 4x5.png" alt="Final checkers poised to exit the board" caption="White has two anchors deep in enemy teritory." >}}
 
 ## The Board Is the Teacher
 
