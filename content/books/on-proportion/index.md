@@ -7,7 +7,7 @@ description: |
 
   The book treats proportion not as moderation but as judgment — the capacity to sense the true size of an event and to resist the distortions of urgency, outrage, and habit.
 weight: 8
-image: "img/books/on-proportion-v2.jpg"
+image: "img/books/on-proportion-v3.jpg"
 image_desktop: "img/articles/op-16x9.webp"
 image_mobile: "img/articles/op-4x5.webp"
 image_alt: "Intricate gold-filigree vines and flowers climbing and blooming across a massive, oppressive Cold War-era brutalist concrete wall."
