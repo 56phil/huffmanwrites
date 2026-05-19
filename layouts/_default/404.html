@@ -70,16 +70,17 @@
         color: var(--primary);
         border-color: var(--primary);
     }
-    .not-found-subtext a, .not-found-text a {
-        color: #0000EE;
+    /* Non-button links in the text */
+    a:not(.not-found-btn) {
+        color: inherit;
         text-decoration: underline;
     }
-    .not-found-subtext a:visited, .not-found-text a:visited {
-        color: #551A8B;
+    a:not(.not-found-btn):hover {
+        color: blue;
     }
-    /* Traditional Blue/Red link style for the rest of the page if links are added */
-    a:link { color: blue; }
-    a:visited { color: red; }
+    a:not(.not-found-btn):visited:hover {
+        color: red;
+    }
 
     @media (max-width: 600px) {
         .not-found-title { font-size: 5rem; }
