@@ -70,16 +70,16 @@
         color: var(--primary);
         border-color: var(--primary);
     }
-    /* Non-button links in the text */
-    a:not(.not-found-btn) {
-        color: inherit;
+    /* Non-button links in the 404 page */
+    .not-found-container a:not(.not-found-btn) {
+        color: inherit !important;
         text-decoration: underline;
     }
-    a:not(.not-found-btn):hover {
-        color: blue;
+    .not-found-container a:not(.not-found-btn):hover {
+        color: blue !important;
     }
-    a:not(.not-found-btn):visited:hover {
-        color: red;
+    .not-found-container a:not(.not-found-btn):visited:hover {
+        color: red !important;
     }
 
     @media (max-width: 600px) {
