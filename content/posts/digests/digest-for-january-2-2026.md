@@ -4,8 +4,8 @@ description: "Weekly digest: observations, recommendations, and reflections from
 date: 2026-01-02T00:00:00Z
 author: Phil Huffman
 lastmod: 2026-01-02T00:00:00Z
-hero_desktop: "img/articles/4-Reflecting-on-2025-16x9.webp"
-hero_mobile: "img/articles/4-Reflecting-on-2025-4x5.webp"
+hero_desktop: "img/articles/14-mirror_16x9.webp"
+hero_mobile: "img/articles/14-mirror_4x5.webp"
 hero_alt: "An empty marble mirror frame with flowing gold script pouring out instead of a reflection."
 hero_caption: "The truth that won't fit in a mirror must be written."
 tags:

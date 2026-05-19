@@ -4,8 +4,8 @@ description: "Weekly digest: a collection of observations, recommendations, and 
 date: 2026-04-18T00:00:00Z
 author: Philip Huffman
 lastmod: 2026-04-18T00:00:00Z
-hero_desktop: "img/articles/1-The-Gap-19x9.webp"
-hero_mobile: "img/articles/1-The-Gap-4x5.webp"
+hero_desktop: "img/articles/11-pause_16x9.webp"
+hero_mobile: "img/articles/11-pause_4x5.webp"
 hero_alt: "Two classical marble hands almost touching, a frozen gold droplet suspended in the space between them."
 hero_caption: "In the pause between impulse and action, everything lives."
 tags:

@@ -51,10 +51,10 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Pending / Next Actions
 
-### 1. Newsletter Hero Images (20 remaining)
-**Status:** Prompts written, images not generated.  
+### 1. Newsletter Hero Images (15 remaining)
+**Status:** Batch 1 (5 of 20) completed and wired.  
 **File:** `image-assignments.md` lines ~150–380  
-**Action needed:** Generate 20 image pairs (16x9 + 4x5) and place in `static/img/articles/`  
+**Action needed:** Generate remaining 15 image pairs (16x9 + 4x5) and place in `static/img/articles/`  
 **Naming convention:** Continue numbering from 11 (e.g., `11 newsletter-title 16x9.webp`)
 
 ### 2. Wire Newsletter Hero Images
