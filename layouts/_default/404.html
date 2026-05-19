@@ -56,20 +56,31 @@
         font-weight: 500;
         transition: all 0.2s ease;
         font-size: 1rem;
+        background-color: #1a1a1a;
+        color: #ffffff;
+        border: 1px solid #3a3a3c;
     }
-    .not-found-btn.primary {
-        background-color: var(--primary);
-        color: #ffffff !important;
-    }
-    .not-found-btn.secondary {
-        border: 1px solid var(--primary);
-        color: var(--primary);
+    .not-found-btn.primary, .not-found-btn.secondary {
+        background-color: #1a1a1a;
+        color: #ffffff;
     }
     .not-found-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        opacity: 1;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        color: var(--primary);
+        border-color: var(--primary);
     }
+    .not-found-subtext a, .not-found-text a {
+        color: #0000EE;
+        text-decoration: underline;
+    }
+    .not-found-subtext a:visited, .not-found-text a:visited {
+        color: #551A8B;
+    }
+    /* Traditional Blue/Red link style for the rest of the page if links are added */
+    a:link { color: blue; }
+    a:visited { color: red; }
+
     @media (max-width: 600px) {
         .not-found-title { font-size: 5rem; }
         .not-found-text { font-size: 1.2rem; }
