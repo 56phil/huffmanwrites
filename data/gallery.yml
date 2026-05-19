@@ -5,7 +5,7 @@
 - image: /img/articles/18-Endurance-16x9.webp
   title: Endurance
   caption: Quiet persistence, staying with the work
-  link: /posts/weekly-digest-for-may-23-2025/
+  link: /posts/digests/weekly-digest-for-may-23-2025/
 - image: /img/articles/6-fragile-16x9.webp
   title: The Economy is Fragile
   caption: "Resilience is not refusal to break \u2014 it is preparation for the storm."
@@ -39,7 +39,7 @@
   title: 21 Expect the Storm
   caption: Visual accompaniment to the article.
   link: /posts/
-- image: /img/articles/19 Justice.png 16x9.png
+- image: /img/articles/19-Justice-16x9.webp
   title: 19 Justice
   caption: Visual accompaniment to the article.
   link: /posts/civics/when-justice-bends-power-privilege-and-the-price-of-fairness/
@@ -198,4 +198,4 @@
 - image: /img/articles/letters-16x9.webp
   title: letters
   caption: Visual accompaniment to the article.
-  link: /posts/letters-summary/
+  link: /posts/summaries/letters-summary/
