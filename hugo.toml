@@ -68,7 +68,7 @@ pluralizeListTitles = false
   priority = 0.5
 
 [outputs]
-  home = ['HTML', 'RSS']
+  home = ['HTML', 'RSS', 'JSON']
   page = ['HTML']
 
 [menu]
@@ -97,6 +97,11 @@ pluralizeListTitles = false
     name = 'Gallery'
     url = '/gallery/'
     weight = 25
+  [[menu.main]]
+    identifier = 'search'
+    name = 'Search'
+    url = '/search/'
+    weight = 28
   [[menu.main]]
     identifier = 'tags'
     name = 'Tags'

@@ -1,0 +1,65 @@
+{{- define "main" }}
+
+<article class="post-single about-page">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title entry-hint-parent">
+      {{ .Title }}
+    </h1>
+    {{- if .Description }}
+    <div class="post-description">
+      {{ .Description }}
+    </div>
+    {{- end }}
+  </header>
+
+  {{- $headshot := resources.Get "img/phil-headshot.jpg" -}}
+  {{- if $headshot }}
+    {{- $headshotWebp := $headshot.Resize "220x webp q85" -}}
+    <div class="about-headshot">
+      <img src="{{ $headshotWebp.RelPermalink }}" alt="Philip Huffman" width="{{ $headshotWebp.Width }}" height="{{ $headshotWebp.Height }}" loading="eager">
+    </div>
+  {{- end }}
+
+  <div class="post-content md-content">
+    {{ .Content }}
+  </div>
+
+  <footer class="post-footer">
+    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <ul class="post-tags">
+      {{- range ($.GetTerms $tags) }}
+      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
+  </footer>
+</article>
+
+<style>
+  .about-headshot {
+    float: right;
+    shape-outside: circle(50%);
+    margin: 0 0 1.5rem 2rem;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .about-headshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @media (max-width: 600px) {
+    .about-headshot {
+      float: none;
+      margin: 0 auto 1.5rem auto;
+      width: 150px;
+      height: 150px;
+    }
+  }
+</style>
+
+{{- end }}

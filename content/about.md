@@ -1,5 +1,6 @@
 ---
 title: "About Philip Huffman"
+layout: "about"
 description: "Who I am, what I write, and why."
 date: 2026-04-28T00:00:00Z
 author: Philip Huffman
@@ -19,4 +20,4 @@ If you're new here, the best place to start is probably [Unstuck](/posts/unstuck
 
 If you're wondering what I've written, the full catalog is on the [Books](/books/) page.
 
-For inquiries, podcasts, or just to say hello: **phil at huffmanwrites dot org**.
+For inquiries, podcasts, or just to say hello: [phil@huffmanwrites.org](mailto:phil@huffmanwrites.org).
