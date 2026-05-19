@@ -1,0 +1,78 @@
+{{- define "main" -}}
+<div class="not-found-container">
+    <div class="not-found-content">
+        <h1 class="not-found-title">404</h1>
+        <p class="not-found-text">The page you are looking for has wandered off into the void.</p>
+        <p class="not-found-subtext">It might have been moved, deleted, or perhaps it never existed in this realm of thought.</p>
+        
+        <div class="not-found-actions">
+            <a href="/" class="not-found-btn primary">Return Home</a>
+            <a href="/posts/" class="not-found-btn secondary">Explore Writings</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .not-found-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        text-align: center;
+        padding: var(--gap);
+    }
+    .not-found-content {
+        max-width: 600px;
+    }
+    .not-found-title {
+        font-size: 8rem;
+        font-weight: 800;
+        margin: 0;
+        color: var(--primary);
+        line-height: 1;
+        opacity: 0.8;
+    }
+    .not-found-text {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 1rem 0;
+        color: var(--primary);
+    }
+    .not-found-subtext {
+        font-size: 1.1rem;
+        color: var(--secondary);
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+    }
+    .not-found-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .not-found-btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        font-size: 1rem;
+    }
+    .not-found-btn.primary {
+        background-color: var(--primary);
+        color: white;
+    }
+    .not-found-btn.secondary {
+        border: 1px solid var(--primary);
+        color: var(--primary);
+    }
+    .not-found-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        opacity: 0.9;
+    }
+    @media (max-width: 600px) {
+        .not-found-title { font-size: 5rem; }
+        .not-found-text { font-size: 1.2rem; }
+    }
+</style>
+{{- end -}}
