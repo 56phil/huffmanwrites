@@ -4,6 +4,7 @@
 {{- $itemsPerPage := 12 -}}
 {{- $totalItems := len $galleryItems -}}
 {{- $totalPages := add (div (sub $totalItems 1) $itemsPerPage) 1 | int -}}
+{{- $baseURL := (site.GetPage "/gallery").RelPermalink -}}
 
 {{- /* Determine current page from URL path */ -}}
 {{- $currentPage := 1 -}}
@@ -201,9 +202,9 @@
   <nav class="gallery-pagination">
     {{- if gt $currentPage 1 }}
       {{- if eq $currentPage 2 }}
-        <a href="{{ .RelPermalink }}" aria-label="Previous page">&larr; Prev</a>
+        <a href="{{ $baseURL }}" aria-label="Previous page">&larr; Prev</a>
       {{- else }}
-        <a href="{{ .RelPermalink }}page/{{ sub $currentPage 1 }}/" aria-label="Previous page">&larr; Prev</a>
+        <a href="{{ $baseURL }}page/{{ sub $currentPage 1 }}/" aria-label="Previous page">&larr; Prev</a>
       {{- end }}
     {{- else }}
       <span class="disabled">&larr; Prev</span>
@@ -213,14 +214,14 @@
       {{- if eq $i $currentPage }}
         <span class="active">{{ $i }}</span>
       {{- else if eq $i 1 }}
-        <a href="{{ $.RelPermalink }}">{{ $i }}</a>
+        <a href="{{ $baseURL }}">{{ $i }}</a>
       {{- else }}
-        <a href="{{ $.RelPermalink }}page/{{ $i }}/">{{ $i }}</a>
+        <a href="{{ $baseURL }}page/{{ $i }}/">{{ $i }}</a>
       {{- end }}
     {{- end }}
     
     {{- if lt $currentPage $totalPages }}
-      <a href="{{ .RelPermalink }}page/{{ add $currentPage 1 }}/" aria-label="Next page">Next &rarr;</a>
+      <a href="{{ $baseURL }}page/{{ add $currentPage 1 }}/" aria-label="Next page">Next &rarr;</a>
     {{- else }}
       <span class="disabled">Next &rarr;</span>
     {{- end }}
