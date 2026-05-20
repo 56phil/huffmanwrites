@@ -35,10 +35,24 @@
    </header>
 
     {{ if or .Params.image_desktop .Params.image_mobile }}
+    {{- $heroDesktop := .Params.image_desktop -}}
+    {{- $heroMobile := .Params.image_mobile -}}
     <div class="article-hero-container">
         <picture>
-            <source srcset="/{{ .Params.image_mobile }}" media="(max-width: 767px)">
-            <img src="/{{ .Params.image_desktop }}" alt="{{ .Title }} Art" class="responsive-hero-img" loading="eager">
+            {{- with $heroMobile }}
+              {{- $mobileImg := resources.Get . -}}
+              {{- if $mobileImg }}
+                {{- $mobileImg = $mobileImg.Resize "767x webp q80" }}
+                <source srcset="{{ $mobileImg.RelPermalink }}" media="(max-width: 767px)">
+              {{- end }}
+            {{- end }}
+            {{- with $heroDesktop }}
+              {{- $desktopImg := resources.Get . -}}
+              {{- if $desktopImg }}
+                {{- $desktopImg = $desktopImg.Resize "1200x webp q80" }}
+                <img src="{{ $desktopImg.RelPermalink }}" alt="{{ $.Title }} Art" class="responsive-hero-img" loading="eager" width="{{ $desktopImg.Width }}" height="{{ $desktopImg.Height }}">
+              {{- end }}
+            {{- end }}
         </picture>
         <div class="hero-overlay"></div>
     </div>
