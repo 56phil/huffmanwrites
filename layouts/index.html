@@ -43,6 +43,27 @@
     line-height: 1.2;
   }
   .latest-posts { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 0; }
+  .recent-post {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .recent-post:last-child { border-bottom: none; }
+  .recent-post h3 { margin: 0 0 0.25rem 0; font-size: 1.1rem; }
+  .recent-post h3 a { color: var(--primary); }
+  .recent-post time {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .recent-post p {
+    font-size: 0.9rem;
+    color: var(--secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .view-all { margin-top: 1rem; }
+  .view-all a { color: var(--primary); font-size: 0.9rem; }
 </style>
 
 <div class="dashboard">
@@ -67,14 +88,17 @@
   </section>
 
   <section class="latest-posts">
-    <h2>Latest Insights</h2>
-    {{ range first 1 (where .Site.RegularPages "Params.tags" "intersect" (slice "stoic-saturday")) }}
-        <article>
-          <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
-          <time>{{ .Date.Format "2006-01-02" }}</time>
-          <p>{{ .Content }}</p>
-        </article>
+    <h2>Recent Posts</h2>
+    {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
+      <div class="recent-post">
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <time>{{ .Date.Format "January 2, 2006" }}</time>
+        <p>{{ .Summary | plainify | truncate 180 }}</p>
+      </div>
     {{ end }}
+    <div class="view-all">
+      <a href="/posts/">View all posts →</a>
+    </div>
   </section>
 
 </div>
