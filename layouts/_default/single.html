@@ -89,10 +89,18 @@
   </div>
 
   {{- $related := where (where site.RegularPages "Type" "posts") "Permalink" "!=" .Permalink -}}
-  {{- $related = where $related "Params.tags" "intersect" .Params.tags -}}
-  {{- with first 4 $related }}
+  {{- $tagRelated := where $related "Params.tags" "intersect" .Params.tags -}}
+  {{- $sectionRelated := where $related "Section" .Section -}}
+  
+  {{- $finalRelated := $tagRelated -}}
+  {{- if lt (len $finalRelated) 4 -}}
+    {{- $sectionRelated = where $sectionRelated "Permalink" "!=" (index $finalRelated 0).Permalink -}} {{/* Avoid duplicating the first tag match */}}
+    {{- $finalRelated = union $finalRelated $sectionRelated -}}
+  {{- end -}}
+
+  {{- with first 4 $finalRelated }}
   <div class="related-posts">
-    <h3>Related Posts</h3>
+    <h3 class="related-title">Further Reading</h3>
     {{- range . }}
     <div class="related-item">
       <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
