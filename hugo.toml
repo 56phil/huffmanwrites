@@ -4,6 +4,7 @@ locale = 'en-us'
 title = 'Huffman Writes'
 theme = 'PaperMod'
 pluralizeListTitles = false
+disableHugoGeneratorInject = true
 
 [params]
   author = 'Phil Huffman'

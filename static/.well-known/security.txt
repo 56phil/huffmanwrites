@@ -1,0 +1,4 @@
+Contact: mailto:phil@huffmanwrites.org
+Expires: 2027-05-20T00:00:00Z
+Preferred-Languages: en
+Canonical: https://huffmanwrites.org/.well-known/security.txt
