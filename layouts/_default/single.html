@@ -77,6 +77,17 @@
     {{- end }}
   </footer>
 
+  {{- $firstTag := index (.GetTerms "tags") 0 -}}
+  <div class="post-cta">
+    <p>
+      Thanks for reading.
+      {{- if $firstTag }}
+        <a href="{{ $firstTag.Permalink }}">More on {{ $firstTag.LinkTitle | lower }}</a>.
+      {{- end }}
+      <a href="/books/">Browse all books</a> &middot; <a href="/index.xml">RSS feed</a>.
+    </p>
+  </div>
+
   {{- if (.Param "comments") }}
   {{- partial "comments.html" . }}
   {{- end }}

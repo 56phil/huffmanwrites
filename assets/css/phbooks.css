@@ -464,3 +464,19 @@ a:hover {
 a:visited:hover {
     color: red;
 }
+
+/* --- Post CTA --- */
+.post-cta {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--entry);
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--secondary);
+    line-height: 1.6;
+}
+.post-cta a {
+    font-weight: 500;
+}
