@@ -3,7 +3,7 @@
   <link rel="stylesheet" href="{{ . }}">
   {{- end }}
 {{- end }}
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' huffmanwrites.goatcounter.com; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' gc.zgo.at; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data:; font-src 'self' fonts.gstatic.com; connect-src 'self' huffmanwrites.goatcounter.com; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script data-goatcounter="https://huffmanwrites.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <style>
@@ -31,6 +31,8 @@
     transform: translateX(0);
   }
 </style>
+{{- $custom := resources.Get "css/custom.css" | resources.Minify | fingerprint }}
+<link rel="stylesheet" href="{{ $custom.RelPermalink }}" integrity="{{ $custom.Data.Integrity }}">
 {{- $phbooks := resources.Get "css/phbooks.css" | resources.Minify | fingerprint }}
 <link rel="stylesheet" href="{{ $phbooks.RelPermalink }}" integrity="{{ $phbooks.Data.Integrity }}">
 {{- if not .Params.cover.image }}

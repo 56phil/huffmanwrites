@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --font-body: 'Crimson Pro', serif;
+    --font-headings: 'Crimson Pro', serif;
+    --font-ui: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    font-weight: 700;
+}
+
+/* UI elements that should remain Sans-Serif for clarity */
+.navbar, 
+.footer, 
+.social-label, 
+time, 
+.breadcrumb, 
+.pagination, 
+.search-input, 
+.book-badge,
+.phbooks-link {
+    font-family: var(--font-ui);
+}
+
+/* Ensure the main content area specifically uses the body font */
+main, .post-content, .entry-content {
+    font-family: var(--font-body);
+}
+
+/* Specifically for the "Books" section to maintain consistency with our new scholarly look 
+   while overriding some of the inline/phbooks styles if they conflict. */
+.phbooks {
+    font-family: var(--font-body) !important;
+}
