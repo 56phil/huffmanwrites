@@ -88,6 +88,21 @@
     </p>
   </div>
 
+  {{- $related := where (where site.RegularPages "Type" "posts") "Permalink" "!=" .Permalink -}}
+  {{- $related = where $related "Params.tags" "intersect" .Params.tags -}}
+  {{- with first 4 $related }}
+  <div class="related-posts">
+    <h3>Related Posts</h3>
+    {{- range . }}
+    <div class="related-item">
+      <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+      <time>{{ .Date.Format "January 2, 2006" }}</time>
+      <p>{{ .Summary | plainify | truncate 120 }}</p>
+    </div>
+    {{- end }}
+  </div>
+  {{- end }}
+
   {{- if (.Param "comments") }}
   {{- partial "comments.html" . }}
   {{- end }}

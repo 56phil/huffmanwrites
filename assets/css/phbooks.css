@@ -480,3 +480,41 @@ a:visited:hover {
 .post-cta a {
     font-weight: 500;
 }
+
+/* --- Related Posts --- */
+.related-posts {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+.related-posts h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+    color: var(--primary);
+}
+.related-item {
+    margin-bottom: 1.25rem;
+}
+.related-item:last-child {
+    margin-bottom: 0;
+}
+.related-item h4 {
+    margin: 0 0 0.15rem 0;
+    font-size: 1rem;
+}
+.related-item h4 a {
+    color: var(--primary);
+    text-decoration: none;
+}
+.related-item time {
+    font-size: 0.8rem;
+    color: var(--secondary);
+    display: block;
+    margin-bottom: 0.35rem;
+}
+.related-item p {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    line-height: 1.5;
+    margin: 0;
+}
