@@ -1,7 +1,6 @@
 ---
 title: "The Civics Guide"
 description: "A comprehensive exploration of the US Constitution, the Bill of Rights, and the state of American democracy."
-layout: "single"
 ---
 
 Welcome to the **Civics Guide**. This collection of writings is designed to explore the foundational principles of American governance, the critical protections of the Bill of Rights, and the contemporary challenges facing our democratic institutions.
