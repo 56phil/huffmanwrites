@@ -64,6 +64,21 @@
   }
   .view-all { margin-top: 1rem; }
   .view-all a { color: var(--primary); font-size: 0.9rem; }
+  .connect-links {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  .connect-links a {
+    color: var(--secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .connect-links a:hover { color: var(--primary); }
 </style>
 
 <div class="dashboard">
@@ -100,6 +115,11 @@
       <a href="/posts/">View all posts →</a>
     </div>
   </section>
+
+  <div class="connect-links">
+    <a href="https://huffmanwrites.org/index.xml">RSS Feed</a>
+    <a href="https://www.amazon.com/author/philip.huffman">Amazon Author Page</a>
+  </div>
 
 </div>
 

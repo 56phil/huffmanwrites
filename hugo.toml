@@ -43,14 +43,8 @@ disableHugoGeneratorInject = true
     msapplication_TileColor = "#1a1a1a"
 
   [[params.socialIcons]]
-    name = 'Explore Books'
-    url = '/books/'
-  [[params.socialIcons]]
     name = 'rss'
     url = 'https://huffmanwrites.org/index.xml'
-  [[params.socialIcons]]
-    name = 'Latest Posts'
-    url = '/posts/'
   [[params.socialIcons]]
     name = 'amazon'
     url = 'https://www.amazon.com/author/philip.huffman'
