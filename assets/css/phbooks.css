@@ -456,3 +456,11 @@
         width: 60px;
     }
 }
+
+/* --- Global link hover: classic blue/red --- */
+a:hover {
+    color: blue;
+}
+a:visited:hover {
+    color: red;
+}
