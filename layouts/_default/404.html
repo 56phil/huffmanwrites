@@ -56,30 +56,24 @@
         font-weight: 500;
         transition: all 0.2s ease;
         font-size: 1rem;
-        background-color: #1a1a1a;
-        color: #ffffff;
-        border: 1px solid #3a3a3c;
-    }
-    .not-found-btn.primary, .not-found-btn.secondary {
-        background-color: #1a1a1a;
-        color: #ffffff;
+        background-color: var(--primary);
+        color: var(--theme);
+        border: 1px solid var(--primary);
     }
     .not-found-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        color: var(--primary);
-        border-color: var(--primary);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        background-color: var(--secondary);
+        color: var(--theme);
+        border-color: var(--secondary);
     }
     /* Non-button links in the 404 page */
     .not-found-container a:not(.not-found-btn) {
-        color: inherit !important;
+        color: var(--primary);
         text-decoration: underline;
     }
     .not-found-container a:not(.not-found-btn):hover {
-        color: blue !important;
-    }
-    .not-found-container a:not(.not-found-btn):visited:hover {
-        color: red !important;
+        color: var(--secondary);
     }
 
     @media (max-width: 600px) {
