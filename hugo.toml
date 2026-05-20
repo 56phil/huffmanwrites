@@ -84,6 +84,11 @@ disableHugoGeneratorInject = true
     url = '/about/'
     weight = 15
   [[menu.main]]
+    identifier = 'now'
+    name = 'Now'
+    url = '/now/'
+    weight = 16
+  [[menu.main]]
     identifier = 'books'
     name = 'Books'
     url = '/books/'
