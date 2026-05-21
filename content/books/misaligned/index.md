@@ -15,6 +15,7 @@ image_alt: "A dissonant sea of gold-leaf parchment maps shifting in a navy void,
 hero_caption: "A sea of shifting maps, one compass needle holding its direction."
 image_caption: "Navigating the gap between intention and outcome."
 link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/B0GLX9JS3V/"
+lastmod: 2026-05-13
 ---
 ## The Future Is Bright and Full of Possibilities
 
@@ -31,3 +32,4 @@ link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/
 ## Agency, Not Repair
 
 ## Coda: What This Book Is (and Is Not)
+

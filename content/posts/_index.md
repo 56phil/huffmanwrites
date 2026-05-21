@@ -2,6 +2,7 @@
 title: "Writings"
 description: "Explore my thoughts on philosophy, civics, and the art of living."
 layout: "single"
+lastmod: 2026-05-19
 ---
 
 Welcome to my collection of writings. To help you find what you're looking for, I've organized my work into several core pillars.
@@ -29,3 +30,4 @@ Miscellaneous thoughts on AI, geopolitics, and the curiosities of life.
 ## 📅 Periodic Digests
 A chronological archive of my weekly and monthly digests.
 👉 [View Digests](/posts/digests/)
+

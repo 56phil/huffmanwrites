@@ -34,7 +34,7 @@ tags:
 
  #### Behavior Over Strategy
 
- The best strategy is worthless if you can’t stick to it. A simple 60/40 held for decades will beat a “perfect” plan abandoned in the first correction. This is where the Stoic virtures of courage and temperance come in — not financial tricks, but steady character.
+ The best strategy is worthless if you can’t stick to it. A simple 60/40 held for decades will beat a “perfect” plan abandoned in the first correction. This is where the Stoic virtues of courage and temperance come in — not financial tricks, but steady character.
 
  #### The Long View
 

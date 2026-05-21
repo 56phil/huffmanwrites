@@ -1,6 +1,7 @@
 ---
 title: "The Civics Guide"
 description: "A comprehensive exploration of the US Constitution, the Bill of Rights, and the state of American democracy."
+lastmod: 2026-05-20
 ---
 
 Welcome to the **Civics Guide**. This collection of writings is designed to explore the foundational principles of American governance, the critical protections of the Bill of Rights, and the contemporary challenges facing our democratic institutions.
@@ -39,3 +40,4 @@ Reflections on the current state of the union and the fight for a renewed democr
 - [International Rallies in Solidarity with U.S. Rallies](/posts/civics/international-rallies-in-solidarity-with-u-s-rallies/)
 - [How 47 Could Improve](/posts/civics/how-47-could-improve/)
 - [Proud to be Woke](/posts/civics/proud-to-be-woke/)
+

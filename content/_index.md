@@ -1,5 +1,6 @@
 +++
 title = "Mission"
+lastmod = "2026-05-04"
 +++
 
 # Mission Statement

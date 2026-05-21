@@ -1,5 +1,5 @@
 ---
-title: "Weekly Digest for May 2, 2025"
+title: "The Price of Silence in a Corrupt Nation"
 description: "On kleptocracy, corruption, and the cost of staying silent in a failing system."
 date: 2025-05-02T00:00:00Z
 tags: [News]

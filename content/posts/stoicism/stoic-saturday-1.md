@@ -8,6 +8,7 @@ hero_desktop: "img/articles/21-Expect-the-Storm-16x9.webp"
 hero_mobile: "img/articles/21-Expect-the-Storm-4x5.webp"
 hero_alt: "A calm marble figure places a glowing gold block into a simple fortress wall while a navy storm gathers in the distance."
 hero_caption: "You don't build a fortress during the siege. You build it in peace."
+lastmod: 2026-05-19
 ---
 
 "The man who has anticipated the blow is less shaken by it." — Seneca
@@ -32,3 +33,4 @@ You don't build a fortress during the siege. You build it in the peace.
 Identify one event this week that causes you anxiety. Spend ten minutes visualizing it failing completely. Don't stop at the failure; visualize your response to it. Determine the first three steps you will take if the worst happens.
 
 See you next Saturday. — Phil
+

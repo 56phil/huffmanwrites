@@ -15,6 +15,7 @@ image_alt: "A shattered Parian marble sphere floating in a navy and gold void, i
 hero_caption: "Kintsugi in marble: fragments fused with gold into a new whole."
 image_caption: "Integration through resilience: the art of becoming whole."
 link: "https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2GLKKCQ/"
+lastmod: 2026-05-13
 ---
 ## Personal Growth
 
@@ -35,3 +36,4 @@ link: "https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2G
 ## Endurance
 
 ## Temperance
+

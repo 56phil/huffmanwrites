@@ -16,8 +16,10 @@ image_mobile: "img/articles/rtr-4x5.webp"
 image_alt: "A fragile white marble seedling growing inside an ornate gold lantern, providing a sanctuary of warm light amidst a chaotic void of digital glitch noise."
 hero_caption: "A marble seedling sheltered in a golden lantern amidst digital chaos."
 image_caption: "Cultivating character and agency within a fragmented world."
+lastmod: 2026-05-13
 ---
 
 # Raise'm Right
 
 [Buy on Amazon](https://www.amazon.com)
+

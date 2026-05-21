@@ -16,6 +16,7 @@ hero_caption: "An obsidian board in the void, one checker balanced on its edge."
 image_caption: "Finding the still point in a game of chance."
 link: "https://www.amazon.com/dp/B0GXW6KRDH/"
 author: "Philip Huffman"
+lastmod: 2026-05-14
 ---
 
 ## **Copyright**
@@ -79,3 +80,4 @@ author: "Philip Huffman"
 ## Answers to Exercises
 
 ## Colophon
+

@@ -63,7 +63,7 @@ tags:
 ---
  **4.** Which 1830 U.S. law led to the forced relocation of tens of thousands of Indigenous people from their ancestral lands?
 
-  Show answer The *Indian Removal Act*, signed by President Andrew Jackson — resulting in the *Trail of Tears*.  
+  Show answer: The *Indian Removal Act*, signed by President Andrew Jackson — resulting in the *Trail of Tears*.  
 
 ---
  **5.** Name one major way Native peoples resisted cultural erasure after European colonization.

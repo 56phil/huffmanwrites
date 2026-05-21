@@ -15,6 +15,7 @@ image_alt: "An ascending spiral of floating ancient papyrus scrolls with glowing
 hero_caption: "Scrolls ascending through the void — a dialogue across time."
 image_caption: "A timeless dialogue with the ghosts of history."
 link: "https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4N7/"
+lastmod: 2026-05-13
 ---
 ## Prologue
 
@@ -27,3 +28,4 @@ link: "https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4
 ## Leadership & Power
 
 ## Art & Interior Strength
+

@@ -1,6 +1,7 @@
 ---
 title: "Books"
 description: "The works of Philip Huffman."
+lastmod: 2026-05-19
 ---
 
 The following is a comprehensive list of my books, exploring the intersections of Stoicism, neurodivergence, and the human experience.
@@ -14,3 +15,4 @@ The following is a comprehensive list of my books, exploring the intersections o
 {{< book title="Stoic Backgammon" link="/books/stoic-backgammon/" subtitle="Finding equilibrium through the game of chance." img="/img/books/stoic-backgammon.jpg" caption="Finding the still point in a game of chance." >}}
 {{< book title="On Proportion" link="/books/on-proportion/" subtitle="Balance and measure in the intellectual life." img="/img/books/on-proportion-v3.jpg" caption="The organic growth of the spirit against the cold architecture of an era." >}}
 {{< book title="Raise'm Right" link="/books/raisem-right/" subtitle="Raising Children of Character, Judgment, and Agency in the 21st Century" img="/img/books/raisem-right.jpg" caption="Cultivating character and agency within a fragmented world." >}}
+

@@ -20,7 +20,7 @@ I’m not chasing a fantasy of elsewhere. I’m chasing a better use of my remai
 
  What I want is simple. I want mornings that begin with a short walk to coffee, not a long drive to errands. I want a budget that buys time—time to write, read, and call the people I love—rather than buying square footage I barely use. I want streets that reward curiosity, not speed. Albania, from Tirana’s café lanes to the Adriatic towns, looks like a place built for human pace.
 
- After decades of effort just to stay alive, my priorities have shifted. I’m no longer optimizing for for simple existance. I’m optimizing for clarity, for dignity in daily life, and for space to write without distraction. I don’t need more things; I need more time. I don’t need a bigger footprint; I need a simpler one.
+ After decades of effort just to stay alive, my priorities have shifted. I'm no longer optimizing for simple existence. I'm optimizing for clarity, for dignity in daily life, and for space to write without distraction. I don’t need more things; I need more time. I don’t need a bigger footprint; I need a simpler one.
 
  America has its advantages—no one disputes that—but affordability, safety, and pace aren’t among them. The math of retirement in the U.S. rarely adds up unless you’re willing to work longer than your health allows or live smaller than your soul can stand. I’m not interested in either bargain. Albania seems to offer another way.
 

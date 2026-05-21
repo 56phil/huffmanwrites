@@ -14,6 +14,7 @@ image_alt: "A cinematic portrait of Marcus Aurelius in Parian marble, highlighte
 hero_caption: "Marcus Aurelius in marble and gold — the steady gaze of public virtue."
 image_caption: "The enduring discipline of the public man."
 link: "https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/"
+lastmod: 2026-05-11
 ---
 ## Foundations
 
@@ -24,3 +25,4 @@ link: "https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/"
 ## The Value of Virtue
 
 ## Letters to Future Citizens
+

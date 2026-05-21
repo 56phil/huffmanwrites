@@ -8,6 +8,7 @@ hero_desktop: "img/articles/22-Negative-Space-16x9.webp"
 hero_mobile: "img/articles/22-Negative-Space-4x5.webp"
 hero_alt: "A seated marble figure contemplates a deliberate empty space amid faint gold outlines of a home, work, money, and family."
 hero_caption: "Negative space teaches us what remains when certainty is removed."
+lastmod: 2026-05-19
 ---
 
 ---
@@ -34,3 +35,4 @@ Do not dwell on the grief; instead, focus on the logistics of your response. Ask
 Write down the answer. Then, let the image go and return to your day, carrying the quiet relief of someone who has already looked at the shadow and found it manageable.
 
 See you next Saturday. — Phil
+
