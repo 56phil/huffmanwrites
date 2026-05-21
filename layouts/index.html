@@ -90,6 +90,30 @@
     line-height: 1.5;
     margin: 0;
   }
+  .now-card {
+    background: var(--entry);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  .now-card p {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--primary);
+  }
+  .view-all-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .view-all-link:hover {
+    text-decoration: underline;
+  }
   .view-all { margin-top: 1rem; }
   .view-all a { color: var(--primary); font-size: 0.9rem; }
   .connect-links {
@@ -134,6 +158,14 @@
         <h3>Book Summaries</h3>
         <p>Condensed insights from influential texts and critical reviews.</p>
       </a>
+    </div>
+  </section>
+
+  <section class="now-teaser">
+    <h2>Right Now</h2>
+    <div class="now-card">
+      <p>Currently researching <strong>Raise'm Right</strong>: raising children of character, judgment, and agency in the 21st century.</p>
+      <a href="/now/" class="view-all-link">Read more about what I'm doing &rarr;</a>
     </div>
   </section>
 
