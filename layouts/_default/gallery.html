@@ -22,6 +22,13 @@
 {{- $pageItems := first $itemsPerPage (after $offset $galleryItems) -}}
 
 <style>
+  /* GLightbox Overrides to match theme */
+  .glightbox-container {
+    --glightbox-color-bg: #1a1a1a;
+    --glightbox-color-text: #efefef;
+    --glightbox-color-accent: var(--primary);
+  }
+
   .gallery-container {
     max-width: 1100px;
     margin: 0 auto;
@@ -184,9 +191,13 @@
         {{- $imgResource := resources.Get $imgPath -}}
         {{- if $imgResource -}}
           {{- $thumb := $imgResource.Resize "600x webp q75" -}}
-          <img src="{{ $thumb.RelPermalink }}" alt="{{ .title }}" class="gallery-img" loading="lazy" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}">
+          <a href="{{ $imgResource.RelPermalink }}" class="glightbox" data-glightbox-title="{{ .title }}" data-glightbox-description="{{ $caption }}">
+            <img src="{{ $thumb.RelPermalink }}" alt="{{ .title }}" class="gallery-img" loading="lazy" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}">
+          </a>
         {{- else -}}
-          <img src="{{ $imgSrc }}" alt="{{ .title }}" class="gallery-img" loading="lazy">
+          <a href="{{ $imgSrc }}" class="glightbox" data-glightbox-title="{{ .title }}" data-glightbox-description="{{ $caption }}">
+            <img src="{{ $imgSrc }}" alt="{{ .title }}" class="gallery-img" loading="lazy">
+          </a>
         {{- end -}}
       </div>
       <div class="gallery-content">
@@ -231,6 +242,19 @@
   <div style="margin-top: 3rem;">
     {{ .Content }}
   </div>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      GLightbox({
+        selector: '.glightbox',
+        touchNavigation: true,
+        loop: true
+      });
+    });
+  </script>
+
 </div>
 
 {{ end }}
