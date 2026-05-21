@@ -50,7 +50,7 @@
               {{- $desktopImg := resources.Get . -}}
               {{- if $desktopImg }}
                 {{- $desktopImg = $desktopImg.Resize "1200x webp q80" }}
-                <img src="{{ $desktopImg.RelPermalink }}" alt="{{ $.Title }} Art" class="responsive-hero-img" loading="eager" width="{{ $desktopImg.Width }}" height="{{ $desktopImg.Height }}">
+                <img src="{{ $desktopImg.RelPermalink }}" alt="{{ $.Title }} Art" class="responsive-hero-img" loading="eager" width="{{ $desktopImg.Width }}" height="{{ $desktopImg.Height }}" fetchpriority="high">
               {{- end }}
             {{- end }}
         </picture>

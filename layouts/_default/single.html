@@ -40,7 +40,7 @@
       {{- with $heroMobile }}
       <source srcset="/{{ $heroMobile }}" media="(max-width: 767px)">
       {{- end }}
-      <img src="/{{ $heroDesktop }}" alt="{{ $.Params.hero_alt | default $.Title }}" class="post-hero-img" loading="eager">
+      <img src="/{{ $heroDesktop }}" alt="{{ $.Params.hero_alt | default $.Title }}" class="post-hero-img" loading="eager" fetchpriority="high">
     </picture>
     {{- with $.Params.hero_caption }}
     <p class="post-hero-caption">{{ . }}</p>
