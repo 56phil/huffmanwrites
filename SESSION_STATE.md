@@ -51,6 +51,16 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Fixed spelling/grammar in 8 posts (doubled words, typos, missing colon, wrong title)
 - Added `fetchpriority="high"` to hero images in `single.html` and `books/single.html`
 - Updated SESSION_STATE.md to reflect current project reality
+- Updated 5 book covers from LaTeX cover/assets/base.png sources (Stoic Citizen, Unstuck, Stoic CGM, Misaligned, On Proportion); Hugo serves all as WebP via book.html shortcode
+
+### Civics Essay — May 21, 2026
+- Added `content/posts/civics/corruption-at-the-summit.md`
+  - Title: "Corruption at the Summit: When Public Power Serves Private Gain"
+  - Approx. 2,300-word researched civics essay on high-level government corruption
+  - Includes clear thesis, structured supporting argument, conclusion, and APA-style sources
+  - Sources include Transparency International U.S., OECD, Pew Research Center, World Bank Worldwide Governance Indicators, and Congressional Research Service on the Supreme Court ethics code
+- Added the new essay to `content/posts/civics/_index.md` under "Justice and Liberty"
+- Verified with `hugo --gc --minify`; build completed successfully with only existing Hugo deprecation warnings
 
 ---
 
@@ -60,9 +70,16 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 **Status:** All 19 newsletter/digest posts have hero images wired. Done.
 
 ### 2. Book Cover Refresh
-**Status:** Discussion started but not finalized  
-**Open question:** Should existing book covers be regenerated in the marble/gold/navy style for visual consistency?  
-**Note:** Current book covers are functional. Hero images use the new aesthetic.
+**Status:** Resolved — May 21, 2026  
+**Action:** Updated 5 book covers from latest LaTeX repo `cover/assets/base.png` sources:
+- The Stoic Citizen: `tsc/cover/assets/base.png` → `assets/img/books/stoic-citizen-v2.jpg`
+- Unstuck: `unstuck/cover/assets/base.png` → `assets/img/books/unstuck-v3.jpg`
+- The Stoic CGM: `cgm/cover/assets/base.png` → `assets/img/books/stoic-cgm-v3.jpg`
+- Misaligned: `Misaligned/cover/assets/base.png` → `assets/img/books/misaligned-v2.jpg`
+- On Proportion: `proportion/cover/assets/base.png` → `assets/img/books/on-proportion-v3.jpg`
+**LaTeX repo root:** `/Users/prh/Developer/LaTeX/AllMyBooks/`
+**Covers served as WebP:** Hugo's `book.html` shortcode processes source JPGs through `resources.Get` + `Resize "600x webp"`, so all book covers are served as `.webp` at build time.
+**Remaining books** (Letters, Stoic Backgammon, A Life Made Whole, Raise'm Right): No `base.png` in their LaTeX repos — covers left untouched.
 
 ### 3. `all-my-books` Page
 **Status:** Kept, not deleted  
@@ -88,7 +105,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - `static/img/articles/` — article/newsletter hero images; use WebP for new hero assets
 
 ### Build
-- `hugo --minify` builds cleanly (165 pages, 0 errors)
+- `hugo --gc --minify` builds cleanly (170 pages, 0 errors)
 - Hugo v0.161.1+extended
 
 ---
@@ -108,7 +125,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 ### Books (9)
 unstuck, life-made-whole, stoic-citizen, stoic-cgm, misaligned, letters, stoic-backgammon, on-proportion, raisem-right
 
-### Standalone Articles (~35)
+### Standalone Articles (~36)
 15 with hero images wired. 20 without (some may never need them).
 
 ### Newsletters (19)
@@ -142,4 +159,4 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 ---
 
 ## Last Updated
-2026-05-21 (CSP fix, lastmod on all content, spelling/grammar fixes, fetchpriority on heroes, newsletter hero images confirmed complete)
+2026-05-21 (CSP fix, lastmod on all content, spelling/grammar fixes, fetchpriority on heroes, newsletter hero images confirmed complete, 5 book covers refreshed from LaTeX base.png sources, new researched civics essay on high-level corruption added with APA sources)

@@ -29,6 +29,7 @@ Analysis of how these laws translate into lived reality and the erosion of civil
 - [The Erosion of Liberty: How We Got Here and What We Must Do About It](/posts/civics/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it/)
 - [When Justice Bends: Power, Privilege, and the Price of Fairness](/posts/civics/when-justice-bends-power-privilege-and-the-price-of-fairness/)
 - [The Price of Silence in a Corrupt Nation](/posts/civics/the-price-of-silence-in-a-corrupt-nation/)
+- [Corruption at the Summit: When Public Power Serves Private Gain](/posts/civics/corruption-at-the-summit/)
 
 ## 📢 Current Events & Democracy
 Reflections on the current state of the union and the fight for a renewed democratic spirit.
@@ -40,4 +41,3 @@ Reflections on the current state of the union and the fight for a renewed democr
 - [International Rallies in Solidarity with U.S. Rallies](/posts/civics/international-rallies-in-solidarity-with-u-s-rallies/)
 - [How 47 Could Improve](/posts/civics/how-47-could-improve/)
 - [Proud to be Woke](/posts/civics/proud-to-be-woke/)
-
