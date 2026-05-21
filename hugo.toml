@@ -35,8 +35,8 @@ disableHugoGeneratorInject = true
 
   [params.assets]
     favicon = "favicon.ico"
-    sendfox_list_id = "YOUR_LIST_ID"
-    sendfox_email = "YOUR_EMAIL"
+    sendfox_list_id = "primary"
+    sendfox_email = "philip.r.huffman"
     favicon16x16 = "favicon.ico"
     favicon32x32 = "favicon.ico"
     apple_touch_icon = "apple-touch-icon.png"
