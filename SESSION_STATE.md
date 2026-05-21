@@ -11,7 +11,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
-## Completed (This Session)
+## Completed (Previous Sessions)
 
 ### Hero Images — Articles
 - **10 article hero image pairs** delivered to `static/img/articles/`
@@ -36,38 +36,35 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - All 9 `{{< book >}}` shortcodes in `content/books/_index.md` have `caption="..."`
 
 ### Image Assignments
-- Master doc: `image-assignments.md` (29 assignments: 10 articles + 20 newsletters)
-- 10 article pairs DONE and wired as WebP
-- **20 newsletter pairs NOT YET generated**
+- All article hero image pairs generated and wired as WebP
+- All newsletter hero image pairs generated and wired as WebP
+- `hero-image-workflow.md` skill in `skills/` documents generation conventions
 
-### Maintenance — May 11, 2026
-- Added `scripts/check_site.py` for frontmatter validation and built internal-link checks.
-- Added `scripts/linkcheck_allowlist.txt` for known legacy same-domain links whose target articles are not currently present.
-- Converted existing article/book hero images in `static/img/articles/` from PNG to WebP; references in content now use `.webp`.
-- Kept PaperMod language template calls on `.Language.LanguageDirection` and `.Language.LanguageCode` for GitHub Actions compatibility with Hugo 0.147.0.
-- Added `static/favicon.svg` so the configured mask icon resolves.
+### Content Cleanup
+- Deleted 7 empty non-Constitution stubs
+- Wrote content for 9 Constitution stubs
+- Kept `all-my-books.md` as functional alternate entry point to `/books/`
+
+### Maintenance — May 21, 2026
+- Fixed CSP `form-action` to allow SendFox newsletter signups
+- Added `lastmod` frontmatter to all 26 content files missing it (git-based dates)
+- Fixed spelling/grammar in 8 posts (doubled words, typos, missing colon, wrong title)
+- Added `fetchpriority="high"` to hero images in `single.html` and `books/single.html`
+- Updated SESSION_STATE.md to reflect current project reality
 
 ---
 
 ## Pending / Next Actions
 
-### 1. Newsletter Hero Images (15 remaining)
-**Status:** Batch 1 (5 of 20) completed and wired.  
-**File:** `image-assignments.md` lines ~150–380  
-**Action needed:** Generate remaining 15 image pairs (16x9 + 4x5) and place in `static/img/articles/`  
-**Naming convention:** Continue numbering from 11 (e.g., `11 newsletter-title 16x9.webp`)
+### 1. Newsletter Hero Images
+**Status:** All 19 newsletter/digest posts have hero images wired. Done.
 
-### 2. Wire Newsletter Hero Images
-**Status:** Layout ready (`layouts/_default/single.html`), but no frontmatter yet  
-**Action needed:** After images arrive, add `hero_desktop`, `hero_mobile`, `hero_alt`, `hero_caption` to all 20 newsletter posts  
-**Note:** Use `replace " " "%20"` in template for filenames with spaces (already implemented)
-
-### 3. Book Cover Refresh
+### 2. Book Cover Refresh
 **Status:** Discussion started but not finalized  
 **Open question:** Should existing book covers be regenerated in the marble/gold/navy style for visual consistency?  
 **Note:** Current book covers are functional. Hero images use the new aesthetic.
 
-### 4. `all-my-books` Page
+### 3. `all-my-books` Page
 **Status:** Kept, not deleted  
 **Note:** Renders via `book_catalog` shortcode. Duplicates `/books/` but serves as alternate entry point. No action unless user wants to consolidate.
 
@@ -76,24 +73,23 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 ## Architecture Notes
 
 ### Key Layouts
-- `layouts/_default/single.html` — all posts (articles + newsletters). Added hero picture block.
-- `layouts/books/single.html` — book detail pages (separate from default)
+- `layouts/_default/single.html` — all posts (articles + newsletters). Hero picture block with `fetchpriority="high"`.
+- `layouts/books/single.html` — book detail pages with hero image + `fetchpriority="high"`
 - `layouts/books/section.html` — book listing
 - `layouts/shortcodes/book.html` — individual book cover in catalog
 - `layouts/shortcodes/book_catalog.html` — grid of all books
+- `layouts/partials/extend_head.html` — CSP headers, GoatCounter analytics, OG image fallback, phbooks custom CSS (SendFox form-action whitelisted in CSP)
 
 ### CSS File
-- `assets/css/phbooks.css` — custom styles. Post-hero classes added this session.
+- `assets/css/phbooks.css` — custom styles (post-hero, book-caption, hero-caption, book-media classes)
 
 ### Image Directories
 - `static/img/books/` — book covers
 - `static/img/articles/` — article/newsletter hero images; use WebP for new hero assets
 
 ### Build
-- `hugo --minify` builds cleanly (144 pages, 0 errors)
-- `scripts/check_site.py` passes after `hugo --minify`
+- `hugo --minify` builds cleanly (165 pages, 0 errors)
 - Hugo v0.161.1+extended
-- Local Hugo 0.161+ emits PaperMod language deprecation warnings, but GitHub Actions currently uses Hugo 0.147.0 and requires the older APIs.
 
 ---
 
@@ -112,11 +108,11 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 ### Books (9)
 unstuck, life-made-whole, stoic-citizen, stoic-cgm, misaligned, letters, stoic-backgammon, on-proportion, raisem-right
 
-### Standalone Articles (~41 after cleanup)
-10 with hero images wired. 31 without (some may never need them).
+### Standalone Articles (~35)
+15 with hero images wired. 20 without (some may never need them).
 
-### Newsletters (20)
-None with hero images yet.
+### Newsletters (19)
+All 19 have hero images wired.
 
 ### Constitution Series (9, all written)
 First Amendment (full essay), Constitution overview, Constitution's Legacy, Second, Third, Fourth, Seventh, Eighth, Fourteenth.
@@ -128,9 +124,11 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 - Tone: Personal stakes + historical context + contemporary urgency. Not yelling, not lecturing. Think *with* the reader.
 - First Amendment gets full essay length; narrower amendments get shorter explainers.
 - `hero_caption` for hero images, `image_caption` for book covers. Never mix them.
-- Use WebP for new hero images unless there is a specific reason not to.
+- Use WebP for new hero images.
 - Keep `all-my-books.md` as alternate entry point.
 - Delete empty stubs unless Constitution-related.
+- Gallery link hover colors (`blue`/`red`) are intentional -- do not suggest changing them.
+- Always check for spelling/grammar errors before committing and pushing.
 
 ---
 
@@ -144,4 +142,4 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 ---
 
 ## Last Updated
-2026-05-11 (site maintenance: WebP heroes, validation/link checks, CI-compatible Hugo language APIs)
+2026-05-21 (CSP fix, lastmod on all content, spelling/grammar fixes, fetchpriority on heroes, newsletter hero images confirmed complete)
