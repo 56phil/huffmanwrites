@@ -62,6 +62,15 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Added the new essay to `content/posts/civics/_index.md` under "Justice and Liberty"
 - Verified with `hugo --gc --minify`; build completed successfully with only existing Hugo deprecation warnings
 
+### Hermes Essay — May 21, 2026
+- Added `content/posts/essays/optimal-use-of-hermes.md`
+  - Title: "The Optimal Use of Hermes: From Tool to Editorial Operation"
+  - Approx. 2,200-word essay on the mental model shift from treating AI as a drafting assistant to treating a persistent AI agent as an editorial operation
+  - Covers skills feedback loop, delegation judgment, cron autonomy, and the unchanged limits of AI
+  - Builds on the earlier "On AI as a Writing Assistant" essay with practical detail from weeks of Hermes use
+  - Auto-listed by PaperMod section pages — no manual _index.md entries needed
+- Verified with `hugo --minify`; build 173 pages, 0 errors
+
 ---
 
 ## Pending / Next Actions
@@ -159,4 +168,4 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 ---
 
 ## Last Updated
-2026-05-21 (CSP fix, lastmod on all content, spelling/grammar fixes, fetchpriority on heroes, newsletter hero images confirmed complete, 5 book covers refreshed from LaTeX base.png sources, new researched civics essay on high-level corruption added with APA sources)
+2026-05-21 (CSP fix, lastmod on all content, spelling/grammar fixes, fetchpriority on heroes, newsletter hero images complete, 5 book covers refreshed from LaTeX base.png sources, researched civics essay on high-level corruption, essay on optimal use of Hermes Agent)
