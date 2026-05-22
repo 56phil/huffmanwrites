@@ -81,6 +81,11 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Findings: 6 fabrications (invented robot "Shumana", fabricated Stanford Cart developers, fake RAND report author, wrong first name for Geoffrey Hinton, hallucinated co-author names in Nature reference), wrong paper cited, wrong ages for Minsky/McCarthy, 27 missing references
 - Report saved to `/Users/prh/Vault/_Inbox/citation-validation-2026-05-21.md` (Vault, not the Hugo project)
 
+### Fix: AI.md Metadata + Sources Frontmatter — May 21, 2026
+- `content/posts/essays/AI.md` was committed with content from the Hermes essay instead of the AI history essay. Overwritten with correct AI history content and proper Hugo frontmatter.
+- `content/posts/essays/sources-optimal-use-of-hermes.md` was missing Hugo frontmatter entirely. Added title, description, date, author, lastmod, tags.
+- Hugo build verified clean; committed and pushed as `b9509b5`.
+
 ---
 
 ## Pending / Next Actions
