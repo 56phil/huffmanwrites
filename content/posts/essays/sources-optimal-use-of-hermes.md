@@ -1,3 +1,17 @@
+---
+title: "Sources: The Optimal Use of Hermes"
+description: "APA-citable sources and citation mapping for the essay on working with Hermes Agent."
+date: 2026-05-21T00:00:00Z
+author: Phil Huffman
+lastmod: 2026-05-21T00:00:00Z
+tags:
+  - ai
+  - essays
+  - sources
+  - tools
+  - writing
+---
+
 # APA-Citable Sources for "The Optimal Use of Hermes"
 
 Below are formatted APA citations organized by which claim in the essay they support. Sources marked [CONFIRMED] were verified via direct API lookups. Sources marked [TRAINING] are drawn from the agent's pretraining knowledge of well-known, highly-cited academic papers.
