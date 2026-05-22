@@ -45,6 +45,11 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Wrote content for 9 Constitution stubs
 - Kept `all-my-books.md` as functional alternate entry point to `/books/`
 
+### Maintenance — May 22, 2026
+- Replaced `assets/img/books/on-proportion-v3.jpg` and `unstuck-v3.jpg` with updated cover images
+- Rebuilt with `hugo --minify`; Hugo regenerated webp versions with new hashes for both books
+- No gallery or template changes needed — book shortcodes use `resources.Get` to auto-process source JPGs
+
 ### Maintenance — May 21, 2026
 - Fixed CSP `form-action` to allow SendFox newsletter signups
 - Added `lastmod` frontmatter to all 26 content files missing it (git-based dates)
