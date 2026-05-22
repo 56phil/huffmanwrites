@@ -86,6 +86,10 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - `content/posts/essays/sources-optimal-use-of-hermes.md` was missing Hugo frontmatter entirely. Added title, description, date, author, lastmod, tags.
 - Hugo build verified clean; committed and pushed as `b9509b5`.
 
+### Unpublish: AI.md — May 21, 2026
+- Set `draft: true` on `content/posts/essays/AI.md` at user request — the essay contains several factual errors (fabricated robot name, wrong developer names, hallucinated reference author names, etc.). Unpublished until corrections can be applied.
+- Committed and pushed as `6b5e42e`.
+
 ---
 
 ## Pending / Next Actions
