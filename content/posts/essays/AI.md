@@ -4,6 +4,7 @@ description: "A comprehensive history of AI from its conceptual precursors throu
 date: 2026-05-21T00:00:00Z
 author: Phil Huffman
 lastmod: 2026-05-21T00:00:00Z
+draft: true
 tags:
   - ai
   - history
