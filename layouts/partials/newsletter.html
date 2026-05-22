@@ -1,12 +1,8 @@
 <div class="newsletter-signup">
   <h3>Stay Informed</h3>
-  <p>Join my mailing list for monthly reflections on philosophy, civics, and the pursuit of a well-lived life.</p>
+  <p>Join my mailing list for weekly reflections on philosophy, civics, and the pursuit of a well-lived life.</p>
   
-  <form action="https://{{ .Site.Params.assets.sendfox_email }}.sendfox.com/subscribe" method="POST" class="newsletter-form">
-    <input type="hidden" name="list" value="{{ .Site.Params.assets.sendfox_list_id }}">
-    <input type="email" name="email" placeholder="Your email address..." required>
-    <button type="submit" class="btn-primary">Subscribe</button>
-  </form>
+  <a href="https://sendfox.com/form/1xlpdz/m86kl8" class="btn-primary newsletter-cta">Subscribe</a>
 </div>
 
 <style>
@@ -31,31 +27,19 @@
     margin-bottom: 1.5rem;
     line-height: 1.6;
   }
-  .newsletter-form {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .newsletter-form input {
-    padding: 0.8rem 1rem;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--code-bg);
-    color: white;
-    width: 250px;
-  }
-  .newsletter-form .btn-primary {
-    padding: 0.8rem 1.5rem;
+  .newsletter-cta {
+    display: inline-block;
+    padding: 0.8rem 2rem;
     background: var(--primary);
     color: var(--theme);
     border: none;
     border-radius: 6px;
     font-weight: 600;
-    cursor: pointer;
+    text-decoration: none;
     transition: opacity 0.2s ease;
+    font-size: 1rem;
   }
-  .newsletter-form .btn-primary:hover {
+  .newsletter-cta:hover {
     opacity: 0.9;
   }
 </style>
