@@ -1,5 +1,6 @@
 ---
 title: "On Proportion"
+subtitle: "Growing up with the Cold War"
 description: |
   Scheduled for release June 16, 2026.
 

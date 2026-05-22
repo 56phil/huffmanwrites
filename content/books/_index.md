@@ -13,6 +13,6 @@ The following is a comprehensive list of my books, exploring the intersections o
 {{< book title="Misaligned" link="/books/misaligned/" subtitle="Right Subject, Wrong Adjective, Disastrous Result" img="/img/books/misaligned-v2.jpg" caption="Navigating the gap between intention and outcome." >}}
 {{< book title="Letters" link="/books/letters/" subtitle="Truth Without Outcome" img="/img/books/letters.jpg" caption="A timeless dialogue with the ghosts of history." >}}
 {{< book title="Stoic Backgammon" link="/books/stoic-backgammon/" subtitle="Finding equilibrium through the game of chance." img="/img/books/stoic-backgammon.jpg" caption="Finding the still point in a game of chance." >}}
-{{< book title="On Proportion" link="/books/on-proportion/" subtitle="Balance and measure in the intellectual life." img="/img/books/on-proportion-v3.jpg" caption="The organic growth of the spirit against the cold architecture of an era." >}}
+{{< book title="On Proportion" link="/books/on-proportion/" subtitle="Growing up with the Cold War" img="/img/books/on-proportion-v3.jpg" caption="The organic growth of the spirit against the cold architecture of an era." >}}
 {{< book title="Raise'm Right" link="/books/raisem-right/" subtitle="Raising Children of Character, Judgment, and Agency in the 21st Century" img="/img/books/raisem-right.jpg" caption="Cultivating character and agency within a fragmented world." >}}
 

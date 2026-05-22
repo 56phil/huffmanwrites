@@ -49,6 +49,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Replaced `assets/img/books/on-proportion-v3.jpg` and `unstuck-v3.jpg` with updated cover images
 - Rebuilt with `hugo --minify`; Hugo regenerated webp versions with new hashes for both books
 - No gallery or template changes needed — book shortcodes use `resources.Get` to auto-process source JPGs
+- Added subtitle "Growing up with the Cold War" to On Proportion: regenerated cover from LaTeX (`cover.md` subtitle field), updated site cover JPG, added `subtitle:` frontmatter to book detail page (`content/books/on-proportion/index.md`), updated catalog shortcode in `content/books/_index.md`
 
 ### Maintenance — May 21, 2026
 - Fixed CSP `form-action` to allow SendFox newsletter signups
