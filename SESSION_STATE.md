@@ -71,6 +71,16 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
   - Auto-listed by PaperMod section pages — no manual _index.md entries needed
 - Verified with `hugo --minify`; build 173 pages, 0 errors
 
+### Additional Essays — Later May 21, 2026
+- Committed and pushed `content/posts/essays/AI.md` (AI history essay, ~4,370 words)
+- Committed and pushed `content/posts/essays/sources-optimal-use-of-hermes.md` (sources/companion to the Hermes essay)
+- Both added in commit `acfda65`; push to `main`
+
+### Citation Validation — May 21, 2026
+- Ran full citation validation pass on the AI history essay (`content/posts/essays/AI.md`)
+- Findings: 6 fabrications (invented robot "Shumana", fabricated Stanford Cart developers, fake RAND report author, wrong first name for Geoffrey Hinton, hallucinated co-author names in Nature reference), wrong paper cited, wrong ages for Minsky/McCarthy, 27 missing references
+- Report saved to `/Users/prh/Vault/_Inbox/citation-validation-2026-05-21.md` (Vault, not the Hugo project)
+
 ---
 
 ## Pending / Next Actions
