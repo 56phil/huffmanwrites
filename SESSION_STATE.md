@@ -51,6 +51,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - No gallery or template changes needed — book shortcodes use `resources.Get` to auto-process source JPGs
 - Added subtitle "Growing up with the Cold War" to On Proportion: regenerated cover from LaTeX (`cover.md` subtitle field), updated site cover JPG, added `subtitle:` frontmatter to book detail page (`content/books/on-proportion/index.md`), updated catalog shortcode in `content/books/_index.md`
 - Fixed subtitle alignment on cover: patched `generate_cover.py` line 1023 to use `title_center_x` instead of `center_x` so subtitle follows the same `hc_front_title_offset_x_inches` shift as the title; regenerated cover and updated site JPG
+- Adjusted author name positioning: HC shifted right from -0.20 to +0.125, PB from 0.00 to +0.325; title offset adjusted to -0.30 HC, +0.05 PB; all covers regenerated
 
 ### Maintenance — May 21, 2026
 - Fixed CSP `form-action` to allow SendFox newsletter signups
