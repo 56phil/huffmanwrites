@@ -1,20 +1,20 @@
 ---
-title: "Digest for May 23, 2026"
-description: "Weekly digest: observations, recommendations, and reflections for Memorial Day weekend."
-date: 2026-05-23T00:00:00Z
+title: Digest for May 23, 2026
+description: 'Weekly digest: observations, recommendations, and reflections for Memorial
+  Day weekend.'
+date: '2026-05-23T00:00:00Z'
 author: Phil Huffman
-sendfox_subject: "Stoic Saturday: What We Owe the Dead"
+lastmod: '2026-05-23T13:00:43Z'
+hero_desktop: img/articles/11-pause_16x9.webp
+hero_mobile: img/articles/11-pause_4x5.webp
+hero_alt: Two classical marble hands almost touching, a frozen gold droplet suspended
+  between them.
+hero_caption: The debt we owe the dead is not grief. It is the life they cannot live.
 tags:
-  - weekly-digest
-  - stoicism
-  - memorial-day
-hero_desktop: "img/articles/11-pause_16x9.webp"
-hero_mobile: "img/articles/11-pause_4x5.webp"
-hero_alt: "Two classical marble hands almost touching, a frozen gold droplet suspended between them."
-hero_caption: "The debt we owe the dead is not grief. It is the life they cannot live."
+- weekly-digest
+- stoicism
+- memorial-day
 ---
-
-Subject: What We Owe the Dead
 
 "Let each thing you do, say, or intend be the act of one who might depart from life this very moment."
  — Marcus Aurelius, Meditations 2.11
