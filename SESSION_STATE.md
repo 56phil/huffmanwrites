@@ -194,6 +194,11 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 
 ---
 
+## Maintenance Log
+
+- 2026-05-23: Sent newsletter "What We Owe the Fallen" (1 campaign(s)) via SendFox API, created Hugo page, committed and pushed.
+
 ## Last Updated
+2026-05-23 (Sent newsletter: What We Owe the Fallen)
 2026-05-22 (SendFox newsletter automation: cron job, processing script, pending/ + archive/ directories, personal access token, SendFox API integration for Hugo page creation + campaign send + git commit/push)
 2026-05-21 (CSP fix, lastmod on all content, spelling/grammar fixes, fetchpriority on heroes, newsletter hero images complete, 5 book covers refreshed from LaTeX base.png sources, researched civics essay on high-level corruption, essay on optimal use of Hermes Agent)

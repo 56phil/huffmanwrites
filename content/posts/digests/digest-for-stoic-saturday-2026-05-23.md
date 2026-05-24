@@ -9,7 +9,7 @@ hero_desktop: img/articles/11-pause_16x9.webp
 hero_mobile: img/articles/11-pause_4x5.webp
 hero_alt: Two classical marble hands almost touching, a frozen gold droplet suspended
   between them.
-hero_caption: The debt we owe the dead is not grief. It is the life they cannot live.
+hero_caption: The debt we owe the fallen is not grief. It is the life they cannot live.
 tags:
 - weekly-digest
 - stoicism
@@ -27,7 +27,7 @@ The Stoics thought about death constantly. Not in a morbid way. In a clarifying 
 
 Marcus wrote that passage above while commanding armies. He wasn't a philosopher in a garden. He was a man who watched soldiers die under his command, who knew the weight of ordering men toward death, who understood that the line between memorialized and memorializer is thinner than anyone wants to admit.
 
-What do we owe the dead?
+What do we owe the fallen?
 
 Not grief, exactly. Grief is for us. The dead don't need our sadness. They need something more practical: they need us to live the life they cannot.
 
