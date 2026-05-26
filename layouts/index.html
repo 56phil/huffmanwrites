@@ -134,12 +134,91 @@
     transition: color 0.2s ease;
   }
   .connect-links a:hover { color: var(--primary); }
+  .site-hero {
+    padding: 3.5rem 0 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--secondary);
+    margin: 0 0 1.25rem;
+  }
+  .hero-tagline {
+    font-family: var(--font-headings);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.15;
+    margin: 0 0 1.25rem;
+    color: var(--primary);
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--secondary);
+    line-height: 1.65;
+    max-width: 540px;
+    margin: 0 auto 2rem;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 0.85rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-cta-primary {
+    background: var(--primary);
+    color: var(--theme) !important;
+    padding: 0.65rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none !important;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+  }
+  .hero-cta-primary:hover { opacity: 0.82; color: var(--theme) !important; }
+  .hero-cta-secondary {
+    color: var(--primary) !important;
+    padding: 0.65rem 1.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    text-decoration: none !important;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: transparent;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .hero-cta-secondary:hover { border-color: var(--primary); background: var(--entry); }
+  .hero-mission-link {
+    margin-top: 1.25rem;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--secondary);
+  }
+  .hero-mission-link a {
+    color: var(--secondary);
+    text-decoration: none;
+  }
+  .hero-mission-link a:hover { color: var(--primary); }
 </style>
 
 <div class="dashboard">
 
-  <section class="mission">
-    {{ .Content }}
+  <section class="site-hero">
+    <p class="hero-eyebrow">Philip Huffman</p>
+    <h1 class="hero-tagline">Think clearly.<br>Live deliberately.</h1>
+    <p class="hero-sub">Nine books on Stoicism, civic life, and practical philosophy — plus essays, digests, and dispatches for readers who've outgrown the usual advice.</p>
+    <div class="hero-ctas">
+      <a href="/books/" class="hero-cta-primary">Browse the books</a>
+      <a href="/posts/" class="hero-cta-secondary">Read recent posts</a>
+    </div>
+    <p class="hero-mission-link"><a href="/mission/">Read the mission statement &rarr;</a></p>
   </section>
 
   <section>
