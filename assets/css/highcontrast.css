@@ -1,0 +1,153 @@
+/* High-contrast / neurodivergent-friendly mode
+   Activated via data-theme="highcontrast" on <html>
+   Toggle stored in localStorage key "pref-hc"
+   Auto-activates when system prefers-contrast: more */
+
+/* ── Colour tokens ─────────────────────────────────────── */
+:root[data-theme="highcontrast"] {
+    --theme:          #0D0D0D;
+    --entry:          #161616;
+    --primary:        #F2EDD8;
+    --secondary:      #C6C0A8;
+    --tertiary:       #2C2C2C;
+    --content:        #EDE8D5;
+    --code-block-bg:  #1A1A1A;
+    --code-bg:        #222222;
+    --border:         #585858;
+    color-scheme: dark;
+}
+
+/* PaperMod overrides list/toc backgrounds */
+[data-theme="highcontrast"] .list {
+    background: var(--theme);
+}
+
+[data-theme="highcontrast"] .toc {
+    background: var(--entry);
+    border: 2px solid var(--border);
+}
+
+/* ── Typography ────────────────────────────────────────── */
+[data-theme="highcontrast"] body,
+[data-theme="highcontrast"] main,
+[data-theme="highcontrast"] .post-content,
+[data-theme="highcontrast"] .entry-content {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.88;
+    letter-spacing: 0.016em;
+    word-spacing: 0.06em;
+}
+
+[data-theme="highcontrast"] h1,
+[data-theme="highcontrast"] h2,
+[data-theme="highcontrast"] h3,
+[data-theme="highcontrast"] h4,
+[data-theme="highcontrast"] h5,
+[data-theme="highcontrast"] h6 {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+}
+
+[data-theme="highcontrast"] p {
+    margin-bottom: 1.4em;
+}
+
+/* Slightly wider reading column */
+[data-theme="highcontrast"] .post-content {
+    font-size: 1.15rem;
+}
+
+/* ── Links ─────────────────────────────────────────────── */
+[data-theme="highcontrast"] a {
+    color: #7DC4FF;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+[data-theme="highcontrast"] a:visited {
+    color: #C4A8FF;
+}
+
+[data-theme="highcontrast"] a:hover,
+[data-theme="highcontrast"] a:focus {
+    color: #FFD700;
+    text-decoration-color: #FFD700;
+}
+
+/* ── Focus rings ───────────────────────────────────────── */
+[data-theme="highcontrast"] *:focus-visible {
+    outline: 3px solid #FFD700;
+    outline-offset: 4px;
+    border-radius: 3px;
+}
+
+/* ── UI chrome ─────────────────────────────────────────── */
+[data-theme="highcontrast"] .header,
+[data-theme="highcontrast"] nav {
+    border-bottom: 1px solid var(--border);
+}
+
+[data-theme="highcontrast"] .entry {
+    border: 1px solid var(--border);
+}
+
+/* Nav links */
+[data-theme="highcontrast"] .menu a,
+[data-theme="highcontrast"] #menu a {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    letter-spacing: 0.04em;
+    font-size: 0.95rem;
+}
+
+/* Active nav item */
+[data-theme="highcontrast"] .menu a span.active,
+[data-theme="highcontrast"] #menu a span.active {
+    border-bottom: 2px solid #FFD700;
+    padding-bottom: 1px;
+}
+
+/* Code */
+[data-theme="highcontrast"] code {
+    font-size: 0.95em;
+    background: var(--code-bg);
+    color: #F2EDD8;
+    padding: 0.15em 0.35em;
+    border-radius: 3px;
+}
+
+/* ── Reduced motion ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    [data-theme="highcontrast"] *,
+    [data-theme="highcontrast"] *::before,
+    [data-theme="highcontrast"] *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ── HC toggle button ──────────────────────────────────── */
+.hc-toggle {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: inherit;
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
+}
+
+.hc-toggle:hover {
+    opacity: 1;
+}
+
+.hc-toggle[aria-pressed="true"] {
+    opacity: 1;
+    color: #FFD700;
+}

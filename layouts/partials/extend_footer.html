@@ -1,0 +1,52 @@
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // ── Inject HC button into .logo-switches ──────────────
+    var switches = document.querySelector('.logo-switches');
+    if (switches) {
+        var btn = document.createElement('button');
+        btn.id = 'hc-toggle';
+        btn.className = 'hc-toggle';
+        btn.setAttribute('accesskey', 'a');
+        btn.setAttribute('title', 'Toggle high contrast (Alt + A)');
+        btn.setAttribute('aria-label', 'Toggle high contrast mode');
+        btn.setAttribute('aria-pressed',
+            document.documentElement.dataset.theme === 'highcontrast' ? 'true' : 'false');
+        // Half-filled circle — universal high-contrast icon
+        btn.innerHTML =
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" ' +
+            'stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+            '<circle cx="12" cy="12" r="10"/>' +
+            '<path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" stroke="none"/>' +
+            '</svg>';
+        switches.insertBefore(btn, switches.firstChild);
+    }
+
+    // ── HC toggle handler ─────────────────────────────────
+    var hcBtn = document.getElementById('hc-toggle');
+    if (hcBtn) {
+        hcBtn.addEventListener('click', function () {
+            var html = document.documentElement;
+            if (html.dataset.theme === 'highcontrast') {
+                var pref = localStorage.getItem('pref-theme') || 'dark';
+                html.dataset.theme = pref;
+                localStorage.setItem('pref-hc', 'false');
+                hcBtn.setAttribute('aria-pressed', 'false');
+            } else {
+                html.dataset.theme = 'highcontrast';
+                localStorage.setItem('pref-hc', 'true');
+                hcBtn.setAttribute('aria-pressed', 'true');
+            }
+        });
+    }
+
+    // ── Patch theme-toggle to clear pref-hc ──────────────
+    // Runs after PaperMod's own listener (added via inline script earlier)
+    var themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function () {
+            localStorage.setItem('pref-hc', 'false');
+            if (hcBtn) hcBtn.setAttribute('aria-pressed', 'false');
+        });
+    }
+});
+</script>

@@ -35,6 +35,17 @@
 <link rel="stylesheet" href="{{ $custom.RelPermalink }}" integrity="{{ $custom.Data.Integrity }}">
 {{- $phbooks := resources.Get "css/phbooks.css" | resources.Minify | fingerprint }}
 <link rel="stylesheet" href="{{ $phbooks.RelPermalink }}" integrity="{{ $phbooks.Data.Integrity }}">
+{{- $hc := resources.Get "css/highcontrast.css" | resources.Minify | fingerprint }}
+<link rel="stylesheet" href="{{ $hc.RelPermalink }}" integrity="{{ $hc.Data.Integrity }}">
+<script>
+(function(){
+    var stored = localStorage.getItem("pref-hc");
+    if (stored === "true" ||
+        (stored !== "false" && window.matchMedia && window.matchMedia("(prefers-contrast: more)").matches)) {
+        document.documentElement.dataset.theme = "highcontrast";
+    }
+})();
+</script>
 {{- if not .Params.cover.image }}
   {{- $ogImage := "https://huffmanwrites.org/img/og-default.png" }}
   <meta property="og:image" content="{{ $ogImage }}">
