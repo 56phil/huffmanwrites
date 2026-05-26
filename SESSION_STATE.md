@@ -198,7 +198,19 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 
 - 2026-05-23: Sent newsletter "What We Owe the Fallen" (1 campaign(s)) via SendFox API, created Hugo page, committed and pushed.
 
+### High-Contrast Theme — May 26, 2026
+- Added toggleable neurodivergent-friendly high-contrast mode (`data-theme="highcontrast"`)
+- Half-circle icon button injected into header `.logo-switches` via `extend_footer.html` (DOMContentLoaded)
+- Preference persisted in `localStorage` key `"pref-hc"`; early-activation script in `extend_head.html` prevents flash on reload
+- Auto-activates on `prefers-contrast: more` (system-level preference)
+- Patched PaperMod's theme-toggle to clear `pref-hc` so regular dark/light toggle cleanly exits HC mode
+- CSS (`assets/css/highcontrast.css`): near-black bg `#0D0D0D`, warm cream text `#F2EDD8`, gold focus rings `#FFD700`, sky-blue links, Atkinson Hyperlegible font, line-height 1.88, reduced-motion support
+- Atkinson Hyperlegible added to existing Google Fonts import in `custom.css` (no extra network request)
+- Committed as `528217c`
+- Accent color changed from gold `#FFD700` to deep amber `#D4820A` (commit `3da4402`)
+
 ## Last Updated
+2026-05-26 (High-contrast / neurodivergent theme toggle)
 2026-05-23 (Sent newsletter: What We Owe the Fallen)
 2026-05-22 (SendFox newsletter automation: cron job, processing script, pending/ + archive/ directories, personal access token, SendFox API integration for Hugo page creation + campaign send + git commit/push)
 2026-05-21 (CSP fix, lastmod on all content, spelling/grammar fixes, fetchpriority on heroes, newsletter hero images complete, 5 book covers refreshed from LaTeX base.png sources, researched civics essay on high-level corruption, essay on optimal use of Hermes Agent)
