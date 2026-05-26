@@ -40,3 +40,26 @@ main, .post-content, .entry-content {
 .phbooks {
     font-family: var(--font-body) !important;
 }
+
+/* Skip-to-content link — visible only on keyboard focus */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 10000;
+    padding: 8px 20px;
+    background: var(--primary);
+    color: var(--theme);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 0 0 6px 6px;
+    transition: top 0.15s ease;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}

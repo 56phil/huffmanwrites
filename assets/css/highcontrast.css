@@ -130,6 +130,13 @@
     }
 }
 
+/* ── Skip-to-content (HC override) ────────────────────── */
+[data-theme="highcontrast"] .skip-to-content:focus {
+    background: #D4820A;
+    color: #0D0D0D;
+    outline-color: #D4820A;
+}
+
 /* ── HC toggle button ──────────────────────────────────── */
 .hc-toggle {
     display: inline-flex;
