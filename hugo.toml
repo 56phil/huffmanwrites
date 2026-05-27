@@ -49,10 +49,10 @@ disableHugoGeneratorInject = true
     url = 'https://huffmanwrites.org/index.xml'
   [[params.socialIcons]]
     name = 'goodreads'
-    url = 'https://www.goodreads.com/author/show/21766359.Philip_Huffman'
+    url = 'https://www.goodreads.com/author/show/54971710.Philip_Huffman'
   [[params.socialIcons]]
     name = 'linkedin'
-    url = 'https://www.linkedin.com/in/philhuffman'
+    url = 'https://www.linkedin.com/in/philip-huffman-948833188'
   [[params.socialIcons]]
     name = 'amazon'
     url = 'https://www.amazon.com/author/philip.huffman'
