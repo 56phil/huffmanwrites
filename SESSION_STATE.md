@@ -218,6 +218,7 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 ### Site Improvements — May 27, 2026
 - Added Goodreads (`goodreads.com/author/show/21766359.Philip_Huffman`) and LinkedIn (`linkedin.com/in/philhuffman`) social icons to `hugo.toml`
 - Social icons consume from `site.Params.socialIcons` in config; PaperMod's `svg.html` already has built-in SVGs for both
+- **Fixed:** home dashboard (`layouts/index.html`) now calls `social_icons.html` partial — icons render on all pages
 - Gallery link left intact (no changes per user preference)
 - Mission statement kept as standalone `/mission/` page (not on home page)
 
