@@ -100,6 +100,12 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
+### AI History Essay — May 26, 2026
+- Full section-by-section factual review of `content/posts/essays/AI.md`
+- Removed fabricated robot "Shumana", invented Stanford Cart names, fabricated RAND study author "Richard S. Lukas", and fabricated co-authors in Silver et al. and Mnih et al. references
+- Corrected: SNARC (Edmonds/1951), Minsky/McCarthy ages, BDI attribution, Geoffrey Hinton name, OpenAI Five year, DQN Atari count, Strategic Computing Initiative year, AutoGen year, Brynjolfsson et al. attribution, HAL 9000 description, Rosenblatt citation, Silver et al. year/volume/pages
+- Set `draft: false`; committed and pushed as `30a2e62`
+
 ## Pending / Next Actions
 
 ### 1. Newsletter Hero Images
