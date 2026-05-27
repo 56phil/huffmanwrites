@@ -215,7 +215,14 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 - Committed as `528217c`
 - Accent color changed from gold `#FFD700` to deep amber `#D4820A` (commit `3da4402`)
 
+### Site Improvements — May 27, 2026
+- Added Goodreads (`goodreads.com/author/show/21766359.Philip_Huffman`) and LinkedIn (`linkedin.com/in/philhuffman`) social icons to `hugo.toml`
+- Social icons consume from `site.Params.socialIcons` in config; PaperMod's `svg.html` already has built-in SVGs for both
+- Gallery link left intact (no changes per user preference)
+- Mission statement kept as standalone `/mission/` page (not on home page)
+
 ## Last Updated
+2026-05-27 (Added Goodreads + LinkedIn social icons)
 2026-05-26 (High-contrast / neurodivergent theme toggle)
 2026-05-23 (Sent newsletter: What We Owe the Fallen)
 2026-05-22 (SendFox newsletter automation: cron job, processing script, pending/ + archive/ directories, personal access token, SendFox API integration for Hugo page creation + campaign send + git commit/push)
