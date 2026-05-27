@@ -216,10 +216,9 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 - Accent color changed from gold `#FFD700` to deep amber `#D4820A` (commit `3da4402`)
 
 ### Site Improvements — May 27, 2026
-- Added Goodreads (`goodreads.com/author/show/54971710.Philip_Huffman`) and LinkedIn (`linkedin.com/in/philip-huffman-948833188`) social icons to `hugo.toml`
-- Social icons consume from `site.Params.socialIcons` in config; PaperMod's `svg.html` already has built-in SVGs for both
-- **Fixed:** home dashboard (`layouts/index.html`) now calls `social_icons.html` partial — icons render on all pages
-- Gallery link left intact (no changes per user preference)
+- Transitioned newsletter signup from static footer area to a high-visibility CTA block on the home page with enhanced typography and copy.
+- Implemented "Start Here" curated content pathways in `content/posts/_index.md` to guide new readers through the site's core pillars (Stoicism, Civics, Essays).
+- Refined Gallery (`layouts/_default/gallery.html`) by cleaning up legacy hover colors and ensuring consistent theme-based styling for gallery links.
 - Mission statement kept as standalone `/mission/` page (not on home page)
 
 ## Last Updated

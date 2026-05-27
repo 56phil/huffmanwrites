@@ -222,7 +222,7 @@
   </section>
 
   <section>
-    <h2>Knowledge Hubs</h2>
+    <h2 class="hub-heading">Knowledge Hubs</h2>
     <div class="hub-grid">
       <a href="/posts/stoicism/" class="hub-card">
         <h3>Stoic Reflections</h3>
@@ -246,7 +246,7 @@
   <section class="now-teaser">
     <h2>Right Now</h2>
     <div class="now-card">
-      <p>Currently researching <strong>Raise'm Right</strong>: raising children of character, judgment, and agency in the 21st century.</p>
+      <p>Currently researching <strong class="highlight">Raise'm Right</strong>: raising children of character, judgment, and agency in the 21st century.</p>
       <a href="/now/" class="view-all-link">Read more about what I'm doing &rarr;</a>
     </div>
   </section>
@@ -275,6 +275,8 @@
     </div>
   </section>
 
+  {{ partial "newsletter.html" . }}
+
   <section class="latest-posts">
     <h2>Recent Posts</h2>
     {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
@@ -295,8 +297,6 @@
   </div>
 
   {{ partial "social_icons.html" dict }}
-
-  {{ partial "newsletter.html" . }}
 
 </div>
 
