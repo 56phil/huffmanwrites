@@ -142,26 +142,27 @@
 }
 
 .phbooks .phbooks-book {
-    display: flex;
-    gap: 1.5rem;
     padding: 1.25rem 0;
     border-bottom: 1px solid var(--border);
-    align-items: flex-start;
+}
+
+.phbooks .phbooks-with-cover::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .phbooks .phbooks-cover {
-    flex: 0 0 60px;
-    width: 60px;
+    float: right;
+    margin: 0 0 0.5rem 1.25rem;
 }
 
 .phbooks .phbooks-cover img {
-    width: 60px;
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
     border: 1px solid var(--border);
-}
-
-.phbooks .phbooks-info {
-    flex: 1 1 auto;
-    min-width: 0;
+    display: block;
 }
 
 .phbooks .phbooks-title {
@@ -447,11 +448,7 @@
         justify-content: center;
     }
     .phbooks .phbooks-book {
-        flex-direction: column;
         gap: 0.8rem;
-    }
-    .phbooks .phbooks-cover {
-        width: 60px;
     }
 }
 

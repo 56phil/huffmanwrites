@@ -4,47 +4,44 @@
   {{- range $books }}
     {{- if .Params.image }}
     <div class="phbooks-book">
-      <div class="phbooks-cover">
-        {{- $img := resources.Get .Params.image }}
-        {{- $processed := "" }}
-        {{- if $img }}
-          {{- $processed = $img.Resize "120x webp" }}
-        {{- end }}
-        
+      <div class="phbooks-title">
         {{- if .Params.link }}
-          <a href="{{ .Params.link }}" target="_blank">
+          <a href="{{ .Params.link }}" target="_blank">{{ .Title }}</a>
+        {{- else }}
+          {{ .Title }}
+        {{- end }}
+        {{- if not .Params.link }}
+          <span class="phbooks-badge">Forthcoming</span>
+        {{- end }}
+      </div>
+      <div class="phbooks-desc phbooks-with-cover">
+        <div class="phbooks-cover">
+          {{- $img := resources.Get .Params.image }}
+          {{- $processed := "" }}
+          {{- if $img }}
+            {{- $processed = $img.Resize "160x webp" }}
+          {{- end }}
+          {{- if .Params.link }}
+            <a href="{{ .Params.link }}" target="_blank">
+              {{ if $processed }}
+                <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} cover">
+              {{ else }}
+                <img src="/{{ .Params.image }}" alt="{{ .Title }} cover">
+              {{ end }}
+            </a>
+          {{- else }}
             {{ if $processed }}
               <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} cover">
             {{ else }}
               <img src="/{{ .Params.image }}" alt="{{ .Title }} cover">
             {{ end }}
-          </a>
-        {{- else }}
-          {{ if $processed }}
-            <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} cover">
-          {{ else }}
-            <img src="/{{ .Params.image }}" alt="{{ .Title }} cover">
-          {{ end }}
-        {{- end }}
-      </div>
-      <div class="phbooks-info">
-        <div class="phbooks-title">
-          {{- if .Params.link }}
-            <a href="{{ .Params.link }}" target="_blank">{{ .Title }}</a>
-          {{- else }}
-            {{ .Title }}
-          {{- end }}
-          {{- if not .Params.link }}
-            <span class="phbooks-badge">Forthcoming</span>
           {{- end }}
         </div>
-        <div class="phbooks-desc">
-          {{ .Params.description | markdownify }}
-        </div>
-        {{- if .Params.link }}
-          <a href="{{ .Params.link }}" class="phbooks-link" target="_blank">Buy on Amazon</a>
-        {{- end }}
+        {{ .Params.description | markdownify }}
       </div>
+      {{- if .Params.link }}
+        <a href="{{ .Params.link }}" class="phbooks-link" target="_blank">Buy on Amazon</a>
+      {{- end }}
     </div>
     {{- end }}
   {{- end }}

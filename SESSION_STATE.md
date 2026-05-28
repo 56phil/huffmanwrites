@@ -221,7 +221,14 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 - Refined Gallery (`layouts/_default/gallery.html`) by cleaning up legacy hover colors and ensuring consistent theme-based styling for gallery links.
 - Mission statement kept as standalone `/mission/` page (not on home page)
 
+### Book Catalog Layout — May 28, 2026
+- Fixed book cover aspect ratio distortion on `all-my-books` page: added `height: auto` to `.phbooks-cover img` (previously only CSS `width` was set, while HTML `height` attribute from Hugo's image processing held the cover at its processed height, causing squishing)
+- Resized book cover thumbnails from 60px wide to 80×120px fixed with `object-fit: cover`
+- Restructured `book_catalog.html` shortcode and `phbooks.css` to use a float-right layout: cover anchored top-right, all description text wrapping to the left and below
+- Hugo image resize updated from `120x` to `160x` (2× retina for 80px display)
+
 ## Last Updated
+2026-05-28 (Book catalog: aspect ratio fix, 80×120 covers, float-right text-wrap layout)
 2026-05-27 (Added Goodreads + LinkedIn social icons)
 2026-05-26 (High-contrast / neurodivergent theme toggle)
 2026-05-23 (Sent newsletter: What We Owe the Fallen)
