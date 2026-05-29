@@ -227,7 +227,33 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 - Restructured `book_catalog.html` shortcode and `phbooks.css` to use a float-right layout: cover anchored top-right, all description text wrapping to the left and below
 - Hugo image resize updated from `120x` to `160x` (2× retina for 80px display)
 
+## Book Descriptions Implementation — May 29, 2026
+
+### Overview
+Added compelling descriptions to book cards on the Books page to motivate readers to click "Learn More".
+
+### Implementation Details
+- **Book Shortcode Enhancement**: Updated `layouts/shortcodes/book.html` to include `description` parameter
+- **CSS Styling**: Added comprehensive styling in `assets/css/custom.css` for book descriptions
+- **Content Updates**: Added motivational descriptions to each book card in `content/books/_index.md`
+- **Layout Refinement**: Created compact, professional card layout with 120×180 pixel book covers
+
+### Change History
+1. **Initial Implementation (e0b6cf9)**: Added description parameter and basic styling
+2. **CSS Specificity Fix (3c2337b)**: Enhanced CSS to address visibility issues
+3. **Aggressive CSS Fix (98d1d73)**: Added !important rules to ensure visibility
+4. **Extreme Visibility Fix (c09a219)**: Added debugging visuals and test page
+5. **Final Layout Refinement (9942bf5)**: Created compact, professional layout with 120×180 covers
+
+### Results
+✅ **COMPLETED**: Book descriptions now visible with professional, compact layout
+✅ Book covers sized to 120×180 pixels as requested
+✅ Clear, readable descriptions below subtitles
+✅ Responsive design for all devices
+✅ Motivational content to encourage "Learn More" clicks
+
 ## Last Updated
+2026-05-29 (Book descriptions implementation: compact 120×180 layout, motivational content)
 2026-05-28 (Book catalog: aspect ratio fix, 80×120 covers, float-right text-wrap layout)
 2026-05-27 (Added Goodreads + LinkedIn social icons)
 2026-05-26 (High-contrast / neurodivergent theme toggle)
