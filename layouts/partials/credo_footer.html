@@ -1,14 +1,14 @@
 <div class="credo-footer">
-  <div class="credo-footer-line"><span class="credo-verb">Think</span> clearly.</div>
-  <div class="credo-footer-line"><span class="credo-verb">Live</span> deliberately.</div>
-  <div class="credo-footer-line"><span class="credo-verb">Love</span> like there's no tomorrow.</div>
+  <div class="credo-footer-line"><span class="credo-verb">Think</span> clearly.<span class="credo-icon" aria-hidden="true">🧠</span></div>
+  <div class="credo-footer-line"><span class="credo-verb">Live</span> deliberately.<span class="credo-icon" aria-hidden="true">🚶</span></div>
+  <div class="credo-footer-line"><span class="credo-verb">Love</span> like there's no tomorrow.<span class="credo-icon" aria-hidden="true">❤️</span></div>
 </div>
 
 <style>
   .credo-footer {
     font-size: 0.9rem;
     font-style: italic;
-    line-height: 1.4;
+    line-height: 1.3;
     margin: 2rem 0 1rem;
     text-align: center;
     color: var(--secondary);
@@ -16,10 +16,9 @@
   }
 
   .credo-footer-line {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    display: block;
+    margin-bottom: 0.2rem;
+    position: relative;
   }
 
   .credo-footer .credo-verb {
@@ -28,9 +27,29 @@
     font-weight: 500;
   }
 
+  .credo-footer .credo-icon {
+    position: absolute;
+    right: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.5em;
+    opacity: 0.8;
+  }
+
   @media (max-width: 600px) {
     .credo-footer {
       font-size: 0.85rem;
+    }
+
+    .credo-footer .credo-icon {
+      right: -1rem;
+      font-size: 0.4em;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .credo-footer .credo-icon {
+      display: none;
     }
   }
 </style>

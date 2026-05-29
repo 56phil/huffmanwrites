@@ -7,9 +7,9 @@ description = "The guiding principles behind Philip Huffman's work: Think clearl
 # Credo
 
 <div class="credo-hero">
-  <div class="credo-line"><span class="credo-verb">Think</span> clearly.</div>
-  <div class="credo-line"><span class="credo-verb">Live</span> deliberately.</div>
-  <div class="credo-line"><span class="credo-verb">Love</span> like there's no tomorrow.</div>
+  <div class="credo-line"><span class="credo-verb">Think</span> clearly.<span class="credo-icon" aria-hidden="true">🧠</span></div>
+  <div class="credo-line"><span class="credo-verb">Live</span> deliberately.<span class="credo-icon" aria-hidden="true">🚶</span></div>
+  <div class="credo-line"><span class="credo-verb">Love</span> like there's no tomorrow.<span class="credo-icon" aria-hidden="true">❤️</span></div>
 </div>
 
 ## The Three Pillars
@@ -69,18 +69,47 @@ Together, they create a framework for a life well-lived—a life of purpose, con
 
 <style>
   .credo-hero {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     font-style: italic;
-    line-height: 1.3;
+    line-height: 1.15;
     margin: 2rem 0 3rem;
     text-align: center;
     color: var(--primary);
+    font-weight: 400;
+  }
+
+  .credo-hero .credo-line {
+    display: block;
+    margin-bottom: 0.3rem;
+    position: relative;
   }
 
   .credo-hero .credo-verb {
     font-variant: small-caps;
     color: var(--primary);
     font-weight: 600;
+  }
+
+  .credo-hero .credo-icon {
+    position: absolute;
+    right: -2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6em;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .credo-hero .credo-icon {
+      right: -1.5rem;
+      font-size: 0.5em;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .credo-hero .credo-icon {
+      display: none;
+    }
   }
 
   .credo-share {
