@@ -43,6 +43,9 @@ main, .post-content, .entry-content {
     margin: 12px 0 20px 0;
     font-style: italic;
     opacity: 0.95;
+    /* Ensure descriptions are visible and don't overflow */
+    overflow: visible;
+    max-height: none;
 }
 
 .book-description p {
@@ -53,6 +56,21 @@ main, .post-content, .entry-content {
 .book-description p:first-child::first-letter {
     font-size: 1.1em;
     font-weight: 600;
+}
+
+/* Fix book content layout to accommodate descriptions */
+.book-card .book-content {
+    height: auto !important;
+    min-height: 220px; /* Provide minimum height for book cards */
+}
+
+.book-card .book-text {
+    flex: 1 1 auto !important;
+    min-height: 0 !important; /* Allow text to overflow properly */
+}
+
+.book-card .book-actions {
+    margin-top: 16px !important;
 }
 
 /* Specifically for the "Books" section to maintain consistency with our new scholarly look 
