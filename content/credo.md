@@ -9,7 +9,7 @@ description = "The guiding principles behind Philip Huffman's work: Think clearl
 <div class="credo-hero">
   <div class="credo-line"><span class="credo-verb">Think</span> clearly.<span class="credo-icon" aria-hidden="true">🧠</span></div>
   <div class="credo-line"><span class="credo-verb">Live</span> deliberately.<span class="credo-icon" aria-hidden="true">🚶</span></div>
-  <div class="credo-line"><span class="credo-verb">Love</span> like there's no tomorrow.<span class="credo-icon" aria-hidden="true">❤️</span></div>
+  <div class="credo-line"><span class="credo-verb">Love</span> intensely.<span class="credo-icon" aria-hidden="true">🔥</span></div>
 </div>
 
 ## The Three Pillars
@@ -36,14 +36,14 @@ Living deliberately involves:
 
 This principle is at the heart of *Unstuck* and *A Life Made Whole*—books that help readers move from passive existence to active, intentional living.
 
-### Love Like There's No Tomorrow
+### Love Intensely
 
-Love, in this context, means connection without reservation. It's the recognition that relationships—with people, with ideas, with the world—are what give life meaning. 
+Love, in this context, means connection with intensity. It's the recognition that relationships—with people, with ideas, with the world—are what give life meaning and power. 
 
 Loving fully requires:
-- **Vulnerability**: The courage to be seen as we are
+- **Intensity**: The commitment to engage fully
 - **Presence**: The discipline of being fully engaged
-- **Generosity**: The willingness to give without expectation
+- **Vulnerability**: The courage to connect authentically
 
 This principle emerges in *Misaligned* and *Letters*—works that explore the human connections that shape our lives and our understanding of the world.
 
