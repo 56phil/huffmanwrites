@@ -35,6 +35,26 @@ main, .post-content, .entry-content {
     font-family: var(--font-body);
 }
 
+/* Book Card Description Styles */
+.book-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--secondary);
+    margin: 12px 0 20px 0;
+    font-style: italic;
+    opacity: 0.95;
+}
+
+.book-description p {
+    margin: 0;
+    padding: 0;
+}
+
+.book-description p:first-child::first-letter {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
 /* Specifically for the "Books" section to maintain consistency with our new scholarly look 
    while overriding some of the inline/phbooks styles if they conflict. */
 .phbooks {

@@ -3,6 +3,7 @@
 {{- $img := .Get "img" -}}
 {{- $link := .Get "link" -}}
 {{- $caption := .Get "caption" -}}
+{{- $description := .Get "description" -}}
 {{- $imgPath := strings.TrimPrefix "/" $img -}}
 {{- $isExternal := strings.HasPrefix $link "http" -}}
 {{- $btnText := cond $isExternal "Buy on Amazon" "Learn More" -}}
@@ -29,6 +30,11 @@
         <div class="book-text">
             <h3 class="book-title">{{ $title }}</h3>
             {{- with $subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end -}}
+            {{- with $description }}
+            <div class="book-description">
+                {{ . }}
+            </div>
+            {{- end }}
         </div>
         <div class="book-actions">
             {{- if $link -}}
