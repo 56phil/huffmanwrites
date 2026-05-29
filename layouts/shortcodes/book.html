@@ -10,37 +10,45 @@
 {{- $btnTarget := cond $isExternal "_blank" "" -}}
 {{- $btnRel := cond $isExternal "noopener" "" -}}
 
-<div class="book-card">
-    <div class="book-cover-wrap">
+<div class="book-card" style="display: flex !important; align-items: flex-start !important; gap: 20px !important; padding: 16px !important; margin: 20px 0 !important; border: 1px solid #e0e0e0 !important; border-radius: 8px !important; background-color: #f9f9f9 !important; max-width: 800px !important;">
+    <div class="book-cover-wrap" style="flex: 0 0 120px !important; width: 120px !important; height: auto !important; overflow: hidden !important;">
         {{- if $img -}}
             {{- $asset := resources.Get (strings.TrimPrefix "/" $img) -}}
             {{- if $link -}}<a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }}>{{- end -}}
                 {{- if $asset -}}
-                    <img src="{{ ($asset.Resize "600x webp").RelPermalink }}" alt="{{ $title }} cover" loading="lazy">
+                    <img src="{{ ($asset.Resize "600x webp").RelPermalink }}"
+                         alt="{{ $title }}: {{ $description | plainify }}"
+                         title="{{ $title }}: {{ $description | plainify }}"
+                         loading="lazy"
+                         style="width: 120px !important; height: 180px !important; object-fit: cover !important; border-radius: 4px !important; box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;">
                 {{- else -}}
-                    <img src="/{{ $imgPath }}" alt="{{ $title }} cover" loading="lazy">
+                    <img src="/{{ $imgPath }}"
+                         alt="{{ $title }}: {{ $description | plainify }}"
+                         title="{{ $title }}: {{ $description | plainify }}"
+                         loading="lazy"
+                         style="width: 120px !important; height: 180px !important; object-fit: cover !important; border-radius: 4px !important; box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;">
                 {{- end -}}
             {{- if $link -}}</a>{{- end -}}
-        {{- with $caption }}<p class="book-caption">{{ . }}</p>{{- end -}}
+        {{- with $caption }}<p class="book-caption" style="font-size: 0.85rem !important; color: #666 !important; font-style: italic !important; text-align: center !important; margin-top: 0.5rem !important;">{{ . }}</p>{{- end -}}
         {{- else -}}
-            <div class="book-cover-placeholder">Cover Coming Soon</div>
+            <div class="book-cover-placeholder" style="width: 120px !important; height: 180px !important; background: #eee !important; display: flex !important; align-items: center !important; justify-content: center !important; text-align: center !important; font-size: 0.8rem !important; color: #666 !important; border-radius: 4px !important; padding: 10px !important;">Cover Coming Soon</div>
         {{- end -}}
     </div>
-    <div class="book-content">
-        <div class="book-text">
-            <h3 class="book-title">{{ $title }}</h3>
-            {{- with $subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end -}}
+    <div class="book-content" style="flex: 1 !important; display: flex !important; flex-direction: column !important; height: auto !important; min-height: 180px !important; justify-content: flex-start !important;">
+        <div class="book-text" style="flex: 1 !important; min-height: 0 !important; overflow: visible !important;">
+            <h3 class="book-title" style="margin: 0 0 4px 0 !important; font-size: 1.3rem !important; font-weight: 700 !important; color: #222 !important;">{{ $title }}</h3>
+            {{- with $subtitle }}<p class="book-subtitle" style="margin: 0 0 12px 0 !important; font-size: 0.95rem !important; line-height: 1.4 !important; opacity: 0.9 !important; color: #333 !important;">{{ . }}</p>{{ end -}}
             {{- with $description }}
-            <div class="book-description">
+            <div class="book-description" style="display: block !important; visibility: visible !important; opacity: 1 !important; font-size: 0.9rem !important; line-height: 1.5 !important; color: #444 !important; margin: 8px 0 16px 0 !important; font-style: italic !important; background-color: rgba(255, 240, 200, 0.3) !important; padding: 8px !important; border-left: 3px solid #ffd700 !important;">
                 {{ . }}
             </div>
             {{- end }}
         </div>
-        <div class="book-actions">
+        <div class="book-actions" style="margin-top: auto !important; padding-top: 12px !important;">
             {{- if $link -}}
-                <a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }} class="book-button">{{ $btnText }}</a>
+                <a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }} class="book-button" style="background-color: #222 !important; color: white !important; padding: 8px 16px !important; border-radius: 4px !important; text-decoration: none !important; font-weight: 600 !important; font-size: 0.9rem !important; display: inline-block !important;">{{ $btnText }}</a>
             {{- else -}}
-                <span class="book-badge">Forthcoming</span>
+                <span class="book-badge" style="background-color: #ddd !important; color: #666 !important; padding: 4px 12px !important; border-radius: 12px !important; font-size: 0.75rem !important; font-weight: 600 !important; text-transform: uppercase !important; letter-spacing: 0.05em !important;">Forthcoming</span>
             {{- end -}}
         </div>
     </div>
