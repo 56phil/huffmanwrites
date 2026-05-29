@@ -390,6 +390,39 @@ Visit huffmanwrites.org for essays, digests, and dispatches that apply these pri
 ✅ Consistent with author's philosophical approach and book marketing strategy
 ✅ Includes credo, book catalog, and website call-to-action
 
+### 5. Book Cover Author Bios
+
+#### Overview
+Updated author biography sections in all `cover.md` files in the AllMyBooks directory with the standardized bio and credo integration.
+
+#### Implementation Details
+- **Files Updated**: 6 `cover.md` files in `/Users/prh/Developer/LaTeX/AllMyBooks/`
+  - `cgm/cover/cover.md`
+  - `proportion/cover/cover.md`
+  - `Misaligned/cover/cover.md`
+  - `tsc/cover/cover.md`
+  - `unstuck/cover/cover.md`
+  - `Life_made_whole/cover/cover.md`
+- **Standardized Bio**: Consistent 398-word bio across all books
+- **Credo Integration**: Full credo (*Think clearly. Live deliberately. Love intensely.*) in all bios
+- **Service Years**: Corrected to 1973-1975 in all bios
+- **Philosophical Framework**: Emphasizes clarity, discipline, and love as core themes
+- **Target Audience**: Speaks to readers who've outgrown conventional advice
+
+#### Key Changes:
+- **Old Credo**: Some books had "Think clearly. Live deliberately." (2-part version)
+- **New Credo**: All books now have the full 3-part version with "Love intensely"
+- **Service Years**: Updated from 1973-1974 to 1973-1975 in all bios
+- **Consistency**: All books now have identical author bios with the same philosophical framework
+- **Professional Tone**: More focused on the author's current writing and philosophical approach
+
+#### Results
+✅ **COMPLETED**: All book cover author bios updated with standardized content
+✅ Consistent messaging across all books in the AllMyBooks directory
+✅ Full credo integration on all book covers
+✅ Corrected service years (1973-1975) in all bios
+✅ Professional, philosophical tone that reinforces author brand
+
 ## Last Updated
 2026-05-29 (Book marketing: credo integration on book detail pages)
 2026-05-28 (Book catalog: aspect ratio fix, 80×120 covers, float-right text-wrap layout)
