@@ -236,7 +236,9 @@ Updated the home page credo from two lines to three lines:
 
 ### Changes Made
 - Updated `layouts/index.html` line 215 to add third line to hero tagline
-- Maintained existing styling and formatting
+- Added emphasis to verbs (Think, Live, Love) using small caps, color, and weight
+- Added CSS styling for `.credo-verb` class
+- Maintained elegant aesthetic while providing clear visual emphasis
 
 ## Book Descriptions Implementation — May 29, 2026
 
