@@ -11,6 +11,32 @@
 {{- $btnRel := cond $isExternal "noopener" "" -}}
 
 <div class="book-card" style="display: flex !important; align-items: flex-start !important; gap: 20px !important; padding: 16px !important; margin: 20px 0 !important; border: 1px solid #e0e0e0 !important; border-radius: 8px !important; background-color: #f9f9f9 !important; max-width: 800px !important;">
+        <style>
+            @media (max-width: 600px) {
+                .book-card {
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    text-align: center !important;
+                }
+
+                .book-cover-wrap {
+                    flex: 0 0 auto !important;
+                    margin-bottom: 12px !important;
+                    width: 120px !important;
+                }
+
+                .book-cover-wrap img {
+                    width: 120px !important;
+                    height: auto !important;
+                    max-height: 180px !important;
+                    object-fit: contain !important;
+                }
+
+                .book-content {
+                    align-items: center !important;
+                }
+            }
+        </style>
     <div class="book-cover-wrap" style="flex: 0 0 120px !important; width: 120px !important; height: auto !important; overflow: hidden !important;">
         {{- if $img -}}
             {{- $asset := resources.Get (strings.TrimPrefix "/" $img) -}}
@@ -20,18 +46,18 @@
                          alt="{{ $title }}: {{ $description | plainify }}"
                          title="{{ $title }}: {{ $description | plainify }}"
                          loading="lazy"
-                         style="width: 120px !important; height: 180px !important; object-fit: cover !important; border-radius: 4px !important; box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;">
+                         style="width: 120px !important; height: auto !important; max-height: 180px !important; object-fit: contain !important; border-radius: 4px !important; box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;">
                 {{- else -}}
                     <img src="/{{ $imgPath }}"
                          alt="{{ $title }}: {{ $description | plainify }}"
                          title="{{ $title }}: {{ $description | plainify }}"
                          loading="lazy"
-                         style="width: 120px !important; height: 180px !important; object-fit: cover !important; border-radius: 4px !important; box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;">
+                         style="width: 120px !important; height: auto !important; max-height: 180px !important; object-fit: contain !important; border-radius: 4px !important; box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;">
                 {{- end -}}
             {{- if $link -}}</a>{{- end -}}
         {{- with $caption }}<p class="book-caption" style="font-size: 0.85rem !important; color: #666 !important; font-style: italic !important; text-align: center !important; margin-top: 0.5rem !important;">{{ . }}</p>{{- end -}}
         {{- else -}}
-            <div class="book-cover-placeholder" style="width: 120px !important; height: 180px !important; background: #eee !important; display: flex !important; align-items: center !important; justify-content: center !important; text-align: center !important; font-size: 0.8rem !important; color: #666 !important; border-radius: 4px !important; padding: 10px !important;">Cover Coming Soon</div>
+            <div class="book-cover-placeholder" style="width: 120px !important; height: auto !important; min-height: 180px !important; max-height: 180px !important; background: #eee !important; display: flex !important; align-items: center !important; justify-content: center !important; text-align: center !important; font-size: 0.8rem !important; color: #666 !important; border-radius: 4px !important; padding: 10px !important;">Cover Coming Soon</div>
         {{- end -}}
     </div>
     <div class="book-content" style="flex: 1 !important; display: flex !important; flex-direction: column !important; height: auto !important; min-height: 180px !important; justify-content: flex-start !important;">
