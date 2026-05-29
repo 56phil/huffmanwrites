@@ -212,12 +212,57 @@
 
   <section class="site-hero">
     <p class="hero-eyebrow">Philip Huffman</p>
-    <h1 class="hero-tagline"><span class="credo-verb">Think</span> clearly.<br><span class="credo-verb">Live</span> deliberately.<br><span class="credo-verb">Love</span> like there's no tomorrow.</h1>
+    <div class="credo-container">
+      <h1 class="hero-tagline">
+        <div class="credo-line"><span class="credo-verb">Think</span> clearly.<span class="credo-icon" aria-hidden="true">🧠</span></div>
+        <div class="credo-line"><span class="credo-verb">Live</span> deliberately.<span class="credo-icon" aria-hidden="true">🚶‍♂️</span></div>
+        <div class="credo-line"><span class="credo-verb">Love</span> like there's no tomorrow.<span class="credo-icon" aria-hidden="true">❤️</span></div>
+      </h1>
+    </div>
     <style>
+      .credo-container {
+        margin: 0 0 1.5rem;
+      }
+
+      .hero-tagline {
+        font-size: clamp(2.2rem, 5vw, 3.5rem) !important;
+        line-height: 1.2 !important;
+        margin: 0 0 1.25rem !important;
+      }
+
+      .credo-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+
       .credo-verb {
         font-variant: small-caps;
         color: var(--primary);
-        font-weight: 500;
+        font-weight: 600;
+        position: relative;
+      }
+
+      .credo-icon {
+        font-size: 0.7em;
+        opacity: 0.8;
+        transition: transform 0.2s ease;
+      }
+
+      .credo-line:hover .credo-icon {
+        transform: scale(1.2);
+      }
+
+      @media (max-width: 600px) {
+        .credo-line {
+          gap: 0.5rem;
+        }
+
+        .credo-icon {
+          font-size: 0.6em;
+        }
       }
     </style>
     <p class="hero-sub">Nine books on Stoicism, civic life, and practical philosophy — plus essays, digests, and dispatches for readers who've outgrown the usual advice.</p>

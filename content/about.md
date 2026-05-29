@@ -10,7 +10,9 @@ tags:
   - author
 ---
 
-I write about Stoicism, civic life, and the practical work of getting unstuck. Most of what I publish is grounded in personal experience — not theory for its own sake, but pressure-tested ideas about living with clarity, proportion, and a little less drama than the world insists on.
+My credo: **Think clearly. Live deliberately. Love like there's no tomorrow.**
+
+I write about Stoicism, civic life, and the practical work of getting unstuck. This credo guides everything I create — not as abstract philosophy, but as a practical framework for living. Most of what I publish is grounded in personal experience — not theory for its own sake, but pressure-tested ideas about living with clarity, proportion, and a little less drama than the world insists on.
 
 My writing is direct, occasionally unsentimental, and always aimed at someone who has already noticed that the usual advice doesn't quite fit. I've published eight books on practical philosophy, alignment, and critical thinking, and I maintain this site as a place for shorter, more timely writing — digests, essays, and the occasional sharp dispatch on matters of civic judgment.
 
