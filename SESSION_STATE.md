@@ -227,6 +227,17 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 - Restructured `book_catalog.html` shortcode and `phbooks.css` to use a float-right layout: cover anchored top-right, all description text wrapping to the left and below
 - Hugo image resize updated from `120x` to `160x` (2× retina for 80px display)
 
+## Home Page Credo Update — May 29, 2026
+
+### Overview
+Updated the home page credo from two lines to three lines:
+- **Before**: Think clearly. Live deliberately.
+- **After**: Think clearly. Live deliberately. Love like there's no tomorrow.
+
+### Changes Made
+- Updated `layouts/index.html` line 215 to add third line to hero tagline
+- Maintained existing styling and formatting
+
 ## Book Descriptions Implementation — May 29, 2026
 
 ### Overview
