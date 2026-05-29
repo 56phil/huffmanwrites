@@ -267,8 +267,34 @@ Added compelling descriptions to book cards on the Books page to motivate reader
 ✅ Responsive design for all devices
 ✅ Motivational content to encourage "Learn More" clicks
 
+## Group B: Book Marketing — Back Cover Integration
+
+### Overview
+Added the credo "Think clearly. Live deliberately. Love intensely." to book detail pages as part of the Book Marketing strategy (Group B).
+
+### Implementation Details
+- **File Modified**: `layouts/books/single.html`
+  - Added credo container and display above book media section
+  - Integrated credo styling with decorative icons and responsive design
+- **CSS Added**: `assets/css/phbooks.css`
+  - Added `.book-credo-container` and `.book-credo` styles
+  - Implemented responsive typography with `clamp()` for font sizing
+  - Added decorative icons with hover effects
+  - Included responsive breakpoints for mobile devices
+- **Design**: Consistent with existing credo styling across the site
+  - Small caps for verbs (Think, Live, Love)
+  - Decorative icons (🧠, 🚶, 🔥) with hover animations
+  - Italic font style matching the site's philosophical tone
+  - Responsive design that works on all device sizes
+
+### Results
+✅ **COMPLETED**: Credo now prominently displayed on all book detail pages
+✅ Consistent styling with other credo displays across the site
+✅ Responsive design works on mobile and desktop devices
+✅ Reinforces author's philosophical approach on book pages
+
 ## Last Updated
-2026-05-29 (Book descriptions implementation: compact 120×180 layout, motivational content)
+2026-05-29 (Book marketing: credo integration on book detail pages)
 2026-05-28 (Book catalog: aspect ratio fix, 80×120 covers, float-right text-wrap layout)
 2026-05-27 (Added Goodreads + LinkedIn social icons)
 2026-05-26 (High-contrast / neurodivergent theme toggle)

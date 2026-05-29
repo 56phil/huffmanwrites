@@ -66,6 +66,14 @@
       {{- $processed = $img.Resize "800x webp" -}}
     {{- end -}}
     {{ if $imgPath }}
+    <div class="book-credo-container">
+        <div class="book-credo">
+          <div class="credo-line"><span class="credo-verb">Think</span> clearly.<span class="credo-icon" aria-hidden="true">🧠</span></div>
+          <div class="credo-line"><span class="credo-verb">Live</span> deliberately.<span class="credo-icon" aria-hidden="true">🚶</span></div>
+          <div class="credo-line"><span class="credo-verb">Love</span> intensely.<span class="credo-icon" aria-hidden="true">🔥</span></div>
+        </div>
+    </div>
+
     <div class="book-media">
        <div class="book-cover-wrap">
            {{ if $processed }}
