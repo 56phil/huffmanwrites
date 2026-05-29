@@ -113,11 +113,11 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ### 2. Book Cover Refresh
 **Status:** Resolved — May 21, 2026  
-**Action:** Updated 5 book covers from latest LaTeX repo `cover/assets/base.png` sources:
-- The Stoic Citizen: `tsc/cover/assets/base.png` → `assets/img/books/stoic-citizen-v2.jpg`
-- Unstuck: `unstuck/cover/assets/base.png` → `assets/img/books/unstuck-v3.jpg`
-- The Stoic CGM: `cgm/cover/assets/base.png` → `assets/img/books/stoic-cgm-v3.jpg`
-- Misaligned: `Misaligned/cover/assets/base.png` → `assets/img/books/misaligned-v2.jpg`
+- The Stoic Citizen: `tsc/cover/assets/base.png` $\\rightarrow$ `assets/img/books/stoic-citizen-v3.jpg`
+- The Stoic CGM: `cgm/cover/assets/base.png` $\\rightarrow$ `assets/img/books/stoic-cgm-v4.jpg`tizen-v3.jpg`
+- The Stoic CGM: `cgm/cover/assets/base.png` $\\rightarrow$ `assets/img/books/stoic-cgm-v4.jpg`oks/stoic-citizen-v3.jpg`
+- The Stoic CGM: `cgm/cover/assets/base.png` $\\rightarrow$ `assets/img/books/stoic-cgm-v4.jpg`stoic-citizen-v3.jpg`
+- The Stoic CGM: `cgm/cover/assets/base.png` $\\rightarrow$ `assets/img/books/stoic-cgm-v4.jpg`
 - On Proportion: `proportion/cover/assets/base.png` → `assets/img/books/on-proportion-v3.jpg`
 **LaTeX repo root:** `/Users/prh/Developer/LaTeX/AllMyBooks/`
 **Covers served as WebP:** Hugo's `book.html` shortcode processes source JPGs through `resources.Get` + `Resize "600x webp"`, so all book covers are served as `.webp` at build time.
