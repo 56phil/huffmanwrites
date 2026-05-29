@@ -267,12 +267,14 @@ Added compelling descriptions to book cards on the Books page to motivate reader
 ✅ Responsive design for all devices
 ✅ Motivational content to encourage "Learn More" clicks
 
-## Group B: Book Marketing — Back Cover Integration
+## Group B: Book Marketing
 
-### Overview
+### 1. Back Cover Integration
+
+#### Overview
 Added the credo "Think clearly. Live deliberately. Love intensely." to book detail pages as part of the Book Marketing strategy (Group B).
 
-### Implementation Details
+#### Implementation Details
 - **File Modified**: `layouts/books/single.html`
   - Added credo container and display above book media section
   - Integrated credo styling with decorative icons and responsive design
@@ -287,11 +289,41 @@ Added the credo "Think clearly. Live deliberately. Love intensely." to book deta
   - Italic font style matching the site's philosophical tone
   - Responsive design that works on all device sizes
 
-### Results
+#### Results
 ✅ **COMPLETED**: Credo now prominently displayed on all book detail pages
 ✅ Consistent styling with other credo displays across the site
 ✅ Responsive design works on mobile and desktop devices
 ✅ Reinforces author's philosophical approach on book pages
+
+### 2. Book Descriptions Integration
+
+#### Overview
+Integrated the credo "Think clearly. Live deliberately. Love intensely." into the motivational book descriptions to create a stronger connection between the author's philosophy and each book's content.
+
+#### Implementation Details
+- **File Modified**: `content/books/_index.md`
+  - Updated all 9 book descriptions to incorporate the credo framework
+  - Each description now follows the pattern: "Think clearly about [book topic]. Live deliberately through [book approach]. Love intensely enough to [book outcome]."
+  - Maintained the motivational tone while adding philosophical depth
+  - Preserved all existing metadata (titles, subtitles, captions, images)
+
+#### Book-Specific Integrations:
+- **Unstuck**: "Think clearly about what's holding you back. Live deliberately by taking action instead of making excuses. Love intensely enough to stop negotiating with yourself."
+- **A Life Made Whole**: "Think clearly about what's broken. Live deliberately through the daily practice of Stoic virtues. Love intensely enough to rebuild what life has fractured."
+- **The Stoic Citizen**: "Think clearly about your civic obligations. Live deliberately as a citizen in a polarized age. Love intensely enough to choose reason over rage, duty over drama, and humility over hubris."
+- **The Stoic CGM**: "Think clearly about your metabolic data. Live deliberately through the discipline of Stoic impressions. Love intensely enough to transform numbers into wisdom."
+- **Misaligned**: "Think clearly about your mental maps. Live deliberately with the right framework for your mind. Love intensely enough to embrace a diagnosis that reframes everything."
+- **Letters**: "Think clearly about history's hard truths. Live deliberately through the quiet courage of those who refused to look away. Love intensely enough to engage in timeless dialogue."
+- **Stoic Backgammon**: "Think clearly about probability and risk. Live deliberately through the discipline of strategic play. Love intensely enough to find acceptance in defeat."
+- **On Proportion**: "Think clearly about the maps that shape us. Live deliberately beyond the containment of Cold War conditioning. Love intensely enough to grow organically."
+- **Raise'm Right**: "Think clearly about what children truly need. Live deliberately as a parent in a noisy world. Love intensely enough to raise children of character, judgment, and agency."
+
+#### Results
+✅ **COMPLETED**: All book descriptions now integrate the credo framework
+✅ Consistent philosophical messaging across the entire book catalog
+✅ Stronger connection between author's philosophy and each book's content
+✅ Motivational language that encourages readers to click "Learn More"
+✅ Maintained responsive design and visual layout
 
 ## Last Updated
 2026-05-29 (Book marketing: credo integration on book detail pages)
