@@ -35,42 +35,53 @@ main, .post-content, .entry-content {
     font-family: var(--font-body);
 }
 
-/* Book Card Description Styles */
+/* Book Card Description Styles - ENSURE VISIBILITY */
 .book-description {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--secondary);
-    margin: 12px 0 20px 0;
-    font-style: italic;
-    opacity: 0.95;
-    /* Ensure descriptions are visible and don't overflow */
-    overflow: visible;
-    max-height: none;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+    color: var(--secondary) !important;
+    margin: 12px 0 20px 0 !important;
+    font-style: italic !important;
+    opacity: 0.95 !important;
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    width: auto !important;
 }
 
 .book-description p {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
 }
 
 .book-description p:first-child::first-letter {
-    font-size: 1.1em;
-    font-weight: 600;
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
 }
 
 /* Fix book content layout to accommodate descriptions */
 .book-card .book-content {
+    display: flex !important;
+    flex-direction: column !important;
     height: auto !important;
-    min-height: 220px; /* Provide minimum height for book cards */
+    min-height: 220px !important;
+    justify-content: flex-start !important;
 }
 
 .book-card .book-text {
     flex: 1 1 auto !important;
-    min-height: 0 !important; /* Allow text to overflow properly */
+    min-height: 0 !important;
+    overflow: visible !important;
+    display: block !important;
 }
 
 .book-card .book-actions {
     margin-top: 16px !important;
+    margin-bottom: 0 !important;
 }
 
 /* Specifically for the "Books" section to maintain consistency with our new scholarly look 
