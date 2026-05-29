@@ -35,66 +35,121 @@ main, .post-content, .entry-content {
     font-family: var(--font-body);
 }
 
-/* BOOK DESCRIPTIONS - ABSOLUTE VISIBILITY GUARANTEED */
+/* Book Card Layout - Compact and Balanced */
+.book-card {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+    padding: 16px !important;
+    margin: 20px 0 !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    background-color: var(--secondary) !important;
+    max-width: 800px !important;
+    width: 100% !important;
+}
+
+.book-card .book-cover-wrap {
+    flex: 0 0 120px !important;
+    width: 120px !important;
+    height: auto !important;
+    overflow: hidden !important;
+}
+
+.book-card .book-cover-wrap img {
+    width: 120px !important;
+    height: 180px !important;
+    object-fit: cover !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+}
+
+.book-card .book-content {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 180px !important;
+    justify-content: flex-start !important;
+}
+
+.book-card .book-title {
+    margin: 0 0 4px 0 !important;
+    font-size: 1.3rem !important;
+    font-weight: 700 !important;
+    color: var(--primary) !important;
+}
+
+.book-card .book-subtitle {
+    margin: 0 0 12px 0 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    opacity: 0.9 !important;
+    color: var(--primary) !important;
+}
+
+/* Book Description Styles */
 .book-description {
     display: block !important;
     visibility: visible !important;
-    opacity: 1 !important !important;
-    font-size: 16px !important;
-    line-height: 1.6 !important;
-    color: #333 !important;
-    margin: 15px 0 !important;
+    opacity: 1 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+    color: var(--secondary) !important;
+    margin: 8px 0 16px 0 !important;
     font-style: italic !important;
+    opacity: 0.95 !important;
     overflow: visible !important;
     max-height: none !important;
     height: auto !important;
-    width: 100% !important;
-    position: static !important;
-    z-index: 1000 !important;
-    background-color: rgba(255, 255, 0, 0.1) !important; /* Light yellow background for debugging */
-    border: 1px dashed #ccc !important; /* Border for debugging */
-    padding: 10px !important;
 }
 
 .book-description p {
     margin: 0 !important;
     padding: 0 !important;
-    display: block !important;
-    color: #333 !important;
-    font-size: 16px !important;
 }
 
-/* FORCE PARENT ELEMENTS TO SHOW CONTENT */
-.book-card {
-    overflow: visible !important;
-    display: block !important;
-    position: static !important;
-}
-
-.book-card .book-cover-wrap {
-    overflow: visible !important;
-}
-
-.book-card .book-content {
-    display: block !important;
-    height: auto !important;
-    min-height: 250px !important;
-    overflow: visible !important;
-    position: static !important;
-}
-
-.book-card .book-text {
-    display: block !important;
-    height: auto !important;
-    min-height: 150px !important;
-    overflow: visible !important;
-    position: static !important;
+.book-description p:first-child::first-letter {
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
 }
 
 .book-card .book-actions {
-    margin-top: 20px !important;
-    display: block !important;
-    position: static !important;
+    margin-top: auto !important;
+    padding-top: 12px !important;
+}
+
+.book-button {
+    background-color: var(--primary) !important;
+    color: var(--theme) !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    display: inline-block !important;
+}
+
+.book-button:hover {
+    opacity: 0.85 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .book-card {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    .book-card .book-cover-wrap {
+        flex: 0 0 auto !important;
+        margin-bottom: 12px !important;
+    }
+
+    .book-card .book-content {
+        align-items: center !important;
+    }
 }
 
 /* Specifically for the "Books" section to maintain consistency with our new scholarly look 
