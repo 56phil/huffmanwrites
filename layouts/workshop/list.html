@@ -1,0 +1,248 @@
+{{ define "main" }}
+<div class="workshop-container">
+  <header class="workshop-header">
+    <h1>{{ .Title }}</h1>
+    <p class="workshop-subtitle">{{ .Params.description }}</p>
+  </header>
+
+  <div class="credo-banner">
+    <div class="credo-line"><span class="credo-verb">Think</span> clearly.</div>
+    <div class="credo-line"><span class="credo-verb">Live</span> deliberately.</div>
+    <div class="credo-line"><span class="credo-verb">Love</span> intensely.</div>
+  </div>
+
+  <div class="workshop-intro">
+    <div class="workshop-video">
+      {{ with .Params.video }}
+        <iframe width="560" height="315" src="{{ . }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      {{ end }}
+    </div>
+    <div class="workshop-description">
+      {{ .Content }}
+    </div>
+  </div>
+
+  <div class="workshop-cta">
+    <a href="#signup" class="workshop-button">Start the 7-Day Workshop</a>
+  </div>
+
+  <div class="workshop-outline">
+    <h2>Workshop Outline</h2>
+    <div class="workshop-days">
+      {{ range .Pages }}
+      <div class="workshop-day">
+        <div class="day-header">
+          <div class="day-number">{{ .Params.day }}</div>
+          <div class="day-title">{{ .Title }}</div>
+        </div>
+        <div class="day-description">{{ .Params.description }}</div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+
+  <div class="workshop-signup" id="signup">
+    <h2>Start Your Journey</h2>
+    <p>Enter your email to receive daily workshop exercises and reflections:</p>
+    <form class="workshop-form" action="{{ .Params.form_action }}" method="POST">
+      <input type="email" name="email" placeholder="Your email address" required>
+      <button type="submit" class="workshop-button">Begin the Workshop</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  .workshop-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .workshop-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .workshop-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .workshop-subtitle {
+    font-size: 1.1rem;
+    color: var(--secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .credo-banner {
+    background: var(--entry);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+
+  .credo-line {
+    font-size: 1.8rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+  }
+
+  .credo-verb {
+    font-variant: small-caps;
+    font-weight: 600;
+  }
+
+  .workshop-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    align-items: start;
+  }
+
+  .workshop-video {
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .workshop-video iframe {
+    width: 100%;
+    height: 315px;
+  }
+
+  .workshop-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--secondary);
+  }
+
+  .workshop-cta {
+    text-align: center;
+    margin: 3rem 0;
+  }
+
+  .workshop-button {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--theme);
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .workshop-button:hover {
+    opacity: 0.85;
+  }
+
+  .workshop-outline {
+    margin: 3rem 0;
+  }
+
+  .workshop-outline h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 2rem;
+  }
+
+  .workshop-days {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .workshop-day {
+    background: var(--entry);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .day-number {
+    background: var(--primary);
+    color: var(--theme);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-right: 1rem;
+  }
+
+  .day-title {
+    font-size: 1.2rem;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .day-description {
+    color: var(--secondary);
+    line-height: 1.6;
+  }
+
+  .workshop-signup {
+    background: var(--entry);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .workshop-signup h2 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .workshop-signup p {
+    color: var(--secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  .workshop-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .workshop-form input {
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .workshop-intro {
+      grid-template-columns: 1fr;
+    }
+
+    .workshop-video iframe {
+      height: 250px;
+    }
+
+    .credo-line {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+{{ end }}

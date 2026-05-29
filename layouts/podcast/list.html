@@ -1,0 +1,290 @@
+{{ define "main" }}
+<div class="podcast-container">
+  <header class="podcast-header">
+    <h1>{{ .Title }}</h1>
+    <p class="podcast-subtitle">{{ .Params.description }}</p>
+  </header>
+
+  <div class="credo-banner">
+    <div class="credo-line"><span class="credo-verb">Think</span> clearly.</div>
+    <div class="credo-line"><span class="credo-verb">Live</span> deliberately.</div>
+    <div class="credo-line"><span class="credo-verb">Love</span> intensely.</div>
+  </div>
+
+  <div class="podcast-intro">
+    <div class="podcast-cover">
+      {{ with .Params.image }}
+        <img src="{{ . }}" alt="{{ $.Title }} podcast cover">
+      {{ end }}
+    </div>
+    <div class="podcast-description">
+      {{ .Content }}
+    </div>
+  </div>
+
+  <div class="subscribe-section">
+    <h2>Subscribe</h2>
+    <div class="subscribe-platforms">
+      {{ range .Params.platforms }}
+      <a href="{{ .url }}" class="subscribe-button" target="_blank">
+        <img src="{{ .icon }}" alt="{{ .name }}">
+        <span>{{ .name }}</span>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+
+  <div class="episode-list">
+    <h2>Episodes</h2>
+    {{ range .Pages }}
+    <div class="episode-card">
+      <div class="episode-image">
+        {{ with .Params.image }}
+          <img src="{{ . }}" alt="{{ $.Title }} episode cover" loading="lazy">
+        {{ end }}
+      </div>
+      <div class="episode-info">
+        <div class="episode-header">
+          <span class="episode-number">Episode {{ .Params.episode }}</span>
+          <h3>{{ .Title }}</h3>
+        </div>
+        <div class="episode-meta">
+          <span class="episode-date">{{ .Date.Format "January 2, 2006" }}</span>
+          <span class="episode-duration">{{ .Params.duration }}</span>
+        </div>
+        <p class="episode-description">{{ .Params.description }}</p>
+        <div class="episode-actions">
+          <a href="{{ .Params.audio }}" class="play-button">▶ Listen</a>
+          {{ with .Params.transcript }}
+            <a href="{{ . }}" class="transcript-button">📄 Transcript</a>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+  .podcast-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .podcast-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .podcast-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .podcast-subtitle {
+    font-size: 1.1rem;
+    color: var(--secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .credo-banner {
+    background: var(--entry);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+
+  .credo-line {
+    font-size: 1.8rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+  }
+
+  .credo-verb {
+    font-variant: small-caps;
+    font-weight: 600;
+  }
+
+  .podcast-intro {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    align-items: start;
+  }
+
+  .podcast-cover img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .podcast-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--secondary);
+  }
+
+  .subscribe-section {
+    margin: 3rem 0;
+    text-align: center;
+  }
+
+  .subscribe-section h2 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+  }
+
+  .subscribe-platforms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .subscribe-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--entry);
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--primary);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+  }
+
+  .subscribe-button:hover {
+    background: var(--primary);
+    color: var(--theme);
+  }
+
+  .subscribe-button img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .episode-list {
+    margin-top: 3rem;
+  }
+
+  .episode-list h2 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 2rem;
+  }
+
+  .episode-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    background: var(--entry);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .episode-image img {
+    width: 100%;
+    border-radius: 4px;
+  }
+
+  .episode-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .episode-number {
+    background: var(--primary);
+    color: var(--theme);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .episode-info h3 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin: 0;
+  }
+
+  .episode-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: var(--secondary);
+    font-size: 0.9rem;
+  }
+
+  .episode-description {
+    color: var(--secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .episode-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .play-button, .transcript-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .play-button {
+    background: var(--primary);
+    color: var(--theme);
+  }
+
+  .transcript-button {
+    background: var(--border);
+    color: var(--secondary);
+  }
+
+  .play-button:hover, .transcript-button:hover {
+    opacity: 0.85;
+  }
+
+  @media (max-width: 768px) {
+    .podcast-intro {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .podcast-cover {
+      margin: 0 auto;
+    }
+
+    .episode-card {
+      grid-template-columns: 1fr;
+    }
+
+    .subscribe-platforms {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .credo-line {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+{{ end }}
