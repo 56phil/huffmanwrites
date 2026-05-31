@@ -477,6 +477,10 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries — sort_key Author Name Fix — May 31, 2026
+
+- Corrected sort_key on all 9 Phil's book summaries from "Huffman, Phil" to "Huffman, Philip" for consistency with LC naming convention
+
 ## Book Summaries — Sagan Trilogy + LC Ordering — May 31, 2026
 
 - **cosmos-summary.md**, **pale-blue-dot-summary.md**, **brocas-brain-summary.md** — Sagan trilogy added
