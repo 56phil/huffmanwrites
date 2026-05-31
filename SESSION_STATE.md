@@ -477,6 +477,15 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Essay: A Life Made Whole — May 31, 2026
+
+- Added `content/posts/essays/a-life-made-whole.md`
+- Comprehensive article: what the book is, why it was written, why it should be read
+- Audience: high-functioning but quietly fragmented readers
+- Origin: accumulated experience over decades, not a single crisis
+- Includes section-by-section walkthrough of all nine Stoic virtues
+- Closes with Amazon link; tone is honest and direct, not promotional
+
 ## Book Summaries — Title Format Fix — May 31, 2026
 
 - Renamed all 9 Phil's book summary titles from "Book Title Summary" to "Book Title — Huffman" to match the external summary title format (e.g. "Thinking, Fast and Slow — Kahneman")
