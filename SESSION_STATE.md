@@ -477,6 +477,19 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries — Ecology Batch — May 31, 2026
+
+Added six ecology summaries, intentionally cross-referenced to existing summaries:
+
+- **sand-county-almanac-summary.md** — Leopold; land ethic as moral philosophy; pairs with Stoic cosmopolitanism
+- **unsettling-of-america-summary.md** — Berry; industrialization of agriculture as cultural/moral failure
+- **silent-spring-summary.md** — Carson; civic right to know; pairs with Sagan and Nussbaum
+- **sixth-extinction-summary.md** — Kolbert; mass extinction as civic failure; pairs with Carson and Leopold
+- **braiding-sweetgrass-summary.md** — Kimmerer; Indigenous epistemology + Western science; pairs with Leopold
+- **pilgrim-at-tinker-creek-summary.md** — Dillard; attention as practice; pairs with Marcus Aurelius
+
+Running total: 27 summaries (9 Phil's books, 18 external). 4 of 6 ecology titles by female authors.
+
 ## Book Summaries Pagination — May 31, 2026
 
 - Created `layouts/posts/summaries/list.html` — custom list layout that paginates at 6 per page
