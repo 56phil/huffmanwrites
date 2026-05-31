@@ -3,6 +3,7 @@ title: "The Sixth Extinction — Kolbert"
 description: "A summary and review of Elizabeth Kolbert's Pulitzer Prize-winning account of the current mass extinction event and the human activity driving it."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Kolbert, Elizabeth"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

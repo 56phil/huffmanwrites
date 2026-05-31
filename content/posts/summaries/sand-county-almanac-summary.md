@@ -3,6 +3,7 @@ title: "A Sand County Almanac — Leopold"
 description: "A summary and review of Aldo Leopold's foundational argument for a land ethic — the extension of moral consideration beyond humans to the broader community of life."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Leopold, Aldo"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

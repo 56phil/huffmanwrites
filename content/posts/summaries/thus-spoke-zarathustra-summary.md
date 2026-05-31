@@ -3,6 +3,7 @@ title: "Thus Spoke Zarathustra — Nietzsche"
 description: "A summary and review of Nietzsche's most ambitious and most misread work — a philosophical prose poem about the death of God, the will to power, and what comes after."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Nietzsche, Friedrich"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

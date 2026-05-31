@@ -3,6 +3,7 @@ title: "Meditations — Marcus Aurelius"
 description: "A summary and review of Marcus Aurelius's private journal — the most intimate record we have of a Stoic philosopher trying to live what he believed."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Aurelius, Marcus"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

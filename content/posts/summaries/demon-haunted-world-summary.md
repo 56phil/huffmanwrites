@@ -3,6 +3,7 @@ title: "The Demon-Haunted World — Sagan"
 description: "A summary and review of Carl Sagan's argument for skepticism as a daily practice and the baloney detection kit as a survival tool."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Sagan, Carl - Demon-Haunted World"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

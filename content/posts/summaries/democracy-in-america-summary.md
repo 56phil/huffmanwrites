@@ -3,6 +3,7 @@ title: "Democracy in America — Tocqueville"
 description: "A summary and review of Alexis de Tocqueville's prophetic diagnosis of democracy's strengths, pathologies, and the specific dangers it carries within it."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Tocqueville, Alexis de"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

@@ -3,6 +3,7 @@ title: "The Art of War — Sun Tzu"
 description: "A summary and review of Sun Tzu's foundational text on strategy, deception, and the discipline of knowing yourself before you engage the enemy."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Sun Tzu"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

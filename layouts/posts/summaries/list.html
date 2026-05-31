@@ -35,6 +35,7 @@
 {{- end }}
 
 {{- $pages := union .RegularPages .Sections }}
+{{- $pages = $pages.ByParam "sort_key" }}
 
 {{- $paginator := .Paginate $pages 6 }}
 

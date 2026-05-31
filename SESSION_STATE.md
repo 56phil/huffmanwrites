@@ -477,6 +477,15 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries — Sagan Trilogy + LC Ordering — May 31, 2026
+
+- **cosmos-summary.md**, **pale-blue-dot-summary.md**, **brocas-brain-summary.md** — Sagan trilogy added
+- **sort_key** frontmatter field added to all 35 summaries (Library of Congress order: last name, first; same-author titles disambiguated)
+- List template updated to sort by `sort_key` param before paginating
+- Future summaries must include `sort_key` frontmatter to maintain LC order
+
+Running total: 35 summaries (9 Phil's books, 26 external).
+
 ## Book Summaries — Psychology, Civics & Philosophy Batch — May 31, 2026
 
 - **thinking-fast-and-slow-summary.md** — Kahneman; System 1/2, cognitive bias; pairs with Sagan and Stoic discipline of assent

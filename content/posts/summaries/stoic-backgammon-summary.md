@@ -3,6 +3,7 @@ title: "Stoic Backgammon Summary"
 description: "Executive summary of Stoic Backgammon: every roll is a small encounter with fate, every move is a decision made with incomplete information."
 date: 2026-02-22T00:00:00Z
 author: Phil Huffman
+sort_key: "Huffman, Philip - Stoic Backgammon"
 lastmod: 2026-05-10T00:00:00Z
 tags:
   - books

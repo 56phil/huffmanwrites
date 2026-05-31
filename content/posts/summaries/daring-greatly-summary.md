@@ -3,6 +3,7 @@ title: "Daring Greatly — Brown"
 description: "A summary and review of Brené Brown's research-based argument that vulnerability is not weakness but the birthplace of courage, connection, and meaning."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Brown, Brene"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

@@ -3,6 +3,7 @@ title: "Misaligned Summary"
 description: "Executive summary of Misaligned: when the map is wrong, discipline becomes damage."
 date: 2025-12-05T00:00:00Z
 author: Phil Huffman
+sort_key: "Huffman, Philip - Misaligned"
 lastmod: 2026-05-10T00:00:00Z
 tags:
   - books

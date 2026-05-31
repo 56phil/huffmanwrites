@@ -3,6 +3,7 @@ title: "Not for Profit — Nussbaum"
 description: "A summary and review of Martha Nussbaum's argument that democracy cannot survive the gutting of humanities education."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Nussbaum, Martha"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

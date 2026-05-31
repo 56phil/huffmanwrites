@@ -3,6 +3,7 @@ title: "Unstuck Summary"
 description: "Executive summary of Unstuck: a Stoic framework for getting your life back on track."
 date: 2025-08-23T00:00:00Z
 author: Phil Huffman
+sort_key: "Huffman, Philip - Unstuck"
 lastmod: 2026-04-28T18:00:00Z
 tags:
   - ai

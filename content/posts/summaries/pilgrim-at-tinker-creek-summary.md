@@ -3,6 +3,7 @@ title: "Pilgrim at Tinker Creek — Dillard"
 description: "A summary and review of Annie Dillard's Pulitzer Prize-winning meditation on attention, wonder, and what the natural world reveals about the nature of existence."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Dillard, Annie"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

@@ -3,6 +3,7 @@ title: "Raise'm Right Summary"
 description: "Executive summary of Raise'm Right: cultivating judgment, not compliance."
 date: 2027-06-01T00:00:00Z
 author: Phil Huffman
+sort_key: "Huffman, Philip - Raisem Right"
 lastmod: 2026-05-10T00:00:00Z
 tags:
   - books

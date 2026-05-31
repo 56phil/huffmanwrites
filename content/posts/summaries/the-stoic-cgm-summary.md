@@ -3,6 +3,7 @@ title: "The Stoic CGM Summary"
 description: "Executive summary of The Stoic CGM: using data to govern the body without surrendering to it."
 date: 2025-11-20T00:00:00Z
 author: Phil Huffman
+sort_key: "Huffman, Philip - Stoic CGM"
 lastmod: 2026-05-10T00:00:00Z
 tags:
   - books

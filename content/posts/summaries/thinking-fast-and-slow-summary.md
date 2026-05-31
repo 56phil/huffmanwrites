@@ -3,6 +3,7 @@ title: "Thinking, Fast and Slow — Kahneman"
 description: "A summary and review of Daniel Kahneman's account of the two systems that drive human thought — and the systematic ways they lead us astray."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Kahneman, Daniel"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

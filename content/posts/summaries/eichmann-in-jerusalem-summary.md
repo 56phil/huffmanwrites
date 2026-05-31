@@ -3,6 +3,7 @@ title: "Eichmann in Jerusalem — Arendt"
 description: "A summary and review of Hannah Arendt's report on the Eichmann trial and her controversial, essential argument about the banality of evil."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Arendt, Hannah"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

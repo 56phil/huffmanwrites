@@ -3,6 +3,7 @@ title: "The Stoic Citizen Summary"
 description: "Executive summary of The Stoic Citizen: virtue as a public discipline, not a private consolation."
 date: 2025-09-18T00:00:00Z
 author: Phil Huffman
+sort_key: "Huffman, Philip - Stoic Citizen"
 lastmod: 2026-05-10T00:00:00Z
 tags:
   - books

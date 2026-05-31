@@ -3,6 +3,7 @@ title: "Braiding Sweetgrass — Kimmerer"
 description: "A summary and review of Robin Wall Kimmerer's braiding of Indigenous botanical knowledge and Western science into an argument for gratitude as an ecological practice."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Kimmerer, Robin Wall"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

@@ -3,6 +3,7 @@ title: "Mindset — Dweck"
 description: "A summary and review of Carol Dweck's research on fixed versus growth mindset, and what the science actually supports versus what the popularization has distorted."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Dweck, Carol"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

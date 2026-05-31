@@ -3,6 +3,7 @@ title: "The Unsettling of America — Berry"
 description: "A summary and review of Wendell Berry's argument that the industrialization of agriculture is not merely an economic or environmental problem but a cultural and moral one."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Berry, Wendell"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

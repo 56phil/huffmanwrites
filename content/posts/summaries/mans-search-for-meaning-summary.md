@@ -3,6 +3,7 @@ title: "Man's Search for Meaning — Frankl"
 description: "A summary and review of Viktor Frankl's account of survival in the Nazi concentration camps and the logotherapy he built from what he observed."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Frankl, Viktor"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

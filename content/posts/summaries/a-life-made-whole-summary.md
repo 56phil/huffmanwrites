@@ -3,6 +3,7 @@ title: "A Life Made Whole Summary"
 description: "Executive summary of A Life Made Whole: essays on holding yourself together when experience threatens to fragment."
 date: 2025-10-12T00:00:00Z
 author: Phil Huffman
+sort_key: "Huffman, Philip - A Life Made Whole"
 lastmod: 2026-05-10T00:00:00Z
 tags:
   - books

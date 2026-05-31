@@ -3,6 +3,7 @@ title: "Silent Spring — Carson"
 description: "A summary and review of Rachel Carson's landmark investigation into the ecological damage of synthetic pesticides — and the civic argument embedded within it."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Carson, Rachel"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

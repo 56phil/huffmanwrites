@@ -3,6 +3,7 @@ title: "Radical Acceptance — Brach"
 description: "A summary and review of Tara Brach's integration of Buddhist psychology and Western therapy, and her argument that the trance of unworthiness is the central wound of modern life."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Brach, Tara"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

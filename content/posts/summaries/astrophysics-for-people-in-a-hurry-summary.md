@@ -3,6 +3,7 @@ title: "Astrophysics for People in a Hurry — Tyson"
 description: "A summary and review of Neil deGrasse Tyson's brisk tour of the cosmos — what it gets gloriously right and where its brevity becomes a liability."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Tyson, Neil deGrasse"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

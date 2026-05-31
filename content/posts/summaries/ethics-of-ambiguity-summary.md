@@ -3,6 +3,7 @@ title: "The Ethics of Ambiguity — de Beauvoir"
 description: "A summary and review of Simone de Beauvoir's existentialist ethics — freedom, responsibility, and the refusal to escape the ambiguity of being human."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Beauvoir, Simone de"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

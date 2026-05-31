@@ -3,6 +3,7 @@ title: "Ego is the Enemy — Holiday"
 description: "A summary and review of Ryan Holiday's argument that ego — not circumstance, not competition, not bad luck — is the primary obstacle to a meaningful life and lasting work."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Holiday, Ryan"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books

@@ -3,6 +3,7 @@ title: "The Power of Now — Tolle"
 description: "A summary and review of Eckhart Tolle's case for present-moment awareness — what it gets right, where it inflates, and why it matters anyway."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
+sort_key: "Tolle, Eckhart"
 lastmod: 2026-05-31T00:00:00Z
 tags:
   - books
