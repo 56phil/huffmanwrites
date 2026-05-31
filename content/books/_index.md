@@ -4,7 +4,7 @@ description: "The works of Philip Huffman."
 lastmod: 2026-05-19
 ---
 
-The following is a comprehensive list of my books, exploring the intersections of Stoicism, neurodivergence, and the human experience.
+Every book here is an argument for the same proposition — that clarity, discipline, and love are not abstractions. They are the work.
 
 {{< book title="Unstuck" link="/books/unstuck/" subtitle="Brutal Guidance for Getting Out of Your Own Way" img="/img/books/unstuck-v3.jpg" caption="The discipline of movement after too much waiting." description="Think clearly about what's holding you back. Live deliberately by taking action instead of making excuses. Love intensely enough to stop negotiating with yourself. Unstuck offers no gentle encouragement—just the hard truth about what it takes to stop the cycle of delay and self-deception." >}}
 {{< book title="A Life Made Whole" link="/books/life-made-whole/" subtitle="Essays on Inner Strength and Resilience" img="/img/books/life-made-whole.jpg" caption="Integration through resilience: the art of becoming whole." description="Think clearly about what's broken. Live deliberately through the daily practice of Stoic virtues. Love intensely enough to rebuild what life has fractured. These essays offer a roadmap for turning adversity into strength through disciplined perspective and intentional action." >}}

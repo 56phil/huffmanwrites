@@ -477,7 +477,13 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Content Edits — May 31, 2026
+
+- **Books page intro** (`content/books/_index.md`): Replaced generic catalog line with credo-anchored copy: "Every book here is an argument for the same proposition — that clarity, discipline, and love are not abstractions. They are the work."
+- **Book Summaries intro** (`content/posts/summaries/_index.md`): Changed "Reading is the process..." to "Reading, like writing, is the process..." to tie reading and writing together as parallel disciplines.
+
 ## Last Updated
+2026-05-31 (Content copy edits: books intro, summaries intro)
 2026-05-29 (Group C: Blue Sky foundation implementation)
 2026-05-29 (Book marketing: credo integration on book detail pages)
 2026-05-28 (Book catalog: aspect ratio fix, 80×120 covers, float-right text-wrap layout)
