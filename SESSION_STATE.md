@@ -477,6 +477,17 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries — Female Authors Batch — May 31, 2026
+
+Added six summaries by female authors, bringing gender balance to the summaries section:
+
+- **not-for-profit-summary.md** — Nussbaum; angle: democracy requires humanities education; pairs with Sagan
+- **ethics-of-ambiguity-summary.md** — de Beauvoir; angle: freedom requires willing the freedom of others; pairs with Stoics
+- **daring-greatly-summary.md** — Brown; angle: vulnerability as courage, shame resilience; pairs with *Unstuck*
+- **mindset-summary.md** — Dweck; angle: fixed vs. growth orientation; critique: replication concerns and popularization distortions
+- **eichmann-in-jerusalem-summary.md** — Arendt; angle: banality of evil, thoughtlessness as moral failure; pairs with *The Stoic Citizen*
+- **radical-acceptance-summary.md** — Brach; angle: trance of unworthiness, RAIN practice; pairs with *The Power of Now*
+
 ## Book Summaries Expansion — May 31, 2026
 
 Added six external book summaries to `content/posts/summaries/`, bringing the section beyond Phil's own books for the first time:
