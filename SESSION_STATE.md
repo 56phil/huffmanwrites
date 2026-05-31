@@ -477,6 +477,21 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries Expansion — May 31, 2026
+
+Added six external book summaries to `content/posts/summaries/`, bringing the section beyond Phil's own books for the first time:
+
+- **demon-haunted-world-summary.md** — Sagan; angle: skepticism as practice; includes baloney detection kit breakdown
+- **art-of-war-summary.md** — Sun Tzu; angle: strategy as self-knowledge; critique: abstraction and moral coldness
+- **7-habits-summary.md** — Covey; angle: character ethic vs. personality ethic; critique: assumes agency not everyone has
+- **mans-search-for-meaning-summary.md** — Frankl; angle: meaning in suffering, Stoic parallels; critique: selection problem
+- **meditations-summary.md** — Marcus Aurelius; angle: aspiration vs. execution in a private journal; critique: lacks systematic rigor
+- **power-of-now-summary.md** — Tolle; angle: presence as practice; critique: spiritual inflation, implicit privilege
+
+All summaries follow the established format: Executive Summary, 5 Core Arguments (numbered), thematic section, A Respectful Disagreement, Bottom Line, closing quote, PRH attribution. Tone: positive, yet critical.
+
+Also updated `_index.md` intro from generic catalog language to credo-anchored copy, and added "like writing" to the summaries page opening sentence.
+
 ## Content Edits — May 31, 2026
 
 - **Books page intro** (`content/books/_index.md`): Replaced generic catalog line with credo-anchored copy: "Every book here is an argument for the same proposition — that clarity, discipline, and love are not abstractions. They are the work."
