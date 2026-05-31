@@ -477,6 +477,14 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries — Psychology, Civics & Philosophy Batch — May 31, 2026
+
+- **thinking-fast-and-slow-summary.md** — Kahneman; System 1/2, cognitive bias; pairs with Sagan and Stoic discipline of assent
+- **democracy-in-america-summary.md** — Tocqueville; soft despotism, tyranny of majority, civic associations; pairs with The Stoic Citizen
+- **thus-spoke-zarathustra-summary.md** — Nietzsche; death of God, last man, Übermensch, eternal recurrence; pairs with Frankl
+
+Running total: 32 summaries (9 Phil's books, 23 external).
+
 ## Book Summaries — Science & Stoicism Batch — May 31, 2026
 
 - **astrophysics-for-people-in-a-hurry-summary.md** — Tyson; cosmic perspective; pairs with Sagan; corrected "mentor" to "hero" after review
