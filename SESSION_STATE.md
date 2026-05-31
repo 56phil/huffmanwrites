@@ -477,6 +477,15 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Essay: Misaligned — May 31, 2026
+
+- Added `content/posts/essays/misaligned.md`
+- Comprehensive article: what the book is, why it was written, why it should be read
+- Phil's closest thing to an autobiography; centers on late ADHD diagnosis and its costs
+- Key addition: "a significant portion of the pain was unnecessary" — the moral center of why the book exists
+- Audience: people who have performed competence while quietly drowning, and those who received a late diagnosis
+- Closes with agency as the final argument, not repair
+
 ## Essay: A Life Made Whole — May 31, 2026
 
 - Added `content/posts/essays/a-life-made-whole.md`
