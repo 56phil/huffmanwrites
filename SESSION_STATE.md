@@ -477,6 +477,11 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries Pagination — May 31, 2026
+
+- Created `layouts/posts/summaries/list.html` — custom list layout that paginates at 6 per page
+- Overrides PaperMod's default list.html for the summaries section only; all other sections unaffected
+
 ## Book Summaries — Female Authors Batch — May 31, 2026
 
 Added six summaries by female authors, bringing gender balance to the summaries section:
