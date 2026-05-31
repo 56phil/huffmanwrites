@@ -1,5 +1,5 @@
 ---
-title: "Raise'm Right Summary"
+title: "Raise'm Right — Huffman"
 description: "Executive summary of Raise'm Right: cultivating judgment, not compliance."
 date: 2027-06-01T00:00:00Z
 author: Phil Huffman

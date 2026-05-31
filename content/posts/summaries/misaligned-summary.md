@@ -1,5 +1,5 @@
 ---
-title: "Misaligned Summary"
+title: "Misaligned — Huffman"
 description: "Executive summary of Misaligned: when the map is wrong, discipline becomes damage."
 date: 2025-12-05T00:00:00Z
 author: Phil Huffman

@@ -477,6 +477,10 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries — Title Format Fix — May 31, 2026
+
+- Renamed all 9 Phil's book summary titles from "Book Title Summary" to "Book Title — Huffman" to match the external summary title format (e.g. "Thinking, Fast and Slow — Kahneman")
+
 ## Book Summaries — sort_key Author Name Fix — May 31, 2026
 
 - Corrected sort_key on all 9 Phil's book summaries from "Huffman, Phil" to "Huffman, Philip" for consistency with LC naming convention

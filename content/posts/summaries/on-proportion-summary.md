@@ -1,5 +1,5 @@
 ---
-title: "On Proportion Summary"
+title: "On Proportion — Huffman"
 description: "Executive summary of On Proportion: the lost discipline of matching response to scale."
 date: 2026-06-16T00:00:00Z
 author: Phil Huffman
