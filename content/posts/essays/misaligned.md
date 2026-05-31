@@ -1,7 +1,7 @@
 ---
 title: "Misaligned: What It Is, Why I Wrote It, Why You Should Read It"
 description: "A comprehensive look at Misaligned — the most personal book Philip Huffman has written, and the one closest to an autobiography. A late ADHD diagnosis, a first marriage, a career built on containment, and the hard work of building something different."
-date: 2026-05-31T00:00:00Z
+date: 2026-05-31T23:00:00Z
 author: Phil Huffman
 lastmod: 2026-05-31T00:00:00Z
 tags:
