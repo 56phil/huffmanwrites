@@ -1,7 +1,7 @@
 ---
 title: "A Life Made Whole: What It Is, Why I Wrote It, Why You Should Read It"
 description: "A comprehensive look at the second Huffman book — its origins in accumulated experience, its Stoic framework, and why it exists for the reader who suspects they are not as whole as they appear."
-date: 2026-05-31T22:00:00Z
+date: 2026-05-31T05:00:00Z
 author: Phil Huffman
 lastmod: 2026-05-31T00:00:00Z
 tags:

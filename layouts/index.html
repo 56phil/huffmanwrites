@@ -310,7 +310,7 @@
 
   <section class="latest-posts">
     <h2>Recent Posts</h2>
-    {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
+    {{ range first 5 (where (where .Site.RegularPages "Type" "posts") ".Params.hiddenInHomeList" "!=" true) }}
       <div class="recent-post">
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
         <time>{{ .Date.Format "January 2, 2006" }}</time>

@@ -2,6 +2,8 @@
 title: "Book Summaries"
 description: "Condensed insights and critical reviews of influential books."
 lastmod: 2026-05-20
+cascade:
+  hiddenInHomeList: true
 ---
 
 Reading, like writing, is the process of standing on the shoulders of giants. In this section, I deconstruct complex texts into their essential arguments, key takeaways, and critical flaws.
