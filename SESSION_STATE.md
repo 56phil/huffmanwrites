@@ -477,6 +477,13 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
 
+## Book Summaries — Science & Stoicism Batch — May 31, 2026
+
+- **astrophysics-for-people-in-a-hurry-summary.md** — Tyson; cosmic perspective; pairs with Sagan; corrected "mentor" to "hero" after review
+- **ego-is-the-enemy-summary.md** — Holiday; ego as tax on achievement across aspiration/success/failure; pairs with Meditations
+
+Running total: 29 summaries (9 Phil's books, 20 external).
+
 ## Book Summaries — Ecology Batch — May 31, 2026
 
 Added six ecology summaries, intentionally cross-referenced to existing summaries:
