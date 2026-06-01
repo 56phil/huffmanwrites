@@ -7,9 +7,9 @@ description = "The guiding principles behind Philip Huffman's work: Think clearl
 # Credo
 
 <div class="credo-hero">
-  <div class="credo-line"><span class="credo-verb">Think</span> clearly.<span class="credo-icon" aria-hidden="true">🧠</span></div>
-  <div class="credo-line"><span class="credo-verb">Live</span> deliberately.<span class="credo-icon" aria-hidden="true">🚶</span></div>
-  <div class="credo-line"><span class="credo-verb">Love</span> intensely.<span class="credo-icon" aria-hidden="true">🔥</span></div>
+  <div class="credo-line"><span class="credo-verb">Think</span> <span class="credo-adverb">clearly</span>.</div>
+  <div class="credo-line"><span class="credo-verb">Live</span> <span class="credo-adverb">deliberately</span>.</div>
+  <div class="credo-line"><span class="credo-verb">Love</span> <span class="credo-adverb">intensely</span>.</div>
 </div>
 
 ## The Three Pillars
@@ -88,6 +88,11 @@ Together, they create a framework for a life well-lived—a life of purpose, con
     font-variant: small-caps;
     color: var(--primary);
     font-weight: 600;
+  }
+
+  .credo-hero .credo-adverb {
+    font-style: italic;
+    font-weight: bold;
   }
 
   .credo-hero .credo-icon {

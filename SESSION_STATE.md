@@ -285,7 +285,6 @@ Added the credo "Think clearly. Live deliberately. Love intensely." to book deta
   - Included responsive breakpoints for mobile devices
 - **Design**: Consistent with existing credo styling across the site
   - Small caps for verbs (Think, Live, Love)
-  - Decorative icons (🧠, 🚶, 🔥) with hover animations
   - Italic font style matching the site's philosophical tone
   - Responsive design that works on all device sizes
 
@@ -468,7 +467,6 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 #### Credo Integration
 - All initiative pages feature the full credo prominently
 - Consistent styling with small caps for verbs (Think, Live, Love)
-- Decorative icons (🧠, 🚶, 🔥) with responsive design
 - Philosophical tone maintained throughout
 
 ### Results
