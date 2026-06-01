@@ -3,12 +3,16 @@ title: "The Optimal Use of Hermes: From Tool to Editorial Operation"
 description: "How a persistent AI agent changed the way I think, write, and work — and what I've learned about using it well."
 date: 2026-05-21T00:00:00Z
 author: Phil Huffman
-lastmod: 2026-05-21T00:00:00Z
+lastmod: 2026-06-01T00:00:00Z
 tags:
   - ai
   - essays
   - tools
   - writing
+---
+
+**Update (June 2026)**: Hermes is no longer part of my workflow. It has been replaced by [Claude](https://claude.ai), a more reliable and consistent AI assistant. While Hermes was groundbreaking in its approach, it leaped without looking too many times—its autonomous nature often led to unpredictable or undesirable outcomes. This essay remains online as a historical record of my experience with Hermes, but I no longer use or recommend it.
+
 ---
 
 About six weeks ago, I wrote a short essay explaining that I use artificial intelligence as part of my writing process. The core observation was simple: AI does not originate ideas, but it exposes structure. It mirrors patterns back at you, shows you where an argument repeats itself, amplifies confusion rather than resolving it, and generally behaves less like a writer and more like a diagnostic instrument.
