@@ -95,6 +95,7 @@ Together, they create a framework for a life well-lived—a life of purpose, con
     font-weight: 800;
     text-decoration: underline;
     text-underline-offset: 3px;
+    color: var(--accent);
   }
 
   .credo-hero .credo-icon {
