@@ -18,7 +18,7 @@ My writing is direct, occasionally unsentimental, and always aimed at someone wh
 
 I served in the U.S. Army between 1973 and 1974, completed Basic Combat Training at Fort Leonard Wood and AIT at Fort Devens, and I write as someone who has lived through several entirely different eras of American public life.
 
-If you're new here, the best place to start is probably [Unstuck](/posts/unstuck-summary/) — the summary of the first book, and the clearest statement of my operating assumptions.
+If you're new here, the best place to start is probably [Unstuck](/posts/summaries/unstuck-summary/) — the summary of the first book, and the clearest statement of my operating assumptions.
 
 If you're wondering what I've written, the full catalog is on the [Books](/books/) page.
 

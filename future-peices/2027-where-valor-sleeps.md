@@ -1,4 +1,4 @@
-# The Fields Where Valor Sleeps
+# Where Valor Sleeps
 
 Beneath the sky of blue so wide,
 Where golden light and shadows glide,
