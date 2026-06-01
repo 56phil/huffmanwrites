@@ -93,6 +93,8 @@ Together, they create a framework for a life well-lived—a life of purpose, con
   .credo-hero .credo-adverb {
     font-style: italic;
     font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .credo-hero .credo-icon {
