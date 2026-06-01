@@ -13,7 +13,10 @@
     --content:        #EDE8D5;
     --code-block-bg:  #1A1A1A;
     --code-bg:        #222222;
-    --border:         #585858;
+    --border:         #D4820A; /* Dark amber for borders */
+    --accent:         #D4820A; /* Dark amber for accents */
+    --button-bg:      #D4820A; /* Dark amber for buttons */
+    --button-text:    #0D0D0D; /* Black text for buttons */
     color-scheme: dark;
 }
 
@@ -63,18 +66,19 @@
 /* ── Links ─────────────────────────────────────────────── */
 [data-theme="highcontrast"] a {
     color: #7DC4FF;
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 3px; /* Thicker underline */
     text-underline-offset: 3px;
 }
 
 [data-theme="highcontrast"] a:visited {
-    color: #C4A8FF;
+    color: var(--accent); /* Dark amber for visited links */
+    text-decoration-color: var(--accent);
 }
 
 [data-theme="highcontrast"] a:hover,
 [data-theme="highcontrast"] a:focus {
-    color: #D4820A;
-    text-decoration-color: #D4820A;
+    color: var(--accent);
+    text-decoration-color: var(--accent);
 }
 
 /* ── Focus rings ───────────────────────────────────────── */
@@ -87,11 +91,42 @@
 /* ── UI chrome ─────────────────────────────────────────── */
 [data-theme="highcontrast"] .header,
 [data-theme="highcontrast"] nav {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 2px solid var(--border); /* Thicker border */
 }
 
 [data-theme="highcontrast"] .entry {
+    border: 2px solid var(--border); /* Thicker border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+/* Add dark amber accents to headings */
+[data-theme="highcontrast"] h1,
+[data-theme="highcontrast"] h2,
+[data-theme="highcontrast"] h3,
+[data-theme="highcontrast"] h4,
+[data-theme="highcontrast"] h5,
+[data-theme="highcontrast"] h6 {
+    border-left: 4px solid var(--accent); /* Dark amber left border */
+    padding-left: 0.75em;
+}
+
+/* Style buttons with dark amber */
+[data-theme="highcontrast"] .button,
+[data-theme="highcontrast"] .btn,
+[data-theme="highcontrast"] .read-more {
+    background-color: var(--button-bg);
+    color: var(--button-text);
     border: 1px solid var(--border);
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+[data-theme="highcontrast"] .button:hover,
+[data-theme="highcontrast"] .btn:hover,
+[data-theme="highcontrast"] .read-more:hover {
+    background-color: #B87308; /* Slightly darker amber */
 }
 
 /* Nav links */
@@ -116,6 +151,13 @@
     color: #F2EDD8;
     padding: 0.15em 0.35em;
     border-radius: 3px;
+}
+
+/* Add dark amber border to code blocks */
+[data-theme="highcontrast"] pre {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1em;
 }
 
 /* ── Reduced motion ────────────────────────────────────── */
