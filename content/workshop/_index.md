@@ -6,7 +6,7 @@ video = "https://www.youtube.com/embed/dQw4w9WgXcQ"
 form_action = "https://convertkit.com/your-form-endpoint"
 +++
 
-The 7-Day Credo Workshop is a practical, interactive program designed to help you apply the principles of "Think clearly. Live deliberately. Love intensely." to your daily life. Through daily exercises, reflections, and guided practices, you'll develop the skills to integrate these principles into your decision-making, relationships, and personal growth.
+The 7-Day Credo Workshop is a practical, interactive program designed to help you apply the principles of "Think Clearly. Live Intentionally. Love Immediately." to your daily life. Through daily exercises, reflections, and guided practices, you'll develop the skills to integrate these principles into your decision-making, relationships, and personal growth.
 
 ## How It Works
 
@@ -31,7 +31,7 @@ Each day builds on the previous one, creating a comprehensive framework for inte
 **Exercises**: Attention training, mindfulness practices
 **Challenge**: Practice focused attention for 10 minutes daily
 
-### Day 3: Live Deliberately
+### Day 3: Live Intentionally
 **Focus**: Aligning actions with values
 **Exercises**: Value identification, decision matrices
 **Challenge**: Make one deliberate decision aligned with your values
@@ -41,7 +41,7 @@ Each day builds on the previous one, creating a comprehensive framework for inte
 **Exercises**: Time allocation, energy management
 **Challenge**: Rebalance one area of your life
 
-### Day 5: Love Intensely
+### Day 5: Love Immediately
 **Focus**: Authentic connection
 **Exercises**: Empathy practices, vulnerability exercises
 **Challenge**: Create one moment of authentic connection

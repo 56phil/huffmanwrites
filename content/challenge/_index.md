@@ -8,7 +8,7 @@ week3_link = "/challenge/week3/"
 week4_link = "/challenge/week4/"
 +++
 
-The #ThinkLiveLove Challenge is a 4-week social media initiative designed to help you apply and share the principles of "Think clearly. Live deliberately. Love intensely." Each week focuses on one aspect of the credo, with daily prompts, community support, and opportunities to share your journey.
+The #ThinkLiveLove Challenge is a 4-week social media initiative designed to help you apply and share the principles of "Think Clearly. Live Intentionally. Love Immediately." Each week focuses on one aspect of the credo, with daily prompts, community support, and opportunities to share your journey.
 
 ## How It Works
 
@@ -27,28 +27,28 @@ The #ThinkLiveLove Challenge is a 4-week social media initiative designed to hel
 - Describe a time when clear thinking changed an outcome
 - What mental habit do you want to improve?
 - How do you create mental space for clear thinking?
-- Share a book or resource that helps you think clearly
+- Share a book or resource that helps you Think Clearly
 - What's one area where you want greater clarity?
 - Reflect on your week of clear thinking
 
-### Week 2: Live Deliberately
+### Week 2: Live Intentionally
 **Focus**: Intentional action and value alignment
 **Prompts**:
 - Share a deliberate action you took today
 - What value did you honor through your actions?
 - Describe a time when you acted against your values
 - How do you align daily actions with long-term goals?
-- What's one habit you want to cultivate deliberately?
+- What's one habit you want to cultivate intentionally?
 - Share a tool or framework you use for deliberate living
 - Reflect on your week of deliberate action
 
-### Week 3: Love Intensely
+### Week 3: Love Immediately
 **Focus**: Connection, vulnerability, and authentic relationships
 **Prompts**:
 - Share a moment of authentic connection
 - Describe a relationship that changed you
 - How do you practice vulnerability?
-- What does "love intensely" mean to you?
+- What does "love immediately" mean to you?
 - Share a story of unexpected kindness
 - How do you maintain meaningful connections?
 - Reflect on your week of intense love

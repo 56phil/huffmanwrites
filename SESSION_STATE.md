@@ -233,7 +233,8 @@ First Amendment (full essay), Constitution overview, Constitution's Legacy, Seco
 Updated the home page credo from two lines to three lines:
 - **Before**: Think clearly. Live deliberately.
 - **Interim**: Think clearly. Live deliberately. Love like there's no tomorrow.
-- **After**: Think clearly. Live deliberately. Love intensely.
+- **After (original)**: Think clearly. Live deliberately. Love intensely.
+- **Current**: Think Clearly. Live Intentionally. Love Immediately.
 
 ### Changes Made
 - Updated `layouts/index.html` line 215 to add third line to hero tagline

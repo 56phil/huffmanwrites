@@ -10,7 +10,7 @@ tags:
   - author
 ---
 
-My credo: **Think clearly. Live deliberately. Love intensely.**
+My credo: **Think Clearly. Live Intentionally. Love Immediately.**
 
 I write about Stoicism, civic life, and the practical work of getting unstuck. This credo guides everything I create — not as abstract philosophy, but as a practical framework for living. Most of what I publish is grounded in personal experience — not theory for its own sake, but pressure-tested ideas about living with clarity, proportion, and a little less drama than the world insists on.
 

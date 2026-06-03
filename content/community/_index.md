@@ -7,15 +7,15 @@ join_link = "https://community.huffmanwrites.org"
 learn_link = "/community/about/"
 +++
 
-The Credo Community is a dedicated space for readers, thinkers, and practitioners to discuss and apply the principles of "Think clearly. Live deliberately. Love intensely." Together, we explore how to integrate these principles into daily life through discussion, learning, and mutual support.
+The Credo Community is a dedicated space for readers, thinkers, and practitioners to discuss and apply the principles of "Think Clearly. Live Intentionally. Love Immediately." Together, we explore how to integrate these principles into daily life through discussion, learning, and mutual support.
 
 ## What We Offer
 
 ### Discussion Forums
 Engage in thoughtful conversations about:
 - **Think Clearly**: Cognitive science, decision making, mental clarity
-- **Live Deliberately**: Stoicism, value alignment, intentional action
-- **Love Intensely**: Psychology of connection, relationships, vulnerability
+- **Live Intentionally**: Stoicism, value alignment, intentional action
+- **Love Immediately**: Psychology of connection, relationships, vulnerability
 - **Integration**: Applying all three principles holistically
 
 ### Weekly Live Sessions

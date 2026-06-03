@@ -4,7 +4,7 @@ description = "Integrate the credo into your applications and projects"
 layout = "list"
 +++
 
-The Credo API provides programmatic access to the principles of "Think clearly. Live deliberately. Love intensely." allowing developers to integrate the credo into websites, applications, and digital experiences. Whether you're building a personal project, a community platform, or a commercial application, the Credo API makes it easy to incorporate philosophical content and exercises.
+The Credo API provides programmatic access to the principles of "Think Clearly. Live Intentionally. Love Immediately." allowing developers to integrate the credo into websites, applications, and digital experiences. Whether you're building a personal project, a community platform, or a commercial application, the Credo API makes it easy to incorporate philosophical content and exercises.
 
 ## API Overview
 
@@ -55,7 +55,7 @@ Embed the credo in your website with our JavaScript widget. Customize the appear
 Integrate the credo into your mobile app with our SDKs. Provide users with daily inspiration, exercises, and philosophical content.
 
 ### Browser Extensions
-Create browser extensions that remind users to think clearly, live deliberately, and love intensely throughout their day.
+Create browser extensions that remind users to Think Clearly, live intentionally, and love immediately throughout their day.
 
 ### CLI Tools
 Build command-line tools that help users apply the credo principles in their daily workflow.

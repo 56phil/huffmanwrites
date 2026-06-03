@@ -1,11 +1,11 @@
 +++
 title = "The Credo Podcast"
-description = "Exploring 'Think clearly. Live deliberately. Love intensely.' through conversation and inquiry"
+description = "Exploring 'Think Clearly. Live Intentionally. Love Immediately.' through conversation and inquiry"
 layout = "list"
 image = "/img/podcast/credo-podcast-cover.jpg"
 +++
 
-The Credo Podcast is an audio exploration of the principles "Think clearly. Live deliberately. Love intensely." Each episode features conversations with philosophers, psychologists, scientists, and practitioners who help us understand how to apply these principles to modern life.
+The Credo Podcast is an audio exploration of the principles "Think Clearly. Live Intentionally. Love Immediately." Each episode features conversations with philosophers, psychologists, scientists, and practitioners who help us understand how to apply these principles to modern life.
 
 ## About the Podcast
 
@@ -27,11 +27,11 @@ Each episode is designed to help you integrate the credo into your daily life, w
 *Guest: Dr. Sarah Chen, Cognitive Psychologist*
 Explore the cognitive foundations of clear thinking, including common biases, decision frameworks, and strategies for improving mental clarity.
 
-**Episode 2: Live Deliberately - Philosophy in Action**
+**Episode 2: Live Intentionally - Philosophy in Action**
 *Guest: Dr. Marcus Aurelius Johnson, Philosopher*
 Discuss the philosophical underpinnings of deliberate living, including Stoic principles, value alignment, and the discipline of action.
 
-**Episode 3: Love Intensely - The Psychology of Connection**
+**Episode 3: Love Immediately - The Psychology of Connection**
 *Guest: Dr. Elena Rodriguez, Social Psychologist*
 Examine the science of authentic connection, including vulnerability, empathy, and the role of relationships in personal growth.
 

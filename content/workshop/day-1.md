@@ -74,7 +74,7 @@ Choose one of these mental models and apply it to a current situation:
 
 Use these prompts for journaling or discussion:
 
-1. What does "think clearly" mean to you in your daily life?
+1. What does "Think Clearly" mean to you in your daily life?
 2. Describe a time when clear thinking led to a positive outcome.
 3. What are your most common cognitive biases or thinking traps?
 4. How can you create more mental space for clear thinking in your routine?

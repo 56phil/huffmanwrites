@@ -4,7 +4,7 @@ description = "Merchandise that helps you live the credo daily"
 layout = "list"
 +++
 
-The Credo Shop offers high-quality merchandise designed to help you integrate the principles of "Think clearly. Live deliberately. Love intensely." into your daily life. Each product is crafted to serve as a tangible reminder of your commitment to intentional living.
+The Credo Shop offers high-quality merchandise designed to help you integrate the principles of "Think Clearly. Live Intentionally. Love Immediately." into your daily life. Each product is crafted to serve as a tangible reminder of your commitment to intentional living.
 
 ## Featured Products
 
@@ -17,8 +17,8 @@ Start your day with intention. Our mugs feature the credo alongside philosophica
 ### Guided Journals
 Notebooks with daily prompts that help you apply each principle:
 - **Think Clearly**: Cognitive exercises and reflection prompts
-- **Live Deliberately**: Decision tracking and value alignment
-- **Love Intensely**: Connection practices and gratitude exercises
+- **Live Intentionally**: Decision tracking and value alignment
+- **Love Immediately**: Connection practices and gratitude exercises
 
 ### Art Prints & Posters
 Beautiful artwork featuring the credo with Stoic and philosophical motifs. Perfect for home offices, studies, or meditation spaces.
