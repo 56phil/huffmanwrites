@@ -3,43 +3,59 @@
   <header class="shop-header">
     <h1>{{ .Title }}</h1>
     <p class="shop-subtitle">{{ .Params.description }}</p>
+    {{ with .Params.etsy_shop_url }}
+    <a href="{{ . }}" class="etsy-shop-link" target="_blank" rel="noopener">Visit the Full Shop on Etsy →</a>
+    {{ end }}
   </header>
 
+  {{ with .Content }}
+  <div class="shop-notice">{{ . }}</div>
+  {{ end }}
+
   <div class="credo-banner">
-    <div class="credo-line"><span class="credo-verb">Think</span> clearly.</div>
-    <div class="credo-line"><span class="credo-verb">Live</span> intentionally.</div>
-    <div class="credo-line"><span class="credo-verb">Love</span> immediately.</div>
+    <div class="credo-line"><span class="credo-verb">Think</span> <span class="credo-adverb">Clearly</span>.</div>
+    <div class="credo-line"><span class="credo-verb">Live</span> <span class="credo-adverb">Intentionally</span>.</div>
+    <div class="credo-line"><span class="credo-verb">Love</span> <span class="credo-adverb">Immediately</span>.</div>
   </div>
 
+  {{ if .Pages }}
   <div class="product-grid">
     {{ range .Pages }}
     <div class="product-card">
       <div class="product-image">
         {{ with .Params.image }}
-          <img src="{{ . }}" alt="{{ $.Title }} product" loading="lazy">
+          <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+        {{ else }}
+          <div class="product-image-placeholder"></div>
         {{ end }}
       </div>
       <div class="product-info">
         <h2>{{ .Title }}</h2>
+        {{ with .Params.tagline }}<p class="product-tagline">{{ . }}</p>{{ end }}
         <p class="product-description">{{ .Params.description }}</p>
         <div class="product-price">{{ .Params.price }}</div>
-        <a href="{{ .Params.link }}" class="product-button">Shop Now</a>
+        {{ with .Params.link }}
+        <a href="{{ . }}" class="product-button etsy-button" target="_blank" rel="noopener">Buy on Etsy</a>
+        {{ else }}
+        <span class="product-button coming-soon-button">Coming Soon</span>
+        {{ end }}
       </div>
     </div>
     {{ end }}
   </div>
+  {{ end }}
 </div>
 
 <style>
   .shop-container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 2rem 1rem;
   }
 
   .shop-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   .shop-header h1 {
@@ -52,7 +68,32 @@
     font-size: 1.1rem;
     color: var(--secondary);
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 1.2rem;
+  }
+
+  .etsy-shop-link {
+    display: inline-block;
+    font-size: 0.95rem;
+    color: #F1641E;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #F1641E;
+    padding-bottom: 1px;
+  }
+
+  .etsy-shop-link:hover {
+    opacity: 0.8;
+  }
+
+  .shop-notice {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-left: 4px solid #F1641E;
+    border-radius: 4px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--secondary);
+    font-size: 0.95rem;
   }
 
   .credo-banner {
@@ -73,14 +114,17 @@
 
   .credo-verb {
     font-variant: small-caps;
-    font-weight: 600;
+    font-weight: 700;
+  }
+
+  .credo-adverb {
+    font-weight: 400;
   }
 
   .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
-    margin-top: 2rem;
   }
 
   .product-card {
@@ -89,39 +133,61 @@
     overflow: hidden;
     border: 1px solid var(--border);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
   }
 
   .product-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
   }
 
   .product-image img {
     width: 100%;
-    height: 250px;
+    height: 240px;
     object-fit: cover;
     display: block;
   }
 
+  .product-image-placeholder {
+    width: 100%;
+    height: 240px;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .product-info {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .product-info h2 {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
     color: var(--primary);
+  }
+
+  .product-tagline {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    font-style: italic;
+    margin-bottom: 0.75rem;
   }
 
   .product-description {
     color: var(--secondary);
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.55;
     margin-bottom: 1rem;
+    flex: 1;
   }
 
   .product-price {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--primary);
     margin-bottom: 1rem;
@@ -129,17 +195,29 @@
 
   .product-button {
     display: inline-block;
-    background: var(--primary);
-    color: var(--theme);
-    padding: 0.6rem 1.5rem;
+    padding: 0.6rem 1.4rem;
     border-radius: 4px;
     text-decoration: none;
     font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
     transition: opacity 0.2s ease;
   }
 
-  .product-button:hover {
-    opacity: 0.85;
+  .etsy-button {
+    background: #F1641E;
+    color: #fff;
+  }
+
+  .etsy-button:hover {
+    opacity: 0.88;
+    color: #fff;
+  }
+
+  .coming-soon-button {
+    background: var(--border);
+    color: var(--secondary);
+    cursor: default;
   }
 
   @media (max-width: 768px) {
@@ -148,7 +226,7 @@
     }
 
     .credo-line {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
   }
 </style>
