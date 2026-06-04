@@ -101,6 +101,11 @@ disableHugoGeneratorInject = true
     url = '/posts/'
     weight = 20
   [[menu.main]]
+    identifier = 'shop'
+    name = 'Shop'
+    url = '/shop/'
+    weight = 22
+  [[menu.main]]
     identifier = 'gallery'
     name = 'Gallery'
     url = '/gallery/'
