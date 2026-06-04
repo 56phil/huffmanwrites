@@ -5,4 +5,3 @@ etsy_shop_url = "https://www.etsy.com/shop/huffmanwrites"
 layout = "list"
 +++
 
-The Etsy shop is coming soon. Products below are in development — check back shortly.

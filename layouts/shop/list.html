@@ -3,9 +3,6 @@
   <header class="shop-header">
     <h1>{{ .Title }}</h1>
     <p class="shop-subtitle">{{ .Params.description }}</p>
-    {{ with .Params.etsy_shop_url }}
-    <a href="{{ . }}" class="etsy-shop-link" target="_blank" rel="noopener">Visit the Full Shop on Etsy →</a>
-    {{ end }}
   </header>
 
   {{ with .Content }}
@@ -35,7 +32,7 @@
         <p class="product-description">{{ .Params.description }}</p>
         <div class="product-price">{{ .Params.price }}</div>
         {{ with .Params.link }}
-        <a href="{{ . }}" class="product-button etsy-button" target="_blank" rel="noopener">Buy on Etsy</a>
+        <a href="{{ . }}" class="product-button redbubble-button" target="_blank" rel="noopener">Buy on Redbubble</a>
         {{ else }}
         <span class="product-button coming-soon-button">Coming Soon</span>
         {{ end }}
@@ -71,24 +68,10 @@
     margin: 0 auto 1.2rem;
   }
 
-  .etsy-shop-link {
-    display: inline-block;
-    font-size: 0.95rem;
-    color: #F1641E;
-    font-weight: 600;
-    text-decoration: none;
-    border-bottom: 1px solid #F1641E;
-    padding-bottom: 1px;
-  }
-
-  .etsy-shop-link:hover {
-    opacity: 0.8;
-  }
-
   .shop-notice {
     background: var(--entry);
     border: 1px solid var(--border);
-    border-left: 4px solid #F1641E;
+    border-left: 4px solid #E41321;
     border-radius: 4px;
     padding: 1rem 1.5rem;
     margin-bottom: 2rem;
@@ -204,12 +187,12 @@
     transition: opacity 0.2s ease;
   }
 
-  .etsy-button {
-    background: #F1641E;
+  .redbubble-button {
+    background: #E41321;
     color: #fff;
   }
 
-  .etsy-button:hover {
+  .redbubble-button:hover {
     opacity: 0.88;
     color: #fff;
   }
