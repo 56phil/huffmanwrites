@@ -575,7 +575,19 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - **Books page intro** (`content/books/_index.md`): Replaced generic catalog line with credo-anchored copy: "Every book here is an argument for the same proposition — that clarity, discipline, and love are not abstractions. They are the work."
 - **Book Summaries intro** (`content/posts/summaries/_index.md`): Changed "Reading is the process..." to "Reading, like writing, is the process..." to tie reading and writing together as parallel disciplines.
 
+## Essay: Fountain Pens — June 8, 2026
+
+- Added `content/posts/essays/fountain-pens.md`
+- Title: "Two Nations, One Instrument: How Germany and Japan Shaped the Modern Fountain Pen"
+- Long-form (~4,800 words), researched comparative history essay
+- German section covers: Pelikan (Kovacs piston mechanism, Model 100/100N, post-war recovery), Montblanc (Meisterstück origins, Simplo Filler Pen Co., WWII survival), LAMY (Bauhaus philosophy, LAMY 2000 and Safari)
+- Japanese section covers: writing system requirements and nib sizing, Sailor (1911, Kyugoro Sakata), Pilot/Namiki (1918, Ryosuke Namiki, maki-e revolution, Capless), Platinum (1919, Shunichi Nakata, first cartridge pen)
+- Three Stoic touches woven in: Marcus Aurelius / *Meditations* as founding rationale for portable writing; *arete* as the shared ethic of both craft traditions; examined life as the pen's enduring purpose
+- Draft also saved to `future-pieces/fountain-pens.md`
+- Tags: essays, writing, history, craft, stoicism, philosophy
+
 ## Last Updated
+2026-06-08 (Fountain pens essay published to Essays & Observations)
 2026-05-31 (Content copy edits: books intro, summaries intro)
 2026-05-29 (Group C: Blue Sky foundation implementation)
 2026-05-29 (Book marketing: credo integration on book detail pages)
