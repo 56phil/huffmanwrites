@@ -81,6 +81,15 @@
     text-decoration-color: var(--accent);
 }
 
+/* PaperMod sets background: var(--border) on these hover states, which
+   matches --accent in HC mode — force dark text so links remain readable. */
+[data-theme="highcontrast"] .post-tags a:hover,
+[data-theme="highcontrast"] .paginav a:hover {
+    background: var(--border);
+    color: var(--button-text); /* #0D0D0D — dark text on amber background */
+    text-decoration-color: var(--button-text);
+}
+
 /* ── Focus rings ───────────────────────────────────────── */
 [data-theme="highcontrast"] *:focus-visible {
     outline: 3px solid #D4820A;

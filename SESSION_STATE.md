@@ -586,7 +586,15 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - Draft also saved to `future-pieces/fountain-pens.md`
 - Tags: essays, writing, history, craft, stoicism, philosophy
 
+## High-Contrast Mode Bug Fix — June 8, 2026
+
+- Fixed invisible link text on hover in HC mode
+- Root cause: PaperMod's `.post-tags a:hover, .paginav a:hover` sets `background: var(--border)` (amber `#D4820A`), but the `a:hover` color also resolved to amber — text vanished into matching background
+- Fix: added HC override in `assets/css/highcontrast.css` to force `color: var(--button-text)` (`#0D0D0D`, near-black) on those hover states, giving strong contrast against the amber background
+- Affects: post tag links and prev/next pagination links
+
 ## Last Updated
+2026-06-08 (HC mode hover bug fix — invisible link text on post-tags/paginav hover)
 2026-06-08 (Fountain pens essay published to Essays & Observations)
 2026-05-31 (Content copy edits: books intro, summaries intro)
 2026-05-29 (Group C: Blue Sky foundation implementation)
