@@ -4,6 +4,7 @@ description: "A civic argument about high-level government corruption, instituti
 date: 2026-05-21T00:00:00Z
 author: Phil Huffman
 lastmod: 2026-05-21T00:00:00Z
+featuredOnHome: true
 tags:
   - civics
   - politics

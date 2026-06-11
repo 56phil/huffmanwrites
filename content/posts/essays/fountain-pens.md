@@ -4,6 +4,7 @@ description: "A comparative history of the two great fountain pen traditions —
 date: 2026-06-08T05:00:00Z
 author: Phil Huffman
 lastmod: 2026-06-08T00:00:00Z
+featuredOnHome: true
 tags:
   - essays
   - writing

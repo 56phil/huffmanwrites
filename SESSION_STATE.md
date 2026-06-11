@@ -593,8 +593,26 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - Fix: added HC override in `assets/css/highcontrast.css` to force `color: var(--button-text)` (`#0D0D0D`, near-black) on those hover states, giving strong contrast against the amber background
 - Affects: post tag links and prev/next pagination links
 
+## Site Improvements — June 11, 2026
+
+- **CLAUDE.md created** — First time the repo has had a `CLAUDE.md` at the root. Documents build commands, architecture, conventions, and deployment. Content summarizes the `SESSION_STATE.md` Architecture Notes section so future agents can onboard without reading this file in full.
+- **Pagination standardized across post sections** — Created custom `list.html` layouts for 5 sections that were inheriting PaperMod's default 10-per-page pagination:
+  - `layouts/posts/digests/list.html`
+  - `layouts/posts/civics/list.html`
+  - `layouts/posts/essays/list.html`
+  - `layouts/posts/stoicism/list.html`
+  - `layouts/posts/investing/list.html`
+  - All 6 post sections (summaries, digests, civics, essays, stoicism, investing) now paginate at 6 per page. The summaries section retains its `sort_key`-based ordering; the other 5 sections sort by date-descending. Matches the density of the existing summaries pagination established on May 31.
+- **AI essay corrections notice** — Added a plain-markdown blockquote at the top of `content/posts/essays/AI.md` (after frontmatter, before the H1) recording that the essay was factually reviewed on 2026-05-26 and republished with specific corrections. Lists the categories of corrections (fabricated citations removed, attributions fixed, dates corrected, reference list cleaned up). Closes with the email address for further corrections. Plain blockquote — no new shortcode or CSS class added; the notice sits inside the rendered article and inherits existing prose styling.
+- **`featuredOnHome` flag added to home page curation** — Modified `layouts/index.html` "Recent Posts" section to preferentially surface posts with `featuredOnHome: true` (up to 5, date-descending) and fill the remainder with the most recent non-featured, non-hidden posts. Graceful degradation: with 0 featured posts, output is identical to before. Comment block at the top of the section explains the logic.
+  - **Initial 5 flagged** (date-descending): `content/posts/essays/fountain-pens.md` (2026-06-08), `content/posts/civics/corruption-at-the-summit.md` (2026-05-21), `content/posts/essays/AI.md` (2026-05-21), `content/posts/essays/the-roots-of-violence.md` (2026-05-10), `content/posts/essays/what-926-gigabytes-taught-me-about-proportion.md` (2026-05-10).
+  - **Note:** Originally flagged `optimal-use-of-hermes.md` instead of `fountain-pens.md`; swapped because the Hermes essay is now framed as a historical record (the workflow has changed) and the most-recent essay was being hidden from the home page. The flagged set should be re-curated whenever the corpus changes meaningfully.
+- **Memory rule saved** — New auto-memory `update-session-state-before-push` at `/Users/prh/.claude/projects/-Users-prh-Developer-huffmanwrites/memory/update-session-state-before-push.md` so future agents update `SESSION_STATE.md` before every push.
+
+**Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
+
 ## Last Updated
-2026-06-08 (HC mode hover bug fix — invisible link text on post-tags/paginav hover)
+2026-06-11 (Site maintenance: CLAUDE.md, pagination consistency, AI essay corrections, featuredOnHome flag)
 2026-06-08 (Fountain pens essay published to Essays & Observations)
 2026-05-31 (Content copy edits: books intro, summaries intro)
 2026-05-29 (Group C: Blue Sky foundation implementation)

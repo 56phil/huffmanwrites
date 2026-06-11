@@ -5,6 +5,7 @@ date: 2026-05-21T00:00:00Z
 author: Phil Huffman
 lastmod: 2026-05-21T00:00:00Z
 draft: false
+featuredOnHome: true
 tags:
   - ai
   - history
@@ -12,6 +13,8 @@ tags:
   - essays
   - technology
 ---
+
+> **Correction notice — May 26, 2026.** This essay was factually reviewed on 2026-05-26 and republished with specific corrections applied. Among them: removed fabricated citations, including an invented robot ("Shumana"), invented Stanford Cart developer names, and a fabricated RAND study author; corrected dates, attributions, and roles for figures including Minsky, McCarthy, Geoffrey Hinton, and the BDI framework's origins; corrected specific historical details (SNARC's 1951 build, the Strategic Computing Initiative's 1983 launch, OpenAI Five's release year, the DQN Atari count, Brynjolfsson et al.'s citation, and several others); and removed fabricated co-authors from the Silver et al. and Mnih et al. reference entries. A reader who compared the original May 21, 2026 version to the current text would see that the historical claims, attributions, and reference list have been tightened throughout. The work should be read as corrected, not as it first appeared. If you spot a remaining error, please email phil@huffmanwrites.org.
 
 # The History of Artificial Intelligence and AI Agents and Their Impact on Society
 

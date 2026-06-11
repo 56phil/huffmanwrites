@@ -4,6 +4,7 @@ description: "Violence doesn't begin with the act. It begins long before, in roo
 date: 2026-05-10T00:00:00Z
 author: Phil Huffman
 lastmod: 2026-05-10T00:00:00Z
+featuredOnHome: true
 tags:
   - essays
   - philosophy

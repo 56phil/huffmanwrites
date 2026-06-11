@@ -4,6 +4,7 @@ description: "On the temptation to reach for the sledgehammer, and the disciplin
 date: 2026-05-10T00:00:00Z
 author: Phil Huffman
 lastmod: 2026-05-10T00:00:00Z
+featuredOnHome: true
 tags:
   - essays
   - philosophy
