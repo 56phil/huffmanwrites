@@ -709,6 +709,13 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Removed duplicate `.credo-verb` rule from `blue-sky.css`** (kept the one in `custom.css` which is the same except it also sets `color: var(--primary)`). The custom.css rule applies globally via cascade order (custom.css loads first, and the removed blue-sky rule was a strict subset).
   - Build verified: 279 pages, 0 errors, all 242 post pages load `reading-progress.js`, only `/api/` loads `api-tabs.js`, only the 5 `/gallery/` pages load `glightbox-init.js`.
 
+### Featured-Post Filter Simplification — June 11, 2026
+- Replaced the 3-line `where featuredOnHome true/ne` split in `layouts/index.html` (5 filter lines, 2 range blocks) with a single `where` clause.
+- The `$recent` fallback was inert in production: 5 posts have `featuredOnHome: true`, so `$needed` was always 0. The fallback would only have kicked in if a future post removed its flag.
+- **Editorial change to flag for the user:** if a future post has `featuredOnHome: true` removed from its frontmatter, the home page will show fewer than 5 cards (not auto-fill from recent unflagged posts). This matches the literal reading of the original `first 5` cap.
+- Build verified: 279 pages, 0 errors. Rendered `public/index.html` `recent-posts` block is **byte-identical** to pre-edit (verified by diff). Same 5 posts in the same order: fountain-pens (2026-06-08), corruption-at-the-summit (2026-05-21), AI (2026-05-21), the-roots-of-violence (2026-05-10), what-926-gigabytes-taught-me-about-proportion (2026-05-10).
+- Net template: 11 lines deleted (3 filter lines + 1 closing `{{ end }}` + 1 range block + comment overhead).
+
 ### Book-Card CSS Consolidation — June 11, 2026
 - **Deleted dead/overridden `.book-card*` rules** from `assets/css/custom.css` (lines 73-187) and `assets/css/phbooks.css` (lines 34-135). Every property in those blocks was 100% overridden by the shortcode's own `!important` rules in `assets/css/book-shortcode.css` (loaded last in `extend_head.html`).
 - **Moved 3 load-bearing cross-stylesheet rules** into `book-shortcode.css` (where they belong, since the shortcode's scoped `.book-card .book-*` selectors do not catch the bare card or button):
@@ -722,6 +729,7 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Featured-post filter simplification: drop inert $recent fallback, single where clause, byte-identical rendered output)
 2026-06-11 (Book-card CSS consolidation: deleted 219 lines of dead/overridden rules, moved 3 load-bearing rules into book-shortcode.css, -20% CSS payload)
 2026-06-11 (Final inline CSS + JS pass: 0 inline style="" and 0 inline <style>/<script> in any body)
 2026-06-11 (Blue Sky + site-wide inline CSS extraction — 0 body-level <style> blocks remain)

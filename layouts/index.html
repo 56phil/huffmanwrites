@@ -82,23 +82,13 @@
   <section class="latest-posts">
     <h2>Recent Posts</h2>
     {{/*
-      Editorial curation: surface posts flagged `featuredOnHome: true` first
-      (sorted by date desc, max 5), then fill remaining slots with the most
-      recent unflagged posts. Always exclude `hiddenInHomeList: true`.
-      When no posts are flagged, behavior is identical to the previous version.
+      Editorial curation: surface the 5 posts flagged `featuredOnHome: true`,
+      sorted by date desc. Always exclude `hiddenInHomeList: true` (which
+      cascades from the summaries section index).
     */}}
     {{ $eligible := where (where .Site.RegularPages "Type" "posts") ".Params.hiddenInHomeList" "!=" true }}
-    {{ $featured := first 5 (where $eligible ".Params.featuredOnHome" true) }}
-    {{ $needed := sub 5 (len $featured) }}
-    {{ $recent := first $needed (where $eligible ".Params.featuredOnHome" "ne" true) }}
-    {{ range $featured }}
-      <div class="recent-post">
-        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
-        <time>{{ .Date.Format "January 2, 2006" }}</time>
-        <p>{{ .Summary | plainify | truncate 180 }}</p>
-      </div>
-    {{ end }}
-    {{ range $recent }}
+    {{ $shown := first 5 (where $eligible ".Params.featuredOnHome" true) }}
+    {{ range $shown }}
       <div class="recent-post">
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
         <time>{{ .Date.Format "January 2, 2006" }}</time>
