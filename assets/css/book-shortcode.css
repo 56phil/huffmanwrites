@@ -147,6 +147,24 @@
     font-weight: 600 !important;
     font-size: 0.9rem !important;
     display: inline-block !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    transition: color 0.2s ease, background-color 0.2s ease !important;
+}
+
+.book-card .book-button:hover {
+    opacity: 0.85 !important;
+}
+
+/* Lift-on-hover for the card. Lifted from the now-deleted bare
+   `.book-card:hover` rule in phbooks.css. The shortcode's scoped
+   `.book-card .book-*` selectors do not catch the bare card, so this
+   rule must live here. */
+.book-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    border-color: var(--primary) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
 }
 
 .book-card .book-badge {

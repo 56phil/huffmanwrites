@@ -709,9 +709,20 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Removed duplicate `.credo-verb` rule from `blue-sky.css`** (kept the one in `custom.css` which is the same except it also sets `color: var(--primary)`). The custom.css rule applies globally via cascade order (custom.css loads first, and the removed blue-sky rule was a strict subset).
   - Build verified: 279 pages, 0 errors, all 242 post pages load `reading-progress.js`, only `/api/` loads `api-tabs.js`, only the 5 `/gallery/` pages load `glightbox-init.js`.
 
+### Book-Card CSS Consolidation — June 11, 2026
+- **Deleted dead/overridden `.book-card*` rules** from `assets/css/custom.css` (lines 73-187) and `assets/css/phbooks.css` (lines 34-135). Every property in those blocks was 100% overridden by the shortcode's own `!important` rules in `assets/css/book-shortcode.css` (loaded last in `extend_head.html`).
+- **Moved 3 load-bearing cross-stylesheet rules** into `book-shortcode.css` (where they belong, since the shortcode's scoped `.book-card .book-*` selectors do not catch the bare card or button):
+  - `.book-card:hover` — the lift-on-hover (was in `phbooks.css:46-50`)
+  - `.book-card .book-button` — added `text-shadow`, `box-shadow`, `transition` (was in `phbooks.css:97-108`)
+  - `.book-card .book-button:hover` — `opacity: 0.85` (was in `phbooks.css:109-111`)
+- Net effect: 219 lines deleted, 34 added, -185 net. CSS payload: 17,743 → 14,176 bytes (-20.1%). Build verified: 279 pages, 0 errors, all rendered HTML byte-identical to pre-edit state once asset URLs and SRI hashes are normalized.
+- All `!important` flags retained in `book-shortcode.css` (per §"Book Descriptions — Change History" — the inline-style hammer was a deliberate fix for visibility regressions). Hard-coded hex colors retained.
+- Cascade order in `extend_head.html` unchanged. SRI hashes are auto-computed at build time, so reordering/merging doesn't break the build. The 4 unrelated bundles (blue-sky, gallery, highcontrast, home) and all 3 JS bundles have byte-identical hashes before vs after.
+
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Book-card CSS consolidation: deleted 219 lines of dead/overridden rules, moved 3 load-bearing rules into book-shortcode.css, -20% CSS payload)
 2026-06-11 (Final inline CSS + JS pass: 0 inline style="" and 0 inline <style>/<script> in any body)
 2026-06-11 (Blue Sky + site-wide inline CSS extraction — 0 body-level <style> blocks remain)
 2026-06-11 (Book shortcode inline CSS extraction → assets/css/book-shortcode.css)
