@@ -709,6 +709,22 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Removed duplicate `.credo-verb` rule from `blue-sky.css`** (kept the one in `custom.css` which is the same except it also sets `color: var(--primary)`). The custom.css rule applies globally via cascade order (custom.css loads first, and the removed blue-sky rule was a strict subset).
   - Build verified: 279 pages, 0 errors, all 242 post pages load `reading-progress.js`, only `/api/` loads `api-tabs.js`, only the 5 `/gallery/` pages load `glightbox-init.js`.
 
+### Heading-ID Regex → Partial — June 11, 2026
+- Moved the inline `replaceRE` at `layouts/books/single.html:80` into a new `layouts/partials/book_strip_headings.html`.
+- The new partial uses the 4-group form (`$1` opening tag, `$2` id, `$3` inner text, `$4` closing tag) — more robust than the original 1-capture version because `.*?` with capture group 3 handles nested inline tags (e.g. `## **Copyright**` → `<h2 id="copyright"><strong>Copyright</strong></h2>`).
+- The id is emitted verbatim, so existing TOC anchor links keep working byte-for-byte.
+- **No change to the shared `anchored_headings.html` partial** (used by 7+ post pages to inject anchors). Book-specific behavior is isolated to a named partial.
+- Build verified: 279 pages, 0 errors.
+- Edge cases tested on `content/books/`:
+  - `unstuck` (apostrophes: "Don't..."): 8 h2 stripped, 0 leftover
+  - `letters` (ampersands: "Witness & Voice", "Conscience & Thought", etc.): 6 h2 stripped, 0 leftover
+  - `stoic-backgammon` (bolded `## **Copyright**`): 4 h2 stripped, 0 leftover — nested `<strong>` handled
+  - `raisem-right` (h1 "Raise'm Right"): 0 h2 in this book, 1 h1 unaffected as expected
+  - `on-proportion` (colons + parens): 4 h2 stripped, 0 leftover
+- Rendered `public/books/unstuck/index.html` `book-content-body` and `TableOfContents` blocks are **byte-identical** to pre-edit (verified by diff). All 8 TOC anchor targets have matching spans in the body.
+- Shared `anchored_headings.html` unaffected: regular post pages (fountain-pens, corruption-at-the-summit, etc.) still show h2 with id and injected anchor links.
+- `grep -rn replaceRE layouts/` now returns only the new partial (no inline `replaceRE` in `books/single.html`).
+
 ### Featured-Post Filter Simplification — June 11, 2026
 - Replaced the 3-line `where featuredOnHome true/ne` split in `layouts/index.html` (5 filter lines, 2 range blocks) with a single `where` clause.
 - The `$recent` fallback was inert in production: 5 posts have `featuredOnHome: true`, so `$needed` was always 0. The fallback would only have kicked in if a future post removed its flag.
@@ -729,6 +745,7 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Heading-ID regex → partial: layouts/partials/book_strip_headings.html, 4-group form, byte-identical rendered output)
 2026-06-11 (Featured-post filter simplification: drop inert $recent fallback, single where clause, byte-identical rendered output)
 2026-06-11 (Book-card CSS consolidation: deleted 219 lines of dead/overridden rules, moved 3 load-bearing rules into book-shortcode.css, -20% CSS payload)
 2026-06-11 (Final inline CSS + JS pass: 0 inline style="" and 0 inline <style>/<script> in any body)

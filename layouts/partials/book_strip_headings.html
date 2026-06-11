@@ -1,0 +1,15 @@
+{{- /* Strip <h2 id="..."> elements from book body so the TOC is the sole
+   source of chapter titles. IDs are kept as empty <span> targets so
+   TOC anchor links still scroll.
+
+   The four-group form (`$1` opening tag, `$2` id, `$3` inner text,
+   `$4` closing tag) is more robust than a one-capture version: the
+   inner `.*?` with capture group 3 handles nested inline tags (e.g.
+   `## **Copyright**` -> <h2 id="..."><strong>Copyright</strong></h2>).
+   The id is emitted verbatim so existing TOC anchor links keep
+   working byte-for-byte.
+
+   The shared `anchored_headings.html` partial (used by single post
+   pages) adds anchors instead of stripping them — it cannot be
+   reused here. */ -}}
+{{ . | replaceRE `(<h2\s+id="([^"]+)"[^>]*>)(.*?)(</h2>)` `<span id="$2"></span>` | safeHTML }}

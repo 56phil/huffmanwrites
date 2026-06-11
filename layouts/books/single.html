@@ -77,8 +77,7 @@
    </details>
 
    <div class="book-content-body">
-       {{ $content := .Content | replaceRE `<h2\s+id="([^"]+)"[^>]*>.*?</h2>` `<span id="$1"></span>` }}
-       {{ $content | safeHTML }}
+       {{ partial "book_strip_headings.html" .Content }}
    </div>
 
    {{ if .Params.link }}
