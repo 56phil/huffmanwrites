@@ -619,9 +619,16 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - **Bluesky added to `schema.org` sameAs** — `[params.schema].sameAs` in `hugo.toml` now includes the Bluesky profile URL alongside `https://huffmanwrites.org`. Verified in rendered home page: `"sameAs":["https://huffmanwrites.org","https://bsky.app/profile/huffmanwrites.bsky.social"]`.
 - **Auto-memories saved** — `no-twitter-x` (Phil doesn't use Twitter/X; don't build Twitter-specific features) and `bluesky-handle` (`huffmanwrites@bsky.social`).
 
+### Preconnect + Google Fonts <link> lift — June 11, 2026 (later)
+
+- **Cross-origin preconnect hints** — Added four `<link rel="preconnect">` tags to `layouts/partials/extend_head.html` (in order): `fonts.googleapis.com`, `fonts.gstatic.com`, `gc.zgo.at`, and `huffmanwrites.goatcounter.com`. All carry `crossorigin`. Lets the browser start TLS handshakes in parallel with HTML parsing instead of paying the round-trip cost when it later discovers the @font-face, analytics script, and analytics beacon.
+- **Google Fonts lifted from `@import` to `<link>`** — `assets/css/custom.css` previously had `@import url('https://fonts.googleapis.com/css2?...')` on line 1, which is render-blocking and serial: the browser had to fetch `custom.css`, parse the `@import`, then fetch the Google Fonts CSS, then fetch the font files. Lifted to a `<link rel="stylesheet">` in `extend_head.html` (right after the preconnect hints) so the browser can discover the Google Fonts CSS in parallel with HTML parsing. Replaced the `@import` with an explanatory comment in `custom.css` pointing to the new location.
+- **Build verification** — Clean `rm -rf public && hugo --gc --minify` produced 279 pages, 38 paginator pages, 105 processed images, 0 errors. Exactly one `custom.min.*.css` file in the output (the new fingerprint, no `@import`). The four preconnect hints are present on every page that includes `extend_head.html`, with the Google Fonts stylesheet immediately after them.
+
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Preconnect hints + Google Fonts lifted from @import to <link>)
 2026-06-11 (Open Graph hero wiring + Twitter stripped + Bluesky social icon)
 2026-06-11 (Site maintenance: CLAUDE.md, pagination consistency, AI essay corrections, featuredOnHome flag)
 2026-06-08 (Fountain pens essay published to Essays & Observations)

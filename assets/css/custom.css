@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap');
+/* Google Fonts loaded via <link rel="preconnect"> + <link rel="stylesheet">
+   in layouts/partials/extend_head.html, instead of @import here.
+   @import is render-blocking and serial: browser must fetch this CSS,
+   parse the @import, then fetch the Google Fonts CSS, then fetch the
+   font files. Lifting to <link> lets preconnect hints start the
+   TLS handshakes in parallel with HTML parsing. */
 
 :root {
     --font-body: 'Crimson Pro', serif;

@@ -3,6 +3,18 @@
   <link rel="stylesheet" href="{{ . }}">
   {{- end }}
 {{- end }}
+
+{{/* Cross-origin hints: start TLS handshakes in parallel with HTML
+   parsing so the browser doesn't pay the round-trip cost when it
+   later discovers the @font-face, the analytics script, and the
+   analytics beacon. Order matters: preconnect first, then the
+   actual stylesheet that triggers the font fetch. */}}
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://gc.zgo.at" crossorigin>
+<link rel="preconnect" href="https://huffmanwrites.goatcounter.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
+
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' gc.zgo.at; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data:; font-src 'self' fonts.gstatic.com; connect-src 'self' huffmanwrites.goatcounter.com; base-uri 'self';">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script data-goatcounter="https://huffmanwrites.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
