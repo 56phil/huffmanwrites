@@ -628,6 +628,7 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (all-my-books canonicalURL pointing to /books/)
 2026-06-11 (Preconnect hints + Google Fonts lifted from @import to <link>)
 2026-06-11 (Open Graph hero wiring + Twitter stripped + Bluesky social icon)
 2026-06-11 (Site maintenance: CLAUDE.md, pagination consistency, AI essay corrections, featuredOnHome flag)
