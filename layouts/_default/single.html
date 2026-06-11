@@ -3,41 +3,16 @@
 {{/* Reading progress indicator: thin fixed bar at top of viewport that
      fills left-to-right as the user scrolls through the article body.
      Visually communicates reading depth on long-form posts.
-     Respects prefers-reduced-motion. No-op when JS is disabled. */}}
+     Respects prefers-reduced-motion. No-op when JS is disabled.
+
+     The script lives in assets/js/reading-progress.js and is loaded
+     with `defer` via extend_head.html, so it runs after the DOM is
+     parsed but doesn't block initial paint. The bar/fill elements
+     below are the only DOM it needs. */}}
 <div id="reading-progress" role="progressbar" aria-label="Reading progress"
      aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
   <div id="reading-progress-fill"></div>
 </div>
-<script>
-(function(){
-  var bar = document.getElementById('reading-progress');
-  var fill = document.getElementById('reading-progress-fill');
-  var article = document.querySelector('.post-content, .book-content-body, .entry-content');
-  if (!bar || !fill || !article) return;
-  var ticking = false;
-  function update() {
-    var rect = article.getBoundingClientRect();
-    var articleTop = window.scrollY + rect.top;
-    var articleHeight = article.offsetHeight;
-    var viewport = window.innerHeight;
-    var scrolled = window.scrollY - articleTop;
-    var trackable = Math.max(1, articleHeight - viewport);
-    var pct = Math.min(100, Math.max(0, (scrolled / trackable) * 100));
-    fill.style.width = pct + '%';
-    bar.setAttribute('aria-valuenow', Math.round(pct));
-    ticking = false;
-  }
-  function onScroll() {
-    if (!ticking) {
-      window.requestAnimationFrame(update);
-      ticking = true;
-    }
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  update();
-})();
-</script>
 
 <article class="post-single">
   <header class="post-header">

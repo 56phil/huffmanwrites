@@ -5,7 +5,7 @@
     <a href="{{ $url }}" target="_blank" rel="noopener noreferrer me" title="{{ $title }}" class="social-icon-link">
         <span class="social-icon-container">
             {{- if eq (lower .name) "amazon" -}}
-                <span style="font-weight: 700; font-family: var(--font-header); display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px;">A</span>
+                <span class="social-amazon-badge">A</span>
             {{- else -}}
                 {{- partial "svg.html" . -}}
             {{- end -}}

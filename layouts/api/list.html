@@ -146,25 +146,11 @@ print(f"Daily Credo: {quote}")</code></pre>
   </div>
 </div>
 
+{{/* Tab switcher lives in assets/js/api-tabs.js — loaded with `defer`
+   here (rather than in extend_head.html) since the script is only
+   needed on the /api/ page. The script self-checks for the tab DOM
+   elements and is a no-op elsewhere. */}}
+{{- $apiTabs := resources.Get "js/api-tabs.js" | resources.Minify | fingerprint }}
+<script defer src="{{ $apiTabs.RelPermalink }}" integrity="{{ $apiTabs.Data.Integrity }}"></script>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const targetTab = this.getAttribute('data-tab');
-
-        // Remove active class from all buttons and contents
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-
-        // Add active class to clicked button and corresponding content
-        this.classList.add('active');
-        document.getElementById(targetTab).classList.add('active');
-      });
-    });
-  });
-</script>
 {{ end }}

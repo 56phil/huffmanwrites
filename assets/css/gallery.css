@@ -170,3 +170,15 @@
         font-size: 0.8rem;
     }
 }
+
+/* "Page X of Y" summary line above the gallery grid. */
+.gallery-page-info {
+    color: var(--secondary);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+/* Wrapper for the .Content block (any prose below the gallery grid). */
+.gallery-content-wrapper {
+    margin-top: 3rem;
+}

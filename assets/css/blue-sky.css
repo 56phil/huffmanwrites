@@ -24,6 +24,11 @@
    any specificity ties. */
 
 /* === Shared: credo banner block used by all 6 Blue Sky pages === */
+/* .credo-line and .credo-verb base rules are defined in custom.css
+   (which loads first in the cascade). The .credo-banner wrapper is
+   Blue-Sky-specific so it lives here. The .credo-line { font-size:
+   1.8rem } override below is page-specific to the Blue Sky landing
+   pages and doesn't conflict with the home page's smaller credo. */
 .credo-banner {
   background: var(--entry);
   padding: 2rem;
@@ -38,11 +43,6 @@
   font-style: italic;
   margin-bottom: 0.5rem;
   color: var(--primary);
-}
-
-.credo-verb {
-  font-variant: small-caps;
-  font-weight: 600;
 }
 
 /* Shop renders the credo with explicit <span class="credo-adverb">
@@ -322,18 +322,48 @@
 }
 
 @media (max-width: 768px) {
-  .endpoints-grid {
+  .credo-line {
+    font-size: 1.5rem;
+  }
+  /* Shop's product grid is the only Blue Sky grid that uses
+     repeat(auto-fill, minmax(280px, 1fr)) and naturally needs an
+     explicit mobile override; the other sections collapse via the
+     one-column rule below. */
+  .product-grid {
     grid-template-columns: 1fr;
   }
-  .sdks-grid {
+  .endpoints-grid,
+  .sdks-grid,
+  .features-grid,
+  .testimonials-grid {
     grid-template-columns: 1fr;
   }
-  .usage-tabs {
+  .usage-tabs,
+  .cta-buttons,
+  .subscribe-platforms {
     flex-direction: column;
     align-items: center;
   }
-  .credo-line {
-    font-size: 1.5rem;
+  .community-intro,
+  .podcast-intro,
+  .workshop-intro {
+    grid-template-columns: 1fr;
+  }
+  .podcast-intro {
+    text-align: center;
+  }
+  .podcast-cover {
+    margin: 0 auto;
+  }
+  .episode-card {
+    grid-template-columns: 1fr;
+  }
+  .challenge-weeks {
+    grid-template-columns: 1fr;
+  }
+  .community-video iframe,
+  .workshop-video iframe {
+    height: 250px;
   }
 }
 
@@ -546,28 +576,6 @@
   opacity: 0.85;
 }
 
-@media (max-width: 768px) {
-  .community-intro {
-    grid-template-columns: 1fr;
-  }
-  .community-video iframe {
-    height: 250px;
-  }
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-  .testimonials-grid {
-    grid-template-columns: 1fr;
-  }
-  .cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  .credo-line {
-    font-size: 1.5rem;
-  }
-}
-
 /* === /podcast/ === */
 .podcast-container {
   max-width: 1200px;
@@ -745,26 +753,6 @@
   opacity: 0.85;
 }
 
-@media (max-width: 768px) {
-  .podcast-intro {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .podcast-cover {
-    margin: 0 auto;
-  }
-  .episode-card {
-    grid-template-columns: 1fr;
-  }
-  .subscribe-platforms {
-    flex-direction: column;
-    align-items: center;
-  }
-  .credo-line {
-    font-size: 1.5rem;
-  }
-}
-
 /* === /challenge/ === */
 .challenge-container {
   max-width: 1200px;
@@ -933,15 +921,6 @@
   opacity: 0.85;
 }
 
-@media (max-width: 768px) {
-  .challenge-weeks {
-    grid-template-columns: 1fr;
-  }
-  .credo-line {
-    font-size: 1.5rem;
-  }
-}
-
 /* === /workshop/ === */
 .workshop-container {
   max-width: 1000px;
@@ -1101,18 +1080,6 @@
   font-size: 1rem;
 }
 
-@media (max-width: 768px) {
-  .workshop-intro {
-    grid-template-columns: 1fr;
-  }
-  .workshop-video iframe {
-    height: 250px;
-  }
-  .credo-line {
-    font-size: 1.5rem;
-  }
-}
-
 /* === /shop/ === */
 .shop-container {
   max-width: 1100px;
@@ -1248,11 +1215,12 @@
   cursor: default;
 }
 
+/* Shop's credo uses 1.4rem on mobile (vs 1.5rem for the other 5
+   sections). Scoped to the shop page via .shop-container so it
+   doesn't override the shared .credo-line { font-size: 1.5rem }
+   rule above on other pages. */
 @media (max-width: 768px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-  }
-  .credo-line {
+  .shop-container .credo-line {
     font-size: 1.4rem;
   }
 }

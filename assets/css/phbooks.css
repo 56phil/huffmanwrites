@@ -599,3 +599,12 @@ a:visited:hover {
     background: linear-gradient(transparent, var(--theme));
     pointer-events: none;
 }
+
+/* Book detail prev/next navigation strip at the bottom of each book
+   detail page. The inline `style="..."` attribute on this div was
+   moved here to keep the layout markup clean. */
+.book-navigation {
+    margin: 2rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}

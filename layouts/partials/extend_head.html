@@ -66,6 +66,13 @@
     }
 })();
 </script>
+{{- /* Reading progress indicator. Loaded with `defer` so it runs after
+   the DOM is parsed but doesn't block initial paint. The IIFE self-
+   checks for the bar/fill elements and the article element, so it's
+   a no-op on pages that don't have them (home, books, book detail
+   pages, etc.). */ -}}
+{{- $readingProgress := resources.Get "js/reading-progress.js" | resources.Minify | fingerprint }}
+<script defer src="{{ $readingProgress.RelPermalink }}" integrity="{{ $readingProgress.Data.Integrity }}"></script>
 {{- if not .Params.cover.image }}
   {{- /* Open Graph meta (including og:image) is emitted by
        layouts/partials/templates/opengraph.html, which shadows

@@ -64,7 +64,7 @@
               {{ if $asset }}
                 <img src="{{ ($asset.Resize "300x webp").RelPermalink }}" alt="{{ $.Title }} cover" loading="lazy">
               {{ else }}
-                <div style="width:100%;aspect-ratio:2/3;background:var(--entry);border-radius:4px;"></div>
+                <div class="cover-item-fallback"></div>
               {{ end }}
             {{ end }}
             <span class="cover-item-title">{{ .Title }}</span>

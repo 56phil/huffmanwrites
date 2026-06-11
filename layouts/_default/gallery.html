@@ -27,7 +27,7 @@
   <p class="lead">{{ .Description }}</p>
   
   {{- if gt $totalPages 1 }}
-  <p style="color: var(--secondary); font-size: 0.85rem; margin-top: 0.25rem;">
+  <p class="gallery-page-info">
     Page {{ $currentPage }} of {{ $totalPages }} &middot; {{ $totalItems }} images total
   </p>
   {{- end }}
@@ -98,21 +98,18 @@
   </nav>
   {{- end }}
 
-  <div style="margin-top: 3rem;">
+  <div class="gallery-content-wrapper">
     {{ .Content }}
   </div>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      GLightbox({
-        selector: '.glightbox',
-        touchNavigation: true,
-        loop: true
-      });
-    });
-  </script>
+  {{/* GLightbox init lives in assets/js/glightbox-init.js — loaded with
+     `defer` so it runs after the DOM is parsed and after the CDN
+     library is fetched. The init script self-checks for GLightbox
+     and is a no-op if the CDN script hasn't arrived yet. */}}
+  {{- $glightbox := resources.Get "js/glightbox-init.js" | resources.Minify | fingerprint }}
+  <script defer src="{{ $glightbox.RelPermalink }}" integrity="{{ $glightbox.Data.Integrity }}"></script>
 
 </div>
 

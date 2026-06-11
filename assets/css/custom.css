@@ -449,3 +449,15 @@ main, .post-content, .entry-content {
     border-left: 3px solid var(--primary);
     background: var(--entry);
 }
+
+/* Amazon social icon badge — the "A" rendered in place of an SVG for
+   the Amazon Author link, sized to match the other social icons. */
+.social-amazon-badge {
+    font-weight: 700;
+    font-family: var(--font-headings);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}

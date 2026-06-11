@@ -691,9 +691,28 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Remaining inline `<style>` in `extend_head.html`** is the social-icon link styles block (`.social-icon-link`, `.social-icon-container`, `.social-label`) — kept inline intentionally because it's first-paint UI styling for the social icons in the header.
   - Build verified: 279 pages, 0 errors, all 6 Blue Sky pages + 404 + about + gallery + books/* still render correctly with their distinctive visual treatments intact.
 
+### Final inline CSS + JS extraction pass — June 11, 2026
+
+- **Eliminated the last 5 inline `style="..."` attributes and extracted 3 inline `<script>` blocks to fingerprinted JS files.** Site is now at 0 inline `style=""` attributes across all layouts, content, and partials; 0 inline `<style>` blocks in any page body; 0 inline `<script>` blocks authored by this project in any page body.
+  - **Inline `style=""` extracted (5 total):**
+    - `layouts/books/single.html:106` (book-navigation div) → `.book-navigation` rule added to `phbooks.css`.
+    - `layouts/_default/gallery.html:30` (page X of Y summary) → `.gallery-page-info` rule added to `gallery.css`.
+    - `layouts/_default/gallery.html:101` (content wrapper) → `.gallery-content-wrapper` rule added to `gallery.css`.
+    - `layouts/partials/social_icons.html:8` (Amazon "A" badge) → `.social-amazon-badge` rule added to `custom.css`. Also fixed a latent bug: the original inline used `var(--font-header)` (typo for `var(--font-headings)`); the new class uses the correct variable.
+    - `layouts/index.html:67` (fallback for missing cover image) → `.cover-item-fallback` rule added to `home.css`.
+  - **JS files extracted (3 new files in `assets/js/`):**
+    - `reading-progress.js` (629B minified) — used on every post page. Loaded with `defer` via `extend_head.html` so it runs after DOM parsing without blocking paint. The IIFE self-checks for the required DOM elements and is a no-op on pages that don't have them.
+    - `api-tabs.js` (434B minified) — `/api/` page only. Loaded with `defer` from `layouts/api/list.html` (page-specific, not in extend_head). Tab switcher logic for the .usage-tabs / .tab-content groups.
+    - `glightbox-init.js` (158B minified) — `/gallery/` and its 4 paginated pages. Loaded with `defer` from `layouts/_default/gallery.html` after the GLightbox CDN library. Self-checks for `GLightbox` global and is a no-op if the CDN script hasn't arrived yet.
+  - All 3 JS files are served with the same `resources.Get | resources.Minify | fingerprint` pattern as the CSS, with SRI `integrity` attribute. `defer` is used so they don't block parsing.
+  - **blue-sky.css consolidation:** the 6 per-section `@media (max-width: 768px)` queries (one per Blue Sky layout, each containing a shared `.credo-line { font-size: 1.5rem }` rule plus section-specific grid/typography changes) were merged into 2 queries — one for the shared mobile rules, one for the shop-specific 1.4rem credo override (scoped via `.shop-container .credo-line` to avoid bleed). Source: 1,258 → 1,222 lines; minified: 15,968 → 15,506 bytes (-2.9%).
+  - **Removed duplicate `.credo-verb` rule from `blue-sky.css`** (kept the one in `custom.css` which is the same except it also sets `color: var(--primary)`). The custom.css rule applies globally via cascade order (custom.css loads first, and the removed blue-sky rule was a strict subset).
+  - Build verified: 279 pages, 0 errors, all 242 post pages load `reading-progress.js`, only `/api/` loads `api-tabs.js`, only the 5 `/gallery/` pages load `glightbox-init.js`.
+
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Final inline CSS + JS pass: 0 inline style="" and 0 inline <style>/<script> in any body)
 2026-06-11 (Blue Sky + site-wide inline CSS extraction — 0 body-level <style> blocks remain)
 2026-06-11 (Book shortcode inline CSS extraction → assets/css/book-shortcode.css)
 2026-06-11 (Home page inline CSS extraction → assets/css/home.css)
