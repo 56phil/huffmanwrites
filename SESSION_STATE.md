@@ -640,9 +640,20 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Surface area**: appears on all post pages (essays, digests, civics, summaries, stoicism, investing) but NOT on the home page, book catalog, or book detail pages. Book detail pages use their own template (`books/single.html`) and are reference material rather than flowing reads, so the bar is intentionally absent there.
   - Build verified: 279 pages, 0 errors, 1 CSS file with reading-progress styles, script present in all post pages and absent from home/books pages.
 
+### Home page inline CSS extraction — June 11, 2026
+
+- **Extracted 6.3KB of inline CSS from `layouts/index.html` into a new fingerprinted stylesheet.** Inline CSS was 23.6% of the home page's total page weight (27,300 bytes total); extraction reduces the home page HTML to 23,047 bytes (-15.6%) and ships a 4.3KB CSS file (`home.min.*.css`) that's cacheable across page loads.
+  - New file: `assets/css/home.css` — all `.dashboard`, `.cover-grid`, `.cover-item`, `.hub-grid`, `.hub-card`, `.recent-post`, `.now-card`, `.view-all-link`, `.connect-links`, `.site-hero`, `.hero-eyebrow`, `.hero-tagline`, `.hero-sub`, `.hero-ctas`, `.hero-cta-*`, `.hero-mission-link` rules, plus a `.hero-tagline` size override that the credo block depends on.
+  - Wired into `layouts/partials/extend_head.html` with the same `resources.Get "css/..." | resources.Minify | fingerprint` pattern as `custom.css` / `phbooks.css` / `highcontrast.css`, including SRI `integrity` attribute. Loaded globally on every page (overhead is negligible — the home page is the heaviest user, and other pages benefit from caching too).
+  - **Credo rules relocated to `custom.css`:** the `.credo-container`, `.credo-line`, and `.credo-verb` rules are shared by 8 layouts (books, workshop, shop, podcast, challenge, community, api, home) and the home-specific credo override (`.hero-tagline` size bump) is the only credo-related rule that actually lives in `home.css`. Keeping credo in `custom.css` means the other 7 layouts don't need to depend on the home page stylesheet being loaded to render their hero correctly.
+  - Removed: two inline `<style>` blocks from `layouts/index.html` (lines 3-209 and 222-246 in the previous version). File went from 350 lines to 121 lines. Replaced with a short comment explaining where the styles live.
+  - **Remaining inline style blocks in `public/index.html` (5, totaling ~2KB):** PaperMod's theme-toggle display rule, dark-mode color scheme block, social-icon link styles from `extend_head.html`, the newsletter-signup block, and a `.credo-footer` block from a different credo context. All are upstream / unrelated to the home page.
+  - Build verified: 279 pages, 0 errors, `home.min.*.css` present in `public/css/` with SRI hash, all 4 stylesheets (custom/phbooks/highcontrast/home) referenced from the home page `<head>`.
+
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Home page inline CSS extraction → assets/css/home.css)
 2026-06-11 (Reading progress indicator on long-form posts)
 2026-06-11 (all-my-books canonicalURL pointing to /books/)
 2026-06-11 (Preconnect hints + Google Fonts lifted from @import to <link>)

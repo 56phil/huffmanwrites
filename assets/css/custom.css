@@ -214,3 +214,24 @@ main, .post-content, .entry-content {
     outline: 3px solid var(--primary);
     outline-offset: 2px;
 }
+
+/* Credo block — "Think clearly. Live intentionally. Love immediately."
+   Used on the home page and reused (with the same markup) on the books,
+   workshop, shop, podcast, challenge, community, and api landing pages.
+   Lives in custom.css rather than home.css so the credo renders correctly
+   on those other pages without depending on the home page stylesheet. */
+.credo-container {
+    margin: 0 0 1.5rem;
+}
+
+.credo-line {
+    display: block;
+    margin-bottom: 0.3rem;
+    position: relative;
+}
+
+.credo-verb {
+    font-variant: small-caps;
+    color: var(--primary);
+    font-weight: 600;
+}

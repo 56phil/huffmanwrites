@@ -49,6 +49,8 @@
 <link rel="stylesheet" href="{{ $phbooks.RelPermalink }}" integrity="{{ $phbooks.Data.Integrity }}">
 {{- $hc := resources.Get "css/highcontrast.css" | resources.Minify | fingerprint }}
 <link rel="stylesheet" href="{{ $hc.RelPermalink }}" integrity="{{ $hc.Data.Integrity }}">
+{{- $home := resources.Get "css/home.css" | resources.Minify | fingerprint }}
+<link rel="stylesheet" href="{{ $home.RelPermalink }}" integrity="{{ $home.Data.Integrity }}">
 <script>
 (function(){
     var stored = localStorage.getItem("pref-hc");
