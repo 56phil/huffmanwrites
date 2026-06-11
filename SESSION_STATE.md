@@ -625,9 +625,25 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - **Google Fonts lifted from `@import` to `<link>`** — `assets/css/custom.css` previously had `@import url('https://fonts.googleapis.com/css2?...')` on line 1, which is render-blocking and serial: the browser had to fetch `custom.css`, parse the `@import`, then fetch the Google Fonts CSS, then fetch the font files. Lifted to a `<link rel="stylesheet">` in `extend_head.html` (right after the preconnect hints) so the browser can discover the Google Fonts CSS in parallel with HTML parsing. Replaced the `@import` with an explanatory comment in `custom.css` pointing to the new location.
 - **Build verification** — Clean `rm -rf public && hugo --gc --minify` produced 279 pages, 38 paginator pages, 105 processed images, 0 errors. Exactly one `custom.min.*.css` file in the output (the new fingerprint, no `@import`). The four preconnect hints are present on every page that includes `extend_head.html`, with the Google Fonts stylesheet immediately after them.
 
+### all-my-books canonical — June 11, 2026 (later)
+
+- **Added `canonicalURL: https://huffmanwrites.org/books/`** to the frontmatter of `content/posts/essays/all-my-books.md`. Tells search engines that the canonical version of "All My Books" is `/books/`; the post URL remains accessible to users (so existing bookmarks and shared links still work) but ranking signals consolidate to the books catalog.
+  - Field name is `canonicalURL` (not `canonical`) — matches PaperMod's `head.html` template at line 95. Used the absolute URL form (`https://huffmanwrites.org/books/`) rather than the relative (`/books/`) for consistency with how Hugo emits self-canonicals and because Google treats absolute canonicals as more authoritative.
+  - Verified: `all-my-books` page now emits `<link rel=canonical href=https://huffmanwrites.org/books/>`; `/books/` still emits its self-canonical; no regressions on other pages.
+
+### Reading progress indicator — June 11, 2026 (later)
+
+- **Thin progress bar at the top of every long-form post.** A 3px fixed bar that fills left-to-right as the user scrolls through the article body. Communicates reading depth on long-form content (essays 2,000-4,800 words; civics explainers; book summaries).
+  - Implementation: project `layouts/_default/single.html` emits a `<div id="reading-progress" role="progressbar" aria-valuemin=0 aria-valuemax=100 aria-valuenow=0>` plus a ~15-line vanilla JS IIFE that listens to scroll/resize with `requestAnimationFrame` throttling, computes the percentage of the article body that's been scrolled past, and sets both the inner fill width and `aria-valuenow`. No external dependencies.
+  - CSS in `assets/css/custom.css`: `#reading-progress` is `position: fixed; top: 0; left: 0; height: 3px; z-index: 1000; pointer-events: none;` and `#reading-progress-fill` uses `var(--primary)` so it adapts to all three themes (default dark, default light, high-contrast).
+  - Accessibility: ARIA `role="progressbar"` with `aria-label="Reading progress"`, dynamic `aria-valuenow`; `pointer-events: none` so it never intercepts clicks; `prefers-reduced-motion: reduce` disables the width transition.
+  - **Surface area**: appears on all post pages (essays, digests, civics, summaries, stoicism, investing) but NOT on the home page, book catalog, or book detail pages. Book detail pages use their own template (`books/single.html`) and are reference material rather than flowing reads, so the bar is intentionally absent there.
+  - Build verified: 279 pages, 0 errors, 1 CSS file with reading-progress styles, script present in all post pages and absent from home/books pages.
+
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Reading progress indicator on long-form posts)
 2026-06-11 (all-my-books canonicalURL pointing to /books/)
 2026-06-11 (Preconnect hints + Google Fonts lifted from @import to <link>)
 2026-06-11 (Open Graph hero wiring + Twitter stripped + Bluesky social icon)
