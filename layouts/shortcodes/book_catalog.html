@@ -16,25 +16,12 @@
       </div>
       <div class="phbooks-desc phbooks-with-cover">
         <div class="phbooks-cover">
-          {{- $img := resources.Get .Params.image }}
-          {{- $processed := "" }}
-          {{- if $img }}
-            {{- $processed = $img.Resize "160x webp" }}
-          {{- end }}
           {{- if .Params.link }}
             <a href="{{ .Params.link }}" target="_blank">
-              {{ if $processed }}
-                <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} cover">
-              {{ else }}
-                <img src="/{{ .Params.image }}" alt="{{ .Title }} cover">
-              {{ end }}
+              {{- partial "img.html" (dict "path" .Params.image "size" "160x webp" "alt" (printf "%s cover" .Title)) -}}
             </a>
           {{- else }}
-            {{ if $processed }}
-              <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} cover">
-            {{ else }}
-              <img src="/{{ .Params.image }}" alt="{{ .Title }} cover">
-            {{ end }}
+            {{- partial "img.html" (dict "path" .Params.image "size" "160x webp" "alt" (printf "%s cover" .Title)) -}}
           {{- end }}
         </div>
         {{ .Params.description | markdownify }}

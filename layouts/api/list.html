@@ -150,7 +150,6 @@ print(f"Daily Credo: {quote}")</code></pre>
    here (rather than in extend_head.html) since the script is only
    needed on the /api/ page. The script self-checks for the tab DOM
    elements and is a no-op elsewhere. */}}
-{{- $apiTabs := resources.Get "js/api-tabs.js" | resources.Minify | fingerprint }}
-<script defer src="{{ $apiTabs.RelPermalink }}" integrity="{{ $apiTabs.Data.Integrity }}"></script>
+{{- partial "bundle.html" (dict "path" "js/api-tabs.js" "kind" "js") -}}
 
 {{ end }}

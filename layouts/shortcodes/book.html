@@ -20,19 +20,11 @@
     <div class="book-cover-wrap">
         <div>
             {{- if $img -}}
-                {{- $asset := resources.Get (strings.TrimPrefix "/" $img) -}}
                 {{- if $link -}}<a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }}>{{- end -}}
-                    {{- if $asset -}}
-                        <img src="{{ ($asset.Resize "600x webp").RelPermalink }}"
-                             alt="{{ $title }}: {{ $description | plainify }}"
-                             title="{{ $title }}: {{ $description | plainify }}"
-                             loading="lazy">
-                    {{- else -}}
-                        <img src="/{{ $imgPath }}"
-                             alt="{{ $title }}: {{ $description | plainify }}"
-                             title="{{ $title }}: {{ $description | plainify }}"
-                             loading="lazy">
-                    {{- end -}}
+                    {{- partial "img.html" (dict "path" $img "size" "600x webp"
+                                                  "alt" (printf "%s: %s" $title ($description | plainify))
+                                                  "title" (printf "%s: %s" $title ($description | plainify))
+                                                  "loading" "lazy") -}}
                 {{- if $link -}}</a>{{- end -}}
             {{- end -}}
         </div>

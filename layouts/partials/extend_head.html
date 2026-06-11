@@ -43,20 +43,17 @@
     transform: translateX(0);
   }
 </style>
-{{- $custom := resources.Get "css/custom.css" | resources.Minify | fingerprint }}
-<link rel="stylesheet" href="{{ $custom.RelPermalink }}" integrity="{{ $custom.Data.Integrity }}">
-{{- $phbooks := resources.Get "css/phbooks.css" | resources.Minify | fingerprint }}
-<link rel="stylesheet" href="{{ $phbooks.RelPermalink }}" integrity="{{ $phbooks.Data.Integrity }}">
-{{- $hc := resources.Get "css/highcontrast.css" | resources.Minify | fingerprint }}
-<link rel="stylesheet" href="{{ $hc.RelPermalink }}" integrity="{{ $hc.Data.Integrity }}">
-{{- $home := resources.Get "css/home.css" | resources.Minify | fingerprint }}
-<link rel="stylesheet" href="{{ $home.RelPermalink }}" integrity="{{ $home.Data.Integrity }}">
-{{- $bookShortcode := resources.Get "css/book-shortcode.css" | resources.Minify | fingerprint }}
-<link rel="stylesheet" href="{{ $bookShortcode.RelPermalink }}" integrity="{{ $bookShortcode.Data.Integrity }}">
-{{- $blueSky := resources.Get "css/blue-sky.css" | resources.Minify | fingerprint }}
-<link rel="stylesheet" href="{{ $blueSky.RelPermalink }}" integrity="{{ $blueSky.Data.Integrity }}">
-{{- $gallery := resources.Get "css/gallery.css" | resources.Minify | fingerprint }}
-<link rel="stylesheet" href="{{ $gallery.RelPermalink }}" integrity="{{ $gallery.Data.Integrity }}">
+{{- /* CSS bundles — `bundle.html` runs the resources.Get + Minify +
+   Fingerprint chain and emits <link> tags with auto-computed SRI
+   `integrity` attributes. On a missing asset it logs a warnf and
+   renders a non-SRI <link> with `data-bundled="false"`. */ -}}
+{{- partial "bundle.html" (dict "path" "css/custom.css" "kind" "css") -}}
+{{- partial "bundle.html" (dict "path" "css/phbooks.css" "kind" "css") -}}
+{{- partial "bundle.html" (dict "path" "css/highcontrast.css" "kind" "css") -}}
+{{- partial "bundle.html" (dict "path" "css/home.css" "kind" "css") -}}
+{{- partial "bundle.html" (dict "path" "css/book-shortcode.css" "kind" "css") -}}
+{{- partial "bundle.html" (dict "path" "css/blue-sky.css" "kind" "css") -}}
+{{- partial "bundle.html" (dict "path" "css/gallery.css" "kind" "css") -}}
 <script>
 (function(){
     var stored = localStorage.getItem("pref-hc");
@@ -71,8 +68,7 @@
    checks for the bar/fill elements and the article element, so it's
    a no-op on pages that don't have them (home, books, book detail
    pages, etc.). */ -}}
-{{- $readingProgress := resources.Get "js/reading-progress.js" | resources.Minify | fingerprint }}
-<script defer src="{{ $readingProgress.RelPermalink }}" integrity="{{ $readingProgress.Data.Integrity }}"></script>
+{{- partial "bundle.html" (dict "path" "js/reading-progress.js" "kind" "js") -}}
 {{- if not .Params.cover.image }}
   {{- /* Open Graph meta (including og:image) is emitted by
        layouts/partials/templates/opengraph.html, which shadows

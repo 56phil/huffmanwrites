@@ -60,12 +60,9 @@
         {{ range .Pages }}
           <a href="{{ .Permalink }}" class="cover-item">
             {{ with .Params.image }}
-              {{ $asset := resources.Get . }}
-              {{ if $asset }}
-                <img src="{{ ($asset.Resize "300x webp").RelPermalink }}" alt="{{ $.Title }} cover" loading="lazy">
-              {{ else }}
-                <div class="cover-item-fallback"></div>
-              {{ end }}
+              {{- safeHTML (partial "img.html" (dict "path" . "size" "300x webp" "alt" (printf "%s cover" $.Title) "loading" "lazy")) -}}
+            {{ else }}
+              <div class="cover-item-fallback"></div>
             {{ end }}
             <span class="cover-item-title">{{ .Title }}</span>
           </a>

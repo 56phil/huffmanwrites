@@ -1,0 +1,84 @@
+{{- /*
+   Image helper. Replaces the duplicated `resources.Get` + `Resize` +
+   guarded `<img>` pattern that was previously inlined in 5 layouts and
+   2 shortcodes. Behavior:
+
+   - If `path` is set and `resources.Get` finds the asset: emit the
+     requested element (`tag` defaults to "img") with all provided
+     attributes. When `size` is set, run `Resize` first and pull
+     `width`/`height` from the resized resource unless caller supplied
+     them.
+   - If the asset is missing: emit a `warnf` so the missing reference
+     is visible in `hugo` build output (not a build abort — content
+     drafts in `pending/` are allowed to have missing assets), then
+     render a fallback element with `data-missing-image="true"` so
+     it's greppable in the rendered HTML.
+
+   Accepted keys in the dict (all optional unless marked required):
+     path       (string, required) — path under `assets/`, leading "/"
+                                 is trimmed
+     size       (string)          — Hugo resize spec, e.g. "300x webp",
+                                 "600x webp q75". Omit for no resize.
+     tag        (string)          — "img" (default) or "source"
+     alt        (string)          — alt text
+     class      (string)          — class attribute
+     loading    (string)          — "lazy" / "eager"
+     fetchpriority (string)       — "high" / "low" / "auto"
+     media      (string)          — only for `tag: source` (e.g. "(max-width: 767px)")
+     title      (string)          — title attribute
+     extra      (string)          — arbitrary trailing attributes
+
+   Note: the entire output is built as a string and marked safe with
+   `safeHTML` at the very end. This is necessary because Hugo's
+   template engine treats partial output that interpolates dict
+   arguments as a plain string (and re-escapes the `<` and `>`) — see
+   https://github.com/gohugoio/hugo/issues/7870 for context. Building
+   the HTML with `printf` and applying `safeHTML` once at the end is
+   the standard workaround.
+*/ -}}
+{{- $path := strings.TrimPrefix "/" .path -}}
+{{- $r := resources.Get $path -}}
+{{- $tag := or .tag "img" -}}
+{{- $out := "" -}}
+{{- if $r -}}
+  {{- if .size -}}
+    {{- $r = $r.Resize .size -}}
+  {{- end -}}
+  {{- if eq $tag "source" -}}
+    {{- $out = printf `<%s srcset=%q` $tag $r.RelPermalink -}}
+    {{- with .media }}{{ $out = printf `%s media=%q` $out . }}{{ end -}}
+    {{- $out = printf `%s>` $out -}}
+  {{- else -}}
+    {{- $out = printf `<%s src=%q` $tag $r.RelPermalink -}}
+    {{- /* If caller didn't supply width/height and the resource is
+           sized, emit them — prevents CLS. */ -}}
+    {{- if not (or (isset . "width") (isset . "height")) -}}
+      {{- $out = printf `%s width=%d height=%d` $out $r.Width $r.Height -}}
+    {{- end -}}
+    {{- with .alt }}{{ $out = printf `%s alt=%q` $out . }}{{ end -}}
+    {{- with .class }}{{ $out = printf `%s class=%q` $out . }}{{ end -}}
+    {{- with .title }}{{ $out = printf `%s title=%q` $out . }}{{ end -}}
+    {{- with .loading }}{{ $out = printf `%s loading=%q` $out . }}{{ end -}}
+    {{- with .fetchpriority }}{{ $out = printf `%s fetchpriority=%q` $out . }}{{ end -}}
+    {{- with .extra }}{{ $out = printf `%s %s` $out . }}{{ end -}}
+    {{- $out = printf `%s>` $out -}}
+  {{- end -}}
+{{- else -}}
+  {{- if .path -}}
+    {{- warnf "img.html: missing image %q referenced from %s" .path .Page.RelPermalink -}}
+    {{- if eq $tag "source" -}}
+      {{- $out = printf `<%s srcset="/%s" data-missing-image="true"` $tag .path -}}
+      {{- with .media }}{{ $out = printf `%s media=%q` $out . }}{{ end -}}
+      {{- $out = printf `%s>` $out -}}
+    {{- else -}}
+      {{- $out = printf `<%s src="/%s" data-missing-image="true"` $tag .path -}}
+      {{- with .alt }}{{ $out = printf `%s alt=%q` $out . }}{{ end -}}
+      {{- with .class }}{{ $out = printf `%s class=%q` $out . }}{{ end -}}
+      {{- with .title }}{{ $out = printf `%s title=%q` $out . }}{{ end -}}
+      {{- with .loading }}{{ $out = printf `%s loading=%q` $out . }}{{ end -}}
+      {{- with .fetchpriority }}{{ $out = printf `%s fetchpriority=%q` $out . }}{{ end -}}
+      {{- $out = printf `%s>` $out -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{ $out | safeHTML }}

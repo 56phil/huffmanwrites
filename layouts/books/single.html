@@ -14,18 +14,10 @@
     <div class="article-hero-container">
         <picture>
             {{- with $heroMobile }}
-              {{- $mobileImg := resources.Get . -}}
-              {{- if $mobileImg }}
-                {{- $mobileImg = $mobileImg.Resize "767x webp q80" }}
-                <source srcset="{{ $mobileImg.RelPermalink }}" media="(max-width: 767px)">
-              {{- end }}
+              {{- partial "img.html" (dict "path" . "size" "767x webp q80" "tag" "source" "media" "(max-width: 767px)") -}}
             {{- end }}
             {{- with $heroDesktop }}
-              {{- $desktopImg := resources.Get . -}}
-              {{- if $desktopImg }}
-                {{- $desktopImg = $desktopImg.Resize "1200x webp q80" }}
-                <img src="{{ $desktopImg.RelPermalink }}" alt="{{ $.Title }} Art" class="responsive-hero-img" loading="eager" width="{{ $desktopImg.Width }}" height="{{ $desktopImg.Height }}" fetchpriority="high">
-              {{- end }}
+              {{- partial "img.html" (dict "path" . "size" "1200x webp q80" "alt" (printf "%s Art" $.Title) "class" "responsive-hero-img" "loading" "eager" "fetchpriority" "high") -}}
             {{- end }}
         </picture>
         <div class="hero-overlay"></div>
@@ -34,11 +26,6 @@
     {{ end }}
 
     {{- $imgPath := .Params.image -}}
-    {{- $img := resources.Get $imgPath -}}
-    {{- $processed := "" -}}
-    {{- if $img -}}
-      {{- $processed = $img.Resize "800x webp" -}}
-    {{- end -}}
     {{ if $imgPath }}
     <div class="book-credo-container">
         <div class="book-credo">
@@ -50,11 +37,7 @@
 
     <div class="book-media">
        <div class="book-cover-wrap">
-           {{ if $processed }}
-             <img src="{{ $processed.RelPermalink }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" alt="{{ .Title }} book cover" class="book-cover" loading="lazy">
-           {{ else }}
-             <img src="/{{ $imgPath }}" alt="{{ .Title }} book cover" class="book-cover" loading="lazy">
-           {{ end }}
+           {{- partial "img.html" (dict "path" $imgPath "size" "800x webp" "alt" (printf "%s book cover" .Title) "class" "book-cover" "loading" "lazy") -}}
            {{ with .Params.image_caption }}<p class="book-caption">{{ . }}</p>{{ end }}
         </div>
         {{ with .Params.description }}

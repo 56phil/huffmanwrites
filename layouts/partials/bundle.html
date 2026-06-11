@@ -1,0 +1,60 @@
+{{- /*
+   CSS/JS bundle helper. Replaces the duplicated
+   `resources.Get | Minify | Fingerprint` pattern + manual SRI
+   `<link>`/`<script>` emission that was previously inlined in
+   `extend_head.html` (7 CSS + 1 JS), `gallery.html`, and `api/list.html`.
+
+   Behavior:
+   - If the asset exists: run the Minify + Fingerprint chain and emit
+     the proper `<link>` or `<script>` with the auto-computed SRI
+     `integrity` attribute. JS bundles get `defer` by default (the
+     pattern in this project is to load interactive scripts with
+     `defer` so they don't block parsing).
+   - If the asset is missing: emit a `warnf` so the missing reference
+     is visible in `hugo` build output, then render a fallback
+     `<link>`/`<script>` with `data-bundled="false"` and no `integrity`
+     attribute.
+
+   Accepted keys in the dict (all optional unless marked required):
+     path   (string, required) — path under `assets/`, leading "/" is
+                              trimmed. E.g. "css/custom.css".
+     kind   (string, required) — "css" or "js"
+     sri    (bool)             — default true. If false, the happy path
+                              emits a `<link>`/`<script>` without the
+                              `integrity` attribute.
+     defer  (bool)             — default true for JS, false for CSS.
+     extra  (string)           — arbitrary trailing attributes, e.g.
+                              `crossorigin="anonymous"`.
+
+   Examples:
+
+     {{ partial "bundle.html" (dict "path" "css/custom.css" "kind" "css") }}
+
+     {{ partial "bundle.html" (dict "path" "js/reading-progress.js"
+                                  "kind" "js") }}
+*/ -}}
+{{- $path := strings.TrimPrefix "/" .path -}}
+{{- $r := resources.Get $path -}}
+{{- if $r -}}
+  {{- $r = $r | resources.Minify | resources.Fingerprint -}}
+{{- end -}}
+{{- $integrity := "" -}}
+{{- if and $r (or (not (isset . "sri")) .sri) -}}
+  {{- $integrity = $r.Data.Integrity -}}
+{{- end -}}
+{{- if eq .kind "css" -}}
+  {{- if $r -}}
+    <link rel="stylesheet" href="{{ $r.RelPermalink }}"{{ with $integrity }} integrity="{{ . }}"{{ end }}{{ with .extra }} {{ . | safeHTMLAttr }}{{ end }}>
+  {{- else -}}
+    {{- warnf "bundle.html: missing CSS asset %q" .path -}}
+    <link rel="stylesheet" href="/{{ .path }}" data-bundled="false"{{ with .extra }} {{ . | safeHTMLAttr }}{{ end }}>
+  {{- end -}}
+{{- else if eq .kind "js" -}}
+  {{- $defer := or (not (isset . "defer")) .defer -}}
+  {{- if $r -}}
+    <script{{ if $defer }} defer{{ end }} src="{{ $r.RelPermalink }}"{{ with $integrity }} integrity="{{ . }}"{{ end }}{{ with .extra }} {{ . | safeHTMLAttr }}{{ end }}></script>
+  {{- else -}}
+    {{- warnf "bundle.html: missing JS asset %q" .path -}}
+    <script{{ if $defer }} defer{{ end }} src="/{{ .path }}" data-bundled="false"{{ with .extra }} {{ . | safeHTMLAttr }}{{ end }}></script>
+  {{- end -}}
+{{- end -}}

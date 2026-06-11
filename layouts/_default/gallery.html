@@ -46,18 +46,9 @@
     <div class="gallery-card">
       <div class="gallery-img-wrapper">
         {{- $imgSrc := .image | relURL -}}
-        {{- $imgPath := strings.TrimPrefix "/" .image -}}
-        {{- $imgResource := resources.Get $imgPath -}}
-        {{- if $imgResource -}}
-          {{- $thumb := $imgResource.Resize "600x webp q75" -}}
-          <a href="{{ $imgResource.RelPermalink }}" class="glightbox" data-glightbox-title="{{ .title }}" data-glightbox-description="{{ $caption }}">
-            <img src="{{ $thumb.RelPermalink }}" alt="{{ .title }}" class="gallery-img" loading="lazy" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}">
-          </a>
-        {{- else -}}
-          <a href="{{ $imgSrc }}" class="glightbox" data-glightbox-title="{{ .title }}" data-glightbox-description="{{ $caption }}">
-            <img src="{{ $imgSrc }}" alt="{{ .title }}" class="gallery-img" loading="lazy">
-          </a>
-        {{- end -}}
+        <a href="{{ $imgSrc }}" class="glightbox" data-glightbox-title="{{ .title }}" data-glightbox-description="{{ $caption }}">
+          <img src="{{ $imgSrc }}" alt="{{ .title }}" class="gallery-img" loading="lazy">
+        </a>
       </div>
       <div class="gallery-content">
         <h3 class="gallery-title">{{ .title }}</h3>
@@ -108,8 +99,7 @@
      `defer` so it runs after the DOM is parsed and after the CDN
      library is fetched. The init script self-checks for GLightbox
      and is a no-op if the CDN script hasn't arrived yet. */}}
-  {{- $glightbox := resources.Get "js/glightbox-init.js" | resources.Minify | fingerprint }}
-  <script defer src="{{ $glightbox.RelPermalink }}" integrity="{{ $glightbox.Data.Integrity }}"></script>
+  {{- partial "bundle.html" (dict "path" "js/glightbox-init.js" "kind" "js") -}}
 
 </div>
 

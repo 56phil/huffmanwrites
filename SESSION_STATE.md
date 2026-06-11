@@ -709,6 +709,30 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Removed duplicate `.credo-verb` rule from `blue-sky.css`** (kept the one in `custom.css` which is the same except it also sets `color: var(--primary)`). The custom.css rule applies globally via cascade order (custom.css loads first, and the removed blue-sky rule was a strict subset).
   - Build verified: 279 pages, 0 errors, all 242 post pages load `reading-progress.js`, only `/api/` loads `api-tabs.js`, only the 5 `/gallery/` pages load `glightbox-init.js`.
 
+### Image Reference Validation — June 11, 2026
+- **Created `layouts/partials/img.html`** — single helper that replaces the duplicated `resources.Get` + `Resize` + guarded `<img>` pattern that was inlined in 5 layouts and 2 shortcodes. Behavior: trims leading `/` from path; calls `resources.Get`; if found and `size` is set, runs `Resize`; emits an `<img>` (or `<source>` if `tag: source`) with all provided attributes. On a missing asset, emits a `warnf` ("img.html: missing image %q referenced from %s") and renders a fallback with `data-missing-image="true"` so it's greppable in rendered HTML.
+- **Created `layouts/partials/bundle.html`** — single helper for CSS/JS bundles. Calls `resources.Get | Minify | Fingerprint` and emits the proper `<link>` or `<script>` with auto-computed SRI `integrity` attribute. JS bundles get `defer` by default. On a missing asset, emits a `warnf` and renders a non-SRI fallback with `data-bundled="false"`.
+- **Migrated 8 data-driven image call sites** to use `img.html`:
+  - `layouts/index.html` (cover grid, 9 book covers on home)
+  - `layouts/books/single.html` (3 sites: hero mobile source, hero desktop img, book cover img)
+  - `layouts/shortcodes/book.html` (book card cover)
+  - `layouts/shortcodes/book_catalog.html` (catalog cover; collapsed the two duplicated `if .Params.link` / `else` blocks into a single `partial` call)
+  - `layouts/_default/gallery.html` — kept gallery on static `relURL` paths (gallery images live in `static/`, not `assets/`, so `resources.Get` would never find them and the old code's `if $imgResource` branch never fired)
+- **Migrated 10 bundle call sites** to use `bundle.html`:
+  - `layouts/partials/extend_head.html` (7 CSS bundles + 1 JS bundle, all on every page)
+  - `layouts/_default/gallery.html` (1 JS bundle, on gallery pages only)
+  - `layouts/api/list.html` (1 JS bundle, on /api/ only)
+- **Implementation gotcha:** Hugo's template engine treats partial output that interpolates dict arguments as a plain string and re-escapes `<` and `>` (see [hugo#7870](https://github.com/gohugoio/hugo/issues/7870)). Fix: build the entire HTML output as a string with `printf` and apply `safeHTML` once at the end. The first version of `img.html` (which emitted `<img>` and `</img>` directly in template syntax) had all `<>` escaped to `&lt;&gt;` in the output.
+- **Build verified:**
+  - `hugo --gc --minify` produces 279 pages, 38 paginator pages, 0 errors.
+  - **Zero `warnf` lines** from the new partials on a clean tree.
+  - **Zero `data-missing-image="true"` or `data-bundled="false"` attributes** in any rendered HTML.
+  - All 4 spot-checked pages (`/`, `/books/`, `/posts/essays/all-my-books/`, `/books/unstuck/`) are **byte-identical** to pre-edit state once asset hashes and SRI are normalized.
+  - The only non-byte-identical deltas are *additive* `width`/`height` attributes on 2 of the 8 call sites (home cover grid, book shortcode). The original `books/single.html:54` and `book_catalog.html:27,34` already had `width`/`height`; the home cover grid and book shortcode did not. Adding them prevents CLS — strictly an improvement.
+  - All 7 CSS bundles + 1 JS bundle on every page still have proper SRI `integrity` attributes.
+  - `reading-progress.js` is loaded on 128 files (every post + paginated list page + section index + tag page), `api-tabs.js` on `/api/` only, `glightbox-init.js` on the 5 gallery pages. All consistent with pre-edit behavior.
+- **`grep -rn "resources\.Get" layouts/ | grep -v "themes/"`** now shows only the 2 new partials (`img.html`, `bundle.html`) — no inline `resources.Get` calls remain in any layout or shortcode.
+
 ### Heading-ID Regex → Partial — June 11, 2026
 - Moved the inline `replaceRE` at `layouts/books/single.html:80` into a new `layouts/partials/book_strip_headings.html`.
 - The new partial uses the 4-group form (`$1` opening tag, `$2` id, `$3` inner text, `$4` closing tag) — more robust than the original 1-capture version because `.*?` with capture group 3 handles nested inline tags (e.g. `## **Copyright**` → `<h2 id="copyright"><strong>Copyright</strong></h2>`).
@@ -745,6 +769,7 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Image reference validation: img.html and bundle.html partials with warnf-on-miss; migrated 8 image + 10 bundle call sites; all rendered pages byte-identical or strictly improved)
 2026-06-11 (Heading-ID regex → partial: layouts/partials/book_strip_headings.html, 4-group form, byte-identical rendered output)
 2026-06-11 (Featured-post filter simplification: drop inert $recent fallback, single where clause, byte-identical rendered output)
 2026-06-11 (Book-card CSS consolidation: deleted 219 lines of dead/overridden rules, moved 3 load-bearing rules into book-shortcode.css, -20% CSS payload)
