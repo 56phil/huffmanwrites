@@ -51,6 +51,8 @@
 <link rel="stylesheet" href="{{ $hc.RelPermalink }}" integrity="{{ $hc.Data.Integrity }}">
 {{- $home := resources.Get "css/home.css" | resources.Minify | fingerprint }}
 <link rel="stylesheet" href="{{ $home.RelPermalink }}" integrity="{{ $home.Data.Integrity }}">
+{{- $bookShortcode := resources.Get "css/book-shortcode.css" | resources.Minify | fingerprint }}
+<link rel="stylesheet" href="{{ $bookShortcode.RelPermalink }}" integrity="{{ $bookShortcode.Data.Integrity }}">
 <script>
 (function(){
     var stored = localStorage.getItem("pref-hc");

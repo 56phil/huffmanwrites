@@ -650,9 +650,21 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Remaining inline style blocks in `public/index.html` (5, totaling ~2KB):** PaperMod's theme-toggle display rule, dark-mode color scheme block, social-icon link styles from `extend_head.html`, the newsletter-signup block, and a `.credo-footer` block from a different credo context. All are upstream / unrelated to the home page.
   - Build verified: 279 pages, 0 errors, `home.min.*.css` present in `public/css/` with SRI hash, all 4 stylesheets (custom/phbooks/highcontrast/home) referenced from the home page `<head>`.
 
+### Book shortcode inline CSS extraction — June 11, 2026
+
+- **Extracted ~3KB of inline CSS from `layouts/shortcodes/book.html` into a new fingerprinted stylesheet.** The shortcode carried one inline `<style>` block (the `@media (max-width: 600px)` rules) plus 13 inline `style="..."` attributes scattered across the markup. After extraction, the shortcode is 62 lines (down from 88) and contains only structural HTML.
+  - New file: `assets/css/book-shortcode.css` — `.book-card` and all descendants (`.book-cover-wrap`, `.book-cover-wrap > div`, `.book-cover-wrap img`, `.book-cover-placeholder`, `.book-content`, `.book-text`, `.book-title`, `.book-subtitle`, `.book-description`, `.book-actions`, `.book-button`, `.book-badge`, `.book-caption`) plus the responsive media query.
+  - Wired into `layouts/partials/extend_head.html` with the same `Minify + fingerprint + SRI integrity` pattern as the other stylesheets. Loaded globally so the shortcode renders consistently wherever it's invoked (`content/books/_index.md` and `content/posts/essays/all-my-books.md` — the latter uses `book_catalog`, a different shortcode, which is unaffected).
+  - **`!important` preserved on every rule.** The inline-style hammer was a deliberate fix for visibility regressions where PaperMod or a downstream stylesheet would otherwise hide book-card text or shrink the cover. Moving the `!important` from inline attributes to a real stylesheet preserves the cascade priority without changing the visual outcome. See SESSION_STATE §"Book Descriptions — Change History" for context.
+  - **Hard-coded hex colors preserved.** The shortcode used `#e0e0e0`, `#f9f9f9`, `#222`, `#333`, `#444`, `#666`, `#ddd`, `#eee`, `#ffd700`, and `rgba(255, 240, 200, 0.3)` — a deliberate choice to not depend on theme variables. These are kept verbatim in the new file; if a future redesign wants to re-theme the book cards, those values are the place to start.
+  - **Cascade order:** `custom.css` → `phbooks.css` → `home.css` → `book-shortcode.css`. The last-loaded stylesheet wins any specificity ties, so `book-shortcode.css` is the final word on `.book-card` rules.
+  - **Duplicate rules acknowledged.** Both `custom.css:73-187` and `phbooks.css:34-135` already define overlapping `.book-card` rules with `!important`. The new `book-shortcode.css` adds a third set, also with `!important`. This is intentional — it makes the shortcode resilient to whatever order stylesheets end up loading in. A future cleanup could consolidate the three sets into one source of truth, but that requires careful visual regression testing across the two shortcode use sites.
+  - Build verified: 279 pages, 0 errors, 9 book cards on `/books/` with 0 inline `style=""` attributes total, `book-shortcode.min.*.css` present in `public/css/` with SRI hash, `all-my-books` page (using `book_catalog` shortcode) unaffected.
+
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Book shortcode inline CSS extraction → assets/css/book-shortcode.css)
 2026-06-11 (Home page inline CSS extraction → assets/css/home.css)
 2026-06-11 (Reading progress indicator on long-form posts)
 2026-06-11 (all-my-books canonicalURL pointing to /books/)

@@ -1,0 +1,179 @@
+/* Book shortcode styles. Extracted from layouts/shortcodes/book.html
+   on 2026-06-11 to keep the shortcode markup lean — the shortcode
+   carried ~3KB of inline CSS (one <style> block plus 13 style=""
+   attributes on individual elements) that re-implemented rules
+   already present in custom.css and phbooks.css.
+
+   Loaded globally via extend_head.html so the shortcode renders
+   consistently wherever it's used (content/books/_index.md and
+   content/posts/essays/all-my-books.md). Used by the `{{< book >}}`
+   shortcode, not the `{{< book_catalog >}}` shortcode (the latter
+   uses phbooks.css).
+
+   !important is intentional. The inline-style hammer was a deliberate
+   fix for visibility regressions where PaperMod or a downstream
+   stylesheet would otherwise hide book-card text or shrink the
+   cover. The cascade order here is custom.css → phbooks.css →
+   home.css → book-shortcode.css, so any specificity fight is won
+   by !important in this file. See SESSION_STATE.md §"Book
+   Descriptions — Change History" for context. */
+
+/* --- Static (desktop) rules, lifted from the inline style="" attrs. --- */
+.book-card {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+    padding: 16px !important;
+    margin: 20px 0 !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    background-color: #f9f9f9 !important;
+    max-width: 800px !important;
+}
+
+.book-card .book-cover-wrap {
+    flex: 0 0 120px !important;
+    width: 120px !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Inner placeholder div that wraps the cover image. Custom.css and
+   phbooks.css don't size this; the shortcode's hard-coded 120x180
+   keeps the cover at its intended 2:3 aspect ratio regardless of
+   the image's intrinsic dimensions. */
+.book-card .book-cover-wrap > div {
+    width: 120px !important;
+    height: 180px !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.book-card .book-cover-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.book-caption {
+    font-size: 0.85rem !important;
+    color: #666 !important;
+    font-style: italic !important;
+    text-align: center !important;
+    margin-top: 0.5rem !important;
+}
+
+.book-cover-placeholder {
+    width: 120px !important;
+    height: 180px !important;
+    background: #eee !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 0.8rem !important;
+    color: #666 !important;
+    border-radius: 4px !important;
+    padding: 10px !important;
+}
+
+.book-card .book-content {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 180px !important;
+    justify-content: flex-start !important;
+}
+
+/* .book-text is unique to the shortcode — a wrapper around title /
+   subtitle / description that gives the description a min-height of
+   0 so it can shrink-to-fit when the cover image is short. */
+.book-text {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+}
+
+.book-card .book-title {
+    margin: 0 0 4px 0 !important;
+    font-size: 1.3rem !important;
+    font-weight: 700 !important;
+    color: #222 !important;
+}
+
+.book-card .book-subtitle {
+    margin: 0 0 12px 0 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    opacity: 0.9 !important;
+    color: #333 !important;
+}
+
+/* Description block. The hard-coded amber accent (border-left #ffd700,
+   translucent cream background) was chosen by the original author and
+   has not been re-themed; if a future redesign wants to re-theme this,
+   the two color values below are the place to start. */
+.book-card .book-description {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+    color: #444 !important;
+    margin: 8px 0 16px 0 !important;
+    font-style: italic !important;
+    background-color: rgba(255, 240, 200, 0.3) !important;
+    padding: 8px !important;
+    border-left: 3px solid #ffd700 !important;
+}
+
+.book-card .book-actions {
+    margin-top: auto !important;
+    padding-top: 12px !important;
+}
+
+.book-card .book-button {
+    background-color: #222 !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    display: inline-block !important;
+}
+
+.book-card .book-badge {
+    background-color: #ddd !important;
+    color: #666 !important;
+    padding: 4px 12px !important;
+    border-radius: 12px !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* --- Responsive (≤ 600px) rules, lifted from the inline <style> block. --- */
+@media (max-width: 600px) {
+    .book-card {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    .book-card .book-cover-wrap {
+        flex: 0 0 auto !important;
+        margin-bottom: 12px !important;
+    }
+
+    .book-card .book-content {
+        align-items: center !important;
+    }
+}
