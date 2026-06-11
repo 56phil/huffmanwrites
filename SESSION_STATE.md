@@ -661,9 +661,40 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Duplicate rules acknowledged.** Both `custom.css:73-187` and `phbooks.css:34-135` already define overlapping `.book-card` rules with `!important`. The new `book-shortcode.css` adds a third set, also with `!important`. This is intentional — it makes the shortcode resilient to whatever order stylesheets end up loading in. A future cleanup could consolidate the three sets into one source of truth, but that requires careful visual regression testing across the two shortcode use sites.
   - Build verified: 279 pages, 0 errors, 9 book cards on `/books/` with 0 inline `style=""` attributes total, `book-shortcode.min.*.css` present in `public/css/` with SRI hash, `all-my-books` page (using `book_catalog` shortcode) unaffected.
 
+### Blue Sky + site-wide inline CSS extraction — June 11, 2026
+
+- **Eliminated every remaining inline `<style>` block from project layouts and partials.** Two new fingerprinted stylesheets (`blue-sky.css`, `gallery.css`) plus additions to `custom.css` and `phbooks.css`. **Result: 0 inline `<style>` blocks in any page body across the entire site** (verified by audit — all 726 remaining inline styles are in `<head>` and belong to PaperMod's noscript fallback, dark-mode block, and the social-icon link styles in `extend_head.html`).
+  - **New file: `assets/css/blue-sky.css`** — all CSS for the 6 Blue Sky initiative landing pages (api, community, podcast, challenge, workshop, shop). ~16KB minified, replacing ~22KB of inline CSS across the 6 layouts. Each layout's section is delineated by a `/* === /SECTION/ === */` comment. Unique class prefixes (`.api-*`, `.community-*`, etc.) prevent cross-section conflicts. Loaded globally because the file is small enough that the per-page overhead is negligible and the file becomes cacheable.
+  - **New file: `assets/css/gallery.css`** — 2.4KB minified, replacing 3.2KB of inline CSS in `layouts/_default/gallery.html`. Includes the GLightbox theme overrides (`.glightbox-container` with `--glightbox-color-*` CSS variables), gallery card grid, hover states, and pagination.
+  - **`assets/css/custom.css` additions** — three new sections appended:
+    - `.credo-footer` rules (was in `layouts/partials/credo_footer.html` inline, 585B). Used site-wide since `extend_footer.html` includes the partial on every page.
+    - `.newsletter-signup` rules (was in `layouts/partials/newsletter.html` inline, 585B). Currently used on the home page only.
+    - `.not-found-*` rules (was in `layouts/_default/404.html` inline, 1.8KB).
+    - `.about-headshot` rules (was in `layouts/_default/about.html` inline, 510B).
+    - `.gallery` shortcode rules (was in `layouts/shortcodes/gallery.html` inline, 146B). Note: bare `.gallery` class on the shortcode vs `gallery-*` prefixed classes on the landing page — different concerns, no conflict.
+  - **`assets/css/phbooks.css` additions** — `.article-hero-container`, `.responsive-hero-img`, `.hero-overlay` rules for the book detail page hero (was in `layouts/books/single.html` inline, 537B). Placed in `phbooks.css` because the book detail page is a `books/single.html` layout and the styles are book-specific.
+  - **Layouts stripped:**
+    - `layouts/api/list.html` (477 → 169 lines; -65%)
+    - `layouts/community/list.html` (343 → 86 lines; -75%)
+    - `layouts/podcast/list.html` (289 → 67 lines; -77%)
+    - `layouts/challenge/list.html` (273 → 74 lines; -73%)
+    - `layouts/workshop/list.html` (247 → 53 lines; -79%)
+    - `layouts/shop/list.html` (216 → 46 lines; -79%)
+    - `layouts/_default/404.html` (84 → 15 lines; -82%)
+    - `layouts/_default/about.html` (65 → 39 lines; -40%)
+    - `layouts/_default/gallery.html` (260 → 119 lines; -54%)
+    - `layouts/shortcodes/gallery.html` (13 → 5 lines; -62%)
+    - `layouts/books/single.html` (139 → 113 lines; -19%)
+    - `layouts/partials/credo_footer.html` (54 → 8 lines; -85%)
+    - `layouts/partials/newsletter.html` (45 → 8 lines; -82%)
+  - **Cascade order** (final, after this commit): `custom.css` → `phbooks.css` → `home.css` → `book-shortcode.css` → `blue-sky.css` → `gallery.css`. Each successive stylesheet wins any specificity tie against its predecessors.
+  - **Remaining inline `<style>` in `extend_head.html`** is the social-icon link styles block (`.social-icon-link`, `.social-icon-container`, `.social-label`) — kept inline intentionally because it's first-paint UI styling for the social icons in the header.
+  - Build verified: 279 pages, 0 errors, all 6 Blue Sky pages + 404 + about + gallery + books/* still render correctly with their distinctive visual treatments intact.
+
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Blue Sky + site-wide inline CSS extraction — 0 body-level <style> blocks remain)
 2026-06-11 (Book shortcode inline CSS extraction → assets/css/book-shortcode.css)
 2026-06-11 (Home page inline CSS extraction → assets/css/home.css)
 2026-06-11 (Reading progress indicator on long-form posts)

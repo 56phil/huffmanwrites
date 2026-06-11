@@ -53,6 +53,10 @@
 <link rel="stylesheet" href="{{ $home.RelPermalink }}" integrity="{{ $home.Data.Integrity }}">
 {{- $bookShortcode := resources.Get "css/book-shortcode.css" | resources.Minify | fingerprint }}
 <link rel="stylesheet" href="{{ $bookShortcode.RelPermalink }}" integrity="{{ $bookShortcode.Data.Integrity }}">
+{{- $blueSky := resources.Get "css/blue-sky.css" | resources.Minify | fingerprint }}
+<link rel="stylesheet" href="{{ $blueSky.RelPermalink }}" integrity="{{ $blueSky.Data.Integrity }}">
+{{- $gallery := resources.Get "css/gallery.css" | resources.Minify | fingerprint }}
+<link rel="stylesheet" href="{{ $gallery.RelPermalink }}" integrity="{{ $gallery.Data.Integrity }}">
 <script>
 (function(){
     var stored = localStorage.getItem("pref-hc");

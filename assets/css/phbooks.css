@@ -567,3 +567,35 @@ a:visited:hover {
     line-height: 1.5;
     margin: 0;
 }
+
+/* --- Book detail hero image --- */
+/* Used by layouts/books/single.html for the responsive hero image at
+   the top of each book detail page. The .article-hero-container wraps
+   a <picture> element with a gradient overlay (.hero-overlay) that
+   darkens the bottom of the image for caption legibility. */
+.article-hero-container {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: var(--theme);
+    position: relative;
+}
+
+.responsive-hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(transparent, var(--theme));
+    pointer-events: none;
+}

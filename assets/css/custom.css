@@ -235,3 +235,217 @@ main, .post-content, .entry-content {
     color: var(--primary);
     font-weight: 600;
 }
+
+/* Credo footer — site-wide credo at the bottom of every page, included
+   via layouts/partials/credo_footer.html. Uses a different markup than
+   the hero credo (each line has a trailing emoji icon), so the rules
+   are scoped to .credo-footer to avoid clashing with .credo-line. */
+.credo-footer {
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.3;
+    margin: 2rem 0 1rem;
+    text-align: center;
+    color: var(--secondary);
+    opacity: 0.9;
+}
+
+.credo-footer-line {
+    display: block;
+    margin-bottom: 0.2rem;
+    position: relative;
+}
+
+.credo-footer .credo-verb {
+    font-variant: small-caps;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.credo-footer .credo-icon {
+    position: absolute;
+    right: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.5em;
+    opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+    .credo-footer {
+        font-size: 0.85rem;
+    }
+    .credo-footer .credo-icon {
+        right: -1rem;
+        font-size: 0.4em;
+    }
+}
+
+@media (max-width: 480px) {
+    .credo-footer .credo-icon {
+        display: none;
+    }
+}
+
+/* Newsletter signup block — used on the home page via
+   layouts/partials/newsletter.html. Site-wide utility: any page that
+   includes this partial will get the same look. */
+.newsletter-signup {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin: 3rem auto;
+    max-width: 600px;
+}
+
+.newsletter-signup h3 {
+    margin-top: 0;
+    font-family: var(--font-headings);
+    color: var(--primary);
+    font-size: 1.75rem;
+    line-height: 1.2;
+}
+
+.newsletter-signup p {
+    font-size: 1.05rem;
+    color: var(--secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.newsletter-cta {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--primary);
+    color: var(--theme);
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    font-size: 1rem;
+}
+
+.newsletter-cta:hover {
+    opacity: 0.9;
+}
+
+/* 404 page — used by layouts/_default/404.html. The 404 is a
+   single-page layout, but the rules are kept in custom.css so
+   the layout file stays focused on structure. */
+.not-found-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    text-align: center;
+    padding: var(--gap);
+}
+
+.not-found-content {
+    max-width: 600px;
+}
+
+.not-found-title {
+    font-size: 8rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--primary);
+    line-height: 1;
+    opacity: 0.8;
+}
+
+.not-found-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1rem 0;
+    color: var(--primary);
+}
+
+.not-found-subtext {
+    font-size: 1.1rem;
+    color: var(--secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.not-found-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.not-found-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    background-color: var(--primary);
+    color: var(--theme);
+    border: 1px solid var(--primary);
+}
+
+.not-found-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    background-color: var(--secondary);
+    color: var(--theme);
+    border-color: var(--secondary);
+}
+
+.not-found-container a:not(.not-found-btn) {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.not-found-container a:not(.not-found-btn):hover {
+    color: var(--secondary);
+}
+
+@media (max-width: 600px) {
+    .not-found-title { font-size: 5rem; }
+    .not-found-text { font-size: 1.2rem; }
+}
+
+/* About page headshot — circular float-right image used by
+   layouts/_default/about.html. */
+.about-headshot {
+    float: right;
+    shape-outside: circle(50%);
+    margin: 0 0 1.5rem 2rem;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.about-headshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .about-headshot {
+        float: none;
+        margin: 0 auto 1.5rem auto;
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* Gallery shortcode — the inline block-quote style used by
+   layouts/shortcodes/gallery.html. (The gallery landing page itself
+   is a separate concern and lives in assets/css/gallery.css.) */
+.gallery {
+    margin: 2rem 0;
+    padding: 1rem;
+    border-left: 3px solid var(--primary);
+    background: var(--entry);
+}
