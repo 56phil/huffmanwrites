@@ -47,12 +47,7 @@
 })();
 </script>
 {{- if not .Params.cover.image }}
-  {{- $ogImage := "https://huffmanwrites.org/img/og-default.png" }}
-  <meta property="og:image" content="{{ $ogImage }}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:alt" content="Huffman Writes - Stoicism, Philosophy, and the Pursuit of a Well-Lived Life">
-  <meta name="twitter:image" content="{{ $ogImage }}">
-  <meta name="twitter:card" content="summary_large_image">
+  {{- /* Open Graph meta (including og:image) is emitted by
+       layouts/partials/templates/opengraph.html, which shadows
+       PaperMod's default and is hero-aware. See that file for details. */ -}}
 {{ end }}

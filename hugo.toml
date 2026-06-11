@@ -27,7 +27,7 @@ disableHugoGeneratorInject = true
 
   [params.schema]
     publisherType = 'Person'
-    sameAs = ['https://huffmanwrites.org']
+    sameAs = ['https://huffmanwrites.org', 'https://bsky.app/profile/huffmanwrites.bsky.social']
 
   [params.homeInfoParams]
     Title = "Huffman Writes"
@@ -56,6 +56,9 @@ disableHugoGeneratorInject = true
   [[params.socialIcons]]
     name = 'amazon'
     url = 'https://www.amazon.com/author/philip.huffman'
+  [[params.socialIcons]]
+    name = 'bluesky'
+    url = 'https://bsky.app/profile/huffmanwrites.bsky.social'
 
 [markup]
   [markup.tableOfContents]

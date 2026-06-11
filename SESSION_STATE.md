@@ -609,9 +609,20 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
   - **Note:** Originally flagged `optimal-use-of-hermes.md` instead of `fountain-pens.md`; swapped because the Hermes essay is now framed as a historical record (the workflow has changed) and the most-recent essay was being hidden from the home page. The flagged set should be re-curated whenever the corpus changes meaningfully.
 - **Memory rule saved** — New auto-memory `update-session-state-before-push` at `/Users/prh/.claude/projects/-Users-prh-Developer-huffmanwrites/memory/update-session-state-before-push.md` so future agents update `SESSION_STATE.md` before every push.
 
-**Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
+### Open Graph + Bluesky — June 11, 2026 (later)
+
+- **Open Graph hero image wiring** — Per-post `og:image` now resolves from `hero_desktop` → `cover.image` → `image` (book page convention) → `og-default.png`, in that order. Set `og:image:width=1200`, `og:image:height=630`, `og:image:type=image/webp`, and `og:image:alt` (from `hero_alt` when available, otherwise `.Title`, otherwise the default). All meta emitted with absolute URLs (`https://huffmanwrites.org/...`) so LinkedIn, Bluesky, Slack, Discord, iMessage, Facebook, and Mastodon all pick up the right preview image.
+  - Implemented as project override `layouts/partials/templates/opengraph.html` that shadows PaperMod's theme default. Title, description, locale, type, section, published/modified time, and up to 6 tags are preserved from PaperMod's logic.
+  - Verified across the four page archetypes: post with `hero_desktop` (Stoic Saturday digest → hero WebP), post without image fields (fountain-pens essay → default PNG), book page with `image` (Unstuck → cover JPG with title fallback alt), and the home page (default PNG).
+- **Twitter Card meta stripped** — Phil confirmed he wants nothing to do with Twitter/X. Removed `twitter:image` and `twitter:card` from `layouts/partials/extend_head.html`. Created empty `layouts/partials/templates/twitter_cards.html` to shadow PaperMod's theme partial. Comment at the top of both files explains the intent and points to the auto-memory `no-twitter-x`.
+- **Bluesky social icon added** — `[[params.socialIcons]]` entry in `hugo.toml`: `name='bluesky'`, `url='https://bsky.app/profile/huffmanwrites.bsky.social'`. Phil's personal Bluesky handle was changed to `huffmanwrites@bsky.social` (brand-aligned). PaperMod's built-in Bluesky SVG renders automatically via `social_icons.html`. The icon now appears in the home page social strip and on every page that includes the partial.
+- **Bluesky added to `schema.org` sameAs** — `[params.schema].sameAs` in `hugo.toml` now includes the Bluesky profile URL alongside `https://huffmanwrites.org`. Verified in rendered home page: `"sameAs":["https://huffmanwrites.org","https://bsky.app/profile/huffmanwrites.bsky.social"]`.
+- **Auto-memories saved** — `no-twitter-x` (Phil doesn't use Twitter/X; don't build Twitter-specific features) and `bluesky-handle` (`huffmanwrites@bsky.social`).
+
+**Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
 ## Last Updated
+2026-06-11 (Open Graph hero wiring + Twitter stripped + Bluesky social icon)
 2026-06-11 (Site maintenance: CLAUDE.md, pagination consistency, AI essay corrections, featuredOnHome flag)
 2026-06-08 (Fountain pens essay published to Essays & Observations)
 2026-05-31 (Content copy edits: books intro, summaries intro)
