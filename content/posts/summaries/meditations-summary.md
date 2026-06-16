@@ -1,6 +1,6 @@
 ---
-title: "Meditations — Marcus Aurelius"
-description: "A summary and review of Marcus Aurelius's private journal — the most intimate record we have of a Stoic philosopher trying to live what he believed."
+title: "Meditations: Summary & Review — Marcus Aurelius"
+description: "Marcus Aurelius's Meditations — a summary and critical review of his private Stoic journal, the core philosophical arguments it makes, and what it means to aspire to virtue while consistently falling short."
 date: 2026-05-31T00:00:00Z
 author: Phil Huffman
 sort_key: "Aurelius, Marcus"

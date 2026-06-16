@@ -774,10 +774,11 @@ Four-phase effort to improve search engine and reader discoverability:
 
 1. **Phase 1 (done):** Unblock tags and categories in `robots.txt` — removed `Disallow: /tags/` and `Disallow: /categories/` so Google can index tag aggregation pages (e.g. `/tags/stoicism/`, `/tags/civics/`). Only `/drafts/` remains disallowed.
 2. **Phase 2 (done):** Google Search Console — placed `static/google928b4d3715b18b06.html` (file-based verification). Served at `https://huffmanwrites.org/google928b4d3715b18b06.html`. After deploy, click **Verify** in GSC, then submit the sitemap at `https://huffmanwrites.org/sitemap.xml`.
-3. **Phase 3:** Audit top book summary titles/descriptions for search intent.
+3. **Phase 3 (done):** Audit top book summary titles/descriptions for search intent. Updated 5 high-traffic summary titles to include "Summary & Review" (Frankl, Covey, Kahneman, Marcus Aurelius, Dweck). Descriptions now lead with full author name + book title for better keyword match. Updated `_index.md` description with author names and subject keywords.
 4. **Phase 4:** Cross-link summaries → Phil's authored books where topically related.
 
 ## Last Updated
+2026-06-16 (Discoverability Phase 3: top 5 summary titles/descriptions updated for search intent — "Summary & Review" pattern, full author names in descriptions)
 2026-06-16 (Discoverability Phase 2: Google Search Console file-based verification added to static/)
 2026-06-16 (Discoverability Phase 1: unblocked /tags/ and /categories/ in robots.txt)
 2026-06-11 (Image reference validation: img.html and bundle.html partials with warnf-on-miss; migrated 8 image + 10 bundle call sites; all rendered pages byte-identical or strictly improved)

@@ -1,6 +1,6 @@
 ---
 title: "Book Summaries"
-description: "Condensed insights and critical reviews of influential books."
+description: "Summaries and critical reviews of influential books on Stoicism, civic life, philosophy, science, and psychology — from Marcus Aurelius to Viktor Frankl to Carol Dweck."
 lastmod: 2026-05-20
 cascade:
   hiddenInHomeList: true
