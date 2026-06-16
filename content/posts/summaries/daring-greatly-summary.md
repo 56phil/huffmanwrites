@@ -49,6 +49,8 @@ The book also has a tendency toward affirmational language that can soften the h
 
 Read it for the shame resilience framework and the distinction between guilt (I did something bad) and shame (I am bad). Those two ideas alone are worth the price of admission.
 
+If Brown's argument about self-imposed armor resonates, [*Unstuck*](/books/unstuck/) makes the Stoic case for dismantling it — not through vulnerability, but through the discipline of stopping the internal negotiation.
+
 ---
 > *"Vulnerability is not winning or losing; it's having the courage to show up and be seen when we have no control over the outcome."*
 — Brené Brown

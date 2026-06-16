@@ -33,7 +33,7 @@ Alexis de Tocqueville arrived in the United States in 1831, nominally to study t
 ---
 ## Tocqueville and The Stoic Citizen
 
-The resonance is direct and deep. Tocqueville's civic associations are what *The Stoic Citizen* calls the practice of citizenship — the daily discipline of engagement, obligation, and proportion that keeps a democratic republic coherent. Both arguments rest on the same premise: that democratic self-governance is not a condition but a practice, and that it degrades when citizens stop practicing it. Tocqueville provides the political diagnosis; Stoicism provides the philosophical framework for the citizen who wants to respond to that diagnosis with something other than despair.
+The resonance is direct and deep. Tocqueville's civic associations are what [*The Stoic Citizen*](/books/stoic-citizen/) calls the practice of citizenship — the daily discipline of engagement, obligation, and proportion that keeps a democratic republic coherent. Both arguments rest on the same premise: that democratic self-governance is not a condition but a practice, and that it degrades when citizens stop practicing it. Tocqueville provides the political diagnosis; Stoicism provides the philosophical framework for the citizen who wants to respond to that diagnosis with something other than despair.
 
 ---
 ## A Respectful Disagreement
@@ -47,7 +47,7 @@ His treatment of slavery, Native Americans, and the position of women is also in
 
 *Democracy in America* reads like it was written about the present because the mechanisms Tocqueville identified are structural, not historical. Soft despotism, the tyranny of majority opinion, the atrophy of civic association, the tension between equality and liberty — these are not period features of 1831 America. They are features of democracy itself, and they are as active now as they were then.
 
-Read it as a companion to *The Stoic Citizen*. Tocqueville names the disease; Stoicism proposes the discipline.
+Read it as a companion to [*The Stoic Citizen*](/books/stoic-citizen/). Tocqueville names the disease; Stoicism proposes the discipline.
 
 ---
 > *"The health of a democratic society may be measured by the quality of functions performed by private citizens."*

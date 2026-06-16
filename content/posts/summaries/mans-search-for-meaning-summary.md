@@ -49,6 +49,8 @@ There is also a selection problem worth naming: Frankl's argument rests heavily 
 
 Read the memoir slowly. Let it land before you move to the theory.
 
+For the Stoic parallel Frankl acknowledges — the argument that the last human freedom is the choice of one's response — see [*A Life Made Whole*](/books/life-made-whole/), which applies the same discipline to the long work of personal integration.
+
 ---
 > *"Those who have a 'why' to live can bear almost any 'how'."*
 — Viktor Frankl (paraphrasing Nietzsche)

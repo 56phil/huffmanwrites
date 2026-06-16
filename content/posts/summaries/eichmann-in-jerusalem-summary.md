@@ -33,7 +33,7 @@ Hannah Arendt covered the 1961 trial of Adolf Eichmann — the Nazi bureaucrat w
 ---
 ## Arendt and the Stoic Citizen
 
-The connection to *The Stoic Citizen* is direct. Arendt's argument is that civic participation requires thinking — not cleverness, not expertise, but the willingness to engage in genuine moral reflection, to consider the standpoint of others, to resist the comfort of role-following. The citizen who outsources judgment to authority, party, or procedure is not a citizen. They are a mechanism. Stoicism's demand that we distinguish between what is in our power and what is not — and that we maintain responsibility for the former — is an answer to the condition Arendt diagnosed.
+The connection to [*The Stoic Citizen*](/books/stoic-citizen/) is direct. Arendt's argument is that civic participation requires thinking — not cleverness, not expertise, but the willingness to engage in genuine moral reflection, to consider the standpoint of others, to resist the comfort of role-following. The citizen who outsources judgment to authority, party, or procedure is not a citizen. They are a mechanism. Stoicism's demand that we distinguish between what is in our power and what is not — and that we maintain responsibility for the former — is an answer to the condition Arendt diagnosed.
 
 ---
 ## A Respectful Disagreement

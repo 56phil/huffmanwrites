@@ -49,6 +49,8 @@ There is also the question of application. Marcus's Stoicism was written under c
 
 That is, in the end, what philosophy is for.
 
+For the civic application of the *Meditations* framework, see [*The Stoic Citizen*](/books/stoic-citizen/). For its application to personal integration, see [*A Life Made Whole*](/books/life-made-whole/).
+
 ---
 > *"You have power over your mind, not outside events. Realize this, and you will find strength."*
 — Marcus Aurelius
