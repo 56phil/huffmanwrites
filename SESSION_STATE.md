@@ -768,7 +768,17 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
+## Discoverability Initiative — June 16, 2026
+
+Four-phase effort to improve search engine and reader discoverability:
+
+1. **Phase 1 (done):** Unblock tags and categories in `robots.txt` — removed `Disallow: /tags/` and `Disallow: /categories/` so Google can index tag aggregation pages (e.g. `/tags/stoicism/`, `/tags/civics/`). Only `/drafts/` remains disallowed.
+2. **Phase 2:** Google Search Console — add GSC verification meta tag to `extend_head.html`.
+3. **Phase 3:** Audit top book summary titles/descriptions for search intent.
+4. **Phase 4:** Cross-link summaries → Phil's authored books where topically related.
+
 ## Last Updated
+2026-06-16 (Discoverability Phase 1: unblocked /tags/ and /categories/ in robots.txt)
 2026-06-11 (Image reference validation: img.html and bundle.html partials with warnf-on-miss; migrated 8 image + 10 bundle call sites; all rendered pages byte-identical or strictly improved)
 2026-06-11 (Heading-ID regex → partial: layouts/partials/book_strip_headings.html, 4-group form, byte-identical rendered output)
 2026-06-11 (Featured-post filter simplification: drop inert $recent fallback, single where clause, byte-identical rendered output)
