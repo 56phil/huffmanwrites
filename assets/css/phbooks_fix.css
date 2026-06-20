@@ -1,25 +1,39 @@
 /*
-  Fix for book cover aspect ratio distortion.
-  Enforces 2:3 aspect ratio (6x9 books) for all .phbooks-cover images.
-  Loaded via extend_head.html to override default styles.
+  Fix for book cover aspect ratio distortion and visibility.
+  Enforces 2:3 aspect ratio (6x9 books) for all book covers.
 */
-.phbooks-cover {
-  aspect-ratio: 2/3 !important; /* 6x9 books */
+.phbooks-cover img,
+.book-catalog-cover {
+  aspect-ratio: 2/3 !important;
   object-fit: cover !important;
   width: 100% !important;
   height: auto !important;
-  max-height: none !important; /* Override any max-height constraints */
-  display: block !important; /* Fix inline-block quirks */
+  max-height: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Fix parent containers */
+.phbooks-cover,
+.book-cover-wrap,
+.book-media {
+  min-height: 1px !important;
+  overflow: visible !important;
 }
 
 /* Home page grid-specific fix */
-.home .phbooks-cover {
-  aspect-ratio: 2/3 !important;
-  object-fit: cover !important;
-  height: auto !important;
+.phbooks-book {
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-/* Books page fix (ensure covers are visible) */
-.book-cover-wrap {
-  min-height: 1px !important; /* Force container to respect child dimensions */
+.phbooks-desc.phbooks-with-cover {
+  display: flex !important;
+  gap: 1rem !important;
+}
+
+.phbooks-cover {
+  flex-shrink: 0 !important;
+  width: 160px !important;
 }

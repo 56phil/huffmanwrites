@@ -18,10 +18,16 @@
         <div class="phbooks-cover">
           {{- if .Params.link }}
             <a href="{{ .Params.link }}" target="_blank">
-              {{- partial "img.html" (dict "path" .Params.image "size" "160x webp" "alt" (printf "%s cover" .Title)) -}}
+              {{- $webpImg := replaceRE "\\.(jpg|png)$" ".webp" .Params.image -}}
+              {{- $imgResource := resources.Get (printf "img/books/%s" $webpImg) | default (resources.Get (printf "img/books/%s" .Params.image)) -}}
+              {{- $resizedImg := $imgResource.Resize "160x webp" -}}
+              <img src="{{ $resizedImg.RelPermalink }}" alt="{{ printf "%s cover" .Title }}" class="book-catalog-cover" loading="lazy">
             </a>
           {{- else }}
-            {{- partial "img.html" (dict "path" .Params.image "size" "160x webp" "alt" (printf "%s cover" .Title)) -}}
+            {{- $webpImg := replaceRE "\\.(jpg|png)$" ".webp" .Params.image -}}
+            {{- $imgResource := resources.Get (printf "img/books/%s" $webpImg) | default (resources.Get (printf "img/books/%s" .Params.image)) -}}
+            {{- $resizedImg := $imgResource.Resize "160x webp" -}}
+            <img src="{{ $resizedImg.RelPermalink }}" alt="{{ printf "%s cover" .Title }}" class="book-catalog-cover" loading="lazy">
           {{- end }}
         </div>
         {{ .Params.description | markdownify }}
