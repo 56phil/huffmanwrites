@@ -1,0 +1,11 @@
+/*
+  Fix for book cover aspect ratio distortion.
+  Enforces 2:3 aspect ratio (6x9 books) for all .phbooks-cover images.
+  Loaded via extend_head.html to override default styles.
+*/
+.phbooks-cover {
+  aspect-ratio: 2/3 !important; /* 6x9 books */
+  object-fit: cover !important;
+  width: 100% !important;
+  height: auto !important;
+}
