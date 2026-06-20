@@ -1,0 +1,5 @@
+- [Book summaries growth](project-summaries-growth.md) — Summaries section is a priority growth area; add external titles frequently, positive-yet-critical tone
+- [Update SESSION_STATE before push](update-session-state-before-push.md) — Refresh SESSION_STATE.md (maintenance log + status sections) before every git push to GitHub
+- [No Twitter/X](no-twitter-x.md) — Phil doesn't use Twitter/X; don't build Twitter-specific features or share integrations into huffmanwrites
+- [Bluesky handle](bluesky-handle.md) — Phil's Bluesky handle is huffmanwrites@bsky.social (brand-aligned)
+- [Newsletter weight convention](newsletter-weight-convention.md) — All future newsletters should include `weight: 1` in their frontmatter to ensure they appear at the top of the "Recent Posts" section on the home page
