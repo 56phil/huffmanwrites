@@ -8,7 +8,7 @@ description: |
   The chapters move through the mechanics of action: how to stop waiting for the right mood, how to treat discomfort as data rather than warning, and how to build momentum through small, deliberate wins rather than dramatic resolutions. The approach is unsentimental. It does not promise transformation. It promises clarity.
 
   Written for readers who already know what they should do and need something firmer than encouragement, Unstuck treats self-improvement as a practice of judgment under uncertainty — not a product to consume, but a position to play.
-image: "img/books/unstuck-v3.jpg"
+image: "img/books/unstuck.jpg"
 image_desktop: "img/articles/Unstuck-16x9.webp"
 image_mobile: "img/articles/Unstuck-4x5.webp"
 image_alt: "A solitary classical figure moving through a stark, light-filled doorway."

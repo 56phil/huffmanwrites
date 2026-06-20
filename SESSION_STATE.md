@@ -106,6 +106,17 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Corrected: SNARC (Edmonds/1951), Minsky/McCarthy ages, BDI attribution, Geoffrey Hinton name, OpenAI Five year, DQN Atari count, Strategic Computing Initiative year, AutoGen year, Brynjolfsson et al. attribution, HAL 9000 description, Rosenblatt citation, Silver et al. year/volume/pages
 - Set `draft: false`; committed and pushed as `30a2e62`
 
+### Book Cover Refresh — June 20, 2026
+- Replaced all versioned cover filenames with clean canonical names:
+  - `misaligned-v2.jpg` → `misaligned.jpg`
+  - `on-proportion-v3.jpg` → `proportion.jpg`
+  - `stoic-cgm-v4.jpg` → `stoic-cgm.jpg`
+  - `stoic-citizen-v3.jpg` → `stoic-citizen.jpg` (modified in place)
+  - `unstuck-v3.jpg` → `unstuck.jpg`
+  - `life-made-whole.jpg` → `almw.jpg`
+- Updated all references in `content/books/_index.md` and each book's `index.md`
+- Old versioned files deleted from `assets/img/books/`
+
 ### Book Cover Bug Fixes — June 20, 2026
 - **Books page** (`/books/`): covers were not rendering — `book.html` shortcode computed `$imgPath` (strip leading `/`) but then used the original `$img` variable (which includes `/img/books/` prefix) in `resources.Get`, doubling the path to `img/books//img/books/...`. Fixed by replacing `$webpImg`/`$img` usage with `$webpPath`/`$imgPath` in the resource lookup.
 - **Home page** cover grid: images displayed at inconsistent heights because native aspect ratios vary (2:3, 5:8, etc.). Fixed by adding `aspect-ratio: 2 / 3` and `object-fit: cover` to `.cover-item img` in `home.css`, enforcing a uniform 2:3 grid.

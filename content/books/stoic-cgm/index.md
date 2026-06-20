@@ -8,7 +8,7 @@ description: |
   The chapters trace the Republic of Glucose — the internal ecosystem of hormones, timing, and consequence — through the Disciplines of Action and Will. They examine how data becomes meaningful only when paired with judgment, and how the habit of measurement can either deepen autonomy or become its own compulsion. The writing moves between clinical precision and lived experience, treating health as a domain where philosophy and science converge.
 
   Written for readers who are managing chronic conditions, aging metabolisms, or the simple desire to understand what their bodies are doing, The Stoic CGM offers a framework for using technology without surrendering to it. The central claim is that the body is not an enemy to defeat but a system to comprehend — and that comprehension, sustained over time, is the beginning of genuine self-governance.
-image: "img/books/stoic-cgm-v4.jpg"
+image: "img/books/stoic-cgm.jpg"
 image_desktop: "img/articles/cgm-16x9.webp"
 image_mobile: "img/articles/cgm-4x5.webp"
 image_alt: "A classical stone-textured hand interacting with a floating holographic data-grid of glowing gold nodes against a deep midnight navy background."
