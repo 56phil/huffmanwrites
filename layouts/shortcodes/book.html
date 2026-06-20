@@ -21,10 +21,10 @@
         <div>
             {{- if $img -}}
                 {{- if $link -}}<a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }}>{{- end -}}
-                    {{- partial "img.html" (dict "path" $img "size" "600x webp"
-                                                  "alt" (printf "%s: %s" $title ($description | plainify))
-                                                  "title" (printf "%s: %s" $title ($description | plainify))
-                                                  "loading" "lazy") -}}
+                    {{- $webpImg := replaceRE "\\.(jpg|png)$" ".webp" $img -}}
+                    {{- $imgResource := resources.Get (printf "img/books/%s" $webpImg) | default (resources.Get (printf "img/books/%s" $img)) -}}
+                    {{- $resizedImg := $imgResource.Resize "600x webp" -}}
+                    <img src="{{ $resizedImg.RelPermalink }}" alt="{{ printf "%s: %s" $title ($description | plainify) }}" title="{{ printf "%s: %s" $title ($description | plainify) }}" class="phbooks-cover" loading="lazy">
                 {{- if $link -}}</a>{{- end -}}
             {{- end -}}
         </div>
