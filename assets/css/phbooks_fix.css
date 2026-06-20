@@ -8,4 +8,18 @@
   object-fit: cover !important;
   width: 100% !important;
   height: auto !important;
+  max-height: none !important; /* Override any max-height constraints */
+  display: block !important; /* Fix inline-block quirks */
+}
+
+/* Home page grid-specific fix */
+.home .phbooks-cover {
+  aspect-ratio: 2/3 !important;
+  object-fit: cover !important;
+  height: auto !important;
+}
+
+/* Books page fix (ensure covers are visible) */
+.book-cover-wrap {
+  min-height: 1px !important; /* Force container to respect child dimensions */
 }
