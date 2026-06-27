@@ -2,7 +2,7 @@
 title = "Credo Mug"
 description = "15 oz ceramic mug with the credo printed in the same small-caps type used on the site. A reminder before the first sip."
 tagline = "Start the morning with intention."
-image = "/img/shop/credo-mug.jpg"
+image = "/img/shop/credo-mug.png"
 link = "https://www.redbubble.com/shop/ap/181263403"
 price = "$22"
 weight = 20
