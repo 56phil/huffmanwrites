@@ -6,9 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Hugo static site (`huffmanwrites`) using the [PaperMod](https://github.com/adityatelange/hugo-PaperMod) theme. Domain: `huffmanwrites.org` (CNAME committed at `static/CNAME`). Deployed to GitHub Pages via `.github/workflows/hugo.yml` on push to `main`.
 
-The site is a personal publication platform for Philip Huffman — 9 published books (Stoicism, civics, neurodivergence), a weekly digest, a long-form essay section, a civics / Constitution series, and a growing library of book summaries. The site embodies the credo **"Think clearly. Live intentionally. Love immediately."** which appears on the home page, book detail pages, and the footer.
+The site is a personal publication platform for Philip Huffman — 9 published books (Stoicism, civics, neurodivergence), a weekly digest, a long-form essay section, a civics / Constitution series, and a growing library of book summaries. The site embodies the credo **"Think clearly. Live intentionally. Love deeply."** which appears on the home page, book detail pages, and the footer.
 
-Visual identity (locked): Parian marble textures, deep midnight navy backgrounds, glowing gold accents (accent color is deep amber `#D4820A`), dramatic cinematic lighting, conceptual/metaphorical imagery (not literal). Established in `skills/hero-image-workflow.md`.
+Visual identity (locked): Parian marble textures, deep midnight navy backgrounds (`#131E39`), glowing gold accents (accent color is deep amber `#D4820A`), dramatic cinematic lighting, conceptual/metaphorical imagery (not literal). Established in `skills/hero-image-workflow.md`.
 
 ## Common Commands
 

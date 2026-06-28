@@ -70,7 +70,7 @@ Current products in the huffmanwrites shop tied to Redbubble:
 ## Visual Identity Reminder
 
 All artwork should follow the established aesthetic:
-- Deep midnight navy backgrounds
+- Deep midnight navy backgrounds (`#131E39`)
 - Glowing gold accents (amber `#D4820A`)
 - Parian marble textures where appropriate
 - Cinematic/conceptual imagery — not literal
