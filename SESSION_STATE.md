@@ -790,6 +790,7 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - Bug report: "Buy on Redbubble" button for the Credo Mug looked permanently in a hover/disabled state; other shop buttons looked normal.
 - Root cause: same class of bug as the June 8 HC fix. High-contrast mode's global `a:visited`/`a:hover` rules set link text to `--accent` (dark amber `#D4820A`). Against `.redbubble-button`'s red (`#E41321`) background, that's very low contrast and nearly unreadable. The mug button was the one already visited (from prior testing/purchases), so only it showed the effect — other shop buttons hadn't been visited yet and still showed HC's default blue link color.
 - Fix: added `[data-theme="highcontrast"] .redbubble-button` override (default/visited/hover/focus) in `assets/css/highcontrast.css` forcing white text, so the button stays readable in every state regardless of visited/hover status.
+- Follow-up: forcing white text in every state also flattened the hover feedback (the base opacity-fade-to-0.88 hover was too subtle without a color shift to go with it). Added a hover/focus `background-color: #B8101C` (darkened red) in the same HC override so the button still gives clear visible feedback on hover.
 
 ## Discoverability Initiative — June 16, 2026
 

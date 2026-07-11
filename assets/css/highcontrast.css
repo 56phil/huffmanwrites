@@ -92,13 +92,22 @@
 
 /* Shop's Redbubble buttons have a red brand background — the global
    a:visited/a:hover amber is unreadable against it, making a visited
-   product's button look permanently disabled. Keep it white. */
+   product's button look permanently disabled. Keep text white in
+   every state, and darken the background on hover/focus so the
+   button still gives clear, visible feedback (the underlying opacity
+   fade on its own is too subtle once the text color stops shifting). */
 [data-theme="highcontrast"] .redbubble-button,
 [data-theme="highcontrast"] .redbubble-button:visited,
 [data-theme="highcontrast"] .redbubble-button:hover,
 [data-theme="highcontrast"] .redbubble-button:focus {
     color: #fff;
     text-decoration-color: #fff;
+}
+
+[data-theme="highcontrast"] .redbubble-button:hover,
+[data-theme="highcontrast"] .redbubble-button:focus {
+    background-color: #B8101C;
+    opacity: 1;
 }
 
 /* ── Focus rings ───────────────────────────────────────── */
