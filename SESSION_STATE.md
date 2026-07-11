@@ -785,6 +785,12 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 
 **Build state:** `hugo --gc --minify` produces 279 pages, 38 paginator pages, 105 processed images, 0 errors. Pre-existing warnings (`.Site.Data` deprecation, `Language.Direction`/`LanguageCode` deprecations, raw-HTML in `credo.md` and `workshop/day-1.md`) are unchanged and unrelated.
 
+## Shop Redbubble Button HC Contrast Fix — July 11, 2026
+
+- Bug report: "Buy on Redbubble" button for the Credo Mug looked permanently in a hover/disabled state; other shop buttons looked normal.
+- Root cause: same class of bug as the June 8 HC fix. High-contrast mode's global `a:visited`/`a:hover` rules set link text to `--accent` (dark amber `#D4820A`). Against `.redbubble-button`'s red (`#E41321`) background, that's very low contrast and nearly unreadable. The mug button was the one already visited (from prior testing/purchases), so only it showed the effect — other shop buttons hadn't been visited yet and still showed HC's default blue link color.
+- Fix: added `[data-theme="highcontrast"] .redbubble-button` override (default/visited/hover/focus) in `assets/css/highcontrast.css` forcing white text, so the button stays readable in every state regardless of visited/hover status.
+
 ## Discoverability Initiative — June 16, 2026
 
 Four-phase effort to improve search engine and reader discoverability:
@@ -800,6 +806,7 @@ Four-phase effort to improve search engine and reader discoverability:
    - `meditations` → *The Stoic Citizen* + *A Life Made Whole* (added paragraph in Bottom Line)
 
 ## Last Updated
+2026-07-11 (Shop Redbubble button HC contrast fix: forced white text on `.redbubble-button` in high-contrast mode across default/visited/hover/focus states)
 2026-06-16 (Discoverability Phase 4: cross-links from 5 external summaries to Phil's authored books — Eichmann/Democracy→Stoic Citizen, Frankl→Life Made Whole, Daring Greatly→Unstuck, Meditations→Stoic Citizen+Life Made Whole)
 2026-06-16 (Discoverability Phase 3: top 5 summary titles/descriptions updated for search intent — "Summary & Review" pattern, full author names in descriptions)
 2026-06-16 (Discoverability Phase 2: Google Search Console file-based verification added to static/)

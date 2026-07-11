@@ -90,6 +90,17 @@
     text-decoration-color: var(--button-text);
 }
 
+/* Shop's Redbubble buttons have a red brand background — the global
+   a:visited/a:hover amber is unreadable against it, making a visited
+   product's button look permanently disabled. Keep it white. */
+[data-theme="highcontrast"] .redbubble-button,
+[data-theme="highcontrast"] .redbubble-button:visited,
+[data-theme="highcontrast"] .redbubble-button:hover,
+[data-theme="highcontrast"] .redbubble-button:focus {
+    color: #fff;
+    text-decoration-color: #fff;
+}
+
 /* ── Focus rings ───────────────────────────────────────── */
 [data-theme="highcontrast"] *:focus-visible {
     outline: 3px solid #D4820A;
