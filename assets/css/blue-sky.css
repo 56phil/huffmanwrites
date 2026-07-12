@@ -1209,6 +1209,15 @@
   color: #fff;
 }
 
+/* phbooks.css's global `a:visited:hover { color: red }` (the
+   intentional classic blue/red link hover) has higher specificity
+   than the rule above because it includes the `a` type selector, so
+   it wins and paints a visited Redbubble button's text red-on-red —
+   invisible. Out-specificity it here to keep the button readable. */
+.redbubble-button:visited:hover {
+  color: #fff;
+}
+
 .coming-soon-button {
   background: var(--border);
   color: var(--secondary);

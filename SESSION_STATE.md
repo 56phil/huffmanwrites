@@ -791,6 +791,7 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - Root cause: same class of bug as the June 8 HC fix. High-contrast mode's global `a:visited`/`a:hover` rules set link text to `--accent` (dark amber `#D4820A`). Against `.redbubble-button`'s red (`#E41321`) background, that's very low contrast and nearly unreadable. The mug button was the one already visited (from prior testing/purchases), so only it showed the effect — other shop buttons hadn't been visited yet and still showed HC's default blue link color.
 - Fix: added `[data-theme="highcontrast"] .redbubble-button` override (default/visited/hover/focus) in `assets/css/highcontrast.css` forcing white text, so the button stays readable in every state regardless of visited/hover status.
 - Follow-up: forcing white text in every state also flattened the hover feedback (the base opacity-fade-to-0.88 hover was too subtle without a color shift to go with it). Added a hover/focus `background-color: #B8101C` (darkened red) in the same HC override so the button still gives clear visible feedback on hover.
+- **Real root cause (found after the above shipped):** the original mug complaint reproduced in *normal* mode too — text vanished on hover. Cause: a global, unscoped `a:visited:hover { color: red }` rule in `phbooks.css` (the intentional "classic blue/red" link hover used by gallery links — do not remove, per CLAUDE.md) has higher CSS specificity than `.redbubble-button:hover` because it includes the `a` type selector, so it wins and paints a visited button's text red-on-red. Fixed by adding `.redbubble-button:visited:hover { color: #fff }` in `assets/css/blue-sky.css`, which out-specifies the global rule (3 class/pseudo-class selectors vs. 2) without touching the gallery hover colors.
 
 ## Discoverability Initiative — June 16, 2026
 
@@ -807,6 +808,7 @@ Four-phase effort to improve search engine and reader discoverability:
    - `meditations` → *The Stoic Citizen* + *A Life Made Whole* (added paragraph in Bottom Line)
 
 ## Last Updated
+2026-07-11 (Shop Redbubble button hover-text fix: `.redbubble-button:visited:hover` now out-specifies phbooks.css's global `a:visited:hover { color: red }`, which was the real cause of the mug button's invisible hover text in normal mode)
 2026-07-11 (Shop Redbubble button HC contrast fix: forced white text on `.redbubble-button` in high-contrast mode across default/visited/hover/focus states)
 2026-06-16 (Discoverability Phase 4: cross-links from 5 external summaries to Phil's authored books — Eichmann/Democracy→Stoic Citizen, Frankl→Life Made Whole, Daring Greatly→Unstuck, Meditations→Stoic Citizen+Life Made Whole)
 2026-06-16 (Discoverability Phase 3: top 5 summary titles/descriptions updated for search intent — "Summary & Review" pattern, full author names in descriptions)
