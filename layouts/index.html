@@ -78,7 +78,8 @@
 
   <section class="latest-posts">
     <h2>Recent Posts</h2>
-    {{ $shown := first 5 (where .Site.RegularPages "Type" "posts") }}
+    {{ $posts := where .Site.RegularPages "Type" "posts" }}
+    {{ $shown := first 5 (sort $posts "Date" "descending") }}
     {{ range $shown }}
       <div class="recent-post">
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
