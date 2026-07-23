@@ -78,10 +78,12 @@
 
   <section class="latest-posts">
     <h2>Recent Posts</h2>
-    {{ $posts := where .Site.RegularPages "Type" "posts" }}
-    {{ $sortedPosts := sort $posts "Date" "descending" }}
-    {{ $shown := first 5 $sortedPosts }}
-    {{ range $shown }}
+    {{/* 
+       Explicitly fetch posts, sort them by date descending, and then take the top 5.
+       Using a variable for sorted results ensures Hugo doesn't revert to default ascending order.
+    */}}
+    {{ $recentPosts := where .Site.RegularPages "Type" "posts" }}
+    {{ range first 5 (sort $recentPosts "Date" "descending") }}
       <div class="recent-post">
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
         <time>{{ .Date.Format "January 2, 2006" }}</time>
