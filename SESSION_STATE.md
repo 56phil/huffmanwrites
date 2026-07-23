@@ -815,7 +815,15 @@ Four-phase effort to improve search engine and reader discoverability:
 - Secondary bug found and fixed in the same pass: `content/posts/digests/pending/archive/stoic-saturday-june-20-2026.md` was a stray duplicate of the real digest at `content/posts/digests/stoic-saturday-june-20-2026/`, mistakenly created inside the `content/` tree (the correct sent-digest archive location is the top-level `pending/archive/`, outside `content/`). Because it lived under `content/posts/`, Hugo rendered it as a live page and it was displacing a genuine 5th post in the Recent Posts list. Deleted; the real digest page is untouched.
 - Verified: `hugo --gc --minify` build clean, 0 errors. Rendered home page now shows 5 distinct posts in correct descending order (July 23 → June 20 → June 16 → June 8 → May 31, 2026).
 
+## Writings Breadcrumb Backslash Fix — July 23, 2026
+
+- Bug report: the "Writings" breadcrumb crumb (and the `/posts/` section title/description) rendered as the literal string `\"Writings\"`, backslashes and all, on every post page site-wide.
+- Root cause: `content/posts/_index.md` frontmatter used `\"Writings\"` / `\"...\"` (escaped quotes) instead of plain YAML double-quoted strings (`"Writings"`). YAML treated the backslashes as literal characters rather than escape syntax, so `.Title` carried them through into the breadcrumb partial and JSON-LD structured data.
+- Fix: removed the stray backslashes from `title`, `description`, and `layout` in the frontmatter.
+- Verified: `hugo --gc --minify` build clean; breadcrumb and JSON-LD `BreadcrumbList` now render plain `Writings` on `/posts/essays/fountain-pens/` (spot-checked) and by extension every page under `/posts/`.
+
 ## Last Updated
+2026-07-23 (Writings breadcrumb fix: removed stray escaped-backslash quotes from content/posts/_index.md frontmatter that were leaking `\"Writings\"` into the breadcrumb and JSON-LD on every /posts/ page)
 2026-07-23 (Home page Recent Posts: fixed `sort` order keyword `"descending"` → `"desc"` in layouts/index.html; deleted stray duplicate digest file inside content/posts/digests/pending/archive/)
 2026-07-11 (Shop Redbubble button hover-text fix: `.redbubble-button:visited:hover` now out-specifies phbooks.css's global `a:visited:hover { color: red }`, which was the real cause of the mug button's invisible hover text in normal mode)
 2026-07-11 (Shop Redbubble button HC contrast fix: forced white text on `.redbubble-button` in high-contrast mode across default/visited/hover/focus states)
