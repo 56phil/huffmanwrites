@@ -828,8 +828,10 @@ Four-phase effort to improve search engine and reader discoverability:
 - Tonal departure from the section's usual "personal stakes + historical context + contemporary urgency" essay voice — first humor/satire piece on the site. Tagged `humor`, `satire`, `politics`, `essays`.
 - No hero image: the user tried generating one (marble-bust-with-oversized-gold-laurel-crown concept, matching site's locked visual identity) and wasn't happy with the results, so the post ships without `hero_desktop`/`hero_mobile` and falls back to `static/og-default.png`. Revisit hero art later if desired.
 - `featuredOnHome: true` — appears in the home page Recent Posts feed.
+- **Revision (same day):** user feedback after reading — "not as sarcastic as I hoped." Asked for style calibration; user chose more absurdist/exaggerated over sharper-irony or meaner-cutting. Rewrote all five vignettes in place (same file/slug, no duplicate) with broader comic exaggeration — whiteboard-marker diplomacy, a caught bird mid-debate, a spite-fixed White House printer, a weeping senator over a fishing treaty, a Nobel committee resenting a laminated pie chart. Structure and closing "homework, not IQ" beat unchanged, just sharper.
 
 ## Last Updated
+2026-07-23 (Genius Years essay revised in place for more absurdist humor per user feedback — same file/slug, not a duplicate; structure/ending kept, vignettes rewritten broader)
 2026-07-23 (New essay: "The Genius Years" satirical oral history published to Essays & Observations, featuredOnHome: true, no hero image — user wasn't satisfied with generated art, ships with default OG fallback)
 2026-07-23 (Writings breadcrumb fix: removed stray escaped-backslash quotes from content/posts/_index.md frontmatter that were leaking `\"Writings\"` into the breadcrumb and JSON-LD on every /posts/ page)
 2026-07-23 (Home page Recent Posts: fixed `sort` order keyword `"descending"` → `"desc"` in layouts/index.html; deleted stray duplicate digest file inside content/posts/digests/pending/archive/)
