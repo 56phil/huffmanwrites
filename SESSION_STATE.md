@@ -807,7 +807,16 @@ Four-phase effort to improve search engine and reader discoverability:
    - `daring-greatly` → *Unstuck* (added paragraph in Bottom Line)
    - `meditations` → *The Stoic Citizen* + *A Life Made Whole* (added paragraph in Bottom Line)
 
+## Home Page Recent Posts Sort Fix — July 23, 2026
+
+- Bug report: home page "Recent Posts" section showed 5 old civics essays (March 12–20, 2025, in ascending order) instead of the 5 most recent posts, despite three prior same-day commits (`a0b55ad`, `e3f44f4`, `00b9938`, `7456bc0`) attempting to fix it.
+- Root cause: `layouts/index.html`'s `sort $recentPosts "Date" "descending"` used the wrong keyword — Hugo's `sort` function only recognizes `"asc"`/`"desc"` for the order argument. `"descending"` is silently ignored and falls back to the default ascending order, so the oldest posts of type "posts" surfaced first. None of the prior fix attempts changed the order keyword itself, so the bug persisted through all of them.
+- Fix: changed the order argument to `"desc"` in `layouts/index.html`.
+- Secondary bug found and fixed in the same pass: `content/posts/digests/pending/archive/stoic-saturday-june-20-2026.md` was a stray duplicate of the real digest at `content/posts/digests/stoic-saturday-june-20-2026/`, mistakenly created inside the `content/` tree (the correct sent-digest archive location is the top-level `pending/archive/`, outside `content/`). Because it lived under `content/posts/`, Hugo rendered it as a live page and it was displacing a genuine 5th post in the Recent Posts list. Deleted; the real digest page is untouched.
+- Verified: `hugo --gc --minify` build clean, 0 errors. Rendered home page now shows 5 distinct posts in correct descending order (July 23 → June 20 → June 16 → June 8 → May 31, 2026).
+
 ## Last Updated
+2026-07-23 (Home page Recent Posts: fixed `sort` order keyword `"descending"` → `"desc"` in layouts/index.html; deleted stray duplicate digest file inside content/posts/digests/pending/archive/)
 2026-07-11 (Shop Redbubble button hover-text fix: `.redbubble-button:visited:hover` now out-specifies phbooks.css's global `a:visited:hover { color: red }`, which was the real cause of the mug button's invisible hover text in normal mode)
 2026-07-11 (Shop Redbubble button HC contrast fix: forced white text on `.redbubble-button` in high-contrast mode across default/visited/hover/focus states)
 2026-06-16 (Discoverability Phase 4: cross-links from 5 external summaries to Phil's authored books — Eichmann/Democracy→Stoic Citizen, Frankl→Life Made Whole, Daring Greatly→Unstuck, Meditations→Stoic Citizen+Life Made Whole)
