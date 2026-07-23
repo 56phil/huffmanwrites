@@ -822,7 +822,15 @@ Four-phase effort to improve search engine and reader discoverability:
 - Fix: removed the stray backslashes from `title`, `description`, and `layout` in the frontmatter.
 - Verified: `hugo --gc --minify` build clean; breadcrumb and JSON-LD `BreadcrumbList` now render plain `Writings` on `/posts/essays/fountain-pens/` (spot-checked) and by extension every page under `/posts/`.
 
+## New Essay: The Genius Years (Satire) — July 23, 2026
+
+- Published `content/posts/essays/the-genius-years-oral-history.md` — a speculative, mock-oral-history satire imagining a Trump presidency run with the competence he's always claimed to have. Explicitly framed up front as fiction; all "interviewees" are invented/composite, not real people, to keep the counterfactual unambiguous.
+- Tonal departure from the section's usual "personal stakes + historical context + contemporary urgency" essay voice — first humor/satire piece on the site. Tagged `humor`, `satire`, `politics`, `essays`.
+- No hero image: the user tried generating one (marble-bust-with-oversized-gold-laurel-crown concept, matching site's locked visual identity) and wasn't happy with the results, so the post ships without `hero_desktop`/`hero_mobile` and falls back to `static/og-default.png`. Revisit hero art later if desired.
+- `featuredOnHome: true` — appears in the home page Recent Posts feed.
+
 ## Last Updated
+2026-07-23 (New essay: "The Genius Years" satirical oral history published to Essays & Observations, featuredOnHome: true, no hero image — user wasn't satisfied with generated art, ships with default OG fallback)
 2026-07-23 (Writings breadcrumb fix: removed stray escaped-backslash quotes from content/posts/_index.md frontmatter that were leaking `\"Writings\"` into the breadcrumb and JSON-LD on every /posts/ page)
 2026-07-23 (Home page Recent Posts: fixed `sort` order keyword `"descending"` → `"desc"` in layouts/index.html; deleted stray duplicate digest file inside content/posts/digests/pending/archive/)
 2026-07-11 (Shop Redbubble button hover-text fix: `.redbubble-button:visited:hover` now out-specifies phbooks.css's global `a:visited:hover { color: red }`, which was the real cause of the mug button's invisible hover text in normal mode)
