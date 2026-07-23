@@ -1,7 +1,7 @@
 ---
-title: \"Writings\"
-description: \"Explore my thoughts on philosophy, civics, and the art of living.\"
-layout: \"single\"
+title: "Writings"
+description: "Explore my thoughts on philosophy, civics, and the art of living."
+layout: "single"
 lastmod: 2026-05-27
 ---
 
