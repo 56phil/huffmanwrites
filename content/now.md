@@ -1,20 +1,18 @@
 ---
 title: "Now"
 description: "What I'm working on right now."
-date: 2026-05-19T00:00:00Z
-lastmod: 2026-05-19T00:00:00Z
+date: 2026-07-25T00:00:00Z
+lastmod: 2026-07-25T00:00:00Z
 ---
 
-*This is a [now page](https://nownownow.com/about), inspired by Derek Sivers. Updated May 2026.*
+*This is a [now page](https://nownownow.com/about), inspired by Derek Sivers. Updated July 2026.*
 
 ---
 
-## Researching *Raise'm Right*
+## Finishing *Raise'm Right*
 
-I'm deep in the research phase for my next book, *Raise'm Right: Raising Children of Character, Judgment, and Agency in the 21st Century*. The core question I'm working through: how do you cultivate a child's capacity for independent thought without destabilizing them — and without performing skepticism as a posture?
+The first draft of my next book, *Raise'm Right: Raising Children of Character, Judgment, and Agency in the 21st Century*, is complete. So is the cover. The manuscript sits at roughly 65,000 words and covers the intersection of developmental psychology, classical education philosophy, and sixteen years of step-parenting — with the same through-line you've seen in *Unstuck* and *Misaligned*: self-governance begins with accurate thinking, and the habits of mind built in childhood determine the quality of adult decisions.
 
-The research spans developmental psychology, classical education philosophy, and the practical experience of sixteen years as a step-parent. I'm particularly interested in the intersection of critical thinking pedagogy and Stoic practice — teaching kids not *what* to think, but *how* to hold a position provisionally, how to revise it under new evidence, and how to resist the pull of performative outrage that defines so much of modern discourse.
+**Current priority:** finding the right person to write the foreword. I'm looking for someone whose work sits at the intersection of parenting, education, and character formation — someone who can speak with authority to readers who care about raising children who think clearly before they act.
 
-If you've read *Unstuck* or *Misaligned*, you'll recognize the through-line: the belief that self-governance begins with accurate thinking, and that the habits of mind we build in childhood determine the quality of our adult decisions.
-
-Expected completion: June 2027.
+Expected publication: early 2027.
