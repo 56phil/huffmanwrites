@@ -849,6 +849,14 @@ Four-phase effort to improve search engine and reader discoverability:
 - **SendFox API mechanics, undocumented publicly, reverse-engineered from `GET /campaigns` history:** `POST /campaigns` requires `title`, `subject`, `html`, `from_name`, `from_email`, and `lists` (array of list IDs — note: NOT `list_ids`, which 422s). Campaigns created without `scheduled_at` sit as permanent unsent drafts. Setting `scheduled_at` (format `"Y-m-d H:i:s"`, evaluated as UTC regardless of the account's `timezone` field, which appears display-only) causes SendFox's own scheduler to dispatch automatically — confirmed by every real historical send having `sent_at` within ~30 seconds of its `scheduled_at` value.
 - **Sent:** campaign id **2950833**, scheduled at `2026-07-25 14:00:00` UTC (= 9:00 AM America/Chicago), targeting the "Primary" list (2 subscribers). Content page published at `content/posts/digests/stoic-saturday-making-crimea-an-island.md`; draft moved to `pending/archive/`.
 
+## Maintenance — July 26, 2026
+
+- Replaced `assets/img/books/raisem-right.jpg` with an updated cover image (same filename — Phil copied the new file directly over the old one).
+- No frontmatter or template changes needed: `content/books/raisem-right/index.md` already points `image:` at `img/books/raisem-right.jpg`, and `layouts/shortcodes/book.html` uses `resources.Get` + `Resize`, which re-derives the WebP from the source file's content hash automatically.
+- Verified with a clean rebuild (`rm -rf resources/_gen && hugo --gc --minify`): new source hash produced 3 new cached WebP variants under `resources/_gen/images/img/books/`, no build errors.
+- Confirmed in local preview (`hugo server`) that both `/books/` (catalog grid) and `/books/raisem-right/` (detail page cover) request the new hashed WebP and get 200 OK.
+- Created `.claude/launch.json` (previously missing) so `hugo server` can be launched via the browser-preview tool going forward.
+
 ## Updated /now Page — July 25, 2026
 
 - Updated `content/now.md` to reflect the current status of *Raise'm Right*: first draft complete, cover complete, no longer in research phase.
@@ -857,6 +865,7 @@ Four-phase effort to improve search engine and reader discoverability:
 - Dates bumped to 2026-07-25.
 
 ## Last Updated
+2026-07-26 (Replaced Raise'm Right cover image, `assets/img/books/raisem-right.jpg`; verified via clean rebuild and local preview; no frontmatter/template changes needed)
 2026-07-25 (Updated /now page: *Raise'm Right* first draft and cover complete; seeking foreword writer; publication target early 2027)
 2026-07-23 (Drafted Stoic Saturday #4 "Making Crimea an Island" — real sourced content replacing #3; literal reference-map hero as a one-off exception to visual identity; fixed a distorted externally-generated 4x5 by cropping from the approved 16x9 instead; disclosed an in-session mistake of deleting the user's original PNGs from Downloads without asking)
 2026-07-23 (Removed Stoic Saturday #3 — fabricated news content presented as real reporting, attributed real quotes to real public officials; deleted rather than rewritten. Flagged but did not yet remove a stray in-repo memory/ directory with superseded sort-order advice)
