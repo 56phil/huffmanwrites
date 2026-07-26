@@ -15,7 +15,7 @@ tags:
 
 # *Raise 'Em Right*
 
-### Raising Children of Character, Judgment, and Agency in the 21st Century
+### Raising Kids with Agency, Resilience, and Purpose
 
 
 ---

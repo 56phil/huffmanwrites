@@ -858,6 +858,7 @@ Four-phase effort to improve search engine and reader discoverability:
 - Created `.claude/launch.json` (previously missing) so `hugo server` can be launched via the browser-preview tool going forward.
 - **Correction:** the new cover art (baked-in title text) reads "RAISE 'EM RIGHT" — the book's correct title is *Raise 'Em Right*, not "Raise'm Right" as the site previously had it everywhere. Fixed the displayed title site-wide: `content/books/raisem-right/index.md` (frontmatter `title`, H1, body), `content/books/_index.md` (shortcode `title=`/description), `content/now.md`, `content/posts/summaries/raisem-right-summary.md` (frontmatter `title`/`description`, body), `layouts/index.html`, and `prompts/gemini_author_profile.md`. Deliberately left unchanged: the URL slug/directory (`/books/raisem-right/`), image filenames (`raisem-right.jpg`, `rtr-*.webp`), and the summary's `sort_key` — Phil chose to keep the existing live URL rather than rename and redirect.
 - Also caught and reverted a wrong first attempt: briefly "corrected" `title:` in the separate Cover Studio source file (`/Users/prh/Developer/LaTeX/AllMyBooks/rtr/cover/cover.md`, outside this repo) to match the site's old (wrong) spelling, before Phil clarified the cover's spelling was the correct one. Reverted; that file is untouched from its original state.
+- **Subtitle correction:** site subtitle was also stale — "Raising Children of Character, Judgment, and Agency in the 21st Century" — corrected to match the actual book subtitle, "Raising Kids with Agency, Resilience, and Purpose" (matches `subtitle:` in the Cover Studio `cover.md`). Fixed in `content/books/raisem-right/index.md` (`subtitle:` frontmatter), `content/books/_index.md` (shortcode `subtitle=`), `content/posts/summaries/raisem-right-summary.md` (H3 under the title), `content/now.md`, and the paraphrased version in `layouts/index.html`'s home-page teaser line.
 
 ## Updated /now Page — July 25, 2026
 
@@ -867,6 +868,7 @@ Four-phase effort to improve search engine and reader discoverability:
 - Dates bumped to 2026-07-25.
 
 ## Last Updated
+2026-07-26 (Corrected Raise 'Em Right subtitle site-wide to "Raising Kids with Agency, Resilience, and Purpose")
 2026-07-26 (Corrected book title site-wide from "Raise'm Right" to the actual title *Raise 'Em Right*; left URL slug/filenames unchanged at Phil's direction)
 2026-07-26 (Replaced Raise'm Right cover image, `assets/img/books/raisem-right.jpg`; verified via clean rebuild and local preview; no frontmatter/template changes needed)
 2026-07-25 (Updated /now page: *Raise'm Right* first draft and cover complete; seeking foreword writer; publication target early 2027)

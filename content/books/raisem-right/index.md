@@ -1,6 +1,6 @@
 ---
 title: "Raise 'Em Right"
-subtitle: "Raising Children of Character, Judgment, and Agency in the 21st Century"
+subtitle: "Raising Kids with Agency, Resilience, and Purpose"
 weight: 9
 description: |
   Expected: June 2027.
