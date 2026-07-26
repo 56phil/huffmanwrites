@@ -3,13 +3,13 @@ title: "Raise 'Em Right"
 subtitle: "Raising Kids with Agency, Resilience, and Purpose"
 weight: 9
 description: |
-  Expected: June 2027.
+  Expected: early 2027.
 
-  Raise 'Em Right draws on sixteen years of step-parenting to argue that the central task of raising children is not protection or instruction but the cultivation of independent judgment. The book treats critical thinking and healthy skepticism as learnable skills — not innate gifts or rebellious postures — and examines how adults can model these capacities without performing them.
+  Raise 'Em Right follows a child from birth to eighteen, one chapter for every year of the journey — because the child at eight months and the child at eight years need entirely different things from the adults raising them. Each chapter braids a Montessori principle for what the child needs from the world around them with a Stoic reflection for what steadies the parent supplying it, closing with a short list of things to try that same week. Grounded in the author's own hard-won parenting notes rather than research handed down from a distance, the book offers no formula — only a set of ideas to sit with, borrow from, and argue with as your child, and your life, keep changing shape.
 
-  The chapters move through the practical work: how to teach a child to question without destabilizing, how to introduce uncertainty as a feature rather than a bug, and how to distinguish between productive skepticism and reflexive contrarianism. The writing is grounded in lived experience and avoids both the sentimentality of parenting manuals and the abstraction of philosophy texts. It treats the parent-child relationship as a long negotiation between guidance and autonomy.
+  Written for parents whose children don't fit the standard mold the advice books quietly assume — and for parents simply tired of pretending they do — Raise 'Em Right weaves in callouts to *Misaligned*, Philip's memoir of growing up with an undiagnosed neurodivergent mind, as one example of the child the map so often leaves out. Beneath the daily work of raising kids runs a quieter thread: a child who learns to observe carefully, reason honestly, and take responsibility for their own actions is being prepared not just for adulthood but for the kind of citizenship a family, a neighborhood, and a country depend on.
 
-  Written for parents, step-parents, and anyone who influences how a young mind encounters the world, Raise 'Em Right offers a framework for raising children who can think — not children who simply comply to get along. The central claim is that skepticism, taught well, is a form of care: the belief that the person you are raising will eventually need to make decisions you cannot make for them, and that your job is to prepare them for that moment.
+  Wherever you are in the work, however long you've been at it, this book starts where you are.
 image: "img/books/raisem-right.jpg"
 image_desktop: "img/articles/rtr-16x9.webp"
 image_mobile: "img/articles/rtr-4x5.webp"
