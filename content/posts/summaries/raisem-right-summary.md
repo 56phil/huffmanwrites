@@ -1,6 +1,6 @@
 ---
-title: "Raise'm Right — Huffman"
-description: "Executive summary of Raise'm Right: cultivating judgment, not compliance."
+title: "Raise 'Em Right — Huffman"
+description: "Executive summary of Raise 'Em Right: cultivating judgment, not compliance."
 date: 2027-06-01T00:00:00Z
 author: Phil Huffman
 sort_key: "Huffman, Philip - Raisem Right"
@@ -13,7 +13,7 @@ tags:
   - stoicism
 ---
 
-# *Raise'm Right*
+# *Raise 'Em Right*
 
 ### Raising Children of Character, Judgment, and Agency in the 21st Century
 
@@ -21,7 +21,7 @@ tags:
 ---
 ## Executive Summary
 
-*Raise'm Right* draws on sixteen years of step-parenting to argue that the central task of raising children is not protection or instruction but the cultivation of independent judgment.
+*Raise 'Em Right* draws on sixteen years of step-parenting to argue that the central task of raising children is not protection or instruction but the cultivation of independent judgment.
 It treats critical thinking and healthy skepticism as learnable skills—not innate gifts or rebellious postures—and examines how adults can model these capacities without performing them.
 The core message: **skepticism, taught well, is a form of care.**
 
@@ -47,7 +47,7 @@ That is the inheritance. Not rules, but rigor. Not answers, but method.
 ---
 ## The Practice of Raising Thinkers
 
-Written for parents, step-parents, and anyone who influences how a young mind encounters the world, *Raise'm Right* offers a framework for raising children who can think—not children who simply comply to get along.
+Written for parents, step-parents, and anyone who influences how a young mind encounters the world, *Raise 'Em Right* offers a framework for raising children who can think—not children who simply comply to get along.
 The central claim: the person you are raising will eventually need to make decisions you cannot make for them. Your job is to prepare them for that moment.
 That preparation is not a curriculum. It is a relationship, sustained over time, in which judgment is modeled more than it is taught.
 
@@ -55,7 +55,7 @@ That preparation is not a curriculum. It is a relationship, sustained over time,
 ---
 ## Bottom Line
 
-*Raise'm Right* is a manual for the long work of raising sovereign minds.
+*Raise 'Em Right* is a manual for the long work of raising sovereign minds.
 The goal is not obedience. It is agency.
 The child who can think is the child who can survive—your absence included.
 

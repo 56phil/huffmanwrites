@@ -3,7 +3,7 @@
 ## Task
 Analyze the **9-book corpus** of Philip Huffman to:
 1. **Profile the author** (core themes, philosophical DNA, tone, audience, AI’s role in coauthorship).
-2. **Synthesize the arc** (*Unstuck → Raise'm Right*), identifying recurring motifs, evolution, and gaps.
+2. **Synthesize the arc** (*Unstuck → Raise 'Em Right*), identifying recurring motifs, evolution, and gaps.
 3. **Deliver actionable insights** (for readers, for Huffman, for AI collaboration).
 
 ---
@@ -236,7 +236,7 @@ Analyze the **9-book corpus** of Philip Huffman to:
     5. Civility and Its Costs
     6. Choosing Otherwise
 
-### 9. *Raise'm Right*
+### 9. *Raise 'Em Right*
 - **Chapters (Age-Based)**:
   1. Welcome Home (0–12 Months)
   2. [Chapter 2: 13–24 Months]
@@ -263,7 +263,7 @@ Analyze the **9-book corpus** of Philip Huffman to:
 - **Tone**: Match Huffman’s voice—personal stakes + historical context + contemporary urgency. *Not* yelling or lecturing. Think *with* the reader.
 - **Frameworks**: Integrate Stoic philosophy, Montessori principles, and neurodivergence-affirming (ADHD/RSD) parenting/education.
 - **AI’s Role**: Flag where AI coauthorship (e.g., "Chatty," "Claude") is visible (structural innovations, creative leaps, or "unnatural" synthesis).
-- **Arc**: The books form a connected progression (*Unstuck → Misaligned → A Life Made Whole → The Stoic Citizen → The Stoic CGM → Letters → Stoic Backgammon → On Proportion → Raise'm Right*). Highlight cross-book themes and evolution.
+- **Arc**: The books form a connected progression (*Unstuck → Misaligned → A Life Made Whole → The Stoic Citizen → The Stoic CGM → Letters → Stoic Backgammon → On Proportion → Raise 'Em Right*). Highlight cross-book themes and evolution.
 
 ---
 
@@ -276,7 +276,7 @@ Analyze the **9-book corpus** of Philip Huffman to:
 5. **AI’s Role** (Where AI coauthorship is visible—e.g., structural innovations, creative leaps, or "unnatural" synthesis).
 
 ### 2. Cross-Book Synthesis
-1. **The Arc** (How the books build on each other. Example: *Unstuck*’s personal narrative → *The Stoic Citizen*’s civic application → *Raise'm Right*’s parenting framework).
+1. **The Arc** (How the books build on each other. Example: *Unstuck*’s personal narrative → *The Stoic Citizen*’s civic application → *Raise 'Em Right*’s parenting framework).
 2. **Recurring Motifs** (3–5 themes that appear in *every* book, with 1–2 examples per book).
 3. **Evolution** (How Huffman’s ideas or tone shift across the arc. Example: "Early books focus on personal agency; later books expand to systemic change").
 4. **Gaps & Opportunities** (1–2 areas where the arc *could* go next, based on current themes. Example: "A book on Stoic leadership for neurodivergent teams").
