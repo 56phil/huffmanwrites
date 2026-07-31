@@ -487,8 +487,13 @@ Began implementation of Group C: Blue Sky initiatives to elevate the credo "Thin
 - Consistent styling with small caps for verbs (Think, Live, Love)
 - Philosophical tone maintained throughout
 
-### Results
-✅ **Website foundation complete** - All initiative pages created with responsive layouts
+## Social Media & Promotion
+
+- **Primary platform**: BlueSky (handle: `@huffmanwrites.bsky.social`).
+- **Secondary**: LinkedIn (cross-posted manually).
+- **Newsletter**: SendFox (digests only; essays are free).
+- **Engagement**: Threads on BlueSky for long-form content (e.g., First Amendment explainer).
+- **Note**: No X/Twitter. All social promotion defaults to BlueSky.
 ✅ **Content structure established** - Core content for each initiative in place
 ✅ **Consistent branding** - Credo integrated across all new sections
 ✅ **Day 1 workshop content** - First day of interactive workshop ready
