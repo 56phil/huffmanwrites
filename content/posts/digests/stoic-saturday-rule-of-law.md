@@ -1,8 +1,8 @@
 --- 
 title: "Stoic Saturday: When the Law Becomes a Suggestion" 
 subtitle: "The rule of law isn’t a spectator sport. It’s a daily practice—like flossing or not eating the entire pizza in one sitting." 
-date: 2026-08-02T06:00:00-05:00 
-lastmod: 2026-08-02T06:00:00-05:00 
+date: 2026-07-31T08:35:00-05:00 
+lastmod: 2026-07-31T08:35:00-05:00 
 draft: false 
 author: "Philip Huffman" 
 description: "A Stoic’s take on the erosion of the rule of law, the rise of authoritarianism, and why standing up for what’s right isn’t dramatic—it’s just non-negotiable." 

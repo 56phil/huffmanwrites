@@ -13,6 +13,11 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Completed (Previous Sessions)
 
+### Maintenance — July 31, 2026
+- Fixed Stoic Saturday post (`content/posts/digests/stoic-saturday-rule-of-law.md`): frontmatter `date`/`lastmod` was mistakenly set to 2026-08-02 (Sunday); since Hugo excludes future-dated content and GH Pages only builds on push, this would have delayed publishing indefinitely. Published immediately at Phil's request by dating it to the push time (2026-07-31) instead of waiting for Saturday.
+- Reverted `layouts/posts/digests/list.html`: a local, uncommitted debug stub (raw page-count/permalink dump, no covers/summaries/pagination) had replaced the working PaperMod list template in the working directory. Never made it to `origin/main` — restored before it could be committed.
+- Untracked `.hermes/desktop-attachments/` (screenshots, a LaTeX build log, duplicate hero PNGs — ~51MB) and `.claude/launch.json` from git; both had been swept into the `abc38f9` commit and pushed to the public repo. Added both to `.gitignore` to prevent recurrence. Files remain on disk, just no longer tracked; git history still contains them (no history rewrite performed).
+
 ### Hero Images — Articles
 - **10 article hero image pairs** delivered to `static/img/articles/`
   - Files: `1 ror`, `2 ipd`, `3 lfg`, `4 ans`, `5 woke`, `6 fragile`, `7 pbd`, `8 rcs`, `9 coj`, `10 albania` (each with 16x9 + 4x5 variants)
