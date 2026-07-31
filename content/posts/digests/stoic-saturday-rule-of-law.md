@@ -2,7 +2,7 @@
 title: "Stoic Saturday: When the Law Becomes a Suggestion" 
 subtitle: "The rule of law isn’t a spectator sport. It’s a daily practice—like flossing or not eating the entire pizza in one sitting." 
 date: 2026-07-31T08:35:00-05:00 
-lastmod: 2026-07-31T08:35:00-05:00 
+lastmod: 2026-07-31T08:51:00-05:00 
 draft: false 
 author: "Philip Huffman" 
 description: "A Stoic’s take on the erosion of the rule of law, the rise of authoritarianism, and why standing up for what’s right isn’t dramatic—it’s just non-negotiable." 
@@ -31,12 +31,12 @@ Marcus Aurelius wrote that "*the best revenge is not to be like your enemy.*" To
 The rule of law isn’t a given. It’s a **daily practice**, like flossing or not eating the entire pizza in one sitting. And right now, it’s being treated like a suggestion rather than a rule.
 
 #### The Facts 
-- **Prosecutions of political allies are dropped.** 
-  [DOJ dismisses Trump classified documents case](https://www.nytimes.com/2024/07/21/us/politics/trump-classified-documents-case-dismissed.html) (July 2024). 
-- **Judges are intimidated.** 
-  [FBI arrests man who threatened Judge Chutkan](https://www.washingtonpost.com/national-security/2024/01/26/fbi-arrest-trump-judge-chutkan-threats/) (January 2024). 
-- **Elected officials openly defy court orders.** 
-  [Texas refuses SCOTUS order on border barriers](https://www.texastribune.org/2024/01/22/texas-border-wall-supreme-court-abbott/) (January 2024).
+- **A judge shields a political ally, over prosecutors' own objections.** 
+  [Judge Cannon dismisses Trump classified documents case](https://www.npr.org/2024/07/16/nx-s1-5040372/judge-cannon-dismisses-trump-documents-case-over-special-counsel-appointment), ruling the special counsel's appointment unconstitutional — a decision the Justice Department itself immediately appealed (July 2024). 
+- **Judges face death threats for doing their jobs.** 
+  [Texas woman arrested for threatening federal Judge Chutkan](https://abcnews.go.com/US/texas-woman-arrested-alleged-death-threats-dc-judge/story?id=102329019) over the Trump election case (August 2023). 
+- **An elected official vows to defy a direct order.** 
+  [Texas continues its border wire standoff despite the Supreme Court's order](https://www.texastribune.org/2024/01/24/texas-border-wire-supreme-court/) — Governor Abbott declares "this is not over" (January 2024).
 
 This isn’t about left or right. It’s about **whether the law applies to everyone or just the people who lose**.
 
