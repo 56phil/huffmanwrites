@@ -1,6 +1,7 @@
 ---
 title: "Now"
 description: "What I'm working on right now."
+teaser: "The manuscript for **Raise 'Em Right** is complete — now searching for the right voice to write the foreword."
 date: 2026-07-25T00:00:00Z
 lastmod: 2026-07-25T00:00:00Z
 ---

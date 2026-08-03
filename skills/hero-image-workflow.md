@@ -36,3 +36,4 @@ After images are generated and placed in the assets folder, the post's frontmatt
 3. **Generate**: Produce both 16:9 and 4:5 variants.
 4. **Verify**: Ensure files are renamed correctly and placed in `static/img/articles/`.
 5. **Wire**: Update the Hugo post's frontmatter to link these assets.
+6. **Add to gallery**: Add a matching entry to `data/gallery.yml` (image, title, caption, link to the post). The gallery does not auto-populate from post frontmatter — a hero image doesn't appear there until it's added by hand.
