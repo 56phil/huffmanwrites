@@ -904,7 +904,7 @@ Four-phase effort to improve search engine and reader discoverability:
 - Updated `content/now.md` to reflect the current status of *Raise'm Right*: first draft complete, cover complete, no longer in research phase.
 - **Current priority:** seeking a foreword writer whose work sits at the intersection of parenting, education, and character formation.
 - **Timeline:** expected publication shifted from "mid-2027" to "early 2027".
-- Dates bumped to 2026-07-25.
+- Dates Bumped to 2026-07-25.
 
 ## Last Updated
 2026-08-06 (Published "Honor in the Age of Self-Interest": fixed a build-breaking frontmatter YAML bug, corrected/removed several unverified or outdated factual claims — NY fraud penalty status, Edelman trust figure, Pew stat mischaracterization, a fabricated Gallup stat, a misquoted Trump line — and generated/wired hero images incl. a real `hero_desktop`/`hero_mobile` leading-slash bug caught along the way)
