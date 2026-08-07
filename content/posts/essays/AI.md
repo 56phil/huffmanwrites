@@ -3,7 +3,7 @@ title: "The History of Artificial Intelligence and AI Agents and Their Impact on
 description: "A comprehensive history of AI from its conceptual precursors through the emergence of agentic systems, examining how each epoch reshaped human expectations, labor markets, governance, and culture."
 date: 2026-05-21T00:00:00Z
 author: Phil Huffman
-lastmod: 2026-05-21T00:00:00Z
+lastmod: 2026-08-07T00:00:00Z
 draft: false
 featuredOnHome: true
 tags:
@@ -17,6 +17,8 @@ tags:
 > **Correction notice — May 26, 2026.** This essay was factually reviewed on 2026-05-26 and republished with specific corrections applied. Among them: removed fabricated citations, including an invented robot ("Shumana"), invented Stanford Cart developer names, and a fabricated RAND study author; corrected dates, attributions, and roles for figures including Minsky, McCarthy, Geoffrey Hinton, and the BDI framework's origins; corrected specific historical details (SNARC's 1951 build, the Strategic Computing Initiative's 1983 launch, OpenAI Five's release year, the DQN Atari count, Brynjolfsson et al.'s citation, and several others); and removed fabricated co-authors from the Silver et al. and Mnih et al. reference entries. A reader who compared the original May 21, 2026 version to the current text would see that the historical claims, attributions, and reference list have been tightened throughout. The work should be read as corrected, not as it first appeared. If you spot a remaining error, please email phil@huffmanwrites.org.
 
 # The History of Artificial Intelligence and AI Agents and Their Impact on Society
+
+I've written elsewhere on this site about using AI as a working partner — first as a drafting assistant, later as something closer to an editorial operation, running as an agent alongside me on this very site. None of that made sense to me until I understood where the technology actually came from: not a sudden arrival in 2022, but eight decades of ambition, failure, quiet progress, and repeated overpromising, most of it decades before anyone could ask a chatbot a question. Writing this history was my own attempt to earn the right to have opinions about where it's going, by first being honest about where it's been. What follows is a reference piece more than a personal essay — dense, footnoted, meant to be a resource rather than a reflection — but it's the ground everything else I've written about AI stands on.
 
 ## Abstract
 
@@ -285,9 +287,3 @@ Weizenbaum, J. (1966). ELIZA — a computer program for the study of natural lan
 World Economic Forum. (2020). *The future of jobs report 2020*.
 
 Yao, S., Zhao, J., Shafran, I., Narasimhan, K., & Cao, Y. (2022). ReAct: Synergizing reasoning and acting in language models. *International Conference on Learning Representations*.
-
----
-
-*Word count: 4,370 words.*
-*Date of composition: May 21, 2026*
-*Language: English*
