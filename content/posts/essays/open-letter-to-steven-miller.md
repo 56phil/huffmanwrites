@@ -5,6 +5,10 @@ date: 2026-08-14T00:00:00Z
 lastmod: 2026-08-14T00:00:00Z
 draft: false
 author: Phil Huffman
+hero_desktop: "img/articles/48-open-letter-to-steven-miller_16x9.webp"
+hero_mobile: "img/articles/48-open-letter-to-steven-miller_4x5.webp"
+hero_alt: "A marble balance scale, one pan glowing with gold coins, the other holding a single unlit candle"
+hero_caption: "What power illuminates, and what it leaves dark."
 tags:
   - essays
   - politics
