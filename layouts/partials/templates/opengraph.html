@@ -5,7 +5,7 @@
   Image selection (priority order):
     1. .Params.hero_desktop  — posts with wired hero images
     2. .Params.cover.image   — book pages
-    3. /img/og-default.png   — fallback for home, about, mission, _index pages
+    3. /img/og-default.webp   — fallback for home, about, mission, _index pages
 
   Twitter Card meta is intentionally NOT emitted (see no-twitter-x memory).
   Most OG consumers (LinkedIn, Bluesky, Slack, Discord, iMessage, Facebook,
@@ -69,7 +69,7 @@
   {{- $ogImage = printf "https://huffmanwrites.org/%s" (strings.TrimPrefix "/" $ogImageRel) -}}
 {{- end -}}
 {{- if not $ogImage -}}
-  {{- $ogImage = "https://huffmanwrites.org/img/og-default.png" -}}
+  {{- $ogImage = "https://huffmanwrites.org/img/og-default.webp" -}}
   {{- $ogImageAlt = "Huffman Writes - Stoicism, Philosophy, and the Pursuit of a Well-Lived Life" -}}
 {{- end -}}
 {{- if and $ogImageRel (not $ogImageAlt) -}}

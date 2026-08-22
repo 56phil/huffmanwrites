@@ -27,23 +27,23 @@ lastmod: 2026-05-14
 
 ## The Roll
 
-{{< section-hero desktop="img/articles/sb-starting-position 16x9.png" mobile="img/articles/sb-starting-position 4x5.png" alt="A backgammon board in starting position." caption="The roll: chance announces itself." >}}
+{{< section-hero desktop="img/articles/sb-starting-position 16x9.webp" mobile="img/articles/sb-starting-position 4x5.webp" alt="A backgammon board in starting position." caption="The roll: chance announces itself." >}}
 
 ## Interlude I: On Indifference
 
 ## The Dichotomy
 
-{{< section-hero desktop="img/articles/sb-order-disorder 16x9.png" mobile="img/articles/sb-order-disorder 4x5.png" alt="Board split between orderly white and disrupted black" caption="Some things are up to us; others are not." >}}
+{{< section-hero desktop="img/articles/sb-order-disorder 16x9.webp" mobile="img/articles/sb-order-disorder 4x5.webp" alt="Board split between orderly white and disrupted black" caption="Some things are up to us; others are not." >}}
 
 ## The Anchor
 
 ## Interlude II: On the Inner Citadel
 
-{{< section-hero desktop="img/articles/sb-gtl 16x9.png" mobile="img/articles/sb-gtl 4x5.png" alt="The board viewed through a translucent golden lens" caption="What no one can take is what you have built inside." >}}
+{{< section-hero desktop="img/articles/sb-gtl 16x9.webp" mobile="img/articles/sb-gtl 4x5.webp" alt="The board viewed through a translucent golden lens" caption="What no one can take is what you have built inside." >}}
 
 ## The Blitz
 
-{{< section-hero desktop="img/articles/sb-awp 16x9.png" mobile="img/articles/sb-awp 4x5.png" alt="Aggressive white advance, black checkers scattered" caption="The blitz: speed and pressure as a test of character." >}}
+{{< section-hero desktop="img/articles/sb-awp 16x9.webp" mobile="img/articles/sb-awp 4x5.webp" alt="Aggressive white advance, black checkers scattered" caption="The blitz: speed and pressure as a test of character." >}}
 
 ## The Back Game
 
@@ -51,12 +51,12 @@ lastmod: 2026-05-14
 
 ## The Prime
 
-{{< section-hero desktop="img/articles/wpw 16x9.png" mobile="img/articles/wpw 4x5.png" alt="Six consecutive blocked points forming a prime wall" caption="The prime: White built an impassable wall built one point at a time." >}}
+{{< section-hero desktop="img/articles/wpw 16x9.webp" mobile="img/articles/wpw 4x5.webp" alt="Six consecutive blocked points forming a prime wall" caption="The prime: White built an impassable wall built one point at a time." >}}
 
 ## The Hit
 
 ## Interlude IV: On Practicing Philosophy
-{{< section-hero desktop="img/articles/sb-twa 16x9.png" mobile="img/articles/sb-twa 4x5.png" alt="Final checkers poised to exit the board" caption="White has two anchors deep in enemy territory." >}}
+{{< section-hero desktop="img/articles/sb-twa 16x9.webp" mobile="img/articles/sb-twa 4x5.webp" alt="Final checkers poised to exit the board" caption="White has two anchors deep in enemy territory." >}}
 ## The Race
 
 ## The Double
