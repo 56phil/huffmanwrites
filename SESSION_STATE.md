@@ -13,6 +13,15 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Completed (Previous Sessions)
 
+### Maintenance — August 21, 2026 (part 4) — Replaced 5 dead citation links from the audit
+- Followed up on the "reported, not fixed" dead-citation list from part 3. All 6 underlying source URLs (5 essays/digests, one file with 2 dead links) had genuinely moved or been taken down — not bot-blocking — confirmed via web search for each and a live `curl` check on every replacement before editing.
+  - `treasury-buybacks-colossal-failure.md`: SIPRI's dead 2025 press-release URL replaced with their current live 2025 release (kept the existing `(SIPRI, 2025)` in-text citation year consistent rather than bumping to the newer 2026 fact sheet, which would have mismatched the in-body citation); Treasury's dead buyback-operations page replaced with TreasuryDirect's live buybacks landing page (home.treasury.gov's own page for this is gone — TreasuryDirect is now the canonical source).
+  - `stoic-saturday-rule-of-law.md`: Penguin Random House's book-ID URL for *The Anatomy of Fascism* had changed (`107530` → `128540`); found the correct current page.
+  - `stephen-miller-and-the-architecture-of-cruelty.md`: SPLC restructured their Hatewatch URLs (`/hatewatch/2019/11/12/...` → `/resources/hatewatch/...`); found the same article at its new address.
+  - `elon-musk-and-the-engineering-of-chaos.md`: the cited Guardian URL (`apr/01`) was never archived by the Wayback Machine either, suggesting it was miscited rather than moved — replaced with a live Guardian piece by the same reporter (Dan Milmo) from the same week covering the same event (Twitter verification-for-purchase), with the citation's date/title updated to match.
+  - `AI.md`: Biden's AI executive order page was pulled from whitehouse.gov (unsurprising given the current administration) — replaced with the Federal Register's permanent, authoritative copy of the same order.
+- Clean rebuild confirmed; all 6 new URLs re-verified live via `curl` immediately before commit.
+
 ### Maintenance — August 21, 2026 (part 3) — Site-wide broken link audit
 - Built the site (`hugo --gc --minify`) and wrote a one-off Python crawler (scratchpad, not committed) to walk every rendered page in `public/`, extract `<a href>`/`<img src>`/`<source src>`/`<link href>` targets, and check internal links against actual output files. Separately collected all 247 unique external links and checked them with `curl` (spoofed browser UA, 12-way parallel).
 - **Fixed 26 broken internal links, all committed:**

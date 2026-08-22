@@ -110,7 +110,7 @@ The most accurate epitaph for his political career to date is this: **Elon Musk 
 
 [^4]: Frier, S., & Wagner, K. (2022, October 28). Elon Musk completes $44 billion Twitter takeover, firing top executives. *Bloomberg*. https://www.bloomberg.com/news/articles/2022-10-28/elon-musk-completes-twitter-takeover-fired-top-executives
 
-[^5]: Milmo, D. (2023, April 1). Elon Musk's Twitter blue tick becomes paid-for feature in latest change. *The Guardian*. https://www.theguardian.com/technology/2023/apr/01/elon-musk-twitter-blue-tick-paid-for-feature
+[^5]: Milmo, D. (2023, April 21). Elon Musk pays for Stephen King and LeBron James to keep Twitter blue ticks. *The Guardian*. https://www.theguardian.com/technology/2023/apr/21/elon-musk-pays-stephen-king-lebron-james-keep-twitter-blue-ticks
 
 [^6]: Hickey, D. (2025). X under Musk's leadership: Substantial hate and no reduction. *PLOS ONE*. https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0313293
 

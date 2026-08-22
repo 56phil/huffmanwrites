@@ -132,5 +132,5 @@ The reckoning is coming. The question is not **if**, but **when**.
 - Reinhart, C. M., & Rogoff, K. S. (2010). [*Growth in a time of debt*](https://www.nber.org/papers/w15639). American Economic Review, 100(2), 573-578.
 - Saez, E., & Zucman, G. (2024). *The triumph of injustice: How the rich dodge taxes and how to make them pay*. W. W. Norton & Company.
 - Securities Industry and Financial Markets Association. (2025). [*U.S. Treasury trading volume*](https://www.sifma.org/research/statistics/us-treasury-securities-statistics).
-- Stockholm International Peace Research Institute. (2025). [*Trends in world military expenditure*](https://www.sipri.org/media/press-release/2025/world-military-expenditure-reaches-new-record-high-2443-billion).
-- U.S. Treasury. (2026). [*Buyback operations report*](https://home.treasury.gov/policy-issues/financing-the-government/buyback-operations).
+- Stockholm International Peace Research Institute. (2025). [*Unprecedented rise in global military expenditure as European and Middle East spending surges*](https://www.sipri.org/media/press-release/2025/unprecedented-rise-global-military-expenditure-european-and-middle-east-spending-surges).
+- U.S. Treasury. (2026). [*Buyback operations*](https://www.treasurydirect.gov/auctions/announcements-data-results/buy-backs/).

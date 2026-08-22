@@ -110,7 +110,7 @@ The people who stand up for the law today are the ones who **keep the future fro
 - **On the rule of law:** 
   [*How Democracies Die*](https://www.penguinrandomhouse.com/books/555571/how-democracies-die-by-steven-levitsky-and-daniel-ziblatt/) (Levitsky & Ziblatt) 
 - **On authoritarian tactics:** 
-  [*The Anatomy of Fascism*](https://www.penguinrandomhouse.com/books/107530/the-anatomy-of-fascism-by-robert-o-paxton/) (Robert Paxton) 
+  [*The Anatomy of Fascism*](https://www.penguinrandomhouse.com/books/128540/the-anatomy-of-fascism-by-robert-o-paxton/) (Robert Paxton) 
 - **On Stoic resistance:** 
   [*The Courage to Be Disliked*](https://www.simonandschuster.com/books/The-Courage-to-Be-Disliked/Ichiro-Kishimi/9781501197277) (Kishimi & Koga) 
 

@@ -96,7 +96,7 @@ The most accurate epitaph for his career to date is this: **Stephen Miller is a 
 
 [^2]: Guerrero, J. (2020). *Hatemonger: Stephen Miller, Donald Trump, and the white nationalist agenda*. William Morrow.
 
-[^3]: Southern Poverty Law Center. (2019, November 12). Leaked emails expose key White House aide Stephen Miller's affinity for white nationalism. *SPLC Hatewatch*. https://www.splcenter.org/hatewatch/2019/11/12/leaked-emails-expose-key-white-house-aide-stephen-millers-affinity-white-nationalism
+[^3]: Southern Poverty Law Center. (2019, November 12). Leaked emails expose key White House aide Stephen Miller's affinity for white nationalism. *SPLC Hatewatch*. https://www.splcenter.org/resources/hatewatch/stephen-millers-affinity-white-nationalism-revealed-leaked-emails/
 
 [^4]: American Immigration Council. (2025). What Project 2025 says about immigration. *American Immigration Council Blog*. https://www.americanimmigrationcouncil.org/blog/what-project-2025-says-about-immigration/
 

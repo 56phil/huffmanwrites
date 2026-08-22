@@ -240,7 +240,7 @@ The history of AI is a history of overpromise and under-delivery, followed by br
 
 Acemoglu, D., & Johnson, S. (2023). The wrong kind of AI: Technology's pernicious effects on the economy. *Journal of Economic Perspectives, 37*(4), 163–193.
 
-Biden, J. (2023). Executive order on the safe, secure, and trustworthy development and use of artificial intelligence. *The White House*. https://www.whitehouse.gov/presidential-actions/executive-order-safe-secure-trustworthy-development-use-artificial-intelligence/
+Biden, J. (2023). Executive order on the safe, secure, and trustworthy development and use of artificial intelligence. *Federal Register*. https://www.federalregister.gov/documents/2023/11/01/2023-24283/safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence
 
 Brynjolfsson, E., Li, D., & Raymond, L. (2023). Generative AI at work. *NBER Working Paper No. 31161*. National Bureau of Economic Research.
 
