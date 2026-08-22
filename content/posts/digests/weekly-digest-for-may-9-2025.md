@@ -41,7 +41,7 @@ lastmod: 2025-05-09T00:00:00Z
  ### 📚 In This Issue
 
  
- -  [*Reclaiming the Word ‘Justice’*](https://www.huffmanwrites.org/reclaiming-the-word-justice/)
+ -  *Reclaiming the Word ‘Justice’*
  Once a virtue carved in stone, now stretched thin by slogans. We trace justice back to its roots — not in the courts, but in conscience.
 
  

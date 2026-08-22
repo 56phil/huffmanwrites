@@ -36,15 +36,15 @@ tags:
 ---
  ## 📘 Featured Post
 
- 📝 [Holding On Without Letting Go of Yourself](https://www.huffmanwrites.org/holding-on-without-letting-go-of-yourself/)
+ 📝 Holding On Without Letting Go of Yourself
 
- 📝 [The Quiet Power](https://www.huffmanwrites.org/the-quiet-power/)
+ 📝 The Quiet Power
 
- 📝 [Letting Go](https://www.huffmanwrites.org/letting-go/)
+ 📝 Letting Go
 
- 📝 [When to Let Go](https://www.huffmanwrites.org/when-to-let-go/)
+ 📝 When to Let Go
 
- 📝 [Stand Tall in the Storm](https://www.huffmanwrites.org/stand-tall-in-the-storm/)
+ 📝 Stand Tall in the Storm
 
  📝 [Stand Tall for Democracy](/posts/civics/stand-tall-for-democracy/)
 

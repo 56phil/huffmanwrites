@@ -74,7 +74,7 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [What You Feed Grows](https://www.huffmanwrites.org/what-you-feed-grows/)
+ 📝 What You Feed Grows
 
  📝 [Executive Summary of Unstuck](/posts/summaries/unstuck-summary/)
 

@@ -52,10 +52,10 @@ lastmod: 2025-05-23T00:00:00Z
  ### 📚 Articles Posted This Week
 
  
- -  [Escape Isn't a Good Choice](https://www.huffmanwrites.org/the-false-lure-of-escape/)
+ -  Escape Isn't a Good Choice
 
  
- -  [Endurance Over Escape](https://www.huffmanwrites.org/endurance-over-escape/)
+ -  Endurance Over Escape
 
  
  -  [Where Will We Be in Four Years?](/posts/civics/a-nation-poised-for-reckoning-or-renewal/)

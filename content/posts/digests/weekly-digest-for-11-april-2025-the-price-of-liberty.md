@@ -30,7 +30,7 @@ This week, I’ve been thinking about what we’re losing—and why. Not just in
 
  
  - 📝&nbsp;**Long-form**:&nbsp;[The Erosion of Liberty](/posts/civics/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it/)
- - 📝&nbsp;**Long-form**:&nbsp;[Liberty or Tyranny: The Choice That Defines Us](https://www.huffmanwrites.org/liberty-or-tyranny-the-choice-that-defines-us/)
+ - 📝&nbsp;**Long-form**:&nbsp;Liberty or Tyranny: The Choice That Defines Us
  
  
 ---

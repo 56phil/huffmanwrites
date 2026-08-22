@@ -25,10 +25,6 @@ lastmod: 2025-05-02T00:00:00Z
  >  *Every generation faces a choice: to confront the rot or to become part of it. In an age where corruption is cloaked in legality, resisting becomes not only a political act but a moral one. This is the anatomy of a kleptocracy — and a call to conscience.*
 
  
-
- **[Read the full essay →](https://www.huffmanwrites.org/the-price-of-silence-in-a-corrupt-nation-2/)**
-
- 
 ---
  ## Lessons from History
 
@@ -68,9 +64,8 @@ lastmod: 2025-05-02T00:00:00Z
  
 ---
  **This Week’s Articles**
- •&nbsp;[Kleptocracy: How the Few Plunder the Many](https://www.huffmanwrites.org/kleptocracy-how-the-few-plunder-the-many/)
- •&nbsp;[Why I Wrote&nbsp;"Unstuck"](https://www.huffmanwrites.org/why-i-wrote-unstuck/)
- •&nbsp;[The Price of Silence in a Corrupt Nation](https://www.huffmanwrites.org/the-price-of-silence-in-a-corrupt-nation-2/)
+ •&nbsp;Kleptocracy: How the Few Plunder the Many
+ •&nbsp;Why I Wrote&nbsp;"Unstuck"
 
  
 ---
