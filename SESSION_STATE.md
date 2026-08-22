@@ -13,6 +13,12 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Completed (Previous Sessions)
 
+### Maintenance — August 22, 2026 — Stoic Backgammon cover refresh
+- Replaced the cover art with a new design supplied at `/Users/prh/Developer/LaTeX/AllMyBooks/backgammon/cover/sg.jpg` (1800×2700 backgammon-board motif, obsidian/gold, title + "PHILIP HUFFMAN" baked in).
+- Converted to WebP (`cwebp -q 90`) and wrote to `assets/img/books/stoic-backgammon.webp` (also regenerated the `.jpg` fallback from the same source) and `static/img/books/stoic-backgammon.webp`, mirroring the prior commit's dual-write pattern. Frontmatter (`content/books/stoic-backgammon/index.md`) already pointed at the `.webp` path, so no frontmatter change needed this time.
+- Verified via clean `hugo --gc --minify` build (no missing-image warnings) and a local `hugo server` pass: new cover renders correctly on both `/books/stoic-backgammon/` (detail page) and the `/books/` listing card.
+- **Flagged, not fixed:** the cover image itself has "A Profitable Pasttime" (double-t typo) baked into the art — the site's `subtitle` frontmatter spells it correctly ("Pastime"), so the mismatch only shows in the image. Needs a regenerate-from-LaTeX-source fix, not a Hugo-side one.
+
 ### Maintenance — August 21, 2026 (part 7) — Un-published the four Blue Sky stub sections
 - **Important finding, flagged to Phil before acting:** the `content/{api,challenge,community,podcast}/_index.md` pages weren't just missing sub-pages (the "stub" framing from part 3's audit undersold it) — they were live, fully-written pages publishing fabricated specifics as if real: the Community page advertised a `$10/month Premium Tier`, claimed to be "currently in beta" with "free premium access to our first 100 members," and its Join button pointed to `community.huffmanwrites.org`, a domain that doesn't resolve. The Podcast page listed 5 specific episodes naming **Ryan Holiday** (a real, identifiable author) as a past guest that never happened, alongside fabricated people like "Dr. Marcus Aurelius Johnson, Philosopher." The API page published a fake base URL, rate limits, and a `$9.99/mo` pricing table for infrastructure that doesn't exist.
 - Phil confirmed: take all four down now, including the comparatively harmless Challenge page (kept for consistency — it promises 4 weeks of content and a submissions gallery that don't exist).
