@@ -8,7 +8,7 @@ description: |
   The book moves from the opening roll through the anchor, the blitz, the prime, the back game, and the bear-off, examining how acceptance, attention, and proportion operate under uncertainty. Interludes deepen the argument: on indifference, the inner citadel, the reserve clause, and the discipline of assent. The foreword, written by Betty — the author's AI collaborator — frames the project as a partnership between human experience and artificial intelligence, neither claiming to be the other.
 
   Written for readers who do not need to know backgammon or Stoicism to begin, the book teaches both as it proceeds. The central claim is that every roll is a small encounter with fate, and every move is a decision made with incomplete information. The right response to uncertainty is not prediction but character — and the board, played repeatedly, is one way to build it.
-image: "img/books/stoic-backgammon.jpg"
+image: "img/books/stoic-backgammon.webp"
 image_desktop: "img/articles/sg-16x9.webp"
 image_mobile: "img/articles/sg-4x5.webp"
 image_alt: "A polished obsidian and inlaid gold backgammon board in a symmetrical navy void, with a single white marble checker perfectly balanced on its edge."
