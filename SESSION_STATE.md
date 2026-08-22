@@ -13,6 +13,12 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Completed (Previous Sessions)
 
+### Maintenance — August 21, 2026 (part 5) — Resolved the last 2 ambiguous citation links
+- Part 3's audit had flagged braun.senate.gov and a usnews.com article as connection failures (000) that could've been bot-blocking rather than real breakage. Phil manually checked both in a browser: braun.senate.gov has nothing (Braun's Senate site appears decommissioned now that he's Indiana's governor, consistent with what part 2 of this log already noted), and the usnews.com site exists but the specific article isn't findable without the old slug — confirming both are genuinely gone, not blocked.
+  - `the-debt-brake-a-real-alternative.md`: same Braun/Emmer press release about the Responsible Budget Targets Act is still live at emmer.house.gov (Braun's own senate.gov copy is what's gone) — swapped the citation to that copy.
+  - `trumps-greenland-gambit-revisited.md`: replaced the dead US News piece with CNBC's matching July 7, 2026 coverage of the same NATO-summit Greenland remarks.
+- Clean rebuild confirmed; both replacement URLs re-verified live via `curl` before commit. This closes out every item from the part 3 audit except the 13 legacy WordPress-era links (Phil's call needed on whether that content exists to migrate or should just be de-linked) and the Blue Sky stub pages/podcast image (presumed intentional placeholders, not yet actioned).
+
 ### Maintenance — August 21, 2026 (part 4) — Replaced 5 dead citation links from the audit
 - Followed up on the "reported, not fixed" dead-citation list from part 3. All 6 underlying source URLs (5 essays/digests, one file with 2 dead links) had genuinely moved or been taken down — not bot-blocking — confirmed via web search for each and a live `curl` check on every replacement before editing.
   - `treasury-buybacks-colossal-failure.md`: SIPRI's dead 2025 press-release URL replaced with their current live 2025 release (kept the existing `(SIPRI, 2025)` in-text citation year consistent rather than bumping to the newer 2026 fact sheet, which would have mismatched the in-body citation); Treasury's dead buyback-operations page replaced with TreasuryDirect's live buybacks landing page (home.treasury.gov's own page for this is gone — TreasuryDirect is now the canonical source).

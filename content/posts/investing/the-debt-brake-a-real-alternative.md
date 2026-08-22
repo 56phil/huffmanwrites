@@ -78,4 +78,4 @@ None of this is effortless. It requires Congress to bind its future self, which 
 - Congressional Budget Office. (2026). [*Director's statement on the budget and economic outlook for 2026 to 2036*](https://www.cbo.gov/publication/62050).
 - Federal Finance Administration (Switzerland). (2023). [*Archive: Debt brake — one of Switzerland's most important fiscal policy instruments turns 20*](https://www.efv.admin.ch/en/archive-20-years-debt-brake).
 - Congressional Research Service. (n.d.). [*Sequestration as a budget enforcement process: Frequently asked questions*](https://www.congress.gov/crs-product/R42972).
-- Braun, M., & Emmer, T. (2023). [*Braun, Emmer introduce bill to rein in out-of-control government spending*](https://braun.senate.gov/braun-emmer-introduce-bill-rein-out-control-government-spending) [Press release].
+- Braun, M., & Emmer, T. (2023). [*Emmer, Braun introduce bill to rein in out-of-control government spending*](https://emmer.house.gov/media-center/press-releases/emmer-braun-introduce-bill-to-rein-in-out-of-control-government-spending) [Press release].

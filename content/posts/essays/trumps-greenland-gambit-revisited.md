@@ -53,7 +53,7 @@ Real strategic interests — the radar at Pituffik, the minerals under Kvanefjel
 
 [^1]: Togoh, I. (2019, August 21). Trump cancels Denmark visit in spat over sale of Greenland. *Forbes*. https://www.forbes.com/sites/isabeltogoh/2019/08/21/trump-cancels-denmark-visit-in-spat-over-sale-of-greenland/
 
-[^2]: Wikipedia contributors. (n.d.). *Greenland crisis*. In Wikipedia. Retrieved August 2026. <https://en.wikipedia.org/wiki/Greenland_crisis>; U.S. News & World Report. (2026, July 7). Trump reiterates at NATO summit that Greenland should be controlled by US, not Denmark. https://www.usnews.com/news/world/articles/2026-07-07/trump-says-greenland-should-be-controlled-by-the-us-not-denmark
+[^2]: Wikipedia contributors. (n.d.). *Greenland crisis*. In Wikipedia. Retrieved August 2026. <https://en.wikipedia.org/wiki/Greenland_crisis>; CNBC. (2026, July 7). Trump renews Greenland threats at NATO summit, says U.S. could remove troops from Europe. https://www.cnbc.com/2026/07/07/trump-nato-summit-greenland-us-troops-europe.html
 
 [^3]: Buckley Space Force Base. (n.d.). 12th Space Warning Squadron [Fact sheet]. https://www.buckley.spaceforce.mil/About-Us/Fact-Sheets/Article/2291701/12th-space-warning-squadron/
 
