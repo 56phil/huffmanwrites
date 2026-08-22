@@ -13,6 +13,11 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Completed (Previous Sessions)
 
+### Maintenance — August 22, 2026 (part 2) — Fixed inconsistent cover-tile heights on home page grid
+- Phil spotted that Stoic Citizen and Stoic Backgammon rendered as visibly different-sized tiles in the home page's "Library" cover grid, while the other seven looked uniform.
+- Root cause: `.cover-item img` in `assets/css/home.css` set `width: 100%` and `aspect-ratio: 2/3` but no explicit `height`, so browsers fell back to each `<img>`'s HTML `height` attribute (derived from `Resize "300x webp"` on the source file's native aspect ratio) instead of letting `aspect-ratio` govern the box. Six of nine covers share a near-identical native ratio (~0.69–0.70) so they looked consistent by coincidence; Stoic Citizen (ratio 0.736, the outlier on one side) and Stoic Backgammon (ratio exactly 0.667 — 2:3 — the outlier on the other) diverged enough to be visibly different heights (408px and 450px vs. ~430px for the rest).
+- Fix: added `height: auto;` to the rule. Verified via direct DOM measurement (`getBoundingClientRect`) before and after rebuild — all nine tiles now render at a uniform 208×312px box.
+
 ### Maintenance — August 22, 2026 — Stoic Backgammon cover refresh
 - Replaced the cover art with a new design supplied at `/Users/prh/Developer/LaTeX/AllMyBooks/backgammon/cover/sg.jpg` (1800×2700 backgammon-board motif, obsidian/gold, title + "PHILIP HUFFMAN" baked in).
 - Converted to WebP (`cwebp -q 90`) and wrote to `assets/img/books/stoic-backgammon.webp` (also regenerated the `.jpg` fallback from the same source) and `static/img/books/stoic-backgammon.webp`, mirroring the prior commit's dual-write pattern. Frontmatter (`content/books/stoic-backgammon/index.md`) already pointed at the `.webp` path, so no frontmatter change needed this time.
