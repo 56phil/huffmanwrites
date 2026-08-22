@@ -38,9 +38,9 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [Risk Management in a Fragile World](/posts/risk-management-in-a-fragile-world/)
+ 📝 [Risk Management in a Fragile World](/posts/investing/risk-management-in-a-fragile-world/)
 
- 📝 [Risk Management: The Investor’s Lifeline](/posts/risk-management-the-investors-lifeline/)
+ 📝 [Risk Management: The Investor’s Lifeline](/posts/investing/risk-management-the-investors-lifeline/)
 
  
 ---

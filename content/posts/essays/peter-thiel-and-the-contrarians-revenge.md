@@ -102,7 +102,7 @@ The most accurate epitaph for his career to date is this: **Peter Thiel is a man
 
 [^5]: Thiel, P. (2009). The education of a libertarian. *Cato Unbound*. Cited in: Wikipedia contributors, n.d.
 
-[^6]: Wikipedia contributors, n.d.; Bacqué, R., Leloup, D., & Piquard, A. (2025, July 22). Peter Thiel, the libertarian billionaire waging war on government. *Le Monde*. https://www.lemonde.fr/en/summer-reads/article/2025/07/22/peter-thiel-the-libertarian-billionaire-waging-war-on-government_6743617_183.html; Sutton, M. A. (2025, October 13). The antichrist has long haunted American politics. Now it's rearing its head again. *The Guardian*. https://www.theguardian.com/commentisfree/2025/oct/13/antichrist-peter-thiel-michigan
+[^6]: Wikipedia contributors, n.d.; Bacqué, R., Leloup, D., & Piquard, A. (2025, July 22). Peter Thiel, the libertarian billionaire waging war on government. *Le Monde*. <https://www.lemonde.fr/en/summer-reads/article/2025/07/22/peter-thiel-the-libertarian-billionaire-waging-war-on-government_6743617_183.html>; Sutton, M. A. (2025, October 13). The antichrist has long haunted American politics. Now it's rearing its head again. *The Guardian*. https://www.theguardian.com/commentisfree/2025/oct/13/antichrist-peter-thiel-michigan
 
 [^7]: Holiday, R. (2018). *Conspiracy: Peter Thiel, Hulk Hogan, Gawker, and the anatomy of intrigue*. Penguin Books.
 

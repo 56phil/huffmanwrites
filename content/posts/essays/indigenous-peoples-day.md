@@ -36,6 +36,6 @@ What I keep coming back to is how ordinary the original mistake was, and how ord
 
 [^3]: The American Presidency Project. (2021, October 8). Proclamation 10283 — Indigenous Peoples' Day, 2021. https://www.presidency.ucsb.edu/documents/proclamation-10283-indigenous-peoples-day-2021
 
-[^4]: U.S. Department of the Interior. (2024). Boarding School Initiative. https://www.doi.gov/ocl/boarding-school-initiative; Education Week. (2022, May). Native American children endured brutal treatment in U.S. boarding schools, federal report shows. https://www.edweek.org/leadership/native-american-children-endured-brutal-treatment-in-u-s-boarding-schools-federal-report-shows/2022/05
+[^4]: U.S. Department of the Interior. (2024). Boarding School Initiative. <https://www.doi.gov/ocl/boarding-school-initiative>; Education Week. (2022, May). Native American children endured brutal treatment in U.S. boarding schools, federal report shows. https://www.edweek.org/leadership/native-american-children-endured-brutal-treatment-in-u-s-boarding-schools-federal-report-shows/2022/05
 
 [^5]: Bureau of Indian Affairs. (2024, January 8). Indian entities recognized by and eligible to receive services from the United States Bureau of Indian Affairs. *Federal Register*. https://www.federalregister.gov/documents/2024/01/08/2024-00109/indian-entities-recognized-by-and-eligible-to-receive-services-from-the-united-states-bureau-of

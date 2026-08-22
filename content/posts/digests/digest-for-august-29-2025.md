@@ -76,9 +76,9 @@ tags:
 
  📝 [What You Feed Grows](https://www.huffmanwrites.org/what-you-feed-grows/)
 
- 📝 [Executive Summary of Unstuck](/posts/unstuck-summary/)
+ 📝 [Executive Summary of Unstuck](/posts/summaries/unstuck-summary/)
 
- 📝 [Five Ways Trump Could Be a Better President](/posts/how-47-could-improve/)
+ 📝 [Five Ways Trump Could Be a Better President](/posts/civics/how-47-could-improve/)
 
  
 ---

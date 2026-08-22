@@ -34,9 +34,9 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [Discount vs. Traditional Brokerages](/posts/discount-vs-traditional-brokerages/)
+ 📝 [Discount vs. Traditional Brokerages](/posts/investing/discount-vs-traditional-brokerages/)
 
- 📝 [A Comparison of Discount Brokerages](/posts/a-comparison-of-discount-brokerages/)
+ 📝 [A Comparison of Discount Brokerages](/posts/investing/a-comparison-of-discount-brokerages/)
 
  
 ---

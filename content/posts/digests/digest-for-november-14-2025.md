@@ -37,7 +37,7 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [Starstuff: Remembering Carl Sagan](/posts/starstuff-remembering-carl-sagan/)
+ 📝 [Starstuff: Remembering Carl Sagan](/posts/essays/starstuff-remembering-carl-sagan/)
 
  
 ---

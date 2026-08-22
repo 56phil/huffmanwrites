@@ -35,7 +35,7 @@ tags:
 ---
  ## 📘 Recent Posts
 
- 📝 [Indigenous Peoples Day](/posts/indigenous-peoples-day/)
+ 📝 [Indigenous Peoples Day](/posts/essays/indigenous-peoples-day/)
 
  
 ---

@@ -44,11 +44,11 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [Why I'm Looking at Albania](/posts/why-i-am-looking-at-albania/)
+ 📝 [Why I'm Looking at Albania](/posts/essays/why-i-am-looking-at-albania/)
 
- 📝 [Proud to be Woke](/posts/proud-to-be-woke/)
+ 📝 [Proud to be Woke](/posts/civics/proud-to-be-woke/)
 
- 📝 [No KIngs Rallies](/posts/no-kings-a-nation-speaks/)
+ 📝 [No KIngs Rallies](/posts/civics/no-kings-a-nation-speaks/)
 
  
 ---

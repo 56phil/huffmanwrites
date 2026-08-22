@@ -86,7 +86,7 @@ The most accurate epitaph for his career to date is this: **Mike Johnson is a ma
 
 [^1]: Wikipedia contributors. (n.d.). *Mike Johnson*. In Wikipedia. Retrieved July 28, 2026, from https://en.wikipedia.org/wiki/Mike_Johnson
 
-[^2]: Kranish, M., & Stanley-Becker, I. (2023, November 4). How Speaker Mike Johnson's plans for a Christian law school unraveled. *The Washington Post*. https://www.washingtonpost.com/politics/2023/11/04/mike-johnson-law-school-louisiana-college-shreveport/; Slodysko, B. (2023, October 31). House Speaker Mike Johnson was once the dean of a Christian law school. It never opened its doors. *Associated Press*. https://apnews.com/article/mike-johnson-house-speaker-2d1a3399e8fe61bf0619d66ba29a1520
+[^2]: Kranish, M., & Stanley-Becker, I. (2023, November 4). How Speaker Mike Johnson's plans for a Christian law school unraveled. *The Washington Post*. <https://www.washingtonpost.com/politics/2023/11/04/mike-johnson-law-school-louisiana-college-shreveport/>; Slodysko, B. (2023, October 31). House Speaker Mike Johnson was once the dean of a Christian law school. It never opened its doors. *Associated Press*. https://apnews.com/article/mike-johnson-house-speaker-2d1a3399e8fe61bf0619d66ba29a1520
 
 [^3]: Schnell, M. (2024, April 16). First Republican publicly backs Greene effort to oust Speaker Johnson. *The Hill*. https://thehill.com/homenews/house/4596862-massie-backs-greene-effort-oust-speaker-johnson/
 
@@ -116,7 +116,7 @@ The most accurate epitaph for his career to date is this: **Mike Johnson is a ma
 
 [^16]: Bowens, J. (2025, January 2). 118th Congress ends as one of the least productive sessions in decades. *KEYE*. https://cbsaustin.com/news/nation-world/118th-congress-ends-as-one-of-the-least-productive-sessions-in-decades-laws-bills-republicans-democrats-house-congress-politics
 
-[^17]: Tait, R., Greve, J. E., & Michael, C. (2024, April 20). US House approves $61bn in military aid for Ukraine after months of stalling. *The Guardian*. https://www.theguardian.com/us-news/2024/apr/20/us-house-approves-61bn-aid-ukraine; Karni & Gold, 2025.
+[^17]: Tait, R., Greve, J. E., & Michael, C. (2024, April 20). US House approves $61bn in military aid for Ukraine after months of stalling. *The Guardian*. <https://www.theguardian.com/us-news/2024/apr/20/us-house-approves-61bn-aid-ukraine>; Karni & Gold, 2025.
 
 [^18]: Berger, 2025.
 

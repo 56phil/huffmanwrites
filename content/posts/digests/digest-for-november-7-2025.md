@@ -37,9 +37,9 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [The Responsibility of a Small, Shining World](/posts/the-responsibility-of-a-small-shining-world/)
+ 📝 [The Responsibility of a Small, Shining World](/posts/stoicism/the-responsibility-of-a-small-shining-world/)
 
- 📝 [Small Planet, Big Responsibility](/posts/small-planet-big-responsibility/)
+ 📝 [Small Planet, Big Responsibility](/posts/stoicism/small-planet-big-responsibility/)
 
  
 ---

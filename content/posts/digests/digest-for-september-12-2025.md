@@ -32,9 +32,9 @@ tags:
 ---
  ## 📘 Recient Posts
 
- 📝 [Why Dollar-Cost Averaging Beats Market Timing](/posts/why-dollar-cost-averaging-beats-market-timing/)
+ 📝 [Why Dollar-Cost Averaging Beats Market Timing](/posts/investing/why-dollar-cost-averaging-beats-market-timing/)
 
- 📝 [Starting to Invest After Retirement](/posts/starting-to-invest-after-retirement/)
+ 📝 [Starting to Invest After Retirement](/posts/investing/starting-to-invest-after-retirement/)
 
  
 ---

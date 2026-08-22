@@ -58,7 +58,7 @@ lastmod: 2025-05-23T00:00:00Z
  -  [Endurance Over Escape](https://www.huffmanwrites.org/endurance-over-escape/)
 
  
- -  [Where Will We Be in Four Years?](/posts/a-nation-poised-for-reckoning-or-renewal/)
+ -  [Where Will We Be in Four Years?](/posts/civics/a-nation-poised-for-reckoning-or-renewal/)
 
  
  

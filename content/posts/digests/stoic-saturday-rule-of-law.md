@@ -11,8 +11,8 @@ categories: ["digests"]
 series: ["Stoic Saturday"] 
 
 # Hero Image (per hero-image-workflow.md) 
-hero_desktop: "/img/articles/2026/2026-stoic-saturday-rule-of-law_16x9.webp" 
-hero_mobile: "/img/articles/2026/2026-stoic-saturday-rule-of-law_4x5.webp" 
+hero_desktop: "img/articles/2026/2026-stoic-saturday-rule-of-law_16x9.webp" 
+hero_mobile: "img/articles/2026/2026-stoic-saturday-rule-of-law_4x5.webp" 
 hero_alt: "A cracked marble pillar with a gavel resting on top, symbolizing the fragility of the rule of law." 
 hero_caption: "The rule of law isn’t a philosophical ideal. It’s a fragile agreement—like flossing. And right now, it’s being treated like a suggestion." 
 
