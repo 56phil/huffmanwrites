@@ -2,7 +2,7 @@
 title = "The Credo Podcast"
 description = "Exploring 'Think Clearly. Live Intentionally. Love Immediately.' through conversation and inquiry"
 layout = "list"
-image = "/img/podcast/credo-podcast-cover.jpg"
+draft = true
 +++
 
 The Credo Podcast is an audio exploration of the principles "Think Clearly. Live Intentionally. Love Immediately." Each episode features conversations with philosophers, psychologists, scientists, and practitioners who help us understand how to apply these principles to modern life.

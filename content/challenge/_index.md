@@ -2,6 +2,7 @@
 title = "#ThinkLiveLove Challenge"
 description = "A 4-week social media challenge to live the credo"
 layout = "list"
+draft = true
 week1_link = "/challenge/week1/"
 week2_link = "/challenge/week2/"
 week3_link = "/challenge/week3/"

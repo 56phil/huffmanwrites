@@ -2,6 +2,7 @@
 title = "Credo Community"
 description = "A space for readers to discuss and apply the credo together"
 layout = "list"
+draft = true
 video = "https://www.youtube.com/embed/dQw4w9WgXcQ"
 join_link = "https://community.huffmanwrites.org"
 learn_link = "/community/about/"

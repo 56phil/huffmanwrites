@@ -2,6 +2,7 @@
 title = "Credo API"
 description = "Integrate the credo into your applications and projects"
 layout = "list"
+draft = true
 +++
 
 The Credo API provides programmatic access to the principles of "Think Clearly. Live Intentionally. Love Immediately." allowing developers to integrate the credo into websites, applications, and digital experiences. Whether you're building a personal project, a community platform, or a commercial application, the Credo API makes it easy to incorporate philosophical content and exercises.
