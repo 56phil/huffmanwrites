@@ -10,7 +10,7 @@ tags:
   - investing
 hero_desktop: "img/articles/52-the-rule-you-set-before-you-need-it_16x9.webp"
 hero_mobile: "img/articles/52-the-rule-you-set-before-you-need-it_4x5.webp"
-hero_alt: "A marble sluice gate under construction in calm daylight, a mason's chisel resting against the half-finished stone, gold light with no flood yet in sight"
+hero_alt: "Two unfinished stone pillars rising from calm water at sunset, a mason's trowel resting against the left pillar, wooden scaffolding atop the right, the gate still half-built with no flood yet in sight"
 hero_caption: "Build the gate while the sea is still calm."
 ---
 
