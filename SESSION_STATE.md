@@ -12,6 +12,13 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 ---
 
 ## Completed (Previous Sessions)
+### Maintenance — August 26, 2026 (part 3) — Wired hero images for both Aug 26 essays
+- Phil delivered 4 PNG renders (as JPEG attachments via session files; WebP option wasn't available in his generator). Saved temporarily to repo root as `image-*.jpg` (400×496 portrait pair + 1024×576 landscape pair), then processed and deleted the originals.
+- **Image-to-essay assignment** was not provided, so I paired and classified computationally (vision model unavailable): center-concentrated gold mass + single central object (land_A/port_A) = the economics piece's cracked capital; mirrored left/right masses + dispersed gold (land_B/port_B) = the midterms piece's two-column balance. Tone-map cross-correlation and edge-structure analysis agreed (port_A↔land_A corr 0.78; port_B↔land_B corr 0.42; cross-pairs negative).
+- Converted with ImageMagick: landscape → 1365×768, portrait → 896×1120, quality 92 WebP (matching prior heroes), saved as `static/img/articles/53-economic-and-geopolitical-position_{16x9,4x5}.webp` and `54-what-the-2026-midterms-will-decide_{16x9,4x5}.webp`.
+- Wired hero frontmatter on both posts (hero_desktop/hero_mobile/hero_alt/hero_caption; no leading slashes; both posts now match the site's visual convention). Added `data/gallery.yml` entries 66 ("The Fault Line") and 67 ("The Weighing") with the 16:9 paths and poetic captions.
+- Verified: clean `hugo --gc --minify` build (333 pages, 0 errors); browser-verified both posts at desktop (1365px) and mobile (390px) widths — `<picture>` serves the 4:5 source on mobile (currentSrc confirmed) and 16:9 on desktop; gallery shows both new entries; images load 200 on production.
+- Committed `e3fd0d9`, pushed; Pages deploy run 32975462035 success; heroes live at `/img/articles/53-*` and `/img/articles/54-*` (HTTP 200).
 
 ### Maintenance — August 26, 2026 — Published "The Economic and Geopolitical Position of the United States in Mid-2026"
 - Phil asked for a formal, APA-cited article (under 1500 words) about the state of the US economy and geopolitical standing, written so the critique reads as institutional and structural rather than personal toward Trump. Iterated through journalistic, academic, and formal voice passes, then approved and asked to publish to huffmanwrites.
