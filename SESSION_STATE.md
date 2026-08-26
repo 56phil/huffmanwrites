@@ -12,6 +12,13 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 ---
 
 ## Completed (Previous Sessions)
+### Maintenance — August 26, 2026 (part 4) — Author byline renamed "Phil Huffman" → "Philip Huffman" sitewide
+- Phil requested the site's author byline read "Philip Huffman" instead of "Phil Huffman". Audited the repo: 123 content files carried `author: Phil Huffman` in frontmatter (66 others already said "Philip"), plus `hugo.toml` `params.author` and `pending/TEMPLATE.md`.
+- Applied the rename via sed across all 125 files; no body-text full-name uses existed. Cleaned `public/` and rebuilt: 333 pages, 0 errors, zero old-name occurrences in output (the four `draft = true` credo pages had stale dev-server leftovers; production build never emits them).
+- Verified live after deploy: midterms post, homepage, and RSS all render "Philip Huffman" only.
+- Committed `b8c7454`, pushed; Pages deploy run 32982229382 success.
+- Flagged (not changed): 13 standalone "Phil" sign-offs in newsletter bodies ("See you next Saturday. — Phil"), one conversational aside in the May 9 digest, and internal notes (SESSION_STATE.md, pending/archive drafts). Phil said byline only, so those stay unless he wants them changed.
+
 ### Maintenance — August 26, 2026 (part 3) — Wired hero images for both Aug 26 essays
 - Phil delivered 4 PNG renders (as JPEG attachments via session files; WebP option wasn't available in his generator). Saved temporarily to repo root as `image-*.jpg` (400×496 portrait pair + 1024×576 landscape pair), then processed and deleted the originals.
 - **Image-to-essay assignment** was not provided, so I paired and classified computationally (vision model unavailable): center-concentrated gold mass + single central object (land_A/port_A) = the economics piece's cracked capital; mirrored left/right masses + dispersed gold (land_B/port_B) = the midterms piece's two-column balance. Tone-map cross-correlation and edge-structure analysis agreed (port_A↔land_A corr 0.78; port_B↔land_B corr 0.42; cross-pairs negative).
