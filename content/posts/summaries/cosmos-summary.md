@@ -2,7 +2,7 @@
 title: "Cosmos — Sagan"
 description: "A summary and review of Carl Sagan's magnum opus — a thirteen-chapter journey through the history of science, the scale of the universe, and the fragile improbability of human consciousness."
 date: 2026-05-31T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Sagan, Carl - Cosmos"
 lastmod: 2026-05-31T00:00:00Z
 tags:

@@ -2,7 +2,7 @@
 title: "The AI Investment Bubble: Depreciation, Revenue, and the Diffusion of Risk"
 description: "A researched analysis of the 2026 AI infrastructure buildout: aggressive depreciation accounting, a wide revenue-to-capex gap, and a financing structure that has spread the downside onto pension funds, index investors, and ratepayers."
 date: 2026-07-31T09:27:00-05:00
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-07-31T09:27:00-05:00
 featuredOnHome: true
 tags:

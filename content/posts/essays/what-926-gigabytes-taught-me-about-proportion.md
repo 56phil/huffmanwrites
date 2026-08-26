@@ -2,7 +2,7 @@
 title: "What 926 Gigabytes Taught Me About Proportion"
 description: "On the temptation to reach for the sledgehammer, and the discipline required to use the scalpel instead."
 date: 2026-05-10T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-05-10T00:00:00Z
 featuredOnHome: true
 tags:

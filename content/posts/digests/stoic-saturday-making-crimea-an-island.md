@@ -3,7 +3,7 @@ title: "Stoic Strategy: Making Crimea an Island"
 description: "How Ukraine's Interdiction Campaign is Reshaping the War."
 date: 2026-07-25T00:00:00Z
 lastmod: 2026-07-24T16:26:34Z
-author: Phil Huffman
+author: Philip Huffman
 tags:
   - weekly-digest
   - stoicism

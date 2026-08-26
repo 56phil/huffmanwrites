@@ -2,7 +2,7 @@
 title: "Digest for October 10, 2025"
 description: "Weekly digest: observations, recommendations, and reflections from October 10, 2025."
 date: 2025-10-10T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-10-10T00:00:00Z
 hero_desktop: "img/articles/7-Government-Building-16x9.webp"
 hero_mobile: "img/articles/7-Government-Building-4x5.webp"

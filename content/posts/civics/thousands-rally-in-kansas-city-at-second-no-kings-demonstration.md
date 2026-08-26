@@ -2,7 +2,7 @@
 title: "Thousands rally in Kansas City at second “No Kings” demonstration"
 description: "A dispatch from the second No Kings demonstration in Kansas City."
 date: 2025-10-20T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-10-20T00:00:00Z
 tags:
   - ai

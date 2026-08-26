@@ -2,7 +2,7 @@
 title: "Stand Tall for Democracy"
 description: "Why standing up for democratic values matters now more than ever."
 date: 2025-06-12T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-06-12T00:00:00Z
 tags:
   - ai

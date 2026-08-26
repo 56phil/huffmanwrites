@@ -3,7 +3,7 @@ title: "The Economic and Geopolitical Position of the United States in Mid-2026"
 description: "A formal assessment of America's macroeconomic trajectory and geopolitical standing in mid-2026: slowing growth, a mounting fiscal load, and a narrowing margin of advantage against rival powers."
 date: 2026-08-26T07:42:20-05:00
 lastmod: 2026-08-26T07:42:20-05:00
-author: Phil Huffman
+author: Philip Huffman
 tags:
   - geopolitics
   - economy

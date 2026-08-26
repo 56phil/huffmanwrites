@@ -2,7 +2,7 @@
 title: "Mike Johnson and the Problem of Bad Faith"
 description: "A scholarly assessment of the 56th Speaker of the House: Is he stupid, evil, both, or something worse?"
 date: 2026-07-28T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-07-28T00:00:00Z
 draft: false
 tags:

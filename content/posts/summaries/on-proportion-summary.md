@@ -2,7 +2,7 @@
 title: "On Proportion — Huffman"
 description: "Executive summary of On Proportion: the lost discipline of matching response to scale."
 date: 2026-06-16T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Huffman, Philip - On Proportion"
 lastmod: 2026-05-10T00:00:00Z
 tags:

@@ -3,7 +3,7 @@ title: "Trump's Greenland Gambit, Revisited"
 description: "What started in 2019 as a canceled state visit and a Photoshopped meme has become a real transatlantic crisis. A look at what's genuine strategy, what's spectacle, and what Greenlanders themselves have said about it — updated through the summer of 2026."
 date: 2025-09-01T00:00:00Z
 lastmod: 2026-08-07T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 tags:
   - geopolitics
   - investing

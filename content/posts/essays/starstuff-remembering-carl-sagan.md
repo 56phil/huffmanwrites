@@ -2,7 +2,7 @@
 title: "Starstuff: Remembering Carl Sagan"
 description: "Remembering Carl Sagan, his cosmic perspective, and what it means to be starstuff."
 date: 2025-11-10T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-11-10T00:00:00Z
 hero_desktop: "img/articles/8-rcs-16x9.webp"
 hero_mobile: "img/articles/8-rcs-4x5.webp"

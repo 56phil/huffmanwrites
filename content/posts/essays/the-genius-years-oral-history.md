@@ -2,7 +2,7 @@
 title: "The Genius Years: An Oral History of a Presidency That Never Happened"
 description: "A speculative, tongue-in-cheek oral history imagining what might have happened if Donald Trump really were the 'very stable genius' he's always claimed to be — told through the recollections of people who, for the record, do not exist."
 date: 2026-07-23T06:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-07-23T00:00:00Z
 featuredOnHome: true
 tags:

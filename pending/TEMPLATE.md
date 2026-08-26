@@ -2,7 +2,7 @@
 title: "Digest for May 23, 2026"
 description: "Weekly digest: observations, recommendations, and reflections."
 date: 2026-05-23T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sendfox_subject: "Your subject line here"
 tags:
   - weekly-digest

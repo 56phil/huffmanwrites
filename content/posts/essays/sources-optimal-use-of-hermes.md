@@ -2,7 +2,7 @@
 title: "Sources: The Optimal Use of Hermes"
 description: "APA-citable sources and citation mapping for the essay on working with Hermes Agent."
 date: 2026-05-21T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-05-21T00:00:00Z
 tags:
   - ai

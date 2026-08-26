@@ -2,7 +2,7 @@
 title: "Letters — Huffman"
 description: "Executive summary of Letters: truth without outcome, speech without guarantee."
 date: 2026-01-15T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Huffman, Philip - Letters"
 lastmod: 2026-05-10T00:00:00Z
 tags:

@@ -2,7 +2,7 @@
 title: "Man's Search for Meaning: Summary & Review — Frankl"
 description: "Viktor Frankl's Man's Search for Meaning — a summary and critical review of his account of survival in the Nazi concentration camps, the logotherapy he built from it, and what it shares with Stoic philosophy."
 date: 2026-05-31T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Frankl, Viktor"
 lastmod: 2026-05-31T00:00:00Z
 tags:

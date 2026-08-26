@@ -2,7 +2,7 @@
 title: "Starting to Invest After Retirement"
 description: "Starting to invest after retirement: what matters and what to avoid."
 date: 2025-09-08T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-09-08T00:00:00Z
 tags:
   - ai

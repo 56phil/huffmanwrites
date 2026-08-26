@@ -3,7 +3,7 @@ title: "Russia's Diplomatic Gambit in the Arctic"
 description: "Russia lost its seat at the Arctic's main table in 2022. Three years later, the pivot to China that was supposed to replace it looks far shakier than the official story suggests."
 date: 2025-09-03T00:00:00Z
 lastmod: 2026-08-07T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 tags:
   - geopolitics
   - politics

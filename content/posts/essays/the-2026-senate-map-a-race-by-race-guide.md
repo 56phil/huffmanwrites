@@ -2,7 +2,7 @@
 title: "The 2026 Senate Map: A Race-by-Race Guide"
 description: "Every U.S. Senate race on the 2026 ballot — candidates, current ratings, and projections, from the handful of toss-ups that will decide the majority to the safest seats in the country."
 date: 2026-08-02T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-08-02T00:00:00Z
 hero_desktop: "img/articles/45-senate-map-16x9.webp"
 hero_mobile: "img/articles/45-senate-map-4x5.webp"

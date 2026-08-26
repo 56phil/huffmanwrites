@@ -2,7 +2,7 @@
 title: "The Virtue of Temperance"
 description: "The lost virtue of temperance: why restraint matters more in an age of excess."
 date: 2025-05-14T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-05-14T00:00:00Z
 tags:
   - ai

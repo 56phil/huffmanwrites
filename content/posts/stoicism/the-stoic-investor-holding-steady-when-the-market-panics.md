@@ -2,7 +2,7 @@
 title: "The Stoic Investor: Holding Steady When the Market Panics"
 description: "Holding steady when the market panics: a Stoic approach to investing."
 date: 2025-10-01T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-05-11T00:00:00Z
 aliases:
   - /the-stoic-investor-holding-steady-when-the-market-panics/

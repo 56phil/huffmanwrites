@@ -3,7 +3,7 @@ title: "Weekly Digest for May 23, 2025"
 description: "Weekly digest: observations, recommendations, and reflections from May 23, 2025."
 date: 2025-05-23T00:00:00Z
 tags: [News]
-author: Phil Huffman
+author: Philip Huffman
 hero_desktop: "img/articles/18-Endurance-16x9.webp"
 hero_mobile: "img/articles/18-Endurance-4x5.webp"
 hero_alt: "A single worn marble oar half-submerged in still navy water, sending small gold ripples outward."

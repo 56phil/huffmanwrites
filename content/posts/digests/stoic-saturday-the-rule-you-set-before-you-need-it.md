@@ -3,7 +3,7 @@ title: "Stoic Saturday: The Rule You Set Before You Need It"
 description: "Treasury just doubled its debt buyback program against a $32 trillion market. Switzerland found something that actually works, a rule written into its constitution two decades ago, and a version of it is already sitting, unpassed, in Congress."
 date: 2026-08-22T08:00:00Z
 lastmod: 2026-08-22T08:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 tags:
   - weekly-digest
   - stoicism

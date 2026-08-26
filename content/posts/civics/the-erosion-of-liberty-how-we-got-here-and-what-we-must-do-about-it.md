@@ -2,7 +2,7 @@
 title: "The Erosion of Liberty: How We Got Here—And What We Must Do About It"
 description: "How liberty erodes incrementally—and what citizens must do to reclaim it."
 date: 2025-04-10T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-04-10T00:00:00Z
 hero_desktop: "img/articles/9-coj-16x9.webp"
 hero_mobile: "img/articles/9-coj-4x5.webp"

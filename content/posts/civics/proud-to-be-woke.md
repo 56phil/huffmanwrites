@@ -2,7 +2,7 @@
 title: "Proud to Be Woke"
 description: "If caring about people makes me woke, then I’ll wear the word like a medal."
 date: 2025-08-11T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-08-11T00:00:00Z
 hero_desktop: "img/articles/5-woke-16x9.webp"
 hero_mobile: "img/articles/5-woke-4x5.webp"

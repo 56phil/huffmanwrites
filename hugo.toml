@@ -7,7 +7,7 @@ pluralizeListTitles = false
 disableHugoGeneratorInject = true
 
 [params]
-  author = 'Phil Huffman'
+  author = 'Philip Huffman'
   keywords = ["Stoicism", "philosophy", "books", "writing", "critical thinking", "civics", "virtue", "personal development", "wisdom", "ethics"]
   description = 'Writings on Stoicism, philosophy, and life'
   ShowReadingTime = true

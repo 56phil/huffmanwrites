@@ -2,7 +2,7 @@
 title: "Treasury Buybacks: A Colossal Failure in the Making"
 description: "Scott Bessent doubled the Treasury's debt buyback program to steady the bond market. The math says it's too small to matter, raises the government's long-term interest burden, and tells Congress deficits don't matter."
 date: 2026-08-21T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-08-21T00:00:00Z
 hero_desktop: "img/articles/50-treasury-buybacks-colossal-failure_16x9.webp"
 hero_mobile: "img/articles/50-treasury-buybacks-colossal-failure_4x5.webp"

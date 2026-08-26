@@ -3,7 +3,7 @@ title: "Indigenous Peoples Day"
 description: "Indigenous Peoples Day isn't really about renaming a Monday in October. It's about whether we're willing to look at what the old name asked us not to see."
 date: 2025-10-13T00:00:00Z
 lastmod: 2026-08-07T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 hero_desktop: "img/articles/2-ipd-16x9.webp"
 hero_mobile: "img/articles/2-ipd-4x5.webp"
 hero_alt: "An ancient indigenous stone calendar partially buried under layers of colonial parchment maps, with gold ink lines bleeding through like veins and native plants growing toward light."

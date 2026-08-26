@@ -2,7 +2,7 @@
 title: "The Optimal Use of Hermes: From Tool to Editorial Operation"
 description: "How a persistent AI agent changed the way I think, write, and work — and what I've learned about using it well."
 date: 2026-05-21T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-06-01T00:00:00Z
 tags:
   - ai

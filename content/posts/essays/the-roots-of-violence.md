@@ -2,7 +2,7 @@
 title: "The Roots of Violence"
 description: "Violence doesn't begin with the act. It begins long before, in roots most of us refuse to examine."
 date: 2026-05-10T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-05-10T00:00:00Z
 featuredOnHome: true
 tags:

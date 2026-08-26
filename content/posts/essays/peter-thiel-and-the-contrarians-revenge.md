@@ -2,7 +2,7 @@
 title: "Peter Thiel and the Contrarian's Revenge: A Scholarly Assessment"
 description: "An analysis of Silicon Valley's philosopher-king: Is he stupid, evil, both, or something more radical?"
 date: 2026-07-28T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-07-28T00:00:00Z
 draft: false
 tags:

@@ -2,7 +2,7 @@
 title: "A Comparison of Discount Brokerages"
 description: "A comparison of discount brokerages for retired and new investors."
 date: 2025-09-24T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-09-24T00:00:00Z
 tags:
   - ai

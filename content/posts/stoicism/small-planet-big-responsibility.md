@@ -2,7 +2,7 @@
 title: "Small Planet, Big Responsibility"
 description: "The responsibility of stewardship in an age of environmental crisis."
 date: 2025-11-03T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-11-03T00:00:00Z
 hero_desktop: "img/articles/7-pbd-16x9.webp"
 hero_mobile: "img/articles/7-pbd-4x5.webp"

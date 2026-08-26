@@ -3,7 +3,7 @@ title: Digest for May 23, 2026
 description: 'Weekly digest: observations, recommendations, and reflections for Memorial
   Day weekend.'
 date: '2026-05-23T00:00:00Z'
-author: Phil Huffman
+author: Philip Huffman
 lastmod: '2026-05-23T13:00:43Z'
 hero_desktop: img/articles/11-pause_16x9.webp
 hero_mobile: img/articles/11-pause_4x5.webp

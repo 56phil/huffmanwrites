@@ -2,7 +2,7 @@
 title: "Corruption at the Summit: When Public Power Serves Private Gain"
 description: "A civic argument about high-level government corruption, institutional trust, and the duties of citizens in a republic."
 date: 2026-05-21T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-05-21T00:00:00Z
 featuredOnHome: true
 tags:

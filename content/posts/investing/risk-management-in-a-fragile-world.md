@@ -2,7 +2,7 @@
 title: "Risk Management in a Fragile World"
 description: "Managing risk in a fragile world: what investors and citizens need to know."
 date: 2025-09-17T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-09-17T00:00:00Z
 hero_desktop: "img/articles/6-fragile-16x9.webp"
 hero_mobile: "img/articles/6-fragile-4x5.webp"

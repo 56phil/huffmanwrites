@@ -2,7 +2,7 @@
 title: "Elon Musk and the Engineering of Chaos: A Scholarly Assessment"
 description: "An analysis of the world's richest demolitionist: Is he stupid, evil, both, or something more dangerous?"
 date: 2026-07-28T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-07-28T00:00:00Z
 draft: false
 tags:

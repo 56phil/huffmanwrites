@@ -2,7 +2,7 @@
 title: "Texas Senate 2026: The Preacher's Son vs. The Indicted Attorney General"
 description: "A compare-and-contrast analysis of the two candidates vying to represent Texas in the U.S. Senate — and why this race is suddenly competitive."
 date: 2026-07-28T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-07-28T00:00:00Z
 draft: false
 tags:

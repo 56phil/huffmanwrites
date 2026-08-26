@@ -2,7 +2,7 @@
 title: "Meditations: Summary & Review — Marcus Aurelius"
 description: "Marcus Aurelius's Meditations — a summary and critical review of his private Stoic journal, the core philosophical arguments it makes, and what it means to aspire to virtue while consistently falling short."
 date: 2026-05-31T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Aurelius, Marcus"
 lastmod: 2026-05-31T00:00:00Z
 tags:

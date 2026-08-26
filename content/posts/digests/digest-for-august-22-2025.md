@@ -2,7 +2,7 @@
 title: "Digest for August 22, 2025"
 description: "Weekly digest: observations, recommendations, and reflections from August 22, 2025."
 date: 2025-08-22T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-08-22T00:00:00Z
 hero_desktop: "img/articles/12-options_16x9.webp"
 hero_mobile: "img/articles/12-options_4x5.webp"

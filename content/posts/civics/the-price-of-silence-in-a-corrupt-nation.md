@@ -3,7 +3,7 @@ title: "The Price of Silence in a Corrupt Nation"
 description: "On kleptocracy, corruption, and the cost of staying silent in a failing system."
 date: 2025-05-02T00:00:00Z
 tags: [News]
-author: Phil Huffman
+author: Philip Huffman
 hero_desktop: "img/articles/30-silence_16x9.webp"
 hero_mobile: "img/articles/30-silence_4x5.webp"
 hero_alt: "A polished marble Comedy mask with a darker tragic face visible behind it, gold coins spilling from its smiling mouth."

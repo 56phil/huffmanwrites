@@ -2,7 +2,7 @@
 title: "The 7 Habits of Highly Effective People: Summary & Review — Covey"
 description: "Stephen Covey's 7 Habits of Highly Effective People — a summary and critical review of his character-ethic framework for personal effectiveness, and an honest look at what still holds up thirty-five years later."
 date: 2026-05-31T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Covey, Stephen"
 lastmod: 2026-05-31T00:00:00Z
 tags:

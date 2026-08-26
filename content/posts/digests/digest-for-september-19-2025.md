@@ -2,7 +2,7 @@
 title: "Digest for September 19, 2025"
 description: "Weekly digest: observations, recommendations, and reflections from September 19, 2025."
 date: 2025-09-19T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-09-19T00:00:00Z
 hero_desktop: "img/articles/11-Risk-Management-16x9.webp"
 hero_mobile: "img/articles/11-Risk-Management-4x5.webp"

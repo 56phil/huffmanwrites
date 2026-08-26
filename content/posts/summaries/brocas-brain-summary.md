@@ -2,7 +2,7 @@
 title: "Broca's Brain — Sagan"
 description: "A summary and review of Carl Sagan's wide-ranging essay collection on science, pseudoscience, the romance of discovery, and the nature of the inquiring mind."
 date: 2026-05-31T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Sagan, Carl - Brocas Brain"
 lastmod: 2026-05-31T00:00:00Z
 tags:

@@ -3,7 +3,7 @@ title: "Weekly Digest – April 18, 2025"
 description: "Weekly digest: observations, recommendations, and reflections from April 18, 2025."
 date: 2025-04-18T00:00:00Z
 tags: [News]
-author: Phil Huffman
+author: Philip Huffman
 hero_desktop: "img/articles/14-The-Plan-16x9.webp"
 hero_mobile: "img/articles/14-The-Plan-4x5.webp"
 hero_alt: "A cracked marble rotunda with dark vines consuming gold coins on the floor, a single beam of light through the dome."

@@ -2,7 +2,7 @@
 title: "Digest for January 2, 2026"
 description: "Weekly digest: observations, recommendations, and reflections from January 2, 2026."
 date: 2026-01-02T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-01-02T00:00:00Z
 hero_desktop: "img/articles/14-mirror_16x9.webp"
 hero_mobile: "img/articles/14-mirror_4x5.webp"

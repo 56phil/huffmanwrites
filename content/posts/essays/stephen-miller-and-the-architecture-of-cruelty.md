@@ -2,7 +2,7 @@
 title: "Stephen Miller and the Architecture of Cruelty: A Scholarly Assessment"
 description: "An analysis of the most influential immigration hardliner in modern American politics: Is he stupid, evil, both, or something worse?"
 date: 2026-07-28T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-07-28T00:00:00Z
 draft: false
 tags:

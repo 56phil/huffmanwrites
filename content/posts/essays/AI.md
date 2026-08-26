@@ -2,7 +2,7 @@
 title: "The History of Artificial Intelligence and AI Agents and Their Impact on Society"
 description: "A comprehensive history of AI from its conceptual precursors through the emergence of agentic systems, examining how each epoch reshaped human expectations, labor markets, governance, and culture."
 date: 2026-05-21T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-08-07T00:00:00Z
 draft: false
 featuredOnHome: true

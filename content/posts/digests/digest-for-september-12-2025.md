@@ -2,7 +2,7 @@
 title: "Digest for September 12, 2025"
 description: "Weekly digest: observations, recommendations, and reflections from September 12, 2025."
 date: 2025-09-12T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-09-12T00:00:00Z
 hero_desktop: "img/articles/10-Fibonacci-16x9.webp"
 hero_mobile: "img/articles/10-Fibonacci-4x5.webp"

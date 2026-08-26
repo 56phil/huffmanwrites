@@ -2,7 +2,7 @@
 title: "Risk Management: The Investor’s Lifeline"
 description: "Risk management as the foundation of sustainable investing."
 date: 2025-09-16T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-09-16T00:00:00Z
 tags:
   - ai

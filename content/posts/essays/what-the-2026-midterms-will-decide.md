@@ -3,7 +3,7 @@ title: "The Verdict, Nine Weeks Out: What the 2026 Midterms Will Actually Decide
 description: "Both chambers of Congress are in play on November 3. A look at the Senate toss-ups, the House math, the economy as the deciding issue, and what the final nine weeks will actually decide."
 date: 2026-08-26T08:11:56-05:00
 lastmod: 2026-08-26T08:11:56-05:00
-author: Phil Huffman
+author: Philip Huffman
 tags:
   - politics
   - essays

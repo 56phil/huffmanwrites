@@ -3,7 +3,7 @@ title: "Stoic Saturday: A Different Part to Play"
 description: "Cicero on the difference between an advocate's duty and a judge's, and what it means when the body meant to check that difference confirms him anyway."
 date: 2026-08-08T08:00:00Z
 lastmod: 2026-08-14T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 tags:
   - weekly-digest
   - stoicism

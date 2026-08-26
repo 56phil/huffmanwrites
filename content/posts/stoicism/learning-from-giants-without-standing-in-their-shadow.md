@@ -2,7 +2,7 @@
 title: "Learning from Giants Without Standing in Their Shadow"
 description: "How to borrow wisdom from remarkable people without losing yourself."
 date: 2025-04-05T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-04-05T00:00:00Z
 hero_desktop: "img/articles/3-lfg-16x9.webp"
 hero_mobile: "img/articles/3-lfg-4x5.webp"

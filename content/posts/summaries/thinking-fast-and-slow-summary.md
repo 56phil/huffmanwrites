@@ -2,7 +2,7 @@
 title: "Thinking, Fast and Slow: Summary & Review — Kahneman"
 description: "Daniel Kahneman's Thinking, Fast and Slow — a summary and critical review of his System 1 and System 2 framework, the cognitive biases they produce, and where the research holds up under scrutiny."
 date: 2026-05-31T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Kahneman, Daniel"
 lastmod: 2026-05-31T00:00:00Z
 tags:

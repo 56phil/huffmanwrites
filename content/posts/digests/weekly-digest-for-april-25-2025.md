@@ -3,7 +3,7 @@ title: "Weekly Digest for April 25, 2025"
 description: "Weekly digest: observations, recommendations, and reflections from April 25, 2025."
 date: 2025-04-25T00:00:00Z
 tags: [News]
-author: Phil Huffman
+author: Philip Huffman
 hero_desktop: "img/articles/16-Last-Chance-16x9.webp"
 hero_mobile: "img/articles/16-Last-Chance-4x5.webp"
 hero_alt: "Weathered and young marble hands planting a glowing sapling together, roots touching future cities in the soil."

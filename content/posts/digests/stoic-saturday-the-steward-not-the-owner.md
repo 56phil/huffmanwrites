@@ -3,7 +3,7 @@ title: "Stoic Saturday: The Steward, Not the Owner"
 description: "A federal judge told the President he could use the White House but not own it. This week the case reaches the Supreme Court, and the taxpayer bill for the private gift has quietly grown to $900 million."
 date: 2026-08-15T08:00:00Z
 lastmod: 2026-08-15T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 tags:
   - weekly-digest
   - stoicism

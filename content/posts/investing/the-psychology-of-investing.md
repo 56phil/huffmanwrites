@@ -2,7 +2,7 @@
 title: "The Psychology of Investing"
 description: "How fear, greed, and bias sabotage investment decisions—and how to resist them."
 date: 2025-09-29T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-09-29T00:00:00Z
 tags:
   - ai

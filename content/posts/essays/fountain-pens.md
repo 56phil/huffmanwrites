@@ -2,7 +2,7 @@
 title: "Two Nations, One Instrument: How Germany and Japan Shaped the Modern Fountain Pen"
 description: "A comparative history of the two great fountain pen traditions — German engineering discipline and Japanese artistic precision — and what they reveal about craft, culture, and the examined life."
 date: 2026-06-08T05:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-06-08T00:00:00Z
 featuredOnHome: true
 tags:

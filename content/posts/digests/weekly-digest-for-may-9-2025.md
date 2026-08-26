@@ -3,7 +3,7 @@ title: "Weekly Digest for May 9, 2025"
 description: "Weekly digest: observations, recommendations, and reflections from May 9, 2025."
 date: 2025-05-09T00:00:00Z
 tags: [News]
-author: Phil Huffman
+author: Philip Huffman
 hero_desktop: "img/articles/19-Justice-16x9.webp"
 hero_mobile: "img/articles/19-Justice-4x5.webp"
 hero_alt: "A marble figure sits in contemplation on a bench, surrounded by faint gold outlines of others in a silent circle."

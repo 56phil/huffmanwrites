@@ -2,7 +2,7 @@
 title: "🧭 A Nation Poised for Reckoning—or Renewal"
 description: "America at the crossroads: reckoning with corruption or renewing democratic values."
 date: 2025-05-18T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-05-18T00:00:00Z
 hero_desktop: "img/articles/1-ror-16x9.webp"
 hero_mobile: "img/articles/1-ror-4x5.webp"

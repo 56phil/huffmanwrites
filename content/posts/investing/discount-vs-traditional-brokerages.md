@@ -2,7 +2,7 @@
 title: "Discount vs. Traditional Brokerages"
 description: "Comparing discount and traditional brokerages for investors at every level."
 date: 2025-09-22T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2025-09-22T00:00:00Z
 tags:
   - investing

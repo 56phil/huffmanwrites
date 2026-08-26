@@ -3,7 +3,7 @@ title: "Honor in the Age of Self-Interest"
 date: 2026-08-06T07:26:00-05:00
 lastmod: 2026-08-07T00:00:00-05:00
 draft: false
-author: Phil Huffman
+author: Philip Huffman
 description: "Honor isn't conferred by office or title. It's a practical discipline: consistency, respect, courage, responsibility, and the country is watching, in real time, what erodes when leaders abandon it."
 hero_desktop: "img/articles/46-honor-in-the-age-of-self-interest_16x9.webp"
 hero_mobile: "img/articles/46-honor-in-the-age-of-self-interest_4x5.webp"

@@ -2,7 +2,7 @@
 title: "The Debt Brake: Discipline That Doesn't Depend on Willpower"
 description: "A companion to Treasury Buybacks: A Colossal Failure in the Making. Switzerland's constitutional debt brake, and the dormant U.S. bill modeled on it, are a real fix, one that needs to start before the CBO's own no-crisis baseline breaks the debt-to-GDP record around 2030."
 date: 2026-08-21T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 lastmod: 2026-08-21T00:00:00Z
 hero_desktop: "img/articles/51-the-debt-brake-a-real-alternative_16x9.webp"
 hero_mobile: "img/articles/51-the-debt-brake-a-real-alternative_4x5.webp"

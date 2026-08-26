@@ -2,7 +2,7 @@
 title: "Pale Blue Dot — Sagan"
 description: "A summary and review of Carl Sagan's meditation on humanity's place in the cosmos, inspired by the most important photograph ever taken."
 date: 2026-05-31T00:00:00Z
-author: Phil Huffman
+author: Philip Huffman
 sort_key: "Sagan, Carl - Pale Blue Dot"
 lastmod: 2026-05-31T00:00:00Z
 tags:
