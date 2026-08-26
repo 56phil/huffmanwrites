@@ -13,6 +13,20 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Completed (Previous Sessions)
 
+### Maintenance — August 26, 2026 — Published "The Economic and Geopolitical Position of the United States in Mid-2026"
+- Phil asked for a formal, APA-cited article (under 1500 words) about the state of the US economy and geopolitical standing, written so the critique reads as institutional and structural rather than personal toward Trump. Iterated through journalistic, academic, and formal voice passes, then approved and asked to publish to huffmanwrites.
+- Created `content/posts/essays/economic-and-geopolitical-position-of-the-united-states.md` with standard frontmatter (title, description, date/lastmod 2026-08-26, author Phil Huffman, tags geopolitics/economy/politics/essays).
+- Structure: Abstract + roman-numeral sections (Introduction, Macroeconomic Trajectory, Fiscal Constraint, Geopolitical Position, Conclusion) + `## Sources` list matching the site's established APA-style convention (in-text `(Author, Year)` citations + linked source list, same pattern as `the-ai-investment-bubble.md`).
+- Key figures cited: Q2 2026 real GDP +1.5% annualized (down from Q1's 2.1%); CBO FY2026 deficit ~$1.9T and debt-to-GDP ~120% by 2036; Fed funds rate held at 3.50 to 3.75% July 29, 2026 (3 dissenters); dollar reserve share below 57%; China ahead of US in approval in 27 of 36 countries surveyed; about 86k US personnel assigned to NATO Europe; more than $6B NATO US-sourced equipment committed to Ukraine.
+- Verified clean build (`hugo --gc --minify`, 332 pages, 0 errors; only pre-existing workshop raw-HTML warnings, unrelated to this file). Confirmed rendered page exists at `/posts/essays/economic-and-geopolitical-position-of-the-united-states/`, title and all 13 source links present. Article is 1,438 words, 0 em dashes (within site convention).
+- Not yet committed/pushed as of writing this entry; the new file is the only untracked change (`public/` is gitignored).
+### Fact-check pass (same session)
+- Ran a full fact-check against sources. 11 of 13 load-bearing claims verified accurate. Two corrections applied at Phil's direction:
+  - **Claim 7 (core PCE direction, material error):** article originally said "June's core PCE inflation declined"; actual data is headline PCE fell 0.1% MoM while core PCE (Fed's preferred gauge) *rose* 0.1%, consumer spending +0.3%. Applied the fuller fix: "June's headline PCE inflation declined 0.1 percent and consumer spending rose 0.3 percent, although core PCE, the gauge the Committee weighs most heavily, rose 0.1 percent."
+  - **Claim 8 (citation quality):** dollar reserve-share figure (<57%) is accurate but was cited to secondary aggregator "Informed Clearly"; replaced with authoritative IMF COFER data brief (July 2026). IMF entry now in the Sources list.
+- Also flagged (not changed, per Phil's scope): FOMC's three dissents were specifically *in favor of a rate hike*; article's framing of the disagreement is fair but could be sharpened.
+- Rebuilt clean (332 pages, 0 errors); corrected sentences and IMF citation confirmed in rendered output. Word count 1,462, 0 em dashes.
+
 ### Maintenance — August 22, 2026 (part 3) — Sent this week's Stoic Saturday digest
 - Phil hadn't sent a newsletter yet on the day of, with no draft in `pending/`. Only genuinely new content that week was a pair of investing pieces published August 21: "Treasury Buybacks: A Colossal Failure in the Making" and its companion "The Debt Brake: Discipline That Doesn't Depend on Willpower" — a departure from the last three digests' civics/rule-of-law theme.
 - Drafted an original Stoic Saturday piece around them, "The Rule You Set Before You Need It" (Epictetus on deciding your character in advance, mapped onto Switzerland's constitutional debt brake vs. Congress's dormant Responsible Budget Targets Act), matching the established digest format (`pending/TEMPLATE.md` structure, `**The Practice**` closer, sourced-from footnote). Phil reviewed and asked for an added Editor's Note thanking service members deployed in the Middle East; appended before the closing link.
