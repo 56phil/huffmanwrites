@@ -12,6 +12,12 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 ---
 
 ## Completed (Previous Sessions)
+### Maintenance — August 26, 2026 (part 5) — Audit cleanup: de-link decision, memory/ removal, draft pruning
+- Phil asked whether anything else the site needs; I audited and reported: (1) the live broken hero image on `stoic-saturday-the-rule-you-set-before-you-need-it.md` (files `52-*` never generated, 404 on page + og:image), (2) 13 legacy WordPress links, (3) stray `memory/` dir, (4) obsolete `future-pieces/` drafts. Phil's call: (1) no action for now; (2) de-link; (3) remove; (4) delete `ai-detection-academic-writing.md` (obsolete, watermarking practice makes it moot) and `fountain-pens.md` (superseded by published essay), keep `2027-where-valor-sleeps.md`.
+- Re: (2): the 13 Ghost-era flat-URL de-link was already done in commit `c800426` (Aug 21) — verified zero legacy flat-slug links remain in source; the 3 remaining `www.huffmanwrites.org/<slug>/` links all resolve 200 via `aliases:` frontmatter (when-justice-bends, the-virtue-of-temperance, the-stoic-investor).
+- Re: (3): `git rm` the in-repo `memory/` directory (stale superseded sort-order advice). Re: (4): removed both drafts; kept `2027-where-valor-sleeps.md`.
+- Committed `ce6dd1c`, pushed; Pages deploy run 32982539883 success, homepage 200.
+
 ### Maintenance — August 26, 2026 (part 4) — Author byline renamed "Phil Huffman" → "Philip Huffman" sitewide
 - Phil requested the site's author byline read "Philip Huffman" instead of "Phil Huffman". Audited the repo: 123 content files carried `author: Phil Huffman` in frontmatter (66 others already said "Philip"), plus `hugo.toml` `params.author` and `pending/TEMPLATE.md`.
 - Applied the rename via sed across all 125 files; no body-text full-name uses existed. Cleaned `public/` and rebuilt: 333 pages, 0 errors, zero old-name occurrences in output (the four `draft = true` credo pages had stale dev-server leftovers; production build never emits them).
