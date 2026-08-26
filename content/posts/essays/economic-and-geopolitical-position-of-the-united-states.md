@@ -9,6 +9,10 @@ tags:
   - economy
   - politics
   - essays
+hero_desktop: "img/articles/53-economic-and-geopolitical-position_16x9.webp"
+hero_mobile: "img/articles/53-economic-and-geopolitical-position_4x5.webp"
+hero_alt: "A monumental Parian marble column capital cracked along a fault line, molten gold light glowing through the fracture, one edge eroded, set against a deep midnight navy void."
+hero_caption: "A load-bearing structure can show its cracks and still stand; the question is what it can carry next."
 ---
 
 This article examines the economic and geopolitical position of the United States as of mid-2026. It analyzes the recent deceleration in real output growth, the persistence of above-target inflation, and the trajectory of public indebtedness, and it relates these macroeconomic conditions to the country's standing within the international system. The analysis concludes that the principal constraints on the American position are endogenous in origin: they derive from domestic fiscal decisions and from the attenuation of the legitimacy that underpins the country's alliance relationships, rather than from the direct exercise of power by rival states.

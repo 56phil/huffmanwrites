@@ -9,6 +9,10 @@ tags:
   - essays
   - civics
   - elections
+hero_desktop: "img/articles/54-what-the-2026-midterms-will-decide_16x9.webp"
+hero_mobile: "img/articles/54-what-the-2026-midterms-will-decide_4x5.webp"
+hero_alt: "Two unweathered Parian marble columns standing like the pans of an abstract balance, a thin gold beam above, one pan lower under a heap of glowing gold discs, gold dust suspended between them in a deep midnight navy void."
+hero_caption: "A verdict is not a fact; it is a decision, and this one has not finished deciding."
 ---
 
 The 2026 midterms come Tuesday, November 3, with both chambers of Congress in play and an outcome that has become genuinely uncertain as the campaign enters its final stretch.[^1] Republicans control the Senate 53 to 47 and the House 219 to 212, with four seats vacant.[^2] Democrats enter the fall with the national wind at their back, roughly six points ahead on the generic ballot, and a plausible arithmetic for taking both chambers.[^3] The question is whether they survive contact with the map.
