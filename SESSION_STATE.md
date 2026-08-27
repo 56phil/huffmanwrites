@@ -11,7 +11,13 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
-## Completed (Previous Sessions)
+### Maintenance — August 27, 2026 — Published "Two Philosophies of the Pen: The Lamy 2000 and the Waterman Carène"
+- Phil asked for a high-quality compare/contrast essay (under 1000 words) on the Lamy 2000 and the Waterman Carène. Wrote `content/posts/essays/lamy-2000-vs-waterman-carene.md` (tags: essays, writing, craft, design, philosophy), framed as a philosophical argument: the Lamy as Bauhaus-functionalist tool that disappears into the task (1966, Gerd A. Müller, Makrolon, hooded 14k nib, piston filler, unchanged for 60 years) vs. the Carène as nautical-luxury object that makes writing an occasion (1997, "hull" in French, 18k inlaid nib, lacquered brass).
+- Facts verified against sources: Lamy 2000 design year/designer/materials and the MoMA connection (Müller's Braun works, not the pen); Carène introduction year (1997 per Waterman's own timeline), name meaning, nib construction, lacquered-brass body.
+- Phil asked what it says about a man who loves both; I answered in conversation, then he asked to work that reflection into the conclusion. Expanded the closing: the man who loves both is complete, not confused; the Lamy-only man thinks clearly but forgets to honor what he thinks, the Carène-only man performs the ceremony but has nothing underneath it; loving both honestly is the evidence of showing up. Final body word count 978, under the 1000 cap.
+- Clean `hugo --gc --minify` build, 0 errors. No hero image pair wired (consistent with the economics and midterms essays; renders fine without one).
+- Committed `57ff1a2`, pushed; post file copied to `~/SimpleBrain/raw/content/posts/essays/` per the post-commit rule. Live at `https://www.huffmanwrites.org/posts/essays/lamy-2000-vs-waterman-carene/` once the Pages deploy completes.
+
 ### Maintenance — August 26, 2026 (part 6) — Wired hero images for "The Rule You Set Before You Need It" (fixes broken hero 52)
 - Phil asked for the image prompt for the long-broken hero 52 (Stoic Saturday digest, published Aug 22). Concept: a marble sluice gate under construction in calm daylight, masonry tool at rest, gold light, no flood yet — completing the visual trilogy with the Aug 21 buyback (crumbling wall) and debt-brake (intact gate) heroes.
 - Phil delivered two renders (via session files): portal-with-axe (portrait) and two pillars-under-construction-with-scaffolding at sunset (landscape). Vision-verified subject mapping sequentially (desktop = sluice/construction, mobile = portal), cropped with ImageMagick to 1365×768 and 896×1120 WebP quality 92, saved as `static/img/articles/52-the-rule-you-set-before-you-need-it_{16x9,4x5}.webp`. Updated `hero_alt` to describe the actual art (pillars, trowel, scaffolding) instead of the original chisel concept; caption unchanged ("Build the gate while the sea is still calm.").
