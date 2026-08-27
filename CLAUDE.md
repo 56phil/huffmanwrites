@@ -90,7 +90,8 @@ There are no automated tests, linters, or a package.json. The "test" is a clean 
 - **Book summaries** must include `sort_key` frontmatter (LC order: "Last, First") so the list template's `ByParam "sort_key"` keeps them in order. Established format: Executive Summary, 5 Core Arguments (numbered), thematic section, A Respectful Disagreement, Bottom Line, closing quote, `*PRH | [huffmanwrites.org] | © Philip Huffman*` attribution. Tone: positive, yet critical.
 - **All Hugo posts** should have `lastmod` frontmatter (git-based date is fine).
 - **All post images** lazy-load except hero images, which use `loading="eager" fetchpriority="high"`.
-- **Always check spelling/grammar** before committing and pushing.
+- **Copyedit + fact check every piece of content before it is committed.** Copyedit: spelling, grammar, punctuation, flow, and the em-dash limit (no more than 3 per file; prefer commas, colons, semicolons, or splitting sentences). Fact check: every load-bearing claim (dates, names, figures, attributions) verified against a source; correct or flag anything unverifiable before publishing. This gate applies to essays, digests, summaries, and any other content.
+- **One commit per publish.** The content file and its SESSION_STATE.md entry go in a single commit, pushed once. No follow-up "session state" commits after a content commit.
 - **Gallery link hover colors** (`blue`/`red`) are intentional — do not suggest changing them.
 - **`all-my-books.md`** is kept as an alternate entry point to `/books/` (renders via `book_catalog` shortcode). Do not delete.
 - **Empty non-Constitution stubs** should be deleted. Constitution stubs are kept and written up.
