@@ -18,7 +18,7 @@ hero_caption: "No one can save the world alone. But no one should feel alone in 
 
 ### *Our Pale Blue Dot Still Turns — and It Still Needs Us*
 
- There’s a photo taken by Voyager 1 in 1990, just before it left our solar system.
+  There's a photo taken by Voyager 1 in 1990, as it was leaving the planetary region of our solar system.
  It shows Earth from 3.7 billion miles away — a tiny speck caught in a beam of scattered sunlight.
 
  That speck is us.

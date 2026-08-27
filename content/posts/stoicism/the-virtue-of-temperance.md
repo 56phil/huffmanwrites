@@ -42,5 +42,5 @@ The first time I truly understood what rage could do to a man, I wasn’t watchi
 
  Temperance may be the quietest virtue.  But in the long run, it’s the one that sustains everything else.
 
- **“No man is more unhappy than he who never faces adversity. For he is not permitted to prove himself.”**
- —&nbsp;*Seneca*
+  **"No man is more unhappy than he who never faces adversity. For he is not permitted to prove himself."**
+ —&nbsp;*Seneca, De Providentia (paraphrase)*

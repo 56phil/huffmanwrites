@@ -11,7 +11,7 @@ hero_caption: "You don't build a fortress during the siege. You build it in peac
 lastmod: 2026-05-19
 ---
 
-"The man who has anticipated the blow is less shaken by it." — Seneca
+"The man who has anticipated the coming of troubles takes away their power when they arrive." — Seneca
 
 Most people spend their lives avoiding the thought of failure. They treat anxiety as a signal to retreat or as a malfunction to be fixed. They assume that by ignoring the possibility of a disaster, they somehow insulate themselves from it.
 

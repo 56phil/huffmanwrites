@@ -14,7 +14,7 @@ lastmod: 2026-05-19
 ---
 ---
 
-"The man who has anticipated the blow is less shaken by it." — Seneca
+"The man who has anticipated the coming of troubles takes away their power when they arrive." — Seneca
 
 We spend most of our lives cultivating a vision of how things *should* go. We build these mental architectures of success, smooth roads, and predictable outcomes. We treat the absence of crisis as the natural state of affairs, and we view the sudden appearance of a problem as a personal affront or a failure of planning.
 

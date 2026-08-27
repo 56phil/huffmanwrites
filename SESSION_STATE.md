@@ -11,6 +11,15 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
+### Maintenance — August 27, 2026 — Fact-checked all 11 posts in /stoicism; corrected 4 claims
+- Phil asked to fact-check `content/posts/stoicism/` (11 files: 2 Stoic Saturday digests, 2 temperance essays, stoic-investor, 5 Pale Blue Dot/Sagan pieces, learning-from-giants, _index). Verified every load-bearing claim against primary sources (Latin Library texts of Seneca, Wikipedia, Goodreads). Report saved to `factcheck-stoicism.md` at repo root.
+- **4 corrections applied across 4 files:**
+  - `stoic-saturday-1.md` + `stoic-saturday-2.md`: epigraph "The man who has anticipated the blow is less shaken by it" is not a genuine Seneca quote — no standard translation uses that wording. Replaced with the verified rendering of *De Tranquillitate Animi* XI.6 ("Quicquid enim fieri potest quasi futurum sit prospiciendo..."), commonly translated "The man who has anticipated the coming of troubles takes away their power when they arrive."
+  - `to-save-a-world-together.md`: "photo taken by Voyager 1 in 1990, just before it left our solar system" — wrong; Voyager 1 crossed the heliopause in 2012, 22 years after the photo. Now "as it was leaving the planetary region of our solar system."
+  - `the-virtue-of-temperance.md`: closing Seneca quote is a paraphrase of *De Providentia* III.3/IV.3 (Demetrius: "nihil mihi uidetur infelicius eo cui nihil umquam euenit aduersi"); attribution now "Seneca, De Providentia (paraphrase)."
+- Verified PASS: Sagan quotes (verbatim vs. *Pale Blue Dot* text), 3.7-billion-miles distance, Coelho quote (*Aleph*), Epictetus dichotomy of control, *premeditatio malorum*, Earth Day/Cuyahoga framing.
+- Single commit per the publishing rule: 4 content files + this SESSION_STATE entry, pushed once.
+
 ### Maintenance — August 27, 2026 — Fact-checked all 35 book summaries; corrected 19 claims
 - Phil asked to fact-check every book summary, with a deliberate cap: ≤4 summaries per task, ≤4 active tasks. 35 summaries → 9 tasks → 3 waves (4+4+1). All 9 agents were scouts; 4 full reports were lost to yield-size failures and recovered via hub chunk delivery.
 - **19 incorrect claims corrected across 14 files:**
