@@ -38,7 +38,7 @@ Thiel cannot be called stupid because he is, in the most precise sense, a **phil
 
 If Thiel is not stupid, is he evil? The evidence is substantial.
 
-In 2007, Thiel wrote an essay titled "The Straussian Moment" in which he argued that "since 1920, the vast increase in welfare beneficiaries and the extension of the franchise to women — two constituencies that are notoriously tough for libertarians — have rendered the notion of 'capitalist democracy' into an oxymoron."[^4] In a 2009 essay for the Cato Institute, he went further: "I no longer believe that freedom and democracy are compatible."[^5] He has described the British Empire as "the Antichrist" and has given private lectures on the Antichrist, Armageddon, and apocalyptic theology — not as a crank, but as a serious intellectual framework.[^6]
+In a 2009 essay for the Cato Institute, "The Education of a Libertarian," Thiel argued that "since 1920, the vast increase in welfare beneficiaries and the extension of the franchise to women — two constituencies that are notoriously tough for libertarians — have rendered the notion of 'capitalist democracy' into an oxymoron."[^4] In a 2009 essay for the Cato Institute, he went further: "I no longer believe that freedom and democracy are compatible."[^5] He has described the British Empire as "the Antichrist" and has given private lectures on the Antichrist, Armageddon, and apocalyptic theology — not as a crank, but as a serious intellectual framework.[^6]
 
 He funded the lawsuit that destroyed *Gawker* — a calculated, years-long campaign of vengeance against a media outlet that had outed him as gay in 2007. He spent roughly $10 million backing Hulk Hogan's invasion-of-privacy suit, keeping his involvement secret until the verdict bankrupted the publication.[^7] This was not impulse. It was **strategic patience** — the application of overwhelming resources to the elimination of an enemy, executed with legal precision and emotional detachment.
 
@@ -98,7 +98,7 @@ The most accurate epitaph for his career to date is this: **Peter Thiel is a man
 
 [^3]: Thiel, P., & Masters, B. (2014). *Zero to one: Notes on startups, or how to build the future*. Crown Business.
 
-[^4]: Thiel, P. (2007). *The Straussian moment*. https://gwern.net/doc/politics/2007-thiel.pdf
+[^4]: Thiel, P. (2009). The education of a libertarian. *Cato Unbound*. https://www.cato-unbound.org/2009/04/13/peter-thiel/education-libertarian
 
 [^5]: Thiel, P. (2009). The education of a libertarian. *Cato Unbound*. Cited in: Wikipedia contributors, n.d.
 

@@ -11,6 +11,26 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
+### Maintenance — August 27, 2026 — Fact-checked all 28 essays; corrected 17 claims
+- Phil asked to fact-check all posts in `/essays`. Dispatched 6 parallel scout agents (5+5+4+4+5+5 files). 28 essays, 300+ claims checked: 4 agents' full reports were lost to yield-size failures and recovered via hub chunk delivery; all reports saved to `factcheck-*.md` at repo root (craft-personal, politics-current, culture-science; politics-figures and geopolitics-history reports were delivered inline at session start).
+- **17 incorrect claims corrected across 12 files:**
+  - `lamy-2000-vs-waterman-carene.md`: ink capacity 2.5ml → 1.35ml (official spec)
+  - `what-926-gigabytes-taught-me-about-proportion.md`: 97% → 98% (arithmetic)
+  - `montessori-stoicism-synthesis.md`: horme citation 1912 → 1949; 3 reference fixes (Stokes not "Harper & Company"; Theosophical Publishing House not "Sonia Montessori Company"; Archer journal = Pedagogy, Culture & Society not Journal of Early Childhood Research)
+  - `economic-and-geopolitical-position-of-the-united-states.md`: dollar reserve share rewritten to match cited IMF COFER (57.13% Q1 2026, up from 56.42%, "broadly stable" — not "fallen below 57%")
+  - `what-the-2026-midterms-will-decide.md`: Paxton "active securities-fraud indictment" → "resolved his securities-fraud case in 2024"
+  - `the-2026-senate-map-a-race-by-race-guide.md`: Paxton "under a securities-fraud indictment dating to 2015" → "subject of a securities-fraud case resolved in 2024"
+  - `texas-senate-2026-*.md`: indictment "remained pending as of mid-2026" → resolved March 2024 (footnote [^13] now cites AP); divorce 2024 → July 2025; "Bob Krueger in 1988" → "Lloyd Bentsen in 1988" (Krueger was appointed 1993, never elected)
+  - `AI.md`: Brynjolfsson 67% time-reduction removed (study found 14% productivity only); McKinsey $270B-$360B/~200 use cases → $2.6T-$4.4T/63 use cases; GPAI "twenty-eight countries" → "fifteen founding members"
+  - `starstuff-remembering-carl-sagan.md`: "starstuff contemplating the stars" → "starstuff pondering the stars" (exact Cosmos wording)
+  - `fountain-pens.md`: 8 fixes (pelican trademark 1878 not 1838; Pelikan rename ~1968 not mid-1950s; Montblanc founded Berlin 1906 as Simplizissimus-Füllhalter, moved Hamburg 1907, Voss joined later; Rouge et Noir 1909 not 1906; Montblanc name 1910 not 1909; Platinum rename 1942 not 1928; Dunhill contract 1930 not 1929; Platinum maki-e attribution)
+  - `elon-musk-and-the-engineering-of-chaos.md`: hate speech "doubled" → "rose by roughly half... doubling of engagement with hate posts" (per cited PLOS ONE study)
+  - `trumps-greenland-gambit-revisited.md`: dead U.S. News citation [^14] → live CNBC July 7, 2026 source
+  - `honor-in-the-age-of-self-interest.md`: McCain crowd "booed him" → "drew applause; booing aimed at the woman's original remark" (per cited ABC7)
+  - `peter-thiel-and-the-contrarians-revenge.md`: "since 1920... oxymoron" quote reattributed from 2007 "The Straussian Moment" to 2009 Cato Unbound "The Education of a Libertarian" (footnote [^4] updated)
+- Unverifiable (not changed): 926GB machine state, .omlx cache, Talarico bill counts/corporate-PAC claim, Arctic forum 2026 St. Petersburg edition, 3 fountain-pens legends. Personal/opinion claims left as-is.
+- Clean `hugo --gc --minify` build, 0 errors. All fixes in one commit per the new single-commit rule.
+
 ### Maintenance — August 27, 2026 — Published "Two Philosophies of the Pen: The Lamy 2000 and the Waterman Carène"
 - Phil asked for a high-quality compare/contrast essay (under 1000 words) on the Lamy 2000 and the Waterman Carène. Wrote `content/posts/essays/lamy-2000-vs-waterman-carene.md` (tags: essays, writing, craft, design, philosophy), framed as a philosophical argument: the Lamy as Bauhaus-functionalist tool that disappears into the task (1966, Gerd A. Müller, Makrolon, hooded 14k nib, piston filler, unchanged for 60 years) vs. the Carène as nautical-luxury object that makes writing an occasion (1997, "hull" in French, 18k inlaid nib, lacquered brass).
 - Facts verified against sources: Lamy 2000 design year/designer/materials and the MoMA connection (Müller's Braun works, not the pen); Carène introduction year (1997 per Waterman's own timeline), name meaning, nib construction, lacquered-brass body.

@@ -32,7 +32,7 @@ It wasn't in the obvious places. Not in my home directory, where most user data 
 
 One file. Nearly a terabyte.
 
-I deleted it. Two directories alongside it — `.omlx` and `.lmstudio`, other local LLM caches I was no longer using — went with it. Then I purged the Time Machine snapshots that were pinning the deleted blocks. The machine dropped from six hundred gigabytes in use to twelve. A 97% reduction. The system was intact. My work was untouched. Nothing was sacrificed that didn't need to be.
+I deleted it. Two directories alongside it — `.omlx` and `.lmstudio`, other local LLM caches I was no longer using — went with it. Then I purged the Time Machine snapshots that were pinning the deleted blocks. The machine dropped from six hundred gigabytes in use to twelve. A 98% reduction. The system was intact. My work was untouched. Nothing was sacrificed that didn't need to be.
 
 The lesson isn't about Docker. It isn't even about disk cleanup.
 

@@ -31,7 +31,7 @@ When a child realizes a cylinder does not fit into a hole, they are not experien
 
 ## II. *Horme* and the Process of *Oikeiōsis*
 
-Montessori described the "absorbent mind" as a unique period of human development where the child effortlessly incorporates sensory information from their environment. She identified a "vital force" or *horme* (Montessori, 1912) that leads the child toward the goal of becoming "sufficient unto themselves."
+Montessori described the "absorbent mind" as a unique period of human development where the child effortlessly incorporates sensory information from their environment. She identified a "vital force" or *horme* (Montessori, 1949) that leads the child toward the goal of becoming "sufficient unto themselves."
 
 This innate drive toward self-completion parallels the Stoic concept of *Oikeiōsis*—the process of "appropriation" or "making something one's own." In Stoicism, *Oikeiōsis* begins with the instinct for self-preservation and gradually expands to include a rational love for others and the cosmos. 
 
@@ -63,11 +63,11 @@ By treating the child as a complete agent capable of self-correction and self-di
 
 ## References
 
-Archer, N. (2024). Walking a desire track: Montessori pedagogy as resistance to normative policy-driven pathways in early childhood education and care. *Journal of Early Childhood Research*. https://doi.org/10.1080/14681366.2024.2355097
+Archer, N. (2024). Walking a desire track: Montessori pedagogy as resistance to normative policy-driven pathways. *Pedagogy, Culture & Society*. https://doi.org/10.1080/14681366.2024.2355097
 
-Montessori, M. (1912). *The Montessori Method*. Frederick A. Harper & Company.
+Montessori, M. (1912). *The Montessori Method*. Frederick A. Stokes Company.
 
-Montessori, M. (1949/1989). *The Absorbent Mind*. The Sonia Montessori Company.
+Montessori, M. (1949/1989). *The Absorbent Mind*. Theosophical Publishing House, Adyar, Madras.
 
 Robertson, D. (2022). *Stoicism for Children*. Donald J. Robertson. https://donaldrobertson.name/2022/06/19/stoicism-for-children/
 

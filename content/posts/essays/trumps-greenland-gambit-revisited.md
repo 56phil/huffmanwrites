@@ -77,7 +77,7 @@ Real strategic interests — the radar at Pituffik, the minerals under Kvanefjel
 
 [^13]: CNN. (2026, February 21). Trump says he's sending a hospital boat to Greenland as territory says 'no thanks.' https://www.cnn.com/2026/02/21/politics/trump-greenland-hospital-boat
 
-[^14]: U.S. News & World Report, 2026, July 7.
+[^14]: CNBC. (2026, July 7). Trump renews Greenland threats at NATO summit, says U.S. could remove troops from Europe. https://www.cnbc.com/2026/07/07/trump-nato-summit-greenland-us-troops-europe.html
 
 [^15]: Newsweek. (2026, July 31). Trump predicts US will control Greenland by 2029: 'Make that bet.' https://www.newsweek.com/trump-greenland-control-2029-make-that-bet-12275042
 

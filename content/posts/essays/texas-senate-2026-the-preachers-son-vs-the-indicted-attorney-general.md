@@ -40,7 +40,7 @@ Paxton's tenure as Attorney General has been defined by two things: aggressive l
 
 In May 2023, the Texas House of Representatives voted 121–23 to impeach Paxton on 16 articles, including allegations that he gave preferential treatment to a political donor who had bribed him, misapplied public resources, made false statements against whistleblowers, obstructed justice in the securities fraud trial against him, and made false statements regarding his financial interests.[^11] The Texas Senate acquitted him in September 2023 on largely party-line votes, and he resumed office.[^12]
 
-The securities fraud indictment, dating to 2015, remained pending as of mid-2026.[^13] His wife, Angela Paxton, filed for divorce in 2024, alleging adultery. His office entered a plea deal in May 2026 with a man charged with sexual abuse of a minor, drawing criticism from both parties.[^14]
+The securities fraud indictment, dating to 2015, was resolved in March 2024, when Paxton agreed to community service and restitution and the charges were dropped.[^13] His wife, Angela Paxton, filed for divorce in July 2025, alleging adultery. His office entered a plea deal in May 2026 with a man charged with sexual abuse of a minor, drawing criticism from both parties.[^14]
 
 Paxton has sued the Biden administration 106 times, opposed the bipartisan gun safety bill after the Uvalde massacre, and led efforts to block emergency abortions for women facing medical crises.[^15] He defeated incumbent Senator John Cornyn in the Republican primary runoff on May 26, 2026, running to Cornyn's right and casting the senior senator as insufficiently loyal to Donald Trump.[^16] He has raised $7.6 million as of July 2026 — roughly one-fifth of Talarico's total.[^17]
 
@@ -70,7 +70,7 @@ Paxton is 63. His political career began before Talarico was born. He speaks the
 
 ## III. The Race: Why It's Competitive
 
-Texas hasn't elected a Democratic senator since Bob Krueger in 1988. The state has trended slightly bluer in recent cycles — Beto O'Rourke came within 2.6 points of Ted Cruz in 2018, and Joe Biden lost Texas by only 5.6 points in 2020 — but it remains a Republican stronghold at the statewide level.[^21] So why is this race a toss-up?
+Texas hasn't elected a Democratic senator since Lloyd Bentsen in 1988. The state has trended slightly bluer in recent cycles — Beto O'Rourke came within 2.6 points of Ted Cruz in 2018, and Joe Biden lost Texas by only 5.6 points in 2020 — but it remains a Republican stronghold at the statewide level.[^21] So why is this race a toss-up?
 
 **First: Paxton's negatives are astronomical.** The July 2026 Texas Public Opinion Research poll found Talarico with a +12 net favorability rating and Paxton with a -13 rating — the worst of any figure tested.[^22] Nearly every Texas voter knows who Paxton is, and a significant portion of them do not like what they see. The impeachment, the indictment, the divorce, the plea deal — these are not obscure scandals. They are the defining features of Paxton's public persona.
 
@@ -124,7 +124,7 @@ Texas Republicans had a choice. They could have renominated John Cornyn, a conve
 
 [^12]: Ibid.
 
-[^13]: Wikipedia contributors, n.d.
+[^13]: AP News. (2024, March 26). Texas AG Ken Paxton reaches deal to end securities fraud case. https://apnews.com/article/ken-paxton-texas-securities-fraud-9ed5eecc30c1f967ec51f7e58ad9d0af
 
 [^14]: Texas Tribune. (2026, May 19). Ken Paxton Waco plea deal child sex abuse. https://www.texastribune.org/2026/05/19/ken-paxton-waco-plea-deal-child-sex-abuse-texas-attorney-general/
 
