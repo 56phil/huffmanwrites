@@ -40,6 +40,6 @@ If you are exhausted by tribalism, noise, and performative certainty—this book
 [**Get the hardcover on Amazon →**](https://a.co/d/06AOhZBr?ref=huffmanwrites.org)
 
 ---
-This is book eight of eight. The arc is complete. Each book is standalone equipment. Pick the one that fits the problem you are trying to solve.
+This is the latest in a growing series. Each book is standalone equipment. Pick the one that fits the problem you are trying to solve.
 
 *Read. Practice. Change.*
