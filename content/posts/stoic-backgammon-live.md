@@ -16,7 +16,7 @@ tags:
 
 The dice choose the numbers. You choose the move.
 
-**Stoic Backgammon** is now available on Amazon. Hardcover is live now; paperback and Kindle coming in June.
+**Stoic Backgammon** is now available on Amazon. Hardcover, paperback, and Kindle editions are all available now.
 
 ---
 This book is not a strategy guide with philosophy sprinkled on top. It is not a Stoicism book with dice metaphors. It is both, and it is neither. Nine chapters, each built around a backgammon concept and a Stoic principle. The anchor. The blitz. The prime. The bear-off.
