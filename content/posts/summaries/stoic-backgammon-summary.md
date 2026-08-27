@@ -67,7 +67,7 @@ That is the practice.
 
 ---
 >  *“Make the best use of what is in your power, and take the rest as it happens.”*
-— Epictetus
+— Epictetus (paraphrase; the standard Long translation of *Discourses* 1.1 reads: "use the rest according to their nature... As God may please")
 
 
 

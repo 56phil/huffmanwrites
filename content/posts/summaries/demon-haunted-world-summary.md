@@ -19,7 +19,7 @@ tags:
 ---
 ## Executive Summary
 
-Written in the last year of his life, *The Demon-Haunted World* is Sagan's most direct argument: that skepticism is not a temperament but a practice, and that a democracy that loses the habit of critical thinking loses everything else with it. The book's central offering — the "baloney detection kit," a set of tools for evaluating claims — is as practical as a Swiss Army knife and about as portable. The thesis is simple: **the candle of science does not guarantee light, but without it we are navigating by superstition.**
+Published in 1995, a year and a half before his death, *The Demon-Haunted World* is Sagan's most direct argument: that skepticism is not a temperament but a practice, and that a democracy that loses the habit of critical thinking loses everything else with it. The book's central offering — the "baloney detection kit," a set of tools for evaluating claims — is as practical as a Swiss Army knife and about as portable. The thesis is simple: **the candle of science does not guarantee light, but without it we are navigating by superstition.**
 
 ---
 ## 5 Core Arguments
