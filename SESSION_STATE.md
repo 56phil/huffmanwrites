@@ -11,6 +11,15 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
+### Maintenance — August 27, 2026 — Fact-checked all 35 book summaries; corrected 19 claims
+- Phil asked to fact-check every book summary, with a deliberate cap: ≤4 summaries per task, ≤4 active tasks. 35 summaries → 9 tasks → 3 waves (4+4+1). All 9 agents were scouts; 4 full reports were lost to yield-size failures and recovered via hub chunk delivery.
+- **19 incorrect claims corrected across 14 files:**
+  - Wave 1 (5): `ethics-of-ambiguity` (Sartre attribution → Beauvoir's own 1945 lecture claim); `ego-is-the-enemy` ×2 (fourth book not "second major"; canvas strategy = Roman anteambulo, not Zeno); `democracy-in-america` ×2 (suffocating-solitude quote → genuine passages; apocryphal health-of-democracy quote flagged)
+  - Wave 2 (11): `braiding-sweetgrass` ×3 (Thanksgiving Address = Haudenosaunee not Potawatomi; plant intelligence = wider literature not her research; "closing argument" → third-section argument); `pale-blue-dot` (Cosmos 15 billion years not 13); `unstuck` (Marcus quote → Jane Austen, letter to Fanny Knight 1814); `meditations` (power-over-mind quote = modern paraphrase, not in Meditations); `a-life-made-whole` (same misattributed quote flagged); `silent-spring` (DDT-malaria-resurgence myth corrected); `astrophysics` ×2 (Big Bang atoms → H/He only; outer arm → Orion Arm); `pilgrim-at-tinker-creek` (Dillard quote from The Writing Life 1989, not Pilgrim 1974)
+  - Wave 3 (3): `demon-haunted-world` ("last year of his life" → published 1995, 1.5 yrs before death); `radical-acceptance` (RAIN not in the 2003 book; later Brach development, acronym coined by Michele McDonald); `stoic-backgammon` (Epictetus quote flagged as paraphrase of Long's Discourses 1.1)
+- Unverifiable (not changed): raisem-right Epictetus quote (not in surviving corpus), a-life-made-whole/on-proportion Amazon listings (bot-blocked), unstuck/926GB-style personal claims. Personal/opinion claims left as-is.
+- Clean `hugo --gc --minify` build, 0 errors. Three commits (9b83bdd, 0c6cdb5, 0ec037d) held locally per Phil's instruction, then pushed together with this entry.
+
 ### Maintenance — August 27, 2026 — Fact-checked all 28 essays; corrected 17 claims
 - Phil asked to fact-check all posts in `/essays`. Dispatched 6 parallel scout agents (5+5+4+4+5+5 files). 28 essays, 300+ claims checked: 4 agents' full reports were lost to yield-size failures and recovered via hub chunk delivery; all reports saved to `factcheck-*.md` at repo root (craft-personal, politics-current, culture-science; politics-figures and geopolitics-history reports were delivered inline at session start).
 - **17 incorrect claims corrected across 12 files:**
