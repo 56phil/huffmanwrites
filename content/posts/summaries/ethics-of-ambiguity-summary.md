@@ -19,7 +19,7 @@ tags:
 ---
 ## Executive Summary
 
-De Beauvoir's project in this book is to do what Sartre said could not be done: derive a genuine ethics from existentialism. If existence precedes essence — if there is no fixed human nature, no God-given purpose, no external ground for morality — how do we decide how to live? De Beauvoir's answer is that the ambiguity of the human condition is not a problem to be solved but a tension to be inhabited. We are both free and situated, both individual and social, both the authors of meaning and dependent on a world we did not make. The thesis: **genuine freedom requires willing the freedom of others, and the refusal to face this is the source of most moral failure.**
+De Beauvoir's project in this book is to derive a genuine ethics from existentialism — a project she had argued, in a 1945 lecture, could not be grounded in Sartre's Being and Nothingness. If existence precedes essence — if there is no fixed human nature, no God-given purpose, no external ground for morality — how do we decide how to live? De Beauvoir's answer is that the ambiguity of the human condition is not a problem to be solved but a tension to be inhabited. We are both free and situated, both individual and social, both the authors of meaning and dependent on a world we did not make. The thesis: **genuine freedom requires willing the freedom of others, and the refusal to face this is the source of most moral failure.**
 
 ---
 ## 5 Core Arguments
