@@ -63,7 +63,7 @@ weight: -1
  
 ---
  >  *“The happiness of your life depends upon the quality of your thoughts.”*
- — Marcus Aurelius
+— Jane Austen (letter to Fanny Knight, November 18, 1814; often misattributed to Marcus Aurelius)
 
  
 

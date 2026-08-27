@@ -38,7 +38,7 @@ Carson belongs in the same tradition as Nussbaum and Sagan: the argument that de
 ---
 ## A Respectful Disagreement
 
-Carson's case against DDT was compelling and largely correct, but the subsequent history is complicated. The near-total ban on DDT in many countries contributed to a resurgence of malaria in parts of the developing world where the disease remained endemic. The relationship between DDT, malaria control, and ecological damage is genuinely difficult, and Carson's framework — which does not engage seriously with the public health tradeoffs — is not fully adequate to that difficulty.
+Carson's case against DDT was compelling and largely correct, but the subsequent history is complicated. DDT was never banned for anti-malarial use — the 1972 U.S. ban covered agricultural and domestic uses, and the 2001 Stockholm Convention explicitly exempted malaria control — and the resurgence of malaria in parts of the developing world is attributed to mosquito resistance and the abandonment of spraying programs, not to bans. The claim that Carson's book caused a malaria resurgence is a documented myth.
 
 This does not diminish her core argument about indiscriminate use, corporate capture of regulatory science, or the public's right to know. It does mean that *Silent Spring* is best read as a necessary corrective to reckless overconfidence, not as the final word on every question it raises.
 

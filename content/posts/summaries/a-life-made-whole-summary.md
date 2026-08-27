@@ -65,7 +65,7 @@ Integration, not perfection, is the path.
 
 ---
 >  *“You have power over your mind—not outside events. Realize this, and you will find strength.”*
-— Marcus Aurelius
+— often attributed to Marcus Aurelius; a modern paraphrase not found in any translation of the *Meditations* (the genuine dichotomy-of-control idea is Epictetus's, *Enchiridion* 1)
 
 
 

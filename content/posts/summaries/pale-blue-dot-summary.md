@@ -33,7 +33,7 @@ In 1990, at Sagan's request, NASA turned the Voyager 1 spacecraft around as it l
 ---
 ## Pale Blue Dot and Cosmos
 
-Where *Cosmos* is expansive — thirteen chapters, thirteen billion years, the full sweep of cosmic history — *Pale Blue Dot* is focused. It begins with a single image and asks what it means. The books are complementary: *Cosmos* gives you the context; *Pale Blue Dot* gives you the consequence. If *Cosmos* is the argument for why science matters, *Pale Blue Dot* is the argument for what we owe the planet that made science possible.
+Where *Cosmos* is expansive — thirteen chapters spanning fifteen billion years of cosmic history — *Pale Blue Dot* is focused. It begins with a single image and asks what it means. The books are complementary: *Cosmos* gives you the context; *Pale Blue Dot* gives you the consequence. If *Cosmos* is the argument for why science matters, *Pale Blue Dot* is the argument for what we owe the planet that made science possible.
 
 ---
 ## A Respectful Disagreement

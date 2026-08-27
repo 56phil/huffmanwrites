@@ -51,7 +51,7 @@ Read it alongside *Meditations*. They are, at bottom, the same project: a person
 
 ---
 > *"How we spend our days is, of course, how we spend our lives."*
-— Annie Dillard
+— Annie Dillard, *The Writing Life* (1989) — not from *Pilgrim at Tinker Creek* (1974)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
