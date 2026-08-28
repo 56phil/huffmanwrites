@@ -43,7 +43,7 @@ lastmod: 2025-05-02T00:00:00Z
  ## Conscience and Courage: Bonhoeffer’s Warning
 
  >  **Dietrich Bonhoeffer resisted a system that demanded silence.**
- He paid with his life, but left a lasting truth:
+ He paid with his life, and a saying often attributed to him captures the stakes:
 
  *"Silence in the face of evil is itself evil. Not to act is to act."*
 

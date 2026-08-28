@@ -15,7 +15,7 @@ tags:
   - politics
 ---
 
-Last Saturday, as President Trump celebrated his 79th birthday with a military parade in Washington, D.C.—funded by private donors at a reported cost of $25–45 million—something far larger and more democratic was unfolding across the country.
+Last Saturday, as President Trump celebrated his 79th birthday with a military parade in Washington, D.C.—at a reported cost of $25–45 million—something far larger and more democratic was unfolding across the country.
 
  In all 50 states, in U.S. territories, and even abroad, the **No Kings** movement organized what may be the largest single-day protest in American history. Backed by more than 200 organizations—including Indivisible, the 50501 Movement, ACLU, MoveOn, Working Families Party, and the American Federation of Teachers—the protest united an estimated 4 to 6 million people across more than 2,100 locations.
 
@@ -29,9 +29,9 @@ Last Saturday, as President Trump celebrated his 79th birthday with a military p
 
  ### Isolated Violence, Ongoing Risk
 
- Despite the overall tone of peaceful civic engagement, a handful of serious incidents served as sobering reminders of the risks that come with public protest. The most tragic occurred in **Salt Lake City**, where a confrontation involving an armed counterprotester led to the death of Arthur Folasa Ah Loo—a 39-year-old fashion designer and Project Runway contestant. Police are still investigating, but the sequence involved a peacekeeper returning fire after being threatened, unintentionally striking Ah Loo.
+ Despite the overall tone of peaceful civic engagement, a handful of serious incidents served as sobering reminders of the risks that come with public protest. The most tragic occurred in **Salt Lake City**, where a confrontation involving an armed counterprotester led to the death of Arthur Folasa Ah Loo—a 39-year-old fashion designer and Project Runway contestant. Police are still investigating; the volunteer peacekeeper who fired said he was threatened by an armed counterprotester, but video footage has been reported to contradict parts of that account. Ah Loo was unintentionally struck.
 
- Other incidents included a vehicular threat in Virginia, a handgun brandished in Nashville, an evacuation at the Texas Capitol, and a politically motivated killing in Minnesota that led to the cancellation of events there. While these episodes were not representative of the movement as a whole, they cast a long shadow. They remind us that in an environment where violence is increasingly normalized, even peaceful demonstrations carry risk.
+ Other incidents included a vehicular threat in Virginia, a handgun brandished in Nashville, an evacuation at the Texas Capitol, and the shootings of two state lawmakers and their spouses in Minnesota that led to the cancellation of events there. While these episodes were not representative of the movement as a whole, they cast a long shadow. They remind us that in an environment where violence is increasingly normalized, even peaceful demonstrations carry risk.
 
  ### A Clear Message, a Long Road
 

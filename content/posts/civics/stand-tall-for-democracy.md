@@ -30,8 +30,6 @@ Critics argue that democracy has failed to deliver justice and equality. They ar
 
 We need a renewed civic culture rooted in courage, responsibility, and solidarity. That means voting in every election, challenging disinformation, and refusing to be cowed by intimidation or apathy. It means defending the rights of those we disagree with, because their rights and ours are interdependent.
 
-When Los Angeles became locked down under military rule at the hands of the federal government, it wasn’t just a local story—it was a national wakeup call. Democracy may look invincible, but it isn’t. It fades when citizens stop holding power to account, when we stop protesting overreach, when we mistake fanaticism for patriotism.
-
 And let’s be honest: the situation is likely to become worse before it gets better. The machinery of authoritarianism feeds on fear and disunity, and we are already seeing the early symptoms—disinformation, intimidation, and the weaponization of institutions. But history teaches us that darkness is not destiny.
 
 We must stand tall for democracy—not because it is perfect, but because it is our best hope for a just and free society. Courage, clarity, and collective resistance will be required. We may be tested, but we are not powerless.

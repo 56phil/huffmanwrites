@@ -14,7 +14,7 @@ tags:
 ---
 
 > *“The natural progress of things is for liberty to yield, and government to gain ground.”*
-—Thomas Jefferson, 1788
+—Thomas Jefferson, 1787
 
 
 Liberty does not collapse in a single moment. It erodes, quietly and gradually, under the weight of fear, convenience, and inattention. While tyrants often get the blame, it is apathy—our own failure to remain vigilant—that often clears the path.
