@@ -30,7 +30,7 @@ tags:
 
  
 ---
- ## 📘 Recient Posts
+ ## 📘 Recent Posts
 
  📝 [Why Dollar-Cost Averaging Beats Market Timing](/posts/investing/why-dollar-cost-averaging-beats-market-timing/)
 

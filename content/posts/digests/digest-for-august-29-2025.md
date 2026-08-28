@@ -72,7 +72,7 @@ tags:
 
  
 ---
- ## 📘 Recient Posts
+ ## 📘 Recent Posts
 
  📝 What You Feed Grows
 

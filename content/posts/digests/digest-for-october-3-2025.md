@@ -42,7 +42,7 @@ tags:
 
  
 ---
- ## 📘 Recient Posts
+ ## 📘 Recent Posts
 
  📝 [The Psychology of Investing](/posts/investing/the-psychology-of-investing/)
 

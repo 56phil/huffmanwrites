@@ -17,8 +17,8 @@ tags:
 
 Subject: The Pause
 
- “You have power over your mind—not outside events. Realize this, and you will find strength.”
- — Marcus Aurelius, Meditations 7.68
+ "You have power over your mind—not outside events. Realize this, and you will find strength."
+ — Marcus Aurelius, Meditations (paraphrase)
  There’s a moment between stimulus and response where everything lives.
 
  Someone cuts you off in traffic. Your chest tightens, your foot tenses toward the brake, your jaw clenches. That’s the stimulus. What happens next is up to you.

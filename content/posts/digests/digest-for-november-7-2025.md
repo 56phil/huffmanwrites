@@ -35,7 +35,7 @@ tags:
 
  
 ---
- ## 📘 Recient Posts
+ ## 📘 Recent Posts
 
  📝 [The Responsibility of a Small, Shining World](/posts/stoicism/the-responsibility-of-a-small-shining-world/)
 

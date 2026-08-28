@@ -63,7 +63,7 @@ lastmod: 2025-05-16T00:00:00Z
 ---
  ### 📣 Stay in the Conversation
 
- If something in these reflections stirred you — even a little — I’d love to hear it. Temparence, after all, grows in dialogue, not monologue.
+ If something in these reflections stirred you — even a little — I’d love to hear it. Temperance, after all, grows in dialogue, not monologue.
 
  
  - **Reply** to this email. I read every note.

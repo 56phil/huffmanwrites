@@ -14,7 +14,7 @@ hero_alt: "Two unfinished stone pillars rising from calm water at sunset, a maso
 hero_caption: "Build the gate while the sea is still calm."
 ---
 
-"First say to yourself what you would be; and then do what you have to do." — Epictetus, *Enchiridion*, LI
+"First say to yourself what you would be; and then do what you have to do." — Epictetus, *Discourses*, 3.23
 
 Net interest on the federal debt is set to cross $1 trillion this fiscal year, more than the Pentagon's entire budget, and it holds there every year through 2035 on the Congressional Budget Office's own numbers ([CBO, 2025](https://www.cbo.gov/publication/61172)). On the CBO's calm, no-crisis baseline, debt held by the public breaks the record set finishing World War II by fiscal year 2030 ([CBO, 2026](https://www.cbo.gov/publication/62050)). That's about four years out. Treasury's response this month was to double its debt buyback program, a move I wrote about this week in [Treasury Buybacks: A Colossal Failure in the Making](/posts/investing/treasury-buybacks-colossal-failure/): a few billion dollars a month against a $32 trillion market, a rounding error dressed up as a fix.
 

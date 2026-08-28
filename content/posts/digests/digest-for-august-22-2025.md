@@ -42,13 +42,13 @@ tags:
 
  
 ---
- ## 📘 Recient Posts
+ ## 📘 Recent Posts
 
  📝 [Why I'm Looking at Albania](/posts/essays/why-i-am-looking-at-albania/)
 
  📝 [Proud to be Woke](/posts/civics/proud-to-be-woke/)
 
- 📝 [No KIngs Rallies](/posts/civics/no-kings-a-nation-speaks/)
+ 📝 [No Kings Rallies](/posts/civics/no-kings-a-nation-speaks/)
 
  
 ---

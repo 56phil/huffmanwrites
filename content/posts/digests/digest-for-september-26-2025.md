@@ -32,7 +32,7 @@ tags:
 
   
 ---
- ## 📘 Recient Posts
+ ## 📘 Recent Posts
 
  📝 [Discount vs. Traditional Brokerages](/posts/investing/discount-vs-traditional-brokerages/)
 

@@ -36,7 +36,7 @@ tags:
 
  
 ---
- ## 📘 Recient Posts
+ ## 📘 Recent Posts
 
  📝 [Risk Management in a Fragile World](/posts/investing/risk-management-in-a-fragile-world/)
 

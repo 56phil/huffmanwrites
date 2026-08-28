@@ -73,8 +73,8 @@ tags:
 ---
  ## ✨ Quote of the Week
 
- >  “History is written by those who have hanged heroes.”
- — *George Orwell*
+  >  "Who controls the past controls the future: who controls the present controls the past."
+ — *George Orwell, 1984*
 
  
 

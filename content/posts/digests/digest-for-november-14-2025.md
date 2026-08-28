@@ -35,7 +35,7 @@ tags:
 
  
 ---
- ## 📘 Recient Posts
+ ## 📘 Recent Posts
 
  📝 [Starstuff: Remembering Carl Sagan](/posts/essays/starstuff-remembering-carl-sagan/)
 
@@ -43,7 +43,7 @@ tags:
 ---
  ## ✦ **This Week’s Quiz — The Weight of Power**
 
- >  *“The measure of a man is what he does with power.”* — Plato
+ >  *"Power shows the man."* — Pittacus of Mytilene (as quoted by Diogenes Laërtius)
 
  
 

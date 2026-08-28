@@ -34,10 +34,6 @@ lastmod: 2025-05-09T00:00:00Z
 
  
 ---
- Right — of course it was. Thanks, Phil. Here’s the corrected teaser section with accurate timing:
-
- 
----
  ### 📚 In This Issue
 
  
