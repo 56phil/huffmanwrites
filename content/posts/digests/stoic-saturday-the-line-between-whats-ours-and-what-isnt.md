@@ -4,10 +4,11 @@ description: "A 50 percent tariff on Canadian goods, a collapsed trade deal, and
 date: 2026-08-29T08:00:00Z
 lastmod: 2026-08-29T08:00:00Z
 author: Philip Huffman
-tags:
-  - weekly-digest
-  - stoicism
-  - geopolitics
+hero_desktop: "img/articles/55-the-line-between-whats-ours-and-what-isnt_16x9.webp"
+hero_mobile: "img/articles/55-the-line-between-whats-ours-and-what-isnt_4x5.webp"
+hero_alt: "A weathered marble statue of a philosopher stands on a stone pier at the edge of a stormy navy sea, warm golden light falling on the figure while white-capped waves crash against the wall."
+
+hero_caption: "The storm is not in your control. The sturdiness of the house is."
 ---
 
 "Some things are in our control and others not." — Epictetus, *Enchiridion*, 1
