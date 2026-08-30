@@ -11,6 +11,18 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
+### Maintenance — August 30, 2026 — Rewrote all nine book blurbs; frontmatter-driven books listing; buy CTA, inline newsletter, homepage search
+- **Blurb rewrites (all 9 books):** raisem-right (approved copy), then the other eight in a de-duplication pass — removed the repeated "Written for readers who…" formula (now varied: "This is a book for people…", "For anyone…", "If you've…", "You don't need to…"), the "treats X as a practice" construction (kept only in Stoic Backgammon), "unsentimental" (kept only in Misaligned), "clinical precision" (kept only in Stoic CGM), and "The central claim is that" (kept only in Stoic Backgammon). On Proportion rewritten to actually mention the Cold War (its subtitle is "Growing up with the Cold War" but the blurb never said it) and its stale "Scheduled for release June 16, 2026" → "Now available".
+- **Frontmatter-driven books listing:** `book` shortcode now looks up each book by `ref` and pulls title/subtitle/summary/image from frontmatter (single source of truth). Added one-line `summary:` fields to all 9 books. `content/books/_index.md` rewritten to nine `{{< book ref="…" >}}` lines. The stale "Think clearly / Live Intentionally / Love Immediately" formula copy is gone from the listing. Cards are now cover + title + subtitle + one-line summary, whole card links to the book page (tighter, no full-paragraph wall). Cover alt text is now short ("Cover of <Title>") instead of the full description.
+- **On Proportion released:** added Amazon link `B0H2QSF22C` (Phil provided) — header buy CTA now shows.
+- **Buy CTA near top:** added a header buy button (`book-buy-top`) to every book page; kept the bottom one as secondary.
+- **Inline newsletter form:** replaced the external-link CTA with an inline SendFox form (`data-async`, recaptcha off) posting to `sendfox.com/form/1xlpdz/m86kl8`; added the newsletter partial to book pages. **CSP relaxed** to allow `sendfox.com` in `script-src`, `connect-src`, and `form-action` (Phil approved the tradeoff). Live-tested end-to-end (HTTP 200, "Thanks, your signup was successful!"); two `sendfox.livetest.*@example.com` test subscribers added then removed by Phil.
+- **Homepage search:** added a search form to the hero (`/search/?q=…`); the search page pre-fills from `?q=` and triggers the Fuse search (with a retry loop, since the index loads async).
+- **Credo removed from book pages** (kept on homepage hero).
+- **Fixed `book_catalog` cover bug:** the shortcode double-prefixed the image path (`img/books/img/books/…`), leaving every cover in the "All My Books" post with an empty `src`. Now all nine render.
+- **Book count:** only eight books are published (Raise 'Em Right is WIP). Fixed "Nine books" → "Eight books" on the homepage hero and "Eight books, with another on the way" in the All My Books post + its frontmatter description.
+- Clean `hugo --gc --minify` build, 0 errors. Commits: `720319c` (raisem-right blurb), `5ef5ed8` (eight blurbs), `0032f8a` (listing/CTA/newsletter/search), plus this entry.
+
 ### Maintenance — August 29, 2026 — Fact-checked civics, digests, investing, and root posts; corrected 16 claims; published Stoic Saturday newsletter
 - Phil asked to fact-check every remaining folder under `content/posts/`: civics, digests, investing, and root files. Verified every load-bearing claim against primary sources (Congress.gov, TreasuryDirect, Conference Board, Perseus, Wikipedia, Goodreads quote search, Gospel Coalition). Reports saved as `factcheck-*.md` at repo root (untracked working artifacts).
 - **16 corrections across 20 files, one commit per folder:**
