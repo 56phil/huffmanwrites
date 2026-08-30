@@ -37,6 +37,7 @@
         </div>
         {{ with .Params.description }}
         <div class="book-blurb">
+           {{ with $.Params.availability }}<p class="book-availability">{{ . }}</p>{{ end }}
            {{ . | markdownify }}
         </div>
         {{ end }}

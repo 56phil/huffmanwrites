@@ -90,6 +90,13 @@
     vertical-align: middle;
 }
 
+.phbooks .phbooks-availability {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    margin: 0 0 0.5rem 0;
+}
+
 .phbooks .phbooks-desc {
     font-size: 0.95rem;
     color: var(--secondary);
@@ -200,6 +207,13 @@
 .book-page .book-cover-wrap {
    flex: 0 0 280px;
    text-align: center;
+}
+
+.book-availability {
+   font-style: italic;
+   font-size: 1rem;
+   color: var(--secondary);
+   margin: 0 0 0.5rem 0;
 }
 
 .book-blurb {

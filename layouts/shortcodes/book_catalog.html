@@ -14,6 +14,9 @@
           <span class="phbooks-badge">Forthcoming</span>
         {{- end }}
       </div>
+      {{- if .Params.availability }}
+      <div class="phbooks-availability">{{ .Params.availability }}</div>
+      {{- end }}
       <div class="phbooks-desc phbooks-with-cover">
         <div class="phbooks-cover">
           {{- if .Params.link }}
