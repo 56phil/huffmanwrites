@@ -3,11 +3,11 @@ title: "The Stoic CGM"
 subtitle: "A Data-Driven Guide to Reinventing Yourself"
 weight: 4
 description: |
-  The Stoic CGM treats continuous glucose monitoring as a practice of self-knowledge — not merely a medical intervention, but a discipline of attention applied to the body’s own politics. The book examines what happens when Stoic principles meet metabolic data: how to respond to information without being ruled by it, and how to govern the self when the self is constantly in motion.
+  The Stoic CGM turns continuous glucose monitoring into a discipline of self-knowledge — not merely a medical intervention, but a practice of attention applied to the body's own rhythms. The book examines what happens when Stoic principles meet metabolic data: how to respond to information without being ruled by it, and how to govern the self when the self is constantly in motion.
 
   The chapters trace the Republic of Glucose — the internal ecosystem of hormones, timing, and consequence — through the Disciplines of Action and Will. They examine how data becomes meaningful only when paired with judgment, and how the habit of measurement can either deepen autonomy or become its own compulsion. The writing moves between clinical precision and lived experience, treating health as a domain where philosophy and science converge.
 
-  Written for readers who are managing chronic conditions, aging metabolisms, or the simple desire to understand what their bodies are doing, The Stoic CGM offers a framework for using technology without surrendering to it. The central claim is that the body is not an enemy to defeat but a system to comprehend — and that comprehension, sustained over time, is the beginning of genuine self-governance.
+  For anyone managing a chronic condition, an aging metabolism, or the simple desire to understand what their body is doing, The Stoic CGM offers a framework for using technology without surrendering to it. The body is not an enemy to defeat but a system to comprehend — and comprehension, sustained over time, is the beginning of genuine self-governance.
 image: "img/books/stoic-cgm.jpg"
 image_desktop: "img/articles/cgm-16x9.webp"
 image_mobile: "img/articles/cgm-4x5.webp"
