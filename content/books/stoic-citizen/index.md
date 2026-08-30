@@ -8,6 +8,7 @@ description: |
 
   For anyone exhausted by performative politics but not willing to retreat, The Stoic Citizen offers a framework for durable engagement: neither surrender nor combat, but the steady maintenance of judgment under pressure.
 image: "img/books/stoic-citizen.jpg"
+summary: "Ancient philosophy applied to the actual conditions of modern civic life."
 image_desktop: "img/articles/Marcus-16x9.webp"
 image_mobile: "img/articles/Marcus-4x5.webp"
 image_alt: "A cinematic portrait of Marcus Aurelius in Parian marble, highlighted with subtle golden light against a deep midnight navy backdrop."

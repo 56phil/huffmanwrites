@@ -9,6 +9,7 @@ description: |
 
   For anyone who has grown skeptical of certainty and still needs to communicate, Letters argues that honest speech is not a strategy for winning but a practice of remaining present. The final question is not whether truth changes outcomes, but whether silence changes the speaker.
 image: "img/books/letters.jpg"
+summary: "Correspondence on the difficult topics public discourse avoids: truth, conscience, and the cost of holding a position."
 image_desktop: "img/articles/letters-16x9.webp"
 image_mobile: "img/articles/letters-4x5.webp"
 image_alt: "An ascending spiral of floating ancient papyrus scrolls with glowing gold ink, stretching upward into a midnight navy cosmic abyss."

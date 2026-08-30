@@ -20,9 +20,7 @@
 
 /* --- Static (desktop) rules, lifted from the inline style="" attrs. --- */
 .book-card {
-    display: flex !important;
-    align-items: flex-start !important;
-    gap: 20px !important;
+    display: block !important;
     padding: 16px !important;
     margin: 20px 0 !important;
     border: 1px solid #e0e0e0 !important;
@@ -31,18 +29,19 @@
     max-width: 800px !important;
 }
 
-.book-card .book-cover-wrap {
-    flex: 0 0 120px !important;
-    width: 120px !important;
-    height: auto !important;
-    overflow: visible !important;
+/* The whole card is now a single link to the book page. The flex row
+   that previously lived on .book-card moved here. */
+.book-card-link {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+    text-decoration: none !important;
+    color: inherit !important;
+    width: 100% !important;
 }
 
-/* Inner placeholder div that wraps the cover image. Custom.css and
-   phbooks.css don't size this; the shortcode's hard-coded 120x180
-   keeps the cover at its intended 2:3 aspect ratio regardless of
-   the image's intrinsic dimensions. */
-.book-card .book-cover-wrap > div {
+.book-card .book-cover-wrap {
+    flex: 0 0 120px !important;
     width: 120px !important;
     height: 180px !important;
     position: relative !important;
@@ -58,14 +57,6 @@
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
-}
-
-.book-caption {
-    font-size: 0.85rem !important;
-    color: #666 !important;
-    font-style: italic !important;
-    text-align: center !important;
-    margin-top: 0.5rem !important;
 }
 
 .book-cover-placeholder {
@@ -92,8 +83,8 @@
 }
 
 /* .book-text is unique to the shortcode — a wrapper around title /
-   subtitle / description that gives the description a min-height of
-   0 so it can shrink-to-fit when the cover image is short. */
+   subtitle / summary that gives the text a min-height of 0 so it can
+   shrink-to-fit when the cover image is short. */
 .book-text {
     flex: 1 !important;
     min-height: 0 !important;
@@ -115,45 +106,11 @@
     color: #333 !important;
 }
 
-/* Description block. The hard-coded amber accent (border-left #ffd700,
-   translucent cream background) was chosen by the original author and
-   has not been re-themed; if a future redesign wants to re-theme this,
-   the two color values below are the place to start. */
-.book-card .book-description {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+.book-card .book-summary {
     font-size: 0.9rem !important;
     line-height: 1.5 !important;
     color: #444 !important;
-    margin: 8px 0 16px 0 !important;
-    font-style: italic !important;
-    background-color: rgba(255, 240, 200, 0.3) !important;
-    padding: 8px !important;
-    border-left: 3px solid #ffd700 !important;
-}
-
-.book-card .book-actions {
-    margin-top: auto !important;
-    padding-top: 12px !important;
-}
-
-.book-card .book-button {
-    background-color: #222 !important;
-    color: white !important;
-    padding: 8px 16px !important;
-    border-radius: 4px !important;
-    text-decoration: none !important;
-    font-weight: 600 !important;
-    font-size: 0.9rem !important;
-    display: inline-block !important;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3) !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
-    transition: color 0.2s ease, background-color 0.2s ease !important;
-}
-
-.book-card .book-button:hover {
-    opacity: 0.85 !important;
+    margin: 8px 0 0 0 !important;
 }
 
 /* Lift-on-hover for the card. Lifted from the now-deleted bare
@@ -167,20 +124,9 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
 }
 
-.book-card .book-badge {
-    background-color: #ddd !important;
-    color: #666 !important;
-    padding: 4px 12px !important;
-    border-radius: 12px !important;
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-}
-
 /* --- Responsive (≤ 600px) rules, lifted from the inline <style> block. --- */
 @media (max-width: 600px) {
-    .book-card {
+    .book-card-link {
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;

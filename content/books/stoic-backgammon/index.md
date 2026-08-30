@@ -9,6 +9,7 @@ description: |
 
   You don't need to know backgammon or Stoicism to begin — the book teaches both as it proceeds. The central claim is that every roll is a small encounter with fate, and every move is a decision made with incomplete information. The right response to uncertainty is not prediction but character — and the board, played repeatedly, is one way to build it.
 image: "img/books/stoic-backgammon.webp"
+summary: "The ancient game as a literal practice of philosophy — the dice are not up to us; the move is."
 image_desktop: "img/articles/sg-16x9.webp"
 image_mobile: "img/articles/sg-4x5.webp"
 image_alt: "A polished obsidian and inlaid gold backgammon board in a symmetrical navy void, with a single white marble checker perfectly balanced on its edge."

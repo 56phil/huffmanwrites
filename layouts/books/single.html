@@ -6,6 +6,9 @@
    <header class="book-header">
        <h1>{{ .Title }}</h1>
        {{ with .Params.subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end }}
+       {{ if .Params.link }}
+       <p class="book-buy-top"><a href="{{ .Params.link }}" target="_blank" rel="noopener">Buy on Amazon</a></p>
+       {{ end }}
    </header>
 
     {{ if or .Params.image_desktop .Params.image_mobile }}
@@ -27,14 +30,6 @@
 
     {{- $imgPath := .Params.image -}}
     {{ if $imgPath }}
-    <div class="book-credo-container">
-        <div class="book-credo">
-          <div class="credo-line"><span class="credo-verb">Think</span> <span class="credo-adverb">clearly</span>.</div>
-          <div class="credo-line"><span class="credo-verb">Live</span> <span class="credo-adverb">intentionally</span>.</div>
-          <div class="credo-line"><span class="credo-verb">Love</span> <span class="credo-adverb">deeply</span>.</div>
-        </div>
-    </div>
-
     <div class="book-media">
        <div class="book-cover-wrap">
            {{- partial "img.html" (dict "path" $imgPath "size" "800x webp" "alt" (printf "%s book cover" .Title) "class" "book-cover" "loading" "lazy") -}}
@@ -90,6 +85,8 @@
        <a href="{{ $next.RelPermalink }}" class="book-nav-btn next">{{ $next.Title }} →</a>
     </div>
     {{ end }}
+
+    {{ partial "newsletter.html" . }}
 
 </article>
 {{ end }}

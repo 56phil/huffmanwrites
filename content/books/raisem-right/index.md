@@ -11,6 +11,7 @@ description: |
 
   Wherever you are in the work, however long you've been at it, this book starts where you are.
 image: "img/books/raisem-right.jpg"
+summary: "A year-by-year guide to raising children with agency, resilience, and purpose."
 image_desktop: "img/articles/rtr-16x9.webp"
 image_mobile: "img/articles/rtr-4x5.webp"
 image_alt: "A fragile white marble seedling growing inside an ornate gold lantern, providing a sanctuary of warm light amidst a chaotic void of digital glitch noise."

@@ -9,6 +9,7 @@ description: |
 
   If you've performed well and still found yourself at a loss, Misaligned offers a framework for recognizing when alignment itself becomes the problem — and for rebuilding with different assumptions. The final argument is not repair but agency: the capacity to choose what to preserve, what to release, and what to construct differently.
 image: "img/books/misaligned.jpg"
+summary: "What happens when the wrong map is applied with discipline — and how to rebuild with different assumptions."
 image_desktop: "img/articles/misaligned-16x9.webp"
 image_mobile: "img/articles/misaligned-4x5.webp"
 image_alt: "A dissonant sea of gold-leaf parchment maps shifting in a navy void, with a single minimalist gold compass needle pointing stubbornly in one direction."

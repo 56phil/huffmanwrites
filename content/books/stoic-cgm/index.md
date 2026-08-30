@@ -9,6 +9,7 @@ description: |
 
   For anyone managing a chronic condition, an aging metabolism, or the simple desire to understand what their body is doing, The Stoic CGM offers a framework for using technology without surrendering to it. The body is not an enemy to defeat but a system to comprehend — and comprehension, sustained over time, is the beginning of genuine self-governance.
 image: "img/books/stoic-cgm.jpg"
+summary: "Continuous glucose monitoring as a discipline of self-knowledge, not just a medical intervention."
 image_desktop: "img/articles/cgm-16x9.webp"
 image_mobile: "img/articles/cgm-4x5.webp"
 image_alt: "A classical stone-textured hand interacting with a floating holographic data-grid of glowing gold nodes against a deep midnight navy background."

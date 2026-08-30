@@ -1,6 +1,25 @@
 {{ partial "credo_footer.html" . }}
 
 <script>
+// Pre-fill the PaperMod search box from a ?q= query param (used by the
+// homepage search form). fastsearch.js builds its Fuse index via an
+// async XHR on window.onload, so a single keyup on load can fire before
+// the index is ready. Retry the keyup a few times until the search
+// actually runs. No-op on every page without #searchInput.
+document.addEventListener('DOMContentLoaded', function () {
+    var input = document.getElementById('searchInput');
+    if (!input) return;
+    var q = new URLSearchParams(window.location.search).get('q');
+    if (!q) return;
+    input.value = q;
+    window.addEventListener('load', function () {
+        var attempts = 0;
+        var timer = setInterval(function () {
+            input.dispatchEvent(new Event('keyup', { bubbles: true }));
+            if (++attempts >= 10) clearInterval(timer); // ~2s max
+        }, 200);
+    });
+});
 document.addEventListener('DOMContentLoaded', function () {
     // ── Inject HC button into .logo-switches ──────────────
     var switches = document.querySelector('.logo-switches');

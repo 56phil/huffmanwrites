@@ -1,54 +1,28 @@
-{{- $title := .Get "title" -}}
-{{- $subtitle := .Get "subtitle" -}}
-{{- $img := .Get "img" -}}
-{{- $link := .Get "link" -}}
-{{- $caption := .Get "caption" -}}
-{{- $description := .Get "description" -}}
-{{- $imgPath := strings.TrimPrefix "/" $img -}}
-{{- $isExternal := strings.HasPrefix $link "http" -}}
-{{- $btnText := cond $isExternal "Buy on Amazon" "Learn More" -}}
-{{- $btnTarget := cond $isExternal "_blank" "" -}}
-{{- $btnRel := cond $isExternal "noopener" "" -}}
-
-{{/* All book-card visual styling lives in assets/css/book-shortcode.css
-   (loaded globally via extend_head.html). The shortcode markup stays
-   focused on structure; CSS handles presentation. !important on every
-   rule is intentional — see book-shortcode.css header for the
-   visibility-regression history. */}}
-
-<div class="book-card">
-    <div class="book-cover-wrap">
-        <div>
-            {{- if $img -}}
-                {{- if $link -}}<a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }}>{{- end -}}
-                    {{- $webpPath := replaceRE "\\.(jpg|png)$" ".webp" $imgPath -}}
-                    {{- $imgResource := resources.Get $webpPath | default (resources.Get $imgPath) -}}
-                    {{- $resizedImg := $imgResource.Resize "600x webp" -}}
-                    <img src="{{ $resizedImg.RelPermalink }}" alt="{{ printf "%s: %s" $title ($description | plainify) }}" title="{{ printf "%s: %s" $title ($description | plainify) }}" class="phbooks-cover" loading="lazy">
-                {{- if $link -}}</a>{{- end -}}
-            {{- end -}}
-        </div>
-        {{- with $caption }}<p class="book-caption">{{ . }}</p>{{- end -}}
-        {{- if not $img -}}
-            <div class="book-cover-placeholder">Cover Coming Soon</div>
+{{- $ref := .Get "ref" -}}
+{{- with .Site.GetPage $ref -}}
+  {{- $title := .Title -}}
+  {{- $subtitle := .Params.subtitle -}}
+  {{- $summary := .Params.summary -}}
+  {{- $img := .Params.image -}}
+  <div class="book-card">
+    <a href="{{ .RelPermalink }}" class="book-card-link">
+      <div class="book-cover-wrap">
+        {{- if $img -}}
+          {{- $webpPath := replaceRE "\\.(jpg|png)$" ".webp" $img -}}
+          {{- $imgResource := resources.Get $webpPath | default (resources.Get $img) -}}
+          {{- $resizedImg := $imgResource.Resize "600x webp" -}}
+          <img src="{{ $resizedImg.RelPermalink }}" alt="Cover of {{ $title }}" loading="lazy">
+        {{- else -}}
+          <div class="book-cover-placeholder">Cover Coming Soon</div>
         {{- end -}}
-    </div>
-    <div class="book-content">
+      </div>
+      <div class="book-content">
         <div class="book-text">
-            <h3 class="book-title">{{ $title }}</h3>
-            {{- with $subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end -}}
-            {{- with $description }}
-            <div class="book-description">
-                {{ . }}
-            </div>
-            {{- end }}
+          <h3 class="book-title">{{ $title }}</h3>
+          {{- with $subtitle }}<p class="book-subtitle">{{ . }}</p>{{ end -}}
+          {{- with $summary }}<p class="book-summary">{{ . }}</p>{{ end -}}
         </div>
-        <div class="book-actions">
-            {{- if $link -}}
-                <a href="{{ $link }}"{{ with $btnTarget }} target="{{ . }}"{{ end }}{{ with $btnRel }} rel="{{ . }}"{{ end }} class="book-button">{{ $btnText }}</a>
-            {{- else -}}
-                <span class="book-badge">Forthcoming</span>
-            {{- end -}}
-        </div>
-    </div>
-</div>
+      </div>
+    </a>
+  </div>
+{{- end -}}

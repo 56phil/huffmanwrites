@@ -2,7 +2,11 @@
   <h3 class="newsletter-title">Join the Journey</h3>
   <p class="newsletter-text">Get weekly reflections on philosophy, civics, and the pursuit of a well-lived life. No spam, just wisdom delivered to your inbox.</p>
 
-  <a href="https://sendfox.com/form/1xlpdz/m86kl8" class="btn-primary newsletter-cta">Subscribe</a>
+  <form method="post" action="https://sendfox.com/form/1xlpdz/m86kl8" class="sendfox-form" id="m86kl8" data-async="true" data-recaptcha="false">
+    <input type="email" placeholder="Email address" name="email" required aria-label="Email address">
+    <button type="submit" class="btn-primary newsletter-cta">Subscribe</button>
+  </form>
+  <script src="https://sendfox.com/js/form.js"></script>
 </div>
 
 {{/* .newsletter-signup styles live in assets/css/custom.css (loaded

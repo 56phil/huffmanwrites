@@ -224,6 +224,18 @@ main, .post-content, .entry-content {
     opacity: 0.9;
 }
 
+.newsletter-signup input[type="email"] {
+    width: 100%;
+    max-width: 360px;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--theme);
+    color: var(--primary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
 /* 404 page — used by layouts/_default/404.html. The 404 is a
    single-page layout, but the rules are kept in custom.css so
    the layout file stays focused on structure. */

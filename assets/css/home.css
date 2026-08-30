@@ -223,6 +223,40 @@
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 .hero-cta-secondary:hover { border-color: var(--primary); background: var(--entry); }
+.hero-search {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1.5rem auto 0;
+  max-width: 480px;
+}
+.hero-search input {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--entry);
+  color: var(--primary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+.hero-search input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.hero-search button {
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: 4px;
+  background: var(--primary);
+  color: var(--theme);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.hero-search button:hover { opacity: 0.82; }
 .hero-mission-link {
   margin-top: 1.25rem;
   font-family: var(--font-ui);

@@ -9,6 +9,7 @@ description: |
 
   For people who already know what they should do and need something firmer than encouragement, Unstuck treats self-improvement as a discipline of judgment under uncertainty — not a product to consume, but a position to play.
 image: "img/books/unstuck.jpg"
+summary: "A direct challenge to the habits of delay and self-deception that keep capable people from moving forward."
 image_desktop: "img/articles/Unstuck-16x9.webp"
 image_mobile: "img/articles/Unstuck-4x5.webp"
 image_alt: "A solitary classical figure moving through a stark, light-filled doorway."

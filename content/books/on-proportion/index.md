@@ -11,6 +11,8 @@ description: |
   Written for anyone who has felt the pull to answer everything and the cost of doing so, On Proportion offers a way to tell the urgent from the important — and to choose silence when silence is the better instrument.
 weight: 8
 image: "img/books/proportion.jpg"
+summary: "The lost discipline of matching response to scale, learned growing up in the shadow of the Cold War."
+link: "https://www.amazon.com/dp/B0H2QSF22C"
 image_desktop: "img/articles/op-16x9.webp"
 image_mobile: "img/articles/op-4x5.webp"
 image_alt: "Intricate gold-filigree vines and flowers climbing and blooming across a massive, oppressive Cold War-era brutalist concrete wall."
