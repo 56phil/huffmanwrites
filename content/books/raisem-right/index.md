@@ -5,9 +5,9 @@ weight: 9
 description: |
   Expected: early 2027.
 
-  Raise 'Em Right follows a child from birth to eighteen, one chapter for every year of the journey — because the child at eight months and the child at eight years need entirely different things from the adults raising them. Each chapter braids a Montessori principle for what the child needs from the world around them with a Stoic reflection for what steadies the parent supplying it, closing with a short list of things to try that same week. Grounded in the author's own hard-won parenting notes rather than research handed down from a distance, the book offers no formula — only a set of ideas to sit with, borrow from, and argue with as your child, and your life, keep changing shape.
+  Raise 'Em Right follows a child from birth to eighteen, one chapter for every year — because the child at eight months and the child at eight years need entirely different things from the adults raising them. Each chapter braids a Montessori principle for what the child needs from the world around them with a Stoic reflection for what steadies the parent supplying it, and closes with a short list of things to try that same week. There's no formula here, only ideas to sit with, borrow from, and argue with as your child — and your life — keep changing shape.
 
-  Written for parents whose children don't fit the standard mold the advice books quietly assume — and for parents simply tired of pretending they do — Raise 'Em Right weaves in callouts to *Misaligned*, Philip's memoir of growing up with an undiagnosed neurodivergent mind, as one example of the child the map so often leaves out. Beneath the daily work of raising kids runs a quieter thread: a child who learns to observe carefully, reason honestly, and take responsibility for their own actions is being prepared not just for adulthood but for the kind of citizenship a family, a neighborhood, and a country depend on.
+  Written for parents whose children don't fit the mold the advice books quietly assume, and for parents simply tired of pretending they do, Raise 'Em Right weaves in callouts to *Misaligned*, Philip's memoir of growing up with an undiagnosed neurodivergent mind, as one example of the child the map so often leaves out. Beneath the daily work runs a quieter thread: a child who learns to observe carefully, reason honestly, and take responsibility for their own actions is being prepared not just for adulthood, but for the kind of citizenship a family, a neighborhood, and a country depend on.
 
   Wherever you are in the work, however long you've been at it, this book starts where you are.
 image: "img/books/raisem-right.jpg"
@@ -22,4 +22,3 @@ lastmod: 2026-05-13
 # Raise 'Em Right
 
 [Buy on Amazon](https://www.amazon.com)
-
