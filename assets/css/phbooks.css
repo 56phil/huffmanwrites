@@ -104,6 +104,11 @@
     margin: 0;
 }
 
+.phbooks .phbooks-desc > p {
+    flex: 1;
+    min-width: 0;
+}
+
 .phbooks .phbooks-link {
     display: inline-block;
     margin-top: 0.6rem;
