@@ -1,8 +1,8 @@
 ---
 title: "Giving Up Control"
-description: "MacKenzie Scott helped build Amazon, then gave away $26 billion. Her first novel in thirteen years, published free on Substack, is the clearest statement yet of her philosophy: the art of giving it away."
+description: "MacKenzie Scott helped build Amazon, then gave away $26 billion. Her philosophy of giving it away is the Stoic dichotomy of control, enacted at a scale the ancients could not have imagined."
 date: 2026-08-31T00:00:00Z
-lastmod: 2026-08-31T00:00:00Z
+lastmod: 2026-09-01T00:00:00Z
 author: Philip Huffman
 hero_desktop: "img/articles/58-giving-up-control_16x9.webp"
 hero_mobile: "img/articles/58-giving-up-control_4x5.webp"
@@ -12,6 +12,7 @@ tags:
   - essays
   - culture
   - philanthropy
+  - stoicism
 ---
 
 There is a version of MacKenzie Scott's life that reads like a fable about the wrong kind of ambition. She studied creative writing at Princeton under Toni Morrison, who called her "one of the best students I've ever had in my creative writing classes."[^1] She spent ten years writing her first novel while helping her husband build a company that would become the most valuable retailer on earth. The novel, *The Testing of Luther Albright*, won an American Book Award. Morrison reviewed it as "a rarity: a sophisticated novel that breaks and swells the heart."[^2] And almost nobody read it. By NPD BookScan's count, her books sold modestly.[^3]
@@ -28,13 +29,17 @@ That choice is the point. Scott's philanthropy is organized through Yield Giving
 
 The Substack novel is the same philosophy applied to art. A traditional publisher is a gatekeeper; it decides what the public gets to read and extracts a toll. Scott bypassed the gate entirely, releasing the work free to anyone who subscribes. She gave up control of the distribution, the pricing, and the gatekeeping, and trusted the work to find its own readers. It is the literary equivalent of an unrestricted grant.
 
+### The Stoics would have recognized her
+
+There is a two-thousand-year-old name for what Scott is doing, and it is not "philanthropy." It is the Stoic doctrine of the dichotomy of control. Epictetus opened his handbook with the claim that some things are in our power and others are not, and he built an entire philosophy on learning to tell the difference, because the things outside our power cannot be the basis of a good life.[^9] The Stoics went further and called wealth, reputation, and even health "indifferents," useful but not part of what makes a life good; the wise person uses them and is willing to let them go.[^10] Seneca, who was among the richest men in Rome, insisted that the wise person owns wealth without being owned by it, holding it loosely enough to give it away at a moment's notice.[^11]
+
+Read that way, Scott's "giving up control" is not a management buzzword. It is the oldest discipline in Western ethics, enacted at a scale the ancients could not have imagined. She did not renounce her fortune, which would have been the ascetic's move. She spent it, deliberately and unconditionally, on other people, and in doing so refused to let the money tell her who she was. The woman who helped build the most controlling institution of the modern economy spent her share proving the opposite thesis: that a person is most free when they are least attached to what they own.
+
 ### The writer who writes checks
 
-The tension in Scott's story is that her giving has made her famous in a way her fiction never could. She is a novelist who won an American Book Award and is known, in the popular imagination, as a checkbook. That is not a tragedy; it is a choice she has made deliberately and repeatedly. She has said she wants her philanthropy to be the loudest thing about her, and it has been.
+That Stoic frame sharpens the tension the popular accounts miss. Scott is a novelist who won an American Book Award and is known, in the public imagination, as a checkbook. But the Stoics would not see a contradiction. The novelist who spent ten years on a single book has the patience of someone who believes in long horizons; the philanthropist who moved $26 billion has the same. She gave up control of her money to community organizations the way she gave up control of her novel to the open internet. The through-line is not a retreat from writing. It is a conviction, held with unusual consistency, that the most powerful thing a person can do with what they have is to let go of it.
 
-But it is worth holding the two halves together, because they illuminate each other. The novelist who spent ten years on a single book is the same person who spent seven years moving $26 billion with the patience of someone who believes in long horizons. The woman who gave up control of her money to community organizations is the same woman who gave up control of her novel to the open internet. The through-line is not a retreat from writing. It is a conviction, held with unusual consistency, that the most powerful thing a person can do with what they have is to let go of it.
-
-Morrison's review of her first novel called it "a rarity: a sophisticated novel that breaks and swells the heart." The same could be said of the way she has chosen to live. She helped build a machine designed to extract value, then spent her share giving it back. She wrote a novel about a father's quiet interior life, then published her next one free, to no one's gatekeeping and no one's profit. The most interesting writer of her generation may be the one who decided, finally, that the best work she could do was to give the work away.
+Morrison's review of her first novel called it "a rarity: a sophisticated novel that breaks and swells the heart." The same could be said of the way she has chosen to live. She helped build a machine designed to extract value, then spent her share giving it back. She wrote a novel about a father's quiet interior life, then published her next one free, to no one's gatekeeping and no one's profit. The most interesting Stoic of her generation may be the one who decided, finally, that the best work she could do was to give the work away. Epictetus said that freedom begins when we stop treating what is not ours as though it were.[^12]
 
 ---
 
@@ -57,3 +62,11 @@ Morrison's review of her first novel called it "a rarity: a sophisticated novel 
 [^7]: "MacKenzie Scott," *Wikipedia*, accessed August 31, 2026, https://en.wikipedia.org/wiki/MacKenzie_Scott. Scott was involved in Amazon's early name, business plan, accounts, order shipping, and first freight contract.
 
 [^8]: Yield Giving, "About," accessed August 31, 2026, https://yieldgiving.com. "Yield is named after a belief in adding value by giving up control."
+
+[^9]: Epictetus, *Enchiridion*, ch. 1. "Some things are in our control and others not." See also Epictetus, *Discourses*, on the dichotomy of control.
+
+[^10]: For the Stoic doctrine of "indifferents" (*adiaphora*), see Diogenes Laërtius, *Lives of the Eminent Philosophers*, 7.101–103; Robert C. Bartlett, trans., *Epictetus: The Discourses and Selected Writings* (Penguin, 2008).
+
+[^11]: Seneca, *De Vita Beata* (*On the Happy Life*), ch. 20–26, where Seneca defends the wise person's wealth as something held, not possessed.
+
+[^12]: Epictetus, *Enchiridion*, ch. 1; cf. *Discourses* 1.1 and 4.1 on freedom and the things that are not ours.
