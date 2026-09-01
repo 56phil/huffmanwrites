@@ -11,6 +11,10 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
+### Maintenance — September 1, 2026 — Published "The Path to 51: How Democrats Could Take the Senate" essay
+- **Published** `content/posts/essays/the-path-to-51.md` — "The Path to 51: How Democrats Could Take the Senate" (tags: politics, essays, civics, senate). An analytical essay on the paths to a Democratic Senate majority in 2026 and the leadership question. Covers the math (net +4 needed for 51 because Vance breaks 50-50 ties; 35 seats up, 22 R / 13 D), the D defense (MI open and most at risk, GA, MN, NH open), the R offense tiered (NC open, Cooper 91%; OH special, Brown 45%; TX, Talarico 49% vs Paxton; ME, AK, IA, NE with Osborn wildcard; KS long shot at 18%), the paths (market path 51-48 D vs consensus 47-47 with 6 toss-ups), and the leadership question (Schumer would reclaim the gavel; Durbin retiring opens the whip race; Klobuchar leaving for the Minnesota governorship; Schatz the front-runner, Murphy the alternative; next generation Warnock/Ossoff/Slotkin/Gallego/Schiff). 21 footnotes. 0 em-dashes. No hero image (none requested).
+- Clean `hugo --gc --minify` build, 0 errors. Single commit per the publishing rule: content + this SESSION_STATE entry, pushed once. Post copied to `~/SimpleBrain/raw/content/posts/essays/` per the post-commit rule.
+
 ### Maintenance — September 1, 2026 — Symlinked ~/SimpleBrain to the SimpleBrain project
 - **Fixed** the obsolete `~/SimpleBrain/raw/` path: `~/SimpleBrain` is now a symlink to `/Users/prh/Developer/SimpleBrain` (the actual SimpleBrain project: `translate.md`, `wiki/`, `archive/`, `raw/`). The post-commit rule's "copy to `~/SimpleBrain/raw/`" now resolves to the project's canonical raw inbox, so future post copies feed the translation loop directly. Removed the stray home-directory copy (duplicate of the Kansas Senate essay, already archived in the project).
 
