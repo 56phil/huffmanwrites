@@ -92,7 +92,8 @@ None of this is prophecy. It is the compiled expectation of the people whose pro
 
 [^5]: Arthur, G. (2026, March 10). China amps up its 2026 defense budget by 7% amid purge of generals. *Defense News.* https://www.defensenews.com/global/asia-pacific/2026/03/10/china-amps-up-its-2026-defense-budget-by-7-amid-purge-of-generals/
 
-[^6]: The White House. (2026, April). *Rebuilding our military* [Fact sheet]. https://www.whitehouse.gov/wp-content/uploads/2026/04/rebuilding-our-military-fact-sheet.pdf; MilitarySpend.org. (2026). *US military spending 2026.* https://militaryspend.org/us-military-spending-2026
+[^6]: The White House. (2026, April). *Rebuilding our military* [Fact sheet]. https://www.whitehouse.gov/wp-content/uploads/2026/04/rebuilding-our-military-fact-sheet.pdf
+    MilitarySpend.org. (2026). *US military spending 2026.* https://militaryspend.org/us-military-spending-2026
 
 [^7]: DF-26. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/DF-26
 
@@ -114,13 +115,15 @@ None of this is prophecy. It is the compiled expectation of the people whose pro
 
 [^16]: People's Liberation Army Rocket Force. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/People%27s_Liberation_Army_Rocket_Force
 
-[^17]: Economy Insights. (2024). *Taiwan's chip leadership.* https://www.economyinsights.com/p/taiwans-chip-leadership; TSMC. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/TSMC
+[^17]: Economy Insights. (2024). *Taiwan's chip leadership.* https://www.economyinsights.com/p/taiwans-chip-leadership
+    TSMC. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/TSMC
 
 [^18]: Malacca dilemma. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/Malacca_dilemma
 
 [^19]: South China Sea. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/South_China_Sea
 
-[^20]: U.S. Geological Survey. (2025). *Mineral commodity summaries 2025: Rare earths.* https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-rare-earths.pdf; Rare-earth element. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/Rare-earth_element
+[^20]: U.S. Geological Survey. (2025). *Mineral commodity summaries 2025: Rare earths.* https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-rare-earths.pdf
+    Rare-earth element. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/Rare-earth_element
 
 [^21]: Enhanced Defense Cooperation Agreement. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/Enhanced_Defense_Cooperation_Agreement
 
@@ -140,7 +143,8 @@ None of this is prophecy. It is the compiled expectation of the people whose pro
 
 [^29]: Center for a New American Security. (2022). *Dangerous straits: Wargaming a future conflict over Taiwan.* https://www.cnas.org/publications/reports/dangerous-straits-wargaming-a-future-conflict-over-taiwan
 
-[^30]: CSIS Missile Threat. (n.d.). *DF-41.* https://missilethreat.csis.org/missile/df-41/; CSIS Missile Threat. (n.d.). *DF-17.* https://missilethreat.csis.org/missile/df-17/
+[^30]: CSIS Missile Threat. (n.d.). *DF-41.* https://missilethreat.csis.org/missile/df-41/
+    CSIS Missile Threat. (n.d.). *DF-17.* https://missilethreat.csis.org/missile/df-17/
 
 [^31]: CSIS Missile Threat. (n.d.). *Ground-based Midcourse Defense (GMD).* https://missilethreat.csis.org/system/gmd/
 
