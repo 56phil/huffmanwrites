@@ -4,7 +4,7 @@ description: "Nine weeks out, the Senate map has expanded: Texas and Kansas move
 date: 2026-09-06T07:00:00-05:00
 author: Philip Huffman
 lastmod: 2026-09-06T07:00:00-05:00
-draft: true
+draft: false
 tags:
   - politics
   - senate
