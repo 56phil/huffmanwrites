@@ -1,9 +1,9 @@
 ---
 title: "Senate Race Report: September 6, 2026"
 description: "Nine weeks out, the Senate map has expanded: Texas and Kansas moved toward the Democrats this week, the prediction markets sit near even, and the path to 51 runs through North Carolina, Ohio, and a bench of races from Maine to Alaska."
-date: 2026-09-06T07:00:00-05:00
+date: 2026-09-02T00:00:00Z
 author: Philip Huffman
-lastmod: 2026-09-06T07:00:00-05:00
+lastmod: 2026-09-02T00:00:00Z
 draft: false
 tags:
   - politics
