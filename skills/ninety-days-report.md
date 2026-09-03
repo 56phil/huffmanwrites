@@ -43,7 +43,7 @@ Both pieces keep the canonical architecture, refreshed:
 5. **What a Careful Investor Does** — the resilience playbook, matched to the new window.
 6. **The close** — personal stakes, the credo voice, the dated storm.
 
-## Output
+- Hero images: generate a fresh pair per article via the OpenAI images API (`gpt-image-2`, key from `.zshrc`'s `OPENAI_API_KEY`, against `https://api.openai.com/v1`; do NOT rely on `OPENAI_BASE_URL`, which points at the local Ollama proxy and serves no images). Standing instruction from Philip: keep using this key until it is declined; if a call fails with an auth/billing error (quota or balance exhausted), do not debug or retry the account — note it in the output and stop. The agreed fallback is fal.ai (FAL) for image generation, to be wired up at that point (Philip will provide the FAL key).
 
 - Files: `content/posts/investing/bond-market-ninety-days-YYYY-MM-DD.md` and `content/posts/investing/sp500-next-ninety-days-YYYY-MM-DD.md` (date = run date). The undated September slugs stay as the first installments.
 - Frontmatter (both): `title`, `description` (one sentence naming the new window), `date` (run time, CT), `author: Philip Huffman`, `lastmod`, `hero_desktop`/`hero_mobile`/`hero_alt`/`hero_caption` (generated this run), `tags: [investing, markets, politics, risk]`, `draft: true`.
