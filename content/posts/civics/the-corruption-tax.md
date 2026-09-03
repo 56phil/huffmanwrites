@@ -21,8 +21,6 @@ Public corruption is conventionally discussed in moral terms: integrity, trust, 
 
 The argument of this essay is that public corruption functions as a tax that no legislature ever enacted: it misallocates capital, raises the cost of borrowing, diminishes the revenue the state can collect, and erodes the voluntary trust on which every modern economy depends. None of these effects requires an assumption that anyone has committed a crime. Much of the corruption that matters most is perfectly legal, and that is precisely what makes it expensive.
 
-## The Economic Evidence
-
 The economics profession was slow to treat corruption as more than a morality tale, but the evidence accumulated rapidly once it did. Three findings form the backbone of the literature.
 
 First, corruption suppresses investment. Paolo Mauro's study in the *Quarterly Journal of Economics* found that countries with higher measured corruption exhibit lower investment and slower growth ([Mauro, 1995](#sources)). The mechanism is not obscure. A bribe operates as an uncertain, unrefundable fee on any project that touches the state: permits, customs, licenses, procurement. Because the fee cannot be predicted, investors discount the project, and some projects never occur at all.
@@ -33,8 +31,6 @@ Third, corruption degrades the state itself. Shleifer and Vishny's formal model 
 
 The aggregate estimates are substantial. An International Monetary Fund study calculated that bribery alone moves roughly **$1.5 to $2 trillion** through the global economy each year, approximately **2 percent of world GDP** ([IMF, 2017](#sources)). That figure covers only the bribes. IMF economists later estimated that if the countries that reduced corruption over the preceding two decades had all done so at the same pace, the world would collect about **$1 trillion more in tax revenue annually**, roughly **1.25 percent of global GDP** ([Mauro, Medas, and Fournier, 2019](#sources)). Corruption is, among its other properties, a machine for rendering the tax collector blind.
 
-## The Channels
-
 Estimates of this magnitude invite scrutiny of the mechanism, and the mechanism is well understood. Public corruption reaches private income through at least four channels.
 
 **Misallocation.** When contracts, permits, and regulatory relief flow toward the connected rather than the competent, the economy's output deteriorates. The connected firm is not the low-cost producer; it is the politically optimized one. Consumers absorb the difference as higher prices and inferior service, and honest firms that decline to participate discover that their efficiency is worth less than a competitor's access.
@@ -44,8 +40,6 @@ Estimates of this magnitude invite scrutiny of the mechanism, and the mechanism 
 **Trust and compliance.** Modern tax systems rest on voluntary compliance, and economists have found that compliance depends heavily on tax morale: the intrinsic willingness to pay that follows from the belief that the system is fair ([Luttmer and Singhal, 2014](#sources)). The United States is conducting the experiment in real time. Pew Research Center reported in December 2025 that only **17 percent** of Americans trust the federal government to do what is right most of the time, among the lowest readings in nearly seven decades of measurement ([Pew Research Center, 2025](#sources)). The consequences of sustained distrust for compliance at the margin follow without elaborate modeling: either honest taxpayers pay more, or public services decline.
 
 **Institutional decay.** Corruption rarely announces itself; it dismantles the instruments that detect it. Inspectors general are removed, enforcement budgets are cut, disclosure rules are narrowed, and the anti-bribery statute on the books ceases to be enforced. The measured level of corruption does not rise when this occurs. The unmeasured level does, and it is the more dangerous of the two.
-
-## The Contemporary American Record
 
 A reasonable objection holds that these dynamics describe poorer countries rather than the United States. The evidence indicates otherwise.
 
@@ -59,8 +53,6 @@ This is the sequence described by the literature, executed at the highest availa
 
 The sensors meanwhile continue to come offline. Enforcement of the Foreign Corrupt Practices Act, the statute that made bribery of foreign officials a federal crime for American companies, was paused by executive order, and its enforcement resources were subsequently reduced ([Transparency International U.S., 2026a](#sources)). In August, Treasury acted to permit anonymous companies, the classic laundering vehicle for cartels and corrupt foreign officials, access to the American financial system with diminished scrutiny ([Transparency International U.S., 2026c](#sources)). Each measure was described in the language of competitiveness or deregulation. Each widens the distance between what the law says and whom the law reaches.
 
-## Market Evidence
-
 Markets respond to war, deficits, and inflation as well as to institutional deterioration, and no single series isolates corruption. Markets nevertheless do not distinguish cleanly among risks that share a root, and the root of much of the current repricing is the question every investor must now ask about the United States: whether the rules still bind.
 
 Gold is the clearest signal. Central banks purchased **289 tonnes of gold in the second quarter of 2026**, a record for any second quarter, following 244 tonnes in the first, and the buying has persisted even as the price retreated from its highs ([World Gold Council, 2026](#sources); [Reuters, 2026](#sources)). Central banks do not accumulate gold in anticipation of jewelry demand. They accumulate it to reduce their dependence on promises, and the largest single promise in the world is the American institutional order.
@@ -69,17 +61,13 @@ The dollar tells a slower version of the same story. The dollar's share of alloc
 
 American borrowers have in fact been paying. The ten-year Treasury yield closed at **4.79 percent** on September 1, nearly a full point above its level before the war with Iran began in February ([FRED, 2026](#sources)). War and fiscal deficits account for most of that repricing. What compounds it is a government simultaneously running large deficits, attacking its own oversight institutions, and demonstrating to the world that its market rules can be rewritten for the benefit of the ruler's family. Investors do not price each of those risks separately. They price the correlation among them, and corruption is what renders the correlation high.
 
-## The Distribution of the Burden
-
-The incidence of the tax deserves precise statement.
+It remains to ask where so diffuse a tax finally settles, and the answer can be stated with unusual precision, because its incidence falls according to access rather than according to desert.
 
 The connected insider pays nothing; the purpose of his position is to externalize his costs. The large corporation maintains a compliance department and pays in legal fees and forgone opportunities. The heaviest and least visible burden, however, falls on those with no access at all. The small contractor who cannot win a bid without a relationship loses the contract. The saver holding Treasury bonds absorbs the risk premium. The first-time homebuyer pays the mortgage rate that the premium inflates. The honest taxpayer funds the revenue that corruption quietly redirects. And the citizen who complies with every rule observes that the rules were optional for those with better connections.
 
 Corruption also compounds inequality beyond dollars. Enforcement that follows power teaches the powerless fear and the powerful impunity. A society in which the law applies downward but not upward leaves the honest majority not merely poorer but demoted.
 
-## What Reduction Requires
-
-The remedy is not primarily prosecutorial, because prosecution arrives late and reaches narrowly. The remedy is structural, and it is the one economists have recommended for decades, because it attacks the channels directly.
+Because the damage operates through structure rather than through isolated criminality, the remedy is not primarily prosecutorial; prosecution arrives late and reaches narrowly. The remedy is structural, and it is the one economists have recommended for decades, because it attacks the channels directly.
 
 **Discretion must be made visible.** Selective enforcement is costly precisely because it is difficult to observe. Disclosures, recusals, and public records covering officials' financial interests, including those of their families, are not ethics theater; they are the price signal that keeps the risk premium low.
 
