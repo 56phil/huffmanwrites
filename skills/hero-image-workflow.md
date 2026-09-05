@@ -34,6 +34,7 @@ After images are generated and placed in the assets folder, the post's frontmatt
 1. **Identify**: Select target post from `image-assignments.md`.
 2. **Prompt**: Utilize the specific prompt designated for that post, ensuring visual identity keywords are present.
 3. **Generate**: Produce both 16:9 and 4:5 variants.
+   - **Timeout note (learned 2026-09-05):** the 4:5 call (`1024x1280`) consistently takes longer than the 16:9 (`1536x1024`) and routinely exceeds a 120-second cell/tool ceiling — it has timed out on every recent pair at least once, and three times in a row on the 69-the-obstacle-is-the-way pair. Do NOT gamble on retries: run the 4:5 generation with the cell timeout disabled (`timeout: 0` in the eval call) so the request runs to completion (~2.5 min typical). The kernel stays alive across a timeout, but an interrupted cell aborts the in-flight HTTP request, so a "retry" is a fresh generation, not a resume.
 4. **Verify**: Ensure files are renamed correctly and placed in `static/img/articles/`.
 5. **Wire**: Update the Hugo post's frontmatter to link these assets.
 6. **Add to gallery**: Add a matching entry to `data/gallery.yml` (image, title, caption, link to the post). The gallery does not auto-populate from post frontmatter — a hero image doesn't appear there until it's added by hand.
