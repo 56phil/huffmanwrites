@@ -12,7 +12,7 @@
   <key>StartCalendarInterval</key>
   <dict>
     <key>Weekday</key>
-    <integer>0</integer>
+    <integer>1</integer>
     <key>Hour</key>
     <integer>13</integer>
     <key>Minute</key>
