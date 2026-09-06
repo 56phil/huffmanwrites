@@ -18,21 +18,20 @@ STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
 # Provider routing: Claude Code appends /v1/messages to ANTHROPIC_BASE_URL,
 # so the base URL must NOT carry a /v1 suffix (Ollama serves Anthropic-format
 # requests at /v1/messages). Model id must match `ollama list` exactly.
-# launchd does not source the shell, so OPENAI_API_KEY is absent; extract it
-# from .zshrc BEFORE exporting ANTHROPIC_API_KEY. Otherwise the variable is
-# empty and claude falls back to the OAuth login instead of the API key.
-OPENAI_KEY="$(grep -oE 'OPENAI_API_KEY="[^"]+"' "$HOME/.zshrc" | head -1 | cut -d'"' -f2)"
-export ANTHROPIC_API_KEY="${OPENAI_KEY:-}"
+# Policy (Philip, 2026-09-06): no Anthropic or OpenAI resources. The only AI
+# API keys available are FAL and Ollama; Ollama may be local or cloud. Auth
+# uses OLLAMA_API_KEY from .zshrc (launchd does not source the shell). Without
+# it, ANTHROPIC_API_KEY is empty and claude falls back to the OAuth login.
+OLLAMA_KEY="$(grep -oE 'OLLAMA_API_KEY="[^"]+"' "$HOME/.zshrc" | head -1 | cut -d'"' -f2)"
+export ANTHROPIC_API_KEY="${OLLAMA_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
 export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
 
-# Image generation: hero pairs call the real OpenAI API. Extract the key from
-# .zshrc (launchd does not source it) and make sure OPENAI_BASE_URL is NOT set,
-# because the shell default points at the local Ollama proxy, which serves no
-# images API. api.openai.com is the default when the variable is absent.
-OPENAI_KEY="$(grep -oE 'OPENAI_API_KEY="[^"]+"' "$HOME/.zshrc" | head -1 | cut -d'"' -f2)"
-export OPENAI_API_KEY="${OPENAI_KEY:-}"
-unset OPENAI_BASE_URL || true
+# Image generation: hero pairs call fal.ai (FLUX.1 dev). Extract FAL_KEY from
+# .zshrc (launchd does not source it). The queue endpoint is
+# https://queue.fal.run/fal-ai/flux/dev with Authorization: Key $FAL_KEY.
+FAL_KEY="$(grep -oE 'FAL_KEY="[^"]+"' "$HOME/.zshrc" | head -1 | cut -d'"' -f2)"
+export FAL_KEY="${FAL_KEY:-}"
 
 # Override for manual test runs: NINETY_DAYS_PROMPT="Reply with exactly: SMOKE-OK"
 # Note: no apostrophes inside the ${VAR:-...} default; bash 3.2 mis-parses them.
