@@ -20,18 +20,20 @@ STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
 # requests at /v1/messages). Model id must match `ollama list` exactly.
 # Policy (Philip, 2026-09-06): no Anthropic or OpenAI resources. The only AI
 # API keys available are FAL and Ollama; Ollama may be local or cloud. Auth
-# uses OLLAMA_API_KEY from ~/.secrets (launchd does not source the shell).
-# Without it, ANTHROPIC_API_KEY is empty and claude falls back to the OAuth
-# login.
-OLLAMA_KEY="$(grep -oE 'OLLAMA_API_KEY="[^"]+"' "$HOME/.secrets" | head -1 | cut -d'"' -f2)"
+# uses OLLAMA_API_KEY from the login keychain (huffmanwrites-ollama), with
+# ~/.secrets as fallback. Without it, ANTHROPIC_API_KEY is empty and claude
+# falls back to the OAuth login.
+OLLAMA_KEY="$(security find-generic-password -a "$USER" -s huffmanwrites-ollama -w 2>/dev/null)"
+[ -z "$OLLAMA_KEY" ] && OLLAMA_KEY="$(grep -oE 'OLLAMA_API_KEY="[^"]+"' "$HOME/.secrets" 2>/dev/null | head -1 | cut -d'"' -f2)"
 export ANTHROPIC_API_KEY="${OLLAMA_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
 export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
 
-# Image generation: hero pairs call fal.ai (FLUX.1 dev). Extract FAL_KEY from
-# ~/.secrets (launchd does not source the shell). The queue endpoint is
-# https://queue.fal.run/fal-ai/flux/dev with Authorization: Key $FAL_KEY.
-FAL_KEY="$(grep -oE 'FAL_KEY="[^"]+"' "$HOME/.secrets" | head -1 | cut -d'"' -f2)"
+# Image generation: hero pairs call fal.ai (FLUX.1 dev). FAL_KEY from the
+# login keychain (huffmanwrites-fal), with ~/.secrets as fallback. The queue
+# endpoint is https://queue.fal.run/fal-ai/flux/dev with Authorization: Key $FAL_KEY.
+FAL_KEY="$(security find-generic-password -a "$USER" -s huffmanwrites-fal -w 2>/dev/null)"
+[ -z "$FAL_KEY" ] && FAL_KEY="$(grep -oE 'FAL_KEY="[^"]+"' "$HOME/.secrets" 2>/dev/null | head -1 | cut -d'"' -f2)"
 export FAL_KEY="${FAL_KEY:-}"
 
 # Override for manual test runs: NINETY_DAYS_PROMPT="Reply with exactly: SMOKE-OK"
