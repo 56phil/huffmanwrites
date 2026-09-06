@@ -4,6 +4,10 @@
 # Self-disables after 2026-11-02 (Election Day: 2026-11-03).
 set -euo pipefail
 
+# launchd does not source the shell, so PATH misses ~/.local/bin (claude) and
+# /opt/homebrew/bin (hugo). Export the full interactive PATH explicitly.
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
 REPO="/Users/prh/Developer/huffmanwrites"
 SKILL="$REPO/skills/senate-race-report.md"
 LOG_DIR="$HOME/Library/Logs"
@@ -14,8 +18,12 @@ STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
 # Provider routing: Claude Code appends /v1/messages to ANTHROPIC_BASE_URL,
 # so the base URL must NOT carry a /v1 suffix (Ollama serves Anthropic-format
 # requests at /v1/messages). Model id must match `ollama list` exactly.
+# launchd does not source the shell, so OPENAI_API_KEY is absent; extract it
+# from .zshrc (same pattern as the ninety-days runner). Without it,
+# ANTHROPIC_API_KEY is empty and claude falls back to the expired OAuth login.
+OPENAI_KEY="$(grep -oE 'OPENAI_API_KEY="[^"]+"' "$HOME/.zshrc" | head -1 | cut -d'"' -f2)"
+export ANTHROPIC_API_KEY="${OPENAI_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
-export ANTHROPIC_API_KEY="${OPENAI_API_KEY:-}"
 export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
 
 # Override for manual test runs: SENATE_REPORT_PROMPT="Reply with exactly: SMOKE-OK"
