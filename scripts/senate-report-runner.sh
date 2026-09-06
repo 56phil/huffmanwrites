@@ -20,9 +20,10 @@ STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
 # requests at /v1/messages). Model id must match `ollama list` exactly.
 # Policy (Philip, 2026-09-06): no Anthropic or OpenAI resources. The only AI
 # API keys available are FAL and Ollama; Ollama may be local or cloud. Auth
-# uses OLLAMA_API_KEY from .zshrc (launchd does not source the shell). Without
-# it, ANTHROPIC_API_KEY is empty and claude falls back to the OAuth login.
-OLLAMA_KEY="$(grep -oE 'OLLAMA_API_KEY="[^"]+"' "$HOME/.zshrc" | head -1 | cut -d'"' -f2)"
+# uses OLLAMA_API_KEY from ~/.secrets (launchd does not source the shell).
+# Without it, ANTHROPIC_API_KEY is empty and claude falls back to the OAuth
+# login.
+OLLAMA_KEY="$(grep -oE 'OLLAMA_API_KEY="[^"]+"' "$HOME/.secrets" | head -1 | cut -d'"' -f2)"
 export ANTHROPIC_API_KEY="${OLLAMA_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
 export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
