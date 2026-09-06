@@ -8,6 +8,12 @@ Weekly report on all 35 U.S. Senate races in the 2026 cycle (33 regular Class 2 
 - The runner invokes Claude Code headless in this repo with this skill. Runs: Sundays September 6 through November 1, 2026 (9 runs). The runner self-disables after November 2, 2026.
 - If a report for today's date already exists, update it in place (same-day re-run).
 
+## Provider policy (Philip, 2026-09-06)
+
+- **No Anthropic or OpenAI resources.** The only AI API keys available are FAL and Ollama. Do not call api.anthropic.com, api.openai.com, or any Anthropic/OpenAI endpoint; do not use the OpenAI key for anything.
+- The model runs on the **local Ollama server** (`http://localhost:11434`), model `deepseek-v4-flash:cloud` (must match `ollama list` exactly). Auth uses `OLLAMA_API_KEY` from `.zshrc`; the runner extracts it because launchd does not source the shell.
+- FAL (`FAL_KEY` in `.zshrc`) is available for image generation if a future report ever needs it; the weekly report does not use hero images.
+
 ## Mission
 
 Produce a fact-checked, house-style ARTICLE on the state of every Senate race, what changed in the past week, and the current math for control of the Senate. The article is a DRAFT for Philip to review, edit, and publish. Do NOT commit, push, send, or copy anything.
