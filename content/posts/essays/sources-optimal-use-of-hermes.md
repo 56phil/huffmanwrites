@@ -104,7 +104,7 @@ Below are formatted APA citations organized by which claim in the essay they sup
 
 ## Implementation Notes
 
-- All arXiv papers should be cited with their arXiv ID and the URL https://arxiv.org/abs/[ID].
+- All arXiv papers should be cited with their arXiv ID and the URL `https://arxiv.org/abs/[ID]`.
 - Where a paper has a published venue (e.g., CHI '19, UIST '23, NeurIPS), include both the conference proceedings and the arXiv preprint — the essay can use either.
 - The Hermes Agent docs and GitHub repo are the primary sources for Claim 1. No academic paper yet exists specifically about Hermes Agent (released 2026), so the documentation itself is the citable source.
 - For a "Sources" section at the end of the essay, group by theme: "Agent Architecture & Memory," "Skills & Learning," "Multi-Agent Delegation," "Human-AI Collaboration."

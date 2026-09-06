@@ -122,10 +122,10 @@ None of it is guaranteed by anything more than the text, and the text is thinner
 
 ## Sources
 
-- Bush v. Gore, 531 U.S. 98 (2000). [*Supreme Court opinion*](https://www.law.cornell.edu/supct/html/00-949.ZO.html).
+- Bush v. Gore, 531 U.S. 98 (2000). [*Supreme Court opinion*](https://www.law.cornell.edu/supremecourt/text/531/98).
 - Electoral Count Reform Act of 2022, Pub. L. No. 117-328 (div. P, tit. III). [*Sen. Collins summary*](https://www.collins.senate.gov/imo/media/doc/one_pager_on_electoral_count_reform_act_of_2022.pdf).
 - Moore v. Harper, 600 U.S. 1 (2023). [*Supreme Court opinion*](https://www.supremecourt.gov/opinions/22pdf/21-1271_3f14.pdf).
-- Powell v. McCormack, 395 U.S. 486 (1969). [*Supreme Court opinion*](https://www.law.cornell.edu/supremecourt/html/395US486.html).
+- Powell v. McCormack, 395 U.S. 486 (1969). [*Supreme Court opinion*](https://www.law.cornell.edu/supremecourt/text/395/486).
 - Trump v. Anderson, 601 U.S. 100 (2024). [*Case summary*](https://en.wikipedia.org/wiki/Trump_v._Anderson).
 - U.S. Const. art. I, §§2, 3, 4, 5; art. II, §1; amends. XII, XIV, XV, XVII, XIX, XX, XXII, XXIII, XXIV, XXVI. [*National Archives*](https://www.archives.gov/founding-docs/constitution-transcript).
 - 3 U.S.C. §1; 2 U.S.C. §§1, 7. [*Uniform election day statutes*](https://uscode.house.gov/).

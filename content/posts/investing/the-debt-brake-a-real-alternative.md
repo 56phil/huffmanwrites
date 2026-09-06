@@ -76,6 +76,6 @@ None of this is effortless. It requires Congress to bind its future self, which 
 - The Conference Board / Committee for Economic Development. (2024). [*Policy backgrounder: How the Swiss debt brake can improve the US debt ceiling*](https://www.conference-board.org/research/ced-policy-backgrounders/swiss-debt-brake-us-debt-ceiling).
 - Congressional Budget Office. (2025). [*The budget and economic outlook: 2025 to 2035*](https://www.cbo.gov/publication/61172).
 - Congressional Budget Office. (2026). [*Director's statement on the budget and economic outlook for 2026 to 2036*](https://www.cbo.gov/publication/62050).
-- Federal Finance Administration (Switzerland). (2023). [*Archive: Debt brake — one of Switzerland's most important fiscal policy instruments turns 20*](https://www.efv.admin.ch/en/archive-20-years-debt-brake).
+- Federal Finance Administration (Switzerland). (2023). [*Archive: Debt brake — one of Switzerland's most important fiscal policy instruments turns 20*](https://web.archive.org/web/20260124090154/https://www.efv.admin.ch/en/archive-20-years-debt-brake).
 - Congressional Research Service. (n.d.). [*Sequestration as a budget enforcement process: Frequently asked questions*](https://www.congress.gov/crs-product/R42972).
 - Braun, M., & Emmer, T. (2023). [*Emmer, Braun introduce bill to rein in out-of-control government spending*](https://emmer.house.gov/media-center/press-releases/emmer-braun-introduce-bill-to-rein-in-out-of-control-government-spending) [Press release].

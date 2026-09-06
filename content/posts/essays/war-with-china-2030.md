@@ -141,7 +141,7 @@ None of this is prophecy. It is the compiled expectation of the people whose pro
 
 [^28]: Cancian, M. F., Cancian, M., & Heginbotham, E. (2024, December 13). *Confronting Armageddon: Wargaming nuclear escalation in a Chinese invasion of Taiwan.* CSIS. https://csis-website-prod.s3.amazonaws.com/s3fs-public/2024-12/241213_Cancian_Confronting_Armageddon.pdf
 
-[^29]: Center for a New American Security. (2022). *Dangerous straits: Wargaming a future conflict over Taiwan.* https://www.cnas.org/publications/reports/dangerous-straits-wargaming-a-future-conflict-over-taiwan
+[^29]: Center for a New American Security. (2022). *Dangerous straits: Wargaming a future conflict over Taiwan.* https://www.cnas.org/publications/reports/dangerous-straits-wargaming-a-future-conflict-over-taiwans
 
 [^30]: CSIS Missile Threat. (n.d.). *DF-41.* https://missilethreat.csis.org/missile/df-41/
     CSIS Missile Threat. (n.d.). *DF-17.* https://missilethreat.csis.org/missile/df-17/

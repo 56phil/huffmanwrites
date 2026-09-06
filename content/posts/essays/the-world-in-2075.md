@@ -61,7 +61,7 @@ The Stoics had a word for the discipline this requires: prohairesis, the faculty
 
 ## Sources
 
-- Hausfather, Z. (2025, January). [*Current-policy warming projections*](https://www.nature.com/articles/s41558-024-02217-0). *Nature Climate Change*.
+- Hausfather, Z. (2025, January). [*An assessment of current policy scenarios over the 21st century and the reduced plausibility of high-emissions pathways*](https://doi.org/10.1177/29768659241304854). *Dialogues on Climate Change*.
 - Intergovernmental Panel on Climate Change. (2021). [*Climate change 2021: The physical science basis*](https://www.ipcc.ch/report/ar6/wg1/). Cambridge University Press.
 - Intergovernmental Panel on Climate Change. (2022). [*Climate change 2022: Impacts, adaptation and vulnerability*](https://www.ipcc.ch/report/ar6/wg2/). Cambridge University Press.
 - Intergovernmental Panel on Climate Change. (2023). [*Synthesis report of the Sixth Assessment Report*](https://www.ipcc.ch/report/ar6/syr/). IPCC.
@@ -69,7 +69,7 @@ The Stoics had a word for the discipline this requires: prohairesis, the faculty
 - Manifold Markets. (2026). [*Fusion power and data center markets*](https://manifold.markets/). Manifold.
 - Myers, N. (2005). [*Environmental refugees: An emergent security issue*](https://www.osce.org/files/f/documents/5/1/14851.pdf). OSCE.
 - United Nations Department of Economic and Social Affairs, Population Division. (2024). [*World population prospects 2024*](https://population.un.org/wpp/). United Nations.
-- Varieties of Democracy Institute. (2020). [*Democracy report 2020: Autocratization surges, resistance grows*](https://v-dem.net/documents/19/report_2020.pdf). University of Gothenburg.
-- Varieties of Democracy Institute. (2026). [*Democracy report 2026*](https://v-dem.net/documents/). University of Gothenburg.
+- Varieties of Democracy Institute. (2020). [*Democracy report 2020: Autocratization surges, resistance grows*](https://www.v-dem.net/documents/14/dr_2020_dqumD5e.pdf). University of Gothenburg.
+- Varieties of Democracy Institute. (2026). [*Democracy report 2026: Unraveling the democratic era?*](https://www.v-dem.net/documents/75/V-Dem_Institute_Democracy_Report_2026_lowres.pdf). University of Gothenburg.
 
 *PRH | huffmanwrites.org | © Philip Huffman*

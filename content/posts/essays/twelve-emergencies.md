@@ -206,7 +206,7 @@ Fourth, the legal status of each declaration tracks its function. Tariff emergen
 
 [^46]: *Smith v. Trump*, No. 1:25-cv-00158 (D. Me. 2025) (preliminary injunction July 18, 2025). https://www.aclu.org/press-releases/court-agrees-trump-administrations-icc-sanctions-likely-violate-advocates-first-amendment-rights
 
-[^47]: *Cali v. Trump*, No. 1:26-cv-00688 (D.D.C. 2026) (injunction May 13, 2026), appeal docketed, No. 26-5172 (D.C. Cir.). See Politico. (2026, May 13). https://www.politico.com/news/2026/05/13/francesca-albanese-gaza-israel-ruling-00920001; D.C. Circuit docket: https://www.courtlistener.com/docket/73372084/cali-v-trump/
+[^47]: *Cali v. Trump*, No. 1:26-cv-00688 (D.D.C. 2026) (injunction May 13, 2026), appeal docketed, No. 26-5172 (D.C. Cir.). See Politico. (2026, May 13). <https://www.politico.com/news/2026/05/13/francesca-albanese-gaza-israel-ruling-00920001>; D.C. Circuit docket: https://www.courtlistener.com/docket/73372084/cali-v-trump/
 
 [^48]: *Prost v. Trump*, No. 1:26-cv-05305 (S.D.N.Y. 2026). https://clearinghouse.net/case/48328/
 
