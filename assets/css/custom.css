@@ -179,6 +179,75 @@ main, .post-content, .entry-content {
     }
 }
 
+/* Credo page — /credo/ renders the credo in display type via the
+   credo-hero shortcode, plus Bluesky/LinkedIn share buttons via
+   credo-share. The .credo-line/.credo-verb base rules above are
+   shared; these rules are scoped to the page's own wrappers. */
+.credo-hero {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-style: italic;
+    line-height: 1.15;
+    margin: 2rem 0 3rem;
+    text-align: center;
+    color: var(--primary);
+    font-weight: 400;
+}
+
+.credo-hero .credo-line {
+    display: block;
+    margin-bottom: 0.3rem;
+    position: relative;
+}
+
+.credo-hero .credo-verb {
+    font-variant: small-caps;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.credo-hero .credo-adverb {
+    font-style: italic;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--accent);
+}
+
+.credo-share {
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.share-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.share-button.bluesky {
+    background-color: #0085ff;
+    color: white;
+}
+
+.share-button.linkedin {
+    background-color: #0077B5;
+    color: white;
+}
+
+.share-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
 /* Newsletter signup block — used on the home page via
    layouts/partials/newsletter.html. Site-wide utility: any page that
    includes this partial will get the same look. */

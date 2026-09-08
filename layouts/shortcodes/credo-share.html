@@ -1,0 +1,13 @@
+{{/* Credo share buttons — Bluesky + LinkedIn share intents for the
+   /credo/ page. Shortcode (not raw HTML) so it renders under the
+   goldmark `unsafe` flag. Bluesky is the site's actual social
+   presence; Twitter and Facebook were dropped (no presence there).
+   The share text is built as one string and urlquery'd as a whole so
+   the space between text and permalink is properly encoded. */}}
+{{- $shareText := printf "Think clearly. Live intentionally. Love deeply. %s" .Page.Permalink -}}
+<div class="credo-share">
+  <div class="share-buttons">
+    <a href="https://bsky.app/intent/compose?text={{ $shareText | urlquery }}" class="share-button bluesky" target="_blank" rel="noopener">Share on Bluesky</a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Page.Permalink }}&title={{ .Page.Title | urlquery }}&summary={{ "Think clearly. Live intentionally. Love deeply." | urlquery }}" class="share-button linkedin" target="_blank" rel="noopener">Share on LinkedIn</a>
+  </div>
+</div>
