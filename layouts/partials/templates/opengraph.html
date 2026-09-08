@@ -19,7 +19,13 @@
   <meta property="og:site_name" content="{{ . }}">
 {{- end }}
 
-{{- with or .Title site.Title site.Params.title | plainify }}
+{{- $ogTitle := .Title -}}
+{{- /* The home page's content file (_index.md) is titled "Mission";
+       link previews should say "Huffman Writes", not "Mission". */ -}}
+{{- if .IsHome -}}
+  {{- $ogTitle = site.Title -}}
+{{- end -}}
+{{- with $ogTitle | plainify }}
   <meta property="og:title" content="{{ . }}">
 {{- end }}
 
@@ -53,32 +59,57 @@
 {{/*
   Image: hero-aware selection. Set og:image, og:image:alt,
   og:image:width, og:image:height once we've resolved the source.
+  The URL is built with absURL so it follows the site's baseURL
+  (www.huffmanwrites.org in production) — matching the canonical
+  link, since some scrapers don't follow redirects on image URLs.
+  Dimensions are read from the actual image resource; the fallback
+  og-default.webp is 1200x630.
 */}}
 {{- $ogImage := "" -}}
 {{- $ogImageRel := "" -}}
 {{- $ogImageAlt := "" -}}
 {{- if .Params.hero_desktop -}}
   {{- $ogImageRel = .Params.hero_desktop -}}
-  {{- $ogImage = printf "https://huffmanwrites.org/%s" (strings.TrimPrefix "/" $ogImageRel) -}}
   {{- $ogImageAlt = .Params.hero_alt | default "" -}}
 {{- else if .Params.cover.image -}}
   {{- $ogImageRel = .Params.cover.image -}}
-  {{- $ogImage = printf "https://huffmanwrites.org/%s" (strings.TrimPrefix "/" $ogImageRel) -}}
 {{- else if .Params.image -}}
   {{- $ogImageRel = .Params.image -}}
-  {{- $ogImage = printf "https://huffmanwrites.org/%s" (strings.TrimPrefix "/" $ogImageRel) -}}
 {{- end -}}
-{{- if not $ogImage -}}
-  {{- $ogImage = "https://huffmanwrites.org/img/og-default.webp" -}}
+{{- if not $ogImageRel -}}
+  {{- $ogImageRel = "img/og-default.webp" -}}
   {{- $ogImageAlt = "Huffman Writes - Stoicism, Philosophy, and the Pursuit of a Well-Lived Life" -}}
+{{- end -}}
+{{- $ogImage = printf "%s/%s" (strings.TrimSuffix "/" site.BaseURL) (strings.TrimPrefix "/" $ogImageRel) -}}
+{{- /* Dimensions: read from the actual file. Book covers live in
+       assets/, article heroes and og-default in static/ — probe both
+       with os.Stat, then imageConfig for the dims. */ -}}
+{{- $ogImagePath := "" -}}
+{{- range slice (printf "static/%s" $ogImageRel) (printf "assets/%s" $ogImageRel) -}}
+  {{- if and (not $ogImagePath) (os.Stat .) -}}
+    {{- $ogImagePath = . -}}
+  {{- end -}}
+{{- end -}}
+{{- $ogImageW := 1200 -}}
+{{- $ogImageH := 630 -}}
+{{- $ogImageType := "image/webp" -}}
+{{- if $ogImagePath -}}
+  {{- with imageConfig $ogImagePath -}}
+    {{- $ogImageW = .Width -}}
+    {{- $ogImageH = .Height -}}
+  {{- end -}}
+  {{- $ext := path.Ext $ogImagePath -}}
+  {{- if eq $ext ".jpg" -}}{{- $ogImageType = "image/jpeg" -}}
+  {{- else if eq $ext ".png" -}}{{- $ogImageType = "image/png" -}}
+  {{- end -}}
 {{- end -}}
 {{- if and $ogImageRel (not $ogImageAlt) -}}
   {{- $ogImageAlt = .Title -}}
 {{- end -}}
 <meta property="og:image" content="{{ $ogImage }}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="{{ $ogImageW }}">
+<meta property="og:image:height" content="{{ $ogImageH }}">
+<meta property="og:image:type" content="{{ $ogImageType }}">
 {{- with $ogImageAlt }}
 <meta property="og:image:alt" content="{{ . }}">
 {{- end }}

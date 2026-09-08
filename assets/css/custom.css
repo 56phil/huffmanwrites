@@ -146,6 +146,13 @@ main, .post-content, .entry-content {
     display: block;
     margin-bottom: 0.2rem;
     position: relative;
+    /* Hug the text so the absolutely-positioned icon trails the last
+       word instead of the viewport edge — the full-width line box
+       pushed the icon 24px past the right edge, causing a horizontal
+       scrollbar on desktop. */
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .credo-footer .credo-verb {

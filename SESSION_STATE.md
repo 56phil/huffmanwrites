@@ -11,6 +11,11 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
+### Maintenance — September 8, 2026 — OG meta fixes + footer horizontal scroll
+- **OG meta fixed** (last audit items): (1) home `og:title` was "Mission" (inherited from `content/_index.md`'s title) — now `site.Title` ("Huffman Writes") on the home page only; other pages unchanged. (2) `og:image` URLs hardcoded the non-www host while canonical is www — now built from `site.BaseURL` (CI passes `--baseURL https://www.huffmanwrites.org/`, so production matches canonical). (3) `og:image:width/height` were hardcoded 1200×630 — now read from the actual file via `os.Stat` + `imageConfig` (probes both `static/` and `assets/` since book covers live in assets and heroes in static); `og:image:type` derived from the extension. Verified: home 1200×630 fallback, post 1365×768, book 1800×2700 jpeg.
+- **Footer horizontal scroll fixed:** `.credo-footer-line` was full-width (`display: block`), so the absolutely-positioned `.credo-icon` at `right: -1.5rem` landed 24px past the viewport edge, inflating `scrollWidth` on every page. Fix: `width: fit-content` + auto margins so the line hugs its text and the icon trails the last word. Verified in-browser: `scrollWidth` == viewport at 1440px, icons still 24px right of their text, hidden below 480px as designed. The `.book-credo` icon rules in phbooks.css share the pattern but no markup uses them (dead CSS) — left in place.
+- Clean build, 0 errors. Committed and pushed.
+
 ### Maintenance — September 8, 2026 — 404 page noindex
 - The 404 page carried `robots: index, follow` — a soft-404 trap that could pollute the index. Fix: overrode the theme's `layouts/partials/head.html` (first override of this partial; the project already overrides `opengraph.html` the same way) to emit `noindex, nofollow` when `.Kind` is `"404"`. Normal pages keep `index, follow`. **Detour:** first tried `content/404.md` with `robotsNoIndex: true` — Hugo rendered it as a regular page (custom 404 design lost, output moved to `/404/index.html` which GitHub Pages doesn't serve). Reverted; the kind-check in the head partial is the correct approach. Verified: 404.html at root with noindex + custom design, home/posts still index. Committed and pushed.
 
