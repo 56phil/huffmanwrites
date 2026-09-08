@@ -21,4 +21,4 @@ lastmod: 2026-05-13
 
 # Raise 'Em Right
 
-[Buy on Amazon](https://www.amazon.com)
+**Coming soon.**
