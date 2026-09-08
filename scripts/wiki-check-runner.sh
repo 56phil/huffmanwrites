@@ -28,6 +28,10 @@ OLLAMA_KEY="$(security find-generic-password -a "$USER" -s huffmanwrites-ollama 
 export ANTHROPIC_API_KEY="${OLLAMA_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
 export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
+# The model has a 1M context window; Claude Code assumes 200k for
+# unrecognized model ids. Set the real window so the audit can scan the
+# whole vault without auto-compact truncation.
+export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 
 # Override for manual test runs: WIKI_CHECK_PROMPT="Reply with exactly: SMOKE-OK"
 # Note: no apostrophes inside the ${VAR:-...} default; bash 3.2 mis-parses them.
@@ -41,10 +45,23 @@ set +e
 claude -p "$PROMPT" \
   -n "wiki-check-$(date '+%Y-%m-%d')" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Edit,Write,Glob,Grep,Bash(git -C /Users/prh/Developer/SimpleBrain *),Bash(md5 *),Bash(cmp *),Bash(diff *),Bash(mv *),Bash(rm *),Bash(mkdir *)" \
+  --allowedTools "Read,Edit,Write,Glob,Grep,Bash(git -C /Users/prh/Developer/SimpleBrain *),Bash(md5 *),Bash(cmp *),Bash(diff *),Bash(mv *),Bash(rm /Users/prh/Developer/SimpleBrain/wiki/*),Bash(mkdir *)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e
+
+if [ "$RC" -eq 0 ]; then
+  # The audit prompt commits but does not push; push any commits it made.
+  set +e
+  git -C "$SB" push >> "$OUT_LOG" 2>> "$ERR_LOG"
+  PUSH_RC=$?
+  set -e
+  if [ "$PUSH_RC" -ne 0 ]; then
+    echo "$STAMP: push failed (exit $PUSH_RC)" >> "$OUT_LOG"
+    exit "$PUSH_RC"
+  fi
+  echo "$STAMP: push OK" >> "$OUT_LOG"
+fi
 
 echo "$STAMP: run finished (exit $RC)" >> "$OUT_LOG"
 exit "$RC"
