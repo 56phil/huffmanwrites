@@ -48,6 +48,13 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
+/* Cards outside the current page's range. All 80 cards render on
+   every page so the lightbox can navigate the full gallery; the
+   off-page ones are hidden with CSS. */
+.gallery-card.hidden {
+    display: none;
+}
+
 .gallery-img-wrapper {
     aspect-ratio: 16 / 9;
     overflow: hidden;

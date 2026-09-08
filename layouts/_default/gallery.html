@@ -19,7 +19,11 @@
 {{- end -}}
 
 {{- $offset := mul (sub $currentPage 1) $itemsPerPage -}}
-{{- $pageItems := first $itemsPerPage (after $offset $galleryItems) -}}
+{{- $pageEnd := add $offset $itemsPerPage -}}
+{{- /* All items render on every page so the lightbox can navigate the
+       full gallery; cards outside the current page's range are hidden
+       with CSS. DOM order is global, so GLightbox's prev/next walks
+       all 80 images regardless of which page you start on. */ -}}
 
 
 <div class="gallery-container">
@@ -33,9 +37,9 @@
   {{- end }}
 
   <div class="gallery-grid">
-    {{ range $pageItems }}
-    {{- $linkedPage := site.GetPage .link -}}
-    {{- $caption := .caption -}}
+    {{ range $i, $item := $galleryItems }}
+    {{- $linkedPage := site.GetPage $item.link -}}
+    {{- $caption := $item.caption -}}
     {{- if $linkedPage -}}
       {{- if $linkedPage.Description -}}
         {{- $caption = $linkedPage.Description -}}
@@ -43,17 +47,21 @@
         {{- $caption = $linkedPage.Params.description -}}
       {{- end -}}
     {{- end -}}
-    <div class="gallery-card">
+    {{- $hidden := "" -}}
+    {{- if or (lt $i $offset) (ge $i $pageEnd) -}}
+      {{- $hidden = " hidden" -}}
+    {{- end -}}
+    <div class="gallery-card{{ $hidden }}">
       <div class="gallery-img-wrapper">
-        {{- $imgSrc := .image | relURL -}}
-        <a href="{{ $imgSrc }}" class="glightbox" data-glightbox-title="{{ .title }}" data-glightbox-description="{{ $caption }}">
-          <img src="{{ $imgSrc }}" alt="{{ .title }}" class="gallery-img" loading="lazy">
+        {{- $imgSrc := $item.image | relURL -}}
+        <a href="{{ $imgSrc }}" class="glightbox" data-title="{{ $item.title }}" data-description="{{ $caption }}">
+          <img src="{{ $imgSrc }}" alt="{{ $item.title }}" class="gallery-img" loading="lazy">
         </a>
       </div>
       <div class="gallery-content">
-        <h3 class="gallery-title">{{ .title }}</h3>
+        <h3 class="gallery-title">{{ $item.title }}</h3>
         <p class="gallery-caption">{{ $caption }}</p>
-        <a href="{{ .link | relURL }}" class="gallery-link">Read Post</a>
+        <a href="{{ $item.link | relURL }}" class="gallery-link">Read Post</a>
       </div>
     </div>
     {{ end }}
@@ -93,12 +101,13 @@
     {{ .Content }}
   </div>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-  {{/* GLightbox init lives in assets/js/glightbox-init.js — loaded with
-     `defer` so it runs after the DOM is parsed and after the CDN
-     library is fetched. The init script self-checks for GLightbox
-     and is a no-op if the CDN script hasn't arrived yet. */}}
+  {{- /* GLightbox is vendored (assets/js/glightbox.min.js,
+         assets/css/glightbox.min.css) so the strict CSP stays
+         untouched — no third-party CDN in the page-load path. The
+         init script self-checks for GLightbox and is a no-op if the
+         library hasn't arrived yet. */ -}}
+  {{- partial "bundle.html" (dict "path" "css/glightbox.min.css" "kind" "css") -}}
+  {{- partial "bundle.html" (dict "path" "js/glightbox.min.js" "kind" "js") -}}
   {{- partial "bundle.html" (dict "path" "js/glightbox-init.js" "kind" "js") -}}
 
 </div>

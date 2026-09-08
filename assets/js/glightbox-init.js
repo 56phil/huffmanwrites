@@ -1,9 +1,12 @@
 /* GLightbox init for the /gallery/ landing page.
    Wires up the .glightbox link elements with touch navigation and
-   looping enabled. The GLightbox library and CSS are loaded from
-   jsdelivr in layouts/_default/gallery.html. No-op when GLightbox
-   is not yet loaded (e.g. on slow connections before the CDN
-   script arrives). */
+   looping enabled. The GLightbox library and CSS are vendored
+   (assets/js/glightbox.min.js, assets/css/glightbox.min.css) and
+   loaded via bundle.html before this script, so the library is
+   defined by the time this runs. The self-check remains as a safety
+   net. All 80 gallery cards render on every page (off-page ones are
+   hidden with CSS), so the lightbox navigates the full gallery
+   regardless of which page you start on. */
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof GLightbox !== 'function') return;
   GLightbox({

@@ -11,6 +11,12 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ---
 
+### Maintenance — September 8, 2026 — Gallery-wide lightbox (vendored GLightbox)
+- **Lightbox fixed and made gallery-wide** (Philip: "Implement a gallery-wide lightbox"). The gallery's GLightbox was dead — loaded from `cdn.jsdelivr.net` but the CSP (`script-src`/`style-src` don't include it) blocked both the script and stylesheet; clicking a thumbnail navigated to the raw `.webp`. Fix: **vendored** `glightbox.min.js` (56KB) + `glightbox.min.css` (14KB) into `assets/js/` and `assets/css/`, loaded via the existing `bundle.html` pipeline (minify + fingerprint + SRI) — no CSP change, no third-party dependency. Verified: `GLightbox` loads, opens on click, no external requests beyond the usual fonts/analytics.
+- **Gallery-wide navigation:** the template now renders **all 80 cards on every page** (12 visible + 68 `display:none` via a new `.gallery-card.hidden` rule), so GLightbox's prev/next walks the full gallery regardless of which page you start on. Verified in-browser: page 3 item 25 → 26 → 27 flows; page 3's last item (36) crosses into page 4's first (37); page 7's last item (79) wraps to item 0 (`loop: true`). Pagination, page info, and "Read Post" links unchanged. Cost: ~14KB extra HTML per gallery page (hidden cards are `loading="lazy"`, so no bandwidth).
+- **Caption bug found and fixed:** the template emitted `data-glightbox-title`/`data-glightbox-description`, but GLightbox reads `data-title`/`data-description` — captions would never have displayed even with the CDN working. Fixed the attribute names; verified titles + captions render in the lightbox.
+- Clean build, 0 errors. Committed and pushed.
+
 ### Maintenance — September 8, 2026 — Raise 'Em Right: Amazon placeholder → "Coming soon"
 - Replaced the `[Buy on Amazon](https://www.amazon.com)` body link on `content/books/raisem-right/index.md` with **Coming soon.** (Philip: the link resolves itself at publication; until then it pointed at Amazon's bare homepage). The `link` frontmatter param was never set on this book, so the template's "Buy on Amazon" buttons never rendered — the body markdown link was the only one. The page now shows "Coming soon." plus the existing `availability: "Expected: early 2027."` line. `lastmod` bumped to 2026-09-08. Clean build verified; committed and pushed.
 
