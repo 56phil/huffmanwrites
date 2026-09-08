@@ -40,7 +40,7 @@ There are no automated tests, linters, or a package.json. The "test" is a clean 
   - `investing/` — investing & risk.
   - `digests/` — weekly/monthly digests (frontmatter includes `sendfox_subject` for newsletter sends).
   - `summaries/` — book summaries; the canonical structure is in `content/posts/summaries/_index.md`. Each summary uses `sort_key` (LC: "Last, First") for ordering. Summaries paginate at 6/page via `layouts/posts/summaries/list.html`.
-- `content/shop/`, `content/workshop/`, `content/challenge/`, `content/podcast/`, `content/community/`, `content/api/` — "Blue Sky" initiatives (see SESSION_STATE.md). All have custom layouts under `layouts/<section>/list.html`.
+- `content/shop/`, `content/challenge/`, `content/podcast/`, `content/community/`, `content/api/` — "Blue Sky" initiatives (see SESSION_STATE.md). All have custom layouts under `layouts/<section>/list.html`.
 
 ### Layouts (`layouts/`)
 

@@ -4,7 +4,7 @@
    alongside the other site stylesheets.
 
    Note: the .credo-* rules used to live here too, but they're shared
-   by 8+ other layouts (books, workshop, shop, podcast, challenge,
+   by 7+ other layouts (books, shop, podcast, challenge,
    community, api), so they moved to custom.css. The .hero-tagline size
    override below is genuinely home-page-only (the home page renders
    the credo inside the hero), so it stays here.

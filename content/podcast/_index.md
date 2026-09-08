@@ -51,7 +51,6 @@ The Credo Podcast is available on all major podcast platforms:
 - [Spotify](#)
 - [Google Podcasts](#)
 - [Amazon Music](#)
-- [YouTube](#)
 - [RSS Feed](#)
 
 ## Support the Podcast
