@@ -86,7 +86,7 @@
        with os.Stat, then imageConfig for the dims. */ -}}
 {{- $ogImagePath := "" -}}
 {{- range slice (printf "static/%s" $ogImageRel) (printf "assets/%s" $ogImageRel) -}}
-  {{- if and (not $ogImagePath) (os.Stat .) -}}
+  {{- if and (not $ogImagePath) (fileExists .) -}}
     {{- $ogImagePath = . -}}
   {{- end -}}
 {{- end -}}
