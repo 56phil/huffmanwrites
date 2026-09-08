@@ -5,6 +5,13 @@ after Election Day (November 4, 2026). Philip requested this on September 6,
 2026. It closes the Senate Race Report series (weekly runs ended November 1;
 the runner self-disabled after November 2).
 
+**Editorial mandate (Philip, September 8, 2026): the piece focuses on the
+common citizen.** It is written for the person who voted, paid taxes, and
+lives with the consequences, not for the political professional. Control
+math, committee assignments, and procedural detail appear only where they
+directly change an ordinary American's life. The voters are the story, not
+just the winners.
+
 ## When this runs
 
 - **Election Day: Tuesday, November 3, 2026.** The report is drafted the
@@ -50,6 +57,12 @@ the runner self-disabled after November 2).
 6. **Surprises:** any race that defied the forecasters, either direction.
 7. **What it means:** the practical consequences — committee control, the
    filibuster, confirmations, the 2028 map.
+8. **The citizen lens:** exit polls and voter surveys (what voters said they
+   were voting about: prices, health care, democracy, rights), turnout
+   numbers and who turned out, and at least one concrete human story per
+   competitive race where reporting allows (a voter, a precinct, a county
+   that flipped). The piece needs the texture of real people, not just
+   margins.
 
 ## House style
 
@@ -71,20 +84,32 @@ the runner self-disabled after November 2).
 ## Article structure
 
 1. **The lede** — Question/Answer pair: who won the Senate, by what margin,
-   and what it means.
+   and what it means for the person reading it at the kitchen table.
 2. **The result** — the control math, stated plainly. Which races were
-   called, which are pending (ranked-choice, runoff, recount).
+   called, which are pending (ranked-choice, runoff, recount). Frame the
+   stakes in citizen terms: what changes on Monday morning for an ordinary
+   family, not just what changes in the Capitol.
 3. **The defense** — did the 13 D-held seats hold? MI, GA, MN, NH in detail;
-   the safe nine in a sentence.
+   the safe nine in a sentence. Where possible, ground this in the voters:
+   who turned out, what they said they were voting about.
 4. **The offense, tiered** — NC, OH, TX, ME, AK, IA, NE, KS, and the rest.
    One short paragraph per competitive race: winner, margin, what it means.
+   Lead each race with the human stakes (health care, prices, schools,
+   rights) before the political stakes.
 5. **The Kansas story** — the margin seat, the 1932 history, the September
    polls vs. the result. This is the emotional and analytical core of the
-   piece for Philip's readers.
+   piece for Philip's readers. Tell it through the voters of Kansas: the
+   farmer, the teacher, the small-town mayor, the union worker. The
+   question is not just who won, but what the people of Kansas were telling
+   the country.
 6. **The math that materialized** — which path won, which didn't. The
-   forecasters vs. the result (were the models right?).
+   forecasters vs. the result (were the models right?). Keep the model talk
+   brief; the citizen's question is whether the experts understood the
+   country.
 7. **The close** — what the result means for the country, the next two
-   years, and the 2028 map. Personal stakes, forward look.
+   years, and the 2028 map. Personal stakes, forward look. End with the
+   citizen: what the reader can do with the result, and why their vote and
+   their voice still matter regardless of who controls the chamber.
 
 ## Hero image (FAL, not OpenAI)
 
