@@ -23,7 +23,7 @@ hugo server --buildDrafts
 hugo --gc --minify
 ```
 
-Hugo v0.162.1+extended is installed via Homebrew at `/opt/homebrew/bin/hugo`. The CI workflow (`.github/workflows/hugo.yml`) pins v0.147.0 — the extended variant is required for Dart Sass and image processing.
+Hugo v0.165.0+extended is installed via Homebrew at `/opt/homebrew/bin/hugo`. The CI workflow (`.github/workflows/hugo.yml`) pins v0.165.0 — the extended variant is required for Dart Sass and image processing.
 
 There are no automated tests, linters, or a package.json. The "test" is a clean `hugo --gc --minify` build with no errors.
 
@@ -98,7 +98,7 @@ There are no automated tests, linters, or a package.json. The "test" is a clean 
 
 ## Deployment
 
-GitHub Pages, deployed automatically on push to `main` via `.github/workflows/hugo.yml`. The workflow installs Hugo 0.147.0 extended, builds with `hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"`, and uploads `./public` as a Pages artifact. `static/CNAME` ensures the custom domain `huffmanwrites.org` is preserved.
+GitHub Pages, deployed automatically on push to `main` via `.github/workflows/hugo.yml`. The workflow installs Hugo 0.165.0 extended, builds with `hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"`, and uploads `./public` as a Pages artifact. `static/CNAME` ensures the custom domain `huffmanwrites.org` is preserved.
 
 To deploy from a detached worktree (e.g. Codex): `git push origin HEAD:main`.
 
