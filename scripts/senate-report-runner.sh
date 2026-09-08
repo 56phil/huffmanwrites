@@ -28,6 +28,10 @@ OLLAMA_KEY="$(security find-generic-password -a "$USER" -s huffmanwrites-ollama 
 export ANTHROPIC_API_KEY="${OLLAMA_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
 export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
+# The model has a 1M context window; Claude Code assumes 200k for
+# unrecognized model ids. Set the real window so long drafts are not
+# auto-compact truncated mid-run.
+export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 
 # Override for manual test runs: SENATE_REPORT_PROMPT="Reply with exactly: SMOKE-OK"
 # Note: no apostrophes inside the ${VAR:-...} default; bash 3.2 mis-parses them.
