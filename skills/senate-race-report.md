@@ -47,6 +47,8 @@ Republican-held (22):
 
 1. Read the previous week's report (`content/posts/essays/senate-race-report-*.md`, newest first) to carry the baseline forward.
 2. Web-search the latest on every competitive race and scan the safe ones: Cook Political Report, Sabato's Crystal Ball, RealClearPolitics, FiveThirtyEight, prediction markets, FEC filings, and local/state news. Corroborate key claims with at least two sources.
+   - **Kansas coverage:** Kansas City Star and KCUR are the preferred local sources (Philip, September 8, 2026) — check them first for Kansas race news, alongside Kansas Reflector and Sunflower State Journal.
+   - **National and international context:** NPR and PBS are the preferred sources (Philip, September 8, 2026) for national and international stories that shape the races.
 3. Track: rating changes, polling movement, fundraising, endorsements, candidate news, debates, and races entering or leaving the competitive tier.
 
 ## Article structure

@@ -44,6 +44,12 @@ just the winners.
 1. **Results:** every competitive race — NC, OH, TX, ME, AK, IA, NE, KS, MI,
    GA, MN, NH, plus FL, LA, MS, MT, SC. Use AP, state election boards, and
    Decision Desk HQ. Corroborate with at least two sources.
+   - **Kansas coverage:** Kansas City Star and KCUR are the preferred local
+     sources (Philip, September 8, 2026), alongside Kansas Reflector and
+     Sunflower State Journal.
+   - **National and international context:** NPR and PBS are the preferred
+     sources (Philip, September 8, 2026) for national and international
+     stories that shape the result.
 2. **Control:** which party holds the Senate, by what margin, and whether any
    race is uncalled (ranked-choice, runoff, recount). The single most
    important fact in the piece.
