@@ -146,10 +146,8 @@ main, .post-content, .entry-content {
     display: block;
     margin-bottom: 0.2rem;
     position: relative;
-    /* Hug the text so the absolutely-positioned icon trails the last
-       word instead of the viewport edge — the full-width line box
-       pushed the icon 24px past the right edge, causing a horizontal
-       scrollbar on desktop. */
+    /* Fit-content + auto margins center each line on its own text
+       width rather than the full line box. */
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
@@ -161,28 +159,9 @@ main, .post-content, .entry-content {
     font-weight: 500;
 }
 
-.credo-footer .credo-icon {
-    position: absolute;
-    right: -1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.5em;
-    opacity: 0.8;
-}
-
 @media (max-width: 600px) {
     .credo-footer {
         font-size: 0.85rem;
-    }
-    .credo-footer .credo-icon {
-        right: -1rem;
-        font-size: 0.4em;
-    }
-}
-
-@media (max-width: 480px) {
-    .credo-footer .credo-icon {
-        display: none;
     }
 }
 
