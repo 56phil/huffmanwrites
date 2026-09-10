@@ -1,9 +1,9 @@
 ---
 title: "A Shock, Not a Surprise: Twenty-Five Years After September 11, What the Warnings Taught Us and What We Owe the Dead"
 description: "The 9/11 Commission called the attacks 'a shock, but they should not have come as a surprise.' Twenty-five years later, with an entire generation grown up with no living memory of the day, this essay walks the road to September 11, 2001, the failures that let the plot through, the price that was paid, and the light that came through the fracture."
-date: 2026-09-10T10:47:00-05:00
+date: 2026-09-11T00:00:00-05:00
 author: Philip Huffman
-lastmod: 2026-09-10T10:47:00-05:00
+lastmod: 2026-09-10T12:16:57-05:00
 featuredOnHome: true
 hero_desktop: "img/articles/76-a-shock-not-a-surprise_16x9.webp"
 hero_mobile: "img/articles/76-a-shock-not-a-surprise_4x5.webp"

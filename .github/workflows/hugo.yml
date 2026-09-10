@@ -3,6 +3,10 @@ name: Deploy Hugo site to Pages
 on:
   push:
     branches: [main]
+  schedule:
+    # 05:00 UTC = midnight Central Time (CDT). Publishes future-dated posts
+    # (e.g. the 9/11 anniversary essay) at the stroke of their date.
+    - cron: '0 5 * * *'
   workflow_dispatch:
 
 permissions:
