@@ -7,6 +7,8 @@ on:
     # 05:00 UTC = midnight Central Time (CDT). Publishes future-dated posts
     # (e.g. the 9/11 anniversary essay) at the stroke of their date.
     - cron: '0 5 * * *'
+    # 11:00 UTC = 06:00 Central Time (CDT). Publishes the Saturday digest at 6 AM.
+    - cron: '0 11 * * *'
   workflow_dispatch:
 
 permissions:
