@@ -1,6 +1,6 @@
 ---
-title: "Run Correctly, Disbelieved Anyway: Ten Ways the November 3 Election Can Go Wrong"
-description: "Two executive orders, a Postal Service rule, a citizenship database, a hundred lawsuits. Almost none of it has changed anything for voters. Here are the ten real risks to the 2026 election, ranked by whether they matter, and the reason the danger is not theft but belief."
+title: "Run Correctly, Disbelieved Anyway: Eleven Ways the November 3 Election Can Go Wrong"
+description: "Two executive orders, a Postal Service rule, a citizenship database, a hundred lawsuits. Almost none of it has changed anything for voters. Here are the eleven real risks to the 2026 election, ranked by whether they matter, and the reason the danger is not theft but belief."
 date: 2026-09-17T15:45:00-05:00
 author: Philip Huffman
 lastmod: 2026-09-17T15:45:00-05:00
@@ -80,7 +80,39 @@ So the honest assessment is that a certification refusal in 2026 will almost cer
 
 One caveat worth carrying: Arizona, of all states, is currently loosening this framework. Its legislature passed a bill in 2026 that would rewrite the duty so supervisors merely "acknowledge without prejudice" rather than canvass. It passed the Senate and stalled on a tie vote in a House committee. A state court also struck the election-manual language calling the county canvass "non-discretionary," holding the manual goes beyond the statute. Arizona's reputation as the most robust mandamus state is less settled than it looks.
 
-## Risk 4: Federal agents at the polls
+## Risk 4: The winner is not seated
+
+This is the last step in the sequence, and it is the only rules-based risk in this piece that no court has closed.
+
+Count, then certify, then seat. Risks 1 through 3 cover the first two steps. The third happens on January 3, 2027, when the 120th Congress convenes, and it turns on the one part of Article I that the Supreme Court has read narrowly in one direction and never in the other.
+
+**The rule.** Article I, Section 5: "Each House shall be the Judge of the Elections, Returns and Qualifications of its own Members."[^50] For most of American history that sentence was read as a grant of broad discretion. On the qualifications half, it is not.
+
+**Powell v. McCormack, 1969.** The House refused to seat Adam Clayton Powell Jr. after his re-election, on findings that he had diverted House funds and filed false reports. The exclusion passed 307 to 116, well past the two-thirds that expulsion would have required. The Court struck it down anyway, because the Speaker had ruled the vote an *exclusion* rather than an *expulsion*, and the Court held the two are "not fungible proceedings." The holding: a member duly elected who meets the three Article I qualifications of age, citizenship, and inhabitancy must be seated, and "the Constitution does not vest in the Congress a discretionary power to deny membership by a majority vote."[^51] *U.S. Term Limits v. Thornton* confirmed in 1995 that those qualifications are fixed and "may not be supplemented by Congress."[^52]
+
+A bare refusal to seat a certified winner is therefore unconstitutional. That part is settled.
+
+**The part that is not settled.** *Powell* narrowed one word: "Qualifications." It said nothing about "Elections and Returns." Which candidate actually received more lawful votes is a different question, and in *Roudebush v. Hartke* the Court called it "a nonjusticiable political question," beyond the courts even before the Senate acted. *Powell*'s footnote 44 extends the qualifications limit to the Senate identically.[^53] The elections and returns prong it left alone.
+
+The consequence is an asymmetry worth stating plainly. The door is closed on "we do not like you." It is open on "we do not believe the count." A refusal dressed as a dispute over which candidate won sits in the one half of Article I, Section 5 that no court has limited. That is a story claim wearing a rules costume, which is the fusion this piece keeps returning to.
+
+*Powell* also reserved more than it decided. Footnote 41 declines to say whether Section 3 of the Fourteenth Amendment, the impeachment-disqualification clause, the incompatibility clause, or the Article VI oath are "qualifications" within the clause. Footnote 42 leaves open whether a court may review a pretextual finding that a member failed a qualification. And the Court granted only declaratory relief, leaving to the lower courts whether a seating can ever be judicially compelled. Those are open doors, not rulings, and none has been walked through.[^54]
+
+**The mechanical surprise.** The popular version of this scenario gets the order backwards. The Speaker is elected before anyone takes the oath. Unsworn members-elect vote for Speaker; that is settled practice, and it is why the 2023 Speaker fight ran fifteen ballots with nobody sworn until it ended. There is no version of refusing to swear enough members that prevents the House from organizing.[^55] The only chokepoint upstream of the Speaker vote is the Clerk's roll of members-elect, which the statute conditions on credentials showing the person "was regularly elected." Striking a certified winner there would contradict the provision's own text, and it has never been tried.
+
+**And the arithmetic runs the other way.** At 218 Republicans and 214 Democrats, with control resting on a net of three seats, refusing minority members would strengthen the majority, and refusing the majority's own members would strengthen the minority. Four refusals produce a tie. Five flip floor control. The mechanically dangerous case is the legally foreclosed one. The legally arguable case is not party-correlated, because no majority has a self-interested reason to refuse its own winners.[^56]
+
+**What exists in 2026: nothing.** That is the finding, and it is why this risk is ranked here rather than higher. No member, no leader, and no Speaker candidate has said they would refuse to seat November's winners. No bill touches seating; the major 2026 election bill, H.R. 7300, does not mention it.[^57] The rules package for the 120th Congress has not been adopted, and seating was not raised at the September Member Day hearing.[^58] The mechanism that does exist has been used as a filter rather than a weapon: the 119th Congress dismissed every election contest that reached it, all of them without objection in December 2025.[^59]
+
+The scenario appears in 2026 only as forecast, from an election-law podcast, an advocacy organization, a legal news outlet, and one newspaper column. None of them quotes an officeholder proposing it. The Brennan Center's September briefing, which catalogs election-subversion worries at length, does not raise seating at all.[^60][^61]
+
+**Two traps in the discourse.** The first is Grijalva. In autumn 2025 Speaker Johnson did deny a certified winner her seat for fifty days, the longest such gap in American history, and it is tempting to offer as precedent. It is not one. Johnson did not dispute that Adelita Grijalva won. He declined to convene the House. That is a scheduling refusal, not an election contest, and conflating the two is the easiest mistake available here.[^62] The second is the Senate, which is structurally different: a continuing body that does not re-adopt rules and has no organization-day crisis, with no statutory equivalent to the House's contested-election act, which is House-only by its own definitions. The Senate last refused to seat anyone in 1929.[^63]
+
+**The honest weight.** As law, a refusal to seat a certified, Article I-qualified winner is foreclosed. Every historical precedent for it, the House exclusions of 1868 through 1920 and the Senate's 1929 refusal, predates *Powell*. Since then the House has adjudicated 107 contested elections and never excluded a qualified winner.[^64] As a 2026 forecast, it is a named scenario with no documented adherents among the people who would have to execute it. That is a different evidentiary shape from every other risk in this piece. Most of them have a filing, a directive, or a vote behind them. This one has commentary.
+
+Which is the reason it sits at number four and not higher, and also the reason it belongs in the list at all. The exclusion of this risk rests on the empty 2026 record, not on the strength of the constitutional argument. A single documented statement would move it up.
+
+## Risk 5: Federal agents at the polls
 
 This is the scenario that dominates the speculation, and it is worth being precise about what has actually happened and what the law says.
 
@@ -102,7 +134,7 @@ So 1,000 monitors is a large number attached to a small set of powers. The numbe
 
 **And the counterweight.** The chairman of the Joint Chiefs of Staff, Gen. Dan Caine, wrote to Sen. Elissa Slotkin on August 28 that the military has no plans to send troops to the polls in November, and that "election administration and security remain the fundamental responsibility of state and local officials." The Associated Press and NBC News each obtained the letter independently, and the Pentagon said it had nothing to add beyond its contents.[^16] The Supreme Court also recently blocked the administration from federalizing National Guard troops during the immigration surge in Chicago. And it remains within each governor's discretion whether to call up their state's Guard at all.
 
-## Risk 5: The data dragnet
+## Risk 6: The data dragnet
 
 The most sustained federal campaign of the cycle has been the attempt to assemble voter data at national scale. It has lost in court more completely than anything else here, and it has still partially succeeded through voluntary compliance.
 
@@ -128,7 +160,7 @@ The historical pattern is consistent: Florida's 2012 list went from 180,000 to 8
 
 None of this means the data campaign is harmless. It means the harm is not the fraud it claims to prevent. It is the wrongful flagging, the burden on election offices, the immigration consequences that follow from a bad match, and the foundation it lays for a contest after November.
 
-## Risk 6: Suppression by attrition
+## Risk 7: Suppression by attrition
 
 The quietest risks are the ones with no villain in the frame.
 
@@ -186,7 +218,7 @@ That is a ratchet. And 45 percent of threats go unreported, which means the surv
 
 The named departures are more eloquent than the rates. A California county elections official retired in 2024 saying she had been diagnosed with heart failure and that "an essential part of recovering... is stress reduction." Her successor resigned for health reasons within a year. A Nevada registrar left after police began checking his home hourly. A Cochise County official described conditions as "physically and emotionally threatening"; that county then went through five elections directors in two and a half years. Pinal County, Arizona had four in four years. And three weeks before early voting opened this year, Chatham County, Georgia's elections supervisor resigned six months into the job, citing board non-engagement and "backlash" after flagging wrongdoing.
 
-## Risk 7: The machinery has been hollowed out
+## Risk 8: The machinery has been hollowed out
 
 Three structural facts about federal election infrastructure in 2026.
 
@@ -202,7 +234,7 @@ The trust damage is the part that may outlast the staffing. Arizona's secretary 
 
 **What holds it together** is the paper. More than 95 percent of registered voters are in jurisdictions with a verifiable paper record of their ballot, and fewer than 4 percent lack one. That is the backstop that makes the cyber risk survivable, and it is the single most important physical fact here.
 
-## Risk 8: Cyber, AI, and the information environment
+## Risk 9: Cyber, AI, and the information environment
 
 **On cyber, the honest answer is that nothing has gone badly wrong yet.** No confirmed 2025 or 2026 ransomware or cyberattack has been shown to have touched vote tabulation or altered a vote total. The documented incidents are election-adjacent: Winona County, Minnesota, hit twice by ransomware in early 2026 and restored, with possible personal data exposure and credit monitoring offered; a municipal incident in Foster City, California; and the Arizona defacement. Voter registration databases are structurally separate from tabulation systems, are backed up offline and encrypted, and tend to fail visibly before Election Day because ballot requests and early voting act as integrity tests.
 
@@ -220,7 +252,7 @@ So the tools resist the conspiracy and get the facts wrong. That is a strange fa
 
 **On foreign interference, the signal is the absence of a signal.** For the first time in about a decade, the Office of the Director of National Intelligence's annual threat assessment omitted foreign election interference. Pressed at a Senate hearing in March, the director of national intelligence would not affirm a specific foreign threat but also would not deny one. Meanwhile the offices built to detect that threat are gone: the FBI task force, the ODNI center, the State Department's engagement center. The Cyber Command and NSA chief testified in April that it is "reasonable to expect" foreign interference and that he did not know whether the joint election security group had been reconvened.[^42]
 
-## Risk 9: Enforcement aimed at people, not rules
+## Risk 10: Enforcement aimed at people, not rules
 
 Every mechanism discussed so far targets rules or data. This one targets individuals, and it is the part of the landscape with the fewest legal guardrails because most of it is ordinary prosecutorial discretion.
 
@@ -248,7 +280,7 @@ Wendy Weiser of the Brennan Center frames the stakes: "All Americans should be c
 
 The Wisconsin case is the structurally interesting one. The state's secretary of state does not currently oversee elections; that power sits with the bipartisan Elections Commission. The Republican nominee for that office campaigns explicitly to move election authority back to the partisan office. Wisconsin is one of the states that will certify the 2028 presidential result.
 
-## Risk 10: The precedent that shapes all of it
+## Risk 11: The precedent that shapes all of it
 
 One thing in this landscape is not a forecast. It already happened, and it tells you what the environment looks like now.
 
@@ -286,7 +318,7 @@ It is worth being as clear about the defenses as about the risks, because the de
 6. **Election night arithmetic in states that cannot pre-process mail ballots.** Pennsylvania and Wisconsin are two of only six states that cannot begin processing mail ballots until Election Day, which means they count slowly by design. The gap between early returns and the final count is the single most exploited feature of modern American elections, and it is a feature of state law, not a malfunction.[^48]
 7. **The mail-ballot rejection rate in November.** California's June primary rejected 1.73 percent of mail ballots, the highest in a decade, and nearly 93,700 of those were for lateness. If that rate holds nationally in a higher-turnout general election, it is the largest single source of disenfranchisement in the country, and almost none of it involves fraud.
 8. **The secretary of state and governor races in Nevada, Colorado, Wisconsin, and Ohio**, where the winners will run the 2028 presidential election.
-9. **Congress on January 6, 2027.** The electoral count that day applies only to presidential elections, so 2026 is a congressional certification and seating question under Article I, Section 5, not an electoral-count question. But the machinery built after 2020 gets its first real test in 2028, and the officials elected in 2026 will be the ones operating it.
+9. **Congress on January 6, 2027, and seating the week before.** The electoral count that day applies only to presidential elections, so 2026 is a congressional certification and seating question under Article I, Section 5, not an electoral-count question. Watch January 3, when the 120th Congress convenes, and whether any member-elect is challenged, asked to stand aside, or refused the oath. A single challenge would be the first documented step toward the scenario in Risk 4; the absence of one is what keeps that risk ranked where it is. The machinery built after 2020 gets its first real test in 2028, and the officials elected in 2026 will be the ones operating it.
 
 ## The honest uncertainty
 
@@ -413,5 +445,35 @@ That outcome requires nothing to be broken. It only requires enough people to st
 [^48]: Brennan Center for Justice, *Roadmap to the Official Count in the 2026 Election* (updated Sept. 2, 2026): "Pennsylvania and Wisconsin are two of just six states that do not allow election officials to begin processing [mail ballots] until Election Day." https://www.brennancenter.org/our-work/research-reports/roadmap-official-count-2024-election
 
 [^49]: The Atlantic, "Trump, Iran, and election cyberattacks" (Aug. 2026), the single reported account of the technology-company briefing; the 2026 Office of the Director of National Intelligence threat assessment omitted foreign election interference. https://www.theatlantic.com/national-security/2026/08/trump-iran-elections-cyberattacks/688297/
+
+[^50]: U.S. Const. art. I, § 5, cl. 1: "Each House shall be the Judge of the Elections, Returns and Qualifications of its own Members." Clause 2 requires "the Concurrence of two thirds" to expel a Member. Article I, § 2, cl. 2 sets the three House qualifications: twenty-five years of age, seven years a citizen, and inhabitant of the state. https://www.law.cornell.edu/constitution/articlei
+
+[^51]: *Powell v. McCormack*, 395 U.S. 486 (June 16, 1969). The House adopted the Curtis Amendment to exclude Powell 248 to 176, then adopted H.Res. 278 as amended 307 to 116; the Speaker had ruled that a majority sufficed because the vote was an exclusion rather than an expulsion. At 507 to 508 the Court held "the distinction between exclusion and expulsion [is not] merely one of form," and at 512 that "exclusion and expulsion are not fungible proceedings." At 522: "the Constitution leaves the House without authority to exclude any person, duly elected by his constituents, who meets all the requirements for membership expressly prescribed in the Constitution." At 547: "the Constitution does not vest in the Congress a discretionary power to deny membership by a majority vote." At 550: "the House was without power to exclude him from its membership." https://www.law.cornell.edu/supremecourt/text/395/486
+
+[^52]: *U.S. Term Limits, Inc. v. Thornton*, 514 U.S. 779 (May 22, 1995): the qualifications for congressional service are "fixed," "at least in the sense that they may not be supplemented by Congress." https://www.law.cornell.edu/supremecourt/text/514/779
+
+[^53]: *Roudebush v. Hartke*, 405 U.S. 15, 19 (Feb. 23, 1972): "Which candidate is entitled to be seated in the Senate is, to be sure, a nonjusticiable political question, a question that would not have been the business of this Court even before the Senate acted." *Powell*, 395 U.S. at 522 n.44: because Art. I, § 5, cl. 1 applies to both Houses, "the scope of the Senate's power to judge the qualifications of its members necessarily is identical to the scope of the House's power," apart from the different age and citizenship thresholds. The narrow reading of "Qualifications" is stated most cleanly in **Douglas, J., concurring**, 395 U.S. at 552, not in the majority opinion.
+
+[^54]: *Powell*, 395 U.S. at 521 n.41: the Court expressly declined to decide whether Art. I, § 3, cl. 7 (impeachment disqualification), Art. I, § 6, cl. 2 (incompatibility), § 3 of the Fourteenth Amendment, the Guarantee Clause of Article IV, or the oath requirement of Art. VI, cl. 3, are "qualifications" within the meaning of Art. I, § 5. At 521 n.42: "federal courts might still be barred by the political question doctrine from reviewing the House's factual determination that a member did not meet one of the standing qualifications. This is an issue not presented in this case, and we express no view as to its resolution." On remedies, the Court granted declaratory relief and left open "the appropriateness of coercive relief"; the action against the Members was dismissed under the Speech or Debate Clause and sustained only against their agents, the Clerk, Sergeant at Arms, and Doorkeeper.
+
+[^55]: House Practice: A Guide to the Rules, Precedents and Procedures of the House, ch. 33 (Oaths), § 1 (115th Cong.), citing 1 Hinds § 224: "unsworn Members have participated at the beginning of a session in organizational business, such as the election of the Speaker." The oath is administered to the Speaker by a Member and by the Speaker to the Members and Clerk "previous to entering on any other business" (2 U.S.C. § 25). The opening roll is made by the Clerk of the preceding House, which lists "those persons, and of such persons only, whose credentials show that they were regularly elected in accordance with the laws of their States respectively, or the laws of the United States" (2 U.S.C. § 26). https://www.govinfo.gov/content/pkg/GPO-HPRACTICE-115/html/GPO-HPRACTICE-115-34.htm
+
+[^56]: House Press Gallery, "Party Breakdown" (updated Sept. 2, 2026): 218 Republicans, 214 Democrats, 1 Independent, 2 vacancies. Rep. Tony Gonzales (R-TX) resigned April 14, 2026; Rep. Sheila Cherfilus-McCormick (D-FL) resigned April 21, 2026. Ballotpedia's 2026 House elections page: "Democrats need to gain a net of three districts to win a majority in the chamber. Meanwhile, Republicans can lose no more than two districts to retain a majority." https://pressgallery.house.gov/member-data/party-breakdown
+
+[^57]: H.R. 7300, the Make Elections Great Again Act, introduced Jan. 30, 2026 by Rep. Bryan Steil (R-WI), 84 pages, 70 Republican cosponsors. Its table of contents runs Title I (Election Integrity) and Title II (Election Administration: paper ballots, mail-ballot limits, a ranked-choice-voting ban, barcode tracking) with no provision on contested elections, the Federal Contested Elections Act, the Committee on House Administration's contest jurisdiction, or seating. Verified against the bill's own table of contents in the GPO text. https://www.govinfo.gov/content/pkg/BILLS-119hr7300ih/html/BILLS-119hr7300ih.htm
+
+[^58]: House Committee on Rules, "Member Day Hearing on Proposed Rules Changes for the 120th Congress" (announced Aug. 20, 2026; hearing held Sept. 2, 2026). The rules package for the 120th Congress has not been adopted. Roll Call's report on the hearing (Sept. 2, 2026) describes the proposals aired and none concern seating. https://rules.house.gov/media/announcement/announcement-member-day-hearing-proposed-rules-changes-120th-congress ; https://rollcall.com/2026/09/02/members-renew-proxy-voting-push-next-congress/
+
+[^59]: H.Res. 308, 309, 310, 311, and 312 (119th Cong.), all sponsored by Rep. Bryan Steil, reported by the Committee on House Administration, and agreed to Dec. 9, 2025. Each dismissed a contested election (FL-14, TX-28, Alaska at-large, TX-30, and FL-14). GovTrack records that the votes were "without objection so no record of individual votes was made." https://www.govtrack.us/congress/bills/119/hres308
+
+[^60]: The scenario appears in 2026 as forecast only: ELB Podcast 7:5, "Myths and Facts About Contesting the 2026 Midterm Elections," with Edward B. Foley, Rebecca Green, and Derek T. Muller (Apr. 9, 2026); Protect Democracy, *Executive Override* (Mar. 2026) and "Deceive, Disrupt, Deny in Full Effect" (July 14, 2026); Democracy Docket, "How could Trump rig the midterms?" (Aug. 6, 2026); James D. Zirin, The Hill (Aug. 25, 2026). None quotes a member of Congress, Speaker candidate, or party leader proposing a refusal to seat November's winners.
+
+[^61]: Brennan Center for Justice, Michael Waldman, "Election Interference Won't Work If Americans Vote" (Sept. 9, 2026), and the companion "Five False Election Rumors to Watch" (Sept. 9, 2026). Neither raises congressional seating; both address certification and argue that interference efforts are failing.
+
+[^62]: Ballotpedia, "119th United States Congress" (Noteworthy events): Speaker Johnson did not swear in Adelita Grijalva (D-Ariz.) for 50 days after her election, the longest such span in U.S. history. Her lawsuit was voluntarily dismissed Nov. 14, 2025, and she was sworn in Nov. 12, 2025. Johnson did not dispute the result of her election; he declined to convene the House while it was out of session. This is a scheduling refusal, not a contested-election refusal, and the two should not be conflated. https://ballotpedia.org/119th_United_States_Congress
+
+[^63]: *Powell*, 395 U.S. at 544 n.83: "The Senate has not excluded anyone since 1929; in that year it refused to seat a member-elect because of improper campaign expenditures." That was William S. Vare (Pa.). The Federal Contested Elections Act, 2 U.S.C. §§381–396 (Pub. L. 91-138, Dec. 5, 1969), is House-only by its own definitions: §381(1) defines "election" as an official general or special election to choose a Representative, Delegate, or Resident Commissioner, and §381(5) covers "an individual who has been elected to such office but has not taken the oath of office." There is no Senate analogue. https://www.law.cornell.edu/uscode/text/2/381
+
+[^64]: CRS Report 98-194, *Contested Election Cases in the House of Representatives: 1933 to 2011* (Dec. 12, 2011), counting 107 House contested election cases across the 73rd through 112th Congresses. The contestant was seated in at least three; in one, *Sanders v. Kemp* (La. 6th, 1934), the House declared a vacancy rather than seat either candidate, on returns grounds rather than qualifications. The most recent cases resolved in the certified winner's favor: McIntyre v. McCloskey (Ind. 8th), where the House seated Frank McCloskey on May 1, 1985 by 236 to 190; Dornan v. Sanchez (Cal. 46th), where the House dismissed the contest 378 to 33 on Feb. 12, 1998; and Iowa 2nd, 2020 to 2021, where Mariannette Miller-Meeks was seated provisionally on Jan. 3, 2021 and Rita Hart withdrew her challenge on March 31, 2021 before any vote on the merits. https://www.everycrsreport.com/reports/98-194.html
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
