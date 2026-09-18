@@ -68,7 +68,10 @@ If any race's rating changed this week, include one compact table of just those 
 - Frontmatter: `title` ("Senate Race Report: <Month Day, Year>"), `description` (one sentence, article-style), `date` (run time, CT), `author: Philip Huffman`, `lastmod`, `draft: true`, `tags: [politics, senate, essays, civics]`.
 - Date guard: the `date` must never be in the future when the article is published. Hugo's default `buildFuture: false` silently skips future-dated content (the build succeeds but the page is absent). The weekly draft is dated on its run day, so publishing the same day is safe; if Philip publishes later, the date is already past and still safe. Never pre-date an article.
 - No hero image (weekly text report). No newsletter/sendfox fields.
-- Verify: `hugo --gc --minify` builds with 0 errors.
+- Verify: `hugo --gc --minify` builds with 0 errors. Do NOT run this yourself — the runner performs the
+  verification build immediately after this session ends and records the result in the log (the agent's
+  permission allow-list intentionally omits hugo, since an exact-match rule denies the redirect and
+  `&&` compound forms you would naturally reach for). Write the article; the script verifies the build.
 - Leave the file uncommitted. Do NOT copy to SimpleBrain (that happens at publish). Do NOT commit or push.
 
 ## After the election

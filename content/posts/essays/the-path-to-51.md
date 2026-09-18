@@ -4,6 +4,10 @@ description: "The math, the map, and the leadership question: what it would take
 date: 2026-09-01T00:00:00Z
 author: Philip Huffman
 lastmod: 2026-09-01T00:00:00Z
+hero_desktop: "img/articles/84-path-to-51_16x9.webp"
+hero_mobile: "img/articles/84-path-to-51_4x5.webp"
+hero_alt: "A classical temple facade of Parian marble standing in a deep midnight navy void, every column pale weathered stone except one in the center carved from glowing molten gold and blazing with warm internal light, gold light pooling on the polished floor below."
+hero_caption: "Every column carries the roof. One of them decides who holds the gavel."
 draft: false
 tags:
   - politics

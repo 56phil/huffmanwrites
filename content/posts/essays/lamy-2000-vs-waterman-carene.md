@@ -4,6 +4,10 @@ description: "A compare and contrast of two modern fountain pen classics — the
 date: 2026-08-27T09:00:00-05:00
 lastmod: 2026-08-27T09:00:00-05:00
 author: Philip Huffman
+hero_desktop: "img/articles/86-lamy-vs-carene_16x9.webp"
+hero_mobile: "img/articles/86-lamy-vs-carene_4x5.webp"
+hero_alt: "An austere rectilinear block of veined white marble facing a large curved marble form that sweeps upward like the hull of a yacht, the two shapes set on a dark reflective floor in a deep midnight navy void, a thin vertical blade of glowing gold light dividing them."
+hero_caption: "One form disappears into the task; the other insists the task is an occasion."
 tags:
   - essays
   - writing

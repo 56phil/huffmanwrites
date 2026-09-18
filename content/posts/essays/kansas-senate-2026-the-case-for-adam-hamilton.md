@@ -4,6 +4,10 @@ description: "A personal case for supporting Adam Hamilton: what I learned atten
 date: 2026-09-01T00:00:00Z
 author: Philip Huffman
 lastmod: 2026-09-01T00:00:00Z
+hero_desktop: "img/articles/85-kansas-hamilton_16x9.webp"
+hero_mobile: "img/articles/85-kansas-hamilton_4x5.webp"
+hero_alt: "A single cracked marble seed resting on a vast plain of weathered grey stone beneath a deep midnight navy sky, a small steady gold flame rising from the opening, the empty dark horizon stretching away in every direction."
+hero_caption: "The plain is enormous. The flame burns anyway."
 draft: false
 tags:
   - politics

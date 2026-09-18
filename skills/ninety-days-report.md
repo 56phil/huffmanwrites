@@ -49,7 +49,10 @@ Both pieces keep the canonical architecture, refreshed:
 - Frontmatter (both): `title`, `description` (one sentence naming the new window), `date` (run time, CT), `author: Philip Huffman`, `lastmod`, `hero_desktop`/`hero_mobile`/`hero_alt`/`hero_caption` (generated this run), `tags: [investing, markets, politics, risk]`, `draft: true`.
 - Date guard: the `date` must never be in the future when published (Hugo's default `buildFuture: false` silently skips future-dated content). Dating to the run day is safe for same-day publication. Never pre-date.
 - Hero images: generate a fresh pair per article via the **fal.ai** images API (FLUX.1 dev, `FAL_KEY` from `.zshrc`, endpoint `https://queue.fal.run/fal-ai/flux/dev`, `Authorization: Key $FAL_KEY`). Follow `skills/hero-image-workflow.md`: locked aesthetic (Parian marble, midnight navy, gold, conceptual, no text), next available NN in `static/img/articles/` (check the highest existing number first), 16:9 cropped to 1365×768 and 4:5 to 896×1120, WebP q92 via `cwebp`. Wire frontmatter and add `data/gallery.yml` entries. Concepts should stay distinct from prior installments while remaining in the same visual family (September used a marble wall with a gold yield-curve crack, and a marble bull with a climbing gold fissure).
-- Verify: `hugo --gc --minify --buildDrafts` builds with 0 errors.
+- Verify: the runner performs the verification builds (production and `--buildDrafts`) immediately after
+  this session ends and records the results in the log. Do NOT run hugo yourself — the agent's
+  permission allow-list intentionally omits it, because an exact-match rule denies the redirect and
+  `&&` compound forms you would naturally reach for. Write the articles; the script verifies the build.
 - Leave both files uncommitted. Do NOT copy to SimpleBrain (that happens at publish). Do NOT commit or push.
 
 ## SimpleBrain note (for Philip at publish)

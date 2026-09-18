@@ -52,10 +52,30 @@ set +e
 claude -p "$PROMPT" \
   -n "senate-report-$(date '+%Y-%m-%d')" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(hugo --gc --minify)" \
+  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e
 
 echo "$STAMP: run finished (exit $RC)" >> "$OUT_LOG"
+
+# Authoritative verification build, run here rather than by the agent.
+# Historically the agent was granted Bash(hugo --gc --minify) as an exact-match
+# rule, but any variant it naturally reached for — a redirect, a "&&" compound,
+# or a different flag set — was denied by the permission layer, so the Sept 13
+# run reported "three attempts were gated" and left the build unrun. Running it
+# in the script makes the check deterministic and puts the exit code in the log.
+echo "$STAMP: running verification build" >> "$OUT_LOG"
+set +e
+BUILD_OUT="$(hugo --gc --minify 2>&1)"
+BUILD_RC=$?
+set -e
+if [ "$BUILD_RC" -ne 0 ]; then
+  echo "$STAMP: build FAILED (exit $BUILD_RC)" >> "$OUT_LOG"
+  echo "$BUILD_OUT" >> "$ERR_LOG"
+  [ "$RC" -eq 0 ] && RC=1
+else
+  echo "$STAMP: build OK" >> "$OUT_LOG"
+fi
+
 exit "$RC"

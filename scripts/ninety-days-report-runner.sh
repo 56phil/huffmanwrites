@@ -48,10 +48,32 @@ set +e
 claude -p "$PROMPT" \
   -n "ninety-days-report-$(date '+%Y-%m-%d')" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(hugo --gc --minify --buildDrafts),Bash(curl *),Bash(magick *),Bash(cwebp *),Bash(jq *),Bash(base64 *),Bash(cp *),Bash(sed *)" \
+  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(curl *),Bash(magick *),Bash(cwebp *),Bash(jq *),Bash(base64 *),Bash(cp *),Bash(sed *)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e
 
 echo "$STAMP: run finished (exit $RC)" >> "$OUT_LOG"
+
+# Authoritative verification builds, run here rather than by the agent.
+# The agent's allow-list intentionally omits hugo: an exact-match rule denied
+# the redirect and "&&" compound forms the agent naturally reached for, which
+# is how the Sept 13 Senate run ended with the build never executed. Two
+# checks: the production build (what actually deploys) and the draft-inclusive
+# build (proves today's draft:true installments render).
+echo "$STAMP: running verification builds" >> "$OUT_LOG"
+for flags in "--gc --minify" "--gc --minify --buildDrafts"; do
+  set +e
+  BUILD_OUT="$(hugo $flags 2>&1)"
+  BUILD_RC=$?
+  set -e
+  if [ "$BUILD_RC" -ne 0 ]; then
+    echo "$STAMP: build FAILED [$flags] (exit $BUILD_RC)" >> "$OUT_LOG"
+    echo "$BUILD_OUT" >> "$ERR_LOG"
+    [ "$RC" -eq 0 ] && RC=1
+  else
+    echo "$STAMP: build OK [$flags]" >> "$OUT_LOG"
+  fi
+done
+
 exit "$RC"
