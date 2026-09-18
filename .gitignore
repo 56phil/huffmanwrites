@@ -6,3 +6,4 @@ resources/
 pending/archive/
 .hermes/
 .claude/launch.json
+.serena/project.yml
