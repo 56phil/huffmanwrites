@@ -1,0 +1,61 @@
+---
+title: "Stoic Saturday: The Same Standard"
+description: "A United Nations mission indicted both sides of the Iran war in a single report, finding grounds to believe the United States committed a war crime at a school in Minab and that Iran committed crimes against humanity in its protest crackdown. The Fed hiked and nothing broke, the war widened to a second waterway, Germany votes tomorrow, and Marcus Aurelius had the harder discipline: if anyone can show me I am wrong, I will gladly change."
+date: 2026-09-19T06:00:00-05:00
+lastmod: 2026-09-19T06:00:00-05:00
+author: Philip Huffman
+sendfox_subject: "Stoic Saturday: The Same Standard"
+tags:
+  - weekly-digest
+  - stoicism
+  - investing
+hero_desktop: "img/articles/87-justice-both-pans_16x9.webp"
+hero_mobile: "img/articles/87-justice-both-pans_4x5.webp"
+hero_alt: "A monumental set of scales of justice carved from veined white Parian marble floating in a deep midnight navy void, the beam perfectly level and both pans hanging at equal height, each holding an identical mass of glowing amber-gold light, gold light pooling on a dark polished marble surface below, sparse gold dust motes and faint stars, dramatic cinematic chiaroscuro"
+hero_caption: "A scale that lights only one pan is not a scale. It is a weapon with a handle."
+draft: false
+---
+
+"If any one can convince or shew me that I am wrong in thought or deed, I will gladly change. It is truth that I seek; and truth never yet hurt any man. What does hurt is persistence in error or in ignorance." — Marcus Aurelius, *Meditations*, 6.21
+
+**One report, two indictments.** A United Nations fact-finding mission reported this week that there are reasonable grounds to believe the United States committed a war crime in Iran on February 28, when a Tomahawk missile collapsed the roof of the Shajareh Tayyebeh primary school in Minab, killing 156 civilians, 120 of them children. The school was "clearly identifiable," the investigators found, and the strike was launched while the United States was "aware of a substantial risk of striking a civilian object and acting recklessly as regards the possibility that this would happen." A second strike the same day, on a sports complex and residential area in Lamerd, killed or injured 22 civilians. The same mission, in the same document, found that Iranian authorities committed crimes against humanity during their crackdown on the protests that began in late December: unlawful killings, torture, arbitrary detention, enforced disappearances. Iran's own count is 3,038 dead and 25,000 injured; the mission believes the real figure is far higher ([The Guardian, 2026](#sources)). American officials have said operations are conducted within the law of armed conflict, and Central Command has denied striking Lamerd at all. The findings are findings, not verdicts. But one investigation returned two indictments, and left no side clean.
+
+**The thing we feared, and did not break.** On Wednesday the Federal Reserve raised its benchmark rate a quarter point, to a range of 3.75 to 4 percent: its first increase since 2023, on a unanimous 12-0 vote, with most officials signaling at least one more before the year ends ([CNBC, 2026](#sources)). The market had spent weeks dreading it. By Thursday it had its best day in six weeks, as the 10-year Treasury yield fell back to roughly 4.96 percent and oil dropped about 2 percent ([Reuters, 2026](#sources); [Zacks, 2026](#sources)). The index closed Thursday about 2 percent below its August record ([Scantips, 2026](#sources)). This is worth sitting with, because it is the ordinary shape of most feared events: the arrival is survivable, and the dread was the expensive part. The market repriced in a single day. It is very good at changing its mind when the evidence moves.
+
+**The war widens to a second door.** The Houthis swept down Yemen's west coast and seized the Bab al-Mandab strait and the Hanish islands, a waterway second only to Hormuz in strategic weight. An Iran-backed militia firing from Iraq shut Saudi Arabia's east-west pipeline, which had been Riyadh's workaround for the closed strait, destroying a pumping station near Al Mesba'ah. Traffic through Hormuz is running at roughly a fifth of its pre-crisis normal, and the attacks are not slowing: on Thursday a tanker was struck by an unknown projectile, and Iran's Revolutionary Guard claimed a hit on a Togo-flagged vessel it accused of an "illegal passage" ([Al Jazeera, 2026](#sources)). A Houthi drone was intercepted near Mecca, and Saudi Arabia warned of a red line ([The Guardian, 2026](#sources)). A GCC meeting with Iran on the future of Hormuz was postponed at the last minute, for lack of consensus. Oil crossed $108 before easing to about $104 by Friday morning. The UN puts the toll from the Houthi advance in Yemen at 150 civilians killed, 200 injured, and about 85,000 displaced.
+
+**The vote tomorrow.** Germany's far right is no longer a protest vote. The AfD won Saxony-Anhalt this month with about 43.8 percent, its best state result ever, and finished just short of a majority, giving it its best chance yet at the first far-right regional government in Germany since the Second World War ([Reuters, 2026](#sources)); the chancellor cancelled a United Nations trip as his leadership came under pressure ([The Guardian, 2026](#sources)). Mecklenburg-Vorpommern votes tomorrow, and the latest polling has the governing Social Democrats edging back ahead of the AfD, a race that looked decided the other way a month ago ([NDR, 2026](#sources)). Tens of thousands of Germans marched in about twenty cities after Saxony-Anhalt ([France24, 2026](#sources)). The country's judges' association has separately asked for tighter law, to stop state governments from bending prosecution powers against political opponents ([Deutsche Welle, 2026](#sources)).
+
+**The honest bulletin.** Washington's envoys shuttled to Moscow and Kyiv this month and came home with little to show for it. This week the Kyiv Independent reported, from officials in both capitals, that confidence in Steve Witkoff as the channel has eroded on both sides, and that several efforts are underway to work around him, while the president remains reluctant to remove him ([Kyiv Independent, 2026](#sources)). That is a single outlet's reporting from unnamed officials, and it should be read as such. It is not a triumph and it is not a funeral. It is a stalled process that still has a calendar.
+
+Here is the honest reading of the week. A United Nations mission named a war crime committed by the United States and crimes against humanity committed by Iran in a single report, which is exactly what a serious accounting looks like: it does not stop at your enemies. A market absorbed the rate hike it had dreaded for weeks and moved on by Thursday, because prices update fast. A war closed a second waterway. A democracy votes tomorrow on how far it will let the far right go. And a stalled peace process kept its calendar.
+
+The thread is Marcus's sentence, which is the hardest line in the *Meditations* because it is the easiest to applaud and the hardest to obey. Everyone is willing to be corrected about their opponents. Almost no one is willing to be corrected about their own side. That is what makes the UN report unusual and what makes the honest response to it uncomfortable: if you read the Minab finding and feel something, and read the crackdown finding and feel nothing, you have not been reading a finding. You have been choosing a team. Marcus is not asking you to be neutral between a school and a state. He is asking you to keep the scale level, because truth never hurt anyone, and persistence in error is what does.
+
+**The Practice**
+
+This week, take one thing you believe about your own side, the position you hold because the people you trust hold it. Then write down the strongest argument against it, in its best form, the version its smartest opponent would make. Do not rebut it. Read it twice, and notice how much of your confidence was really just allegiance. Then do the same exercise on the other side, so the scale stays level. You do not have to change your mind. You have to be a person who could.
+
+See you next Saturday. — Phil
+
+*Sourced from the Guardian's reporting on the UN fact-finding mission on Iran and on the Strait of Hormuz and Yemen; Al Jazeera on Friday's tanker strikes in the strait; CNBC, Reuters, Zacks, and the Los Angeles Times on the September 16 Federal Reserve decision and the following day's market session; Reuters on the German state elections, and France24 and NDR on the Mecklenburg-Vorpommern campaign; and the Kyiv Independent on the state of the Ukraine negotiations.*
+
+## Sources
+
+- The Guardian. (2026, September 17). [*Iran school bombing: grounds to believe US was behind atrocity, UN finds*](https://www.theguardian.com/world/2026/sep/17/iran-school-bombing-un-mission-us-military-behind-attack).
+- CNBC. (2026, September 16). [*Fed rate decision September 2026: Rates rise to 3.75%-4%*](https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html).
+- Reuters. (2026, September 17). [*Tech leads Wall St to higher close as oil eases, Treasury yields dip*](https://www.reuters.com/business/wall-st-futures-rise-fed-rate-hike-lifts-long-standing-overhang-2026-09-17/).
+- Zacks. (2026, September 18). [*Stock Market News for Sep 18, 2026*](https://www.zacks.com/stock/news/2991913/stock-market-news-for-sep-18-2026).
+- Los Angeles Times. (2026, September 17). [*Stocks rally to their best day in 6 weeks after oil prices, bond yields ease*](https://www.latimes.com/business/story/2026-09-17/stocks-rally-to-their-best-day-in-6-weeks-after-oil-prices-bond-yields-ease).
+- Scantips. (2026, September 17). [*Count the annual S&P 500 Record Highs, 2018-2026*](https://www.scantips.com/s&pcnthighs.html).
+- The Guardian. (2026, September 14). [*Gulf states postpone strait of Hormuz talks with Iran as Yemen conflict intensifies*](https://www.theguardian.com/world/2026/sep/14/gulf-states-postpone-strait-of-hormuz-talks-iran-yemen-houthi-saudi-arabia-airbase-pipeline).
+- The Guardian. (2026, September 16). [*Saudi Arabia warns of 'red line' after Houthi drone intercepted close to holy city of Mecca*](https://www.theguardian.com/world/2026/sep/16/saudi-arabia-houthi-drone-shot-down-mecca-iran-middle-east).
+- Al Jazeera. (2026, September 18). [*Iran war live: Second tanker reported struck in the Strait of Hormuz*](https://www.aljazeera.com/news/liveblog/2026/9/18/iran-war-live-trump-weighs-big-decision-on-iran-tanker-hit-in-hormuz).
+- Reuters. (2026, September 16). [*Merz's fate in the balance as second eastern German state goes to the polls*](https://www.reuters.com/world/europe/merzs-fate-balance-second-eastern-german-state-goes-polls-2026-09-16/).
+- The Guardian. (2026, September 16). [*Merz cancels UN visit after AfD election win puts his leadership on the ropes*](https://www.theguardian.com/world/2026/sep/16/german-state-leaders-rally-behind-friedrich-merz-doubts-over-future-afd).
+- France24. (2026, September 13). [*Germany: Thousands rally against far-right after AfD victory*](https://www.france24.com/en/germany-thousands-rally-against-far-right-after-afd-victory).
+- NDR. (2026, September 17). [*ZDF-Politbarometer: SPD überholt AfD in MV*](https://www.ndr.de/nachrichten/mecklenburg-vorpommern/landtagswahl/zdf-politbarometer-spd-ueberholt-afd-in-mv,mvwahl-392.html).
+- Deutsche Welle. (2026, September 17). [*Germany's judges seek to prevent AfD justice abuse*](https://uk.news.yahoo.com/germanys-judges-seek-prevent-afd-151800867.html), by Ben Knight.
+- Kyiv Independent. (2026, September 18). [*Exclusive: Ukraine, Russia are done with Steve Witkoff. Trump sees no problem.*](https://kyivindependent.com/exclusive-ukraine-russia-are-done-with-steve-witkoff-trump-sees-no-problem/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

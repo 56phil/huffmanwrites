@@ -4,6 +4,14 @@
 
 ---
 
+### Maintenance — September 18, 2026 — Stoic Saturday for Sept 19 drafted (theme: justice)
+
+- **Stoic Saturday for Sept 19 drafted (theme B: justice).** `pending/2026-09-19-Stoic-Saturday.md` — "Stoic Saturday: The Same Standard" (`sendfox_subject` the same), ~1,500 words, 2 em dashes, 15 sourced links, hero pair **87** (`87-justice-both-pans_*`, marble scales with both pans lit). Epigraph: Marcus Aurelius, *Meditations* 6.21 ("If any one can convince or shew me that I am wrong… I will gladly change"), **verified in two independent translations** — the Casaubon text on Project Gutenberg and the Long translation (`pg55317`), both locating it at Book VI, 21. Spine: a **UN fact-finding mission indicted both sides in one report** (grounds to believe the US committed a war crime at the Minab school, 156 civilians incl. 120 children; and that Iran committed crimes against humanity in its protest crackdown), which is the week's honest-accounting story and the reason the theme is not "judicial neutrality" but "keep the scale level." Also covers the Fed hike absorbed in a day, the war closing a second waterway (Bab al-Mandab), the German vote tomorrow, and the stalled Ukraine track. **Awaiting Phil's 16:30 review** — not published, not committed.
+- **Fact-check notes for the digest (all verified at source, not from headlines):** the Guardian UN report read in full (both findings, the 120 children, the "recklessly" quote, CENTCOM's Lamerd denial); the Kyiv Independent Witkoff exclusive read in full, and the claim **downgraded to single-outlet reporting from unnamed officials** rather than asserted; the Deutsche Welle judges'-association claim verified via its text (the DRB is the *Deutscher Richterbund*, and the piece is Ben Knight's); the Merz UN-trip cancellation verified against the Guardian URL (HTTP 200). Corrections made during the pass: the war is in its **seventh** month (not eighth), the Fed dread span is **weeks** (not "two months"), and the AfD wording is **"finished just short of a majority"** per Reuters rather than "briefly held."
+- **Verification gotcha for future digests:** Hugo's minifier emits **unquoted** attributes (`href=https://…`). A verification regex expecting `href="…"` reports **zero** links on a page that renders all of them. Match `href=(?:")?https?://` when checking rendered output.
+
+---
+
 ### Maintenance — September 18, 2026 — SimpleBrain repair, ninety-days installments, hero backfill, scheduler fix
 
 - **SimpleBrain audit correction (important).** A slug-based audit appeared to show **11 published posts untranslated**. That was **wrong** — an artifact of the vault's renames (`civics-*`, `an-open-letter-*`, `stoic-saturday-letter-*`, `reports/`, `books/*-summary`). Matching by title and fuzzy basename across **all** wiki subfolders shows **all 160 published posts are present**; median wiki-to-post body ratio is **1.00**. Do not re-raise "N articles behind" from filename matching alone.
@@ -1418,6 +1426,7 @@ Four-phase effort to improve search engine and reader discoverability:
 - Dates Bumped to 2026-07-25.
 
 ## Last Updated
+2026-09-18 (Stoic Saturday for Sept 19 drafted on theme B, justice — "The Same Standard," built on Meditations 6.21 and the UN mission that indicted both sides in one report; hero pair 87; awaiting review. Also: repaired four SimpleBrain defects, drafted both ninety-days installments for the Dec 17 window, backfilled hero images on three posts, fixed the scheduler's gated-verify bug in both runners, and made this index current)
 2026-09-17 (Revised "Run Correctly, Disbelieved Anyway" to eleven risks — added Risk 4, the winner is not seated, the one rules-based risk no court has closed; then published the 2026 election risk dossier itself: 11,300 words, 64 footnotes, two original finds — DHS/FEMA election conditions on the $1.064B Homeland Security Grant Program, and the Joint Chiefs pledge confirmed in writing by Gen. Dan Caine)
 2026-09-15 (Published "A Million Missourians, a Map That Never Became Law, and the Remedy the Law Forbids" — the Missouri HB 1 map fight and the ranked-choice remedy 2 U.S.C. §2c forbids; published "Golden Gate: The Mac Just Crossed Its Own Bridge" — macOS 27 as the first Apple-silicon-only Mac release. **Open flag:** the post-election ranked-choice voting piece is planned for after Nov 3 — see the FLAGGED section above; do not draft before results land)
 2026-09-14 (Published "The Probability of AI Ending Humanity", companion to the Sept 10 takeover essay and scoped strictly to extinction)
