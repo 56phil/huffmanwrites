@@ -23,6 +23,17 @@
 
 ---
 
+### Maintenance — September 19, 2026 — Ratings table: column definitions added to the skill
+
+- **Philip asked what "PVI" and "IE" mean (2026-09-19).** The question exposed a real gap: the table ships two columns whose labels do not explain themselves, and nothing in the skill told the agent to explain them. A reader hitting tomorrow's report cold would have to leave the article to decode them.
+- **Fixed in `skills/senate-race-report.md`,** so the definitions are standing furniture of the report rather than a one-off answer: PVI (Cook Partisan Voting Index, from the 2020 and 2024 presidential two-party vote share, weighted toward 2024), IE (Inside Elections, Nathan Gonzales's newsletter), and the full rating scale **Solid/Safe → Likely → Lean → Tilt → Tossup** with DDHQ's win probabilities (Solid >95%, Likely 80–95%, Lean 65–80%, Tossup 35–65%). The agent now adds a one-or-two-line legend beneath the table the first time it appears.
+- **One finding changes how the table reads, and the skill now says so: `Tilt` is Inside Elections' own rating.** Ballotpedia's comparison table lists it **N/A for Cook, Sabato and DDHQ** — IE is the only one of the four that uses the tier. That is why every `Tilt` in the current table sits in the IE column and nowhere else. A reader (or a future draft) could easily read "IE: Tilt R" beside "Cook: Tossup" as the two disagreeing, when it is IE using a finer scale. The skill now warns against calling that a disagreement.
+- **PVI values independently verified, not assumed.** All nine competitive-race PVI scores were checked against Cook's own state list (as reproduced in the Cook PVI article, sourced to the 2025 Cook PVI state map): Alaska R+6, Georgia R+1, Iowa R+6, Maine D+4, Michigan EVEN, New Hampshire D+2, North Carolina R+1, Ohio R+5, Texas R+6 — **all nine match**. The Wikipedia aggregate table the script reads is therefore consistent with Cook on the index itself.
+- **Definitional check on the index:** PVI measures a state's **baseline lean**, not the current race, so a `Tossup` rating in an `R+6` state (Alaska, Iowa, Texas) is the interesting fact rather than a contradiction. The legend states this explicitly so the table cannot be misread as internally inconsistent.
+- No content changed; no deploy needed beyond the normal build. Gates green.
+
+---
+
 ### Maintenance — September 19, 2026 — Senate ratings added to the weekly report
 
 - **Philip, 2026-09-19: "Add ratings to the content."** The weekly report now carries a ratings table **every week**, not only when a forecaster moves a race. The old rule ("include a table only if a rating changed") was why the last two installments had no table at all — no forecaster moved between Sept 6 and Sept 13. That rule is replaced in `skills/senate-race-report.md`.
