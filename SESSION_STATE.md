@@ -23,6 +23,18 @@
 
 ---
 
+### Maintenance — September 19, 2026 — PVI: good prior, poor discriminator (the scout corrected me)
+
+- **Philip, 2026-09-19: "PVI seems out of touch."** I answered from a rank-correlation of my own construction (+0.23) and called PVI "the weakest predictor of the nine." A research pass found evidence that **cuts against my own framing**, and the reconciliation is more useful than either.
+- **The contradiction: Pew found 158 of 176 Senate elections since 2012 (89.8%) went to the party that carried the state.** That is a *strong* prior, which looks like it refutes "weakest predictor." My test wasn't wrong, it measured something else: applied to these nine races as the sole predictor, PVI calls **5 of 9** correctly, missing Georgia, North Carolina, Ohio and Texas. Both numbers are true because they cover different populations — Pew's 176 are mostly safe seats where the baseline holds by construction, while a race earns its way into this table *precisely by being a case where the baseline does not settle it*.
+- **The formulation now in the skill: PVI is a good *prior* and a poor *discriminator*.** The actionable consequence is an instruction — **never argue from PVI against the forecasters**; where they disagree on a competitive race, the forecasters are the point of the exercise. I removed my overstated "weakest predictor of the nine" line rather than let it stand.
+- **Elasticity is the missing axis, and it is genuinely orthogonal.** I measured lean against elasticity across the nine: **r = +0.12** — independent, as Silver claims. From Silver's scores (2018 set, the last published; discontinued Apr 2024): **New Hampshire 1.15 and Maine 1.13 are among the most elastic states in the country; Georgia 0.90 is among the most inelastic; Texas 1.03 is dead average.** That explains the table's biggest surprise — Georgia and North Carolina are *inelastic* (bifurcated electorates, few persuadable voters), while Maine and New Hampshire are *elastic* (cross-pressured moderates).
+- **Corrected a claim I had made twice, in both directions.** I first told Philip "Texas is inelastic-red." **False** — Texas is 1.03, essentially median. I then told him Texas's large swing makes PVI *understate* its Republican lean. That is about the swing, not elasticity, and the two are different properties. The elasticity data is the check on the first claim and does not support the second as an elasticity claim.
+- **Sharpest supporting finding, from an academic source:** DeFord, Duchin & Solomon argue CPVI "is not measuring competitiveness but rather *typicality*" — because when the national vote itself is skewed, a D+5/R+5 band marks the *average* district, not a close one. That is Philip's instinct stated precisely, and it is why the column must be labelled a baseline rather than a competitiveness measure.
+- Gates green; skill and no content changed. No deploy needed beyond the normal build.
+
+---
+
 ### Maintenance — September 19, 2026 — Inside Elections IS fetchable; the constraint was wrong
 
 - **I documented a false constraint earlier today, and this corrects it.** The script's docstring and the skill both asserted that `insideelections.com` returns HTTP 403 to automated fetch "even with a full browser User-Agent." The curl half is true; the conclusion was wrong. **`insideelections.com` serves its own 2026 ratings as JSON, and `urllib` with a UA *plus a `Referer` header* returns HTTP 200.**
