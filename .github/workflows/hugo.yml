@@ -52,6 +52,14 @@ jobs:
         run: |
           [[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true
 
+      # Fail the build before deploy if the gallery pagination contract is
+      # broken. The layout derives its page count from data/gallery.yml while
+      # the page stubs are hand-written, so adding a gallery item past a page
+      # boundary links to a page that was never generated (a live 404 — see
+      # the 2026-09-18 page 9 incident). Checking here keeps it off production.
+      - name: Check gallery pagination
+        run: python3 scripts/check-gallery-pages.py
+
       - name: Build with Hugo
         run: |
           hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"

@@ -7,3 +7,7 @@ pending/archive/
 .hermes/
 .claude/launch.json
 .serena/project.yml
+
+# Python bytecode — regenerated on every run; local build artifact, not source
+__pycache__/
+*.pyc
