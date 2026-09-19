@@ -48,7 +48,10 @@ tags:
 ---
  ## ✦ **This Week’s Quiz — Candlelight &amp; Common Sense**
 
- >  *“It is far better to grasp the Universe as it really is than to persist in delusion, however satisfying and reassuring.”* — Carl Sagan
+ >  *“For me, it is far better to grasp the Universe as it really is than to persist in delusion, however satisfying and reassuring.”*
+ — Carl Sagan, *The Demon-Haunted World* (1995), [text](https://en.wikiquote.org/wiki/Carl_Sagan)
+
+ *Wording note: the sentence opens “For me, it is far better…” — Sagan states this as his own stance, not as a general imperative. The page previously dropped that opening, which changed an avowal into a pronouncement.*
 
  
 
@@ -124,7 +127,9 @@ tags:
  ## ✨ Quote of the Week
 
  “The nitrogen in our DNA, the calcium in our teeth, the iron in our blood, the carbon in our apple pies—were made in the interiors of collapsing stars. We are made of star stuff.”
- — Carl Sagan, Cosmos (1980)
+ — Carl Sagan, *Cosmos* (1980), [text](https://openlibrary.org/search/inside?q=%22nitrogen+in+our+DNA%22)
+
+ *Source note: verified present in Cosmos, ch. 1, via full-text search across scanned editions (the passage is also spoken in the series' first episode). The em-dash before “were made” is an editorial insertion; Sagan's sentence runs on without it.*
 
  
 ---

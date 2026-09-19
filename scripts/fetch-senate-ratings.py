@@ -180,8 +180,13 @@ def _die(msg: str, code: int = 2) -> "None":
 
 
 def fetch() -> str:
+    # --compressed: a server may force gzip regardless of Accept-Encoding, and
+    # decoding those bytes as UTF-8 yields mojibake in which "Cook" and "Toss"
+    # are absent — so the shape check below would report "the ratings table is
+    # absent" for a page that was fetched perfectly. Same defect class as the
+    # quote checker's (see scripts/check-quotes.py, 2026-09-19).
     r = subprocess.run(
-        ["curl", "-sL", "--max-time", "40", "-A", UA, API],
+        ["curl", "-sL", "--compressed", "--max-time", "40", "-A", UA, API],
         capture_output=True,
     )
     if r.returncode != 0:

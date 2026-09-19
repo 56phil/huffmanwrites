@@ -18,10 +18,10 @@ tags:
 
 ## 🪞 A Reflection
 
- >  *“Nearly all men can stand adversity, but if you want to test a man’s character, give him power.”*
- — Ingersoll, said of Lincoln ([“Abraham Lincoln: A Lecture,” 1895, p. 52](https://archive.org/details/abrahamlincolnle00inge/page/52))
+ >  *“Most people can bear adversity. But if you wish to know what a man really is, give him power. This is the supreme test.”*
+ — Ingersoll, said of Lincoln ([“Abraham Lincoln: A Lecture,” 1895](https://archive.org/stream/abrahamlincolnle00inge/abrahamlincolnle00inge_djvu.txt))
 
- *Attribution note: this line is routinely credited to Lincoln, but it does not appear anywhere in his writings or speeches. It is a compression of Robert G. Ingersoll's tribute to him: “Most people can bear adversity. But if you wish to know what a man really is, give him power. This is the supreme test.” — [“Abraham Lincoln: A Lecture” (1895), p. 52](https://archive.org/details/abrahamlincolnle00inge/page/52).*
+ *Attribution note: this line is routinely credited to Lincoln, but it does not appear anywhere in his writings or speeches. It is a compression of Robert G. Ingersoll's tribute to him: “Most people can bear adversity. But if you wish to know what a man really is, give him power. This is the supreme test.” — [“Abraham Lincoln: A Lecture” (1895)](https://archive.org/stream/abrahamlincolnle00inge/abrahamlincolnle00inge_djvu.txt).*
 
  
 
@@ -109,7 +109,7 @@ tags:
 ---
  ### **Extra Credit — The Test of Character**
 
- >  *“Nearly all men can stand adversity, but if you want to test a man’s character, give him power.”* — Ingersoll, said of Lincoln ([1895, p. 52](https://archive.org/details/abrahamlincolnle00inge/page/52))
+ >  *“Most people can bear adversity. But if you wish to know what a man really is, give him power. This is the supreme test.”* — Ingersoll, said of Lincoln ([1895](https://archive.org/stream/abrahamlincolnle00inge/abrahamlincolnle00inge_djvu.txt))
  → What does this quote reveal about the link between **integrity and self-knowledge**?
 
  

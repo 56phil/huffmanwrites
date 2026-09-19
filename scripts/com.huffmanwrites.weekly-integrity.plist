@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.weekly-integrity</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/weekly-integrity-check.sh</string>
+  </array>
+  <!-- Monday 14:00 CT, an hour after the site audit (13:00) and the wiki check
+       (13:30) so the three do not contend, and so a failure here is read
+       alongside whatever the audit already reported.
+
+       Weekly rather than per-commit on purpose: the deterministic gates run in
+       CI on every push, but the expensive checks (fetch every cited URL, verify
+       every quotation against its own source) need network and are far too slow
+       for the deploy path. Scheduled, they still catch rot in content nobody has
+       touched in months -- which is where every defect found on 2026-09-19 had
+       been sitting. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>14</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <!-- Keep the exported PATH used by the other huffmanwrites jobs so hugo,
+       python3 and the keychain-backed helpers resolve the same way. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/prh</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/weekly-integrity.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/weekly-integrity.err.log</string>
+</dict>
+</plist>

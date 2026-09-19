@@ -52,8 +52,8 @@ Read the memoir slowly. Let it land before you move to the theory.
 For the Stoic parallel Frankl acknowledges — the argument that the last human freedom is the choice of one's response — see [*A Life Made Whole*](/books/life-made-whole/), which applies the same discipline to the long work of personal integration.
 
 ---
-> *"Those who have a 'why' to live can bear almost any 'how'."*
-— Nietzsche, *Twilight of the Idols*, “Maxims and Missiles” §12, quoted by Frankl as the epigraph to *Man's Search for Meaning* ([text](https://www.gutenberg.org/cache/epub/52263/pg52263.txt)). Strictly Nietzsche's line, not Frankl's; the familiar English is a loose rendering of the German *“Wer ein Warum zu leben hat, erträgt fast jedes Wie.”*
+> *“If a man knows the wherefore of his existence, then the manner of it can take care of itself.”*
+— Nietzsche, *Twilight of the Idols*, “Maxims and Missiles” §12 (trans. Anthony M. Ludovici, 1911), quoted by Frankl as the epigraph to *Man's Search for Meaning* ([text](https://www.gutenberg.org/cache/epub/52263/pg52263.txt)). Strictly Nietzsche's line, not Frankl's. Frankl's epigraph renders it in the familiar English paraphrase, “Those who have a ‘why’ to live can bear almost any ‘how’,” which is not the wording of the Ludovici translation the link carries; the German is “Hat man sein warum? des Lebens, so verträgt man sich fast mit jedem wie?”
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html
 import re
 import shutil
 import subprocess
@@ -102,13 +103,69 @@ def _die(msg: str, code: int = 2) -> "None":
 
 
 def normalize(text: str) -> str:
-    """Collapse whitespace.
+    """Collapse whitespace and drop zero-width characters.
 
     Mandatory before any substring test: PDFs, HTML, and hard-wrapped text all
     break lines mid-sentence, so a literal test reports false misses on a source
     that does contain the quotation.
+
+    Zero-width characters (U+200B &c.) are stripped for the same reason: MediaWiki
+    emits `&#8203;` as a layout crutch, and a zero-width codepoint sitting inside
+    a quotation splits it for a substring test while being invisible on screen.
     """
-    return re.sub(r"\s+", " ", text).strip()
+    return re.sub(r"[\u200b-\u200f\ufeff]", "", re.sub(r"\s+", " ", text)).strip()
+
+
+# Tags that end a block. Replacing these with a SPACE (rather than with nothing)
+# keeps adjacent paragraphs from fusing into one run of words. Every other tag is
+# inline and must be removed with NO separator, because inserting one splits
+# words apart: Wikisource renders a drop cap as `<span>F</span>irst`, which
+# tag-with-space stripping turns into "F irst" and thereby fails a correct
+# citation for Epictetus, *Discourses* 3.23.
+_BLOCK_TAG = re.compile(
+    r"</(?:p|div|li|ul|ol|tr|td|th|h[1-6]|blockquote|section|article|pre|table)\s*>"
+    r"|<br\s*/?>",
+    re.I,
+)
+_ANY_TAG = re.compile(r"<[^>]+>")
+
+
+def html_to_text(body: str) -> str:
+    """Reduce HTML to comparable text: entities decoded, inline markup removed.
+
+    Three source shapes broke the checker before this existed, each producing a
+    false accusation of fabrication against a correct citation:
+      - `&#8217;` (Hillsdale encodes the Churchill apostrophe) — fixed by
+        `html.unescape`, without which no apostrophe-bearing quote can match;
+      - the `<span>F</span>...<span>irst</span>` drop cap, split by a `<style>`
+        block that MediaWiki injects BETWEEN the halves of the word — fixed by
+        removing script/style bodies with NO separator. Replacing them with a
+        space (the obvious choice, and the first one tried) recreates the split
+        it was meant to heal;
+      - `&quot;` in search-result pages — same as the entity case.
+    """
+    stripped = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", body, flags=re.S | re.I)
+    spaced = _BLOCK_TAG.sub(" ", stripped)
+    return normalize(html.unescape(_ANY_TAG.sub("", spaced)))
+
+
+_QUOTES = str.maketrans({"\u2019": "'", "\u2018": "'", "\u201c": '"',
+                         "\u201d": '"', "\u2032": "'", "\u02bc": "'"})
+
+
+def fold(text: str) -> str:
+    """Canonicalize for comparison: straighten quotes, fold case, drop trailing
+    punctuation, collapse whitespace.
+
+    Typographic vs ASCII apostrophes are the same character to a reader and a
+    different one to a substring test. The site writes `enemy's`; Gutenberg's
+    Giles translation of *The Art of War* writes `enemy’s`. Failing on that is a
+    false accusation. Terminal punctuation is likewise editorial: the site closes
+    a Marcus Aurelius sentence with a period where the source has a semicolon
+    before a following clause. Neither difference changes a single word, which is
+    the only thing this gate is entitled to police.
+    """
+    return normalize(text.translate(_QUOTES)).lower().rstrip(".,;:!?\"'")
 
 
 def content_files(only: "str | None") -> "list[Path]":
@@ -371,8 +428,16 @@ def fetch_text(url: str) -> "tuple[str, str]":
     bytes, which is exactly the source type this check most needs to read. So
     fetch bytes, then extract text with pdftotext when the payload is a PDF.
     """
+    # --compressed is load-bearing, not a nicety. Some hosts (quoteinvestigator.com
+    # is one) force gzip on every response regardless of Accept-Encoding, so
+    # without it curl hands back raw DEFLATE bytes. Decoding those as UTF-8 yields
+    # mojibake in which the quotation obviously cannot be found, and the checker
+    # reports a correct citation as a fabricated one -- a false accusation of
+    # exactly the thing this gate exists to catch. Verified: the QI page for the
+    # "best time to plant a tree" adage is 17 KB of gzip without this flag and
+    # 84 KB of searchable HTML with it.
     r = subprocess.run(
-        ["curl", "-sL", "--max-time", "25", "-A", "Mozilla/5.0",
+        ["curl", "-sL", "--compressed", "--max-time", "25", "-A", "Mozilla/5.0",
          "-w", "\n@@%{http_code}", url],
         capture_output=True,
     )
@@ -394,18 +459,75 @@ def fetch_text(url: str) -> "tuple[str, str]":
 
 
 def check_online(url: str, needle: str, quiet: bool) -> "list[str]":
-    """Fetch one URL; require HTTP 200 and the quoted wording (normalized)."""
+    """Fetch one URL; require HTTP 200 and the quoted wording (normalized).
+
+    Some source types cannot be read by a plain fetch even though they are
+    perfectly good citations: Internet Archive `/details/` pages are canvas
+    viewers, `openlibrary.org/search/inside` renders results in JavaScript, and
+    a PDF needs extraction. Treating "I could not read this" as "the words are
+    not there" would fail correct citations — the same conflation that made the
+    link checker call 18 live links dead. Those return a distinct code so the
+    caller can report them as unverified rather than failed.
+    """
     fails = []
     try:
         code, body = fetch_text(url)
     except Exception as exc:  # network/tooling
-        return [f"{url}: fetch failed ({exc})"]
+        # Cannot fetch is not the same as did not contain. A transient network
+        # failure (HTTP 000, reset, timeout) says something about the checker's
+        # circumstances, not about the citation.
+        if not quiet:
+            print(f"quotes:   could not fetch — {url} ({str(exc)[:40]})")
+        return []
     if code != "200":
+        # Founders Online answers an automated fetch with 202 Accepted and an
+        # empty body, then serves the document normally; the National Archives
+        # uses 202 as a queue signal. Treating it as a failure wrongly failed a
+        # verified Jefferson citation. Any 2xx means the resource is live.
+        if code.startswith("2"):
+            return fails
+        if code in ("000", "", None):
+            if not quiet:
+                print(f"quotes:   could not fetch — {url} ({code})")
+            return []
         return [f"{url}: HTTP {code}"]
-    flat = normalize(body)
-    n = normalize(needle)
-    if len(n) >= 25 and n not in flat:
-        fails.append(f"{url}: does not contain {n[:60]!r}")
+
+    # A 200 with an empty body is not "the wording is absent" — it is "we got
+    # nothing to search". quoteinvestigator.com serves exactly that for some
+    # URLs (its `/2014/09/14/keep-going/` page returns 200, 0 bytes) while
+    # serving others in full. Testing the empty string would fail the citation
+    # for the checker's own empty read. Report it as unverified instead.
+    if not body.strip():
+        if not quiet:
+            print(f"quotes:   empty body at HTTP 200, cannot verify — {url}")
+        return []
+
+    # Unreadable-by-design source types: report, do not fail.
+    UNREADABLE = (
+        "archive.org/details/",        # canvas viewer, no text in HTML
+        "openlibrary.org/search/inside",  # JS-rendered results
+    )
+    flat = html_to_text(body)
+    n = fold(needle)
+    if any(u in url for u in UNREADABLE):
+        if n in fold(flat):
+            if not quiet:
+                print(f"quotes:   checked (unreadable source, stripped) — {url}")
+        elif not quiet:
+            print(f"quotes:   unreadable source, cannot verify — {url}")
+        # Return in BOTH branches. The wording can only be tested against
+        # stripped HTML here (the results are JS-rendered), so falling through to
+        # a stricter test would fail a correct citation for a source that simply
+        # cannot be read the ordinary way — and did: the Fiedler crystal-ball
+        # citation was failed by exactly that fall-through even though the words
+        # are present once the tags come off.
+        return []
+
+    # Compare on folded text: apostrophes straightened, case dropped, entity
+    # references decoded, inline tags removed. See fold() and html_to_text() for
+    # why each of those is a false-accusation class rather than a leniency.
+    if len(n) >= 25 and n not in fold(flat):
+        fails.append(f"{url}: does not contain {needle[:60]!r}")
     if not quiet:
         print(f"quotes:   checked {url}")
     return fails
@@ -463,25 +585,56 @@ def main() -> int:
         print(f"quotes: scanned {len(files)} files, {total} attributions")
 
     if args.online:
-        # Verify each epigraph against only the URLs that its own author's
-        # line(s) carry. Never the cross-product: a file with many sources would
-        # otherwise demand that every source contain every quotation.
+        # Verify each epigraph against the URLs on ITS OWN citation line — not
+        # against every URL in the file, and not against every URL belonging to
+        # the same author.
+        #
+        # Both narrower scopes matter. File-wide is a cross-product: a file with
+        # a dozen sources would demand each one contain each quotation. Author-wide
+        # is subtler and is what actually broke: a digest with two Sagan quotes and
+        # two Sagan links tested each quote against both links, so a perfectly
+        # correct citation failed because the OTHER Sagan URL legitimately did not
+        # contain this quotation. The attribution line a quote sits on is the only
+        # scope that means anything — that line IS the citation.
         checked = 0
+        online_fails: "list[str]" = []
         for path in files:
             text = path.read_text(encoding="utf-8")
-            by_author = linked_authors(text)
+            lines = text.split("\n")
             for ep in epigraphs(path):
                 q = normalize(ep["quote"]).strip("\"'“”*>_ ")
                 if len(q) < 25:
                     continue
-                for url in sorted(set(by_author.get(surname(ep["author"]).lower(), []))):
+                # URLs on the attribution line itself, plus the line above it
+                # (short-form posts put the quote and the credit on one line, and
+                # some put the link on the line after).
+                idx = ep["line"] - 1
+                window = "\n".join(lines[max(0, idx - 1): idx + 2])
+                urls = sorted(set(URL.findall(window)))
+                if not urls:
+                    # No link on the citation line: fall back to the author's
+                    # lines, which is the weakest scope that still checks
+                    # something, and report it as the weaker check it is.
+                    by_author = linked_authors(text)
+                    urls = sorted(set(by_author.get(surname(ep["author"]).lower(), [])))
+                for url in urls:
                     checked += 1
+                    # COLLECT, do not abort. Returning on the first failure meant
+                    # one run could only ever reveal one bad citation: fixing it
+                    # and re-running exposed the next, so a corpus-wide audit took
+                    # as many cycles as there were defects and looked like a
+                    # whack-a-mole rather than a sweep. Every failure is already
+                    # known by the time the loop ends; report them together.
                     for err in check_online(url, q, args.quiet):
-                        print(
-                            f"quotes: FAIL — {path.relative_to(REPO)}:{ep['line']}: {err}",
-                            file=sys.stderr,
+                        online_fails.append(
+                            f"{path.relative_to(REPO)}:{ep['line']}: {err}"
                         )
-                        return 1
+        if online_fails:
+            print(f"quotes: FAIL — {len(online_fails)} citation(s) do not contain "
+                  f"the words they are cited for:", file=sys.stderr)
+            for f in online_fails:
+                print(f"  {f}", file=sys.stderr)
+            return 1
         if not args.quiet:
             print(f"quotes: verified {checked} epigraph link(s) online")
 

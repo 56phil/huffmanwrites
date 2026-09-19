@@ -45,6 +45,11 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 PUBLIC = REPO / "public"
 
+# Minimum plausible build. The site renders ~380 pages; set well below that so
+# ordinary growth never trips it, but high enough that a missing or partial
+# build does. See the coverage-floor note in scan().
+MIN_PAGES = 100
+
 # Go's sentinel for "this URL failed the safety filter", plus the printf
 # overflow markers that indicate a value arrived with the wrong type.
 #
@@ -99,10 +104,19 @@ def scan(quiet: bool) -> int:
     if not PUBLIC.is_dir():
         die("no public/ directory — run `hugo` first")
 
+    # Coverage floor: refuse to report clean on a scan that saw no pages. A
+    # wrong build output directory or an interrupted build would otherwise
+    # produce a confident OK over nothing at all.
+    built = pages()
+    if len(built) < MIN_PAGES:
+        die(f"found only {len(built)} built page(s); expected at least "
+            f"{MIN_PAGES}. The scan is not seeing the build output, so a pass "
+            f"would be meaningless.")
+
     sentinel_hits: "list[tuple[str, str]]" = []
     broken_hits: "list[tuple[str, str, str]]" = []
 
-    for page in pages():
+    for page in built:
         try:
             text = page.read_text(encoding="utf-8", errors="replace")
         except Exception:

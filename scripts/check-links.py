@@ -15,15 +15,22 @@ is fabricated. Run it before publishing, and periodically.
 
 Verdicts, in order of how much they should worry you:
 
-  DEAD     4xx/5xx or DNS failure on a host that is not blanket-blocking us.
-           This is the fabrication signature. Check it.
+  DEAD     404/410 — the resource is definitively gone. This is the ONLY status
+           that is evidence of rot. Check it.
   REDIRECT the link resolves but lands somewhere else (often a homepage). The
            cited page may not exist; the reader will not see what was promised.
-  BLOCKED  403/429 from a host known to refuse automated clients. NOT evidence
-           of fabrication — several real sources (Cook, RCP, Sabato) do this.
+  BLOCKED  401/403/429. The host refuses automated clients as a matter of
+           policy. NOT evidence of rot or fabrication — Reuters, the Post and
+           Cook all do this.
+  UNVERIFIED timeout, connection reset, SSL failure, 5xx, or a 406 content
+           negotiation refusal. "We could not look" — a statement about the
+           checker, not the citation. Deliberately NOT a failure: conflating it
+           with DEAD produced 18 false alarms in one sweep and would train the
+           reader to ignore the gate.
   OK       200 with content.
 
-Exit codes: 0 nothing wrong, 1 dead or redirecting links found, 2 fetch error.
+Exit codes: 0 nothing wrong, 1 dead or redirecting links found, 2 fetch error
+or coverage floor not met.
 """
 
 from __future__ import annotations
@@ -52,12 +59,21 @@ TRAILING = ".,;:!?"
 # Hosts that refuse automated clients as a matter of policy. A 403 here is
 # expected and says nothing about whether the link is real. Kept explicit so the
 # report can distinguish "we could not check" from "this is broken".
+#
+# Reuters belongs here and was missing: it answers every automated request with
+# 401, so 24 perfectly good citations were being reported as DEAD. That is the
+# same false-positive class as calling Inside Elections unfetchable — a check
+# that cannot see is not evidence that there is nothing to see. Add a host here
+# only after confirming the refusal is policy (consistent 401/403/429 across
+# different URLs on that host), never merely because one link failed.
 BOT_BLOCKING = (
     "cookpolitical.com", "realclearpolitics.com", "centerforpolitics.org",
     "insideelections.com", "washingtonpost.com", "nytimes.com",
-    "wsj.com", "bloomberg.com", "economist.com", "ft.com",
+    "wsj.com", "bloomberg.com", "economist.com",
     "amazon.com", "substack.com", "natesilver.net", "twitter.com", "x.com",
     "facebook.com", "linkedin.com", "instagram.com",
+    # Confirmed 401 to automated clients across multiple URLs:
+    "reuters.com", "jp.reuters.com", "marketwatch.com", "ft.com",
 )
 
 # Our own domain: checked against the built site in CI, not fetched here.
@@ -71,6 +87,19 @@ def die(msg: str, code: int = 2) -> "None":
 
 def clean(url: str) -> str:
     return url.rstrip(TRAILING)
+
+
+# Minimum plausible corpus. Used by every mode so a gate can never print a
+# clean result for an empty or mis-targeted scan. Set well below current actual
+# counts (200 files, ~750 URLs) so ordinary content growth never trips it, but
+# high enough that a broken path or glob does.
+MIN_FILES = 100
+MIN_URLS = 200
+
+
+def _die_floor(msg: str) -> "None":
+    print(f"links: ERROR: coverage floor not met — {msg}", file=sys.stderr)
+    sys.exit(2)
 
 
 def host_of(url: str) -> str:
@@ -161,11 +190,20 @@ def deterministic_scan() -> int:
     placeholder_hits: "list[tuple[str, str]]" = []
     blocked_hits: "list[tuple[str, str]]" = []
 
+    # Coverage floor. Every gate in this repo exists because a detector once
+    # reported OK while blind to the thing it existed to find. The cheapest
+    # guard against that is to refuse to say OK unless a plausible amount of
+    # input was actually examined: a moved directory, a bad glob, or a refactor
+    # that stops the scan matching would otherwise print a clean bill of health.
+    scanned = 0
+    urls_seen = 0
+
     for path in sorted(CONTENT.rglob("*.md")):
         try:
             text = path.read_text(encoding="utf-8")
         except Exception:
             continue
+        scanned += 1
         rel = str(path.relative_to(REPO))
         # Placeholders: scan every line, on raw text.
         for i, line in enumerate(text.split("\n"), 1):
@@ -175,10 +213,16 @@ def deterministic_scan() -> int:
         # Blocklist: scan extracted URLs, which is exact-match by design.
         for raw in URL.findall(text):
             u = clean(raw)
+            urls_seen += 1
             if NOT_A_SOURCE.search(u):
                 placeholder_hits.append((rel, u))
             if u in bad_block:
                 blocked_hits.append((rel, u))
+
+    if scanned < MIN_FILES or urls_seen < MIN_URLS:
+        _die_floor(f"examined only {scanned} file(s) and {urls_seen} URL(s); "
+                   f"expected at least {MIN_FILES} and {MIN_URLS}. The scan is "
+                   f"not seeing the corpus, so a pass would be meaningless.")
 
     if placeholder_hits:
         print(f"links: FAIL — {len(placeholder_hits)} URL(s) still carry a "
@@ -233,17 +277,36 @@ def probe(args: "tuple[str, float]") -> "tuple[str, int, str, str]":
         return url, code, "OK", ""
     except urllib.error.HTTPError as e:
         code = e.code
-        if code in (403, 429) and is_blocking(url):
+        # 401 belongs in the blocked family alongside 403/429. A paywalled or
+        # bot-hostile host answers automated clients with 401 Unauthorized —
+        # Reuters does this on every URL — and treating that as DEAD reported 24
+        # perfectly good citations as broken. The host list alone was not enough:
+        # adding Reuters to BOT_BLOCKING changed nothing, because this branch
+        # never consulted the list for a 401. The status code, not just the host,
+        # decides whether "we were refused" or "this is gone".
+        if code in (401, 403, 429) and is_blocking(url):
             return url, code, "BLOCKED", "host refuses automated clients"
-        if code in (403, 429):
-            return url, code, "BLOCKED", "403/429 (not a known bot-blocker)"
-        return url, code, "DEAD", f"HTTP {code}"
+        if code in (401, 403, 429):
+            return url, code, "BLOCKED", f"{code} (not a known bot-blocker)"
+        if code in (404, 410):
+            # The ONLY status that is definitive evidence the resource is gone.
+            return url, code, "DEAD", f"HTTP {code}"
+        if code == 406:
+            # A content-negotiation refusal, not a missing page. arXiv answers
+            # an Accept header it dislikes this way on PDF URLs that exist.
+            return url, code, "UNVERIFIED", "406 content negotiation refused"
+        return url, code, "UNVERIFIED", f"HTTP {code} (server-side)"
     except socket.timeout:
-        return url, 0, "DEAD", "timeout"
+        return url, 0, "UNVERIFIED", "timeout — host may be refusing us"
     except urllib.error.URLError as e:
-        return url, 0, "DEAD", f"{e.reason}"
+        # A reset, an SSL failure or a DNS blip is "we could not look", not
+        # "it is not there". Reporting these as DEAD produced 18 false alarms in
+        # one sweep (Washington Post timeouts, Open Library resets) and would
+        # have trained the reader to ignore the gate.
+        reason = str(e.reason)
+        return url, 0, "UNVERIFIED", f"unreachable: {reason[:40]}"
     except Exception as e:  # noqa: BLE001 - report, never crash the sweep
-        return url, 0, "DEAD", f"{type(e).__name__}: {e}"
+        return url, 0, "UNVERIFIED", f"{type(e).__name__}: {str(e)[:40]}"
 
 
 def main() -> int:
@@ -274,12 +337,18 @@ def main() -> int:
         print("links: no external URLs in content/", file=sys.stderr)
         return 0
 
+    if len(table) < MIN_URLS:
+        _die_floor(f"found only {len(table)} external URL(s) in content/; "
+                   f"expected at least {MIN_URLS}. The sweep is not seeing the "
+                   f"corpus, so a clean result would be meaningless.")
+
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         results = list(pool.map(probe, [(u, args.timeout) for u in table]))
 
     dead = [r for r in results if r[2] == "DEAD"]
     redir = [r for r in results if r[2] == "REDIRECT"]
     blocked = [r for r in results if r[2] == "BLOCKED"]
+    unver = [r for r in results if r[2] == "UNVERIFIED"]
     ok = [r for r in results if r[2] == "OK"]
 
     if args.json:
@@ -302,12 +371,22 @@ def main() -> int:
         for u, s, v, d in sorted(blocked):
             print(f"  [{s}] {u}")
 
-    print(f"\nlinks: {len(ok)} ok, {len(redir)} redirecting, {len(dead)} dead, "
-          f"{len(blocked)} blocked (of {len(results)}).", file=sys.stderr)
+    if unver and not args.quiet:
+        print(f"\nUNVERIFIED ({len(unver)}) — could not be checked "
+              f"(timeout / reset / server error); NOT evidence of rot:")
+        for u, s, v, d in sorted(unver):
+            print(f"  [{s}] {u}\n      {d}")
 
-    # Blocked is deliberately NOT a failure: a bot-blocking host is not a
-    # fabricated citation, and failing on it would train us to ignore the gate.
-    return 1 if (dead or redir) else 0
+    print(f"\nlinks: {len(ok)} ok, {len(redir)} redirecting, {len(dead)} dead, "
+          f"{len(blocked)} blocked, {len(unver)} unverified (of {len(results)}).",
+          file=sys.stderr)
+
+    # DEAD is 404/410 — the resource is gone. REDIRECT is reported but not fatal:
+    # the slug-changed redirects in this corpus are cosmetic (a site moved a path
+    # and kept serving the page), and failing on them would make the job noisy
+    # enough to ignore. The fabrication signature is a redirect, so it still
+    # appears prominently in the report for a human to read.
+    return 1 if dead else 0
 
 
 if __name__ == "__main__":

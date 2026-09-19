@@ -90,8 +90,12 @@ def _now() -> str:
 
 
 def fetch_feed() -> str:
+    # --compressed: see scripts/check-quotes.py. A gzip-forcing host would make
+    # this read mojibake, the "<entry" test below would fail, and a live docket
+    # would be reported as unreadable — the false-negative that makes a watch
+    # job useless.
     r = subprocess.run(
-        ["curl", "-sL", "--max-time", "30", "-A", USER_AGENT, FEED],
+        ["curl", "-sL", "--compressed", "--max-time", "30", "-A", USER_AGENT, FEED],
         capture_output=True,
     )
     if r.returncode != 0:

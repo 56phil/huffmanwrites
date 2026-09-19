@@ -54,7 +54,7 @@ The clearest high point of 2025 was finally giving my writing the honesty it had
 ---
  ## ✨ Quote of the Week
 
- >  “Time is greater than space.”
+ >  “Time is greater than space”
  — **Pope Francis**, *Evangelii Gaudium* §222 (2013), [text](https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20131124_evangelii-gaudium.html)
 
  
