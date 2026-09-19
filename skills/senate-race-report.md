@@ -48,7 +48,15 @@ Republican-held (22):
 ## Research phase
 
 1. Read the previous week's report (`content/posts/essays/senate-race-report-*.md`, newest first) to carry the baseline forward. **The published reports are the authoritative baseline; the race list above is only a starting sketch.** Where they disagree on a name, a nominee, or a rating, the report wins — it was fact-checked at write time and this list may lag. Never introduce a candidate from this list that the most recent report does not name.
-2. Web-search the latest on every competitive race and scan the safe ones: Cook Political Report, Sabato's Crystal Ball, RealClearPolitics, FiveThirtyEight, prediction markets, FEC filings, and local/state news. Corroborate key claims with at least two sources.
+2. **Get the ratings FIRST, with the script — do not try to fetch the forecasters directly.** Run:
+   ```
+   python3 scripts/fetch-senate-ratings.py
+   ```
+   This prints a markdown table of the competitive races with **Cook, IE, Sabato, RCP, DDHQ and Silver** columns, each stamped with its own as-of date. Use it for the ratings table and for the ratings claims in the prose.
+   - **Why the script exists:** cookpolitical.com, centerforpolitics.org and insideelections.com all return **HTTP 403** to automated fetch, even with a browser User-Agent. The script reads Wikipedia's aggregate ratings table, which carries every forecaster in its own column with per-column dates, and parses it correctly. Fetching the forecasters directly will fail; do not burn turns on it.
+   - `--all` for all 35 races, `--changes` to diff against last week's stored baseline (use this to find rating moves), `--json` for structured output.
+   - **The as-of dates differ per forecaster** (Cook updates weekly, Sabato less often). Never restamp the whole table with today's date — that is a factual error. The script supplies the real dates; carry them through.
+3. Web-search the latest on every competitive race and scan the safe ones: Cook Political Report, Sabato's Crystal Ball, RealClearPolitics, FiveThirtyEight, prediction markets, FEC filings, and local/state news. Corroborate key claims with at least two sources. Search results and secondary coverage *quote* the forecasters, so the paywalled/blocked pages can still be sourced that way — but the ratings table itself comes from the script.
    - **Kansas coverage:** Kansas City Star and KCUR are the preferred local sources (Philip, September 8, 2026) — check them first for Kansas race news, alongside Kansas Reflector and Sunflower State Journal.
    - **National and international context:** NPR and PBS are the preferred sources (Philip, September 8, 2026) for national and international stories that shape the races.
 3. Track: rating changes, polling movement, fundraising, endorsements, candidate news, debates, and races entering or leaving the competitive tier.
@@ -60,9 +68,10 @@ Republican-held (22):
 3. **The defense** — the 13 Democratic-held seats; a paragraph each on MI, GA, MN, NH; the safe nine in a sentence or two.
 4. **The offense, tiered** — NC; OH and TX; ME, AK, IA, NE; KS, FL, LA, MS, MT, SC; the safe nine in a sentence. One short paragraph per competitive race.
 5. **The math** — forecasters' consensus vs. prediction markets; the paths to 51; the Kansas connection (Hamilton as the margin seat).
-6. **The close** — personal stakes and a forward look to Election Day, in the voice of the canonical essays.
-
-If any race's rating changed this week, include one compact table of just those races (state, rating, change). Do NOT include a full 35-row table; that is report furniture, not article prose.
+6. **The ratings table** — include the ratings table **every week**, in the "math" section. It carries the competitive races (the script's default output: Alaska, Georgia, Iowa, Maine, Michigan, New Hampshire, North Carolina, Ohio, Texas, plus any race the forecasters have moved into Tossup/Tilt/Lean), one row per race, one column per forecaster, with the **per-forecaster as-of dates** from the script beneath it. This replaces the old "only if a rating changed" rule (Philip, September 19, 2026): the table is now standing furniture of the article, not a change report.
+   - Use `--changes` to find moves since last week, and **name them in the prose** — a move is still the most newsworthy thing in the section when one occurs. When no forecaster moved, say so plainly rather than implying the table is unchanged because nothing is happening; two consecutive weeks of model- and market-driven movement without a ratings move is itself the story.
+   - Do not expand this into a 35-row table; the competitive set is the right size for article prose. `--all` exists if a claim needs a safe-seat rating.
+7. **The close** — personal stakes and a forward look to Election Day, in the voice of the canonical essays.
 
 ## Output
 

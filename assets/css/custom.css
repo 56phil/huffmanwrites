@@ -420,3 +420,42 @@ main, .post-content, .entry-content {
     width: 24px;
     height: 24px;
 }
+
+/* Wide tables on narrow screens.
+
+   PaperMod ships no table overflow rule, so a wide table is simply clipped:
+   the ratings table in the weekly Senate report needs ~650px and gets the
+   content column's ~360px on a phone, which silently hid the last four
+   forecaster columns (Sabato, RCP, DDHQ, Silver) with no way to scroll to
+   them.
+
+   Two behaviors, split by breakpoint:
+     - Wide viewports: let the table wrap and fit the content column, so it
+       reads as a normal table with no scrollbar.
+     - Narrow viewports: prevent wrapping and let the table scroll. Squeezing
+       eight columns into a phone width would break labels like
+       "Lean D (flip)" across lines and make the table unreadable; a
+       horizontally scrollable table keeps every column legible.
+
+   Applied via CSS to `.post-content table` so no markup change is needed in
+   the content: the article keeps a plain markdown table. */
+.post-content table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 700px) {
+    .post-content table th,
+    .post-content table td {
+        white-space: nowrap;
+    }
+
+    .post-content table {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+    }
+}

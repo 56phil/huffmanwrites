@@ -16,3 +16,10 @@ __pycache__/
 # Local-only by design: on a fresh clone the watcher's first run records the
 # newest entry without alerting on the whole filing history.
 scripts/docket-watch-state.json
+
+# Senate ratings baseline — last week's fetched ratings, written by
+# scripts/fetch-senate-ratings.py --update-baseline and read by --changes.
+# Local-only by design: on a fresh clone the first --update-baseline run
+# establishes the baseline and --changes reports nothing until a forecaster
+# actually moves a race.
+scripts/senate-ratings-state.json
