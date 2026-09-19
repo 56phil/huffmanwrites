@@ -132,7 +132,7 @@ tags:
 
  >  “If it is not right, do not do it; if it is not true, do not say it.”
 
- — Marcus Aurelius, *Meditations*
+ — Marcus Aurelius, *Meditations* 12.17 (trans. George Long, 1862), [text](https://en.wikisource.org/wiki/The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_XII)
 
  
 

@@ -53,7 +53,7 @@ For the Stoic parallel Frankl acknowledges — the argument that the last human 
 
 ---
 > *"Those who have a 'why' to live can bear almost any 'how'."*
-— Viktor Frankl (paraphrasing Nietzsche)
+— Nietzsche, *Twilight of the Idols*, “Maxims and Missiles” §12, quoted by Frankl as the epigraph to *Man's Search for Meaning* ([text](https://www.gutenberg.org/cache/epub/52263/pg52263.txt)). Strictly Nietzsche's line, not Frankl's; the familiar English is a loose rendering of the German *“Wer ein Warum zu leben hat, erträgt fast jedes Wie.”*
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

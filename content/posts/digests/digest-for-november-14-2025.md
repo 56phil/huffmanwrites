@@ -19,7 +19,7 @@ tags:
 ## 🪞 A Reflection
 
  >  *“Nearly all men can stand adversity, but if you want to test a man’s character, give him power.”*
- — Said of Lincoln by Robert G. Ingersoll, 1883 (not by Lincoln)
+ — Ingersoll, said of Lincoln ([“Abraham Lincoln: A Lecture,” 1895, p. 52](https://archive.org/details/abrahamlincolnle00inge/page/52))
 
  *Attribution note: this line is routinely credited to Lincoln, but it does not appear anywhere in his writings or speeches. It is a compression of Robert G. Ingersoll's tribute to him: “Most people can bear adversity. But if you wish to know what a man really is, give him power. This is the supreme test.” — [“Abraham Lincoln: A Lecture” (1895), p. 52](https://archive.org/details/abrahamlincolnle00inge/page/52).*
 
@@ -45,7 +45,7 @@ tags:
 ---
  ## ✦ **This Week’s Quiz — The Weight of Power**
 
- >  *"Power shows the man."* — Pittacus of Mytilene (as quoted by Diogenes Laërtius)
+ >  *"Power shows the man."* — Pittacus of Mytilene, as quoted by Diogenes Laërtius, *Lives of the Eminent Philosophers* I (trans. C. D. Yonge, 1853), [text](https://www.gutenberg.org/cache/epub/57342/pg57342.txt)
 
  
 
@@ -109,7 +109,7 @@ tags:
 ---
  ### **Extra Credit — The Test of Character**
 
- >  *“Nearly all men can stand adversity, but if you want to test a man’s character, give him power.”* — Said of Lincoln by Robert G. Ingersoll (not by Lincoln)
+ >  *“Nearly all men can stand adversity, but if you want to test a man’s character, give him power.”* — Ingersoll, said of Lincoln ([1895, p. 52](https://archive.org/details/abrahamlincolnle00inge/page/52))
  → What does this quote reveal about the link between **integrity and self-knowledge**?
 
  

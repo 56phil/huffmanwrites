@@ -135,7 +135,14 @@ def author_of(segment: str) -> "str | None":
     """
     head = re.split(r"[,(]|—|–", segment, maxsplit=1)[0]
     head = head.replace("*", "").strip()
-    head = re.sub(r"^(?:by|from|after)\s+", "", head, flags=re.I).strip()
+    # Quotation marks around an attributed name are decoration, not part of the
+    # name: `Attributed to a "Chinese Proverb"` extracted the author as
+    # `Proverb";`, so the link-binding check searched for a surname that could
+    # never appear on a line. Strip them before tokenising.
+    head = head.strip("\"'“”‘’").strip()
+    head = re.sub(r"^(?:by|from|after|attributed to(?: a| an| the)?|said of|as quoted by)\s+",
+                  "", head, flags=re.I).strip()
+    head = head.strip("\"'“”‘’").strip()
     if not head or len(head) > 60:
         return None
     words = [w for w in head.split() if w.lower() not in STOPWORDS]
@@ -181,11 +188,46 @@ def epigraphs(path: Path) -> "list[dict]":
         if not m:
             continue
         attribution = m.group(1).strip()
-        # A credit is short. Prose clauses after a dash are not.
-        if not attribution or len(attribution) > 90:
+        if not attribution:
             continue
-        # Prose colons and slashed lists are not citations.
-        if ":" in attribution or " / " in attribution:
+        # A credit is short; a prose clause after a dash is not. But a LENGTH
+        # cap alone is the wrong test, and it produced the worst possible
+        # failure: a properly-cited attribution — translator, year and source
+        # link — exceeds any fixed limit, so improving a citation made the gate
+        # STOP SEEING IT and report OK. The gate went blind exactly where the
+        # work was done.
+        #
+        # The real distinction is structural, not length:
+        #   - a CITATION is name-first, followed by optional apparatus
+        #     (work, section, translator, link) — no finite verb sentence;
+        #   - PROSE after a dash is a full clause with a verb and typically
+        #     lower-case continuation.
+        # So: allow a long attribution when it leads with a recognizable
+        # author and contains no sentence-ending prose, and keep a generous
+        # absolute ceiling as a backstop against genuine paragraphs.
+        if len(attribution) > 90:
+            if len(attribution) > 400:
+                continue
+            # Markdown links and italics are citation apparatus, not prose.
+            stripped = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", attribution)
+            stripped = stripped.replace("*", "").strip()
+            # A citation may open with an author, or with a work when the
+            # credit reads "— *Meditations*, trans. …".
+            head = stripped.lstrip("\"'“”*_ ")
+            if not head[:1].isupper():
+                continue
+            # Prose runs on in lower case after the first clause; a citation
+            # does not. Reject a bare lower-case sentence tail after a comma
+            # that reads as narration rather than apparatus.
+            if re.search(r",\s+(?:and|but|which|that|it|this|they|we|he|she)\b", stripped):
+                continue
+        # Prose colons and slashed lists are not citations. But a colon inside a
+        # URL is not prose — `https:` contains one — so a bare `":" in
+        # attribution` test rejected EVERY attribution carrying a source link,
+        # which is the opposite of intent. Test the colon only outside links.
+        text_only = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", attribution)
+        text_only = re.sub(r"https?://\S+", "", text_only)
+        if ":" in text_only or " / " in text_only:
             continue
         # An all-caps segment is a heading fragment ("THE CANDLE AND THE MIRROR").
         if attribution.replace("*", "").strip().isupper():

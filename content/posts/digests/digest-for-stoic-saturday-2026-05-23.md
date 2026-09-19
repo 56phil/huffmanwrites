@@ -17,7 +17,7 @@ tags:
 ---
 
 "Let each thing you do, say, or intend be the act of one who might depart from life this very moment."
- — Marcus Aurelius, Meditations 2.11
+ — Marcus Aurelius, *Meditations* 2.11, in Long's rendering: *“Since it is possible that thou mayest depart from life this very moment, regulate every act and thought accordingly.”* (trans. George Long, 1862). The wording above is a modern paraphrase, not a translation.
 
 Memorial Day is a strange holiday.
 

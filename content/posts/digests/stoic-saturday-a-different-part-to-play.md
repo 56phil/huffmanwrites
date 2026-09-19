@@ -14,7 +14,7 @@ hero_alt: "A marble theatrical mask lit by a single shaft of gold light, resting
 hero_caption: "The part you're given, and the part you leave behind."
 ---
 
-"It is your business to act well the part that is given you; but to select the part belongs to another." — Epictetus, *Enchiridion*, XVII
+"For this is your duty, to act well the part that is given to you; but to select the part, belongs to another." — Epictetus, *Enchiridion* 17 (trans. George Long, 1862), [text](https://www.gutenberg.org/cache/epub/10661/pg10661.txt)
 
 Early this morning, the Senate confirmed Todd Blanche as Attorney General of the United States, 50 to 49. Every Democrat voted no. So did two Republicans, Susan Collins and Lisa Murkowski. [(NPR)](https://www.npr.org/2026/08/08/g-s1-137631/senate-confirms-todd-blanche-attorney-general)
 

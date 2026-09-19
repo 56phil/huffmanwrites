@@ -27,7 +27,7 @@ tags:
  So yes, celebrate Indigenous Peoples Day. But maybe skip the hashtags and ask a harder question: how much of what we call “civilization” was really just theft dressed up as destiny?
 
  >  “They made a desert and called it peace.”
- — *Tacitus*
+ — Tacitus, *Agricola* 30 — the speech of Calgacus (trans. Oxford revision, 1900), [text](https://www.gutenberg.org/cache/epub/7524/pg7524.txt)
 
  
 

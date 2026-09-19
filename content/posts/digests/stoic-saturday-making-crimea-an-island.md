@@ -14,7 +14,7 @@ hero_alt: "A political-geographic map of the Crimean Peninsula showing the Kerch
 hero_caption: "The geography of interdiction: two chokepoints, patiently closed."
 ---
 
-"Some things are up to us, and some are not." — Epictetus, *Enchiridion*
+"Some things are in our own power, and others in the power of others." — Epictetus, *Enchiridion* 1 (trans. George Long, 1862), [text](https://www.gutenberg.org/cache/epub/10661/pg10661.txt)
 
 I've been following the campaign around Crimea closely these past few weeks, and something about the shape of it has stuck with me — not the politics of it, which I'll leave to people better qualified than a Stoicism newsletter, but the *strategy*.
 

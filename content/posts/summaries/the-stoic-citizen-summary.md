@@ -60,7 +60,7 @@ Virtue is not a trophy. It is the infrastructure that holds when the institution
 
 ---
 >  *“The best revenge is to be unlike him who performed the injury.”*
-— Marcus Aurelius
+— Marcus Aurelius, *Meditations* 6.6 ([Long, 1862](https://en.wikisource.org/wiki/The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_VI): *“The best way of avenging thyself is not to become like [the wrong-doer]”*; Hays, 2002: *“The best revenge is not to be like your enemy.”* The wording above matches neither and is a modern paraphrase.)
 
 
 

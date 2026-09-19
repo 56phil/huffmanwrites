@@ -1,5 +1,5 @@
 ---
-title: "The Art of War — Sun Tzu"
+title: "The Art of War — Sun Tzu, *Art of War* III §2 (trans. Lionel Giles, 1910), [text](https://www.gutenberg.org/cache/epub/132/pg132.txt)"
 description: "A summary and review of Sun Tzu's foundational text on strategy, deception, and the discipline of knowing yourself before you engage the enemy."
 date: 2026-05-31T00:00:00Z
 author: Philip Huffman

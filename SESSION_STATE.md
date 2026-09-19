@@ -1501,6 +1501,24 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - **Also fixed while the buttons still existed** (kept in the record because it was a real accessibility defect): "Coming Soon" in high-contrast mode resolved to amber-on-cream at **1.64:1** contrast — unreadable, in the mode built for readability. It had gone unnoticed because every card previously carried a live link, so the fallback was rarely on screen. It measured **6.48:1** after the fix.
 - **Verification:** `hugo --gc --minify` builds clean, **380 pages** (down from 387), 0 errors; `public/shop/` absent; the string "shop" does not appear in the rendered home page; `/shop/` 404s; `git ls-files` matches nothing for `shop` or `redbutton`. All three pre-commit gates green.
 
+## Translator Gap Closed — September 19, 2026
+
+- **Philip: "Close the translator gap."** Done for the classical/translated set: **20 attributions** across Marcus Aurelius, Epictetus, Seneca, Tacitus, Sun Tzu, Nietzsche, Beauvoir, Pittacus and Pope Francis now name a translation with year and a link — or state plainly that the wording matches no published translation.
+- **How each was settled.** Primary texts were fetched (Gutenberg, Wikisource, Perseus-adjacent, Open Library search-inside) and each site rendering was tested as a verbatim substring of a *named* translation:
+  - **Matched a real translation → credited it:** Long 1862 (Marcus 12.17; *Enchiridion* 1, 11, 17; *Discourses* 2.18.1), Chrystal 1902 (Marcus 6.21), Carter 1758 (*Discourses* 3.23), Costa 1997 (Seneca, *De Brevitate Vitae*), Yonge 1853 (Pittacus via Diogenes Laërtius), Giles 1910 (*Art of War* III), Oxford rev. (*Agricola* 30), Frechtman 1948 (Beauvoir), Hays 2002 (Marcus 5.20), Oldfather 1928 (Epictetus fragment 35), Vatican English (*Evangelii Gaudium* §222).
+  - **Matched no translation → said so and supplied the real text:** Marcus 2.11 and 6.6, *Enchiridion* 11 and 17, *Discourses* 2.18.1, and the Nietzsche Zarathustra line. In each case the genuine rendering replaced the paraphrase, so the quotation now matches something a reader can actually look up.
+- **A real defect was fixed at the source:** Epictetus *Enchiridion* 17 and 11 and *Discourses* 2.18.1 had been quoted in modern paraphrase; they now carry Long's actual words.
+
+### The finding that matters most: the gate was blind to the work it was checking
+
+- **Fixing the citations made the quote gate STOP SEEING THEM.** After the edits the attribution count dropped 43 → 24 and the gate reported **OK**. Two independent bugs, both in the extractor:
+  1. **A 90-character cap on attributions.** It existed to reject prose after a dash, but a *properly cited* attribution — author, work, section, translator, year, source link — exceeds any such limit. So improving a citation silently removed it from the gate's view.
+  2. **`if ":" in attribution: continue`.** Every URL contains `https:`, so this rejected **every attribution carrying a source link** — precisely the attributions the citation rule requires.
+- **Fixed structurally, not by raising a number.** The length test now distinguishes a citation from prose by *shape* (name-first, no sentence tail) rather than by length, with a generous backstop; the colon test excludes colons inside URLs. `author_of` also now strips surrounding quotation marks, which had produced the author `Proverb";` from `Attributed to a "Chinese Proverb"`.
+- **Measured effect: the gate now sees 61 attributions, up from 24.** It had been silently ignoring **37 of them**. This is the same class of error as the `[ID]` placeholder bug — a detector blind to the thing it exists to find, reporting success — and it is the more dangerous instance, because it made *good* work invisible rather than bad work.
+- **Immediate payoff:** with the extractor fixed, the gate flagged four real gaps it had never seen — including a line in `unstuck-summary.md` whose note **reversed the truth**. It claimed the Marcus Aurelius line "happiness of your life depends upon the quality of your thoughts" was really Austen's, misattributed to Aurelius. Neither Long nor Chrystal contains it, and no Austen locus was found either; the wording appears only in modern compilations, usually under Aurelius. The note now says that, and records that the earlier version had it backwards.
+- **Verification:** all four gates green; `author_of` regression suite passes on the new citation shapes.
+
 ## Aphorism Attribution Audit — September 19, 2026
 
 - **Triggered by "Are you sure there are no fabrications in the site?" The honest answer was no**, and the specific reason is structural: `check-quotes.py` exempts **68 pre-rule attributions**, so those have **never been checked by anything**. One of them (the Seneca epigraph) was already proven fabricated. The baseline records *unverified* attributions, not verified ones.

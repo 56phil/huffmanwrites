@@ -11,7 +11,7 @@ hero_alt: "A weathered marble statue of a philosopher stands on a stone pier at 
 hero_caption: "The storm is not in your control. The sturdiness of the house is."
 ---
 
-"Some things are in our control and others not." — Epictetus, *Enchiridion*, 1
+"Some things are in our own power, and others in the power of others." — Epictetus, *Enchiridion* 1 (trans. George Long, 1862), [text](https://www.gutenberg.org/cache/epub/10661/pg10661.txt)
 
 The United States and Canada are now in a trade war that nobody on either side of the border asked for. Talks collapsed on Friday, August 21. The next day the United States imposed 50 percent tariffs on roughly $27.6 billion of Canadian goods. On Tuesday, Canada answered dollar for dollar, announcing tariffs on $20 billion of American products beginning September 8. Prime Minister Mark Carney put it plainly: "We were attacked." Two neighbors, the largest trading relationship on Earth, and the response to a dispute is to make everything both countries buy more expensive.
 

@@ -70,7 +70,7 @@ None of this is really an argument about one man. It's an argument about a disci
 Honor was never a title. It's an account settled daily, mostly in rooms no one else is watching. The debt doesn't disappear because a public figure has stopped paying his. It only becomes more urgent that the rest of us keep paying ours.
 
 > *"Waste no more time arguing what a good man should be. Be one."*
-> — Marcus Aurelius
+> — Marcus Aurelius, *Meditations* 10.16, in Hays's rendering ([trans. Gregory Hays, 2002](https://en.wikiquote.org/wiki/Marcus_Aurelius)). The wording above matches no published translation; Hays reads “Stop talking about what the good man is like, and just be one.”
 
 ---
 

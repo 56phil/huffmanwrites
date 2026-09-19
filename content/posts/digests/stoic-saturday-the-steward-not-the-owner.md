@@ -14,7 +14,7 @@ hero_alt: "A single marble column standing intact amid rubble, gold light fallin
 hero_caption: "What's held in trust is never held for keeps."
 ---
 
-"Treat it as your own only while it is given to you, as travelers treat an inn." — Epictetus, *Enchiridion*, XI
+"So long as he may allow you, take care of it as a thing which belongs to another, as travellers do with their inn." — Epictetus, *Enchiridion* 11 (trans. George Long, 1862), [text](https://www.gutenberg.org/cache/epub/10661/pg10661.txt)
 
 On October 20, 2025, demolition crews began tearing down the White House East Wing, the 1902 addition that had housed the East Garden Room, the Family Theater, and generations of First Ladies' offices. [(NPR)](https://www.npr.org/2025/10/23/nx-s1-5583959/white-house-east-wing-demolition-ballroom-trump) It was coming down to make room for a 90,000-square-foot state ballroom, which the White House said in July 2025 would cost about $200 million, fully covered by Trump himself and other "patriot donors," at no cost to taxpayers. [(PBS)](https://www.pbs.org/newshour/politics/9-things-to-know-about-the-250-million-ballroom-trump-is-adding-to-the-white-house) By December the estimate had climbed to $400 million. This week, CNBC reported the figure has reached roughly $900 million, and that it will now be "covered primarily by taxpayers." [(CNBC)](https://www.cnbc.com/2026/08/14/trump-ballroom-supreme-court-white-house.html)
 

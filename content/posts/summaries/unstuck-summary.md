@@ -63,7 +63,9 @@ weight: -1
  
 ---
  >  *“The happiness of your life depends upon the quality of your thoughts.”*
-— Jane Austen (letter to Fanny Knight, November 18, 1814; often misattributed to Marcus Aurelius)
+— Marcus Aurelius, commonly attributed; no locus in any translation ([search](https://openlibrary.org/search/inside?q=%22quality+of+your+thoughts%22))
+
+ *Attribution note: this line circulates under both Marcus Aurelius and Jane Austen. It appears in neither Long nor Chrystal's Meditations, and no Austen locus was found either — the wording shows up only in modern quotation compilations, most often under Aurelius, sometimes with the continuation “therefore guard accordingly.” An earlier version of this note reversed the claim, asserting the line was Austen's and had been misattributed to Aurelius. Treat it as unattributed.*
 
  
 

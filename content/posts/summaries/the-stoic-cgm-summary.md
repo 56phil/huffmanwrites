@@ -59,8 +59,8 @@ The body is not a machine to optimize. It is a system to comprehend—and that c
 
 
 ---
->  *“No man is free who is not master of himself.”*
-— Epictetus
+> *“No man is free who is not master of himself.”*
+— Epictetus, Fragment 35 (trans. W. A. Oldfather, Loeb, 1928) — among the fragments Oldfather classes as doubtful, [text](https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Fragments)
 
 
 
