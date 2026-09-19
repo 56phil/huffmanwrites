@@ -66,9 +66,11 @@ AUDIT_BUILD_STATUS="$BUILD_STATUS" python3 "$CRAWLER" "$REPO/public" "$REPORT" \
 RC=$?
 set -e
 
-# Fold the gallery contract into the exit code. The crawler always returns 0
-# (it reports broken links rather than failing on them), so without this the
-# only way a missing page stub could surface was someone reading the report.
+# Fold the gallery contract into the exit code. The crawler now fails on
+# broken internal links itself (see its docstring), and its exit code carries
+# through $RC above; the gallery guard is separate because it detects a
+# missing page stub, which is a build-level contract the crawl also catches
+# but only as one broken link among many.
 [ "$GALLERY_RC" -ne 0 ] && RC=1
 
 echo "$STAMP: audit finished (exit $RC)" >> "$OUT_LOG"

@@ -9,6 +9,15 @@ against the latest GitHub release. Writes a markdown report.
 
 Usage: site-audit-crawler.py <public_dir> <report_path>
 Env:   AUDIT_BUILD_STATUS  "PASS" (default) or a short failure note
+
+Exit codes:
+  0  no definite breakage
+  1  a broken internal link was found
+  2  usage error
+
+Dead, ambiguous, and bot-blocked external links are reported but never fail
+the run: an external host being down is not this repository's defect, and the
+ambiguous class is dominated by sites that bot-block curl.
 """
 
 import concurrent.futures
@@ -309,6 +318,16 @@ def main():
           f"({len(internal_broken)} broken), {len(external_results)} external "
           f"links ({len(dead)} dead, {len(ambiguous)} ambiguous), "
           f"CSP {'PASS' if csp_ok else 'FAIL'}")
+
+    # Broken internal links are the one class this repo fully controls, so they
+    # fail the run and thereby trigger the runner's failure alert. External
+    # findings stay report-only: `dead` is usually someone else's outage, and
+    # `ambiguous` is mostly bot-blocking (FRED alone produced 15 in one run),
+    # so failing on those would train the alert into being ignored.
+    if internal_broken:
+        print(f"FAIL: {len(internal_broken)} broken internal link(s); "
+              f"see {report_path}", file=sys.stderr)
+        return 1
     return 0
 
 
