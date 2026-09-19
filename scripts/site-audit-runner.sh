@@ -1,6 +1,6 @@
 #!/bin/bash
 # Weekly site audit runner.
-# Invoked by launchd (com.huffmanwrites.site-audit) every Sunday at 13:00 CT.
+# Invoked by launchd (com.huffmanwrites.site-audit) every Monday at 13:00 CT.
 # Builds the site, crawls it for broken links, checks the CSP, verifies Hugo
 # is current, and writes a report to ~/Library/Logs/site-audit-report.md.
 set -euo pipefail
