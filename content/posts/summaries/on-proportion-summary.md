@@ -59,8 +59,10 @@ The life that meets each moment with the response it deserves, and no more.
 
 
 ---
->  *“How much trouble he has given himself, and how much trouble he has given others, who is not satisfied with the limits assigned to him.”*
-— Marcus Aurelius
+>  *“How much trouble he avoids who does not look to see what his neighbor says or does or thinks, but only to what he does himself, that it may be just and pure.”*
+— Marcus Aurelius, *Meditations* 4.18 (trans. George Long, 1862), [text](https://en.wikisource.org/wiki/The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_IV)
+
+*Attribution note: this page formerly carried a different line — “How much trouble he has given himself, and how much trouble he has given others, who is not satisfied with the limits assigned to him” — attributed to Marcus Aurelius. No passage in the Meditations contains that wording, and no published translation does; it was a fabricated paraphrase presented as a quotation. It has been replaced with the genuine 4.18 passage, which shares its rhetorical shape.*
 
 
 
