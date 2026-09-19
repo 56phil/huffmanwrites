@@ -60,6 +60,14 @@ jobs:
       - name: Check gallery pagination
         run: python3 scripts/check-gallery-pages.py
 
+      # Fail before deploy if an epigraph lacks a checkable source. The site has
+      # pre-rule quotations listed in scripts/quote-baseline.txt; those pass, and
+      # editing one withdraws its exemption (the baseline is keyed by the quoted
+      # text). No network here — wording verification is the --online flag, run
+      # deliberately, not on every push.
+      - name: Check quotation citations
+        run: python3 scripts/check-quotes.py
+
       - name: Build with Hugo
         run: |
           hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"

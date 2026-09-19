@@ -23,6 +23,24 @@
 
 ---
 
+### Maintenance — September 19, 2026 — Quote-citation CI gate (`scripts/check-quotes.py`)
+
+- **New pre-deploy gate, on Philip's go-ahead.** `scripts/check-quotes.py` runs in `.github/workflows/hugo.yml` between the gallery check and the Hugo build. It extracts every attribution in `content/`, and fails the build when a translated author's attribution **names no translator** (and is not labelled a paraphrase) or when **no URL-bearing line in the file names that author**. This turns the two conventions added earlier the same day from advice into enforcement — a future session cannot ship an uncheckable epigraph.
+- **BASELINE-AWARE BY DESIGN.** The 68 pre-rule attributions ship in `scripts/quote-baseline.txt`. Because the key is **file + sha1 of the quoted text**, editing any quotation withdraws its exemption and the rule applies on next touch — which is exactly the documented forward-looking policy, with no sweep. Verified: editing an exempt epigraph flips the build to red; restoring the bytes flips it back to green.
+- **Verified behaviors (each exercised, not assumed):** baseline passes (exit 0); `--update-baseline` is idempotent; freshly compliant epigraph (translator named + linked source) passes; translator-less or unlinked new epigraph fails with exit 1 and a reason on stderr; `--file` scopes to one file and errors on a missing path; `--quiet` suppresses diagnostics only; CI's full three-step sequence (gallery → quotes → build) passes clean.
+- **`--online` is the wording verifier, deliberately not in CI.** It fetches each epigraph's *own* author-associated URLs and requires HTTP 200 **and** the quoted wording present after whitespace normalization. Verified both directions: a real quote in its linked Chrystal source passes; a fabricated variant of the same sentence fails, naming the URL. It runs on demand — network in the deploy path would make the build flaky.
+- **Bugs found and fixed while building it (all real, all caught by running it):**
+  - `git ls-files content "*.md"` also matched root `*.md`, so the gate "audited" `CLAUDE.md` and `SESSION_STATE.md`. Use `git ls-files content` alone; documented in the function.
+  - First detector flagged **329** attributions because every prose em dash looked like a credit. Tightened to require an actual quotation, which cut it to **66** genuine ones (a heading or sentence is not an attribution).
+  - `load_baseline` keyed on file only while lookup keyed on `file\tsig`, so no exemption ever matched. Fixed; the docstring now warns that file-only keying would exempt a file forever.
+  - `--update-baseline` originally blessed only compliant entries, which would have made the flag useless — the debt is the thing being recorded. It now blesses everything current.
+  - `--online` checked the **cross-product** of every URL against every quote, so a file with many sources had to have each source contain each epigraph. Now each quote is checked only against its own author's URLs.
+  - `subprocess(text=True)` **crashes** decoding a PDF's bytes — the source type the rule most needs. `fetch_text` now reads bytes and runs `pdftotext`, which is what makes the Carter *Enchiridion* PDF verifiable at all.
+  - A blockquote attribution (`> — Author`) left `pre` as `">"`, satisfying the "looks like a quote" test and skipping the lookback, so those epigraphs went undetected. Fixing this surfaced **3 more** (68 vs 66), including `honor-in-the-age-of-self-interest.md:73` — the very "Waste no more time arguing…" epigraph that `CLAUDE.md` now cites as its example.
+- **Honest limitation, recorded rather than glossed:** the gate detects *structural* compliance — does the attribution name a translator, is there a URL-bearing line naming the author. It does not read the link and confirm the words unless `--online` is passed. Full content verification stays a human/agent step; the gate's job is to make omission impossible.
+
+---
+
 ### Maintenance — September 19, 2026 — Published "The Name Over the Door" (Kennedy Center)
 
 - **Published** `content/posts/essays/the-name-over-the-door.md` (tags: civics, politics, essays, rule-of-law), 4,744 words, 9 `h2` sections, 0 em dashes, 36 inline citation markers all resolving to 35 source entries. Hero pair **88** (`88-the-name-over-the-door_*`, 1365×768 / 896×1120), gallery entry added (gallery now 88 entries).

@@ -1,0 +1,74 @@
+# Quotations that predate the citation rule (CLAUDE.md).
+# Keyed by file + a hash of the quoted text, so editing one removes its
+# exemption and the rule applies on next touch. Never hand-edit;
+# regenerate with: scripts/check-quotes.py --update-baseline
+#
+# file	sha1_12	attribution
+content/posts/civics/the-constitution-of-the-united-states-the-foundation-of-freedom.md	5381e7b760b3	Preamble, 1787
+content/posts/civics/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it.md	cf1f49ed2779	Thomas Jefferson, 1787
+content/posts/civics/the-first-amendment-the-cornerstone-of-american-freedom.md	c53d3f7269ae	Thomas Jefferson, First Inaugural Address, 1801
+content/posts/digests/digest-for-april-18-2026.md	facd6279db1d	Marcus Aurelius, Meditations (paraphrase)
+content/posts/digests/digest-for-august-29-2025.md	ec7b3da56004	Marcus Aurelius, *Meditations*
+content/posts/digests/digest-for-january-2-2026.md	68cf2581780d	**Pope Francis**
+content/posts/digests/digest-for-november-14-2025.md	20c2eb8dcbee	Adapted from James Madison, Federalist No. 51
+content/posts/digests/digest-for-november-14-2025.md	9f1ed891b262	Pittacus of Mytilene (as quoted by Diogenes Laërtius)
+content/posts/digests/digest-for-november-14-2025.md	a0f079bbad75	Lincoln
+content/posts/digests/digest-for-november-14-2025.md	cd395c637113	Abraham Lincoln
+content/posts/digests/digest-for-november-7-2025.md	052fa81ad64d	Carl Sagan, *The Demon-Haunted World*
+content/posts/digests/digest-for-november-7-2025.md	cb1e530a4199	Carl Sagan, Cosmos (1980)
+content/posts/digests/digest-for-november-7-2025.md	f616bcce48f1	Carl Sagan
+content/posts/digests/digest-for-october-17-2025.md	69ce1ef7c4e8	*George Orwell, 1984*
+content/posts/digests/digest-for-october-17-2025.md	c59e83cd2fe6	*Tacitus*
+content/posts/digests/digest-for-october-3-2025.md	166d162fdd4a	Chinese Proverb
+content/posts/digests/digest-for-september-12-2025.md	b5bcaa7fd8a0	Ray Dalio
+content/posts/digests/digest-for-september-19-2025.md	64f0e553ae65	Benjamin Graham
+content/posts/digests/digest-for-september-26-2025.md	7ed216f8e3f9	Karen Lamb
+content/posts/digests/digest-for-stoic-saturday-2026-05-23.md	2082494ac0b9	Marcus Aurelius, Meditations 2.11
+content/posts/digests/prh-digest-for-mid-june-2025.md	f9339bb0e5c8	Václav Havel
+content/posts/digests/stoic-saturday-a-different-part-to-play.md	8003b3a072fd	Epictetus, *Enchiridion*, XVII
+content/posts/digests/stoic-saturday-expect-the-splash.md	98c2377d8002	Epictetus, *Enchiridion*, 4
+content/posts/digests/stoic-saturday-making-crimea-an-island.md	b19d2f1cc5f3	Epictetus, *Enchiridion*
+content/posts/digests/stoic-saturday-the-line-between-whats-ours-and-what-isnt.md	701a010466bd	Epictetus, *Enchiridion*, 1
+content/posts/digests/stoic-saturday-the-obstacle-is-the-way.md	427651e2f9c5	Marcus Aurelius, *Meditations*, 5.20
+content/posts/digests/stoic-saturday-the-rule-you-set-before-you-need-it.md	06bd3a6d0025	Epictetus, *Discourses*, 3.23
+content/posts/digests/stoic-saturday-the-same-standard.md	e90fe2870f5e	Marcus Aurelius, *Meditations*, 6.21
+content/posts/digests/stoic-saturday-the-steward-not-the-owner.md	0a4cdbe93e9d	Epictetus, *Enchiridion*, XI
+content/posts/digests/weekly-digest-for-may-16-2025.md	0b56289030f2	Epictetus
+content/posts/digests/weekly-digest-for-may-23-2025.md	ad80c25cffe2	Winston Churchill
+content/posts/essays/honor-in-the-age-of-self-interest.md	6430950e9941	Marcus Aurelius
+content/posts/essays/the-case-for-honest-leaders.md	c7dfa74ea95f	James Madison, Federalist 51
+content/posts/stoicism/learning-from-giants-without-standing-in-their-shadow.md	49a3218944e8	Paulo Coelho
+content/posts/stoicism/stoic-saturday-1.md	c0db6731c406	Seneca
+content/posts/stoicism/stoic-saturday-2.md	c0db6731c406	Seneca
+content/posts/stoicism/to-save-a-world-together.md	ff24e31a9089	Carl Sagan
+content/posts/summaries/7-habits-summary.md	fe1224d18399	Stephen Covey
+content/posts/summaries/art-of-war-summary.md	276aca112dc0	Sun Tzu
+content/posts/summaries/astrophysics-for-people-in-a-hurry-summary.md	d58a23e41bcc	Neil deGrasse Tyson
+content/posts/summaries/braiding-sweetgrass-summary.md	8f4bd00eb808	Robin Wall Kimmerer
+content/posts/summaries/brocas-brain-summary.md	c876a06d7c9e	Carl Sagan
+content/posts/summaries/cosmos-summary.md	f06ca2b4023e	Carl Sagan
+content/posts/summaries/daring-greatly-summary.md	0065232d2a17	Brené Brown
+content/posts/summaries/democracy-in-america-summary.md	d9a3ddd02e1e	Alexis de Tocqueville
+content/posts/summaries/demon-haunted-world-summary.md	a4d073dedb9e	Carl Sagan
+content/posts/summaries/ego-is-the-enemy-summary.md	0cb9c3f50947	Ryan Holiday
+content/posts/summaries/eichmann-in-jerusalem-summary.md	35f100fb774a	Hannah Arendt
+content/posts/summaries/ethics-of-ambiguity-summary.md	9b1493e6f287	Simone de Beauvoir
+content/posts/summaries/letters-summary.md	f017be484673	Epictetus
+content/posts/summaries/mans-search-for-meaning-summary.md	cc2e841a0344	Viktor Frankl (paraphrasing Nietzsche)
+content/posts/summaries/mindset-summary.md	0a5aa3c45784	Carol Dweck
+content/posts/summaries/misaligned-summary.md	0afb16d62d40	Seneca
+content/posts/summaries/not-for-profit-summary.md	1aeac4db06f1	Martha Nussbaum
+content/posts/summaries/on-proportion-summary.md	5128398a957f	Marcus Aurelius
+content/posts/summaries/pale-blue-dot-summary.md	13eb0b24aee5	Carl Sagan
+content/posts/summaries/pilgrim-at-tinker-creek-summary.md	fba540543a34	Annie Dillard, *The Writing Life* (1989) — not from *Pilgrim at Tinker Creek* (1
+content/posts/summaries/power-of-now-summary.md	c625038c8240	Eckhart Tolle
+content/posts/summaries/radical-acceptance-summary.md	d1541f1ea53c	Tara Brach
+content/posts/summaries/raisem-right-summary.md	99cd8fc727c8	Epictetus
+content/posts/summaries/sand-county-almanac-summary.md	9a08267c10e9	Aldo Leopold
+content/posts/summaries/silent-spring-summary.md	f6cfcf4c190f	Rachel Carson
+content/posts/summaries/sixth-extinction-summary.md	a7bd9d094a34	Elizabeth Kolbert
+content/posts/summaries/the-stoic-cgm-summary.md	dd5394777e4d	Epictetus
+content/posts/summaries/the-stoic-citizen-summary.md	51ff637cbbbb	Marcus Aurelius
+content/posts/summaries/thinking-fast-and-slow-summary.md	d1acc4c5fd5c	Daniel Kahneman
+content/posts/summaries/thus-spoke-zarathustra-summary.md	0b59f1c7dc25	Friedrich Nietzsche
+content/posts/summaries/unsettling-of-america-summary.md	68894ecf6529	Wendell Berry
