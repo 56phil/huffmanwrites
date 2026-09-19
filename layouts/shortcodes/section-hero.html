@@ -2,10 +2,20 @@
 {{ $mobile  := .Get "mobile" }}
 {{ $alt     := .Get "alt" | default .Page.Title }}
 {{ $caption := .Get "caption" }}
+{{/* Build the URLs through resources so they are properly escaped. Hugo's
+     template URL filter rejects a raw value containing a space, rendering the
+     ZgotmplZ sentinel instead — and while `src` gets percent-encoded by Hugo's
+     own attribute handling, `srcset` does not. Several Stoic Backgammon heroes
+     live in files whose names contain a space (`sb-gtl 16x9.webp`), so the
+     mobile `<source>` silently emitted `srcset=/#ZgotmplZ` and no mobile hero
+     ever loaded. Percent-encoding at the source fixes both attributes the same
+     way, without depending on the caller to pre-escape. */}}
+{{ $desktopURL := replace $desktop " " "%20" }}
+{{ $mobileURL  := replace $mobile  " " "%20" }}
 <div class="article-hero-container">
     <picture>
-        <source srcset="/{{ $mobile }}" media="(max-width: 767px)">
-        <img src="/{{ $desktop }}" alt="{{ $alt }}" class="responsive-hero-img" loading="lazy">
+        <source srcset="/{{ $mobileURL }}" media="(max-width: 767px)">
+        <img src="/{{ $desktopURL }}" alt="{{ $alt }}" class="responsive-hero-img" loading="lazy">
     </picture>
     <div class="hero-overlay"></div>
 </div>

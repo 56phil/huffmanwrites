@@ -82,6 +82,16 @@ jobs:
         run: |
           hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"
 
+      # Runs AFTER the build because it inspects the rendered output. Catches a
+      # class nothing else can: a page that builds cleanly, returns 200, and is
+      # still broken — a URL attribute Go's safety filter rejected (rendering
+      # the ZgotmplZ sentinel) or a local reference to a file that does not
+      # exist. Every mobile hero on /books/stoic-backgammon/ was broken this way
+      # for weeks: the hero files have a space in their names and Hugo
+      # percent-encodes spaces in `src` but not in `srcset`.
+      - name: Check render integrity
+        run: python3 scripts/check-render-integrity.py
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:

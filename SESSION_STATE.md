@@ -1501,6 +1501,16 @@ Also updated `_index.md` intro from generic catalog language to credo-anchored c
 - **Also fixed while the buttons still existed** (kept in the record because it was a real accessibility defect): "Coming Soon" in high-contrast mode resolved to amber-on-cream at **1.64:1** contrast — unreadable, in the mode built for readability. It had gone unnoticed because every card previously carried a live link, so the fallback was rarely on screen. It measured **6.48:1** after the fix.
 - **Verification:** `hugo --gc --minify` builds clean, **380 pages** (down from 387), 0 errors; `public/shop/` absent; the string "shop" does not appear in the rendered home page; `/shop/` 404s; `git ls-files` matches nothing for `shop` or `redbutton`. All three pre-commit gates green.
 
+## Render Integrity — September 19, 2026
+
+- **Found while asking a different question** ("are you sure there are no fabrications?"). Auditing the site rather than trusting the gates surfaced a **user-visible defect that no check in this repo could see**: every mobile hero image on `/books/stoic-backgammon/` was broken.
+- **The mechanism.** The Stoic Backgammon hero files have a **space in their filenames** (`sb-gtl 16x9.webp`). Hugo percent-encodes a space in `src` but **not** in `srcset`, so `<source srcset="/img/articles/sb-gtl 4x5.webp">` hit Go's template URL safety filter and rendered the sentinel `srcset=/#ZgotmplZ`. The mobile hero never loaded. The desktop `<img>` loaded fine, which is exactly why it went unnoticed. **Six of the seven heroes on that page were affected, and they had been broken on the live site.**
+- **Why every existing gate missed it.** The source markdown is valid, the asset exists, the build succeeds, the page returns **200**, and the frontmatter is correct. The defect exists only in the rendered output — a class nothing was checking.
+- **Fixed at the source** in `layouts/shortcodes/section-hero.html` by percent-encoding both URLs in the shortcode, rather than depending on the caller to pass pre-escaped paths. Verified: `ZgotmplZ` count across the whole build went from 6 to **0**, and all 7 heroes now decode at mobile width (`naturalWidth` 1024, lazy-loading forced by scrolling).
+- **New gate: `scripts/check-render-integrity.py`, wired into CI after the build.** It fails on (a) Go template sentinels (`ZgotmplZ`, `<no value>`, `%!s(` …) and unrendered `{{< shortcode >}}` in the output, and (b) local `src`/`srcset`/`href` references that do not resolve in `public/`. Negative-tested: re-injecting the defect fails the gate; restoring it passes.
+- **Deliberately not scanned: bare `{{` / `}}`.** Those are template delimiters but also legitimate minified-JS syntax, and scanning for them flagged **340 healthy pages**. A gate that cries wolf is worse than no gate — it trains the reader to ignore it. Unrendered shortcodes are matched precisely by shape instead.
+- **Scope:** `section-hero` is used in exactly one file, so the bug was contained to that page. No other page in the build contains a sentinel.
+
 ## Citation Integrity Sweep — September 19, 2026
 
 - **Philip, 2026-09-19: "I want to avoid fabrications. Completely."** "Completely" is a higher bar than the gates then met, so the enforcement was rebuilt rather than asserted.
