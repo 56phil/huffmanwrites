@@ -10,6 +10,9 @@ export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/us
 
 SB="/Users/prh/Developer/SimpleBrain"
 PROMPT_FILE="$SB/prompts/wiki-check-and-fix.md"
+# Shared failure alert, kept in the huffmanwrites repo alongside the other
+# runners so all four jobs report failures the same way.
+ALERT="/Users/prh/Developer/huffmanwrites/scripts/alert-failure.sh"
 LOG_DIR="$HOME/Library/Logs"
 OUT_LOG="$LOG_DIR/wiki-check.out.log"
 ERR_LOG="$LOG_DIR/wiki-check.err.log"
@@ -58,10 +61,17 @@ if [ "$RC" -eq 0 ]; then
   set -e
   if [ "$PUSH_RC" -ne 0 ]; then
     echo "$STAMP: push failed (exit $PUSH_RC)" >> "$OUT_LOG"
+    "$ALERT" "wiki-check" "$PUSH_RC" "push failed; see $OUT_LOG" || true
     exit "$PUSH_RC"
   fi
   echo "$STAMP: push OK" >> "$OUT_LOG"
 fi
 
 echo "$STAMP: run finished (exit $RC)" >> "$OUT_LOG"
+
+# Unattended job: a non-zero exit used to leave nothing but a log line.
+# No-op on success. `|| true` keeps a missing/failing alert from replacing the
+# job's real exit code under `set -e`.
+"$ALERT" "wiki-check" "$RC" "see $OUT_LOG" || true
+
 exit "$RC"

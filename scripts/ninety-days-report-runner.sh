@@ -28,6 +28,10 @@ OLLAMA_KEY="$(security find-generic-password -a "$USER" -s huffmanwrites-ollama 
 export ANTHROPIC_API_KEY="${OLLAMA_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
 export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
+# The model has a 1M context window; Claude Code assumes 200k for
+# unrecognized model ids. Set the real window so the two drafts are not
+# auto-compact truncated mid-run.
+export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 
 # Image generation: hero pairs call fal.ai (FLUX.1 dev). FAL_KEY from the
 # login keychain (huffmanwrites-fal), with ~/.secrets as fallback. The queue
@@ -75,5 +79,10 @@ for flags in "--gc --minify" "--gc --minify --buildDrafts"; do
     echo "$STAMP: build OK [$flags]" >> "$OUT_LOG"
   fi
 done
+
+# Unattended job: a non-zero exit used to leave nothing but a log line.
+# No-op on success. `|| true` keeps a missing/failing alert from replacing the
+# job's real exit code under `set -e`.
+"$REPO/scripts/alert-failure.sh" "ninety-days-report" "$RC" "see $OUT_LOG" || true
 
 exit "$RC"

@@ -78,4 +78,9 @@ else
   echo "$STAMP: build OK" >> "$OUT_LOG"
 fi
 
+# Unattended job: a non-zero exit used to leave nothing but a log line. On
+# 2026-09-06 this job exited 127 then 1 and nobody saw it. No-op on success.
+# `|| true` keeps a missing/failing alert from replacing the job's real exit code.
+"$REPO/scripts/alert-failure.sh" "senate-report" "$RC" "see $OUT_LOG" || true
+
 exit "$RC"

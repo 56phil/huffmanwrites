@@ -47,4 +47,10 @@ RC=$?
 set -e
 
 echo "$STAMP: audit finished (exit $RC)" >> "$OUT_LOG"
+
+# Unattended job: a non-zero exit used to leave nothing but a log line.
+# No-op on success. `|| true` keeps a missing/failing alert from replacing the
+# job's real exit code under `set -e`.
+"$REPO/scripts/alert-failure.sh" "site-audit" "$RC" "see $OUT_LOG" || true
+
 exit "$RC"
