@@ -64,7 +64,9 @@ tags:
  ## ✨ Quote of the Week
 
  >  *“A year from now you may wish you had started today.”*
- — Karen Lamb
+ — Attributed to Karen Lamb; no source located ([searched](https://openlibrary.org/search/inside?q=%22you+may+wish+you+had+started+today%22))
+
+ *Attribution note: this line circulates widely credited to Karen Lamb, but no primary source has been located — the name appears only in secondary quotation compilations, and one compilation credits the line to “Anonymous.” Treat it as unattributed.*
 
  
 

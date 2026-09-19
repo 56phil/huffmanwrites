@@ -94,8 +94,10 @@ tags:
 ---
  ## ✨ Quote of the Week
 
- >  **“He who lives by the crystal ball will eat shattered glass.”**
- — Ray Dalio
+ >  **“He who lives by the crystal ball soon learns to eat ground glass.”**
+ — Edgar R. Fiedler, [“Fiedler's Laws,” *Across the Board* (1977)](https://openlibrary.org/search/inside?q=%22Edgar+R.+Fiedler%22+crystal+ball)
+
+ *Attribution note: this page formerly credited the line to Ray Dalio. It is not his. The aphorism is Edgar R. Fiedler's, an American economist, published as “Fiedler's Laws” in 1977 and reprinted in Paul Dickson's* The Official Rules *with the copyright notice “© 1977 Edgar R. Fiedler.” The site's wording (“will eat shattered glass”) also matched no original; Fiedler's reads “soon learns to eat ground glass.”*
 
  
 

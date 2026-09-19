@@ -50,8 +50,10 @@ The book is also long — longer than it needs to be. The core framework and its
 Read it alongside Sagan's baloney detection kit. Sagan tells you what questions to ask of claims about the external world; Kahneman tells you what questions to ask of your own mind.
 
 ---
-> *"Nothing in life is as important as you think it is while you are thinking about it."*
-— Daniel Kahneman
+> *"Nothing in life is as important as you think it is when you are thinking about it."*
+— Daniel Kahneman, *Thinking, Fast and Slow* (2011), [text](https://openlibrary.org/search/inside?q=%22important+as+you+think+it+is+when+you+are+thinking+about+it%22)
+
+*Wording note: the page formerly read “…while you are thinking about it.” The book says “when.” A one-word drift inside quotation marks is still a misquote, so it has been corrected to the published text.*
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

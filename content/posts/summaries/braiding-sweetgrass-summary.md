@@ -50,8 +50,10 @@ The book is also long, and its structure — a series of loosely connected essay
 Read it for the plants. Stay for the argument about what we owe them.
 
 ---
-> *"In the grammar of Potawatomi, beings are subjects, not objects, and so the grammar reflects the reality of the living world."*
-— Robin Wall Kimmerer
+> *"In Potawatomi 101, rocks are animate, as are mountains and water and fire."*
+— Robin Wall Kimmerer, [*Braiding Sweetgrass*, “Learning the Grammar of Animacy”](https://openlibrary.org/search/inside?q=%22rocks+are+animate%22+Potawatomi)
+
+*Attribution note: the page formerly quoted “In the grammar of Potawatomi, beings are subjects, not objects, and so the grammar reflects the reality of the living world.” That sentence does not appear in* Braiding Sweetgrass*; it was a paraphrase of the book's argument placed inside quotation marks. It has been replaced with Kimmerer's actual sentence from the essay it paraphrases.*
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

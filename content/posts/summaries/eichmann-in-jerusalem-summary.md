@@ -50,8 +50,10 @@ The controversy over the Jewish councils section is more serious. Many survivors
 That argument is not about the past. It is about now.
 
 ---
-> *"The sad truth is that most evil is done by people who never make up their minds to be good or evil."*
-— Hannah Arendt
+> *"The sad truth of the matter is that most evil is done by people who never make up their minds to be good or evil."*
+— Hannah Arendt, [“Thinking and Moral Considerations” (1971)](https://openlibrary.org/search/inside?q=%22most+evil+is+done+by+people+who+never+make+up+their+minds%22), collected in *Responsibility and Judgment* — not from *Eichmann in Jerusalem*
+
+*Source note: the line is genuine Arendt but not from this book. It belongs to her later essay “Thinking and Moral Considerations” (1971) and* The Life of the Mind*. It is widely attached to* Eichmann in Jerusalem *because it expresses that book's theme; the attribution was corrected rather than left to imply the summary's own text.*
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

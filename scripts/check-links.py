@@ -122,7 +122,13 @@ PLACEHOLDER = re.compile(
     # (`)`, `]`, `,`, quote, angle bracket). Without that bound the gap runs
     # from a real URL into unrelated markdown — `https://medium.com/?ref=x),[Substack]`
     # matched and was reported as a placeholder it was not.
-    r"https?://[^\s)\]\"'<>,]*?(?:"
+    #
+    # The bracket rule also must not fire inside a URL FRAGMENT. Wikiquote
+    # anchors legitimately end in `_[Episode_1]` — a working link, e.g.
+    # `en.wikiquote.org/wiki/Carl_Sagan#The_Shores_of_the_Cosmic_Ocean_[Episode_1]`
+    # — which this pattern rejected as a placeholder. Excluding `#` from the gap
+    # keeps the scan in the path, where a bracketed placeholder actually lives.
+    r"https?://[^\s#)\]\"'<>,]*?(?:"
     r"\[[A-Za-z_]+\]?|"        # [ID] or a truncated [ID
     r"\{[^}]*\}?|"             # {id}
     r"<[^>]*>?|"               # <NUMBER>

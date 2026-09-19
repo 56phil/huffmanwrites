@@ -57,7 +57,10 @@ tags:
 ---
  ## ✨ Quote of the Week
 
- >  “The essence of investment management is the management of risks, not the management of returns.” — Benjamin Graham
+ >  “The essence of investment management is the management of risks, not the management of returns.”
+ — Attributed to Benjamin Graham; no source located ([searched](https://openlibrary.org/search/inside?q=%22essence+of+investment+management%22))
+
+ *Attribution note: this sentence circulates in investment literature crediting Graham, but it does not appear in* The Intelligent Investor*,* Security Analysis*, or any other Graham text that could be searched. Every traceable occurrence is a modern practitioner book repeating it. The phrasing appears to originate with a later commentator, not Graham. Treat it as unattributed.*
 
  
 

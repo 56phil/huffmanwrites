@@ -51,7 +51,7 @@ Read it as a corrective to the assumption that efficiency is the same as progres
 
 ---
 > *"The soil is the great connector of lives, the source and destination of all."*
-— Wendell Berry
+— Wendell Berry, *The Unsettling of America* (1977), [text](https://openlibrary.org/search/inside?q=%22The+soil+is+the+great+connector+of+lives%22)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

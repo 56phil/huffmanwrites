@@ -50,8 +50,10 @@ There is also an idealization of the Socratic classroom that deserves scrutiny. 
 Read it as a companion to Sagan. Together they make the case that clarity of thought — scientific and humanistic — is not a cultural preference. It is a civic necessity.
 
 ---
-> *"Socratic pedagogy... requires developing students' capacity for genuine self-examination — and that capacity is the foundation of democratic citizenship."*
-— Martha Nussbaum
+> *Nussbaum's chapter “Socratic Pedagogy: The Importance of Argument” argues that Socratic questioning develops students' capacity for genuine self-examination, and that this capacity is the foundation of democratic citizenship.*
+— Martha Nussbaum, *Not for Profit*, ch. 4 “[Socratic Pedagogy: The Importance of Argument](https://openlibrary.org/search/inside?q=%22Socratic+Pedagogy%3A+The+Importance+of+Argument%22)” (chapter title verified; remainder is summary)
+
+*Attribution note: this was presented as a quotation with an ellipsis. The chapter title is real, but the sentence is a modern compression of Nussbaum's argument and does not appear verbatim in the book. It is now written as a summary so it is not mistaken for her words.*
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

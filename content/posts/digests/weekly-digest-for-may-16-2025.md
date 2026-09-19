@@ -27,7 +27,9 @@ lastmod: 2025-05-16T00:00:00Z
  Quote of the Week:
 
  >  “No man is free who is not master of himself.”
- —Epictetus
+ — Epictetus, Fragment 35 (trans. W. A. Oldfather, Loeb, 1928) — *one of the fragments of doubtful authenticity*, [text](https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Fragments)
+
+ *Attribution note: this line is genuine Epictetus only in the weak sense — it survives among the fragments that Oldfather grouped under “Doubtful and Spurious Fragments,” drawn from Stobaeus and a gnomology, whose authenticity Schenkl and others disputed. For the undisputed Epictetus on this theme see* Discourses *IV.1, “About Freedom.”*
 
  
 

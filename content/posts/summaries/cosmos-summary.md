@@ -50,8 +50,10 @@ The book is also uneven — some chapters are extraordinary, others pedestrian. 
 Read it for the cosmic calendar. Read it for Alexandria. Read it for the last chapter, which is as honest and as urgent as anything he wrote.
 
 ---
-> *"The cosmos is within us. We are made of star-stuff. We are a way for the universe to know itself."*
-— Carl Sagan
+> *"The cosmos is also within us. We're made of star-stuff. We are a way for the cosmos to know itself."*
+— Carl Sagan, *Cosmos: A Personal Voyage* (PBS, 1980), Episode 1, [“The Shores of the Cosmic Ocean”](https://en.wikiquote.org/wiki/Carl_Sagan#The_Shores_of_the_Cosmic_Ocean_[Episode_1]) — the television series, not the book
+
+*Source note: this line is from the* Cosmos *TV series (Ep. 1, ~5m15s), and it is quoted here in its spoken form. The page previously read “The cosmos is within us… a way for **the universe** to know itself” — which dropped “also” and substituted “the universe” for “the cosmos.” Neither change is Sagan's. The book of the same name does not contain the sentence.*
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

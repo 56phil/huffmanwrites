@@ -65,8 +65,10 @@ tags:
 ---
  ## ✨ Quote of the Week
 
- >  *“Hope is not the conviction that something will turn out well, but the certainty that something makes sense, regardless of how it turns out.”*
- — Václav Havel
+ >  *“Hope is definitely not the same thing as optimism. It is not the conviction that something will turn out well, but the certainty that something makes sense, regardless of how it turns out.”*
+ — Václav Havel, [*Disturbing the Peace*](https://openlibrary.org/search/inside?q=%22makes+sense%2C+regardless+of+how+it+turns+out%22) (trans. Paul Wilson, 1990)
+
+ *Rendering note: this passage had been quoted with its opening sentence dropped and “It” rewritten as “Hope,” which attributed to Havel a reworded version of his translator's text. Restored to the Wilson rendering.*
 
  
 

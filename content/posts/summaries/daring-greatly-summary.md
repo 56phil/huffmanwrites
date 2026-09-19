@@ -53,7 +53,9 @@ If Brown's argument about self-imposed armor resonates, [*Unstuck*](/books/unstu
 
 ---
 > *"Vulnerability is not winning or losing; it's having the courage to show up and be seen when we have no control over the outcome."*
-— Brené Brown
+— Brené Brown, [*Rising Strong* (2015)](https://openlibrary.org/search/inside?q=%22vulnerability+is+not+winning+or+losing%22) — not from *Daring Greatly*
+
+*Source note: this line is Brown's, but it appears in* Rising Strong*, not the book summarized here. Corrected so the page does not imply it comes from* Daring Greatly*.*
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
