@@ -23,6 +23,14 @@
 
 ---
 
+### Maintenance — September 19, 2026 — Senate report: pre-flight verified, stale baseline corrected
+
+- **Pre-flight for the Sunday, Sept 20, 07:00 CT run — every dependency exercised, not assumed.** Keychain key `huffmanwrites-ollama` present (57 chars); Ollama reachable (HTTP 200); `deepseek-v4-flash:cloud` **responds** — note it is *not* in `/api/tags` because it is a cloud model pulled on demand, so a bare `ollama list` check would have produced a false alarm; `claude` and `hugo` on the exported PATH; runner smoke test prints `SMOKE-OK`; **WebSearch works under the runner's provider config** (returned the NC rating); skill and prior-report reads work; verification build OK. Tomorrow's filename (`senate-race-report-2026-09-20.md`) is free — no same-day collision.
+- **Real defect found and fixed in `skills/senate-race-report.md`:** its baseline race list was **stale in three places** and would have fed wrong names into Sunday's draft — Montana (listed **Daines**, who **withdrew in March 2026**), South Carolina (listed **Graham**; **Lindsey Graham died in July 2026** and his sister **Darline Graham** is the nominee), and Louisiana (`nominee TBD`; **Julia Letlow** is the nominee). All three had already been corrected in the published Sept 6 report after research verification, but the skill file was never updated. Corrected in place with a "do not revert" note, and the research phase now states explicitly that **the published reports are the authoritative baseline and this list is only a starting sketch** — where they disagree, the report wins. This is the fix that stops the error being reintroduced every week.
+- **No open blockers.** Both prior installments are published (`draft: false`, 09-06 and 09-13). Nothing in flight on the tree. The report drafts itself uncommitted and unpushed by design; publish is a separate manual step.
+
+---
+
 ### Maintenance — September 19, 2026 — Kennedy Center docket watch installed
 
 - **Philip, 2026-09-19: "I must keep an eye on this story."** Built and installed `com.huffmanwrites.docket-watch` (launchd, 07:30 and 18:30 CT, alongside the four existing jobs). Watches the **docket**, not the news — coverage of this case routinely conflates the two-year renovation closure with the seven-day safety closure, and several outlets overstated what Cooper's minute order froze. The docket is the only reliable instrument.
