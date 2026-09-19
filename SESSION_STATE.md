@@ -23,6 +23,18 @@
 
 ---
 
+### Maintenance — September 19, 2026 — Kennedy Center docket watch installed
+
+- **Philip, 2026-09-19: "I must keep an eye on this story."** Built and installed `com.huffmanwrites.docket-watch` (launchd, 07:30 and 18:30 CT, alongside the four existing jobs). Watches the **docket**, not the news — coverage of this case routinely conflates the two-year renovation closure with the seven-day safety closure, and several outlets overstated what Cooper's minute order froze. The docket is the only reliable instrument.
+- **Mechanism:** `scripts/check-docket.py` reads the CourtListener Atom feed for the case (`https://www.courtlistener.com/docket/72069932/feed/` — structured, carries ECF entry numbers, no HTML scraping that breaks on a restyle), compares the highest entry against `scripts/docket-watch-state.json`, and reports new filings with a one-line note on what each one was. **It also watches the case calendar** (`CALENDAR` in the script: the Sept 23 status report, Sept 26 NSO concert, Sept 30 discovery, Oct 8/9/16/23/27) so a due date surfaces even when nothing is filed that day.
+- **Exit-code contract (deliberate, and the point of the job):** `0` no change, `2` **could not read the feed**, `3` found-a-change-but-could-not-deliver. Non-zero routes to `scripts/alert-failure.sh`, so "I could not reach the docket" can never be indistinguishable from "nothing was filed" — the exact failure mode that makes a watch job worthless. Verified by pointing the checker at a dead feed (exit 2) and confirming the alert log line.
+- **Verified behaviors:** feed parses to ECF 89 (matches `Date of Last Known Filing: Sept. 18, 2026`); change detection at watermark 84 reports exactly ECF 85-89 with correct notes and leaves state untouched under `--dry-run`; idempotent on re-run; calendar boundary checked (Sept 23 appears at horizon 4, is silent at horizon 3, shows `TODAY` on the day); notification + durable log both fire; `plutil -lint` OK; loaded in launchd.
+- **Delivery:** two channels, matching `alert-failure.sh` — a durable record in `~/Library/Logs/huffmanwrites-docket.log` and a Notification Center banner. Durable record first, so a delivery failure still leaves evidence.
+- **Current state: watermark 89, nothing pending.** Next expected event is the **Sept 23 status report + sworn declaration** (4 days out; will surface in the 07:30 run on Sept 21). That filing is the live hinge — it will show whether the closure is being characterized as genuinely seven days or open-ended, and drift from Floca's Sept 16/17 statements is the most publishable finding available.
+- **Scope note:** this is the *watch*, not the writing. `SESSION_STATE` still carries the standing policy on the companion essay — draft it only if the closure is extended past Sept 23 without the court's modification, anchored on the verified docket record rather than coverage.
+
+---
+
 ### Maintenance — September 19, 2026 — Quote-citation CI gate (`scripts/check-quotes.py`)
 
 - **New pre-deploy gate, on Philip's go-ahead.** `scripts/check-quotes.py` runs in `.github/workflows/hugo.yml` between the gallery check and the Hugo build. It extracts every attribution in `content/`, and fails the build when a translated author's attribution **names no translator** (and is not labelled a paraphrase) or when **no URL-bearing line in the file names that author**. This turns the two conventions added earlier the same day from advice into enforcement — a future session cannot ship an uncheckable epigraph.

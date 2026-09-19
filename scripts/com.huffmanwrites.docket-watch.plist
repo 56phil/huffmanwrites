@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.docket-watch</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/docket-watch-runner.sh</string>
+  </array>
+  <!-- Two runs a day: 07:30 and 18:30 CT. CourtListener's RECAP feed ingests
+       new filings within hours of PACER, so the morning run catches anything
+       filed overnight and the evening run catches the same-day burst (ECF 88
+       and 89 both landed after 8 p.m. on Sept 18). -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict>
+      <key>Hour</key>
+      <integer>7</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+    <dict>
+      <key>Hour</key>
+      <integer>18</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/docket-watch.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/docket-watch.err.log</string>
+</dict>
+</plist>

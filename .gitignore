@@ -11,3 +11,8 @@ pending/archive/
 # Python bytecode — regenerated on every run; local build artifact, not source
 __pycache__/
 *.pyc
+
+# Docket-watch cursor — runtime state, rewritten twice daily by the launchd job.
+# Local-only by design: on a fresh clone the watcher's first run records the
+# newest entry without alerting on the whole filing history.
+scripts/docket-watch-state.json
