@@ -18,8 +18,11 @@ tags:
 
 ## 🪞 A Reflection
 
- >  *“Science is more than a body of knowledge; it’s a way of thinking, a way of skeptically interrogating the universe with a fine understanding of human fallibility.”*
- — Carl Sagan, *The Demon-Haunted World*
+ >  *“Science is more than a body of knowledge; it is a way of thinking.”*
+>  *“Science is a way of skeptically interrogating the universe with a fine understanding of human fallibility.”*
+ — Carl Sagan, *The Demon-Haunted World*, ch. 2, and [*Charlie Rose*, 27 May 1996](https://archive.org/details/Charlie-Rose-1996-05-27)
+
+ *Source note: the two clauses above are real Sagan, but they come from two different sources and had been joined into one quotation. The first is from* The Demon-Haunted World*, ch. 2; the second from Sagan's final* Charlie Rose *interview (27 May 1996), reprinted in* Conversations with Carl Sagan *(2006). Neither source contains the other's clause.*
 
  
 

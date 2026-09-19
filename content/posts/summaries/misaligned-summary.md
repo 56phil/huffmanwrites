@@ -62,7 +62,9 @@ The goal is not repair but agency: the capacity to choose what to preserve, what
 
 ---
 >  *“It is not that we have a short time to live, but that we waste a lot of it.”*
-— Seneca
+— Seneca, *De Brevitate Vitae* §1, trans. C. D. N. Costa (Penguin, 1997), [text](https://archive.org/details/onshortnessoflif0000sene)
+
+*Translation note: this wording is Costa's. Basore's Loeb rendering of the same Latin reads “It is not that we have a short space of time, but that we waste much of it.”*
 
 
 

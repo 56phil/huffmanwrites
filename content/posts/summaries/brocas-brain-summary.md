@@ -51,7 +51,9 @@ Most of all, read it for the title essay: a scientist standing in front of a jar
 
 ---
 > *"The brain is a very big place in a very small space."*
-— Carl Sagan
+— Carl Sagan, *Cosmos* (1980), ch. 11, [text](https://publicism.info/science/cosmos/12.html)
+
+*Source note: this line is real Sagan but not from* Broca's Brain*. It appears in* Cosmos*, ch. 11 (“The Persistence of Memory”), in the passage on the information content of the brain — the twenty-million-volumes comparison. Corrected from a bare “— Carl Sagan” that implied the page's own book.*
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
