@@ -4,14 +4,15 @@
 Philip, 2026-09-19: "Add ratings to the content."
 
 The weekly Senate report needs a ratings table every week, not only when a
-forecaster moves a race. But the three forecasters the site actually cites are
-all closed to automated fetch — cookpolitical.com, centerforpolitics.org and
-insideelections.com each return **HTTP 403** to curl even with a full browser
-User-Agent and Accept headers. So they cannot be read directly by the research
-agent, and a ratings table sourced "from Cook" would be uncitable.
+forecaster moves a race.
+
+Fetching the forecasters directly is mostly blocked: cookpolitical.com,
+centerforpolitics.org and realclearpolitics.com return **HTTP 403** to any
+automated request we have tried, so a ratings table sourced "from Cook" would
+be uncitable and any claim that Cook was checked would be false.
 
 Wikipedia's "2026 United States Senate elections" article carries the standard
-aggregate ratings table, with every forecaster in its own column and an as-of
+aggregate ratings table with every forecaster in its own column and an as-of
 date on each. That page IS fetchable, and it cites each forecaster. It is the
 practical route to the ratings, and it is what this script reads.
 
@@ -69,6 +70,20 @@ RATING = re.compile(
 # State names needing parentheses in the display table.
 SPECIALS = {"Florida(special)": "Florida (special)", "Ohio(special)": "Ohio (special)"}
 
+# Two-letter codes, to join the Wikipedia table to Inside Elections' JSON.
+STATE_CODES = {
+    "Alabama": "AL", "Alaska": "AK", "Arkansas": "AR", "Colorado": "CO",
+    "Delaware": "DE", "Florida": "FL", "Georgia": "GA", "Idaho": "ID",
+    "Illinois": "IL", "Iowa": "IA", "Kansas": "KS", "Kentucky": "KY",
+    "Louisiana": "LA", "Maine": "ME", "Massachusetts": "MA", "Michigan": "MI",
+    "Minnesota": "MN", "Mississippi": "MS", "Montana": "MT",
+    "Nebraska": "NE", "New Hampshire": "NH", "New Jersey": "NJ",
+    "New Mexico": "NM", "North Carolina": "NC", "Ohio": "OH",
+    "Oklahoma": "OK", "Oregon": "OR", "Rhode Island": "RI",
+    "South Carolina": "SC", "South Dakota": "SD", "Tennessee": "TN",
+    "Texas": "TX", "Virginia": "VA", "West Virginia": "WV", "Wyoming": "WY",
+}
+
 
 def _die(msg: str, code: int = 2) -> "None":
     print(f"senate-ratings: ERROR: {msg}", file=sys.stderr)
@@ -86,6 +101,52 @@ def fetch() -> str:
     if "Cook" not in body or "Toss" not in body:
         _die("page fetched but the ratings table is absent — shape changed?")
     return body
+
+
+# Inside Elections serves its own ratings as JSON from a theme cache path.
+# This is an undocumented internal endpoint, so treat it as a bonus that can
+# fail: the Wikipedia table remains the primary route.
+#
+# Fetch note, learned the hard way: `curl` is refused by Cloudflare with a 403
+# challenge here, but `urllib` with the same UA **plus a Referer** returns 200.
+# Do not "simplify" this to curl — it is the difference between working and a
+# hard 403. (Verified 2026-09-19: curl 403 / urllib 200, same headers.)
+IE_API = ("https://insideelections.com/wp-content/themes/inside-elections/cache/"
+          "ratings_latest_senate_year=2026_district=all_clean.json")
+IE_HEADERS = {
+    "User-Agent": UA,
+    "Accept": "application/json,*/*",
+    "Referer": "https://insideelections.com/ratings/senate/",
+}
+
+
+def fetch_ie() -> "dict[str, dict]":
+    """Inside Elections' own 2026 ratings, keyed by state abbreviation.
+
+    Returns {} on any failure. Worth having despite the redundancy because the
+    JSON carries `previous_rating` and `shift`, which the aggregate table does
+    not — so it is the one source that can report a move we did not witness
+    (e.g. a shift that happened before the baseline was first stored).
+    """
+    try:
+        import urllib.request
+        req = urllib.request.Request(IE_API, headers=IE_HEADERS)
+        raw = urllib.request.urlopen(req, timeout=25).read()
+        data = json.loads(raw.decode("utf-8", "replace"))
+    except Exception:
+        return {}
+    out: "dict[str, dict]" = {}
+    for r in data.get("ratings", []):
+        # 100 entries for 50 states: one per Senate class. Only the class up in
+        # 2026 carries a live rating; the rest read "Not Up This Cycle". Ohio's
+        # 2026 race is a special of the other class, so key on the rating
+        # itself, not on the class letter.
+        if r.get("rating_numeric") is None:
+            continue
+        code = r.get("district")
+        if code and code not in out:
+            out[code] = r
+    return out
 
 
 def cell_text(raw: str) -> str:
@@ -155,6 +216,7 @@ def parse(page: str) -> "tuple[list[str], list[dict], dict[str, str]]":
             continue
         ratings = [RATING.match(c).group(0) for c in cells if RATING.match(c)]
         out.append({"state": state, "pvi": cells[1],
+                    "code": STATE_CODES.get(re.sub(r"\(special\)", "", state).strip()),
                     "by": dict(zip(names, ratings))})
 
     if len(out) < 30:
@@ -205,13 +267,57 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Fetch 2026 Senate race ratings.")
     ap.add_argument("--all", action="store_true", help="every race, not just competitive")
     ap.add_argument("--changes", action="store_true", help="diff against the stored baseline")
+    ap.add_argument("--moves", action="store_true",
+                    help="rating moves Inside Elections itself reports (previous vs current)")
     ap.add_argument("--json", action="store_true", help="emit JSON")
     ap.add_argument("--update-baseline", action="store_true", help="store current ratings")
     args = ap.parse_args()
 
+    if args.moves:
+        ie_data = fetch_ie()
+        if not ie_data:
+            _die("could not read Inside Elections' ratings JSON")
+        rows = [r for r in ie_data.values()
+                if r.get("previous_rating") and r["previous_rating"] != r["rating"]]
+        rows.sort(key=lambda r: r.get("date") or "", reverse=True)
+        if not rows:
+            print("Inside Elections reports no rating moves.")
+            return 0
+        for r in rows:
+            flag = "  FLIP" if r.get("flipped") else ""
+            date = (r.get("date") or "")[:10]
+            print(f"  {r['district']:<3} {r['previous_rating']:<20} -> "
+                  f"{r['rating']:<20} {date}{flag}")
+        print(f"\nInside Elections reports {len(rows)} moves. "
+              f"Latest update {ie_data and max((r.get('date') or '') for r in ie_data.values())[:10]}.",
+              file=sys.stderr)
+        return 0
+
     names, data, as_of = parse(fetch())
     print(f"senate-ratings: read {len(data)} races; forecasters: {', '.join(names)}",
           file=sys.stderr)
+
+    # IE's own JSON, when reachable, is authoritative for the IE column and
+    # carries move information the aggregate table lacks. Overwrite only on an
+    # exact state match; the aggregate table's per-forecaster as-of dates are
+    # still what gets printed beneath the table.
+    ie_data = fetch_ie()
+    if ie_data:
+        abbr = {"Republican": "R", "Democrat": "D", "Independent": "I"}
+        for d in data:
+            code = d.get("code")
+            r = ie_data.get(code) if code else None
+            if not r:
+                continue
+            got = " ".join(abbr.get(w, w) for w in (r.get("rating") or "").split())
+            got = got.replace("Toss-up", "Tossup")
+            if r.get("flipped"):
+                got += " (flip)"
+            if got and got != d["by"].get("IE"):
+                d["by"]["IE"] = got
+    else:
+        print("senate-ratings: note — Inside Elections JSON unreachable; "
+              "using the aggregate table for the IE column", file=sys.stderr)
 
     if args.update_baseline:
         save_state(names, data)

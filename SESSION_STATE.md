@@ -23,6 +23,18 @@
 
 ---
 
+### Maintenance — September 19, 2026 — Inside Elections IS fetchable; the constraint was wrong
+
+- **I documented a false constraint earlier today, and this corrects it.** The script's docstring and the skill both asserted that `insideelections.com` returns HTTP 403 to automated fetch "even with a full browser User-Agent." The curl half is true; the conclusion was wrong. **`insideelections.com` serves its own 2026 ratings as JSON, and `urllib` with a UA *plus a `Referer` header* returns HTTP 200.**
+- **The distinction that matters: curl 403, urllib 200 — same headers.** Verified explicitly (`curl -A UA -H Referer` → 403 Cloudflare challenge; `urllib.request` with those identical headers → 200, 86,063 bytes). Cloudflare is fingerprinting the client, not the request. This is why my earlier 403 test "confirmed" a false claim: I tested with curl, concluded for all clients, and wrote it down as fact. **Lesson recorded in the script so it is not re-derived: do not simplify that call to curl.**
+- **`scripts/fetch-senate-ratings.py` now reads IE's own JSON** via `fetch_ie()`. It is authoritative for the IE column and carries **`previous_rating` and `shift`**, which the Wikipedia aggregate table does not. Fails soft: if the endpoint is ever blocked, the script falls back to the aggregate table and says so on stderr rather than dying.
+- **New `--moves` flag** answers "what moved recently" from IE's own data, so it survives a lost local baseline — unlike `--changes`, which can only know moves since the baseline was first stored. It reports **12 moves this cycle**: ME `Tilt R → Toss-up` (Sept 17), AK `Lean R → Tilt R`, OH `Tilt R → Toss-up`, NH `Tilt D → Toss-up`, KS `Solid R → Likely R` (Sept 3), NC `Toss-up → Tilt D` **FLIP**, GA `Toss-up → Tilt D`, TX `Likely R → Lean R`, IA `Lean R → Tilt R` (Aug 6), MT, NE (spring), MN (July 2025).
+- **Cross-validated the two sources against each other.** IE's JSON and the Wikipedia aggregate table agree **8/8** on the eight competitive races IE rates (Ohio is a class III special, so it is absent from the class II filter — keying on the rating rather than the class letter resolves it). So the table's IE column is not Wikipedia's paraphrase of IE; it now comes from IE.
+- **Ohio needed care and got it.** IE's JSON holds 100 ratings for 50 districts — one per Senate class, with non-2026 classes reading "Not Up This Cycle." Filtering on `office == "II"` silently drops Ohio, whose 2026 race is a special of the other class. The filter is now on `rating_numeric is not None`, which is the actual predicate for a live rating.
+- **All 35 state codes resolve** (the `(special)` suffix needed stripping), so every row is joined and checked — no row silently skips the authoritative source.
+
+---
+
 ### Maintenance — September 19, 2026 — Ratings table: column definitions added to the skill
 
 - **Philip asked what "PVI" and "IE" mean (2026-09-19).** The question exposed a real gap: the table ships two columns whose labels do not explain themselves, and nothing in the skill told the agent to explain them. A reader hitting tomorrow's report cold would have to leave the article to decode them.
