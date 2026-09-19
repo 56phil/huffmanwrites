@@ -108,7 +108,7 @@ The most accurate epitaph for his career to date is this: **Peter Thiel is a man
 
 [^8]: Wikipedia contributors, n.d.
 
-[^9]: Kirshner, A. (2014, September 12). Peter Thiel on the dangers of mimetic desire. *The New Republic*. https://newrepublic.com/article/119459/peter-thiel-mimetic-desire
+[^9]: Wikipedia contributors. René Girard. *Wikipedia*. https://en.wikipedia.org/wiki/Ren%C3%A9_Girard ; and Wikipedia contributors. Peter Thiel. *Wikipedia*. https://en.wikipedia.org/wiki/Peter_Thiel (documenting that Thiel studied under Girard at Stanford and that mimetic theory influenced him). Note: an earlier draft cited a *New Republic* article titled "Peter Thiel on the dangers of mimetic desire"; no such article could be located, and the URL used for it resolved to an unrelated piece on campus consent laws. It has been removed rather than guessed at.
 
 [^10]: Niskanen Center. (2017, August 24). Peter Thiel's plan to become CEO of America. https://www.niskanencenter.org/peter-thiels-plan-become-ceo-america/
 

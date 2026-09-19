@@ -107,8 +107,8 @@ The people who stand up for the law today are the ones who **keep the future fro
 ---
 
 ### Further Reading (Because Stoicism Isn’t Just Quotes) 
-- **On the rule of law:** 
-  [*How Democracies Die*](https://www.penguinrandomhouse.com/books/555571/how-democracies-die-by-steven-levitsky-and-daniel-ziblatt/) (Levitsky & Ziblatt) 
+- **On the rule of law:**
+  [*How Democracies Die*](https://en.wikipedia.org/wiki/How_Democracies_Die) (Levitsky & Ziblatt)
 - **On authoritarian tactics:** 
   [*The Anatomy of Fascism*](https://www.penguinrandomhouse.com/books/128540/the-anatomy-of-fascism-by-robert-o-paxton/) (Robert Paxton) 
 - **On Stoic resistance:** 

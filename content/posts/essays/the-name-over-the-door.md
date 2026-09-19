@@ -170,7 +170,6 @@ The name over the door is not his. If we want it to stay that way, we have to ke
 - Minute Order. (2026, September 17). [Order denying emergency hearing; ordering status report and 30-day notice](https://www.courtlistener.com/docket/72069932/beatty-v-trump/). Beatty v. Trump, No. 25-cv-4480 (D.D.C.).
 - Notice of Board Vote. (2026, September 15). [*Notice of Board Vote and Chairman Statement*, ECF 78](https://storage.courtlistener.com/recap/gov.uscourts.dcd.287972/gov.uscourts.dcd.287972.78.0_1.pdf). Beatty v. Trump.
 - Notice of Supplemental Authority. (2026, September 17). [*Notice of Supplemental Authority*, ECF 85](https://storage.courtlistener.com/recap/gov.uscourts.dcd.287972/gov.uscourts.dcd.287972.85.0_1.pdf). Beatty v. Trump.
-- NPR. (2026, June 13). [*Trump's name is removed from the Kennedy Center facade*](https://www.npr.org/2026/06/13/nx-s1-5831502/trump-name-removed-kennedy-center).
 - NPR. (2026a, September 15). [*Kennedy Center board votes to close it, as judge again keeps Trump's name off*](https://www.npr.org/2026/09/15/nx-s1-5969905/kennedy-center-closing-trump-name).
 - NPR. (2026b, September 17). [*Trump threatens to tear down the Kennedy Center, as legal battle continues*](https://www.npr.org/2026/09/17/nx-s1-5973036/trump-threat-tear-down-kennedy-center).
 - NPR/WBOI. (2026, June 30). [*How does the Kennedy Center board make decisions? This legal filing sheds some light*](https://www.wboi.org/npr-news/2026-06-30/how-does-the-kennedy-center-board-make-decisions-this-legal-filing-sheds-some-light).

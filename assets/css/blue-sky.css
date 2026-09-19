@@ -5,9 +5,9 @@
 
    Served fingerprinted with SRI alongside the other site stylesheets.
    Loaded globally on every page; the rules use unique class prefixes
-   (api-*, community-*, podcast-*, challenge-*, shop-*)
+   (api-*, community-*, podcast-*, challenge-*)
    so they only apply on their respective pages. The .credo-banner,
-   .credo-line, .credo-verb, .credo-adverb, and .redbubble-button
+   .credo-line, .credo-verb, and .credo-adverb
    classes are shared across two or more sections and live here as
    well; their CSS variables (var(--primary) etc.) adapt to all
    three themes.
@@ -324,13 +324,6 @@
 @media (max-width: 768px) {
   .credo-line {
     font-size: 1.5rem;
-  }
-  /* Shop's product grid is the only Blue Sky grid that uses
-     repeat(auto-fill, minmax(280px, 1fr)) and naturally needs an
-     explicit mobile override; the other sections collapse via the
-     one-column rule below. */
-  .product-grid {
-    grid-template-columns: 1fr;
   }
   .endpoints-grid,
   .sdks-grid,
@@ -900,156 +893,3 @@
   opacity: 0.85;
 }
 
-/* === /shop/ === */
-.shop-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-.shop-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.shop-header h1 {
-  font-size: 2.5rem;
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-}
-
-.shop-subtitle {
-  font-size: 1.1rem;
-  color: var(--secondary);
-  max-width: 600px;
-  margin: 0 auto 1.2rem;
-}
-
-.shop-notice {
-  background: var(--entry);
-  border: 1px solid var(--border);
-  border-left: 4px solid #E41321;
-  border-radius: 4px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 2rem;
-  color: var(--secondary);
-  font-size: 0.95rem;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
-}
-
-.product-card {
-  background: var(--entry);
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-.product-image img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  display: block;
-}
-
-.product-image-placeholder {
-  width: 100%;
-  height: 240px;
-  background: var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.product-info {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.product-info h2 {
-  font-size: 1.2rem;
-  margin-bottom: 0.25rem;
-  color: var(--primary);
-}
-
-.product-tagline {
-  font-size: 0.85rem;
-  color: var(--secondary);
-  font-style: italic;
-  margin-bottom: 0.75rem;
-}
-
-.product-description {
-  color: var(--secondary);
-  font-size: 0.9rem;
-  line-height: 1.55;
-  margin-bottom: 1rem;
-  flex: 1;
-}
-
-.product-price {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--primary);
-  margin-bottom: 1rem;
-}
-
-.product-button {
-  display: inline-block;
-  padding: 0.6rem 1.4rem;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  text-align: center;
-  transition: opacity 0.2s ease;
-}
-
-.redbubble-button {
-  background: #E41321;
-  color: #fff;
-}
-
-.redbubble-button:hover {
-  opacity: 0.88;
-  color: #fff;
-}
-
-/* phbooks.css's global `a:visited:hover { color: red }` (the
-   intentional classic blue/red link hover) has higher specificity
-   than the rule above because it includes the `a` type selector, so
-   it wins and paints a visited Redbubble button's text red-on-red —
-   invisible. Out-specificity it here to keep the button readable. */
-.redbubble-button:visited:hover {
-  color: #fff;
-}
-
-.coming-soon-button {
-  background: var(--border);
-  color: var(--secondary);
-  cursor: default;
-}
-
-/* Shop's credo uses 1.4rem on mobile (vs 1.5rem for the other 5
-   sections). Scoped to the shop page via .shop-container so it
-   doesn't override the shared .credo-line { font-size: 1.5rem }
-   rule above on other pages. */
-@media (max-width: 768px) {
-  .shop-container .credo-line {
-    font-size: 1.4rem;
-  }
-}

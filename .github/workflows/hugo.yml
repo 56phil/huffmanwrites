@@ -68,6 +68,16 @@ jobs:
       - name: Check quotation citations
         run: python3 scripts/check-quotes.py
 
+      # Fail before deploy if a citation is fabricated. Deterministic and
+      # offline: it catches placeholder URLs ([ID], TODO, example.com) and any
+      # URL recorded in scripts/check-links-blocklist.txt as proven to resolve
+      # to the wrong article. Full network verification is
+      # `scripts/check-links.py --online`, run deliberately before publishing —
+      # never here, where a 403 from a bot-blocking host would fail the build
+      # for no reason.
+      - name: Check citation integrity
+        run: python3 scripts/check-links.py --check
+
       - name: Build with Hugo
         run: |
           hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"

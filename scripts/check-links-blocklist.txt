@@ -1,0 +1,32 @@
+# Citations PROVEN fabricated or unresolvable. A URL in this file must never
+# appear in content/ again.
+#
+# What counts as fabricated, precisely: a URL that either returns non-200, or
+# returns 200 while landing on a page that is NOT the cited article. The second
+# kind is the dangerous one — it looks perfect to any link checker that only
+# tests for a 200 — and it is what put a pollinator story in the Kennedy Center
+# essay's source list.
+#
+# The usual cause is CONSTRUCTION over retrieval: taking a real URL whose ID is
+# correct and writing a plausible slug for it. The ID resolves; the slug is
+# invented; the reader lands somewhere unrelated. Never build a URL from a
+# pattern — fetch the page, or do not cite it.
+#
+# Format: one URL per line. `#` starts a comment.
+#
+# --- found 2026-09-19 by scripts/check-links.py --online -----------------------
+
+# Cited as "Trump's name is removed from the Kennedy Center facade" (NPR, Jun 13
+# 2026). Resolves to an Oklahoma pollinator story dated Jun 2. The nx-s1-5831502
+# ID is real; the slug is invented. NOTE: the same essay's other two NPR links
+# (nx-s1-5969905, nx-s1-5973036) do resolve correctly — do not "fix" those.
+https://www.npr.org/2026/06/13/nx-s1-5831502/trump-name-removed-kennedy-center
+
+# Cited as Levitsky & Ziblatt, *How Democracies Die*. Resolves to *Riverbound*,
+# a children's novel by Melinda Beatty. Book ID 555571 is real; the slug is not.
+https://www.penguinrandomhouse.com/books/555571/how-democracies-die-by-steven-levitsky-and-daniel-ziblatt/
+
+# Cited as Kirshner, "Peter Thiel on the dangers of mimetic desire" (*The New
+# Republic*, 2014). Article ID 119459 is real and is about campus consent laws.
+# No New Republic article with this title was found.
+https://newrepublic.com/article/119459/peter-thiel-mimetic-desire
