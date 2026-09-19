@@ -109,14 +109,25 @@ def collect() -> "dict[str, list[str]]":
 
 # A URL still carrying its template placeholder. Deterministic, offline, and
 # the exact signature of "I meant to come back and fill this in."
+#
+# Applied to the RAW line, not to an extracted URL token. That distinction is
+# load-bearing: the URL extractor excludes `]` from its character class (so a
+# markdown link `[text](url)` tokenises cleanly), which silently truncates
+# `https://arxiv.org/abs/[ID]` to `https://arxiv.org/abs/[ID` and makes a
+# bracket-balanced pattern unmatchable. Detecting on raw text means an
+# extraction quirk can never hide a placeholder again — which is exactly what
+# happened when this gate reported OK on a file that still contained one.
 PLACEHOLDER = re.compile(
-    r"https?://[^\s\)\]\"'<>]*(?:"
-    r"\[[A-Za-z_]+\]|"          # [ID], [slug]
-    r"\{[^}]*\}|"               # {id}
-    r"<[^>]*>|"                 # <NUMBER>
+    # The gap may not cross whitespace or a delimiter that ends a URL token
+    # (`)`, `]`, `,`, quote, angle bracket). Without that bound the gap runs
+    # from a real URL into unrelated markdown — `https://medium.com/?ref=x),[Substack]`
+    # matched and was reported as a placeholder it was not.
+    r"https?://[^\s)\]\"'<>,]*?(?:"
+    r"\[[A-Za-z_]+\]?|"        # [ID] or a truncated [ID
+    r"\{[^}]*\}?|"             # {id}
+    r"<[^>]*>?|"               # <NUMBER>
     r"\bTODO\b|\bFIXME\b|\bXXX\b|"
-    r"example\.com|placeholder|"
-    r"/\.\.\.|%5BID%5D"
+    r"example\.(?:com|org|net)|placeholder|/\.\.\."
     r")",
     re.I,
 )
@@ -150,9 +161,15 @@ def deterministic_scan() -> int:
         except Exception:
             continue
         rel = str(path.relative_to(REPO))
+        # Placeholders: scan every line, on raw text.
+        for i, line in enumerate(text.split("\n"), 1):
+            m = PLACEHOLDER.search(line)
+            if m:
+                placeholder_hits.append((f"{rel}:{i}", m.group(0)))
+        # Blocklist: scan extracted URLs, which is exact-match by design.
         for raw in URL.findall(text):
             u = clean(raw)
-            if PLACEHOLDER.search(u) or NOT_A_SOURCE.search(u):
+            if NOT_A_SOURCE.search(u):
                 placeholder_hits.append((rel, u))
             if u in bad_block:
                 blocked_hits.append((rel, u))
@@ -160,14 +177,14 @@ def deterministic_scan() -> int:
     if placeholder_hits:
         print(f"links: FAIL — {len(placeholder_hits)} URL(s) still carry a "
               f"placeholder:", file=sys.stderr)
-        for rel, u in placeholder_hits:
-            print(f"  {rel}\n      {u}", file=sys.stderr)
+        for where, u in placeholder_hits:
+            print(f"  {where}\n      {u}", file=sys.stderr)
 
     if blocked_hits:
         print(f"links: FAIL — {len(blocked_hits)} citation(s) previously proven "
               f"fabricated have returned:", file=sys.stderr)
-        for rel, u in blocked_hits:
-            print(f"  {rel}\n      {u}", file=sys.stderr)
+        for where, u in blocked_hits:
+            print(f"  {where}\n      {u}", file=sys.stderr)
 
     if placeholder_hits or blocked_hits:
         print(

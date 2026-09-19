@@ -24,6 +24,9 @@ https://www.npr.org/2026/06/13/nx-s1-5831502/trump-name-removed-kennedy-center
 
 # Cited as Levitsky & Ziblatt, *How Democracies Die*. Resolves to *Riverbound*,
 # a children's novel by Melinda Beatty. Book ID 555571 is real; the slug is not.
+# The CORRECT publisher page is /books/562246/ (verified 2026-09-19). Note: the
+# publisher's own site search 404s, so finding it means probing the /books/<id>/
+# URL space — do not conclude "no publisher URL exists" from a failed search.
 https://www.penguinrandomhouse.com/books/555571/how-democracies-die-by-steven-levitsky-and-daniel-ziblatt/
 
 # Cited as Kirshner, "Peter Thiel on the dangers of mimetic desire" (*The New
