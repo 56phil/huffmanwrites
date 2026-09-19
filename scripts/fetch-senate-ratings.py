@@ -84,6 +84,95 @@ STATE_CODES = {
     "Texas": "TX", "Virginia": "VA", "West Virginia": "WV", "Wyoming": "WY",
 }
 
+# Provenance of each column, so the report can say plainly what kind of number
+# each one is. The distinction that matters: a COMPUTED number can be
+# reproduced from a primary source; a JUDGMENT rating cannot be reproduced at
+# all; a MODEL output is reproducible only if the model is published.
+#
+# `kind` is one of: computed | judgment | model | aggregate
+# `depends` names columns it is NOT independent of.
+SOURCES = {
+    "PVI": {
+        "kind": "computed",
+        "who": "Cook Partisan Voting Index, The Cook Political Report",
+        "method": ("Democratic share of the two-party presidential vote, "
+                   "weighted 75% (2024) / 25% (2020), minus the national "
+                   "figure (~50.005%)"),
+        "indep": "yes",
+        "note": ("Reproducible from certified FEC totals — we have done so, and "
+                 "all nine values matched Cook's published figures. Describes a "
+                 "historical baseline, not the 2026 race."),
+    },
+    "Cook": {
+        "kind": "judgment",
+        "who": "The Cook Political Report (Amy Walter)",
+        "method": ("state's political makeup; candidates' strengths and "
+                   "weaknesses; the political environment in the state and "
+                   "nationally; interviews with candidates and campaign "
+                   "professionals"),
+        "indep": "yes",
+        "note": ("Analyst judgment; no numeric model is published, so it cannot "
+                 "be independently reproduced. The factors are disclosed, their "
+                 "weights are not."),
+    },
+    "IE": {
+        "kind": "judgment",
+        "who": "Inside Elections (Nathan Gonzales)",
+        "method": ("nonpartisan analyst ratings; factors include polling, "
+                   "fundraising, candidate quality and reporting"),
+        "indep": "yes",
+        "note": ("Analyst judgment. Uniquely among these sources, IE publishes "
+                 "its own machine-readable export including each race's previous "
+                 "rating, which is where our move data comes from."),
+    },
+    "Sabato": {
+        "kind": "judgment",
+        "who": "Sabato's Crystal Ball (U. of Virginia Center for Politics)",
+        "method": ("electoral history, polling, candidate quality, modeling and "
+                   "reporting"),
+        "indep": "yes",
+        "note": ("Analyst judgment. Updates least often of the six — on the "
+                 "current table its column is three weeks staler than Cook's."),
+    },
+    "RCP": {
+        "kind": "aggregate",
+        "who": "RealClearPolitics",
+        "method": "not verified",
+        "indep": "unverified",
+        "note": ("realclearpolitics.com returns HTTP 403 to us, so we have NOT "
+                 "read its methodology and cannot say whether this column is "
+                 "independent judgment or a composite of the other forecasters. "
+                 "Treat it as unverified."),
+    },
+    "DDHQ": {
+        "kind": "model",
+        "who": "Decision Desk HQ",
+        "method": ("three layers — a fundamentals ensemble (ridge regression, "
+                   "random forest, XGBoost) trained on 2016-2024; a polling "
+                   "average weighted by number of polls; prediction-market "
+                   "prices from Polymarket and Kalshi"),
+        "indep": "yes",
+        "note": ("Methodology published. Notably does NOT use expert ratings or "
+                 "Cook PVI: its partisan prior is the most recent presidential "
+                 "margin adjusted for national swing. The most independent "
+                 "column in the table."),
+    },
+    "Silver": {
+        "kind": "model",
+        "who": "Silver Bulletin (Nate Silver) — FLIPR",
+        "method": ("three layers — polling averages; fundamentals; and expert "
+                   "ratings. Weight on expert ratings is roughly one-sixth of "
+                   "the forecast for congressional races with polling"),
+        "indep": "NO",
+        "note": ("NOT INDEPENDENT. FLIPR's default ('Deluxe') build feeds Cook, "
+                 "Inside Elections and Sabato ratings in as an input at roughly "
+                 "one-sixth weight. Its agreement with those columns is partly "
+                 "by construction and is not corroboration. Silver flags the "
+                 "recursion risk himself: if experts calibrate to his forecasts, "
+                 "'the entire process becomes somewhat recursive.'"),
+    },
+}
+
 
 def _die(msg: str, code: int = 2) -> "None":
     print(f"senate-ratings: ERROR: {msg}", file=sys.stderr)
@@ -269,9 +358,25 @@ def main() -> int:
     ap.add_argument("--changes", action="store_true", help="diff against the stored baseline")
     ap.add_argument("--moves", action="store_true",
                     help="rating moves Inside Elections itself reports (previous vs current)")
+    ap.add_argument("--sources", action="store_true",
+                    help="what each column is, and how independent it is")
     ap.add_argument("--json", action="store_true", help="emit JSON")
     ap.add_argument("--update-baseline", action="store_true", help="store current ratings")
     args = ap.parse_args()
+
+    if args.sources:
+        order = ["PVI"] + [c for c in CITED if c in SOURCES]
+        kinds = {"computed": "computed number", "judgment": "analyst judgment",
+                 "model": "published model", "aggregate": "unverified"}
+        print("Where each column comes from\n")
+        for c in order:
+            s = SOURCES[c]
+            print(f"{c} — {s['who']}")
+            print(f"  Kind: {kinds[s['kind']]}")
+            print(f"  How: {s['method']}")
+            print(f"  Independent of the others: {s['indep']}")
+            print(f"  {s['note']}\n")
+        return 0
 
     if args.moves:
         ie_data = fetch_ie()

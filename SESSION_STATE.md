@@ -23,6 +23,22 @@
 
 ---
 
+### Maintenance — September 19, 2026 — Source provenance for the ratings columns
+
+- **Philip, 2026-09-19: "It would be nice if you include an objective discussion about the sources for these numbers."** The table presents seven columns that look alike and are not: one is arithmetic, four are professional judgment, two are models, and one of those models consumes the judgment as an input. That is worth stating in the article, not just here.
+- **New standing section 7 in the report structure — "A note on the sources" — required every week.** `scripts/fetch-senate-ratings.py --sources` now emits the provenance mechanically (a `SOURCES` registry keyed by column, classifying each as **computed / judgment / model / aggregate** and recording its independence), so the note is generated rather than recalled.
+- **The findings, each verified against a primary source:**
+  - **PVI is the only computed column** — arithmetic on certified FEC totals, reproducible (we reproduced it; 9/9 matched).
+  - **Cook, IE, Sabato and RCP are analyst judgment.** Cook's own page lists the factors ("the state's political makeup, the candidates' strengths and weaknesses, the political environment in the state and nationally, and interviews with candidates and campaign professionals") but none of the four publishes how the factors are weighted. **The rating is the data** — there is nothing beneath it to reproduce. Sabato's factors are published in one line: "electoral history, polling, candidate quality, modeling, and reporting."
+  - **DDHQ and Silver publish real methodology.** DDHQ: a fundamentals ensemble (ridge regression, random forest, XGBoost) trained on 2016–2024 with a strict temporal holdout, a polling average weighted as `min(1, n/n₀)`, prediction-market prices from Polymarket and Kalshi, combined via the normal CDF and simulated with a single-factor probit for cross-race correlation. Silver's FLIPR is documented in comparable depth.
+  - **Silver is NOT an independent column, and this is the most important finding.** FLIPR's default Deluxe build takes Cook, Inside Elections and Sabato ratings as an input at **roughly one-sixth weight** for polled congressional races. Its agreement with those three is therefore partly by construction, not corroboration. Silver names the recursion risk himself: if experts look at his forecast to calibrate, "the entire process becomes somewhat recursive." Any prose treating Silver-agrees-with-Cook as two opinions is wrong.
+  - **DDHQ is the most independent column.** It uses neither expert ratings nor Cook PVI; its partisan prior is the most recent presidential margin adjusted for national swing.
+  - **RCP is genuinely unverifiable, and now labelled so.** `realclearpolitics.com` returns 403 to curl, to urllib with browser headers, and to the `read` tool's reader backend — unlike Inside Elections, where urllib succeeded. We therefore **do not know** whether the RCP column is independent judgment or a composite of the other forecasters, and the skill instructs the report to say so rather than implying it is a seventh opinion.
+- **Correction to note for the record:** I had earlier described IE's JSON as an "undocumented internal endpoint." Wrong — IE links it on its ratings page under an explicit **"API"** label, alongside an XML variant. It is a supported export, not a leak.
+- Gates green. No content published; this shapes the report that runs tomorrow.
+
+---
+
 ### Maintenance — September 19, 2026 — PVI: good prior, poor discriminator (the scout corrected me)
 
 - **Philip, 2026-09-19: "PVI seems out of touch."** I answered from a rank-correlation of my own construction (+0.23) and called PVI "the weakest predictor of the nine." A research pass found evidence that **cuts against my own framing**, and the reconciliation is more useful than either.
