@@ -7,10 +7,10 @@ author: Philip Huffman
 hero_desktop: "img/articles/69-the-obstacle-is-the-way_16x9.webp"
 hero_mobile: "img/articles/69-the-obstacle-is-the-way_4x5.webp"
 hero_alt: "A marble figure climbs a cracked marble wall that rises from dark water, the wall's fissures glowing warm gold and turning into a path under the climber's feet, midnight navy storm sky, gold dust motes."
-hero_caption: "The impediment to action advances action. What stands in the way becomes the way."
+hero_caption: "The impediment to action advances action. What stands in the way becomes the way. — Marcus Aurelius, Meditations 5.20, trans. Gregory Hays (2002)"
 ---
 
-"The impediment to action advances action. What stands in the way becomes the way." — Marcus Aurelius, *Meditations*, 5.20
+"The impediment to action advances action. What stands in the way becomes the way." — Marcus Aurelius, *Meditations*, 5.20 (trans. Gregory Hays, 2002), [text](https://en.wikiquote.org/wiki/Marcus_Aurelius)
 
 The United Nations told us this week that the world will fail to hold global heating to 1.5 degrees Celsius. The U.N. Environment Programme's new report finds that even under the most optimistic scenario, temperatures will rise at least 1.8 degrees, and UNEP Director Inger Andersen put the consequences plainly: "There is no good outcome if we remain above the 1.5" ([Democracy Now!, 2026](#sources)). The report's best remaining option is to exceed current climate goals on the road to net zero. The goal is not abandoned. The path is.
 
