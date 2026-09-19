@@ -95,7 +95,9 @@ tags:
  ## ✨ Quote of the Week
 
  >  *“The best time to plant a tree was 20 years ago. The second best time is now.”*
- — Chinese Proverb
+ — Anonymous American saying, not a Chinese proverb ([Quote Investigator](https://quoteinvestigator.com/2021/12/29/plant-tree/), [Barry Popik](https://barrypopik.com/blog/the_best_time_to_plant_a_tree))
+
+ *Attribution note: this is widely labelled a Chinese proverb, but no such proverb is known. Quote Investigator found “no substantive evidence” for a Chinese origin; the earliest trace is a Cleveland newspaper in March 1967, where a city councilman repeated it while explicitly declining credit. The “Chinese proverb” label only appears from 1985. Treat it as an anonymous modern adage.*
 
  
 

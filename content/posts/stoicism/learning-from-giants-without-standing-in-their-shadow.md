@@ -16,7 +16,7 @@ tags:
 I came across a quote earlier today that stopped me:
 
  >  *“Travel is never a matter of money, but of courage.”*
- — Paulo Coelho
+ — Paulo Coelho, *Aleph* (2011), in [Chapter 1](https://openlibrary.org/search/inside?q=%22Travel+is+never+a+matter+of+money%22)
 
  
 

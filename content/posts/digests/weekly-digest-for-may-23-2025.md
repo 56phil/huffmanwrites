@@ -36,7 +36,9 @@ lastmod: 2025-05-23T00:00:00Z
 ---
  📜 Quote of the Week
  “If you’re going through hell, keep going.”
- —Winston Churchill
+ — Misattribution; no source in Churchill ([Churchill Project](https://winstonchurchill.hillsdale.edu/fake-churchill-quote/), [Quote Investigator](https://quoteinvestigator.com/2014/09/14/keep-going/))
+
+ *Attribution note: this line is not Churchill's. It appears nowhere in the roughly 50 million published words by and about him, and is catalogued among the false attributions in “Churchill By Himself.” The earliest traceable appearance is an anonymous exchange in the Christian Science Sentinel, October 30, 1943 — two decades before it was first linked to Churchill. Treat it as apocryphal.*
 
  
 ---
