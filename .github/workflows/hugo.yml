@@ -88,6 +88,15 @@ jobs:
       - name: Check em-dash limit
         run: python3 scripts/check-emdashes.py --check
 
+      # Fail if a scheduled job's plist cannot be loaded. The weekly integrity
+      # check shipped with "--" inside an XML comment, which is illegal, so
+      # launchd refused the file and the job never ran — silently, for days,
+      # because bootstrap does not report it. A scheduled guard that never runs
+      # is worse than no guard: the intent feels satisfied. This also catches a
+      # missing schedule key and a reference to a script that does not exist.
+      - name: Check launchd schedules
+        run: python3 scripts/check-plists.py
+
       - name: Build with Hugo
         run: |
           hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"

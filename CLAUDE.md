@@ -80,6 +80,7 @@ There are no automated tests, linters, or a package.json. The "test" is a clean 
 - `future-pieces/` — draft essays (e.g. `fountain-pens.md` was drafted here before being published).
 - `pending/` — newsletter drafts awaiting send. `TEMPLATE.md` is the digest template; sent digests move to `pending/archive/`. Each pending file has `sendfox_subject` frontmatter for the SendFox API send.
 - `SESSION_STATE.md` — long-form project state, maintenance log, and architecture notes. **Read this at session start** to pick up continuity before asking "where were we?"
+- `SESSION_STATE_ARCHIVE.md` — every entry before September 2026, moved out verbatim on 2026-09-20 when the combined file reached 2,023 lines (reading it at session start meant reading three months of history to reach the current entry). Nothing was deleted. **Search it with `grep` when you need an earlier decision, commit hash, or rationale** — it is complete, and it is the only place those answers live.
 
 ## Conventions
 
