@@ -72,8 +72,6 @@ content/posts/investing/the-psychology-of-investing.md	11
 content/posts/investing/why-dollar-cost-averaging-beats-market-timing.md	10
 content/posts/stoicism/learning-from-giants-without-standing-in-their-shadow.md	6
 content/posts/stoicism/small-planet-big-responsibility.md	4
-content/posts/stoicism/stoic-saturday-1.md	6
-content/posts/stoicism/stoic-saturday-2.md	11
 content/posts/stoicism/the-responsibility-of-a-small-shining-world.md	11
 content/posts/stoicism/the-virtue-of-temperance.md	5
 content/posts/stoicism/to-save-a-world-together.md	13

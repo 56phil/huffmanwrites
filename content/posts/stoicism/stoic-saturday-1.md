@@ -13,7 +13,7 @@ lastmod: 2026-05-19
 
 "By looking forward to the coming of our sorrows we take the sting out of them when they come." — Seneca, *De Consolatione ad Marciam*, IX (trans. Aubrey Stewart, 1900), [text](https://en.wikisource.org/wiki/Of_Consolation:_To_Marcia)
 
-*This epigraph previously read "The man who has anticipated the coming of troubles takes away their power when they arrive," attributed to Seneca. That wording is not Seneca's: it appears in no Seneca text and in no published translation, and traces to a modern paraphrase circulating online since about 2017. It has been replaced with the actual passage. A loose paraphrase of this same line — "He robs present ills of their power who has perceived their coming beforehand" (trans. J. W. Basore, Loeb, 1932) — is also in circulation.*
+*This epigraph previously read "The man who has anticipated the coming of troubles takes away their power when they arrive," attributed to Seneca. That wording is not Seneca's: it appears in no Seneca text and in no published translation, and traces to a modern paraphrase circulating online since about 2017. It has been replaced with the actual passage. A loose paraphrase of this same line, "He robs present ills of their power who has perceived their coming beforehand" (trans. J. W. Basore, Loeb, 1932), is also in circulation.*
 
 Most people spend their lives avoiding the thought of failure. They treat anxiety as a signal to retreat or as a malfunction to be fixed. They assume that by ignoring the possibility of a disaster, they somehow insulate themselves from it.
 
@@ -21,7 +21,7 @@ This is a mistake.
 
 The pain of a setback is rarely just the event itself; it is the shock. The gap between your expectation of a smooth path and the reality of a wall. When you are surprised by a crisis, you lose your agency. You react with panic, frustration, or despair.
 
-Stoics use *premeditatio malorum*—the premeditation of evils—to close that gap.
+Stoics use *premeditatio malorum*, the premeditation of evils, to close that gap.
 
 This isn't pessimism. Pessimism is the belief that things will go wrong and that it matters. Premeditation is the strategic acknowledgment that things *can* go wrong, and the decision to be ready for it.
 

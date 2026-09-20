@@ -13,21 +13,21 @@ lastmod: 2026-05-19
 
 "By looking forward to the coming of our sorrows we take the sting out of them when they come." — Seneca, *De Consolatione ad Marciam*, IX (trans. Aubrey Stewart, 1900), [text](https://en.wikisource.org/wiki/Of_Consolation:_To_Marcia)
 
-*The epigraph in the first Stoic Saturday originally read "The man who has anticipated the coming of troubles takes away their power when they arrive," attributed to Seneca. That wording is not Seneca's — it appears in no Seneca text and in no published translation — and has been replaced with the actual passage.*
+*The epigraph in the first Stoic Saturday originally read "The man who has anticipated the coming of troubles takes away their power when they arrive," attributed to Seneca. That wording is not Seneca's: it appears in no Seneca text and in no published translation, and has been replaced with the actual passage.*
 
 We spend most of our lives cultivating a vision of how things *should* go. We build these mental architectures of success, smooth roads, and predictable outcomes. We treat the absence of crisis as the natural state of affairs, and we view the sudden appearance of a problem as a personal affront or a failure of planning.
 
-But this orientation is fragile. When we build our peace on the assumption of stability, we aren't actually peaceful; we are merely lucky. The moment the wind shifts—a health scare, a professional setback, a sudden conflict—the architecture collapses because it was never designed to hold the weight of reality.
+But this orientation is fragile. When we build our peace on the assumption of stability, we aren't actually peaceful; we are merely lucky. The moment the wind shifts (a health scare, a professional setback, a sudden conflict), the architecture collapses because it was never designed to hold the weight of reality.
 
-The Stoics practiced a different kind of architecture. They focused on the negative space. *Premeditatio Malorum*—the premeditation of evils—is not a pessimistic exercise in worrying. It is an act of intellectual honesty. It is the process of looking at your most cherished certainties and asking: "What if this disappears?"
+The Stoics practiced a different kind of architecture. They focused on the negative space. *Premeditatio Malorum*, the premeditation of evils, is not a pessimistic exercise in worrying. It is an act of intellectual honesty. It is the process of looking at your most cherished certainties and asking: "What if this disappears?"
 
 By visualizing the blow before it lands, you strip the event of its power to shock. You realize that while you cannot control the arrival of the storm, you can control the sturdiness of the house you've built. The goal isn't to live in fear, but to move through the world with a quiet confidence that comes from knowing you have already survived the worst-case scenario in your mind.
 
-When the blow eventually comes—and it always does—you don't panic. You don't ask "Why is this happening to me?" Instead, you recognize it as a known variable. You step into the crisis not as a victim of surprise, but as a practitioner of a known art.
+When the blow eventually comes, and it always does, you don't panic. You don't ask "Why is this happening to me?" Instead, you recognize it as a known variable. You step into the crisis not as a victim of surprise, but as a practitioner of a known art.
 
 **The Practice**
 
-This week, identify one thing you are currently "certain" about—a relationship, a project, a health status, or a financial cushion. Spend ten minutes in quiet contemplation imagining that this thing has been removed from your life. 
+This week, identify one thing you are currently "certain" about, a relationship, a project, a health status, or a financial cushion. Spend ten minutes in quiet contemplation imagining that this thing has been removed from your life.
 
 Do not dwell on the grief; instead, focus on the logistics of your response. Ask yourself: "If this were gone, what would my first three steps be? How would I maintain my character and my composure in the aftermath?"
 
