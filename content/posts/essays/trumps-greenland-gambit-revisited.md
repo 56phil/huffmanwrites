@@ -67,7 +67,7 @@ Real strategic interests (the radar at Pituffik, the minerals under Kvanefjeld, 
 
 [^8]: CNN. (2025, August 27). Denmark summons US envoy over report on covert American 'influence operations' in Greenland. https://www.cnn.com/2025/08/27/europe/denmark-summons-us-envoy-greenland-intl
 
-[^9]: NBC News. (2026, January 6). U.S. military action an option to acquire Greenland, White House says. https://www.nbcnews.com/politics/white-house/trump-open-using-military-acquire-greenland-denmark-territory-nato-rcna252669
+[^9]: NBC News. (2026, January 6). U.S. military action an option to acquire Greenland, White House says. https://www.nbcnews.com/politics/white-house/us-military-option-acquire-greenland-denmark-territory-nato-rcna252669
 
 [^10]: The Washington Post. (2026, January 8). Republicans push back on White House military threat toward Greenland. https://www.washingtonpost.com/politics/2026/01/08/republicans-trump-greenland/
 

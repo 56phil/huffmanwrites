@@ -17,7 +17,7 @@
        CI on every push, but the expensive checks (fetch every cited URL, verify
        every quotation against its own source) need network and are far too slow
        for the deploy path. Scheduled, they still catch rot in content nobody has
-       touched in months -- which is where every defect found on 2026-09-19 had
+       touched in months, which is where every defect found on 2026-09-19 had
        been sitting. -->
   <key>StartCalendarInterval</key>
   <dict>
