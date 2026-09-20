@@ -13,7 +13,10 @@ SKILL="$REPO/skills/ninety-days-report.md"
 LOG_DIR="$HOME/Library/Logs"
 OUT_LOG="$LOG_DIR/ninety-days-report.out.log"
 ERR_LOG="$LOG_DIR/ninety-days-report.err.log"
-STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
+# Timestamp each event as it happens: a single STAMP captured at start stamped
+# every line with the run's start time, so the log could not show how long the
+# two drafts, the hero generations, or the builds took.
+stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 
 # Provider routing: Claude Code appends /v1/messages to ANTHROPIC_BASE_URL,
 # so the base URL must NOT carry a /v1 suffix (Ollama serves Anthropic-format
@@ -46,7 +49,7 @@ PROMPT="${NINETY_DAYS_PROMPT:-Read $SKILL and follow it exactly. Draft both nine
 
 cd "$REPO"
 
-echo "$STAMP: starting ninety-days report run" >> "$OUT_LOG"
+echo "$(stamp): starting ninety-days report run" >> "$OUT_LOG"
 
 set +e
 claude -p "$PROMPT" \
@@ -57,7 +60,7 @@ claude -p "$PROMPT" \
 RC=$?
 set -e
 
-echo "$STAMP: run finished (exit $RC)" >> "$OUT_LOG"
+echo "$(stamp): run finished (exit $RC)" >> "$OUT_LOG"
 
 # Authoritative verification builds, run here rather than by the agent.
 # The agent's allow-list intentionally omits hugo: an exact-match rule denied
@@ -65,20 +68,25 @@ echo "$STAMP: run finished (exit $RC)" >> "$OUT_LOG"
 # is how the Sept 13 Senate run ended with the build never executed. Two
 # checks: the production build (what actually deploys) and the draft-inclusive
 # build (proves today's draft:true installments render).
-echo "$STAMP: running verification builds" >> "$OUT_LOG"
-for flags in "--gc --minify" "--gc --minify --buildDrafts"; do
+echo "$(stamp): running verification builds" >> "$OUT_LOG"
+# The drafts build renders to a scratch destination, not public/. public/ is
+# what deploys, and site-audit builds it with --cleanDestinationDir and then
+# crawls it — a draft page left there would be crawled as if it were live.
+DRAFTS_DEST="$(mktemp -d "${TMPDIR:-/tmp}/hugo-drafts-XXXXXX")"
+for flags in "--gc --minify" "--gc --minify --buildDrafts --destination $DRAFTS_DEST"; do
   set +e
   BUILD_OUT="$(hugo $flags 2>&1)"
   BUILD_RC=$?
   set -e
   if [ "$BUILD_RC" -ne 0 ]; then
-    echo "$STAMP: build FAILED [$flags] (exit $BUILD_RC)" >> "$OUT_LOG"
+    echo "$(stamp): build FAILED [$flags] (exit $BUILD_RC)" >> "$OUT_LOG"
     echo "$BUILD_OUT" >> "$ERR_LOG"
     [ "$RC" -eq 0 ] && RC=1
   else
-    echo "$STAMP: build OK [$flags]" >> "$OUT_LOG"
+    echo "$(stamp): build OK [$flags]" >> "$OUT_LOG"
   fi
 done
+rm -rf "$DRAFTS_DEST"
 
 # Unattended job: a non-zero exit used to leave nothing but a log line.
 # No-op on success. `|| true` keeps a missing/failing alert from replacing the

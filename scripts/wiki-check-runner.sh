@@ -16,7 +16,9 @@ ALERT="/Users/prh/Developer/huffmanwrites/scripts/alert-failure.sh"
 LOG_DIR="$HOME/Library/Logs"
 OUT_LOG="$LOG_DIR/wiki-check.out.log"
 ERR_LOG="$LOG_DIR/wiki-check.err.log"
-STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
+# Timestamp each event as it happens: a single STAMP captured at start stamped
+# every line with the run's start time, hiding how long the audit and push took.
+stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 
 # Provider routing: Claude Code appends /v1/messages to ANTHROPIC_BASE_URL,
 # so the base URL must NOT carry a /v1 suffix (Ollama serves Anthropic-format
@@ -42,7 +44,7 @@ PROMPT="${WIKI_CHECK_PROMPT:-Read $PROMPT_FILE and follow it exactly. Run the wi
 
 cd "$SB"
 
-echo "$STAMP: starting wiki check & fix run" >> "$OUT_LOG"
+echo "$(stamp): starting wiki check & fix run" >> "$OUT_LOG"
 
 set +e
 claude -p "$PROMPT" \
@@ -60,14 +62,14 @@ if [ "$RC" -eq 0 ]; then
   PUSH_RC=$?
   set -e
   if [ "$PUSH_RC" -ne 0 ]; then
-    echo "$STAMP: push failed (exit $PUSH_RC)" >> "$OUT_LOG"
+    echo "$(stamp): push failed (exit $PUSH_RC)" >> "$OUT_LOG"
     "$ALERT" "wiki-check" "$PUSH_RC" "push failed; see $OUT_LOG" || true
     exit "$PUSH_RC"
   fi
-  echo "$STAMP: push OK" >> "$OUT_LOG"
+  echo "$(stamp): push OK" >> "$OUT_LOG"
 fi
 
-echo "$STAMP: run finished (exit $RC)" >> "$OUT_LOG"
+echo "$(stamp): run finished (exit $RC)" >> "$OUT_LOG"
 
 # Unattended job: a non-zero exit used to leave nothing but a log line.
 # No-op on success. `|| true` keeps a missing/failing alert from replacing the

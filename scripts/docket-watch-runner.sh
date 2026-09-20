@@ -25,16 +25,20 @@ ALERT="$REPO/scripts/alert-failure.sh"
 LOG_DIR="$HOME/Library/Logs"
 OUT_LOG="$LOG_DIR/docket-watch.out.log"
 ERR_LOG="$LOG_DIR/docket-watch.err.log"
-STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
+# Timestamp each event as it happens, not once at start: a single STAMP stamped
+# every line with the run's start time, which hid how long a check took. For a
+# watch job that runs twice daily, "when did this actually look" is the whole
+# point of the log.
+stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 
-echo "$STAMP: starting docket check" >> "$OUT_LOG"
+echo "$(stamp): starting docket check" >> "$OUT_LOG"
 
 set +e
 /usr/bin/python3 "$CHECKER" >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e
 
-echo "$STAMP: finished (exit $RC)" >> "$OUT_LOG"
+echo "$(stamp): finished (exit $RC)" >> "$OUT_LOG"
 
 # No-op on success. `|| true` keeps a failing alert from masking the real code.
 "$ALERT" "docket-watch" "$RC" "see $OUT_LOG" || true

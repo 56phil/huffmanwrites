@@ -16,11 +16,14 @@ LOG_DIR="$HOME/Library/Logs"
 OUT_LOG="$LOG_DIR/site-audit.out.log"
 ERR_LOG="$LOG_DIR/site-audit.err.log"
 REPORT="$LOG_DIR/site-audit-report.md"
-STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
+# Timestamp each event as it happens: a single STAMP captured at start stamped
+# every line with the run's start time, so the log could not show how long the
+# build and crawl took.
+stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 
 cd "$REPO"
 
-echo "$STAMP: starting site audit" >> "$OUT_LOG"
+echo "$(stamp): starting site audit" >> "$OUT_LOG"
 
 # 0. Gallery pagination contract. The layout derives its page count from
 #    data/gallery.yml, but Hugo only builds /gallery/page/N/ when the stub
@@ -35,10 +38,10 @@ GALLERY_OUT="$(python3 "$GALLERY_GUARD" 2>&1)"
 GALLERY_RC=$?
 set -e
 if [ "$GALLERY_RC" -ne 0 ]; then
-  echo "$STAMP: gallery pagination FAILED (exit $GALLERY_RC)" >> "$OUT_LOG"
+  echo "$(stamp): gallery pagination FAILED (exit $GALLERY_RC)" >> "$OUT_LOG"
   echo "$GALLERY_OUT" >> "$ERR_LOG"
 else
-  echo "$STAMP: gallery pagination OK" >> "$OUT_LOG"
+  echo "$(stamp): gallery pagination OK" >> "$OUT_LOG"
 fi
 
 # 1. Clean build. --cleanDestinationDir removes stale output (Hugo does not
@@ -51,11 +54,11 @@ BUILD_OUT="$(hugo --gc --minify --cleanDestinationDir 2>&1)"
 BUILD_RC=$?
 set -e
 if [ "$BUILD_RC" -ne 0 ]; then
-  echo "$STAMP: build FAILED (exit $BUILD_RC)" >> "$OUT_LOG"
+  echo "$(stamp): build FAILED (exit $BUILD_RC)" >> "$OUT_LOG"
   echo "$BUILD_OUT" >> "$ERR_LOG"
   BUILD_STATUS="FAILED (exit $BUILD_RC)"
 else
-  echo "$STAMP: build OK" >> "$OUT_LOG"
+  echo "$(stamp): build OK" >> "$OUT_LOG"
   BUILD_STATUS="PASS"
 fi
 
@@ -73,7 +76,7 @@ set -e
 # but only as one broken link among many.
 [ "$GALLERY_RC" -ne 0 ] && RC=1
 
-echo "$STAMP: audit finished (exit $RC)" >> "$OUT_LOG"
+echo "$(stamp): audit finished (exit $RC)" >> "$OUT_LOG"
 
 # Unattended job: a non-zero exit used to leave nothing but a log line.
 # No-op on success. `|| true` keeps a missing/failing alert from replacing the

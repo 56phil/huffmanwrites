@@ -31,12 +31,16 @@ LOG="$HOME/Library/Logs/weekly-integrity.out.log"
 ERR="$HOME/Library/Logs/weekly-integrity.err.log"
 mkdir -p "$(dirname "$LOG")"
 
-STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
+# Stamp each phase as it runs. A single STAMP captured at start stamped every
+# phase header with the same second, so the log could not show which phase was
+# slow — and here the phases differ by orders of magnitude (the offline link
+# check is instant, the online sweep takes minutes and is the one that times out).
+stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 rc_total=0
 
 run() {
   local label="$1"; shift
-  echo "=== $label ($STAMP) ==="
+  echo "=== $label ($(stamp)) ==="
   # Capture, do NOT pipe. `cmd | tail` makes $? the exit status of tail, so a
   # failing check would report success — the same shape of bug as the gate that
   # reported OK while blind. Run it, keep its status, then show the tail.
