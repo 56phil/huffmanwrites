@@ -18,7 +18,7 @@ Below are formatted APA citations organized by which claim in the essay they sup
 
 ---
 
-## Claim 1: Hermes Agent — an open-source agent framework from Nous Research (memory, skills, delegation, cron)
+## Claim 1: Hermes Agent: an open-source agent framework from Nous Research (memory, skills, delegation, cron)
 
 **Nous Research. (2026).** *Hermes Agent documentation.* Retrieved May 21, 2026, from https://hermes-agent.nousresearch.com/docs/
 
@@ -50,11 +50,11 @@ Below are formatted APA citations organized by which claim in the essay they sup
 
 **[TRAINING] Wang, G., Xie, Y., Jiang, Y., Mandlekar, A., Xiao, C., Zhu, Y., Fan, L., & Anandkumar, A. (2023).** Voyager: An open-ended embodied agent with large language models. *arXiv preprint arXiv:2305.16291.* https://arxiv.org/abs/2305.16291
 
-- **Note:** Introduces a growing skill library where the agent encodes successful behaviors as reusable code and retrieves them for future tasks — conceptually identical to Hermes' skill creation and reuse mechanism. Supports "Every time we work through a difficult task... the agent can encode what we learned. Next time, it follows the recipe instead of improvising."
+- **Note:** Introduces a growing skill library where the agent encodes successful behaviors as reusable code and retrieves them for future tasks (conceptually identical to Hermes' skill creation and reuse mechanism). Supports "Every time we work through a difficult task... the agent can encode what we learned. Next time, it follows the recipe instead of improvising."
 
 **[TRAINING] Shinn, N., Cassano, F., Gopinath, A., Narasimhan, K., & Yao, S. (2023).** Reflexion: Language agents with verbal reinforcement learning. In *Advances in Neural Information Processing Systems*, 36. https://arxiv.org/abs/2303.11366
 
-- **Note:** Describes agents that learn from feedback, record corrections, and improve iteratively — mirroring Hermes' compound learning loop ("it records the correction and does not make that mistake again"). Use in "The Limits Remain" and "The Skills Feedback Loop" sections.
+- **Note:** Describes agents that learn from feedback, record corrections, and improve iteratively, mirroring Hermes' compound learning loop ("it records the correction and does not make that mistake again"). Use in "The Limits Remain" and "The Skills Feedback Loop" sections.
 
 ---
 
@@ -62,11 +62,11 @@ Below are formatted APA citations organized by which claim in the essay they sup
 
 **[CONFIRMED] Wu, Q., Bansal, G., Zhang, J., Wu, Y., Li, B., Zhu, E., Jiang, L., Zhang, X., Zhang, S., Liu, J., Awadalla, A. H., White, R. W., Burger, D., & Wang, C. (2023).** AutoGen: Enabling next-gen LLM applications via multi-agent conversation. *arXiv preprint arXiv:2308.08155.* https://arxiv.org/abs/2308.08155
 
-- **Note:** Canonical framework for multi-agent delegation — parent agents spawn subagents that work in isolated contexts and return summaries. Directly supports "Hermes can spawn subagents... to handle subtasks in parallel." Also addresses delegation patterns and trust boundaries. Use in "When to Delegate and When to Do It Yourself."
+- **Note:** Canonical framework for multi-agent delegation: parent agents spawn subagents that work in isolated contexts and return summaries. Directly supports "Hermes can spawn subagents... to handle subtasks in parallel." Also addresses delegation patterns and trust boundaries. Use in "When to Delegate and When to Do It Yourself."
 
 **[CONFIRMED] Chen, S., Sritharan, N., Wen, X., Zhang, C., Wang, X., & Wang, Y. (2026).** When the chain breaks: Interactive diagnosis of LLM chain-of-thought reasoning errors. *arXiv preprint arXiv:2603.21286.* https://arxiv.org/abs/2603.21286
 
-- **Note:** Analyzes how errors propagate through multi-step LLM reasoning chains — directly relevant to the essay's warning about subagents: "A subagent is a self-reporting system. It may claim to have uploaded a file... and be wrong." Use to ground the compound-error risk in "When to Delegate."
+- **Note:** Analyzes how errors propagate through multi-step LLM reasoning chains, directly relevant to the essay's warning about subagents: "A subagent is a self-reporting system. It may claim to have uploaded a file... and be wrong." Use to ground the compound-error risk in "When to Delegate."
 
 **[TRAINING] Chase, H. (2022).** *LangChain: Building applications with LLMs through composability* [Computer software]. https://github.com/langchain-ai/langchain
 
@@ -104,8 +104,8 @@ Below are formatted APA citations organized by which claim in the essay they sup
 
 ## Implementation Notes
 
-- All arXiv papers should be cited with their arXiv ID, in the form `arxiv.org/abs/<the paper's ID>` — e.g. `arxiv.org/abs/2310.08560`.
-- Where a paper has a published venue (e.g., CHI '19, UIST '23, NeurIPS), include both the conference proceedings and the arXiv preprint — the essay can use either.
+- All arXiv papers should be cited with their arXiv ID, in the form `arxiv.org/abs/<the paper's ID>`, e.g. `arxiv.org/abs/2310.08560`.
+- Where a paper has a published venue (e.g., CHI '19, UIST '23, NeurIPS), include both the conference proceedings and the arXiv preprint; the essay can use either.
 - The Hermes Agent docs and GitHub repo are the primary sources for Claim 1. No academic paper yet exists specifically about Hermes Agent (released 2026), so the documentation itself is the citable source.
 - For a "Sources" section at the end of the essay, group by theme: "Agent Architecture & Memory," "Skills & Learning," "Multi-Agent Delegation," "Human-AI Collaboration."
 

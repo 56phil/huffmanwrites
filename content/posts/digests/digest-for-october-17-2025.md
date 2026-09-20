@@ -20,7 +20,7 @@ tags:
 
  Last Monday was Indigenous Peoples Day, which means we once again pretended that reflection counts as redemption. Politicians tweeted something solemn, schools trotted out platitudes, and by early Tuesday we were back to bulldozing what was left.
 
- History books call it exploration. The truth is simpler — invasion with better PR. We arrived, took what wasn’t ours, renamed everything, and congratulated ourselves for our courage. The native peoples gave us corn, medicine, and balance. We gave them disease, treaties written in disappearing ink, and a few casinos to make the math look fair.
+ History books call it exploration. The truth is simpler: invasion with better PR. We arrived, took what wasn’t ours, renamed everything, and congratulated ourselves for our courage. The native peoples gave us corn, medicine, and balance. We gave them disease, treaties written in disappearing ink, and a few casinos to make the math look fair.
 
  Our greatest contribution as a species has been the ability to rewrite every atrocity as an achievement. We measure progress by what we’ve conquered, not by what we’ve cared for. And the land, patient as ever, keeps the receipts.
 
@@ -46,14 +46,14 @@ tags:
 
  
 ---
- **1.** Who was the first known European to set foot in North America—centuries before Columbus?
+ **1.** Who was the first known European to set foot in North America, centuries before Columbus?
 
   Show answer Leif Erikson, around the year 1000 CE, landing in what he called *Vinland* (likely Newfoundland).  
 
 ---
  **2.** What year did Christopher Columbus first arrive in the Caribbean, claiming the land for Spain?
 
-  Show answer 1492 — though he never set foot on the North American mainland.  
+  Show answer 1492, though he never set foot on the North American mainland.  
 
 ---
  **3.** What doctrine, rooted in papal decrees, gave Christian explorers the supposed right to claim non-Christian lands?
@@ -63,12 +63,12 @@ tags:
 ---
  **4.** Which 1830 U.S. law led to the forced relocation of tens of thousands of Indigenous people from their ancestral lands?
 
-  Show answer: The *Indian Removal Act*, signed by President Andrew Jackson — resulting in the *Trail of Tears*.  
+  Show answer: The *Indian Removal Act*, signed by President Andrew Jackson, resulting in the *Trail of Tears*.  
 
 ---
  **5.** Name one major way Native peoples resisted cultural erasure after European colonization.
 
-  Show answer Through preservation and revival of languages, oral histories, art, and governance traditions — many of which survive and thrive today.  
+  Show answer Through preservation and revival of languages, oral histories, art, and governance traditions, many of which survive and thrive today.  
 
 ---
  ## ✨ Quote of the Week

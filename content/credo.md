@@ -12,7 +12,7 @@ description = "The guiding principles behind Philip Huffman's work: Think Clearl
 
 ### Think Clearly
 
-Clarity is the foundation of effective action. In a world of noise, distraction, and misinformation, the ability to cut through complexity and see reality as it is—not as we wish it to be—is a superpower.
+Clarity is the foundation of effective action. In a world of noise, distraction, and misinformation, the ability to cut through complexity and see reality as it is (not as we wish it to be) is a superpower.
 
 Clear thinking requires:
 - **Intellectual honesty**: The willingness to confront uncomfortable truths
@@ -34,7 +34,7 @@ This principle is at the heart of *Unstuck* and *A Life Made Whole*—books that
 
 ### Love Deeply
 
-Love, in this context, means connection with intensity. It's the recognition that relationships—with people, with ideas, with the world—are what give life meaning and power.
+Love, in this context, means connection with intensity. It's the recognition that relationships (with people, with ideas, with the world) are what give life meaning and power.
 
 Loving deeply requires:
 - **Intensity**: The commitment to engage fully
@@ -51,7 +51,7 @@ These three principles form a cycle:
 2. **Live intentionally** to act on that understanding
 3. **Love deeply** to connect that action to meaning
 
-Together, they create a framework for a life well-lived—a life of purpose, connection, and continuous growth.
+Together, they create a framework for a life well-lived: a life of purpose, connection, and continuous growth.
 
 ## Share the Credo
 

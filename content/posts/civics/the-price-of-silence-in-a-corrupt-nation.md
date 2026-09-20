@@ -22,7 +22,7 @@ lastmod: 2025-05-02T00:00:00Z
 ---
  ## Feature Essay: **Silence Protects Nothing**
 
- >  *Every generation faces a choice: to confront the rot or to become part of it. In an age where corruption is cloaked in legality, resisting becomes not only a political act but a moral one. This is the anatomy of a kleptocracy — and a call to conscience.*
+ >  *Every generation faces a choice: to confront the rot or to become part of it. In an age where corruption is cloaked in legality, resisting becomes not only a political act but a moral one. This is the anatomy of a kleptocracy, and a call to conscience.*
 
  
 ---
@@ -49,17 +49,17 @@ lastmod: 2025-05-02T00:00:00Z
 
  
 
- When corruption becomes systemic, conscience demands more than quiet disapproval — it demands action. Kleptocracies do not collapse from exhaustion. They survive because citizens normalize their existence.
+ When corruption becomes systemic, conscience demands more than quiet disapproval; it demands action. Kleptocracies do not collapse from exhaustion. They survive because citizens normalize their existence.
 
  It begins silently, spreads quickly, and reaches critical stages before its symptoms are even recognized.
  If untreated, it is fatal.
 
- Resistance need not be grand — but it must be real.
+ Resistance need not be grand, but it must be real.
  The longer we accept corruption as inevitable, the harder it becomes to reclaim what is lost.
 
  **Silence protects nothing worth saving.**
 
- If this piece stirred something in you—don’t let it fade. Share it with someone who still believes we can do better. And if you’re willing, tell me what you see where you live: Is it corruption… or just business as usual?
+ If this piece stirred something in you, don’t let it fade. Share it with someone who still believes we can do better. And if you’re willing, tell me what you see where you live: Is it corruption… or just business as usual?
 
  
 ---
@@ -71,6 +71,6 @@ lastmod: 2025-05-02T00:00:00Z
 ---
  Coming Up Next Week: Justice
 
- Next week, we turn our attention to justice—a word too often twisted into something hollow or weaponized. We’ll strip it back to its roots, explore what it really means to live justly, and ask whether justice today is served, staged, or simply sold. From ancient philosophy to modern failure, we’ll seek clarity on one of civilization’s most essential—and endangered—ideals.
+ Next week, we turn our attention to justice, a word too often twisted into something hollow or weaponized. We’ll strip it back to its roots, explore what it really means to live justly, and ask whether justice today is served, staged, or simply sold. From ancient philosophy to modern failure, we’ll seek clarity on one of civilization’s most essential and endangered ideals.
 
  #

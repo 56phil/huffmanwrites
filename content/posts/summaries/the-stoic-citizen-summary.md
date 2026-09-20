@@ -22,18 +22,18 @@ tags:
 ## Executive Summary
 
 *The Stoic Citizen* applies ancient philosophy to the actual conditions of modern civic life: polarization, institutional distrust, and the erosion of shared reality.
-It argues that Stoicism is not a private consolation but a public discipline—a way of maintaining integrity under systems that reward fragmentation and outrage.
+It argues that Stoicism is not a private consolation but a public discipline: a way of maintaining integrity under systems that reward fragmentation and outrage.
 The core message: **citizenship is a practice of virtue, not a legal status.**
 
 
 ---
 ## 5 Core Sections
 
- - **Foundations** — The Stoic principles that undergird durable civic engagement: judgment, proportion, and the discipline of assent.
- - **Principles in Practice** — How to engage with difference without capitulation, and how to sustain conviction without contempt.
- - **The Citizen in Community** — The work of maintaining relationships across disagreement, and the cost of isolation.
- - **The Value of Virtue** — Why integrity matters even when the system does not reward it—and especially then.
- - **Letters to Future Citizens** — A series of direct addresses that extend the argument to readers not yet born, treating civic duty as intergenerational stewardship.
+ - **Foundations**: The Stoic principles that undergird durable civic engagement: judgment, proportion, and the discipline of assent.
+ - **Principles in Practice**: How to engage with difference without capitulation, and how to sustain conviction without contempt.
+ - **The Citizen in Community**: The work of maintaining relationships across disagreement, and the cost of isolation.
+ - **The Value of Virtue**: Why integrity matters even when the system does not reward it, and especially then.
+ - **Letters to Future Citizens**: A series of direct addresses that extend the argument to readers not yet born, treating civic duty as intergenerational stewardship.
 
 
 ---

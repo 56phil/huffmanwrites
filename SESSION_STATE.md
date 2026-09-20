@@ -6,6 +6,28 @@
 
 ---
 
+### Maintenance — September 20, 2026 — Em-dash sweep, fifth pass: every file at 7 or more, 167 to 19
+
+Per Philip: "do 7+".
+- **Twenty-one files sat at 7 or more counted em-dashes. 167 in, 19 out; 148 removed.** Corpus total: **379 → 235**. Baseline entries **38 → 17**. The highest remaining file is now **6**, so nothing is left at 7 or above. Fifth pass of the day, after 18+ (231 → 9), 15+ (161 → 15), 13+ (120 → 14), and 10+ (181 → 22).
+- **`content/credo.md` was in scope and needed special handling: it uses TOML `+++` frontmatter, not YAML `---`.** My first snapshot run mis-split it (the harness reported FRONTMATTER CHANGED and QUOTATIONS CHANGED 2→0 when nothing had in fact changed) because it only knew the `---` fence. The harness now splits on either fence. The file itself was edited correctly — the `+++` block is byte-identical, and the three pillars, all nine bullet items, the numbered cycle, and the book titles are unchanged. **A verification tool that assumes one frontmatter syntax invents failures on files using the other; two files in this repo use `+++`.**
+- **This pass went hardest at the misattribution and paraphrase guards, and all nine survived byte-for-byte** (verified against HEAD individually after the edits, then confirmed on the deployed site):
+  - `weekly-digest-for-may-23-2025.md` — the **Churchill misattribution guard**: `Misattribution; no source in Churchill` with both the Churchill Project and Quote Investigator URLs, plus the note naming `apocryphal`, the `Christian Science Sentinel, October 30, 1943` trace, the `50 million published words` figure, and `“Churchill By Himself.”` Both URLs verified as live `href`s in the rendered HTML.
+  - `on-proportion-summary.md` — a **third** fabricated-quotation repair I had not catalogued in earlier passes: the note recording that the page "formerly carried a different line … it was a fabricated paraphrase presented as a quotation," naming the fake wording and stating that no published translation contains it. Preserved word-for-word; only its dash pair became a comma pair, with the comma placed **outside** the closing quotation mark so the quoted span stays byte-identical.
+  - `the-stoic-citizen-summary.md` — the two-translation guard quoting both **Long** and **Hays** renderings of *Meditations* 6.6, with `The wording above matches neither and is a modern paraphrase.` Intact.
+  - `digest-for-stoic-saturday-2026-05-23.md` — `in Long's rendering` plus `The wording above is a modern paraphrase, not a translation.` Intact.
+  - `digest-for-september-19-2025.md` — the **Graham no-locus guard**: `no locus found` and `returns no Graham primary source` with its search URL. Intact.
+  - `digest-for-october-17-2025.md` — the Tacitus citation (`*Agricola* 30`, the speech of Calgacus, `trans. Oxford revision, 1900`, Gutenberg URL) and the Orwell epigraph credit. Intact.
+  - `prh-digest-for-mid-june-2025.md` — Havel, `*Disturbing the Peace*` (trans. Paul Wilson, 1990). Intact.
+  - `on-proportion-summary.md` — `4.18 (trans. George Long, 1862)` with the Book IV Wikisource URL. Intact.
+  - Plus the signature-line convention (`— Phil`) preserved in the May 9 and Stoic Saturday digests, matching compliant siblings.
+- **The word-level check caught a hedge word this time, not a connective.** In `how-47-could-improve.md`, converting `shared priorities — like infrastructure, veterans' care, or the opioid crisis — he can` to parentheses produced `shared priorities (infrastructure, veterans' care, or the opioid crisis)`, dropping **"like"**. That changes the sentence from *examples of shared priorities* to *the priorities themselves* — a meaning shift, not a punctuation change. Restored as `(like infrastructure, …)`. Third consecutive pass where the only surviving defect class was a word moved in a punctuation edit; the token-multiset comparison is the check that finds them.
+- **One editor ran `git stash`/`git stash pop` while siblings were mid-edit**, which briefly reverted the whole working tree. It restored cleanly, but I did not take that on trust: the full-corpus gate was re-run (235 counted, 17 over the limit) and the four earlier passes' files were spot-checked (`sand-county` 1, `cosmos` 3, `starstuff` 0, `digest-for-november-7` 3) to confirm no reduction had been rolled back. `git status` shows exactly the 21 content files plus the baseline — nothing else touched.
+- **Verified.** Invariant harness over all twenty-one (frontmatter SHA, URL set, footnote defs/refs, quotation-span hash, en-dash count, counted dashes, alphanumeric token multiset vs HEAD): **ALL INVARIANTS HELD**. All nine guard blocks confirmed present and unchanged. Gates green: `check-emdashes --check` (17 recorded, consistent), `check-quotes`, `check-links --check`, `check-render-integrity` (441 pages), `check-gallery-pages`; clean `hugo --gc --minify` (**383 pages**). Twelve pages rendered in a browser and read back — dashes within limit, no doubled punctuation, no empty parentheses — including the `credo` page (three pillars and both rewritten parentheticals present).
+- **Where this stands after five passes:** corpus **1,237 → 235** (81% reduction); top of the distribution flattened from 24 to 6; baseline debt **97 → 17**. **17 files** remain, all in the 4–6 band (with one at 3 already compliant). The ratchet prevents growth; the next natural threshold is "every file over the limit," which is a 17-file finish.
+
+---
+
 ### Maintenance — September 20, 2026 — Em-dash sweep, fourth pass: every file at 10 or more, 181 to 22
 
 Per Philip: "Go natural." — meaning the next threshold I had named (10+).

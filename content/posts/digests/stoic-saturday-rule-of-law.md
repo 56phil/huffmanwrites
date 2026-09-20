@@ -50,7 +50,7 @@ Authoritarians don’t start with tanks in the streets. They start with **three 
 1. **Declare the system rigged.** 
    "*If you lose, it’s fraud. If you win, it’s democracy.*"
 2. **Punish the truth-tellers.** 
-   Journalists, judges, whistleblowers—anyone who says "*Actually, no.*"
+   Journalists, judges, whistleblowers: anyone who says "*Actually, no.*"
 3. **Make obedience the only safe option.** 
    "*If you speak up, you’re a traitor. If you stay quiet, you’re complicit.*"
 
@@ -58,11 +58,11 @@ Authoritarians don’t start with tanks in the streets. They start with **three 
 - **Hungary (2010–2020):** 
   Viktor Orbán used "legal" means to dismantle checks and balances, then called it "*illiberal democracy.*"
 - **Turkey (2016–present):** 
-  Erdoğan purged judges, journalists, and academics after a failed coup—then rewrote the constitution to make it permanent. 
+  Erdoğan purged judges, journalists, and academics after a failed coup, then rewrote the constitution to make it permanent. 
 - **The U.S. (2016–present):** 
   "*Lock her up*" wasn’t just a chant. It was a **test**. And the test was passed.
 
-The playbook works because **most people would rather keep their heads down than risk their necks**. That’s human nature. But Stoicism isn’t about being human—it’s about **being better than that**. 
+The playbook works because **most people would rather keep their heads down than risk their necks**. That’s human nature. But Stoicism isn’t about being human. It’s about **being better than that**. 
 
 ---
 
@@ -72,7 +72,7 @@ The playbook works because **most people would rather keep their heads down than
 Yes, it is. The moment you accept that the law only applies to *other* people, you’ve already lost.
 
 **Action:** 
-Pick **one** thing—a local election, a school board meeting, a court case—and show up. Not as a hero. As a **citizen**. 
+Pick **one** thing (a local election, a school board meeting, a court case) and show up. Not as a hero. As a **citizen**. 
 
 #### 2. Refuse to Normalize the Abnormal 
 "*It’s just politics.*" 
@@ -91,7 +91,7 @@ Build **parallel systems** (mutual aid networks, local media, independent courts
 ---
 
 ### The Hard Truth 
-The rule of law isn’t a **philosophical ideal**. It’s a **fragile agreement**—one that only holds if enough people **insist on it**.
+The rule of law isn’t a **philosophical ideal**. It’s a **fragile agreement**: one that only holds if enough people **insist on it**.
 
 You don’t have to be a revolutionary. You just have to **stop pretending this is normal**. 
 

@@ -11,13 +11,13 @@ hero_caption: "Liberty doesn't vanish all at once — it fades quietly, with our
 lastmod: 2025-04-11T00:00:00Z
 ---
 
-This week, I’ve been thinking about what we’re losing—and why. Not just in headlines, but in values. Not just freedom on paper, but liberty in practice.
+This week, I’ve been thinking about what we’re losing, and why. Not just in headlines, but in values. Not just freedom on paper, but liberty in practice.
 
  Thomas Jefferson once said that&nbsp;*“The natural progress of things is for liberty to yield, and government to gain ground.”*&nbsp;It was a warning. And we’re living in the middle of what happens when that warning goes unheeded.
 
- Liberty doesn’t vanish all at once. It fades. Quietly. Gradually. With every compromise we make in the name of safety, convenience, or comfort. The danger isn’t always in the laws—it’s in the silence. The normalization. The learned helplessness.
+ Liberty doesn’t vanish all at once. It fades. Quietly. Gradually. With every compromise we make in the name of safety, convenience, or comfort. The danger isn’t always in the laws. It’s in the silence. The normalization. The learned helplessness.
 
- This week’s long-form article,&nbsp;**[*The Erosion of Liberty: How We Got Here—and What We Must Do About It*](/posts/civics/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it/)**, is a look at how we got here—and what it will take to pull us back. Not slogans. Not outrage. But participation, vigilance, and grit.
+ This week’s long-form article,&nbsp;**[*The Erosion of Liberty: How We Got Here, and What We Must Do About It*](/posts/civics/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it/)**, is a look at how we got here and what it will take to pull us back. Not slogans. Not outrage. But participation, vigilance, and grit.
 
  Because the price of liberty is more than vigilance.
  It’s attention.
@@ -35,7 +35,7 @@ This week, I’ve been thinking about what we’re losing—and why. Not just in
  
 ---
  
- - 🖊️&nbsp;**Behind the Scenes**: I’ve been practicing handwritten signatures with my new Lamy 2000 fountain pen—because even how we sign our names should reflect something deeper.
+ - 🖊️&nbsp;**Behind the Scenes**: I’ve been practicing handwritten signatures with my new Lamy 2000 fountain pen, because even how we sign our names should reflect something deeper.
  
  
 ---
@@ -52,7 +52,7 @@ This week, I’ve been thinking about what we’re losing—and why. Not just in
  ### 🎯 Final Thought:
 
  Freedom won’t protect itself.
- We have to show up for it—every day, in ways big and small.
+ We have to show up for it every day, in ways big and small.
  That’s the price. And it’s worth paying.
  Next week we'll be working on the foundations of integrity,
 

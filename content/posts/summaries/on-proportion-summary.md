@@ -21,17 +21,17 @@ tags:
 ## Executive Summary
 
 *On Proportion* examines the lost discipline of matching response to scale: knowing when a situation demands attention and when it demands inattention, when intervention is warranted and when silence is the better instrument.
-It treats proportion not as moderation but as judgment—the capacity to sense the true size of an event and to resist the distortions of urgency, outrage, and habit.
+It treats proportion not as moderation but as judgment: the capacity to sense the true size of an event and to resist the distortions of urgency, outrage, and habit.
 The core message: **the right-sized response is not a compromise. It is a precision.**
 
 
 ---
 ## 4 Core Movements
 
- - **Formation** — How proportion is learned: through pattern, through failure, and through the slow calibration of experience.
- - **Application** — The work of deploying proportion in real time, when the pressure is on and the measure is unclear.
- - **Cost** — What proportion demands of the person who practices it: restraint, patience, and the willingness to be misunderstood.
- - **Reckoning** — The long arc: how proportion compounds over time, and how its absence compounds faster.
+ - **Formation**: How proportion is learned: through pattern, through failure, and through the slow calibration of experience.
+ - **Application**: The work of deploying proportion in real time, when the pressure is on and the measure is unclear.
+ - **Cost**: What proportion demands of the person who practices it: restraint, patience, and the willingness to be misunderstood.
+ - **Reckoning**: The long arc: how proportion compounds over time, and how its absence compounds faster.
 
 
 ---
@@ -62,7 +62,7 @@ The life that meets each moment with the response it deserves, and no more.
 >  *“How much trouble he avoids who does not look to see what his neighbor says or does or thinks, but only to what he does himself, that it may be just and pure.”*
 — Marcus Aurelius, *Meditations* 4.18 (trans. George Long, 1862), [text](https://en.wikisource.org/wiki/The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_IV)
 
-*Attribution note: this page formerly carried a different line — “How much trouble he has given himself, and how much trouble he has given others, who is not satisfied with the limits assigned to him” — attributed to Marcus Aurelius. No passage in the Meditations contains that wording, and no published translation does; it was a fabricated paraphrase presented as a quotation. It has been replaced with the genuine 4.18 passage, which shares its rhetorical shape.*
+*Attribution note: this page formerly carried a different line, “How much trouble he has given himself, and how much trouble he has given others, who is not satisfied with the limits assigned to him”, attributed to Marcus Aurelius. No passage in the Meditations contains that wording, and no published translation does; it was a fabricated paraphrase presented as a quotation. It has been replaced with the genuine 4.18 passage, which shares its rhetorical shape.*
 
 
 
