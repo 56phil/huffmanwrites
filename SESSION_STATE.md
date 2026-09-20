@@ -12,6 +12,25 @@
 
 ---
 
+### Maintenance — September 20, 2026 — The attribution debt cleared: 68 exemptions to zero, and the citation rule now stands alone
+
+Per Philip: "Then, do two" — the 18 attributions with no checkable source.
+- **The size of the debt was measured, not assumed.** `quote-baseline.txt` held **68** entries, but that is the number of *exemptions*, not the number of problems. Emptying it and running the gate showed the real figure: **18 attributions across 15 files** that would fail. The other 50 already satisfied the rule and were merely grandfathered. **The baseline is now empty: `check-quotes.py` passes with 0 exemptions, and `--online` verified all 52 epigraph links.**
+- **Two shapes, and they needed different fixes.** Thirteen were bare credits — a real quotation, a real author, no work, no year, no link (`— Carl Sagan`). Five already named a work and only lacked a URL (`— Preamble, 1787`). The first needed sources found; the second needed a link added.
+- **Every URL was fetched and confirmed myself, in both directions** — that the URL returns 200, and that the page contains *that file's own* quoted wording. Two scouts did the searching; I re-verified all twelve of their links independently rather than trusting the reports, and re-ran the authoritative `--file --online` gate on all 15 files.
+- **Four attributions were materially wrong and are now corrected rather than decorated:**
+  - **Dweck, "Becoming is better than being"** was presented as her own aphorism. Quote Investigator documents her actual sentence in *Mindset*: "There was a saying in the 1960s that went: 'Becoming is better than being.'" **She gives it an anonymous attribution; it is not her coinage.** This is the same failure class as the shipped "O'Toole" and "George Long" defects — an attribution naming an author the source does not name. The page now says so.
+  - **Brach, "The boundary to what we can accept…"** is in *Radical Acceptance*, but **she records it as something a teacher said to her at a retreat**, not as her own line. The attribution now says that.
+  - **Tyson** — the epigraph read *"We are not figuratively, but literally stardust,"* which is **not in *Astrophysics for People in a Hurry***, the book the page summarizes. Replaced with the book's actual sentence (*"We are stardust brought to life…"*, ch. 1), verified at source. An epigraph that reads as a quotation from the book under review must be one.
+  - **Marcus Aurelius 6.21** in the Sept 19 Stoic Saturday — the site quoted *"convince or shew me"*, which **exists in no linkable text**: Wikisource/Long reads *"convince me and show me"*, and openlibrary full-text returned **zero hits** for the site's wording. Handled with the documented `stoic-backgammon` pattern: the paraphrase is labelled, and the sourced Long rendering is quoted beside it.
+- **Three compressions are now labelled as compressions** rather than passed off as verbatim: the Orwell *1984* line (the novel interrupts it with "ran the Party slogan"), the Madison line (labelled "Adapted from"; Federalist 51 actually reads "If men were angels"), and the Sagan *Pale Blue Dot* epigraph, whose ellipsis **joins two passages from the same chapter** rather than one continuous sentence.
+- **A URL-shape bug found by the gate, not by me.** `archive.org/.../pale blue dot(1)_djvu.txt` — the literal parentheses make the gate's URL extractor truncate at `dot(1` and report HTTP 404. Percent-encoded (`%281%29`) it verifies clean. **Literal parens in a URL are hostile to extraction; encode them.**
+- **One wrong-URL paste caught in my own edit**: I briefly put the Holiday archive link on the Dweck epigraph. The per-file "does this URL contain this file's quote" check caught it immediately. Recorded because it is exactly the fabrication class this repo has shipped before, and the check is what makes it survivable.
+- **A 42nd test locks the result:** `test_the_exemption_baseline_stays_empty` fails if anyone re-adds an exemption. An exemption is a promise to look later, and 68 of them went unlooked-at for months — which is how a fabricated attribution shipped.
+- **Verified:** `check-quotes` passes with **0 pre-rule exemptions**; `--online` verified 52 epigraph links; 42 gate tests pass; all corpus gates green; clean 383-page build. The nine corrected pages were rendered in a browser and read back — citations live, no punctuation artifacts.
+
+---
+
 ### Maintenance — September 20, 2026 — Added a plist parse gate, and split SESSION_STATE at the September boundary
 
 Two follow-ups from the launchd finding, both done in one pass.

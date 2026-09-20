@@ -51,7 +51,7 @@ Read the opening meditation slowly. Read it more than once. Then ask what it cha
 
 ---
 > *"Look again at that dot. That's here. That's home. That's us."*
-— Carl Sagan
+— Carl Sagan, *Pale Blue Dot* (1994), ch. "You Are Here", [full text](https://archive.org/download/pale-blue-dot-1/pale%20blue%20dot%281%29_djvu.txt)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

@@ -74,7 +74,7 @@ tags:
  ## ✨ Quote of the Week
 
   >  "Who controls the past controls the future: who controls the present controls the past."
- — *George Orwell, 1984*
+ — *George Orwell, 1984*, [Wikiquote text](https://en.wikiquote.org/wiki/Nineteen_Eighty-Four). Quoted as the Party slogan; the novel runs it *"Who controls the past," ran the Party slogan, "controls the future: who controls the present controls the past."*
 
  
 

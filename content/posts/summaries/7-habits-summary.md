@@ -51,7 +51,7 @@ Read it skeptically. Skip the anecdotes. Take the framework seriously.
 
 ---
 > *"Most people do not listen with the intent to understand; they listen with the intent to reply."*
-— Stephen Covey
+— Stephen Covey, *The 7 Habits of Highly Effective People* (1989), [Wikiquote text](https://en.wikiquote.org/wiki/Stephen_Covey)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

@@ -320,6 +320,20 @@ class TestCorpusIntegration(unittest.TestCase):
         e2 = {"path": Path("x.md"), "text": "a different quotation", "attribution": "A"}
         self.assertNotEqual(sig, cq.signature(e2))
 
+    def test_the_exemption_baseline_stays_empty(self):
+        # The 68 grandfathered attributions were all repaired on 2026-09-20:
+        # each names its work and carries a URL containing the wording. An
+        # exemption is a promise to look later, and these went unlooked-at for
+        # months — which is how a fabricated attribution shipped. This asserts
+        # the debt is not quietly re-incurred: a new entry here means someone
+        # grandfathered an uncheckable citation instead of fixing it.
+        exemptions = cq.load_baseline()
+        self.assertEqual(
+            exemptions, {},
+            f"{len(exemptions)} exemption(s) re-added to quote-baseline.txt; "
+            "repair the citation instead, or justify the exemption in the commit",
+        )
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])

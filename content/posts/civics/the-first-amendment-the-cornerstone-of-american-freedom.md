@@ -14,7 +14,7 @@ hero_caption: "The First Amendment is not a favor granted by government. It is a
 ---
 
 > *"If there be any among us who would wish to dissolve this Union or to change its republican form, let them stand undisturbed as monuments of the safety with which error of opinion may be tolerated where reason is left free to combat it."*
-— Thomas Jefferson, First Inaugural Address, 1801
+— Thomas Jefferson, First Inaugural Address, 1801, [Avalon Project text](https://avalon.law.yale.edu/19th_century/jefinau1.asp)
 
 ---
 

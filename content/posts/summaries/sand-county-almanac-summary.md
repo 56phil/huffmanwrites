@@ -51,7 +51,7 @@ Read it slowly. The almanac sections train the kind of attention the land ethic 
 
 ---
 > *"A thing is right when it tends to preserve the integrity, stability, and beauty of the biotic community. It is wrong when it tends otherwise."*
-— Aldo Leopold
+— Aldo Leopold, *A Sand County Almanac* (1949), p. 224-225, [quoted at Wikiquote](https://en.wikiquote.org/wiki/Aldo_Leopold)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

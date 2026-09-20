@@ -14,7 +14,7 @@ hero_caption: "The Constitution is not a list of suggestions. It is the operatin
 ---
 
 > *"We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America."*
-— Preamble, 1787
+— Preamble, 1787, [National Archives transcript](https://www.archives.gov/founding-docs/constitution-transcript)
 
 ---
 

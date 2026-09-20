@@ -51,7 +51,8 @@ What stays with you: the fixed mindset person is not weak. They are protecting s
 
 ---
 > *"Becoming is better than being."*
-— Carol Dweck
+— Carol Dweck, *Mindset: The New Psychology of Success* (2006), [quoted at Goodreads](https://www.goodreads.com/quotes/548058-becoming-is-better-than-being)
+— Dweck gives this an anonymous attribution: "There was a saying in the 1960s that went: 'Becoming is better than being.'" It is not her coinage ([Quote Investigator](https://quoteinvestigator.com/2022/11/02/becoming/)).
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

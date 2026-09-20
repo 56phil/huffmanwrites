@@ -51,7 +51,7 @@ Read it for the science, which holds up. Read it for the civic argument, which i
 
 ---
 > *"The question is whether any civilization can wage relentless war on life without destroying itself, and without losing the right to be called civilized."*
-— Rachel Carson
+— Rachel Carson, *Silent Spring* (1962; Houghton Mifflin Harcourt ed., 2002), [quoted at Lib Quotes](https://libquotes.com/rachel-carson/quote/lbn3n1j)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

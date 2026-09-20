@@ -118,7 +118,7 @@ tags:
  ## ✨ Quote of the Week
 
  “Because we are not angels, our power must be bound by conscience before it is bound by law.”
- — Adapted from James Madison, Federalist No. 51
+ — Adapted from James Madison, Federalist No. 51, [Avalon Project text](https://avalon.law.yale.edu/18th_century/fed51.asp). Madison's sentence runs *"If men were angels, no government would be necessary"*; the line above is a paraphrase.
 
  
 ---

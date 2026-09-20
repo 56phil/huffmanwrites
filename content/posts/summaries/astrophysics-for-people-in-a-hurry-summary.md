@@ -50,8 +50,8 @@ Tyson's prose also has a register (enthusiastic, slightly self-delighted) that n
 Read it for the cosmic perspective chapter alone. The argument that astrophysics is not an escape from human concerns but a deepening of them is one worth having.
 
 ---
-> *"We are not figuratively, but literally stardust."*
-— Neil deGrasse Tyson
+> *"We are stardust brought to life, then empowered by the universe to figure itself out—and we have only just begun."*
+— Neil deGrasse Tyson, *Astrophysics for People in a Hurry* (2017), ch. 1, [Wikiquote text](https://en.wikiquote.org/wiki/Neil_deGrasse_Tyson)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

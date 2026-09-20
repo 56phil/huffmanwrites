@@ -61,7 +61,7 @@ Read it for the baloney detection kit. Keep it for the argument that wonder and 
 
 ---
 > *"The candle flame gutters. Its little pool of light trembles. Darkness gathers. The demons begin to stir."*
-— Carl Sagan
+— Carl Sagan, *The Demon-Haunted World* (1995), ch. 2, [full text](https://archive.org/download/carl-sagan-the-demon-haunted-world-science-as-acandle-in/CarlSagan-TheDemon-hauntedWorld-ScienceAsACandleIn_djvu.txt)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

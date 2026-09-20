@@ -51,7 +51,7 @@ Read it alongside *Meditations*. Marcus spent twelve books of private journals t
 
 ---
 > *"Ego is the enemy of what you want and of what you have."*
-— Ryan Holiday
+— Ryan Holiday, *Ego Is the Enemy* (2016), [full text](https://archive.org/download/ego-is-the-enemy_202405/Ego%20is%20the%20enemy_djvu.txt)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

@@ -80,7 +80,7 @@ hero_caption: "No one can save the world alone. But no one should feel alone in 
 
  And more than ever, it’s worth the effort, not just to endure it, but to&nbsp;*cherish*&nbsp;it.
 
- >  “The Earth is the only world known so far to harbor life… it underscores our responsibility to deal more kindly with one another, and to preserve and cherish the pale blue dot, the only home we've ever known.” — Carl Sagan
+ >  “The Earth is the only world known so far to harbor life… it underscores our responsibility to deal more kindly with one another, and to preserve and cherish the pale blue dot, the only home we've ever known.” — Carl Sagan, *Pale Blue Dot* (1994), [full text](https://archive.org/download/pale-blue-dot-1/pale%20blue%20dot%281%29_djvu.txt). The ellipsis joins two passages from the same chapter, not a continuous sentence.
 
  
 

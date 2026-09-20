@@ -51,7 +51,7 @@ Read it alongside Leopold. Leopold gives you the ethical framework; Kolbert give
 
 ---
 > *"Though it might be nice to imagine there once was a time when man lived in harmony with nature, it's not clear that he ever really did."*
-— Elizabeth Kolbert
+— Elizabeth Kolbert, *The Sixth Extinction: An Unnatural History* (2014), [quoted at Goodreads](https://www.goodreads.com/quotes/1342763-though-it-might-be-nice-to-imagine-there-once-was)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

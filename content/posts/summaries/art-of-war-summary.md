@@ -51,7 +51,7 @@ What Sun Tzu understood, and what most people miss, is that strategy is a form o
 
 ---
 > *"Supreme excellence consists in breaking the enemy's resistance without fighting."*
-— Sun Tzu
+— Sun Tzu, *The Art of War*, ch. III §2 (trans. Lionel Giles, 1910), [text](https://www.gutenberg.org/cache/epub/132/pg132.txt)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
