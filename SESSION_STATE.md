@@ -24,6 +24,25 @@
 - **Not violations, checked rather than assumed:** the `em-dash` counts in these files (11 and 6) are concentrated in the frontmatter-adjacent epigraph/correction apparatus and in the site-wide `See you next Saturday. — Phil` signoff, which every Stoic Saturday post uses — the same convention as the `## Sources` `— Phil` separators. The 3-per-file limit targets prose, and rewriting the signoff would break a section convention for no reader benefit. Left as written.
 - Gate `check-quotes.py --file` re-run on both files after the edit (each: 1 attribution, checkable); clean build; `check-render-integrity.py` OK. Committed as a separate maintenance commit (`e8dbd56`) — the one-commit rule binds *publishes*, and this is not one.
 
+### Maintenance — September 20, 2026 — Em-dash sweep: the six worst offenders
+
+- **Reduced the six highest em-dash counts in the corpus from 307 prose dashes to 6**, all six now inside the house limit of 3 (`CLAUDE.md`: "no more than 3 per file; prefer commas, colons, semicolons, or splitting sentences"). Six parallel editors, one file each, punctuation-only edits.
+
+| File | Before | After (prose) | Protected dashes left |
+|---|---|---|---|
+| `essays/fountain-pens.md` | 75 | 2 | — |
+| `essays/AI.md` | 74 | 2 | 1 blockquote (correction notice), 1 bibliography |
+| `essays/the-2026-senate-map-a-race-by-race-guide.md` | 60 | 0 | — |
+| `civics/the-erosion-of-liberty…md` | 39 | 1 | 1 leading-dash attribution (Jefferson) |
+| `investing/the-ai-investment-bubble.md` | 31 | 0 | — |
+| `essays/peter-thiel-and-the-contrarians-revenge.md` | 28 | 1 | 2 inside a verbatim Thiel quotation |
+
+- **Nothing but punctuation changed, proven three ways.** (1) The word multiset (lowercased, punctuation-stripped) is **identical to `HEAD` for all six files** — zero words added, zero removed. (2) Frontmatter SHA-256 unchanged for all six. (3) Per file, the URL set, footnote-definition list, footnote-reference list, and a SHA-256 over every quoted span are byte-identical to a pre-edit snapshot.
+- **Two classes of dash were deliberately not touched, because they are not prose.** (1) `—` inside a **verbatim quotation** — the Thiel "franchise to women — two constituencies… libertarians —" line in `peter-thiel…md`, whose two interior dashes sit inside a sourced quotation that `check-quotes.py` would flag if altered; confirmed present in the rendered HTML. (2) **Citation apparatus** — leading-dash attribution lines, `## Sources`/`## References` bibliographies, and the `AI.md` correction-notice blockquote.
+- **No `quote-baseline.txt` exemption was withdrawn.** The pre-rule count is **68 before and after** — the signal that matters, since the baseline is keyed by `file + hash of the quoted text`, so a prose-only edit leaves an exemption standing. `the-erosion-of-liberty…md` holds the only exemption among the six (the Jefferson letter) and it survives because its attribution wording is unchanged.
+- **Method note.** The word-token drop in each file (e.g. fountain-pens 5,073 → 5,000) is mechanical: a spaced em-dash is its own whitespace-delimited token, so `X — Y` → `X, Y` removes exactly one token. The multiset comparison is the control proving no content was lost. Rendered counts run higher than source counts because the template injects prev/next post titles that themselves contain an em-dash — not article text.
+- Gate: `check-quotes.py` (201 files, 61 attributions, 68 pre-rule), `check-links.py --check`, clean `hugo --gc --minify` (381 pages), `check-render-integrity.py` (438 pages) — all exit 0. Each file re-read in built HTML to confirm the article body carries only the intended dashes.
+
 ---
 
 ### Maintenance — September 19, 2026 — Citation integrity: a shipped fabrication, and the gate that was blind to it
