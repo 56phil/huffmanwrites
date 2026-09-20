@@ -22,7 +22,7 @@ tags:
 
  We all have a diet. Not just of food, but of thoughts, habits, and attention. Every day, we choose what to give our time and energy to. And here’s the truth: what you feed, grows.
 
- Scroll through social media for hours and you’re feeding distraction. Watch the news on repeat and you’re feeding anxiety. Spend time with your family, read a book, or write a page, and you’re feeding connection and growth. Like it or not, the results are predictable—seeds always sprout into what they are meant to become.
+ Scroll through social media for hours and you’re feeding distraction. Watch the news on repeat and you’re feeding anxiety. Spend time with your family, read a book, or write a page, and you’re feeding connection and growth. Like it or not, the results are predictable: seeds always sprout into what they are meant to become.
 
  
 ---
@@ -42,7 +42,7 @@ tags:
 
  What you feed doesn’t show up overnight, but small things add up fast. A single seed becomes a tree. A few drops fill a bucket.
 
- Five minutes of journaling may feel small compared to an hour of doomscrolling—but give it a month and see what happens. Habits compound. The little things you choose every day create momentum, and that momentum sets the direction of your life.
+ Five minutes of journaling may feel small compared to an hour of doomscrolling, but give it a month and see what happens. Habits compound. The little things you choose every day create momentum, and that momentum sets the direction of your life.
 
  Growth is slow, but it is inevitable. The only question is: what direction are you growing in?
 
@@ -94,7 +94,7 @@ tags:
  - B) Denmark
  - C) Norway
  
- Answer B) **Denmark** — it summoned the U.S. chargé d’affaires in Copenhagen.  
+ Answer B) **Denmark**: it summoned the U.S. chargé d’affaires in Copenhagen.  
 ---
   - The alleged operations centered on which territory?
   
@@ -102,7 +102,7 @@ tags:
  - B) Svalbard
  - C) Greenland
  
- Answer C) **Greenland** — reports focused on shaping opinion in Greenland.  
+ Answer C) **Greenland**: reports focused on shaping opinion in Greenland.  
 ---
   - What was one alleged goal of the campaign?
   
@@ -140,4 +140,4 @@ tags:
 ---
  ## 🔮 Coming Soon
 
- **Topic**: Arctic Geopolitics 101 — Greenland, rare earths, and the new Great Game.
+ **Topic**: Arctic Geopolitics 101 (Greenland, rare earths, and the new Great Game).

@@ -23,7 +23,7 @@ At the heart of both the Montessori method and Stoic philosophy lies a preoccupa
 
 ## I. *Prohairesis* and the Prepared Environment
 
-The cornerstone of the Montessori method is the "prepared environment"—a meticulously curated space where materials are designed for self-correction and accessibility. In a traditional educational setting, the teacher is the primary agent of correction and direction. In the Montessori setting, the environment itself assumes this role.
+The cornerstone of the Montessori method is the "prepared environment": a meticulously curated space where materials are designed for self-correction and accessibility. In a traditional educational setting, the teacher is the primary agent of correction and direction. In the Montessori setting, the environment itself assumes this role.
 
 This shift is conceptually congruent with the Stoic emphasis on the "discipline of assent." The Stoics argued that while we cannot control external events (*ta ekton*), we have absolute authority over our judgments and reactions to those events. By providing the child with materials that offer an immediate, objective "control of error," Montessori removes the adult as the arbiter of truth and replaces them with the reality of the task.
 
@@ -33,7 +33,7 @@ When a child realizes a cylinder does not fit into a hole, they are not experien
 
 Montessori described the "absorbent mind" as a unique period of human development where the child effortlessly incorporates sensory information from their environment. She identified a "vital force" or *horme* (Montessori, 1949) that leads the child toward the goal of becoming "sufficient unto themselves."
 
-This innate drive toward self-completion parallels the Stoic concept of *Oikeiōsis*—the process of "appropriation" or "making something one's own." In Stoicism, *Oikeiōsis* begins with the instinct for self-preservation and gradually expands to include a rational love for others and the cosmos. 
+This innate drive toward self-completion parallels the Stoic concept of *Oikeiōsis*: the process of "appropriation" or "making something one's own." In Stoicism, *Oikeiōsis* begins with the instinct for self-preservation and gradually expands to include a rational love for others and the cosmos. 
 
 The "absorbent mind" can be viewed as the earliest stage of *Oikeiōsis*. The child is not merely absorbing data; they are appropriating the structure of their world to build their own identity. When a child engages in a "cycle of work" without interruption, they are aligning their internal drive with a meaningful activity. This alignment is a precursor to the Stoic ideal of living "in accordance with nature." By allowing the child to follow their *horme* within a prepared environment, the educator is supporting the natural development of a rational, autonomous agent.
 
@@ -41,7 +41,7 @@ The "absorbent mind" can be viewed as the earliest stage of *Oikeiōsis*. The ch
 
 A critical distinction in the Montessori method is the role of the adult as a "guide" (*directress*) rather than a lecturer. The guide does not impose their will upon the child but observes the child's needs and provides the necessary tools to meet them.
 
-This mirrors the Stoic approach to mentorship. The Stoics believed that virtue is not taught through textbooks or lectures, but through *exempla*—leading by example. As Donald Robertson (2022) notes, the most effective way to instill philosophical resilience in children is to embody it. 
+This mirrors the Stoic approach to mentorship. The Stoics believed that virtue is not taught through textbooks or lectures, but through *exempla*, leading by example. As Donald Robertson (2022) notes, the most effective way to instill philosophical resilience in children is to embody it. 
 
 The Montessori guide practices a form of "disciplined detachment." By resisting the urge to intervene prematurely, the guide respects the child's agency. This restraint is an act of Stoic virtue; it requires the adult to manage their own desire for control in order to facilitate the child's growth. The guide becomes a "silent partner" in the child's construction of themselves, providing the structure of the environment while remaining secondary to the child's internal will.
 

@@ -27,9 +27,9 @@ Look again at that pale blue dot.
  The Pale Blue Dot does not diminish us.
  It clarifies us.
 
- It reminds us that meaning isn’t given — it’s made.
- That kindness isn’t weakness — it’s the only sustainable strategy.
- That science isn’t cold — it’s our most human instinct: to understand where we are, and who we are becoming.
+ It reminds us that meaning isn’t given. It’s made.
+ That kindness isn’t weakness. It’s the only sustainable strategy.
+ That science isn’t cold. It’s our most human instinct: to understand where we are, and who we are becoming.
 
  This week, we practice remembering.
 
@@ -58,6 +58,6 @@ Look again at that pale blue dot.
  - What is one small kindness that fits a universe this large?
  
  Let the sky clear your thinking.
- Then step back into the day — not smaller, but steadier.
+ Then step back into the day, not smaller, but steadier.
 
  Welcome to Sagan Week. 🌌

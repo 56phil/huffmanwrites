@@ -15,7 +15,7 @@ tags:
 
 ## The Cruelty Standard
 
-The Eighth Amendment is the Constitution's conscience. It does not tell us what justice requires. It tells us what justice forbids: punishment so disproportionate or degrading that it offends civilized standards. The amendment's language—"cruel and unusual"—was borrowed directly from the English Bill of Rights of 1689, where it targeted the grotesque punishments of the Tudor and Stuart periods: drawing and quartering, burning alive, disembowelment while conscious.
+The Eighth Amendment is the Constitution's conscience. It does not tell us what justice requires. It tells us what justice forbids: punishment so disproportionate or degrading that it offends civilized standards. The amendment's language ("cruel and unusual") was borrowed directly from the English Bill of Rights of 1689, where it targeted the grotesque punishments of the Tudor and Stuart periods: drawing and quartering, burning alive, disembowelment while conscious.
 
 The American Framers knew this history. They also knew that new cruelties would be invented. So they wrote a principle, not a catalog. The amendment does not list forbidden punishments. It sets a boundary: punishment may be severe, but it may not be barbaric.
 
@@ -46,8 +46,8 @@ The Eighth Amendment does not require comfortable prisons. It requires humane on
 
 ## Bail, Fines, and the Wealth Gap
 
-The Eighth Amendment also prohibits excessive bail and excessive fines. These clauses are rarely litigated but deeply important. Cash bail systems routinely keep poor defendants in jail before trial while wealthy defendants walk free. Municipal fines for minor infractions—traffic violations, jaywalking, code enforcement—can accumulate into crushing debt for low-income people.
+The Eighth Amendment also prohibits excessive bail and excessive fines. These clauses are rarely litigated but deeply important. Cash bail systems routinely keep poor defendants in jail before trial while wealthy defendants walk free. Municipal fines for minor infractions (traffic violations, jaywalking, code enforcement) can accumulate into crushing debt for low-income people.
 
 In *Timbs v. Indiana* (2019), the Supreme Court ruled that the excessive fines clause applies to state and local governments, not just the federal government. This opened the door to challenges against fine-driven policing and asset forfeiture. But the standard for what counts as "excessive" remains vague, and enforcement is spotty.
 
-The Eighth Amendment is not a solution to mass incarceration or economic inequality. But it is a tool—a moral and legal tool—for challenging the most degrading aspects of American punishment. The question is whether we still believe in its standard enough to use it.
+The Eighth Amendment is not a solution to mass incarceration or economic inequality. But it is a tool (a moral and legal tool) for challenging the most degrading aspects of American punishment. The question is whether we still believe in its standard enough to use it.

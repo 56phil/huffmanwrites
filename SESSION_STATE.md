@@ -6,6 +6,25 @@
 
 ---
 
+### Maintenance — September 20, 2026 — Em-dash sweep, sixth and final pass: every file at 4 or more; corpus fully compliant, baseline emptied
+
+Per Philip: "Do 4+."
+- **Seventeen files remained at 4 or more counted em-dashes. 87 in, 12 out; 75 removed. Corpus total: 235 → 157.** Baseline entries **17 → 0**. **No file in the repository now exceeds the limit of 3**, and `check-emdashes --check` reports `0 recorded, 0 currently over the 3 limit`.
+- **The baseline is empty for the first time.** `scripts/emdash-baseline.txt` held 97 exempted attributions when this work began; all six passes removed entries as files were edited (the exemption is keyed to the quoted text, so editing a file withdraws it and the rule then applies). It now contains only its explanatory header. **That is the real completion signal: the ratchet has nothing left to hold, and any future file that grows past 3 will fail the gate immediately rather than being exempted.**
+- **Six passes, one day:** 18+ (231 → 9), 15+ (161 → 15), 13+ (120 → 14), 10+ (181 → 22), 7+ (167 → 19), 4+ (87 → 12). Corpus **1,237 → 157** (87% reduction); top of distribution **24 → 3**; baseline debt **97 → 0**.
+- **This pass again went straight at the guards, and all six survived byte-for-byte** (verified against HEAD individually after editing):
+  - `digest-for-september-12-2025.md` — the **Dalio → Fiedler misattribution correction**: `formerly credited the line to Ray Dalio`, `It is not his`, `Fiedler's Laws`, *Across the Board* (1977), Paul Dickson's *The Official Rules*, the copyright notice `© 1977 Edgar R. Fiedler`, and **both** renderings (`will eat shattered glass` vs Fiedler's `soon learns to eat ground glass`). My first check reported a false MISSING because the file uses a **straight apostrophe** in `Fiedler's Laws` while my test string used a curly one — worth remembering: apostrophe form varies by file and a substring test can fail on nothing.
+  - `digest-for-september-26-2025.md` — the **Karen Lamb no-locus guard**: `no locus found`, `returns only secondhand compilations`, `no primary source has been located`, `Treat it as unattributed`. Intact.
+  - `the-virtue-of-temperance.md` — the Seneca attribution with its `(paraphrase)` label. Intact.
+  - `learning-from-giants-without-standing-in-their-shadow.md` — the Coelho / *Aleph* (2011) citation with its openlibrary link. Intact.
+  - `digest-for-august-29-2025.md` — `Meditations` 12.17 `(trans. George Long, 1862)` with the Book XII Wikisource URL. Intact.
+  - `content/about.md` — the credo line verbatim, the biographical facts (U.S. Army 1973–1974, Fort Leonard Wood, Fort Devens, "eight books"), and every internal link plus the `mailto:`. Intact.
+- **No word was added or removed in any of the seventeen** — the token-multiset comparison against HEAD passed clean on the first run for the first time in this series. The defects that spoiled earlier passes (an inserted `and`, an inserted `like`, a dropped `and`) did not recur, because the briefs now state the rule explicitly: a punctuation mark alone is the fix; a word added or dropped is a content change.
+- **Verified.** Invariant harness over all seventeen (fence-aware frontmatter SHA for both YAML and TOML, URL set, footnote defs/refs, quotation-span hash, en-dash count, counted dashes, alphanumeric token multiset vs HEAD): **ALL INVARIANTS HELD** on the first run. All six guard blocks confirmed. Gates green: `check-emdashes --check` (0 recorded, 0 over), `check-quotes`, `check-links --check`, `check-render-integrity` (441 pages), `check-gallery-pages`; clean `hugo --gc --minify` (**383 pages**). All seventeen pages rendered in a browser and read back — dashes within limit, no doubled punctuation, no empty parentheses.
+- **Where this ends:** every one of the 203 content files is at or below 3 counted em-dashes, and `--check` will now fail on any regression rather than exempting it.
+
+---
+
 ### Maintenance — September 20, 2026 — Em-dash sweep, fifth pass: every file at 7 or more, 167 to 19
 
 Per Philip: "do 7+".

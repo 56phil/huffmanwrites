@@ -18,17 +18,17 @@ tags:
 
 ## 🪞 A Reflection - Advice vs. Theater
 
- I still remember when placing a trade felt like walking into a marble-floored bank: handshakes, hushed voices, and a commission that quietly skimmed my returns. Traditional brokerages sold reassurance—someone to call, someone who “knew a guy.” The price of that comfort was friction.
+ I still remember when placing a trade felt like walking into a marble-floored bank: handshakes, hushed voices, and a commission that quietly skimmed my returns. Traditional brokerages sold reassurance: someone to call, someone who “knew a guy.” The price of that comfort was friction.
 
  Then the discount houses rewired the game. Zero-commission trades, index funds with fees measured in basis points, slick dashboards instead of mahogany desks. The pitch wasn’t romance; it was math. Keep costs down, keep behavior simple, let compounding work without the rake.
 
  What gets lost in the debate is that these models serve different insecurities. Traditional firms soothe the fear of&nbsp;*not knowing*; discount platforms soothe the fear of&nbsp;*overpaying*. Both are valid. The question is which fear costs you more over time.
 
- Here’s my current stance: advice is valuable, but it should be&nbsp;**transparent and unbundled**. I’ll pay for planning the way I pay a good mechanic—clear scope, posted rate, no mystery. For the rest, I want the quiet efficiency of a discount shop that doesn’t tax my future with unnecessary fees.
+ Here’s my current stance: advice is valuable, but it should be&nbsp;**transparent and unbundled**. I’ll pay for planning the way I pay a good mechanic: clear scope, posted rate, no mystery. For the rest, I want the quiet efficiency of a discount shop that doesn’t tax my future with unnecessary fees.
 
  The revolution wasn’t just cheaper trades. It was a shift in&nbsp;*power*. I don’t need permission to invest simply, broadly, and at low cost. I need discipline, a plan, and the humility to avoid fancy-sounding products that exist to feed someone else’s margin.
 
- **Bottom line:**&nbsp;Your broker should be an instrument, not an identity. If they make you feel clever but leave your balance lighter, that’s not service—that’s theater.
+ **Bottom line:**&nbsp;Your broker should be an instrument, not an identity. If they make you feel clever but leave your balance lighter, that’s not service. That’s theater.
 
   
 ---
@@ -66,7 +66,7 @@ tags:
  >  *“A year from now you may wish you had started today.”*
  — Karen Lamb, no locus found ([search](https://openlibrary.org/search/inside?q=%22you+may+wish+you+had+started+today%22) returns only secondhand compilations)
 
- *Attribution note: this line circulates widely credited to Karen Lamb, but no primary source has been located — the name appears only in secondary quotation compilations, and one compilation credits the line to “Anonymous.” Treat it as unattributed.*
+ *Attribution note: this line circulates widely credited to Karen Lamb, but no primary source has been located; the name appears only in secondary quotation compilations, and one compilation credits the line to “Anonymous.” Treat it as unattributed.*
 
  
 

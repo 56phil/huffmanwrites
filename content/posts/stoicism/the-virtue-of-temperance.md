@@ -14,13 +14,13 @@ tags:
 
 The first time I truly understood what rage could do to a man, I wasn’t watching the news or reading some philosophical text. I was standing in my own home, unmoored by betrayal.
 
- I had just found out that my first wife was involved with someone else, a friend of a friend. No slow unraveling. No explanation. Just a blunt, soul-jarring truth that hit me like a punch to the chest. I remember the heat crawling up my neck. My hands trembling. My vision narrowing like I was looking through a straw. I don’t remember exactly what I said—I only remember the volume. The force. The aftermath.
+ I had just found out that my first wife was involved with someone else, a friend of a friend. No slow unraveling. No explanation. Just a blunt, soul-jarring truth that hit me like a punch to the chest. I remember the heat crawling up my neck. My hands trembling. My vision narrowing like I was looking through a straw. I don’t remember exactly what I said. I only remember the volume. The force. The aftermath.
 
- I didn’t hit anything. I didn’t throw anything. But my anger filled the room like smoke—suffocating and heavy. And when it cleared, when the adrenaline drained, what remained wasn’t justice or power. It was silence. Emptiness. Shame.
+ I didn’t hit anything. I didn’t throw anything. But my anger filled the room like smoke, suffocating and heavy. And when it cleared, when the adrenaline drained, what remained wasn’t justice or power. It was silence. Emptiness. Shame.
 
  It was much later that I learned something painful and true:&nbsp;**unrestrained emotion doesn’t heal. It only scorches what remains.**
 
- We live in a time where&nbsp;*more*&nbsp;is the mantra.  More stimulation. More comfort. More outrage.  But in chasing more, we’ve lost something vital—**temperance**.
+ We live in a time where&nbsp;*more*&nbsp;is the mantra.  More stimulation. More comfort. More outrage.  But in chasing more, we’ve lost something vital: **temperance**.
 
  It’s the quiet virtue. The one nobody puts on a billboard.  Temperance doesn’t grab headlines or rack up likes.  It doesn't promise six-pack abs or a six-figure income.  But it&nbsp;*will*&nbsp;keep your soul intact when everything else is on fire.
 
@@ -30,7 +30,7 @@ The first time I truly understood what rage could do to a man, I wasn’t watchi
 
  In our world of algorithms and excess, temperance is often mistaken for weakness.  But it’s not. It’s discipline.  It’s grace under pressure.  It’s the difference between destruction and growth.
 
- I’ve lost things to a lack of temperance.  Relationships. Health. Peace of mind.  But I’ve also found myself again through practicing it—imperfectly, but consistently.
+ I’ve lost things to a lack of temperance.  Relationships. Health. Peace of mind.  But I’ve also found myself again through practicing it (imperfectly, but consistently).
 
  Temperance doesn’t dim your fire.  It shapes and directs it.  It doesn’t make you a passive wimp.  It makes you powerful in a way that doesn’t burn others in the process.
 

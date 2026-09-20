@@ -15,11 +15,11 @@ lastmod: 2025-04-18T00:00:00Z
 
  
 ---
- ### **🧠 Monday:&nbsp;*The Rot Before the Collapse — How Broken Systems Breed Corruption***
+ ### **🧠 Monday:&nbsp;*The Rot Before the Collapse: How Broken Systems Breed Corruption***
 
  We began the week by exposing how systemic decay invites exploitation.
  When institutions rot from within, it’s not long before opportunists move in.
- This piece explores how dysfunction becomes design — and how corruption spreads like mold in silence.
+ This piece explores how dysfunction becomes design and how corruption spreads like mold in silence.
 
  👉&nbsp;[Read the full article →](https://www.huffmanwrites.org/)
 
@@ -28,7 +28,7 @@ lastmod: 2025-04-18T00:00:00Z
  ### **💰 Thursday:&nbsp;*They’re Not Failing. They’re Looting.***
 
  What looks like chaos is often just control by another name.
- This isn’t mismanagement — it’s a strategy.
+ This isn’t mismanagement. It’s a strategy.
  The looters aren’t breaking the system. They&nbsp;*are*&nbsp;the system.
 
  👉&nbsp;[Read the full article →](https://www.huffmanwrites.org/)
@@ -53,7 +53,7 @@ lastmod: 2025-04-18T00:00:00Z
  ### **🌿 Coming Next Week:&nbsp;*Earth Week***
 
  We turn from corruption to consequence.
- Our environment isn’t just neglected — it’s been commodified, stripped, and sacrificed.
+ Our environment isn’t just neglected: it’s been commodified, stripped, and sacrificed.
  Next week, we tackle climate decay, radical responsibility, and what’s still worth protecting.
 
  **Monday’s feature:&nbsp;*The Rot Before the Collapse*&nbsp;was just the beginning.**

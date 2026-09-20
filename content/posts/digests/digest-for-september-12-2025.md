@@ -20,11 +20,11 @@ tags:
 
  Compound interest is often called the “eighth wonder of the world.” At first, it seems like a throwaway phrase, something to stick in a finance textbook. But when I think about it deeply, I realize that compounding is less about money and more about time.
 
- The principle is simple: today’s growth becomes tomorrow’s foundation. A dollar earns a penny, and next year both the dollar and the penny are at work. Repeat that cycle for long enough, and the results stop being linear—they start becoming extraordinary. What once felt slow and dull accelerates into something almost unstoppable.
+ The principle is simple: today’s growth becomes tomorrow’s foundation. A dollar earns a penny, and next year both the dollar and the penny are at work. Repeat that cycle for long enough, and the results stop being linear; they start becoming extraordinary. What once felt slow and dull accelerates into something almost unstoppable.
 
  What strikes me is how this mirrors so much of life beyond investing. Habits compound. Knowledge compounds. Relationships compound. Small, steady deposits of effort or kindness can grow into something profound if you let time do the heavy lifting.
 
- Compound interest also demands patience, and that’s where most of us stumble. We crave quick wins, instant results. But compounding only reveals its magic after years—even decades—of quiet persistence. It asks for faith in the unseen, a willingness to let the clock work in your favor.
+ Compound interest also demands patience, and that’s where most of us stumble. We crave quick wins, instant results. But compounding only reveals its magic after years, even decades, of quiet persistence. It asks for faith in the unseen, a willingness to let the clock work in your favor.
 
  When I reflect on it, I don’t just see an investing strategy. I see a philosophy: that the little things matter, that consistency outpaces brilliance, and that time, given enough space, turns the ordinary into the remarkable.
 

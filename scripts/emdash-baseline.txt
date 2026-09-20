@@ -8,20 +8,3 @@
 # Regenerate with: scripts/check-emdashes.py --update-baseline
 #
 # file	count
-content/about.md	4
-content/posts/civics/a-nation-poised-for-reckoning-or-renewal.md	4
-content/posts/civics/international-rallies-in-solidarity-with-u-s-rallies.md	6
-content/posts/civics/the-eighth-amendment-protecting-against-cruel-and-unusual-punishment.md	6
-content/posts/civics/the-fourth-amendment-protecting-privacy-in-a-digital-age.md	6
-content/posts/civics/thousands-rally-in-kansas-city-at-second-no-kings-demonstration.md	6
-content/posts/digests/digest-for-august-29-2025.md	6
-content/posts/digests/digest-for-september-12-2025.md	4
-content/posts/digests/digest-for-september-26-2025.md	5
-content/posts/digests/weekly-digest-april-18-2025.md	4
-content/posts/essays/montessori-stoicism-synthesis.md	5
-content/posts/essays/on-ai-as-a-writing-assistant.md	4
-content/posts/investing/risk-management-the-investors-lifeline.md	6
-content/posts/investing/starting-to-invest-after-retirement.md	6
-content/posts/stoicism/learning-from-giants-without-standing-in-their-shadow.md	6
-content/posts/stoicism/small-planet-big-responsibility.md	4
-content/posts/stoicism/the-virtue-of-temperance.md	5

@@ -27,7 +27,7 @@ That wall is now porous.
 
 ## From Physical Space to Digital Life
 
-The Fourth Amendment was drafted in an era of paper letters, physical dwellings, and tangible property. "Houses" meant houses. "Papers" meant papers. "Effects" meant the things you carried. The amendment's protections were tied to geography—your home, your body, your belongings.
+The Fourth Amendment was drafted in an era of paper letters, physical dwellings, and tangible property. "Houses" meant houses. "Papers" meant papers. "Effects" meant the things you carried. The amendment's protections were tied to geography: your home, your body, your belongings.
 
 Today our most private thoughts live in the cloud. Our locations are tracked by GPS. Our conversations are recorded by digital assistants. Our financial transactions, medical records, romantic messages, and political opinions are stored on servers we do not own, protected by passwords we share with corporations, and accessible to algorithms we do not control.
 
@@ -37,9 +37,9 @@ The Supreme Court has struggled to adapt. In *Katz v. United States* (1967), the
 
 ## The Third-Party Doctrine: The Loophole That Ate Privacy
 
-The biggest threat to Fourth Amendment privacy is not government overreach alone. It is the **third-party doctrine**—the legal theory that once you share information with a third party (a bank, a phone company, a social media platform), you lose any reasonable expectation of privacy in that information.
+The biggest threat to Fourth Amendment privacy is not government overreach alone. It is the **third-party doctrine**: the legal theory that once you share information with a third party (a bank, a phone company, a social media platform), you lose any reasonable expectation of privacy in that information.
 
-This doctrine made sense in 1979, when the Supreme Court applied it to pen registers in *Smith v. Maryland*—devices that recorded the numbers dialed from a phone. It makes no sense today, when sharing information with third parties is not optional but structural. You cannot participate in modern life without sharing data with internet providers, credit card companies, health apps, and email services. The third-party doctrine treats every necessary digital transaction as a voluntary surrender of privacy.
+This doctrine made sense in 1979, when the Supreme Court applied it to pen registers in *Smith v. Maryland*, devices that recorded the numbers dialed from a phone. It makes no sense today, when sharing information with third parties is not optional but structural. You cannot participate in modern life without sharing data with internet providers, credit card companies, health apps, and email services. The third-party doctrine treats every necessary digital transaction as a voluntary surrender of privacy.
 
 The result is a two-tiered system: physical space is protected by warrants, but digital life is largely open to government inspection. Law enforcement can request your location history, search history, email metadata, and social media connections without the judicial scrutiny that a physical search would require. The Fourth Amendment's protections have not disappeared. They have been outpaced by technology and outflanked by doctrine.
 
@@ -49,9 +49,9 @@ The result is a two-tiered system: physical space is protected by warrants, but 
 
 The Fourth Amendment was designed to constrain *government* searches. It does not directly bind private corporations. But in the digital age, the line between corporate surveillance and state surveillance has blurred to the point of invisibility.
 
-Tech companies collect data for profit—targeted ads, behavioral prediction, engagement optimization. That same data is accessible to government agencies through subpoenas, informal requests, and bulk collection programs. The NSA's mass surveillance programs, revealed by Edward Snowden in 2013, showed that the government was harvesting phone metadata, internet traffic, and foreign communications at a scale the Framers could not have imagined.
+Tech companies collect data for profit: targeted ads, behavioral prediction, engagement optimization. That same data is accessible to government agencies through subpoenas, informal requests, and bulk collection programs. The NSA's mass surveillance programs, revealed by Edward Snowden in 2013, showed that the government was harvesting phone metadata, internet traffic, and foreign communications at a scale the Framers could not have imagined.
 
-Snowden's disclosures forced some reforms. The USA FREEDOM Act ended the bulk collection of domestic phone records. But the architecture remains. The data is still collected. The tools are still built. And the legal frameworks—FISA courts, National Security Letters, executive orders—operate with minimal public scrutiny and near-total secrecy.
+Snowden's disclosures forced some reforms. The USA FREEDOM Act ended the bulk collection of domestic phone records. But the architecture remains. The data is still collected. The tools are still built. And the legal frameworks (FISA courts, National Security Letters, executive orders) operate with minimal public scrutiny and near-total secrecy.
 
 This is not what the Fourth Amendment envisions. The amendment demands particularity: *this* place, *these* persons, *those* things. Mass collection is the opposite of particularity. It is the general warrant by another name.
 

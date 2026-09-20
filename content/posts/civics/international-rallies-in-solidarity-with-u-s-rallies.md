@@ -12,7 +12,7 @@ tags:
   - writing
 ---
 
-While the bulk of the “No Kings” protests unfolded across the United States, the movement found resonance in international communities as well — signaling that opposition to perceived authoritarianism and executive over-reach in Washington has an overseas echo.
+While the bulk of the “No Kings” protests unfolded across the United States, the movement found resonance in international communities as well, signaling that opposition to perceived authoritarianism and executive over-reach in Washington has an overseas echo.
 
  ### 🌍 Global Participation
 
@@ -32,14 +32,14 @@ While the bulk of the “No Kings” protests unfolded across the United States,
 
  ### 🧭 Style and Symbolism
 
- The protests abroad mirrored the U.S. tone — mixing serious political rhetoric with creative and festive visuals. Protesters wore costumes, used banners referencing crowns, thrones and kings, and chanted slogans such as *“No kings. No Crowns. We will not bow down.”* ([PBS](https://www.pbs.org/newshour/politics/protesters-gather-across-the-u-s-at-nationwide-anti-trump-no-kings-rallies?utm_source=chatgpt.com)) In many places, the alternative naming (“No Dictators”) allowed the movement to adapt to local contexts (especially in monarchies) while preserving the core message: resistance against consolidation of power. ([Wikipedia](https://en.wikipedia.org/wiki/No_Kings_protests_%28June_2025%29?utm_source=chatgpt.com))
+ The protests abroad mirrored the U.S. tone: mixing serious political rhetoric with creative and festive visuals. Protesters wore costumes, used banners referencing crowns, thrones and kings, and chanted slogans such as *“No kings. No Crowns. We will not bow down.”* ([PBS](https://www.pbs.org/newshour/politics/protesters-gather-across-the-u-s-at-nationwide-anti-trump-no-kings-rallies?utm_source=chatgpt.com)) In many places, the alternative naming (“No Dictators”) allowed the movement to adapt to local contexts (especially in monarchies) while preserving the core message: resistance against consolidation of power. ([Wikipedia](https://en.wikipedia.org/wiki/No_Kings_protests_%28June_2025%29?utm_source=chatgpt.com))
 
  ### 🧩 The Bigger Picture
 
  While the U.S. protests served as the main stage, the international dimension underscores two broader themes:
 
-  - **Transnational solidarity** — Even when a protest centers on U.S. politics, diasporas and global citizens see echoes of their own struggles in it.
- - **Symbolic export of protest culture** — The No Kings movement leveraged global networks to signal that concerns over democratic backsliding are not simply domestic to the U.S.
+  - **Transnational solidarity**: Even when a protest centers on U.S. politics, diasporas and global citizens see echoes of their own struggles in it.
+ - **Symbolic export of protest culture**: The No Kings movement leveraged global networks to signal that concerns over democratic backsliding are not simply domestic to the U.S.
   ### ✅ Early Outcomes &amp; Questions
 
  Though turnout abroad was smaller than in large U.S. cities, organizers believe the international presence amplifies the movement’s legitimacy and reach. One unintended benefit: media coverage abroad often depicted U.S.-style protest rather than local dissent, offering a different lens on American politics.
