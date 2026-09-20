@@ -24,20 +24,20 @@ weight: -1
 
  *Unstuck* is a no-nonsense guide to breaking through inertia and self-sabotage.
  It rejects motivational fluff and insists on discipline, responsibility, and daily action.
- The core message: **stop waiting — move now.**
+ The core message: **stop waiting. Move now.**
 
  
 ---
  ## 8 Core Principles
 
-  - **Stop Stalling** — Waiting for the “right time” is an illusion. Take one step now — action creates momentum.
- - **Your Excuses Are BS** — Excuses are lies we tell ourselves. Face the truth, and act on it, however small.
- - **Embrace Discomfort** — Growth demands discomfort. Avoid comfort traps and toxic influences; lean into struggle.
- - **Don’t Negotiate with Yourself** — Motivation fails — discipline wins. Lower the bar, stop debating, and show up daily.
- - **Action Comes First** — Clarity and confidence come from doing, not thinking. Small wins lead to streaks and momentum.
- - **Stack Wins** — Life will hit hard. Reframe setbacks, control what you can, and adopt a “so what?” mindset.
- - **Persistence Over Perfection** — Consistency beats flawless effort. Build systems and routines that sustain growth.
- - **Don’t Miss Twice** — Slipping once is normal. Failing twice breaks the streak. Reset quickly and keep moving forward.
+  - **Stop Stalling**: Waiting for the “right time” is an illusion. Take one step now; action creates momentum.
+ - **Your Excuses Are BS**: Excuses are lies we tell ourselves. Face the truth, and act on it, however small.
+ - **Embrace Discomfort**: Growth demands discomfort. Avoid comfort traps and toxic influences; lean into struggle.
+ - **Don’t Negotiate with Yourself**: Motivation fails; discipline wins. Lower the bar, stop debating, and show up daily.
+ - **Action Comes First**: Clarity and confidence come from doing, not thinking. Small wins lead to streaks and momentum.
+ - **Stack Wins**: Life will hit hard. Reframe setbacks, control what you can, and adopt a “so what?” mindset.
+ - **Persistence Over Perfection**: Consistency beats flawless effort. Build systems and routines that sustain growth.
+ - **Don’t Miss Twice**: Slipping once is normal. Failing twice breaks the streak. Reset quickly and keep moving forward.
   
 ---
  ## The Stoic Thread
@@ -65,7 +65,7 @@ weight: -1
  >  *“The happiness of your life depends upon the quality of your thoughts.”*
 — Marcus Aurelius, commonly attributed; no locus in any translation ([search](https://openlibrary.org/search/inside?q=%22quality+of+your+thoughts%22))
 
- *Attribution note: this line circulates under both Marcus Aurelius and Jane Austen. It appears in neither Long nor Chrystal's Meditations, and no Austen locus was found either — the wording shows up only in modern quotation compilations, most often under Aurelius, sometimes with the continuation “therefore guard accordingly.” An earlier version of this note reversed the claim, asserting the line was Austen's and had been misattributed to Aurelius. Treat it as unattributed.*
+ *Attribution note: this line circulates under both Marcus Aurelius and Jane Austen. It appears in neither Long nor Chrystal's Meditations, and no Austen locus was found either; the wording shows up only in modern quotation compilations, most often under Aurelius, sometimes with the continuation “therefore guard accordingly.” An earlier version of this note reversed the claim, asserting the line was Austen's and had been misattributed to Aurelius. Treat it as unattributed.*
 
  
 

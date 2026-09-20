@@ -20,7 +20,7 @@ tags:
 ---
 ## Executive Summary
 
-*A Life Made Whole* examines the long process of integration—not the dramatic breakthroughs, but the daily work of holding together what experience threatens to fragment.
+*A Life Made Whole* examines the long process of integration: not the dramatic breakthroughs, but the daily work of holding together what experience threatens to fragment.
 It treats the Stoic virtues not as ideals to achieve, but as practices to maintain under pressure, loss, and the slow erosion of circumstance.
 The core message: **wholeness is not a state to reach, but a direction to hold.**
 
@@ -30,15 +30,15 @@ The core message: **wholeness is not a state to reach, but a direction to hold.*
 
 The book is organized around nine recurring disciplines of wholeness. Some are classical virtues, some are practices, and some are outcomes of sustained moral attention. Together, they form the book's architecture:
 
- - **Courage** — The willingness to act with integrity despite fear.
- - **Hope** — The refusal to collapse into despair when the future cannot be guaranteed.
- - **Justice** — The alignment of personal action with what you know to be right, even when the cost is real.
- - **Discipline** — The infrastructure of the self: small repeated choices that hold form under pressure.
- - **Wisdom** — The capacity to see what is actually happening, stripped of comforting distortion.
- - **Integrity** — When your private accounting matches your public behavior, regardless of who is watching.
- - **Meaning** — The value constructed from small honest actions rather than handed down by grand narratives.
- - **Endurance** — The active maintenance of coherence when coherence costs something.
- - **Temperance** — The restraint that keeps your fire from burning what you claim to protect.
+ - **Courage**: The willingness to act with integrity despite fear.
+ - **Hope**: The refusal to collapse into despair when the future cannot be guaranteed.
+ - **Justice**: The alignment of personal action with what you know to be right, even when the cost is real.
+ - **Discipline**: The infrastructure of the self: small repeated choices that hold form under pressure.
+ - **Wisdom**: The capacity to see what is actually happening, stripped of comforting distortion.
+ - **Integrity**: When your private accounting matches your public behavior, regardless of who is watching.
+ - **Meaning**: The value constructed from small honest actions rather than handed down by grand narratives.
+ - **Endurance**: The active maintenance of coherence when coherence costs something.
+ - **Temperance**: The restraint that keeps your fire from burning what you claim to protect.
 
 
 ---
@@ -53,13 +53,13 @@ The virtues are not trophies. They are repairs, performed daily, on a self that 
 ## The Practice of Integration
 
 Each chapter treats a single virtue as a response to a specific kind of fracture.
-The writing moves between clinical precision and lived experience, treating resilience as a skill—not a gift, not a mood, but a practice built from small, repeated choices in the face of what cannot be controlled.
+The writing moves between clinical precision and lived experience, treating resilience as a skill: not a gift, not a mood, but a practice built from small, repeated choices in the face of what cannot be controlled.
 
 
 ---
 ## Bottom Line
 
-*A Life Made Whole* is a manual for the hard middle—not the crisis, not the recovery, but the long stretch between them where most of life actually happens.
+*A Life Made Whole* is a manual for the hard middle: not the crisis, not the recovery, but the long stretch between them where most of life actually happens.
 Integration, not perfection, is the path.
 
 

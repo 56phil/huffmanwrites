@@ -20,7 +20,7 @@ tags:
 ---
 ## Executive Summary
 
-*Stoic Backgammon* treats the ancient game as a practice of philosophy—not metaphorically, but literally.
+*Stoic Backgammon* treats the ancient game as a practice of philosophy: not metaphorically, but literally.
 Each chapter pairs a phase of play with a Stoic principle, demonstrating that the board enforces what the *Enchiridion* describes: some things are up to us, others are not.
 The dice are not; the move is.
 The core message: **the right response to uncertainty is not prediction but character.**
@@ -29,16 +29,16 @@ The core message: **the right response to uncertainty is not prediction but char
 ---
 ## Core Phases of Play
 
- - **The Roll** — Fate arrives uninvited. The first practice is acceptance.
- - **The Dichotomy** — What the board teaches about the Stoic division: the roll is given, the response is chosen.
- - **The Anchor** — How to hold position when the world is pushing you back.
- - **The Blitz** — When aggression is warranted, and when it becomes its own trap.
- - **The Back Game** — The discipline of playing from behind without despair.
- - **The Prime** — Building structures that last, and knowing when they must be abandoned.
- - **The Hit** — The cost of contact, and the recovery that follows.
- - **The Race** — Stripped of complexity, the raw arithmetic of who moves fastest under pressure.
- - **The Double** — The moment of decision: when to press advantage, when to concede.
- - **The Bear-Off** — The endgame, where small errors compound and precision matters most.
+ - **The Roll**: Fate arrives uninvited. The first practice is acceptance.
+ - **The Dichotomy**: What the board teaches about the Stoic division. The roll is given, the response is chosen.
+ - **The Anchor**: How to hold position when the world is pushing you back.
+ - **The Blitz**: When aggression is warranted, and when it becomes its own trap.
+ - **The Back Game**: The discipline of playing from behind without despair.
+ - **The Prime**: Building structures that last, and knowing when they must be abandoned.
+ - **The Hit**: The cost of contact, and the recovery that follows.
+ - **The Race**: Stripped of complexity, the raw arithmetic of who moves fastest under pressure.
+ - **The Double**. The moment of decision: when to press advantage, when to concede.
+ - **The Bear-Off**: The endgame, where small errors compound and precision matters most.
 
 
 ---
@@ -46,7 +46,7 @@ The core message: **the right response to uncertainty is not prediction but char
 
 Each phase of play is paired with a Stoic concept: indifference, the inner citadel, the reserve clause, the discipline of assent.
 The board is not a metaphor. It is a machine for generating uncertainty, and uncertainty is the condition under which character is tested.
-You cannot control the dice. You can control your response—and the practice of controlling your response, repeated across thousands of rolls, is one way to build the habit of character.
+You cannot control the dice. You can control your response, and the practice of controlling your response, repeated across thousands of rolls, is one way to build the habit of character.
 
 
 ---
@@ -54,7 +54,7 @@ You cannot control the dice. You can control your response—and the practice of
 
 Written for readers who do not need to know backgammon or Stoicism to begin, the book teaches both as it proceeds.
 The central claim: every roll is a small encounter with fate, and every move is a decision made with incomplete information.
-The board, played repeatedly, is one way to build the character that responds rightly to uncertainty—not by predicting it, but by meeting it with proportion and discipline.
+The board, played repeatedly, is one way to build the character that responds rightly to uncertainty: not by predicting it, but by meeting it with proportion and discipline.
 
 
 ---

@@ -35,7 +35,6 @@ content/posts/digests/digest-for-september-19-2025.md	9
 content/posts/digests/digest-for-september-26-2025.md	5
 content/posts/digests/digest-for-stoic-saturday-2026-05-23.md	9
 content/posts/digests/prh-digest-for-mid-june-2025.md	7
-content/posts/digests/stoic-saturday-making-crimea-an-island.md	13
 content/posts/digests/stoic-saturday-rule-of-law.md	7
 content/posts/digests/weekly-digest-april-18-2025.md	4
 content/posts/digests/weekly-digest-for-11-april-2025-the-price-of-liberty.md	7
@@ -43,13 +42,10 @@ content/posts/digests/weekly-digest-for-april-25-2025.md	7
 content/posts/digests/weekly-digest-for-may-16-2025.md	10
 content/posts/digests/weekly-digest-for-may-23-2025.md	9
 content/posts/digests/weekly-digest-for-may-9-2025.md	9
-content/posts/essays/indigenous-peoples-day.md	14
 content/posts/essays/montessori-stoicism-synthesis.md	5
 content/posts/essays/on-ai-as-a-writing-assistant.md	4
 content/posts/essays/russias-diplomatic-gambit-in-the-arctic.md	12
 content/posts/essays/sources-optimal-use-of-hermes.md	7
-content/posts/essays/starstuff-remembering-carl-sagan.md	14
-content/posts/essays/the-roots-of-violence.md	13
 content/posts/essays/what-926-gigabytes-taught-me-about-proportion.md	11
 content/posts/investing/a-comparison-of-discount-brokerages.md	8
 content/posts/investing/risk-management-in-a-fragile-world.md	10
@@ -61,14 +57,9 @@ content/posts/stoicism/learning-from-giants-without-standing-in-their-shadow.md	
 content/posts/stoicism/small-planet-big-responsibility.md	4
 content/posts/stoicism/the-responsibility-of-a-small-shining-world.md	11
 content/posts/stoicism/the-virtue-of-temperance.md	5
-content/posts/stoicism/to-save-a-world-together.md	13
-content/posts/summaries/a-life-made-whole-summary.md	13
-content/posts/summaries/art-of-war-summary.md	13
 content/posts/summaries/letters-summary.md	10
 content/posts/summaries/misaligned-summary.md	11
 content/posts/summaries/on-proportion-summary.md	8
 content/posts/summaries/raisem-right-summary.md	12
-content/posts/summaries/stoic-backgammon-summary.md	14
 content/posts/summaries/the-stoic-cgm-summary.md	10
 content/posts/summaries/the-stoic-citizen-summary.md	9
-content/posts/summaries/unstuck-summary.md	13

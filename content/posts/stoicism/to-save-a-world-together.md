@@ -16,31 +16,31 @@ hero_alt: "A marble Earth traced with gold light in navy space, multiple marble 
 hero_caption: "No one can save the world alone. But no one should feel alone in trying."
 ---
 
-### *Our Pale Blue Dot Still Turns — and It Still Needs Us*
+### *Our Pale Blue Dot Still Turns. And It Still Needs Us.*
 
   There's a photo taken by Voyager 1 in 1990, as it was leaving the planetary region of our solar system.
- It shows Earth from 3.7 billion miles away — a tiny speck caught in a beam of scattered sunlight.
+ It shows Earth from 3.7 billion miles away: a tiny speck caught in a beam of scattered sunlight.
 
  That speck is us.
  Everyone you’ve ever loved. Every moment of history. Every act of courage and cruelty. Every hope and heartbreak.
 
  A pale blue dot.
 
- Carl Sagan called it “a mote of dust suspended in a sunbeam.” But he also reminded us that this mote is everything we’ve got. And whether it survives — whether it thrives — is up to&nbsp;*all of us*.
+ Carl Sagan called it “a mote of dust suspended in a sunbeam.” But he also reminded us that this mote is everything we’ve got. And whether it survives, whether it thrives, is up to&nbsp;*all of us*.
 
  You know the symptoms:
  Melting glaciers. Poisoned water. Choked skies. Forests erased for profit. Species silenced forever.
 
- But these aren’t isolated crises. They’re threads in the same unraveling fabric — one we’re all stitched into.
+ But these aren’t isolated crises. They’re threads in the same unraveling fabric: one we’re all stitched into.
 
  And while corporations pollute and politicians delay, it's everyday people who live with the consequences.
- Not in the abstract — in our neighborhoods. In our lungs. In our children’s futures.
+ Not in the abstract. In our neighborhoods. In our lungs. In our children’s futures.
 
  No one can save the world alone.
  But no one should feel alone in trying.
 
  Radical responsibility doesn't mean solitary struggle. It means showing up&nbsp;*together*.
- It means knowing that small acts — when multiplied — become culture.
+ It means knowing that small acts, when multiplied, become culture.
 
  When one person cuts waste, it’s a gesture.
  When thousands do, it’s momentum.
@@ -48,7 +48,7 @@ hero_caption: "No one can save the world alone. But no one should feel alone in 
 
  This week isn’t a hashtag. It’s a mirror.
  It asks: Will we keep pretending someone else will fix it?
- Or will we rise as caretakers — not just of land, but of each other?
+ Or will we rise as caretakers, not just of land, but of each other?
 
  Let this week mark a line in the sand.
  Let it be the week we stopped waiting.
@@ -68,7 +68,7 @@ hero_caption: "No one can save the world alone. But no one should feel alone in 
  -  **Support each other**. Community gardens, mutual aid, local leadership.
 
  
- -  **Resist despair**. Hope is not naïve — it’s strategic.
+ -  **Resist despair**. Hope is not naïve. It’s strategic.
 
  
  
@@ -78,7 +78,7 @@ hero_caption: "No one can save the world alone. But no one should feel alone in 
  It’s still abundant.
  It’s still home.
 
- And more than ever, it’s worth the effort — not just to endure it, but to&nbsp;*cherish*&nbsp;it.
+ And more than ever, it’s worth the effort, not just to endure it, but to&nbsp;*cherish*&nbsp;it.
 
  >  “The Earth is the only world known so far to harbor life… it underscores our responsibility to deal more kindly with one another, and to preserve and cherish the pale blue dot, the only home we've ever known.” — Carl Sagan
 
@@ -88,4 +88,4 @@ hero_caption: "No one can save the world alone. But no one should feel alone in 
 
  It’s&nbsp;*ours*.
 
- Let’s rise to meet it — together.
+ Let’s rise to meet it. Together.

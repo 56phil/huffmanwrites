@@ -6,6 +6,25 @@
 
 ---
 
+### Maintenance — September 20, 2026 — Em-dash sweep, third pass: every file at 13 or more, 120 to 14
+
+Per Philip: "Fix all files with 13+ em-dashes."
+- **Nine files sat at 13 or more counted em-dashes. 120 in, 14 out; 106 removed.** Corpus total: **651 → 543**. The highest remaining file is now **12** (`russias-diplomatic-gambit-in-the-arctic.md`, `the-constitutions-legacy...`); nothing is left at 13 or above. Third pass of the day, after the 18+ sweep (231 → 9) and the 15+ sweep (161 → 15).
+- **The transformation is now purely mechanical for the summaries** — bold list labels and numbered core-argument headers (`- **The Roll** — Fate arrives uninvited.` → `- **The Roll**: Fate arrives uninvited.`), plus paired asides to commas or parentheses. Seven of the nine followed that pattern. The other two, `starstuff-remembering-carl-sagan` (14 → 0) and `the-roots-of-violence` (13 → 2), have no citations at all and were pure prose recasting.
+- **Four fabrication-guard citations had to survive byte-for-byte, and were verified against HEAD individually after the edits** — these are load-bearing and are exactly what the last few days' work added:
+  - `stoic-backgammon-summary.md` — the **paraphrase + Long rendering** pattern that CLAUDE.md names as the site's model for a quotation that exists only as a paraphrase (`— Epictetus (paraphrase; the standard Long translation of *Discourses* 1.1 reads: "…")`). Dash, the word `paraphrase`, the translator `Long`, and the quoted rendering all intact.
+  - `unstuck-summary.md` — the honesty guard `— Marcus Aurelius, commonly attributed; no locus in any translation ([search](…))`. `commonly attributed`, `no locus in any translation`, and the URL all intact.
+  - `a-life-made-whole-summary.md` — the **paraphrase warning** on the fake "You have power over your mind" line. Intact.
+  - `stoic-saturday-making-crimea-an-island.md` — the translated epigraph `— Epictetus, *Enchiridion* 1 (trans. George Long, 1862), [text](gutenberg)`. Translator, year, and URL intact; this file's epigraph already used the house one-line convention and was not restructured.
+- **The `to-save-a-world-together` file needed a different hand.** Its dash density was extreme (one per ~33 words) because the prose is deliberately clipped (`This world is flawed. Bruised. Strained.`). Several dashes joined short independent clauses where a **period** was the right fix and a comma would have comma-spliced the rhythm into mush — e.g. `Not in the abstract. In our neighborhoods.` and `Let's rise to meet it. Together.` The staccato voice is preserved; that was the point of the exercise, not a casualty of it.
+- **One word-change the token check caught.** The `stoic-backgammon-summary` editor, converting `- **The Double** — The moment of decision: when to…`, hit a doubled colon and papered over it by inserting an `and` (`…when to press advantage and when to concede`). An independent alphanumeric token-multiset comparison against HEAD caught the added word. Fixed with no word change at all — a period: `- **The Double**. The moment of decision: when to press advantage, when to concede.` **This is the value of comparing token multisets rather than trusting a diff summary: a single connective slipped in to dodge a punctuation problem reads as a clean edit.**
+- **All other token deltas were capitalization** from sentence splits (`such` → `Such`, `and` → `And`, `it's` → `It's`, `together` → `Together`, `move` → `Move`), confirmed by multiset comparison. No word was added, dropped, or reordered in any of the nine.
+- **Verified.** Invariant harness over all nine (frontmatter SHA, URL set, footnote defs/refs, quotation-span hash, en-dash count, counted dashes via the gate's own logic): **ALL INVARIANTS HELD**. Gates green: `check-emdashes --check` (55 recorded, consistent), `check-quotes`, `check-links --check`, `check-render-integrity` (441 pages, no sentinels), `check-gallery-pages`; clean `hugo --gc --minify` (**383 pages**). All nine pages rendered in-browser — dashes within limit, no doubled punctuation, no empty parentheses.
+- **Baseline ratchet narrowed:** `scripts/emdash-baseline.txt` **64 → 55** entries, exactly these nine, each removed only after its current count was confirmed at or below 3. SimpleBrain not touched (publish-triggered flow).
+- **Where this stands after three passes:** corpus **1,237 → 543** (56% reduction) with the top of the distribution flattened from 24 to 12. **55 files** remain, all in the 5–12 band. The ratchet prevents growth; the next natural threshold is 10 or more.
+
+---
+
 ### Maintenance — September 20, 2026 — Em-dash sweep, second pass: every file at 15 or more, 161 to 15
 
 Per Philip: "Fix all files with 15+ em-dashes."
