@@ -22,9 +22,9 @@ This is a short update to [The Name Over the Door](/posts/essays/the-name-over-t
 
 ## What the board did
 
-Through the summer, the board fought the injunction rather than the ruling behind it. It moved for a stay so the President's name could go back over the door; the D.C. Circuit refused on July 8, holding that the government had asserted financial harm "without any specific facts or evidence" and that the removal had already happened anyway ([D.C. Circuit, 2026](#sources)).
+The board has fought this in two directions at once. It moved for a stay so the President's name could go back over the door; the D.C. Circuit refused on July 8, holding that the government had asserted financial harm "without any specific facts or evidence" and that the removal had already happened anyway ([D.C. Circuit, 2026](#sources)). It has also taken the underlying judgment itself up on appeal.
 
-Judge Cooper enjoined the second attempt on September 15: no inscription claiming the building was renovated by the President, no renaming of the grounds for him, because "Defendants cannot install memorials for President Trump or anyone or anything else at the Kennedy Center without Congress's blessing" ([Memorandum Opinion and Order, 2026](#sources)). The board voted to close the building the same day.
+Judge Cooper enjoined the second attempt on September 15: no inscription claiming the building was renovated by the President, no renaming of the grounds for him, because "Defendants cannot install memorials for President Trump or anyone or anything else at the Kennedy Center without Congress's blessing" ([Memorandum Opinion and Order, 2026](#sources)). The board voted to close the building the same day, and appealed that order too ([Notice of Appeal, 2026](#sources)).
 
 The board has now changed course, and not in the direction of compliance.
 
@@ -56,6 +56,7 @@ The case remains what it was: a man who wants his name on a building Congress na
 - ECF 88. (2026, September 18). [*Defendants' motion to dissolve preliminary injunction* (Rule 60(b)(5))](https://storage.courtlistener.com/recap/gov.uscourts.dcd.287972/gov.uscourts.dcd.287972.88.0.pdf). Beatty v. Trump, No. 25-cv-04480 (D.D.C.).
 - ECF 89. (2026, September 18). [*Defendants' renewed motion for partial summary judgment* (Rule 56(a))](https://storage.courtlistener.com/recap/gov.uscourts.dcd.287972/gov.uscourts.dcd.287972.89.0.pdf). Beatty v. Trump, No. 25-cv-04480 (D.D.C.).
 - Minute Order. (2026, September 17). [Order denying emergency hearing; ordering sworn status report by September 23 and thirty-day written notice before any change in scope](https://www.courtlistener.com/docket/72069932/beatty-v-trump/). Beatty v. Trump, No. 25-cv-04480 (D.D.C.).
+- Notice of Appeal. (2026, September 15). [*Notice of appeal to the D.C. Circuit from the September 15 Memorandum Opinion and Order*, ECF 79](https://storage.courtlistener.com/recap/gov.uscourts.dcd.287972/gov.uscourts.dcd.287972.79.0.pdf). Beatty v. Trump, No. 25-cv-04480 (D.D.C.).
 - Scheduling Order. (2026, September). [*Scheduling order*, ECF 82](https://www.courtlistener.com/docket/72069932/beatty-v-trump/). Beatty v. Trump, No. 25-cv-04480 (D.D.C.).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
