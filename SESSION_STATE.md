@@ -6,6 +6,25 @@
 
 ---
 
+### Maintenance — September 20, 2026 — Em-dash sweep, fourth pass: every file at 10 or more, 181 to 22
+
+Per Philip: "Go natural." — meaning the next threshold I had named (10+).
+- **Seventeen files sat at 10 or more counted em-dashes. 181 in, 22 out; 159 removed.** Corpus total: **543 → 379**. Baseline entries **55 → 38**. The highest remaining file is now **9**, so nothing is left at 10 or above. Fourth pass of the day, after 18+ (231 → 9), 15+ (161 → 15), and 13+ (120 → 14).
+- **This pass reached the material where the site's hardest-won rules live, and that shaped the brief.** Four of the seventeen carry `*Attribution note:*` blocks that are the *repair* for documented fabrication failures, so those were named explicitly in the briefs and then verified byte-for-byte against HEAD after the edits:
+  - `digest-for-april-18-2026.md` — the guard on the fake "You have power over your mind—not outside events" line: `paraphrase`, `no translation contains this wording`, the genuine Long 4.18 rendering, and the Wikisource URL all intact. The editor kept both outer dashes rather than risk the citation, and took its removals from prose instead.
+  - `digest-for-october-3-2025.md` — the "best time to plant a tree" note that names **George W. White**, the 1967 *Cleveland Plain Dealer*, the Quote Investigator URL, and the 1985 provenance of the "Chinese proverb" label. All intact.
+  - `raisem-right-summary.md` — the note recording that a shipped fake Epictetus line (`It is the nature of the wise to resist pleasures…`) `appears nowhere in the Epictetus corpus`. Intact.
+  - `weekly-digest-for-may-16-2025.md` and `the-stoic-cgm-summary.md` — the `Fragment 35` citations with `trans. W. A. Oldfather, Loeb, 1928` and the doubtful-fragments qualification. Intact.
+  - Also protected: `the-constitutions-legacy...` (`— Martin Luther King Jr., paraphrasing Theodore Parker`, where the hedge word matters), `misaligned-summary` (Costa's Penguin translation with its archive.org link), and the `Enchiridion 1 (trans. George Long, 1862)` line in `letters-summary`.
+- **The token-multiset check earned its keep a second time.** An editor converting `stay steady — let those…` in the October 3 digest wrote `stay steady, and let those…`, inserting a conjunction to make the comma read well. A comma alone is correct there and adds nothing, so the word was removed. **Two passes in a row, the only defects that reached the files were single connectives slipped in to smooth a punctuation change** — exactly the class of edit that reads as clean in a diff summary and is invisible to every other check. The fix is now standard: compare an alphanumeric token multiset against HEAD, not a diffstat.
+- **Two files landed at the ceiling (3) and were brought down rather than left.** In `raisem-right-summary` and `weekly-digest-for-may-16-2025` the surviving dashes were prose asides *inside* the attribution notes, not parts of the citations — an aside in parentheses and a colon respectively. Both notes keep their meaning and their names; the files now sit at 1 and 2, and **no file in the corpus sits at the ceiling**.
+- **One deliberate exclusion, confirmed rather than assumed.** `raisem-right-summary.md` is future-dated (`2027-06-01`, a book expected early 2027) and so is excluded from the build by `buildFuture: false`; it was the one file of the seventeen with no live page to verify. The date is byte-identical to HEAD — pre-existing, not a regression — and it is the only future-dated summary in the corpus.
+- **Quiz-answer convention adopted for the digests.** `Answer **B — Disposition effect**: Investors tend to…` became `Answer **B: Disposition effect**. Investors tend to…`, which preserves every word and the single bold span while removing the dash. Worth keeping for future digests.
+- **Verified.** Invariant harness over all seventeen (frontmatter SHA, URL set, footnote defs/refs, quotation-span hash, en-dash count, counted dashes, and alphanumeric token multiset vs HEAD): **ALL INVARIANTS HELD**. All eight guard-citation blocks confirmed present and unchanged. Gates green: `check-emdashes --check` (38 recorded, consistent), `check-quotes`, `check-links --check`, `check-render-integrity` (441 pages), `check-gallery-pages`; clean `hugo --gc --minify` (**383 pages**). Sixteen of the seventeen pages rendered in a browser and read back — dashes within limit, no doubled punctuation, no empty parentheses.
+- **Where this stands after four passes:** corpus **1,237 → 379** (69% reduction); the top of the distribution flattened from 24 to 9; baseline debt **97 → 38**. **38 files** remain, all in the 5–9 band. The ratchet prevents growth; the next natural threshold is 7 or more.
+
+---
+
 ### Maintenance — September 20, 2026 — Em-dash sweep, third pass: every file at 13 or more, 120 to 14
 
 Per Philip: "Fix all files with 13+ em-dashes."

@@ -14,22 +14,22 @@ lastmod: 2025-05-16T00:00:00Z
 ---
 ### ✨ Weekly Reflection: **The Quiet Strength of Temperance**
 
- Temperance isn’t about denial. It’s about choosing mastery over impulse. In a culture addicted to more—more screens, more noise, more comfort—temperance dares to whisper *enough.*
+ Temperance isn’t about denial. It’s about choosing mastery over impulse. In a culture addicted to more (more screens, more noise, more comfort), temperance dares to whisper *enough.*
 
- This virtue doesn’t shout. It doesn’t flex. It lives in the pause before we speak, the breath before we act, the decision to walk away when ego says fight. Temperance is not the absence of desire—it’s the discipline to channel that desire toward something higher than momentary relief.
+ This virtue doesn’t shout. It doesn’t flex. It lives in the pause before we speak, the breath before we act, the decision to walk away when ego says fight. Temperance is not the absence of desire. It’s the discipline to channel that desire toward something higher than momentary relief.
 
  It’s the art of restraint, not as punishment, but as liberation. To say *no* to excess is to say *yes* to clarity. To self-respect. To peace.
 
  Temperance asks us not to numb, but to *feel fully without drowning.* It invites us to build a life not on cravings, but on character. In that way, it may be the most radical virtue of all.
 
- This week, I’ve been reflecting on what it means to live with intention instead of indulgence. To practice balance, not out of fear of falling—but to become the kind of person who can walk through chaos with steady hands.
+ This week, I’ve been reflecting on what it means to live with intention instead of indulgence. To practice balance, not out of fear of falling, but to become the kind of person who can walk through chaos with steady hands.
 
  Quote of the Week:
 
  >  “No man is free who is not master of himself.”
  — Epictetus, Fragment 35 (trans. W. A. Oldfather, Loeb, 1928) — *one of the fragments of doubtful authenticity*, [text](https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Fragments)
 
- *Attribution note: this line is genuine Epictetus only in the weak sense — it survives among the fragments that Oldfather grouped under “Doubtful and Spurious Fragments,” drawn from Stobaeus and a gnomology, whose authenticity Schenkl and others disputed. For the undisputed Epictetus on this theme see* Discourses *IV.1, “About Freedom.”*
+ *Attribution note: this line is genuine Epictetus only in the weak sense: it survives among the fragments that Oldfather grouped under “Doubtful and Spurious Fragments,” drawn from Stobaeus and a gnomology, whose authenticity Schenkl and others disputed. For the undisputed Epictetus on this theme see* Discourses *IV.1, “About Freedom.”*
 
  
 
@@ -43,7 +43,7 @@ lastmod: 2025-05-16T00:00:00Z
  C) Practicing self-restraint to maintain balance and clarity
  D) Giving in to instincts as a form of authenticity
 
- Reply with your answer—I'll reveal it in the comments.
+ Reply with your answer. I'll reveal it in the comments.
 
  
 ---
@@ -65,7 +65,7 @@ lastmod: 2025-05-16T00:00:00Z
 ---
  ### 📣 Stay in the Conversation
 
- If something in these reflections stirred you — even a little — I’d love to hear it. Temperance, after all, grows in dialogue, not monologue.
+ If something in these reflections stirred you (even a little), I’d love to hear it. Temperance, after all, grows in dialogue, not monologue.
 
  
  - **Reply** to this email. I read every note.

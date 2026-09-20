@@ -12,7 +12,7 @@ tags:
   - critical-thinking
 ---
 
-I always knew the universe was enormous — at least in the abstract.
+I always knew the universe was enormous. At least in the abstract.
 
  But it took Carl Sagan to make me *feel* it. Not as trivia, but as orientation. Not as a chapter in a book, but as a posture in life.
 
@@ -23,7 +23,7 @@ I always knew the universe was enormous — at least in the abstract.
  One informs.
  The other transforms.
 
- As the world gets louder and more certain of itself, I return to Sagan — not for nostalgia, but calibration. He wasn’t offering escape. He was offering proportion.
+ As the world gets louder and more certain of itself, I return to Sagan, not for nostalgia, but calibration. He wasn’t offering escape. He was offering proportion.
 
  Quiet courage is undervalued now.
  It still works.
@@ -32,7 +32,7 @@ I always knew the universe was enormous — at least in the abstract.
 ---
  ### *Wonder, responsibly carried.*
 
- Sagan didn’t simplify science — he dignified the public.
+ Sagan didn’t simplify science; he dignified the public.
  He made wonder responsible.
  He linked awe to empathy, truth to humility, knowledge to duty.
 
@@ -62,7 +62,7 @@ I always knew the universe was enormous — at least in the abstract.
  He treated scientific literacy as a public right.
  He trusted ordinary people with extraordinary scale.
 
- He didn’t build followers —
+ He didn’t build followers;
  he built participants.
 
  Legacy isn’t always loud.
@@ -81,7 +81,7 @@ I always knew the universe was enormous — at least in the abstract.
 ---
  ### **Practicing Sagan’s Values**
 
- Not as theory — as daily practice.
+ Not as theory. As daily practice.
 
  
  - Ask one honest question
@@ -92,7 +92,7 @@ I always knew the universe was enormous — at least in the abstract.
  - Fix one thing you didn’t break
  - Think in generations
  
- Stewardship isn’t heroic — it’s consistent.
+ Stewardship isn’t heroic; it’s consistent.
 
  A Sagan day is simple:
  **wonder, humility, learning, care.**
@@ -111,20 +111,20 @@ I always knew the universe was enormous — at least in the abstract.
  We are rare.
  We live on one world in an endless dark.
 
- The Pale Blue Dot isn’t a quote — it’s a way to see.
+ The Pale Blue Dot isn’t a quote; it’s a way to see.
 
  We don’t need the stars to tell us what matters.
  They simply remind us.
 
  To be skeptical without arrogance.
  To be hopeful without denial.
- To be gentle not because we are weak — but because we are all we have.
+ To be gentle not because we are weak, but because we are all we have.
 
  Someday Voyager will drift unheard.
- Long after our noise fades, it may still carry evidence that we tried to understand — and to deserve — our moment here.
+ Long after our noise fades, it may still carry evidence that we tried to understand (and to deserve) our moment here.
 
  Look again at that dot.
- Then return to your day — not smaller, but steadier.
+ Then return to your day, not smaller, but steadier.
 
  We only get one world.
  Let’s act like it.

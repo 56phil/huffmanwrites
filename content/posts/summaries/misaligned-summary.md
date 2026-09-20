@@ -23,26 +23,26 @@ tags:
 
 *Misaligned* begins with a late-life diagnosis and follows its implications outward: through a first marriage that ended in miscommunication rather than malice, through a career built on containment, and through the slow recognition that many strengths become liabilities when the context changes.
 It treats the gap between internal experience and external expectation as a structural problem, not a personal failure.
-The core message: **alignment is not a state to achieve—it is a map to question.**
+The core message: **alignment is not a state to achieve. It is a map to question.**
 
 
 ---
 ## 7 Core Chapters
 
- - **The Future Is Bright and Full of Possibilities** — The opening premise: a life built on capability and control, before the map was questioned.
- - **The Wrong Map** — What happens when a Stoic temperament preserves stability at the cost of intimacy.
- - **Treated, Not Understood** — The late diagnosis, and the difference between medical intervention and genuine comprehension.
- - **Relationships Under Load** — How executive function succeeds professionally while eroding relationally.
- - **Endurance Is Not Healing** — The danger of a self-management pattern that outlasts its usefulness.
- - **A Better Map, Late** — Rebuilding with different assumptions, when the old framework is no longer viable.
- - **Agency, Not Repair** — The final argument: the capacity to choose what to preserve, what to release, and what to construct differently.
+ - **The Future Is Bright and Full of Possibilities**: the opening premise, a life built on capability and control, before the map was questioned.
+ - **The Wrong Map**: What happens when a Stoic temperament preserves stability at the cost of intimacy.
+ - **Treated, Not Understood**: The late diagnosis, and the difference between medical intervention and genuine comprehension.
+ - **Relationships Under Load**: How executive function succeeds professionally while eroding relationally.
+ - **Endurance Is Not Healing**: The danger of a self-management pattern that outlasts its usefulness.
+ - **A Better Map, Late**: Rebuilding with different assumptions, when the old framework is no longer viable.
+ - **Agency, Not Repair**: the final argument, the capacity to choose what to preserve, what to release, and what to construct differently.
 
 
 ---
 ## The Stoic Thread
 
 The book does not blame Stoicism. It examines the collision between a disciplined philosophy and a neurodivergent mind.
-The Stoic virtues—courage, discipline, wisdom—are not the problem. The problem is applying them with the wrong map, so that containment becomes isolation and endurance becomes a trap.
+The Stoic virtues (courage, discipline, wisdom) are not the problem. The problem is applying them with the wrong map, so that containment becomes isolation and endurance becomes a trap.
 The question is not whether to be Stoic, but which Stoic: the one who holds the line, or the one who redraws it.
 
 

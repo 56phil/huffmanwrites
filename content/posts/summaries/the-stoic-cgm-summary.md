@@ -21,7 +21,7 @@ tags:
 ---
 ## Executive Summary
 
-*The Stoic CGM* treats continuous glucose monitoring as a practice of self-knowledge—not merely a medical intervention, but a discipline of attention applied to the body’s own politics.
+*The Stoic CGM* treats continuous glucose monitoring as a practice of self-knowledge: not merely a medical intervention, but a discipline of attention applied to the body’s own politics.
 It examines what happens when Stoic principles meet metabolic data: how to respond to information without being ruled by it, and how to govern the self when the self is constantly in motion.
 The core message: **the body is not an enemy to defeat, but a system to comprehend.**
 
@@ -29,10 +29,10 @@ The core message: **the body is not an enemy to defeat, but a system to comprehe
 ---
 ## 4 Core Sections
 
- - **The Republic of Glucose** — The internal ecosystem of hormones, timing, and consequence—how the body’s politics mirror the civic kind.
- - **The Discipline of Action** — Using data to inform choice without letting measurement become compulsion.
- - **The Discipline of Will** — Responding to information without being ruled by it: the Stoic practice of maintaining sovereignty over the self.
- - **The Stoic Citizen of the Body** — Treating health as a domain where philosophy and science converge, and where technology serves judgment rather than replacing it.
+ - **The Republic of Glucose**: The internal ecosystem of hormones, timing, and consequence; how the body’s politics mirror the civic kind.
+ - **The Discipline of Action**: Using data to inform choice without letting measurement become compulsion.
+ - **The Discipline of Will**: Responding to information without being ruled by it: the Stoic practice of maintaining sovereignty over the self.
+ - **The Stoic Citizen of the Body**: Treating health as a domain where philosophy and science converge, and where technology serves judgment rather than replacing it.
 
 
 ---
@@ -40,7 +40,7 @@ The core message: **the body is not an enemy to defeat, but a system to comprehe
 
 Drawing on the Discipline of Desire and the Discipline of Assent, the book applies Stoic self-governance to the metabolic realm.
 The body is the first and most intimate republic: a system of competing demands, limited resources, and consequences that arrive on delay.
-The Stoic does not fight his body. He comprehends it—sustained over time, that comprehension becomes the beginning of genuine self-governance.
+The Stoic does not fight his body. He comprehends it. Sustained over time, that comprehension becomes the beginning of genuine self-governance.
 
 
 ---
@@ -55,7 +55,7 @@ The central claim: comprehension, sustained over time, is the beginning of genui
 ## Bottom Line
 
 *The Stoic CGM* is a manual for governing the body with the same rigor applied to the mind and the state.
-The body is not a machine to optimize. It is a system to comprehend—and that comprehension is the beginning of freedom.
+The body is not a machine to optimize. It is a system to comprehend, and that comprehension is the beginning of freedom.
 
 
 ---

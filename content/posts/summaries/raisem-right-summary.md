@@ -22,18 +22,18 @@ tags:
 ## Executive Summary
 
 *Raise 'Em Right* draws on sixteen years of step-parenting to argue that the central task of raising children is not protection or instruction but the cultivation of independent judgment.
-It treats critical thinking and healthy skepticism as learnable skills—not innate gifts or rebellious postures—and examines how adults can model these capacities without performing them.
+It treats critical thinking and healthy skepticism as learnable skills (not innate gifts or rebellious postures) and examines how adults can model these capacities without performing them.
 The core message: **skepticism, taught well, is a form of care.**
 
 
 ---
 ## Core Themes
 
- - **Questioning Without Destabilizing** — How to teach a child to interrogate what they are told without losing their footing.
- - **Uncertainty as a Feature** — How to introduce the unknown as a space of possibility rather than a source of fear.
- - **Productive Skepticism vs. Reflexive Contrarianism** — The difference between thinking for yourself and reacting against others, and how to steer toward the former.
- - **Guidance and Autonomy** — The long negotiation between what you know and what they must discover, and when to step back.
- - **The Moment You Cannot Make For Them** — Preparing the child for the inevitable decisions you will not be present for, and the judgment they will need to exercise alone.
+ - **Questioning Without Destabilizing**: How to teach a child to interrogate what they are told without losing their footing.
+ - **Uncertainty as a Feature**: How to introduce the unknown as a space of possibility rather than a source of fear.
+ - **Productive Skepticism vs. Reflexive Contrarianism**: The difference between thinking for yourself and reacting against others, and how to steer toward the former.
+ - **Guidance and Autonomy**: The long negotiation between what you know and what they must discover, and when to step back.
+ - **The Moment You Cannot Make For Them**: Preparing the child for the inevitable decisions you will not be present for, and the judgment they will need to exercise alone.
 
 
 ---
@@ -47,7 +47,7 @@ That is the inheritance. Not rules, but rigor. Not answers, but method.
 ---
 ## The Practice of Raising Thinkers
 
-Written for parents, step-parents, and anyone who influences how a young mind encounters the world, *Raise 'Em Right* offers a framework for raising children who can think—not children who simply comply to get along.
+Written for parents, step-parents, and anyone who influences how a young mind encounters the world, *Raise 'Em Right* offers a framework for raising children who can think, not children who simply comply to get along.
 The central claim: the person you are raising will eventually need to make decisions you cannot make for them. Your job is to prepare them for that moment.
 That preparation is not a curriculum. It is a relationship, sustained over time, in which judgment is modeled more than it is taught.
 
@@ -57,14 +57,14 @@ That preparation is not a curriculum. It is a relationship, sustained over time,
 
 *Raise 'Em Right* is a manual for the long work of raising sovereign minds.
 The goal is not obedience. It is agency.
-The child who can think is the child who can survive—your absence included.
+The child who can think is the child who can survive, your absence included.
 
 
 ---
 >  *“Some things are in our own power, and others in the power of others.”*
 — Epictetus, *Enchiridion* 1 (trans. George Long, 1862), [text](https://www.gutenberg.org/cache/epub/10661/pg10661.txt)
 
-*Attribution note: this page formerly read “It is the nature of the wise to resist pleasures, but the foolish to be a slave to them,” attributed to Epictetus. That sentence appears nowhere in the Epictetus corpus — not in the Enchiridion, the Discourses, or Oldfather's fragments — and survives only in modern quotation anthologies. It was replaced with the opening of the Enchiridion, the foundational Epictetus passage on what is and is not ours.*
+*Attribution note: this page formerly read “It is the nature of the wise to resist pleasures, but the foolish to be a slave to them,” attributed to Epictetus. That sentence appears nowhere in the Epictetus corpus (not in the Enchiridion, the Discourses, or Oldfather's fragments) and survives only in modern quotation anthologies. It was replaced with the opening of the Enchiridion, the foundational Epictetus passage on what is and is not ours.*
 
 
 

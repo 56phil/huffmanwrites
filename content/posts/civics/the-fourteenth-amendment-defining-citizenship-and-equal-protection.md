@@ -11,7 +11,7 @@ tags:
 
 ## The Amendment That Rebuilt America
 
-Ratified in 1868, three years after Appomattox, the Fourteenth Amendment was not a footnote. It was a reconstruction—constitutional, moral, and civic. The Civil War had settled the question of secession by force. The Fourteenth Amendment was meant to settle the question of belonging by law.
+Ratified in 1868, three years after Appomattox, the Fourteenth Amendment was not a footnote. It was a reconstruction: constitutional, moral, and civic. The Civil War had settled the question of secession by force. The Fourteenth Amendment was meant to settle the question of belonging by law.
 
 It contains five sections, but two clauses have shaped American life more than almost any other text in the Constitution:
 
@@ -25,7 +25,7 @@ The Citizenship Clause settled a question that the original Constitution had dod
 
 Birth on American soil became sufficient for citizenship. This was not merely administrative convenience. It was a radical statement about the nature of the republic: belonging is not granted by bloodline, wealth, or political favor. It is established by presence, by birth, by the fact of being here. A child born in a Mississippi cotton field and a child born in a Manhattan hospital became, by that fact alone, equal members of the political community.
 
-This principle is now under renewed scrutiny. Debates over birthright citizenship, immigration policy, and the status of undocumented residents all return to this clause. The Framers of the Fourteenth Amendment—Radical Republicans who had fought to end slavery—intended the Citizenship Clause to be broad and permanent. Any narrowing of it is not a technical adjustment. It is a redefinition of who gets to belong.
+This principle is now under renewed scrutiny. Debates over birthright citizenship, immigration policy, and the status of undocumented residents all return to this clause. The Framers of the Fourteenth Amendment, Radical Republicans who had fought to end slavery, intended the Citizenship Clause to be broad and permanent. Any narrowing of it is not a technical adjustment. It is a redefinition of who gets to belong.
 
 ---
 
@@ -43,9 +43,9 @@ But equal protection is not self-enforcing. The clause promises that the law wil
 
 The Due Process Clause requires states to follow fair procedures before depriving anyone of life, liberty, or property. This means notice, a hearing, an impartial decision-maker, and the right to appeal. It is the procedural backbone of every criminal trial, every eviction hearing, every administrative appeal.
 
-Over time, the Supreme Court has also read the clause as protecting substantive rights—liberties so fundamental that no procedure can legitimately take them away. This "substantive due process" doctrine underpins the right to privacy, the right to contraception, and the right to raise your children as you see fit. It is also the doctrine most criticized by originalists, who argue that the Framers intended only procedural protections, not a license for judges to invent new rights.
+Over time, the Supreme Court has also read the clause as protecting substantive rights: liberties so fundamental that no procedure can legitimately take them away. This "substantive due process" doctrine underpins the right to privacy, the right to contraception, and the right to raise your children as you see fit. It is also the doctrine most criticized by originalists, who argue that the Framers intended only procedural protections, not a license for judges to invent new rights.
 
-The tension is real and ongoing. But the underlying principle—that government cannot act arbitrarily against individuals, and that some freedoms are too basic to be voted away—remains the Fourteenth Amendment's deepest contribution to American law.
+The tension is real and ongoing. But the underlying principle (that government cannot act arbitrarily against individuals, and that some freedoms are too basic to be voted away) remains the Fourteenth Amendment's deepest contribution to American law.
 
 ---
 
@@ -53,6 +53,6 @@ The tension is real and ongoing. But the underlying principle—that government 
 
 The Fourteenth Amendment was written in the shadow of slavery, ratified in the hope of racial justice, and immediately betrayed by Jim Crow. For nearly a century, its promises were honored in the breach. The amendment did not prevent segregation, lynching, or voter suppression. It took the Civil Rights Movement, the Civil Rights Act of 1964, and the Voting Rights Act of 1965 to begin making the amendment's text match its meaning.
 
-That work is not finished. Disparities in policing, sentencing, education funding, and voting access all raise Fourteenth Amendment questions. The amendment is not a magic spell. It is a standard—a demanding standard—that requires each generation to measure its laws against the promise of equal dignity.
+That work is not finished. Disparities in policing, sentencing, education funding, and voting access all raise Fourteenth Amendment questions. The amendment is not a magic spell. It is a standard, a demanding standard, that requires each generation to measure its laws against the promise of equal dignity.
 
-The question is not whether the Fourteenth Amendment has been perfectly enforced. It has not. The question is whether we still believe in the promise enough to keep pressing for it. Because the alternative—accepting unequal protection as the natural order—is not pragmatism. It is abandonment of the constitutional project itself.
+The question is not whether the Fourteenth Amendment has been perfectly enforced. It has not. The question is whether we still believe in the promise enough to keep pressing for it. Because the alternative, accepting unequal protection as the natural order, is not pragmatism. It is abandonment of the constitutional project itself.

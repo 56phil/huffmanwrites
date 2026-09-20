@@ -21,18 +21,18 @@ tags:
 ## Executive Summary
 
 *Letters* collects correspondence on the difficult topics that most public discourse avoids: what it means to speak the truth when outcomes are uncertain, how conscience functions under pressure, and whether interior strength has any public value.
-The essays are written as letters—direct, addressed, unguarded—because the subject matter demands intimacy rather than performance.
+The essays are written as letters (direct, addressed, unguarded) because the subject matter demands intimacy rather than performance.
 The core message: **honest speech is not a strategy for winning. It is a practice of remaining present.**
 
 
 ---
 ## 5 Core Tensions
 
- - **Witness & Voice** — The gap between seeing clearly and speaking rightly, and what it costs to close it.
- - **Conscience & Thought** — How conscience functions under pressure, and whether it can be trained or only tested.
- - **Science & Scale** — The problem of knowledge that outpaces comprehension, and the humility required to hold it.
- - **Leadership & Power** — The distinction between directing and serving, and how power corrodes the distinction.
- - **Art & Interior Strength** — Whether beauty and meaning survive when survival itself is in question, and what that survival is worth.
+ - **Witness & Voice**: The gap between seeing clearly and speaking rightly, and what it costs to close it.
+ - **Conscience & Thought**: How conscience functions under pressure, and whether it can be trained or only tested.
+ - **Science & Scale**: The problem of knowledge that outpaces comprehension, and the humility required to hold it.
+ - **Leadership & Power**: The distinction between directing and serving, and how power corrodes the distinction.
+ - **Art & Interior Strength**: Whether beauty and meaning survive when survival itself is in question, and what that survival is worth.
 
 
 ---
@@ -47,7 +47,7 @@ That is the Stoic measure: not the effect on the world, but the effect on the se
 ---
 ## The Practice of Direct Address
 
-Written for readers who have grown skeptical of certainty and still need to communicate, *Letters* argues that the letter form—direct, addressed, specific—is the right container for uncertain truths.
+Written for readers who have grown skeptical of certainty and still need to communicate, *Letters* argues that the letter form (direct, addressed, specific) is the right container for uncertain truths.
 Public speech demands performance. The letter demands honesty. The book chooses honesty.
 
 

@@ -20,9 +20,9 @@ hero_caption: "The Constitution is not a list of suggestions. It is the operatin
 
 ## A Compact, Not a Crown
 
-The Constitution is not a list of suggestions. It is the operating system of the republic—a framework for how power is divided, checked, and ultimately returned to the people who delegate it. When the Framers gathered in Philadelphia in the summer of 1787, they were not designing a utopia. They were designing a restraint. They had just fought a war against concentrated power, and they were determined not to recreate the monarchy they had rejected.
+The Constitution is not a list of suggestions. It is the operating system of the republic: a framework for how power is divided, checked, and ultimately returned to the people who delegate it. When the Framers gathered in Philadelphia in the summer of 1787, they were not designing a utopia. They were designing a restraint. They had just fought a war against concentrated power, and they were determined not to recreate the monarchy they had rejected.
 
-What emerged was radical for its time: a government of enumerated powers. Not a government that could do anything unless forbidden, but a government that could only do what it was explicitly allowed. That inversion—limited government, sovereign citizens—remains the central innovation of American constitutionalism.
+What emerged was radical for its time: a government of enumerated powers. Not a government that could do anything unless forbidden, but a government that could only do what it was explicitly allowed. That inversion (limited government, sovereign citizens) remains the central innovation of American constitutionalism.
 
 ---
 
@@ -32,13 +32,13 @@ What emerged was radical for its time: a government of enumerated powers. Not a 
 
 The Constitution splits power among three branches not because cooperation is inefficient, but because concentration is dangerous.
 
-- **The Legislative Branch** makes the laws. Congress holds the power of the purse, the power to declare war, and the power to impeach. It was designed to be the first branch—the branch closest to the people, the branch where the nation's arguments are supposed to happen in public.
+- **The Legislative Branch** makes the laws. Congress holds the power of the purse, the power to declare war, and the power to impeach. It was designed to be the first branch: the branch closest to the people, the branch where the nation's arguments are supposed to happen in public.
 
 - **The Executive Branch** enforces the laws. The President commands the military, appoints judges and cabinet members, and ensures that Congress's statutes are carried out. The oath of office is not to the party, the donor class, or personal ambition. It is to preserve, protect, and defend the Constitution itself.
 
-- **The Judicial Branch** interprets the laws. Federal judges serve during "good behavior"—meaning they are insulated from political pressure—so they can decide cases without fear of retaliation. Their authority rests on the Constitution, not on popular opinion.
+- **The Judicial Branch** interprets the laws. Federal judges serve during "good behavior" (meaning they are insulated from political pressure), so they can decide cases without fear of retaliation. Their authority rests on the Constitution, not on popular opinion.
 
-No branch was meant to dominate. Each was meant to frustrate the others just enough to prevent tyranny, while still allowing the government to function. It is a clumsy, brilliant, maddening design—and it works only when each branch respects its own limits.
+No branch was meant to dominate. Each was meant to frustrate the others just enough to prevent tyranny, while still allowing the government to function. It is a clumsy, brilliant, maddening design, and it works only when each branch respects its own limits.
 
 ### Federalism: Power Divided Again
 
@@ -74,8 +74,8 @@ And underneath all of this, the deepest erosion: **civic disengagement**. The Co
 
 ## The Work of Maintenance
 
-The Constitution was never meant to run on autopilot. It demands maintenance—constant, contentious, uncomfortable maintenance. That means reading it. It means arguing about it. It means showing up at school boards, city councils, and congressional town halls. It means voting, even when the choices are imperfect. It means knowing your representative's name, your state's constitutional provisions, and the difference between a republic and a democracy.
+The Constitution was never meant to run on autopilot. It demands maintenance: constant, contentious, uncomfortable maintenance. That means reading it. It means arguing about it. It means showing up at school boards, city councils, and congressional town halls. It means voting, even when the choices are imperfect. It means knowing your representative's name, your state's constitutional provisions, and the difference between a republic and a democracy.
 
 Benjamin Franklin, leaving the Constitutional Convention, was asked what kind of government the delegates had created. "A republic," he replied, "if you can keep it."
 
-That "if" is the whole point. The Constitution is not a guarantee. It is an invitation—to participate, to resist, to improve, and to belong. The question is not whether the document is sufficient. It is whether we are.
+That "if" is the whole point. The Constitution is not a guarantee. It is an invitation: to participate, to resist, to improve, and to belong. The question is not whether the document is sufficient. It is whether we are.
