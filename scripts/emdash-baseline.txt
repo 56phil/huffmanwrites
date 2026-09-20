@@ -1,0 +1,115 @@
+# Em-dashes over the limit in content written before the exemption
+# amendment (CLAUDE.md, 2026-09-20). Keyed by file + the count at that
+# moment, so the ratchet is on the number: a file may be reduced freely
+# but may not grow past what it was. Editing a file to add prose dashes
+# is therefore caught; reducing them passes and the count is
+# re-recorded on the next --update-baseline.
+#
+# Regenerate with: scripts/check-emdashes.py --update-baseline
+#
+# file	count
+content/about.md	4
+content/credo.md	7
+content/posts/civics/a-nation-poised-for-reckoning-or-renewal.md	4
+content/posts/civics/how-47-could-improve.md	8
+content/posts/civics/international-rallies-in-solidarity-with-u-s-rallies.md	6
+content/posts/civics/no-kings-a-nation-speaks.md	9
+content/posts/civics/proud-to-be-woke.md	8
+content/posts/civics/stand-tall-for-democracy.md	7
+content/posts/civics/the-constitution-of-the-united-states-the-foundation-of-freedom.md	10
+content/posts/civics/the-constitutions-legacy-a-more-perfect-union-worth-fighting-for.md	12
+content/posts/civics/the-eighth-amendment-protecting-against-cruel-and-unusual-punishment.md	6
+content/posts/civics/the-first-amendment-the-cornerstone-of-american-freedom.md	17
+content/posts/civics/the-fourteenth-amendment-defining-citizenship-and-equal-protection.md	10
+content/posts/civics/the-fourth-amendment-protecting-privacy-in-a-digital-age.md	6
+content/posts/civics/the-paradox-of-the-second-amendment-well-regulated-or-unorganized.md	8
+content/posts/civics/the-price-of-silence-in-a-corrupt-nation.md	8
+content/posts/civics/thousands-rally-in-kansas-city-at-second-no-kings-demonstration.md	6
+content/posts/digests/digest-for-april-18-2026.md	10
+content/posts/digests/digest-for-august-22-2025.md	8
+content/posts/digests/digest-for-august-29-2025.md	6
+content/posts/digests/digest-for-november-14-2025.md	16
+content/posts/digests/digest-for-november-7-2025.md	16
+content/posts/digests/digest-for-october-10-2025.md	10
+content/posts/digests/digest-for-october-17-2025.md	8
+content/posts/digests/digest-for-october-3-2025.md	11
+content/posts/digests/digest-for-september-12-2025.md	4
+content/posts/digests/digest-for-september-19-2025.md	9
+content/posts/digests/digest-for-september-26-2025.md	5
+content/posts/digests/digest-for-stoic-saturday-2026-05-23.md	9
+content/posts/digests/prh-digest-for-mid-june-2025.md	7
+content/posts/digests/stoic-saturday-making-crimea-an-island.md	13
+content/posts/digests/stoic-saturday-rule-of-law.md	7
+content/posts/digests/weekly-digest-april-18-2025.md	4
+content/posts/digests/weekly-digest-for-11-april-2025-the-price-of-liberty.md	7
+content/posts/digests/weekly-digest-for-april-25-2025.md	7
+content/posts/digests/weekly-digest-for-may-16-2025.md	10
+content/posts/digests/weekly-digest-for-may-23-2025.md	9
+content/posts/digests/weekly-digest-for-may-9-2025.md	9
+content/posts/essays/a-life-made-whole.md	19
+content/posts/essays/elon-musk-and-the-engineering-of-chaos.md	26
+content/posts/essays/indigenous-peoples-day.md	14
+content/posts/essays/mike-johnson-and-the-problem-of-bad-faith.md	19
+content/posts/essays/misaligned.md	24
+content/posts/essays/montessori-stoicism-synthesis.md	5
+content/posts/essays/on-ai-as-a-writing-assistant.md	4
+content/posts/essays/optimal-use-of-hermes.md	26
+content/posts/essays/russias-diplomatic-gambit-in-the-arctic.md	12
+content/posts/essays/sources-optimal-use-of-hermes.md	7
+content/posts/essays/starstuff-remembering-carl-sagan.md	14
+content/posts/essays/stephen-miller-and-the-architecture-of-cruelty.md	26
+content/posts/essays/texas-senate-2026-the-preachers-son-vs-the-indicted-attorney-general.md	21
+content/posts/essays/the-genius-years-oral-history.md	20
+content/posts/essays/the-roots-of-violence.md	13
+content/posts/essays/trumps-greenland-gambit-revisited.md	19
+content/posts/essays/what-926-gigabytes-taught-me-about-proportion.md	11
+content/posts/essays/why-i-am-looking-at-albania.md	16
+content/posts/investing/a-comparison-of-discount-brokerages.md	8
+content/posts/investing/risk-management-in-a-fragile-world.md	10
+content/posts/investing/risk-management-the-investors-lifeline.md	6
+content/posts/investing/starting-to-invest-after-retirement.md	6
+content/posts/investing/the-psychology-of-investing.md	11
+content/posts/investing/why-dollar-cost-averaging-beats-market-timing.md	10
+content/posts/stoicism/learning-from-giants-without-standing-in-their-shadow.md	6
+content/posts/stoicism/small-planet-big-responsibility.md	4
+content/posts/stoicism/stoic-saturday-1.md	6
+content/posts/stoicism/stoic-saturday-2.md	11
+content/posts/stoicism/the-responsibility-of-a-small-shining-world.md	11
+content/posts/stoicism/the-virtue-of-temperance.md	5
+content/posts/stoicism/to-save-a-world-together.md	13
+content/posts/stoicism/we-are-the-ancestors-of-what-follows.md	21
+content/posts/summaries/7-habits-summary.md	17
+content/posts/summaries/a-life-made-whole-summary.md	13
+content/posts/summaries/art-of-war-summary.md	13
+content/posts/summaries/astrophysics-for-people-in-a-hurry-summary.md	21
+content/posts/summaries/braiding-sweetgrass-summary.md	25
+content/posts/summaries/brocas-brain-summary.md	22
+content/posts/summaries/cosmos-summary.md	23
+content/posts/summaries/daring-greatly-summary.md	18
+content/posts/summaries/democracy-in-america-summary.md	21
+content/posts/summaries/demon-haunted-world-summary.md	16
+content/posts/summaries/ego-is-the-enemy-summary.md	24
+content/posts/summaries/eichmann-in-jerusalem-summary.md	21
+content/posts/summaries/ethics-of-ambiguity-summary.md	19
+content/posts/summaries/letters-summary.md	10
+content/posts/summaries/mans-search-for-meaning-summary.md	18
+content/posts/summaries/meditations-summary.md	15
+content/posts/summaries/mindset-summary.md	17
+content/posts/summaries/misaligned-summary.md	11
+content/posts/summaries/not-for-profit-summary.md	15
+content/posts/summaries/on-proportion-summary.md	8
+content/posts/summaries/pale-blue-dot-summary.md	21
+content/posts/summaries/pilgrim-at-tinker-creek-summary.md	19
+content/posts/summaries/power-of-now-summary.md	18
+content/posts/summaries/radical-acceptance-summary.md	18
+content/posts/summaries/raisem-right-summary.md	12
+content/posts/summaries/sand-county-almanac-summary.md	20
+content/posts/summaries/silent-spring-summary.md	16
+content/posts/summaries/sixth-extinction-summary.md	18
+content/posts/summaries/stoic-backgammon-summary.md	14
+content/posts/summaries/the-stoic-cgm-summary.md	10
+content/posts/summaries/the-stoic-citizen-summary.md	9
+content/posts/summaries/thinking-fast-and-slow-summary.md	21
+content/posts/summaries/thus-spoke-zarathustra-summary.md	27
+content/posts/summaries/unsettling-of-america-summary.md	22
+content/posts/summaries/unstuck-summary.md	13

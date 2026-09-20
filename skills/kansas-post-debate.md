@@ -59,8 +59,10 @@ State Journal, Lawrence KS Times, Wichita Eagle, AP, local TV debate coverage.
 - **Structure:** the Sept 1 essay's shape works — a question/answer opening,
   thematic sections, an honest-weaknesses section, a close. The post-debate
   piece should be tighter: what happened, what it means, what it doesn't mean.
-- **Em-dash limit:** no more than 3 per file. Prefer commas, colons,
-  semicolons, or splitting sentences.
+- **Em-dash limit:** no more than 3 in the prose you write. Prefer commas, colons,
+  semicolons, or splitting sentences. Not counted: a dash inside quotation marks, and a
+  dash standing as a date/number range (the en-dash is the right mark for a range; an
+  em-dash there is a typo). Count with `python3 scripts/check-emdashes.py --file <path>`.
 - **Footnotes:** numbered, named sources (publication + date), matching the
   Sept 6 report's style. Every load-bearing claim gets one.
 - **Attribution line:** `*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*`

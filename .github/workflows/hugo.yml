@@ -78,6 +78,16 @@ jobs:
       - name: Check citation integrity
         run: python3 scripts/check-links.py --check
 
+      # Fail before deploy if a file's em-dash count grows. The limit is 3 in
+      # body prose; dashes inside quotations and in date/number ranges are
+      # exempt (CLAUDE.md). Content written before the exemption amendment is
+      # recorded in scripts/emdash-baseline.txt, keyed by file with its count at
+      # that moment — so the ratchet is on the number, not on presence: a file
+      # may be reduced freely but may not grow. Editing a file to add prose
+      # dashes fails here; reducing them passes.
+      - name: Check em-dash limit
+        run: python3 scripts/check-emdashes.py --check
+
       - name: Build with Hugo
         run: |
           hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"

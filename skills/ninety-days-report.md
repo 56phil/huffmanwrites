@@ -21,7 +21,10 @@ Both are DRAFTS for Philip to review, edit, and publish. Do NOT commit, push, or
 
 - Tone: personal stakes + historical context + contemporary urgency. Not yelling, not lecturing. Think *with* the reader.
 - Model the voice and structure on the two canonical September installments, including their section architecture (Ninety Days From Today; Where the Market Stands Today; the thematic core; the map; the playbook; the close; Sources).
-- Em-dash limit: no more than 3 per file. Prefer commas, colons, semicolons, or splitting sentences.
+- Em-dash limit: no more than 3 in the prose you write. Prefer commas, colons, semicolons, or
+  splitting sentences. Not counted: a dash inside quotation marks, and a dash standing as a
+  date/number range (the en-dash is the right mark for a range; an em-dash there is a typo).
+  Count with `python3 scripts/check-emdashes.py --file <path>`.
 - Every load-bearing claim (yields, spreads, oil, levels, probabilities, historical figures) MUST be verified against a source this month; cite inline with links and a `## Sources` list. Flag anything unverifiable.
 - Closing attribution: `*PRH | huffmanwrites.org | © Philip Huffman*`.
 

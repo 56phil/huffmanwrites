@@ -77,8 +77,10 @@ just the winners.
 - Open with the house lede: a bold **Question:** / **Answer:** pair framing
   the result and what it means. Model on the weekly reports and
   `the-path-to-51.md`.
-- Em-dash limit: no more than 3 per file. Prefer commas, colons, semicolons,
-  or splitting sentences.
+- Em-dash limit: no more than 3 in the prose you write. Prefer commas, colons, semicolons,
+  or splitting sentences. Not counted: a dash inside quotation marks, and a dash standing as
+  a date/number range (the en-dash is the right mark for a range; an em-dash there is a typo).
+  Count with `python3 scripts/check-emdashes.py --file <path>`.
 - Every load-bearing claim (winners, margins, dates, control math) MUST be
   verified against a source; cite with `[^n]` footnotes and a `## Notes`
   section. Flag anything unverifiable or uncalled.
