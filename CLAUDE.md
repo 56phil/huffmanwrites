@@ -23,9 +23,9 @@ hugo server --buildDrafts
 hugo --gc --minify
 ```
 
-Hugo v0.165.0+extended is installed via Homebrew at `/opt/homebrew/bin/hugo`. The CI workflow (`.github/workflows/hugo.yml`) pins v0.165.0 — the extended variant is required for Dart Sass and image processing.
+Hugo v0.166.0+extended is installed via Homebrew at `/opt/homebrew/bin/hugo`. The CI workflow (`.github/workflows/hugo.yml`) pins the same version — the extended variant is required for Dart Sass and image processing. **Keep these two in step:** a build that differs between the local toolchain and production is the kind of difference that surprises you once, in production.
 
-There are no automated tests, linters, or a package.json. The "test" is a clean `hugo --gc --minify` build with no errors.
+The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (41 assertions over the rules the gates enforce — the exemption logic, the fabrication patterns this corpus has produced, and the blind spots that were actually fixed). CI runs it before the build. Beyond that there is no package.json and no linter; a clean `hugo --gc --minify` plus the gates is the check.
 
 ## Architecture
 
@@ -108,7 +108,7 @@ There are no automated tests, linters, or a package.json. The "test" is a clean 
 
 ## Deployment
 
-GitHub Pages, deployed automatically on push to `main` via `.github/workflows/hugo.yml`. The workflow installs Hugo 0.165.0 extended, builds with `hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"`, and uploads `./public` as a Pages artifact. `static/CNAME` ensures the custom domain `huffmanwrites.org` is preserved.
+GitHub Pages, deployed automatically on push to `main` via `.github/workflows/hugo.yml`. The workflow installs Hugo 0.166.0 extended, builds with `hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"`, and uploads `./public` as a Pages artifact. `static/CNAME` ensures the custom domain `huffmanwrites.org` is preserved.
 
 To deploy from a detached worktree (e.g. Codex): `git push origin HEAD:main`.
 

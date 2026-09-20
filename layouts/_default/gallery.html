@@ -1,6 +1,6 @@
 {{ define "main" }}
 
-{{- $galleryItems := .Site.Data.gallery -}}
+{{- $galleryItems := hugo.Data.gallery -}}
 {{- $itemsPerPage := 12 -}}
 {{- $totalItems := len $galleryItems -}}
 {{- $totalPages := add (div (sub $totalItems 1) $itemsPerPage) 1 | int -}}

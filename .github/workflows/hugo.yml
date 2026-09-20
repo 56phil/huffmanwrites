@@ -28,7 +28,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.165.0
+      HUGO_VERSION: 0.166.0
     steps:
       - name: Install Hugo CLI
         run: |
@@ -96,6 +96,17 @@ jobs:
       # missing schedule key and a reference to a script that does not exist.
       - name: Check launchd schedules
         run: python3 scripts/check-plists.py
+
+      # The gates above are load-bearing, and four of them have been wrong in
+      # ways found only by accident: a counting-semantics mismatch in the
+      # em-dash gate, a blind spot in the quotation gate that made a *better*
+      # citation invisible to it, and a hero-image srcset bug in the render
+      # check. This suite tests the RULES those gates enforce — the exemption
+      # logic, the fabrication patterns this corpus has produced, and the blind
+      # spots that were actually fixed — so a regression fails here instead of
+      # shipping.
+      - name: Run gate tests
+        run: python3 scripts/test_gates.py
 
       - name: Build with Hugo
         run: |

@@ -107,6 +107,20 @@ def existing_stubs() -> "set[int]":
     return nums
 
 
+def page_count(items: int, per_page: int) -> int:
+    """Pages needed for `items`, rounded UP.
+
+    Rounding down leaves the final page unbuilt while the paginator still links
+    to it, which is a live 404 — the 2026-09-18 page 9 incident. Named and
+    separated so a test can call this rule rather than restating its formula:
+    a test that recomputes the arithmetic passes even when this function is
+    wrong.
+    """
+    if per_page <= 0:
+        _die(f"items per page must be positive, got {per_page}")
+    return (items + per_page - 1) // per_page
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Guard the gallery pagination contract.")
     ap.add_argument(
@@ -122,7 +136,7 @@ def main() -> int:
     if items == 0:
         _die("gallery data contains no items — refusing to guess the contract")
 
-    total_pages = (items + per_page - 1) // per_page
+    total_pages = page_count(items, per_page)
     required = set(range(2, total_pages + 1))
     present = existing_stubs()
     missing = sorted(required - present)
