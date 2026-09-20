@@ -6,6 +6,38 @@
 
 ---
 
+### Maintenance — September 20, 2026 — Published "The Kennedy Center Deadline: What Is Due September 23"
+
+- **Published** `content/posts/essays/kennedy-center-september-23-2026.md` — a short (~830-word) update to *The Name Over the Door*, timed to the September 23 deadline the September 17 minute order set. Per Philip: "Short update." Structure: what the board did (the two September 18 motions), why Wednesday matters (the sworn status report), what to watch (three things, in order). Hero pair NN **90** generated via fal.ai and wired; gallery entry added.
+- **What is actually new, from the docket rather than the coverage.** Friday's filings are **ECF 88** (motion to *dissolve* the May 29 preliminary injunction under Rule 60(b)(5)) and **ECF 89** (renewed motion for partial summary judgment on Count Two and portions of Counts Four, Five, and Seven). Read together they are not a defense of a contested decision; they are a request that the case be over. The published essay named the September 23 date but did not cover these, so the update adds rather than repeats: it now names the two motions, the counts, and the Rule 60(b)(5) standard.
+- **Read from the primary record.** The CourtListener Atom feed (`docket/72069932/feed/`, 30 entries) supplied the exact caption and filing date for each of ECF 84-89; the ECF 88 and ECF 89 PDFs were fetched and read for the relief sought and the cited rule. Every claim in the piece traces to a fetched document.
+- **Two facts corrected or omitted during the fact-check.** (1) The July 8 D.C. Circuit stay denial concerned **returning the name to the façade**, not the September inscription/Plaza injunction — the first draft conflated them, and the order's own text ("Since that removal has already occurred") settled which. The draft now separates the two, and adds the judge's September 15 language ("Defendants cannot install memorials for President Trump … without Congress's blessing"). (2) The checker's table records D.C. Cir. **26-5322** for ECF 79 while the published essay cites **26-5224** for the July 8 order. Only 26-5224 is confirmed by a fetched document, so the update cites **only** that one; the unconfirmed number is omitted rather than asserted. **Worth resolving in a later pass: one of the two numbers is probably transcription drift, and the published essay may need the same treatment.**
+- **Date-guard trap hit for the third time, caught by the build.** The draft was dated `15:30` while the clock read `14:22`, so `buildFuture: false` silently skipped it: the build reported **382 pages and no error**, and the page 404'd. Re-dating to the current clock gave **383 pages** and a live route. The same trap hit the Sept 6 Senate report and the Sept 20 Thiel letter. **The guard is not "check the date is today" but "the date must not be ahead of the clock at build time."**
+- **Verified:** all four cited URLs return **HTTP 200** (the D.C. Circuit order, both CourtListener ECF PDFs, and the docket page — checked individually with a browser UA). Clean `hugo --gc --minify` (**383 pages**), route present, rendered in-browser with the hero at natural 1365×768 and `loading="eager"`, four sections, five source links. Gates green: `check-emdashes --check`, `check-quotes`, `check-links --check`, `check-render-integrity` (440 pages), `check-gallery-pages` (101 items, 9 pages). Em-dash count in the article: **2**. Single commit per the publishing rule; SimpleBrain copy and translation follow.
+
+### Maintenance — September 20, 2026 — Em-dash sweep: every file over 20, 238 dashes to 12
+
+- **Done on Philip's instruction** ("Fix all files that have more than twenty em-dashes"). Eleven files, eleven parallel editors, punctuation-only. **238 → 12** counted prose em-dashes. (The earlier pass in this session took the six worst by a *different* threshold; this one takes everything above 20.)
+
+| File | Before | After |
+|---|---|---|
+| `essays/misaligned.md` | 24 | 0 |
+| `summaries/cosmos-summary.md` | 23 | 3 |
+| `summaries/unsettling-of-america-summary.md` | 22 | 1 |
+| `summaries/brocas-brain-summary.md` | 22 | 1 |
+| `summaries/thinking-fast-and-slow-summary.md` | 21 | 1 |
+| `summaries/pale-blue-dot-summary.md` | 21 | 1 |
+| `summaries/eichmann-in-jerusalem-summary.md` | 21 | 1 |
+| `summaries/democracy-in-america-summary.md` | 21 | 1 |
+| `summaries/astrophysics-for-people-in-a-hurry-summary.md` | 21 | 1 |
+| `stoicism/we-are-the-ancestors-of-what-follows.md` | 21 | 2 |
+| `essays/texas-senate-2026-the-preachers-son-vs-the-indicted-attorney-general.md` | 21 | 0 |
+
+- **Punctuation-only, verified eight ways per file rather than asserted:** word multiset identical to `HEAD`; frontmatter byte-identical; **quoted spans byte-identical**; URL set identical; headings identical; footnote defs+refs identical; and the rendered pages free of punctuation artifacts (`spaceComma`, `spacePeriod`, `commaComma`, `spaceColon`, `doubleSpace` all zero on six sampled pages). Total: **1,237 → 1,011** counted dashes corpus-wide.
+- **The surviving dashes are the epigraph/closing-quotation attribution markers** (`— Carl Sagan`, `— Wendell Berry`, `— Hannah Arendt`, `— Kahneman`, `— Tocqueville`, `— Tyson`). They must stay: `check-quotes.py` detects attributions via `(?:—|–)\s*(.+?)$`, so removing one makes the gate blind to the attribution it exists to check. The Texas Senate agent independently reverted an edit that had put a comma **inside** a quotation for the same reason — caught by its own quoted-span check.
+- **Baseline ratchet audited, not trusted:** `--update-baseline` regenerates the whole file, so the diff was checked rather than accepted — **97 → 86 entries, exactly these eleven removed, zero added, no surviving entry's count increased.** Backlog is now **86 files over the limit**, down from 97.
+- **Still open on this front:** the 86 remaining files are the 5–19 band (32 files at 5–9, 26 at 10–14, 20 at 15–19, plus 6 at 0–4 that are over only via frontmatter-adjacent counts). The ratchet prevents growth but will not shrink on its own; say the word and I will continue down the distribution.
+
 ### Maintenance — September 20, 2026 — The unrecognized-model warning, investigated and correctly left alone
 
 - **Item 2 as I had scoped it was wrong, and the investigation is the deliverable.** I had called this "noise plus a latent risk … one-line fix." Both halves were off. Measured by A/B on this machine (alternating runs, one variable each), the stderr for a runner-style invocation is **109 bytes: a single telemetry line**. The 591-byte version in the log — the long advisory about auto-compact assuming 200k — is **already suppressed** by `CLAUDE_CODE_MAX_CONTEXT_TOKENS`, which the Sept 8 fix (`bdf88a7`) added for the real reason (auto-compact truncating long drafts mid-run). So the "risk" was closed six weeks ago and the residue is one benign line, not the warning.
