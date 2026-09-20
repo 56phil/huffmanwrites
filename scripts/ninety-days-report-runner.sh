@@ -34,6 +34,14 @@ export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
 # The model has a 1M context window; Claude Code assumes 200k for
 # unrecognized model ids. Set the real window so the two drafts are not
 # auto-compact truncated mid-run.
+#
+# This var also suppresses the long half of the "unrecognized model" advisory
+# (measured 2026-09-20: set -> 109 bytes of stderr, warning absent; unset -> 591
+# bytes, warning present). What remains is one benign telemetry line per API
+# call. It does not affect the exit code and cannot raise the failure alert, so
+# it is left alone on purpose. See the long note in senate-report-runner.sh for
+# the three things that DO silence it and why none is worth doing (one fakes a
+# background session; one makes the transcript misattribute the model).
 export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 
 # Image generation: hero pairs call fal.ai (FLUX.1 dev). FAL_KEY from the

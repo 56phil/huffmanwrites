@@ -35,6 +35,32 @@ export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
 # The model has a 1M context window; Claude Code assumes 200k for
 # unrecognized model ids. Set the real window so long drafts are not
 # auto-compact truncated mid-run.
+#
+# This var is ALSO the suppression for the noisy part of the "unrecognized
+# model" advisory, and it is worth knowing which is which (measured 2026-09-20
+# by A/B on this machine):
+#   CLAUDE_CODE_MAX_CONTEXT_TOKENS set   -> stderr 109 bytes, long warning ABSENT
+#   unset                                 -> stderr 591 bytes, long warning PRESENT
+# The long warning is the one that says auto-compact will use 200k, and setting
+# the real window removes it.
+#
+# What remains is a single line the binary writes on EVERY api call when the
+# model id is not one Claude Code recognizes:
+#   [claude-code:unrecognized_model] {"model":"...","query_source":"sdk"}
+# It is emitted by this branch (read from the 2.1.234 binary):
+#   H("tengu_api_unrecognized_model", {...}); if (stderrIsTty && SESSION_KIND
+#   !== "bg") writeToStderr(line); else log(line, "warn");
+# It is telemetry, not an error: it does not affect the exit code, so it cannot
+# raise the failure alert (that is gated on $RC). Do NOT try to silence it:
+#   - CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1 does not remove it.
+#   - CLAUDE_CODE_SESSION_KIND=bg does, but that fakes a background session and
+#     changes permission handling, prompt injection and worktree isolation in
+#     the same binary. It is suppression with real side effects.
+#   - A modelOverrides mapping ({"claude-sonnet-4-5":"deepseek-v4-flash:cloud"})
+#     does remove it, and is honored, but it makes the session lie about which
+#     model is running: the transcript then attributes the draft to
+#     claude-sonnet-4-5. Not worth it to hide one diagnostic line.
+# The only honest fix is for the API to serve an id Claude Code recognizes.
 export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 
 # Override for manual test runs: SENATE_REPORT_PROMPT="Reply with exactly: SMOKE-OK"

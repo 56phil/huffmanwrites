@@ -6,6 +6,33 @@
 
 ---
 
+### Maintenance — September 20, 2026 — The unrecognized-model warning, investigated and correctly left alone
+
+- **Item 2 as I had scoped it was wrong, and the investigation is the deliverable.** I had called this "noise plus a latent risk … one-line fix." Both halves were off. Measured by A/B on this machine (alternating runs, one variable each), the stderr for a runner-style invocation is **109 bytes: a single telemetry line**. The 591-byte version in the log — the long advisory about auto-compact assuming 200k — is **already suppressed** by `CLAUDE_CODE_MAX_CONTEXT_TOKENS`, which the Sept 8 fix (`bdf88a7`) added for the real reason (auto-compact truncating long drafts mid-run). So the "risk" was closed six weeks ago and the residue is one benign line, not the warning.
+- **What actually emits it, read from the 2.1.234 binary rather than guessed:** `H("tengu_api_unrecognized_model", …)` → `if (stderrIsTty && CLAUDE_CODE_SESSION_KIND !== "bg") writeToStderr(line); else log(line, "warn")`. It fires on every API call whenever the model id is not one Claude Code recognizes; it is telemetry, and it **cannot raise the alert** (`alert-failure.sh` is gated on `$RC`, and the runs exit 0).
+- **Three ways to silence it, all tested, none worth taking.** (1) `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1` — does not remove it. (2) `CLAUDE_CODE_SESSION_KIND=bg` — **does** remove it (bytes=0), but that variable also drives permission composition, prompt injection, worktree relocation and fullscreen handling in the same binary; faking a background session to hide a log line trades a cosmetic symptom for real behavioural change. (3) `modelOverrides` — genuinely works and is honored (proven by control: mapping to a bogus id restores the line, so the flag is not inert), but it works by *declaring the Ollama model is* `claude-sonnet-4-5`, which makes the transcript misattribute the draft. Rejected.
+- **Decision: leave it, and document why, so the next session does not "fix" it.** Both runners now carry the mechanism, the three rejected routes and their side effects, and the correct fix (the API serving a recognized id). Recorded because the tempting moves here are all worse than the symptom.
+- **One real defect found next to it and fixed:** `senate-report.err.log` held `line 37: claude: command not found` from a run whose PATH lacked `~/.local/bin`. The runner exports the full PATH itself, so this was a launchd-context artifact, not a live bug — verified `claude`, `hugo` and `python3` all resolve under the runner's exact `env -i PATH`. The smoke run (`SENATE_REPORT_PROMPT="Reply with exactly: SMOKE-OK"`) exits 0, runs both verification builds and both gates, and raises no alert; its 8 log lines were removed afterwards so the production record holds only real runs, per the Sept 20 precedent.
+
+### Maintenance — September 20, 2026 — Em-dash sweep: the six worst offenders, 154 dashes to 4
+
+- **Done on Philip's instruction** ("then do the worst six on number one"). Six parallel editors, one file each, punctuation-only. Total counted prose em-dashes across the six: **154 → 4**.
+
+| File | Before | After |
+|---|---|---|
+| `summaries/thus-spoke-zarathustra-summary.md` | 27 | 1 |
+| `essays/stephen-miller-and-the-architecture-of-cruelty.md` | 26 | 1 |
+| `essays/optimal-use-of-hermes.md` | 26 | 0 |
+| `essays/elon-musk-and-the-engineering-of-chaos.md` | 26 | 0 |
+| `summaries/braiding-sweetgrass-summary.md` | 25 | 1 |
+| `summaries/ego-is-the-enemy-summary.md` | 24 | 1 |
+
+- **Nothing but punctuation changed, and it is proven per file, not asserted.** For all six: the word multiset (lowercased, punctuation-stripped) is **identical to `HEAD`**; frontmatter is byte-identical; the **quoted spans are byte-identical** (checked separately, since the em-dash rule exempts quotation-interior dashes and mangling one would break `check-quotes`); the URL set is identical; headings, bold/structure tokens, footnote definitions and references, and backtick counts are all unchanged. Rendered pages read back in-browser show **zero punctuation artifacts** (`spaceComma`, `spacePeriod`, `commaComma`, `spaceSpace` all 0) and the prose reads cleanly.
+- **The dashes that remain are the ones that must stay.** Each file keeps its epigraph/closing-quotation attribution marker (`— Friedrich Nietzsche`, `— Robin Wall Kimmerer`, `— Ryan Holiday`), which `check-quotes.py` detects via its `ATTRIBUTION = (?:—|–)\s*(.+?)\s*$` pattern — removing it would make the gate stop seeing the attribution entirely, which is why the agent assigned to it correctly left it. All six are inside the limit of 3, so all six **left `scripts/emdash-baseline.txt`**.
+- **The baseline ratchet was audited, not trusted.** `--update-baseline` regenerates the whole file, so the diff was checked rather than accepted: **103 → 97 entries, exactly the six removed, zero added, no surviving entry's count increased.**
+- **Verification:** `check-emdashes --file` on each (0–1 each, OK); `check-emdashes --check` (97 recorded, 97 over); `check-quotes` (all attributions checkable, 68 pre-rule); `check-links --check`; `check-render-integrity` (440 pages, no sentinels); `check-gallery-pages`; clean `hugo --gc --minify` (382 pages). Committed as a maintenance commit — the one-commit rule binds *publishes*, and this is not one. No SimpleBrain work: none of these are newly published.
+- **Backlog note:** **97 files remain over the limit.** This pass took the top of the distribution (24–27 dashes); the tail is long and shallow. The baseline is a ratchet, so it cannot grow, but it will not shrink on its own either.
+
 ### Maintenance — September 20, 2026 — Archived the Sept 19 digest draft, and a status pass on the schedulers
 
 - **Archived the sent Sept 19 digest.** `pending/2026-09-19-Stoic-Saturday.md` → `pending/archive/`, a day late rather than the three weeks the Sept 12 file ran on 2026-09-18. Its digest went out on schedule — campaign **3035047**, `sent_at 2026-09-19T11:00:03Z`, confirmed against the SendFox API, and its body is byte-identical to the published `content/posts/digests/stoic-saturday-the-same-standard.md`, so there was never any doubt the content shipped. The file was simply never moved. Verified byte-identical by sha256 across the move (`19a1656c…`); `pending/archive/` is gitignored (`.gitignore:6`), so the move is paired with `git rm --cached` to take it out of version control while leaving it on disk, per the July 25 and Sept 12 precedents.
