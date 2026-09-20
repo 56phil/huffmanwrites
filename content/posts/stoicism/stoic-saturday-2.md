@@ -11,9 +11,6 @@ hero_caption: "Negative space teaches us what remains when certainty is removed.
 lastmod: 2026-05-19
 ---
 
----
----
-
 "By looking forward to the coming of our sorrows we take the sting out of them when they come." — Seneca, *De Consolatione ad Marciam*, IX (trans. Aubrey Stewart, 1900), [text](https://en.wikisource.org/wiki/Of_Consolation:_To_Marcia)
 
 *The epigraph in the first Stoic Saturday originally read "The man who has anticipated the coming of troubles takes away their power when they arrive," attributed to Seneca. That wording is not Seneca's — it appears in no Seneca text and in no published translation — and has been replaced with the actual passage.*
