@@ -26,15 +26,15 @@ tags:
 
  
 
- ### **REFLECTION — THE CANDLE AND THE MIRROR**
+ ### **REFLECTION: THE CANDLE AND THE MIRROR**
 
- Carl Sagan never treated science as an escape from the world. He saw it as an act of service — a disciplined way to honor the fragile miracle of being here at all. When he called Earth a *pale blue dot*, he wasn’t indulging in cosmic poetry; he was issuing a moral reminder. Knowledge carries responsibility. Understanding obliges care.
+ Carl Sagan never treated science as an escape from the world. He saw it as an act of service: a disciplined way to honor the fragile miracle of being here at all. When he called Earth a *pale blue dot*, he wasn’t indulging in cosmic poetry; he was issuing a moral reminder. Knowledge carries responsibility. Understanding obliges care.
 
- He spoke of skepticism not as cynicism but as compassion — a defense against our own credulity, and a gesture of respect for truth. His *baloney-detection kit* wasn’t about winning arguments; it was about preserving the integrity of a species that too easily believes its own stories. For Sagan, clear thinking was an act of love. It kept the light on.
+ He spoke of skepticism not as cynicism but as compassion (a defense against our own credulity, and a gesture of respect for truth). His *baloney-detection kit* wasn’t about winning arguments; it was about preserving the integrity of a species that too easily believes its own stories. For Sagan, clear thinking was an act of love. It kept the light on.
 
- That discipline feels even more urgent now. We live amid algorithms that feed appetite instead of reason, among headlines that reward outrage over accuracy. Wonder alone can’t sustain us; it needs the scaffolding of honesty, clarity, and shared curiosity. Sagan’s candle in the dark still burns, but it’s a flame that demands tending — a daily maintenance of skepticism, civility, and awe.
+ That discipline feels even more urgent now. We live amid algorithms that feed appetite instead of reason, among headlines that reward outrage over accuracy. Wonder alone can’t sustain us; it needs the scaffolding of honesty, clarity, and shared curiosity. Sagan’s candle in the dark still burns, but it’s a flame that demands tending: a daily maintenance of skepticism, civility, and awe.
 
- The real lesson isn’t that we are small. It’s that we are *custodians* — keepers of a home that can ask questions about itself. The candle and the mirror: one gives light, the other clarity. To keep one alive, we have to keep polishing the other.
+ The real lesson isn’t that we are small. It’s that we are *custodians*: keepers of a home that can ask questions about itself. The candle and the mirror: one gives light, the other clarity. To keep one alive, we have to keep polishing the other.
 
  
 ---
@@ -46,12 +46,12 @@ tags:
 
  
 ---
- ## ✦ **This Week’s Quiz — Candlelight &amp; Common Sense**
+ ## ✦ **This Week’s Quiz: Candlelight &amp; Common Sense**
 
  >  *“For me, it is far better to grasp the Universe as it really is than to persist in delusion, however satisfying and reassuring.”*
  — Carl Sagan, *The Demon-Haunted World* (1995), [text](https://en.wikiquote.org/wiki/Carl_Sagan)
 
- *Wording note: the sentence opens “For me, it is far better…” — Sagan states this as his own stance, not as a general imperative. The page previously dropped that opening, which changed an avowal into a pronouncement.*
+ *Wording note: the sentence opens “For me, it is far better…”. Sagan states this as his own stance, not as a general imperative. The page previously dropped that opening, which changed an avowal into a pronouncement.*
 
  
 
@@ -78,7 +78,7 @@ tags:
  ### **3. Signal vs. Noise**
 
  Look back over your media or information diet this week.
- → What was *signal*—something that sharpened understanding—and what was *noise*—something that fed emotion but not insight?
+ → What was *signal* (something that sharpened understanding), and what was *noise* (something that fed emotion but not insight)?
 
  *(Short response.)*
 
@@ -97,7 +97,7 @@ tags:
  ### **5. Integrity Check**
 
  Sagan wrote, *“Science is a way to keep from fooling ourselves.”*
- → Identify one way you kept yourself honest this week—financially, intellectually, or personally.
+ → Identify one way you kept yourself honest this week: financially, intellectually, or personally.
 
  *(Short reflection.)*
 
@@ -117,7 +117,7 @@ tags:
 
  
 ---
- ### **Extra Credit — Wonder Without Illusion**
+ ### **Extra Credit: Wonder Without Illusion**
 
  Sagan said: *“For small creatures such as we, the vastness is bearable only through love.”*
  → Interpret that line in the context of community, science, or faith as you understand it.
@@ -135,4 +135,4 @@ tags:
 ---
  ## 🔮 Coming Soon
 
- **Topic**: Power and responsibility. The moral weight of influence — from individuals to institutions.
+ **Topic**: Power and responsibility. The moral weight of influence, from individuals to institutions.
