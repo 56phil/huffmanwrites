@@ -12,6 +12,23 @@
 
 ---
 
+### Maintenance — September 21, 2026 — Closed the one SimpleBrain gap, and verified the docket watch end-to-end before Wednesday
+
+Two items off a state audit, neither of which was in the notes as an open task.
+- **The SimpleBrain gap was found by measurement, not memory.** A coverage sweep over every published post (`content/posts/**` slug vs. every `.md` basename anywhere under `~/SimpleBrain`) returned exactly one miss: `stoic-saturday-the-same-standard.md`. That is the Sept 19 digest — sent (campaign `3035047`) and live — which had **no `wiki/articles/` page, nothing in `archive/`, and no `wiki/index.md` highlight**, because the Sept 19 session went straight from publishing into the citation-integrity work and the post-commit translation step never ran. **All 30 published digests are now translated; the sweep reports 0 missing.**
+- **The translation was verified as a translation, not asserted as one.** Word count on the body is **1530 → 1530, ratio 1.000, body byte-identical** to the published page; the URL set matches (`17 → 17`, none dropped); the `# Title` H1 and the `---` + `Source:` footer are both present and follow the established shape. Frontmatter is stripped per `translate.md`, and the raw file was moved to `archive/` (flat, never deleted). SimpleBrain commit `711e7de`, pushed, working tree clean, up to date with origin.
+- **The highlight list was pruned, not just appended.** It had reached 7 entries; the oldest (`sp500-next-ninety-days-2026-09-18`) was dropped to hold the list at the documented ~7. Checked, not assumed: the list now reads 7.
+- **The docket watch was tested rather than trusted, and this is the part that mattered.** Philip: "Stay frosty on the docket deadline." The Sept 23 docket item is **in 2 days**, so the question is not whether the job is installed but whether it will actually *speak* on the day. Four checks:
+  - **Armed and identical to what runs.** Repo plist and the installed copy in `~/Library/LaunchAgents/` are **byte-identical** (sha256 `5e407555…`); `launchctl print` shows the job loaded, `state = not running`, `runs = 1`, `last exit code = 0`. Repo is not drifting from the running config.
+  - **The feed actually reads.** Fetched CourtListener directly: **HTTP 200, 30,004 bytes**, 105 entry titles parsed, newest **ECF 89** — matching the watermark exactly. No new filings since Friday's two motions.
+  - **The new-filing path fires.** Simulated a filing by holding the watermark at 88 and running `--dry-run`: it reported **`CHANGE`**, named **ECF 89** with its `KNOWN` annotation, and appended the calendar item. Restored the state file afterward (it is gitignored, so the simulation could not leak into a commit) and confirmed the watermark back at 89.
+  - **The calendar actually advances toward the deadline.** Simulated `due_calendar` across Sept 21–27: `in 2d` → `in 1d` → **`TODAY` on Sept 23** (and it correctly picks up the Sept 26 NSO concert from the same horizon). A real run wrote both channels — the durable `huffmanwrites-docket.log` line and the `osascript` notification (exit 0).
+- **Why this deserved the test.** A watch job fails in two directions and only one is visible: it can miss a filing, or it can silently never run. This repo has already been burned by the second (`eb6ad18` — the weekly-integrity plist that had never executed). So the day before a deadline is exactly when "I believe it is armed" should be replaced with "I watched it report."
+- **The content follow-up, stated so the next session does not have to rediscover it:** Wednesday Sept 23 is the status report plus sworn declaration, and the docket will confirm what was filed against what the Sept 17 minute order required. `content/posts/essays/kennedy-center-september-23-2026.md` already sets up the date, so the natural piece is a short Wednesday follow-up on **compliance versus the order** — not a restatement.
+- **Verified:** all six repo gates green (`check-emdashes` 0 over, `check-quotes` 0 pre-rule, `check-links`, `check-render-integrity` 441 pages, `check-gallery-pages`, `check-plists` 6 schedules); 42 gate tests pass; clean `hugo --gc --minify` (**383 pages**); SimpleBrain clean and pushed; docket watch armed, reading, and proven to report.
+
+---
+
 ### Maintenance — September 20, 2026 — The attribution debt cleared: 68 exemptions to zero, and the citation rule now stands alone
 
 Per Philip: "Then, do two" — the 18 attributions with no checkable source.
