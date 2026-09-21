@@ -26,7 +26,7 @@ Congress has already appropriated $257 million for exactly those repairs ([OBBBA
 
 I have written about this fight before, and argued then that he is not deranged but deliberate, that the objective is coherent and small ([*The Name Over the Door*](/posts/essays/the-name-over-the-door/)). I want to make a narrower argument now, because the broader one has been made and won. This is not an essay about whether he can do it. It is an essay about whether he should be honored there even if he could.
 
-He should not. And the reason is not that he is a bad man, which is uninteresting and unprovable. The reason is that there is a standard, it is written in the statute, and the nation's forty-sixth president has measured himself against it in public and failed at every point. The standard has a name in the statute and a body of evidence in a book, and I propose to hold him to both.
+He should not. And the reason is not that he is a bad man, which is uninteresting and unprovable. The reason is that there is a standard, it is written in the statute, and the nation's forty-seventh president has measured himself against it in public and failed at every point. The standard has a name in the statute and a body of evidence in a book, and I propose to hold him to both.
 
 ## What the building actually is
 
