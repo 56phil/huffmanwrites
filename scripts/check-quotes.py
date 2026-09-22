@@ -347,6 +347,12 @@ def linked_authors(text: str) -> "dict[str, list[str]]":
     that author. Checking every URL against every quotation in the file (the
     cross-product) fails spuriously: a file with a dozen sources would demand
     that each one contain each epigraph.
+
+    Retained for `audit`'s "no URL-bearing line names <author>" check, which is
+    a different and weaker question than "which source does this quotation
+    cite". It is deliberately NOT used any more to pick URLs to verify: naming
+    an author on a line is not the same as being the source of a specific
+    quotation, and treating it as one produced false accusations (see main).
     """
     out: "dict[str, list[str]]" = {}
     for line in text.split("\n"):
@@ -356,6 +362,63 @@ def linked_authors(text: str) -> "dict[str, list[str]]":
         for w in re.findall(r"[A-Z][a-zA-Z\u00C0-\u024F'’\-]+", line):
             out.setdefault(w.lower(), []).extend(urls)
     return out
+
+
+FOOTNOTE_MARKER = re.compile(r"\[\^([^\]\s]+)\]")
+FOOTNOTE_DEF = re.compile(r"^\[\^([^\]\s]+)\]:", re.M)
+
+
+def footnote_urls(text: str, marker: str) -> "list[str]":
+    """URLs in the definition of footnote `marker`.
+
+    A marker on the citation line is an explicit pointer to the source, so
+    following it is a citation, not a guess. The definition runs to the next
+    footnote definition or the end of the block.
+    """
+    defs = list(FOOTNOTE_DEF.finditer(text))
+    for i, m in enumerate(defs):
+        if m.group(1) != marker:
+            continue
+        end = defs[i + 1].start() if i + 1 < len(defs) else len(text)
+        return sorted(set(URL.findall(text[m.end(): end])))
+    return []
+
+
+def citation_urls(text: str, ep: dict) -> "list[str]":
+    """The URLs that may be tested against this epigraph's quotation.
+
+    THE scope rule, and the only place it is expressed. Three sources, in order:
+
+      1. The attribution line, plus the line above it (short-form posts put the
+         quote and the credit on one line; some put the link on the line after).
+      2. The line below it, for `> — Author` / `[text](url)`.
+      3. A footnote the attribution line explicitly points at, whose definition
+         holds the URL. CLAUDE.md names the footnote block as legitimate
+         apparatus, and a marker is an unambiguous pointer.
+
+    Anything else is a guess, and guessing is what produced false accusations.
+    The author-wide fallback that used to live here — every URL on a line naming
+    the author — made a summary with five Kennedy-labelled Sources demand that
+    each of the five contain the epigraph, failing four correct citations and
+    printing them as quotations "that do not contain the words they are cited
+    for". Naming an author is not citing a specific quotation.
+
+    Returning several URLs is legitimate when they all sit on the citation line:
+    the Churchill epigraph cites the Churchill Project and Quote Investigator
+    side by side, both documenting that the line is not his.
+    """
+    lines = text.split("\n")
+    idx = ep["line"] - 1
+    urls = set(URL.findall("\n".join(lines[max(0, idx - 1): idx + 2])))
+    if not urls and idx + 1 < len(lines):
+        urls = set(URL.findall(lines[idx + 1]))
+    if not urls:
+        for marker in FOOTNOTE_MARKER.findall(ep["attribution"]):
+            found = footnote_urls(text, marker)
+            if found:
+                urls = set(found)
+                break
+    return sorted(urls)
 
 
 def audit(ep: dict, text: str, translated: bool) -> "list[str]":
@@ -459,15 +522,19 @@ def fetch_text(url: str) -> "tuple[str, str]":
 
 
 def check_online(url: str, needle: str, quiet: bool) -> "list[str]":
-    """Fetch one URL; require HTTP 200 and the quoted wording (normalized).
+    """Fetch one URL; return 0-or-1 problem messages.
 
-    Some source types cannot be read by a plain fetch even though they are
-    perfectly good citations: Internet Archive `/details/` pages are canvas
-    viewers, `openlibrary.org/search/inside` renders results in JavaScript, and
-    a PDF needs extraction. Treating "I could not read this" as "the words are
-    not there" would fail correct citations — the same conflation that made the
-    link checker call 18 live links dead. Those return a distinct code so the
-    caller can report them as unverified rather than failed.
+    The contract that matters is what a message is allowed to SAY. A returned
+    line asserts a fact about the citation, so it may only be produced when this
+    fetch actually read the page and the wording is genuinely absent. Every other
+    outcome — refused, timed out, unreadable by design, empty body — is a
+    statement about the checker and returns [].
+
+    That distinction is not pedantry. Folding HTTP 403 into the mismatch branch
+    labelled a correctly cited, bot-blocked publisher as a fabricated quotation;
+    the caller then printed that label and exited 1, so the gate accused this
+    repo of the exact defect it exists to catch. Same conflation that once
+    reported 18 live links as dead.
     """
     fails = []
     try:
@@ -490,7 +557,24 @@ def check_online(url: str, needle: str, quiet: bool) -> "list[str]":
             if not quiet:
                 print(f"quotes:   could not fetch — {url} ({code})")
             return []
-        return [f"{url}: HTTP {code}"]
+        if code in ("404", "410"):
+            # A dead link is a real defect and stays fatal — but it is not a
+            # missing quotation, and saying so would misdescribe it. Reported
+            # for what it is: the wording cannot be checked because the page is
+            # gone.
+            return [f"{url}: HTTP {code} (link is dead — the wording cannot be checked)"]
+        # 401/403/429 and 5xx are refusals and server-side faults, not evidence
+        # about the citation. This is the module's own rule for a fetch that
+        # never happened, applied to a fetch that happened and was turned away:
+        # "I could not read this" is a statement about the checker. It shipped
+        # as a failure once — a correct citation credited to a bot-blocked
+        # publisher was reported as "does not contain the words it is cited for",
+        # the precise false accusation of fabrication this gate exists to
+        # prevent, because 403 was folded into the mismatch branch.
+        if not quiet:
+            print(f"quotes:   unverified — {url} (HTTP {code}; host refused or "
+                  f"failed, so the wording could not be read)")
+        return []
 
     # A 200 with an empty body is not "the wording is absent" — it is "we got
     # nothing to search". quoteinvestigator.com serves exactly that for some
@@ -598,25 +682,32 @@ def main() -> int:
         # scope that means anything — that line IS the citation.
         checked = 0
         online_fails: "list[str]" = []
+        unsourced: "list[str]" = []
         for path in files:
             text = path.read_text(encoding="utf-8")
-            lines = text.split("\n")
             for ep in epigraphs(path):
                 q = normalize(ep["quote"]).strip("\"'“”*>_ ")
                 if len(q) < 25:
                     continue
-                # URLs on the attribution line itself, plus the line above it
-                # (short-form posts put the quote and the credit on one line, and
-                # some put the link on the line after).
-                idx = ep["line"] - 1
-                window = "\n".join(lines[max(0, idx - 1): idx + 2])
-                urls = sorted(set(URL.findall(window)))
+                # Which URLs may be tested against this quotation is decided in
+                # ONE place, citation_urls, because the scope rule is exactly
+                # what went wrong before (see its docstring).
+                urls = citation_urls(text, ep)
                 if not urls:
-                    # No link on the citation line: fall back to the author's
-                    # lines, which is the weakest scope that still checks
-                    # something, and report it as the weaker check it is.
-                    by_author = linked_authors(text)
-                    urls = sorted(set(by_author.get(surname(ep["author"]).lower(), [])))
+                    # Nothing points at a specific source. Say exactly that.
+                    # This is the honest report: the quotation may be perfectly
+                    # well sourced in the piece's apparatus, but this gate cannot
+                    # identify which source to check, and inventing a scope to
+                    # check against is how the false accusations happened.
+                    if not args.quiet:
+                        print(f"quotes:   no link identifies the source for "
+                              f"{ep['path'].relative_to(REPO)}:{ep['line']} — "
+                              f"skipped (add the citation link to the attribution "
+                              f"line, or a footnote marker)")
+                    unsourced.append(f"{ep['path'].relative_to(REPO)}:{ep['line']}: "
+                                     f"{ep['author']} — no link on or pointed from "
+                                     f"the attribution line")
+                    continue
                 for url in urls:
                     checked += 1
                     # COLLECT, do not abort. Returning on the first failure meant
@@ -635,6 +726,16 @@ def main() -> int:
             for f in online_fails:
                 print(f"  {f}", file=sys.stderr)
             return 1
+        if unsourced:
+            # Not a failure. An epigraph whose citation line points at no
+            # specific source cannot be verified, and reporting it as broken
+            # would be the same false accusation in a quieter voice. It is
+            # printed so the debt is visible rather than invisible, which is the
+            # standard this repo already holds itself to for citations.
+            print(f"quotes: {len(unsourced)} epigraph(s) could not be checked — no "
+                  f"link identifies the source:", file=sys.stderr)
+            for u in unsourced:
+                print(f"  {u}", file=sys.stderr)
         if not args.quiet:
             print(f"quotes: verified {checked} epigraph link(s) online")
 

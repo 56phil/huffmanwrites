@@ -14,8 +14,8 @@ fabrication patterns the corpus has produced. A test that restates the
 implementation would pass while the gate was blind, which is exactly the
 failure mode these guards exist to prevent.
 
-Run:  python3 scripts/run-gate-tests.py
-      python3 scripts/run-gate-tests.py -v      # per-test names
+Run:  python3 scripts/test_gates.py
+      python3 scripts/test_gates.py -v      # per-test names
 """
 
 from __future__ import annotations
@@ -192,6 +192,101 @@ class TestQuoteRules(unittest.TestCase):
         if p.exists():
             for ep in cq.epigraphs(p):
                 self.assertTrue(ep["author"], ep)
+
+    def test_a_refused_fetch_is_not_a_missing_quotation(self):
+        # The false accusation this gate is most dangerous for. A 403 is the
+        # host refusing automated clients — the same refusal the link gate
+        # documents as "NOT evidence of fabrication". Folding it into the
+        # mismatch branch made a correctly cited, bot-blocked publisher print as
+        # "does not contain the words it is cited for" and exit 1: the gate
+        # accusing this repo of the exact defect it exists to catch.
+        #
+        # Simulated through fetch_text so the rule is tested, not the network.
+        orig = cq.fetch_text
+        try:
+            cq.fetch_text = lambda url: ("403", "")
+            self.assertEqual(cq.check_online("https://example.org/x", "a" * 40, True), [])
+            # 5xx likewise: a server-side fault says nothing about the citation.
+            cq.fetch_text = lambda url: ("503", "")
+            self.assertEqual(cq.check_online("https://example.org/x", "a" * 40, True), [])
+            # A dead link stays fatal, and is reported as a dead link rather
+            # than as a missing quotation.
+            cq.fetch_text = lambda url: ("404", "")
+            dead = cq.check_online("https://example.org/x", "a" * 40, True)
+            self.assertEqual(len(dead), 1, dead)
+            self.assertIn("dead", dead[0])
+            self.assertNotIn("does not contain", dead[0])
+            # A readable page that really lacks the wording is still caught —
+            # without this the fix above would be indistinguishable from
+            # disabling the check.
+            cq.fetch_text = lambda url: ("200", "<p>unrelated content here</p>")
+            self.assertEqual(len(cq.check_online("https://example.org/x", "a" * 40, True)), 1)
+            cq.fetch_text = lambda url: ("200", "<p>" + "a" * 40 + "</p>")
+            self.assertEqual(cq.check_online("https://example.org/x", "a" * 40, True), [])
+        finally:
+            cq.fetch_text = orig
+
+    def test_footnote_marker_points_at_the_definition(self):
+        # A citation may route through the piece's own footnote apparatus, which
+        # CLAUDE.md names as legitimate ("the footnote block in pieces that use
+        # footnotes"). The marker is an explicit pointer, so following it is a
+        # citation rather than a guess.
+        text = ("Prose[^1] here.\n\n"
+                "[^1]: Madison, J. (1788). Federalist No. 51. "
+                "https://avalon.law.yale.edu/18th_century/fed51.asp\n"
+                "[^2]: Other. https://example.org/other\n")
+        self.assertEqual(cq.footnote_urls(text, "1"),
+                         ["https://avalon.law.yale.edu/18th_century/fed51.asp"])
+        self.assertEqual(cq.footnote_urls(text, "2"), ["https://example.org/other"])
+        # A definition must not bleed into the next one.
+        self.assertNotIn("https://example.org/other", cq.footnote_urls(text, "1"))
+        self.assertEqual(cq.footnote_urls(text, "9"), [])
+        self.assertEqual(cq.FOOTNOTE_MARKER.findall("— James Madison, Federalist 51[^1]"), ["1"])
+        self.assertEqual(cq.FOOTNOTE_MARKER.findall("— James Madison, Federalist 51"), [])
+
+    def test_an_epigraph_is_never_tested_against_another_sources_url(self):
+        # The cross-product. A summary naming Kennedy in its Sources matched all
+        # five of its Kennedy-labelled URLs — a Politico profile, an NYT archive
+        # piece, a Pulitzer page, an academia.edu chapter, and the book's own
+        # full text — and demanded each contain the epigraph, failing four
+        # correct citations. The author-wide fallback is gone: sources reachable
+        # only by naming the author must never be tested against a quotation.
+        #
+        # The Kennedy summary is the live regression fixture, so this asserts on
+        # the real file rather than a synthetic one.
+        p = REPO / "content" / "posts" / "summaries" / "profiles-in-courage-summary.md"
+        self.assertTrue(p.exists(), "regression fixture missing")
+        text = p.read_text(encoding="utf-8")
+        eps = [e for e in cq.epigraphs(p) if e["author"].startswith("John F. Kennedy")]
+        self.assertEqual(len(eps), 1, eps)
+        urls = cq.citation_urls(text, eps[0])
+        # Exactly one: the full text linked on the citation line. The other four
+        # URLs in the file name Kennedy and must NOT be pulled in.
+        self.assertEqual(len(urls), 1, urls)
+        self.assertIn("fadedpage.com", urls[0])
+        for stray in ("pulitzer.org", "academia.edu", "theatlantic.com",
+                      "nytimes.com"):
+            self.assertNotIn(stray, " ".join(urls),
+                             f"{stray} reached the citation by naming the author")
+
+    def test_citation_urls_reads_the_scope_it_claims(self):
+        # The three legitimate locations, and the one that is not.
+        ep = {"line": 3, "attribution": "Tara Brach[^1]", "author": "Tara Brach",
+              "quote": '"a quotation long enough to be audited"'}
+        # 1. on the attribution line
+        t = "x\ny\n— Tara Brach, [text](https://example.org/on-line)\n"
+        self.assertEqual(cq.citation_urls(t, ep), ["https://example.org/on-line"])
+        # 2. on the line below it
+        t = "x\ny\n> — Tara Brach\n[text](https://example.org/below)\n"
+        self.assertEqual(cq.citation_urls(t, ep), ["https://example.org/below"])
+        # 3. through a footnote the line points at
+        t = ("x\ny\n> — Tara Brach[^1]\n\n[^1]: Brach, T. *Radical Acceptance*. "
+             "https://example.org/def\n")
+        self.assertEqual(cq.citation_urls(t, ep), ["https://example.org/def"])
+        # 4. naming the author elsewhere must NOT reach it
+        t = ("preamble\nmore\n— Tara Brach\n\nfiller\nmore filler\n\nSources:\n"
+             "- Brach, Tara. [x](https://example.org/author-line)\n")
+        self.assertEqual(cq.citation_urls(t, ep), [])
 
 
 # --------------------------------------------------------------------------

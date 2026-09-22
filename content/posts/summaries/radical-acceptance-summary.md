@@ -51,7 +51,7 @@ The RAIN practice alone is worth the read. Return to it when the inner critic is
 
 ---
 > *"The boundary to what we can accept is the boundary to our freedom."*
-— Tara Brach, *Radical Acceptance* (2003), [full text](https://archive.org/download/tarabrachradicalacceptanceembracingyourlifewiththeheartofabuddhabantam2004/Tara%20Brach%20-%20Radical%20Acceptance_%20Embracing%20Your%20Life%20With%20the%20Heart%20of%20a%20Buddha-Bantam%20(2004)_djvu.txt). Brach records it as something a teacher said to her at a retreat, not as her own coinage.
+— Tara Brach, *Radical Acceptance* (2003), [full text](https://archive.org/download/tarabrachradicalacceptanceembracingyourlifewiththeheartofabuddhabantam2004/Tara%20Brach%20-%20Radical%20Acceptance_%20Embracing%20Your%20Life%20With%20the%20Heart%20of%20a%20Buddha-Bantam%20%282004%29_djvu.txt). Brach records it as something a teacher said to her at a retreat, not as her own coinage.
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

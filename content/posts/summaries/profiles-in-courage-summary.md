@@ -76,7 +76,7 @@ If the structural question interests you, [*Democracy in America*](/posts/summar
 
 ---
 > *"We can compromise our political positions, but not ourselves. We can resolve the clash of interests without conceding our ideals."*
-— John F. Kennedy, *Profiles in Courage*, ch. I
+— John F. Kennedy, *Profiles in Courage*, ch. I, [text](https://www.fadedpage.com/books/20220864/20220864.txt)
 
 ---
 ## Sources

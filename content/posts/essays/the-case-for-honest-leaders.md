@@ -71,7 +71,7 @@ So the case for honest leaders is not a moral preference. It is an engineering r
 The republic runs on citizens who check claims. It can only afford that if the claims are checkable. That is why we need honest leaders, and why the alternative is not merely unpleasant but structurally dangerous. A leader who tells the truth is not a luxury. He is the thing that keeps the whole machine from seizing.
 
 > *"If men were angels, no government would be necessary."*
-> — James Madison, Federalist 51
+> — James Madison, Federalist 51, [Avalon Project text](https://avalon.law.yale.edu/18th_century/fed51.asp)
 
 ---
 
