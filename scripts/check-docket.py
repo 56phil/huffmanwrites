@@ -69,14 +69,16 @@ KNOWN: "dict[int, str]" = {
     87: "Beatty reply (pretext).",
     88: "Motion to dissolve the PI (Rule 60(b)(5)) + 50-page memo.",
     89: "Renewed motion for partial summary judgment (+ Sep 18 Floca declaration, Delta Consulting report, Sep 15 board exhibits).",
+    90: "Beatty reply in support of the motion to unseal the JLL Plan and Delta deck.",
+    91: "DEFENDANTS' STATUS REPORT + Sep 23 Floca declaration (ECF 91-1). Closure extended to Sep 30. Says the temporary closure is a management safety measure 'separate from implementation of the Board's longer-term closure plan.'",
 }
 
 # Dates that force a fresh look regardless of whether anything is filed. The
 # docket and the case calendar are different instruments and both matter.
 CALENDAR: "list[tuple[str, str]]" = [
-    ("2026-09-23", "STATUS REPORT + sworn declaration due (Sept 17 minute order); discovery requests and deposition notices due; the 'seven-day' closure window expires."),
+    ("2026-09-23", "DISCHARGED — status report + sworn declaration filed as ECF 91 / 91-1. Discovery requests and deposition notices due. The 'seven-day' closure window expired and was extended."),
     ("2026-09-26", "NSO's first concert of its exile season (six DMV venues)."),
-    ("2026-09-30", "Discovery responses due."),
+    ("2026-09-30", "Extended temporary closure runs to this date (ECF 91: Floca extended it one week); he says he will 'reevaluate on a weekly basis'. Discovery responses also due."),
     ("2026-10-08", "Board's own prior deferral date for returning the name to the façade."),
     ("2026-10-09", "Discovery closes."),
     ("2026-10-16", "Plaintiff opposition + cross-motion for summary judgment due."),
