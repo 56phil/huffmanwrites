@@ -85,12 +85,29 @@
   <section class="latest-posts">
     <h2>Recent Posts</h2>
     {{/*
-       Fetch posts, sort by date descending, take the top 5.
+       Editorial curation: surface up to 5 posts flagged `featuredOnHome: true`,
+       date-descending, then fill any remainder from the most recent unflagged
+       posts so the section always shows 5 when 5 eligible posts exist.
+
+       Always exclude `hiddenInHomeList: true`, which cascades from the
+       summaries section index — book summaries belong in their own hub, not
+       in the home feed.
+
+       The fill is deliberate. A bare `first 5` over the flagged set would
+       silently render fewer than 5 cards once fewer than 5 posts carry the
+       flag, which is a home page that looks broken rather than curated.
+
        Hugo's sort order argument must be "desc"/"asc" — "descending" is not
        recognized and silently falls back to ascending order.
     */}}
-    {{ $recentPosts := where .Site.RegularPages "Type" "posts" }}
-    {{ range first 5 (sort $recentPosts "Date" "desc") }}
+    {{ $eligible := where (where .Site.RegularPages "Type" "posts") ".Params.hiddenInHomeList" "!=" true }}
+    {{ $featured := sort (where $eligible ".Params.featuredOnHome" true) "Date" "desc" }}
+    {{ $shown := first 5 $featured }}
+    {{ if lt (len $shown) 5 }}
+      {{ $other := sort (where $eligible ".Params.featuredOnHome" "!=" true) "Date" "desc" }}
+      {{ $shown = $shown | append (first (sub 5 (len $shown)) $other) }}
+    {{ end }}
+    {{ range $shown }}
       <div class="recent-post">
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
         <time>{{ .Date.Format "January 2, 2006" }}</time>

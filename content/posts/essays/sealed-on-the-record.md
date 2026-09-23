@@ -5,6 +5,7 @@ date: 2026-09-23T17:00:00-05:00
 author: Philip Huffman
 lastmod: 2026-09-23T17:00:00-05:00
 draft: false
+featuredOnHome: true
 tags:
   - civics
   - politics

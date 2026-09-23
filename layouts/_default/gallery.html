@@ -1,6 +1,13 @@
 {{ define "main" }}
 
-{{- $galleryItems := hugo.Data.gallery -}}
+{{- /* Newest-first. gallery.yml is maintained in insertion order, so the raw
+       list is oldest-first and the most recent hero art would otherwise land
+       on the last page, where nobody scrolls. Reversing here rather than
+       reordering the file keeps the data appendable: new entries still go on
+       the end, and the display order stays correct without touching 100+
+       existing records. Pagination indexes into this slice, so every page
+       flips consistently. */ -}}
+{{- $galleryItems := collections.Reverse hugo.Data.gallery -}}
 {{- $itemsPerPage := 12 -}}
 {{- $totalItems := len $galleryItems -}}
 {{- $totalPages := add (div (sub $totalItems 1) $itemsPerPage) 1 | int -}}
