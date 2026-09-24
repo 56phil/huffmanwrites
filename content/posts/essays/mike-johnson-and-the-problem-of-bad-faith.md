@@ -3,7 +3,7 @@ title: "Mike Johnson and the Problem of Bad Faith"
 description: "A scholarly assessment of the 56th Speaker of the House: Is he stupid, evil, both, or something worse?"
 date: 2026-07-28T00:00:00Z
 author: Philip Huffman
-lastmod: 2026-07-28T00:00:00Z
+lastmod: 2026-09-24T00:00:00Z
 draft: false
 tags:
   - politics
@@ -52,7 +52,9 @@ These are not the actions of a man who believes he is doing God's will. They are
 
 The most accurate descriptor is the third option: something else. Johnson is best understood as a **Christian nationalist who has mastered the language and forms of constitutional governance while rejecting its substantive premises.** His formative professional years were spent at the Alliance Defending Freedom (ADF), a conservative Christian legal organization that litigates to establish biblical principles as binding law. He sat on the Ethics and Religious Liberty Commission of the Southern Baptist Convention.[^11] He has openly stated that his worldview is derived from the Bible and that the Constitution was founded upon Christian principles, a historical claim rejected by most constitutional scholars but central to the Christian nationalist project.[^12]
 
-This is not mere religiosity. It is a **totalizing epistemology.** In Johnson's framework, there is no distinction between biblical truth and legal truth, between spiritual warfare and political warfare. He described his own election as Speaker as the result of divine intervention ("God is not done with America") and has consistently framed political opposition in moral and eschatological terms.[^13]
+This is not mere religiosity. It is a **totalizing epistemology.** In Johnson's framework, there is no distinction between biblical truth and legal truth, between spiritual warfare and political warfare. He described his own election as Speaker as the result of divine intervention, telling the House in his first speech after taking the gavel that Scripture "is very clear: that God is the one who raises up those in authority," and adding of his colleagues, "He raised up each of you. All of us." He has consistently framed political opposition in moral and eschatological terms.[^13]
+
+**Correction, September 24, 2026.** This paragraph originally attributed the sentence "God is not done with America" to Johnson, in quotation marks and with a citation to *Christianity Today*. That sentence does not appear in the article cited for it, which reports different words, and I have found no source that contains it. It was an unsourced quotation dressed as a sourced one, which is the precise failure this site's quotation rules exist to catch, and a reader who followed the citation would have found nothing to confirm it. The words quoted above are Johnson's actual remarks as the article reports them, and the citation now points to the passage that carries them.
 
 The danger of this worldview is not that it is irrational (though it is). The danger is that it is **non-falsifiable.** When empirical evidence contradicts theological conviction (on climate change, on election results, on the efficacy of abstinence-only education, on the outcomes of tax cuts), the evidence must be wrong, because the Bible cannot be. This creates a politician who is capable of sophisticated legal argumentation in service of propositions that are factually untrue. He is not stupid. He is **epistemologically closed**.[^14]
 
@@ -108,7 +110,7 @@ The most accurate epitaph for his career to date is this: **Mike Johnson is a ma
 
 [^12]: Clarkson, F. (2018, January 19). A manual to restore a Christian nation that never was. *Political Research Associates*. https://politicalresearch.org/2018/01/19/a-manual-to-restore-a-christian-nation-that-never-was
 
-[^13]: Jenkins, J. (2023, October 26). Evangelical Mike Johnson "raised up" as House Speaker. *Christianity Today*. https://www.christianitytoday.com/news/2023/october/mike-johnson-house-speaker-evangelical-congress-bible.html
+[^13]: Jenkins, J. (2023, October 26). Evangelical Mike Johnson "raised up" as House Speaker. *Christianity Today*: Johnson's first speech as Speaker was "I believe that Scripture, the Bible, is very clear: that God is the one who raises up those in authority. He raised up each of you. All of us." https://www.christianitytoday.com/2023/10/mike-johnson-house-speaker-evangelical-congress-bible/ **Corrected September 24, 2026:** this note previously supported the sentence "God is not done with America," which the article does not contain.
 
 [^14]: Corn, 2023.
 
