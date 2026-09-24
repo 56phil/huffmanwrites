@@ -5,6 +5,10 @@ date: 2026-09-24T11:15:00Z
 author: Philip Huffman
 lastmod: 2026-09-24T11:15:00Z
 featuredOnHome: true
+hero_desktop: "img/articles/96-speaker-canon_16x9.webp"
+hero_mobile: "img/articles/96-speaker-canon_4x5.webp"
+hero_alt: "A long row of blank Parian marble slabs of equal width but greatly unequal height standing on a polished dark floor in a deep midnight navy void, warm amber-gold light glowing along their bases and raking up their unmarked faces, the tallest catching a thin rim of cold light, every marble surface uncarved and bearing no text"
+hero_caption: "Fifty-six of them, and not one line of text on any. That is the problem. Nobody had written the ranking down."
 tags:
   - civics
   - history
