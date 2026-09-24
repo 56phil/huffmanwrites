@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.repair-plan</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/repair-plan-runner.sh</string>
+  </array>
+  <!-- Quarterly, on the first day of January, April, July and October at 07:00 CT.
+
+       launchd's StartCalendarInterval takes a SINGLE dict, not an array of
+       dicts: an array of schedules is a LaunchDaemon-only form and is silently
+       ignored for a LaunchAgent, so the job would parse cleanly and never fire.
+       Four dicts inside the one dict means four keys (Day, Month, Hour,
+       Minute), and launchd ANDs keys within a dict but ORs values within a
+       key. So Month as a four-value array fires on the 1st of each of those
+       four months, which is what "quarterly" means here.
+
+       07:00 CT deliberately matches the ninety-days job on the 1st of the
+       month, so both land before Philip's morning review, and sits clear of the
+       Monday cluster (site audit 13:00, wiki check 13:30, weekly integrity
+       14:00) even on the occasions when the 1st is a Monday. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Month</key>
+    <array>
+      <integer>1</integer>
+      <integer>4</integer>
+      <integer>7</integer>
+      <integer>10</integer>
+    </array>
+    <key>Day</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>7</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <!-- Keep the exported PATH used by the other huffmanwrites jobs so hugo,
+       python3, pdftotext and the keychain-backed helpers resolve the same way. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/prh</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/repair-plan.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/repair-plan.err.log</string>
+</dict>
+</plist>
