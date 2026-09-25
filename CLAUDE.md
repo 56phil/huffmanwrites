@@ -25,7 +25,9 @@ hugo --gc --minify
 
 Hugo v0.166.0+extended is installed via Homebrew at `/opt/homebrew/bin/hugo`. The CI workflow (`.github/workflows/hugo.yml`) pins the same version — the extended variant is required for Dart Sass and image processing. **Keep these two in step:** a build that differs between the local toolchain and production is the kind of difference that surprises you once, in production.
 
-The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (41 assertions over the rules the gates enforce — the exemption logic, the fabrication patterns this corpus has produced, and the blind spots that were actually fixed). CI runs it before the build. Beyond that there is no package.json and no linter; a clean `hugo --gc --minify` plus the gates is the check.
+The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (154 assertions over the rules the gates enforce — the exemption logic, the fabrication patterns this corpus has produced, and the blind spots that were actually fixed). CI runs it before the build. Beyond that there is no package.json and no linter; a clean `hugo --gc --minify` plus the gates is the check.
+
+Credentials have exactly one home: the **login keychain** (a `huffmanwrites-*` generic password), with `~/.secrets` (chmod 600) as the fallback every launchd runner reads. `scripts/check-secrets.py` enforces that — offline it fails if two homes disagree or a repo-local copy reappears, and `--online` asks fal.ai whether the resolved key authenticates via a GET on a request id that cannot exist (`404` = live, `401` = stale), which submits no generation and costs nothing. It runs in CI (where it no-ops: no keychain) and as phase 3 of `weekly-integrity-check.sh`. The gate exists because the fal.ai key lived in three places on 2026-09-24 and only one worked, and nothing could see it: a stale key has the right length, right prefix, and right home, and is wrong only in a way you learn by spending it. **Do not add a repo-local key file** — `.fal_token` was that mistake; read the keychain.
 
 ## Architecture
 

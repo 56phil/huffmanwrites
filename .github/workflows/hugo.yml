@@ -88,6 +88,17 @@ jobs:
       - name: Check em-dash limit
         run: python3 scripts/check-emdashes.py --check
 
+      # Fail before deploy if a credential has drifted between its homes. This
+      # gate exists because the fal.ai key lived in three places and only one
+      # worked, and nothing could see it: a stale key has the right length, the
+      # right prefix and the right home, and is wrong only in a way you learn by
+      # spending it. Offline and deterministic here — it compares the keychain
+      # (absent in CI) with ~/.secrets (also absent), so it no-ops, which is the
+      # correct behavior on a machine that holds no secrets. The liveness probe
+      # is `--online`, run by the weekly integrity job, not on every push.
+      - name: Check credential drift
+        run: python3 scripts/check-secrets.py
+
       # Fail if a scheduled job's plist cannot be loaded. The weekly integrity
       # check shipped with "--" inside an XML comment, which is illegal, so
       # launchd refused the file and the job never ran — silently, for days,

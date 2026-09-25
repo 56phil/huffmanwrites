@@ -14,9 +14,10 @@
 # (nothing is waiting on it), the results go to a log, and anything actionable
 # raises the shared failure alert.
 #
-# Two phases:
+# Three phases:
 #   1. Deterministic + online link sweep  (scripts/check-links.py)
 #   2. Quotation wording verification     (scripts/check-quotes.py --online)
+#   3. Credential drift + liveness        (scripts/check-secrets.py --online)
 #
 # Exit codes: 0 clean, 1 problems found, 2 the check could not run.
 #
@@ -67,8 +68,17 @@ run "links (online)"  python3 scripts/check-links.py --online --quiet
 # the failure mode a 200-only check cannot see.
 run "quotes (online)" python3 scripts/check-quotes.py --online --quiet
 
+# Phase 3: credentials. Two homes that disagree are reported offline; --online
+# also asks fal.ai whether the resolved key authenticates, via a GET on a
+# request id that cannot exist (a live key answers 404, a stale one 401). It
+# submits no generation, so the weekly check costs nothing — and it is the only
+# check here that would have caught the 2026-09-24 stale-key split, where the
+# keychain and ~/.secrets agreed with each other and both were dead.
+run "secrets (drift)"  python3 scripts/check-secrets.py --quiet
+run "secrets (liveness)" python3 scripts/check-secrets.py --online --quiet
+
 if [ "$rc_total" -ne 0 ]; then
-  "$ALERT" "weekly-integrity" 1 "link or citation problems; see $LOG"
+  "$ALERT" "weekly-integrity" 1 "link, citation, or credential problems; see $LOG"
   echo "weekly-integrity: PROBLEMS FOUND"
 else
   echo "weekly-integrity: clean"

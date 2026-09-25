@@ -49,6 +49,7 @@ cr = load("check-render-integrity")
 cg = load("check-gallery-pages")
 cp = load("check-plists")
 cpn = load("check-prepositions")
+cs = load("check-secrets")
 
 EM = "\u2014"
 
@@ -1538,6 +1539,88 @@ class TestCorpusIntegration(unittest.TestCase):
             f"{len(exemptions)} exemption(s) re-added to quote-baseline.txt; "
             "repair the citation instead, or justify the exemption in the commit",
         )
+
+
+# --------------------------------------------------------------------------
+# Secret drift gate: the rule is that two homes must agree.
+# --------------------------------------------------------------------------
+class TestSecretDrift(unittest.TestCase):
+    """The rule, tested without a keychain.
+
+    This gate exists because the fal.ai key lived in three places and only one
+    of them worked, and nothing could see it — a stale key has the right
+    length, the right prefix and the right home, and is wrong only in a way you
+    learn by spending it. The tests below pin the rule and, more importantly,
+    the two cases that must be *loud*: two homes that disagree, and the
+    reappearance of the repo-local copy that started it.
+    """
+
+    def test_agreeing_homes_are_clean(self):
+        self.assertEqual(
+            cs.compare_homes("K", {"keychain:k": "same", "~/.secrets:K": "same"}),
+            [],
+        )
+
+    def test_disagreeing_homes_are_reported(self):
+        # This is the 2026-09-24 failure exactly: the keychain and ~/.secrets
+        # held a stale value in perfect agreement with each other, so any check
+        # comparing only those two would call it clean. The rule that catches
+        # the real defect is not "the homes match" but "the resolved key
+        # authenticates" — which is why --online exists.
+        problems = cs.compare_homes("K", {"keychain:k": "stale", "~/.secrets:K": "live"})
+        self.assertEqual(len(problems), 1)
+        self.assertIn("DISAGREE", problems[0])
+
+    def test_a_missing_home_is_reported(self):
+        # The runners read the keychain with ~/.secrets as fallback, so a
+        # keychain-only key means the documented fallback is dead.
+        problems = cs.compare_homes("K", {"keychain:k": "v", "~/.secrets:K": None})
+        self.assertEqual(len(problems), 1)
+        self.assertIn("missing from ~/.secrets:K", problems[0])
+
+    def test_no_home_at_all_is_reported(self):
+        problems = cs.compare_homes("K", {"keychain:k": None, "~/.secrets:K": None})
+        self.assertEqual(len(problems), 1)
+        self.assertIn("no value in any home", problems[0])
+
+    def test_the_fingerprint_never_contains_the_secret(self):
+        # Findings go into a log file. The fingerprint is the only thing that
+        # may be written there, so it must be a digest and must be short.
+        secret = "055df1aa-bbbb-cccc-dddd-eeeeeeeeeeee"
+        fp = cs.fingerprint(secret)
+        self.assertEqual(len(fp), 12)
+        self.assertNotIn(secret[:6], fp)
+        self.assertEqual(fp, cs.fingerprint(secret))       # stable
+        self.assertNotEqual(fp, cs.fingerprint(secret + "x"))
+
+    def test_a_reappearing_repo_copy_is_reported(self):
+        # `.fal_token` was the third copy that made the drift possible. It is
+        # listed as legacy for exactly one reason: its return must fail here
+        # rather than wait for the next unattended 401.
+        cred = {"name": "K", "keychain": "does-not-exist-xyz",
+                "secrets_var": "NO_SUCH_VAR_XYZ", "legacy_repo_files": ["CLAUDE.md"]}
+        problems = cs.check_drift(cred)
+        self.assertTrue(any("repo-local copy exists" in p for p in problems))
+
+    def test_credentials_without_a_probe_are_not_probed(self):
+        # Only fal.ai has a cheap, free liveness probe. A key with no probe
+        # must not be sent anywhere — asserting the registry shape keeps a
+        # later edit from inventing one by accident.
+        for cred in cs.CREDENTIALS:
+            with self.subTest(cred=cred["name"]):
+                self.assertIn(cred.get("probe"), (None, "fal"))
+
+    def test_the_guard_runs_clean_on_the_real_repo(self):
+        # The end state, verified as the runner will see it: no drift, and the
+        # one credential with a probe authenticates. Skipped rather than failed
+        # if the keychain is unavailable (CI has none), because a check that
+        # cannot run is not a check that failed.
+        import subprocess
+        if not cs.keychain_available() or not cs.keychain_lookup("huffmanwrites-fal"):
+            self.skipTest("no keychain (expected in CI)")
+        r = subprocess.run([sys.executable, "scripts/check-secrets.py", "--online"],
+                           cwd=REPO, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
 
 if __name__ == "__main__":
