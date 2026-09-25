@@ -45,6 +45,20 @@ edit, publish, or discard. Do NOT commit, push, send, or copy anything.
 
 ## Step 1 — Get the week's filings from the script. Do not fetch the dockets by hand.
 
+First, read last week's report if one exists, newest first:
+
+```
+ls content/posts/essays/docket-report-*.md
+```
+
+That is the authoritative carry-forward baseline. Where it and the registry
+disagree about a case's posture, the **published report wins** — it was checked
+at write time and the registry may lag. Never restate a case's posture from
+memory; carry it forward from the last report and then correct it against this
+week's filings.
+
+Then get the week's filings:
+
 ```
 python3 scripts/check-docket.py --report
 ```
@@ -63,9 +77,15 @@ the window covered, and the calendar ahead. It is the spine of the report. Use i
 the same script backs the twice-daily watcher, so the case registry in
 `scripts/check-docket.py` is the single source of truth for what is watched. It
 also carries the `known` map: a one-line note for each ECF number, so the report
-names what ECF 91 *is* instead of printing a bare document number. If a filing
-appears in the report with no note, that is a signal the registry needs a line
-added for it — read the document and add one.
+names what ECF 91 *is* instead of printing a bare document number.
+
+**The `known` map is the registry's memory and it only grows one way.** A filing
+that appears with no note is a filing the registry has not been told about, and
+the note is only as good as the last time someone read the document. So when a
+filing matters, add its line to the `known` map for the relevant case as part of
+this job — one sentence, what the document says, not what it is titled. That is
+what makes next week's report cheaper than this week's and keeps the twice-daily
+alert intelligible. Never write a note for a document you have not read.
 
 **Two things the script does, and one it deliberately does not.**
 
