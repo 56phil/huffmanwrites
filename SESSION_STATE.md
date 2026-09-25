@@ -26,6 +26,19 @@ Per Philip: "Publish a piece summarizing the Phang case." Written the same day t
 
 ---
 
+### Maintenance — September 25, 2026 — SESSION_STATE.md may be split at will, and the splitter was a one-shot that would have eaten the archive on a second run
+
+Philip: "While it's important to preserve that information, you may split SESSION_STATE.md whenever you want." The file was at 1,377 lines / 430 KB with 105 September entries, and the script that split it in September could not do it again — worse, running it again would have destroyed the archive.
+- **`scripts/split-session-state.py` was a one-shot with three defects, one of them data loss.** Making the grant real meant fixing all three rather than just being willing to split:
+  - **The archive was REWRITTEN, not appended to.** It built the archive from only the sections it was moving *that run*. That was survivable exactly once, because the archive was empty in September. Measured before fixing: a second run would have replaced `SESSION_STATE_ARCHIVE.md` — **1,106 lines, 120 sections** — with the **25 lines of its own header**. Silent, complete loss of every pre-September entry.
+  - **The safety check was blind to it.** It compared every original line against the two *outputs*, which answers "did I keep what I am writing" and cannot answer "did I destroy what was already there". It now checks both directions, and refuses to write if any line already in the archive would disappear.
+  - **It was idempotent only by accident.** The boundary was a hardcoded `>= (2026, 9)`, so a second run would have moved nothing and reported success — a one-shot by construction. It is now `--keep-months N` (default 3) counted back from the run date, so the boundary advances by itself and no future split needs an edit first.
+- **A fourth defect was mine, introduced while fixing the third and caught by testing rather than by reading.** The first rewrite appended the archive pointer every run: two runs left **three `**History.**` blocks** in the preamble. It is now replaced, not appended, and the predicate matches the pointer's *shape* (a blockquote leading with `**History.**`) rather than its wording — because the wording names the boundary and therefore changes, which is exactly what made the previous revision's pointer look like content the loss check should protect. Verified idempotent: three consecutive runs produce byte-identical output, one pointer.
+- **Verified by running it, on copies first.** Repeated runs at 2026-12-01 and 2027-03-01: three runs → live 168 lines every time, exactly one pointer, **zero archive lines lost**; a second split with new content appended rather than replaced (archive 2,432 → 2,442 lines); every non-pointer line of the original accounted for in one of the two outputs. On the real files today it correctly reports **nothing to move** (the window is July onward) and writes nothing. **146/146 gate tests** (13 new). Both files unchanged, so this entry is the only edit.
+- **What a split now does.** Reference sections (Project Overview, Pending / Next Actions, Architecture Notes, Visual Identity, Content Inventory, User Preferences, Environment Notes, FLAGGED) and `Last Updated` always stay; entries older than the window move verbatim. Dry run by default; `--write` moves; `--as-of` previews a later split. Documented in CLAUDE.md, since the next session will not remember this conversation.
+
+---
+
 ### Maintenance — September 25, 2026 — Published the first Chiefs report, and closed the two link-gate holes that verifying it exposed
 
 Philip: "Where is the report you just did?" — then, after the runner was made to produce one and I read every line of it against its sources: publish it, and commit the link-gate fixes.

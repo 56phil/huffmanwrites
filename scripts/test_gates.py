@@ -1284,6 +1284,167 @@ class TestLinkGateRules(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+# SESSION_STATE splitter. The rules that matter are the ones whose absence
+# caused, or would have caused, silent data loss: a repeatable boundary, an
+# APPENDED archive, and a safety check that covers both files.
+# --------------------------------------------------------------------------
+ss = load("split-session-state")
+
+
+class TestSessionStateSplitter(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.dir = Path(tempfile.mkdtemp(prefix="split-"))
+        self.live = self.dir / "live.md"
+        self.arch = self.dir / "archive.md"
+
+    def write(self, live: str, arch: "str | None" = None):
+        self.live.write_text(live, encoding="utf-8")
+        if arch is not None:
+            self.arch.write_text(arch, encoding="utf-8")
+
+    def run_split(self, *extra) -> "tuple[int, str]":
+        import subprocess
+        r = subprocess.run(
+            [sys.executable, str(SCRIPTS / "split-session-state.py"),
+             "--live", str(self.live), "--archive", str(self.arch), *extra],
+            capture_output=True, text=True, cwd=REPO,
+        )
+        return r.returncode, r.stdout + r.stderr
+
+    # -- the boundary advances by itself ----------------------------------
+    def test_the_cutoff_counts_back_whole_months(self):
+        self.assertEqual(ss.cutoff(date(2026, 9, 25), 3), (2026, 7))
+        self.assertEqual(ss.cutoff(date(2026, 12, 1), 3), (2026, 10))
+        self.assertEqual(ss.cutoff(date(2027, 1, 15), 3), (2026, 11))
+        self.assertEqual(ss.cutoff(date(2027, 2, 1), 1), (2027, 2))
+        # The boundary must be derivable from ANY date, which is what makes this
+        # repeatable; the old hardcoded (2026, 9) moved nothing on a second run.
+        self.assertLess(ss.cutoff(date(2026, 9, 25), 3), ss.cutoff(date(2027, 9, 25), 3))
+
+    def test_dated_reads_a_heading(self):
+        self.assertEqual(ss.dated("### Maintenance — September 25, 2026 — Published X"), (2026, 9))
+        self.assertIsNone(ss.dated("## Project Overview"))
+        self.assertIsNone(ss.dated("### Maintenance — no date here"))
+
+    # -- reference sections and the pointer ------------------------------
+    def test_reference_sections_are_never_archived(self):
+        for h in ("## Project Overview", "## User Preferences", "## Last Updated",
+                  "### FLAGGED — something"):
+            with self.subTest(h=h):
+                self.assertTrue(ss.is_reference(h))
+        self.assertFalse(ss.is_reference("### Maintenance — September 1, 2026 — x"))
+
+    def test_a_history_pointer_is_recognised_by_shape_not_wording(self):
+        # Its wording changes as the boundary moves. Matching today's string
+        # would treat the PREVIOUS revision's pointer as content and fail the
+        # loss check on every re-run.
+        self.assertTrue(ss.is_history_pointer(
+            "> **History.** Entries before September 2026 were moved to"))
+        self.assertTrue(ss.is_history_pointer(
+            "> **History.** Entries older than the last few months are in"))
+        self.assertFalse(ss.is_history_pointer("> A quoted sentence about History in general"))
+        self.assertFalse(ss.is_history_pointer("Plain prose about History"))
+
+    # -- the data-loss bug -------------------------------------------------
+    def test_the_archive_is_appended_to_never_replaced(self):
+        # The first version wrote only the sections it was moving this run over
+        # the archive. A second run would have replaced a 1,106-line archive with
+        # the 25 lines of its own header — measured before fixing.
+        self.write(
+            "PRE\n\n---\n\n### Maintenance — January 5, 2026 — old\nbody\n\n---\n\n"
+            "### Maintenance — December 5, 2026 — new\nbody2\n\n---\n\n"
+            "## Project Overview\nkeep me\n",
+            arch="# Session State — Archive\n\n### Maintenance — May 1, 2025 — ancient\nancient body\n",
+        )
+        rc, out = self.run_split("--as-of", "2027-03-01", "--write")
+        self.assertEqual(rc, 0, out)
+        after = self.arch.read_text()
+        self.assertIn("ancient body", after, "pre-existing archive content was destroyed")
+        self.assertIn("old", after, "the moved section was not appended")
+
+    def test_a_second_run_changes_nothing(self):
+        # Idempotence: any run must leave the live file in the shape it would
+        # have had if it were the only run. The defect this guards is a pointer
+        # appended on every run — three `**History.**` blocks after two runs.
+        self.write(
+            "PRE\n\n---\n\n### Maintenance — January 5, 2026 — old\nbody\n\n---\n\n"
+            "## Project Overview\nkeep\n",
+            arch="# Archive\n",
+        )
+        rc, out = self.run_split("--as-of", "2027-03-01", "--write")
+        self.assertEqual(rc, 0, out)
+        first = self.live.read_text()
+        rc2, out2 = self.run_split("--as-of", "2027-03-01", "--write")
+        self.assertEqual(rc2, 0, out2)
+        second = self.live.read_text()
+        self.assertEqual(first, second, "a re-run must be a no-op")
+        self.assertEqual(second.count("**History.**"), 1,
+                         "the history pointer must appear exactly once")
+
+    def test_the_replaced_pointer_is_rewritten_not_lost(self):
+        # Even when the previous revision's wording names a specific month.
+        legacy = ("> **History.** Entries before September 2026 were moved to\n"
+                  "> [`SESSION_STATE_ARCHIVE.md`](SESSION_STATE_ARCHIVE.md) on 2026-09-20 — nothing was\n")
+        self.write(f"PRE\n\n---\n{legacy}\n---\n\n### Maintenance — January 5, 2026 — old\nb\n",
+                   arch="# Archive\n")
+        rc, out = self.run_split("--as-of", "2027-03-01", "--write")
+        self.assertEqual(rc, 0, f"the legacy pointer broke the loss check:\n{out}")
+        after = self.live.read_text()
+        self.assertEqual(after.count("**History.**"), 1)
+        self.assertNotIn("September 2026", after, "the stale boundary wording survived")
+
+    def test_nothing_to_move_is_reported_not_an_error(self):
+        self.write("PRE\n\n---\n\n### Maintenance — September 25, 2026 — recent\nb\n")
+        rc, out = self.run_split("--as-of", "2026-09-25")
+        self.assertEqual(rc, 0, out)
+        self.assertIn("nothing to move", out)
+
+    def test_a_dry_run_writes_nothing(self):
+        self.write("PRE\n\n---\n\n### Maintenance — January 5, 2026 — old\nbody\n")
+        before = self.live.read_text()
+        rc, out = self.run_split("--as-of", "2027-03-01")
+        self.assertEqual(rc, 0, out)
+        self.assertIn("DRY RUN", out)
+        self.assertEqual(self.live.read_text(), before)
+
+    def test_it_refuses_a_bad_argument(self):
+        self.write("PRE\n\n---\n\n## Project Overview\nx\n")
+        self.assertEqual(self.run_split("--keep-months", "0")[0], 2)
+        self.assertEqual(self.run_split("--as-of", "not-a-date")[0], 2)
+
+    def test_the_live_file_has_no_sections_so_it_refuses(self):
+        self.write("just prose, no headings at all\n")
+        rc, _ = self.run_split()
+        self.assertEqual(rc, 2)
+
+    # -- the real files ----------------------------------------------------
+    def test_the_real_live_file_keeps_its_reference_sections(self):
+        # A split of the actual file must never archive what a session needs.
+        text = (REPO / "SESSION_STATE.md").read_text(encoding="utf-8")
+        pl = ss.plan(text, date(2027, 6, 1), 3)
+        kept = {h for _, _, h in pl["keep"]}
+        for need in ss.KEEP_ALWAYS:
+            self.assertTrue(any(need in h for h in kept),
+                            f"{need!r} would be archived away from the live file")
+
+    def test_the_real_corpus_loses_nothing_when_split(self):
+        # The whole point: run the plan over the real file and prove every
+        # non-pointer line survives in one of the two outputs.
+        text = (REPO / "SESSION_STATE.md").read_text(encoding="utf-8")
+        pl = ss.plan(text, date(2027, 6, 1), 3)
+        live_body = "\n".join(ss.build_live(pl))
+        moved = []
+        for s, e, _ in pl["arch"]:
+            moved += pl["lines"][s:e]
+        arch_body = "\n".join(moved)
+        lost = [l for l in pl["lines"]
+                if l.strip() and not ss.is_history_pointer(l)
+                and l not in live_body and l not in arch_body]
+        self.assertEqual(lost, [], f"{len(lost)} line(s) would be lost")
+
+
+# --------------------------------------------------------------------------
 # The gates agree with the corpus they guard.
 # --------------------------------------------------------------------------
 class TestCorpusIntegration(unittest.TestCase):
