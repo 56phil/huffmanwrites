@@ -1,0 +1,80 @@
+# Sentence-final preposition baseline.
+#
+# House rule adopted 2026-09-25: never end a sentence with a preposition.
+# Every file below predates the rule and carries the count recorded at the
+# time it landed. The ratchet works the same way as the em-dash baseline: a
+# file may be REDUCED freely but may not grow past its recorded number, so
+# the rule catches up as each file is next edited.
+#
+# This file is a promise to look later, not a licence. Do not add to it to
+# silence a new hit in a file you are already editing — fix the sentence.
+#
+# Regenerate only when a NEW file legitimately needs recording, and say why in
+# the commit message. Format: <path>\t<count>
+#
+content/about.md	1
+content/posts/civics/no-kings-a-nation-speaks.md	1
+content/posts/civics/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it.md	1
+content/posts/civics/the-fourth-amendment-protecting-privacy-in-a-digital-age.md	1
+content/posts/civics/what-the-constitution-says-about-federal-elections.md	2
+content/posts/digests/digest-for-august-29-2025.md	2
+content/posts/digests/digest-for-january-2-2026.md	1
+content/posts/digests/digest-for-october-17-2025.md	1
+content/posts/digests/digest-for-september-26-2025.md	1
+content/posts/digests/stoic-saturday-the-line-between-whats-ours-and-what-isnt.md	1
+content/posts/digests/stoic-saturday-the-obstacle-is-the-way.md	1
+content/posts/digests/stoic-saturday-the-rule-you-set-before-you-need-it.md	1
+content/posts/digests/weekly-digest-for-april-25-2025.md	1
+content/posts/essays/AI.md	2
+content/posts/essays/a-life-made-whole.md	2
+content/posts/essays/a-million-missourians.md	2
+content/posts/essays/a-shock-not-a-surprise.md	1
+content/posts/essays/consider-the-source.md	2
+content/posts/essays/fountain-pens.md	2
+content/posts/essays/golden-gate.md	2
+content/posts/essays/honor-in-the-age-of-self-interest.md	1
+content/posts/essays/kansas-senate-2026-the-case-for-adam-hamilton.md	1
+content/posts/essays/kennedy-center-september-23-2026.md	1
+content/posts/essays/lamy-2000-vs-waterman-carene.md	1
+content/posts/essays/misaligned.md	2
+content/posts/essays/open-letter-to-peter-thiel.md	6
+content/posts/essays/phang-v-blanche.md	2
+content/posts/essays/presidential-grading-method.md	3
+content/posts/essays/ranking-the-speakers.md	4
+content/posts/essays/separate-from-the-plan.md	6
+content/posts/essays/the-2026-senate-map-a-race-by-race-guide.md	1
+content/posts/essays/the-case-for-honest-leaders.md	1
+content/posts/essays/the-crimes-of-donald-j-trump.md	1
+content/posts/essays/the-delusion-and-the-danger.md	2
+content/posts/essays/the-emergency-is-the-point.md	1
+content/posts/essays/the-genius-years-oral-history.md	2
+content/posts/essays/the-name-over-the-door.md	2
+content/posts/essays/the-probability-of-ai-ending-humanity.md	4
+content/posts/essays/the-probability-of-ai-taking-over-the-world.md	3
+content/posts/essays/the-roots-of-violence.md	3
+content/posts/essays/the-standard-and-the-man.md	4
+content/posts/essays/trumps-greenland-gambit-revisited.md	1
+content/posts/essays/twenty-seventh-of-fifty-six.md	3
+content/posts/essays/what-926-gigabytes-taught-me-about-proportion.md	1
+content/posts/essays/what-can-go-wrong-november-3.md	3
+content/posts/essays/what-courage-costs.md	4
+content/posts/essays/what-would-carl-sagan-say.md	2
+content/posts/investing/bond-market-ninety-days-2026-09-18.md	3
+content/posts/investing/sp500-next-ninety-days-2026-09-18.md	1
+content/posts/investing/sp500-next-ninety-days.md	1
+content/posts/investing/the-ai-investment-bubble.md	1
+content/posts/investing/the-bond-market-is-not-fooled.md	3
+content/posts/investing/the-debt-brake-a-real-alternative.md	3
+content/posts/stoic-backgammon-live.md	1
+content/posts/stoicism/the-stoic-investor-holding-steady-when-the-market-panics.md	1
+content/posts/stoicism/the-virtue-of-temperance-holding-the-line-when-everything-pulls-you-off-it.md	1
+content/posts/stoicism/to-save-a-world-together.md	1
+content/posts/stoicism/we-are-the-ancestors-of-what-follows.md	2
+content/posts/summaries/astrophysics-for-people-in-a-hurry-summary.md	1
+content/posts/summaries/braiding-sweetgrass-summary.md	1
+content/posts/summaries/cosmos-summary.md	1
+content/posts/summaries/mans-search-for-meaning-summary.md	1
+content/posts/summaries/meditations-summary.md	1
+content/posts/summaries/not-for-profit-summary.md	1
+content/posts/summaries/radical-acceptance-summary.md	1
+content/posts/summaries/unsettling-of-america-summary.md	1

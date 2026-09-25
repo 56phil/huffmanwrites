@@ -45,6 +45,7 @@ cl = load("check-links")
 cr = load("check-render-integrity")
 cg = load("check-gallery-pages")
 cp = load("check-plists")
+cpn = load("check-prepositions")
 
 EM = "\u2014"
 
@@ -538,6 +539,106 @@ class TestDocketRules(unittest.TestCase):
         self.assertEqual(len(got), 1)
         self.assertEqual(got[0]["kind"], "entry")
         self.assertEqual(got[0]["num"], 1208891196)
+
+
+# --------------------------------------------------------------------------
+# Never end a sentence with a preposition (house rule, 2026-09-25).
+# --------------------------------------------------------------------------
+class TestPrepositionRules(unittest.TestCase):
+    @staticmethod
+    def count(text: str) -> int:
+        return len(cpn.find(cpn.strip_non_prose(text)))
+
+    def test_a_stranded_preposition_is_flagged(self):
+        self.assertEqual(self.count("Who did you give it to?"), 1)
+        self.assertEqual(self.count("This is the house I live in."), 1)
+        self.assertEqual(self.count("What are you looking at?"), 1)
+
+    def test_the_corrected_form_is_clean(self):
+        self.assertEqual(self.count("To whom did you give it?"), 0)
+        self.assertEqual(self.count("The house in which I live is old."), 0)
+
+    def test_a_quotation_is_exempt(self):
+        # A quotation's grammar belongs to its author. Rewriting it to satisfy a
+        # house style rule would corrupt the quotation the citation gate exists
+        # to protect — the same reason the em-dash gate exempts quoted dashes.
+        self.assertEqual(self.count('He said, "Who did you give it to?"'), 0)
+
+    def test_a_url_and_a_code_span_are_exempt(self):
+        self.assertEqual(
+            self.count("See [the filing](https://example.org/docs/for/) for more."), 0)
+        self.assertEqual(self.count("Use `git log to find it.`"), 0)
+
+    def test_adverbial_particles_are_not_flagged(self):
+        # Each of these ends in a word that IS a preposition elsewhere but is an
+        # ADVERB here. Flagging them would fail a build on correct writing,
+        # which is the failure mode that teaches people to ignore a gate.
+        for text in ("The meeting is over.", "As noted above, the rule holds.",
+                     "He walked past.", "I haven't seen him since.",
+                     "This war has broken hearts before.",
+                     "eroded from both within and without."):
+            with self.subTest(text=text):
+                self.assertEqual(self.count(text), 0)
+
+    def test_phrasal_verb_particles_are_not_flagged(self):
+        # A particle is not a stranded preposition. The SAME verb forms both:.
+        # "give in" is phrasal, "give it to" is not, so the judgement is on the
+        # pair, not the verb.
+        for text in ("Please log in.", "Sign up.", "decay sets in.",
+                     "would fill it in.", "Complacency crept in.",
+                     "It kept the light on.", "Groceries, etc. pile on."):
+            with self.subTest(text=text):
+                self.assertEqual(self.count(text), 0)
+
+    def test_prepositional_verbs_still_flagged(self):
+        # The other half of that pair: these are PREPOSITIONAL verbs whose
+        # particles genuinely strand, so the rule must still catch them.
+        # Exempting them would hide the construction the rule exists for.
+        for text in ("and what exactly are you looking for?",
+                     "a trade war that nobody asked for.",
+                     "That is not a defect to be embarrassed about.",
+                     "the one door he does not have to knock on."):
+            with self.subTest(text=text):
+                self.assertEqual(self.count(text), 1)
+
+    def test_catenative_to_is_not_flagged(self):
+        # "don't want to" ends in the infinitive marker with its verb elided.
+        self.assertEqual(
+            self.count("Sometimes you have to pause, even when you don't want to."), 0)
+
+    def test_hyphenated_compound_is_not_flagged(self):
+        # "passers-by" is one word; the particle is not stranded.
+        self.assertEqual(self.count("Handed out stickers to passers-by."), 0)
+
+    def test_mid_sentence_preposition_is_not_flagged(self):
+        # The rule is about SENTENCE-final position only.
+        self.assertEqual(
+            self.count("He asked what she was talking about, and then he left."), 0)
+
+    def test_frontmatter_display_fields_are_scanned(self):
+        # A stranded preposition in a `description` is what a reader sees in a
+        # search result, so the display fields are in scope. The sentence must
+        # actually end in the preposition for this to be a real test.
+        md = '---\ndescription: "This is the tool he asked for."\n---\nclean prose.\n'
+        hits = cpn.find(cpn.strip_non_prose(cpn.frontmatter_prose(
+            md.split("---")[1])))
+        self.assertEqual(len(hits), 1)
+
+    def test_non_display_frontmatter_is_not_scanned(self):
+        # `hero_alt` is display text; a slug or a date is not prose.
+        md = '---\nslug: the-tool-he-asked-for\ndate: 2026-09-25\n---\nclean prose.\n'
+        self.assertEqual(cpn.frontmatter_prose(md.split("---")[1]), "")
+
+    def test_the_baseline_keys_on_the_file(self):
+        # The ratchet: a file may be reduced freely but may not grow past its
+        # recorded count, so the rule catches up as each file is next touched.
+        self.assertIsInstance(cpn.load_baseline(), dict)
+
+    def test_corpus_is_at_or_under_the_baseline(self):
+        import subprocess
+        r = subprocess.run([sys.executable, "scripts/check-prepositions.py", "--check"],
+                           cwd=REPO, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
 
 # --------------------------------------------------------------------------
