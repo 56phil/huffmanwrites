@@ -24,9 +24,10 @@ import argparse
 import importlib.util
 import inspect
 import json
+import re
 import sys
 import unittest
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -743,9 +744,533 @@ class TestPrepositionRules(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+# Chiefs weekly report. The rules that matter are the ones that decide whether a
+# thing gets PUBLISHED and whether the pack's numbers can be trusted: the
+# season guard that keeps the job silent in the off season, the assertion that
+# stops a feed from answering with the wrong season, and the frontmatter check
+# that is the only review an auto-published article gets.
+# --------------------------------------------------------------------------
+ck = load("chiefs-report")
+
+
+class TestChiefsReport(unittest.TestCase):
+    @staticmethod
+    def _calendar(*phases) -> "list[dict]":
+        """A league calendar in the shape the scoreboard payload serves."""
+        out = []
+        for label, value, start, end, periods in phases:
+            out.append({
+                "label": label, "type": value,
+                "start": ck.parse_date(start), "end": ck.parse_date(end),
+                "periods": [
+                    {"label": p[0], "value": p[1], "start": ck.parse_date(p[2]),
+                     "end": ck.parse_date(p[3]), "detail": p[4] if len(p) > 4 else ""}
+                    for p in periods
+                ],
+            })
+        return out
+
+    def test_off_season_is_the_only_phase_the_job_skips(self):
+        cal = self._calendar(
+            ("Regular Season", "2", "2026-09-06", "2027-01-13",
+             [("Week 3", "3", "2026-09-23", "2026-09-30", "Sep 23-29")]),
+            ("Off Season", "4", "2027-02-16", "2027-08-01", []),
+        )
+        in_season = ck.season_state(cal, date(2026, 9, 25))
+        self.assertTrue(in_season["in_season"])
+        self.assertEqual(in_season["period"], "Week 3")
+        self.assertEqual(in_season["period_detail"], "Sep 23-29")
+        off = ck.season_state(cal, date(2027, 5, 1))
+        self.assertFalse(off["in_season"])
+        self.assertEqual(off["phase"], "Off Season")
+
+    def test_a_date_outside_every_window_is_an_error_not_a_default(self):
+        # The league calendar is fetched, not hardcoded, so the way it breaks is
+        # by rolling over. Returning a phase anyway would let the job run and
+        # publish a report about a season nobody asked for.
+        cal = self._calendar(("Regular Season", "2", "2026-09-06", "2027-01-13", []))
+        with self.assertRaises(ck.FetchError):
+            ck.season_state(cal, date(2030, 9, 1))
+
+    def test_a_phase_boundary_is_half_open(self):
+        # The end date belongs to the NEXT phase: the calendar's endDate is the
+        # first instant of the following one, so treating it as inclusive would
+        # report the wrong phase on every boundary day.
+        cal = self._calendar(
+            ("Regular Season", "2", "2026-09-06", "2027-01-13", []),
+            ("Postseason", "3", "2027-01-13", "2027-02-16", []),
+        )
+        self.assertEqual(ck.season_state(cal, date(2027, 1, 12))["phase"], "Regular Season")
+        self.assertEqual(ck.season_state(cal, date(2027, 1, 13))["phase"], "Postseason")
+
+    def test_an_unknown_season_is_refused_rather_than_answered(self):
+        # Measured 2026-09-25: `standings?season=2027` returns 200 with the 2026
+        # standings, sixteen teams and all. A writer handed that would produce a
+        # report about the wrong season and nothing in it would look wrong. So
+        # the requested year must appear in the response.
+        stale = {"season": {"year": 2026}, "requestedSeason": None}
+        with self.assertRaises(ck.FetchError):
+            ck.assert_season(stale, 2027, "the standings")
+        ck.assert_season(stale, 2026, "the standings")
+        ck.assert_season(stale, None, "the standings")  # no claim, no check
+
+    def test_the_served_season_field_alone_is_enough(self):
+        # Some endpoints set requestedSeason and some only season.year; either
+        # naming the year asked for is proof the feed served it.
+        ck.assert_season({"season": {"year": 2027}, "requestedSeason": None},
+                         2027, "the schedule")
+
+    def test_selection_picks_the_last_completed_and_the_next_scheduled(self):
+        def ev(eid, when, completed, state):
+            return {
+                "id": eid, "date": when, "name": "x", "shortName": "x",
+                "week": {"number": 2},
+                "competitions": [{
+                    "status": {"type": {"completed": completed, "state": state,
+                                        "description": "Final" if completed else "Scheduled"}},
+                    "competitors": [
+                        {"homeAway": "home", "team": {"abbreviation": "KC"},
+                         "score": {"displayValue": "33"}, "winner": True},
+                        {"homeAway": "away", "team": {"abbreviation": "IND"},
+                         "score": {"displayValue": "30"}},
+                    ],
+                }],
+            }
+        events = [
+            ev("a", "2026-09-15T00:15Z", True, "post"),
+            ev("b", "2026-09-21T00:20Z", True, "post"),
+            ev("c", "2026-09-27T17:00Z", False, "pre"),
+            ev("d", "2026-10-04T20:25Z", False, "pre"),
+        ]
+        picks = ck.pick_games(events, "KC", date(2026, 9, 25))
+        self.assertEqual(picks["last"]["id"], "b", "must take the MOST RECENT completed game")
+        self.assertEqual(picks["next"]["id"], "c", "must take the EARLIEST scheduled game")
+        self.assertEqual(picks["played"], 2)
+
+    def test_games_for_other_teams_are_ignored(self):
+        # The team schedule endpoint is filtered by the feed, but a league-wide
+        # payload reaching this function must not be counted as the team's games.
+        def ev(eid, abbrs):
+            return {
+                "id": eid, "date": "2026-09-21T00:20Z", "name": "x", "shortName": "x",
+                "week": {"number": 2},
+                "competitions": [{
+                    "status": {"type": {"completed": True, "state": "post", "description": "Final"}},
+                    "competitors": [
+                        {"homeAway": "home", "team": {"abbreviation": abbrs[0]}},
+                        {"homeAway": "away", "team": {"abbreviation": abbrs[1]}},
+                    ],
+                }],
+            }
+        picks = ck.pick_games([ev("a", ("GB", "ATL")), ev("b", ("KC", "IND"))], "KC",
+                              date(2026, 9, 25))
+        self.assertEqual(picks["played"], 1)
+        self.assertEqual(picks["last"]["id"], "b")
+
+    def test_news_is_filtered_to_the_window_and_the_team_tag(self):
+        def art(headline, published, tags):
+            return {
+                "headline": headline, "description": "", "type": "Story",
+                "published": published,
+                "categories": [{"type": t, "uid": u} for t, u in tags],
+            }
+        payload = {"articles": [
+            art("KC today", "2026-09-25T10:00:00Z", [("team", "s:20~l:28~t:12")]),
+            art("KC old", "2026-08-01T10:00:00Z", [("team", "s:20~l:28~t:12")]),
+            art("League only", "2026-09-25T10:00:00Z", [("league", "s:20~l:28")]),
+            art("Other team", "2026-09-25T10:00:00Z", [("team", "s:20~l:28~t:2")]),
+        ]}
+        got = ck.recent_news(payload, date(2026, 9, 25))
+        self.assertEqual([a["headline"] for a in got], ["KC today"])
+
+    def test_news_is_newest_first(self):
+        payload = {"articles": [
+            {"headline": f"n{i}", "published": f"2026-09-2{i}T10:00:00Z", "type": "Story",
+             "categories": [{"type": "team", "uid": "s:20~l:28~t:12"}]}
+            for i in (1, 5, 3)
+        ]}
+        got = ck.recent_news(payload, date(2026, 9, 26))
+        self.assertEqual([a["headline"] for a in got], ["n5", "n3", "n1"])
+
+    def test_a_playlist_story_is_whatever_the_feed_tagged_not_a_judgement(self):
+        # The feed's team filter is a tag, not a topic. Half of what comes back
+        # names the Chiefs once in a league-wide piece. The function keeps them
+        # (that is the feed's own contract) and the SKILL tells the writer to
+        # read the tag with suspicion — so the rule lives in the prompt, and this
+        # test records that the data layer is deliberately not editorializing.
+        payload = {"articles": [
+            {"headline": "NFL Week 3 uniforms", "published": "2026-09-25T10:00:00Z",
+             "type": "Story", "categories": [{"type": "team", "uid": "s:20~l:28~t:12"}]},
+        ]}
+        self.assertEqual(len(ck.recent_news(payload, date(2026, 9, 25))), 1)
+
+    def test_division_standings_needs_the_division_level(self):
+        # With level=3 the AFC node carries children and no entries of its own.
+        # Reading the conference node's entries returns nothing and the seed
+        # line vanishes from the pack, so the seed list must be rebuilt from the
+        # divisions. This is the payload shape with level=3, measured 2026-09-25.
+        def entry(abbr, tid, seed):
+            return {"team": {"abbreviation": abbr, "displayName": abbr, "id": tid},
+                    "stats": [{"name": "playoffSeed", "displayValue": seed},
+                              {"name": "overall", "displayValue": "2-0"}]}
+        payload = {"children": [
+            {"abbreviation": "AFC", "standings": {"entries": []}, "children": [
+                {"name": "AFC West", "standings": {"entries": [
+                    entry("KC", "12", "1"), entry("LV", "13", "5"),
+                    entry("DEN", "7", "9"), entry("LAC", "24", "15")]}},
+                {"name": "AFC East", "standings": {"entries": [
+                    entry("BUF", "2", "2"), entry("MIA", "15", "13")]}},
+            ]},
+        ]}
+        got = ck.division_standings(payload, "KC")
+        self.assertEqual(got["division"], "AFC West")
+        self.assertEqual(len(got["rows"]), 4)
+        self.assertEqual(len(got["conference"]), 6, "seed list rebuilt from the divisions")
+        self.assertEqual(got["conference"][0]["team"], "KC")
+
+    def test_a_division_findings_failure_is_loud(self):
+        payload = {"children": [
+            {"abbreviation": "AFC", "standings": {"entries": []}, "children": [
+                {"name": "AFC West", "standings": {"entries": [
+                    {"team": {"abbreviation": "LV", "id": "13"}, "stats": []}]}},
+            ]},
+        ]}
+        with self.assertRaises(ck.FetchError):
+            ck.division_standings(payload, "KC")
+
+    def test_game_links_come_only_from_the_payload(self):
+        # The repo's most dangerous failure is a constructed URL that returns
+        # 200 and lands elsewhere. A link the feed handed over is observed; one
+        # assembled from a game id is not. So the extractor must read links and
+        # never build them — including that it invents nothing for an event
+        # whose payload carries none.
+        with_links = {"links": [{"href": "https://www.espn.com/nfl/game/_/gameId/1/x"}],
+                      "competitions": [{"links": [{"href": "https://www.espn.com/nfl/recap?gameId=1"}]}]}
+        got = ck.game_links(with_links)
+        self.assertEqual(got, ["https://www.espn.com/nfl/game/_/gameId/1/x",
+                               "https://www.espn.com/nfl/recap?gameId=1"])
+        self.assertEqual(ck.game_links({"id": "401872945", "competitions": [{}]}), [],
+                         "an event id is not a URL; nothing may be assembled from it")
+
+    def test_game_links_deduplicate_and_drop_non_http(self):
+        event = {"links": [{"href": "https://a.example/x"}, {"href": "https://a.example/x"},
+                           {"href": "sportscenter://x-callback-url/showGame?gameId=1"}],
+                 "competitions": [{}]}
+        self.assertEqual(ck.game_links(event), ["https://a.example/x"])
+
+    def test_describe_game_reads_the_team_side_not_the_first_competitor(self):
+        # The home competitor is not always the Chiefs, and taking competitors[0]
+        # would silently swap the score around on an away game.
+        event = {
+            "id": "1", "date": "2026-09-27T17:00Z", "name": "KC at MIA",
+            "shortName": "KC @ MIA", "week": {"number": 3},
+            "competitions": [{
+                "status": {"type": {"completed": True, "state": "post",
+                                    "description": "Final", "detail": "Final"}},
+                "venue": {"fullName": "Hard Rock Stadium"},
+                "broadcasts": [{"media": {"shortName": "CBS"}}],
+                "competitors": [
+                    {"homeAway": "home", "team": {"abbreviation": "MIA", "displayName": "Miami Dolphins"},
+                     "score": {"displayValue": "20"}, "winner": False},
+                    {"homeAway": "away", "team": {"abbreviation": "KC", "displayName": "Kansas City Chiefs"},
+                     "score": {"displayValue": "27"}, "winner": True},
+                ],
+            }],
+        }
+        got = ck.describe_game(event, "KC")
+        self.assertEqual(got["team_score"], "27")
+        self.assertEqual(got["opponent_score"], "20")
+        self.assertEqual(got["opponent"], "MIA")
+        self.assertFalse(got["home"])
+        self.assertTrue(got["won"])
+        self.assertEqual(got["broadcasts"], ["CBS"])
+
+    def test_describe_game_returns_none_for_an_absent_team(self):
+        event = {"id": "1", "competitions": [{"competitors": [
+            {"team": {"abbreviation": "GB"}, "score": {"displayValue": "1"}},
+            {"team": {"abbreviation": "ATL"}, "score": {"displayValue": "2"}},
+        ]}]}
+        self.assertIsNone(ck.describe_game(event, "KC"))
+
+    def test_the_predictor_resolves_names_only_from_observed_ids(self):
+        # The projection identifies teams by numeric id, and printing the raw id
+        # leaves the writer guessing which side is which. Guessing a NAME is
+        # worse: a wrong team name reads as a fact. So an unknown id falls back
+        # to the id itself.
+        pack = {"standings": {"rows": [{"id": "12", "name": "Kansas City Chiefs"}],
+                              "conference": [{"id": "15", "name": "Miami Dolphins"}]}}
+        idmap = ck.team_id_map(pack)
+        self.assertEqual(ck.team_name_for(idmap, "12", "12"), "Kansas City Chiefs")
+        self.assertEqual(ck.team_name_for(idmap, "15", "15"), "Miami Dolphins")
+        self.assertEqual(ck.team_name_for(idmap, "99", "99"), "99")
+
+    def test_parse_date_rejects_anything_not_iso(self):
+        self.assertEqual(ck.parse_date("2026-09-27T17:00Z"), date(2026, 9, 27))
+        for bad in ("", None, "Sep 27, 2026", "27/09/2026"):
+            with self.subTest(bad=bad):
+                with self.assertRaises(ValueError):
+                    ck.parse_date(bad)
+
+    def test_urls_in_finds_nested_urls(self):
+        blob = {"a": ["https://x.example/1", {"b": "see https://y.example/2 for more"}]}
+        self.assertEqual(ck.urls_in(blob), {"https://x.example/1", "https://y.example/2"})
+
+
+class TestChiefsArticleValidation(unittest.TestCase):
+    """The only review an auto-published article gets. Every rule here is a
+    defect this repo has actually shipped."""
+
+    def setUp(self):
+        import tempfile
+        self.dir = Path(tempfile.mkdtemp(prefix="chiefs-validate-"))
+        self.now = datetime(2026, 9, 29, 18, 30, tzinfo=ck.CT)
+
+    def write(self, body: str) -> Path:
+        p = self.dir / "a.md"
+        p.write_text(body, encoding="utf-8")
+        return p
+
+    def good(self, **over):
+        fields = {
+            "title": '"Chiefs Report: September 29, 2026"',
+            "description": '"A one-sentence description."',
+            "date": "2026-09-29T18:30:00-05:00",
+            "draft": "false",
+            "featuredOnHome": "true",
+        }
+        fields.update(over)
+        front = "\n".join(f"{k}: {v}" for k, v in fields.items())
+        return f"---\n{front}\n---\n\nBody prose.\n\n*PRH | [huffmanwrites.org] | © Philip Huffman*\n"
+
+    def test_a_good_article_passes(self):
+        p = self.write(self.good())
+        self.assertEqual(ck.validate_article(p, now=self.now), [])
+
+    def test_a_draft_flag_left_true_is_caught(self):
+        # It would deploy nothing while looking like it published.
+        p = self.write(self.good(draft="true"))
+        self.assertTrue(any("draft" in m for m in ck.validate_article(p, now=self.now)))
+
+    def test_a_missing_home_flag_is_caught(self):
+        # More than five posts already carry the flag, so an unflagged post
+        # never reaches the home feed at all: published and unseen.
+        p = self.write(self.good(featuredOnHome="false"))
+        self.assertTrue(any("featuredOnHome" in m for m in ck.validate_article(p, now=self.now)))
+        p2 = self.write("\n".join(
+            ln for ln in self.good().split("\n") if not ln.startswith("featuredOnHome")))
+        self.assertTrue(any("featuredOnHome" in m for m in ck.validate_article(p2, now=self.now)))
+
+    def test_a_future_date_is_caught(self):
+        # buildFuture: false skips the page WITHOUT failing the build — the
+        # failure recorded three times in SESSION_STATE.
+        p = self.write(self.good(date="2026-09-29T23:30:00-05:00"))
+        problems = ck.validate_article(p, now=self.now)
+        self.assertTrue(any("ahead of the clock" in m for m in problems), problems)
+
+    def test_small_clock_slack_is_allowed(self):
+        # The stamp is taken microseconds before the check runs, so a modest
+        # drift must not fail a correct article. The default slack is 5 minutes.
+        p = self.write(self.good(date="2026-09-29T18:33:00-05:00"))
+        self.assertEqual(ck.validate_article(p, now=self.now), [])
+
+    def test_an_unparseable_date_is_caught_rather_than_skipped(self):
+        p = self.write(self.good(date="September 29, 2026"))
+        self.assertTrue(any("ISO 8601" in m for m in ck.validate_article(p, now=self.now)))
+
+    def test_a_missing_attribution_is_caught(self):
+        body = self.good().replace("*PRH | [huffmanwrites.org] | © Philip Huffman*\n", "")
+        p = self.write(body)
+        self.assertTrue(any("attribution" in m for m in ck.validate_article(p, now=self.now)))
+
+    def test_missing_required_fields_are_named(self):
+        p = self.write("---\ndraft: false\nfeaturedOnHome: true\n---\n*PRH | x*\n")
+        problems = ck.validate_article(p, now=self.now)
+        for name in ("title", "description", "date"):
+            self.assertTrue(any(name in m for m in problems), (name, problems))
+
+    def test_a_missing_file_is_a_problem_not_a_crash(self):
+        self.assertTrue(ck.validate_article(self.dir / "nope.md", now=self.now))
+
+    def test_no_frontmatter_is_caught(self):
+        p = self.write("just prose, no frontmatter\n")
+        self.assertTrue(any("frontmatter" in m for m in ck.validate_article(p, now=self.now)))
+
+
+class TestChiefsRunnerContract(unittest.TestCase):
+    """The runner's own invariants, checked against its text.
+
+    These are not style rules. Each asserts a property whose absence would let
+    an unreviewed article reach production, and each is cheap to break by
+    editing the script without thinking about this job publishing."""
+
+    def setUp(self):
+        self.runner = (REPO / "scripts" / "chiefs-weekly-report-runner.sh").read_text()
+
+    def test_a_gate_failure_aborts_the_push(self):
+        # In the four drafting jobs a failed gate is a note for Philip. Here it
+        # is the only review the piece gets, so it must stop the run.
+        i = self.runner.find("GATE_FAILED=1")
+        self.assertGreater(i, 0)
+        after = self.runner[i:]
+        self.assertIn("NOT PUBLISHING", after)
+        self.assertLess(after.find("NOT PUBLISHING"), after.find("git push"),
+                        "the gate abort must come before the push")
+
+    def test_a_build_failure_aborts_the_push(self):
+        i = self.runner.find("BUILD_FAILED=1")
+        self.assertGreater(i, 0)
+        after = self.runner[i:]
+        self.assertIn("not publishing", after)
+        self.assertLess(after.find("not publishing"), after.find("git push"))
+
+    def test_the_article_is_validated_before_the_builds(self):
+        self.assertLess(self.runner.find("--validate"), self.runner.find("check-quotes"))
+
+    def test_the_article_path_is_bound_before_anything_uses_it(self):
+        # The guards and the commit all read $ARTICLE. Under `set -u` an unbound
+        # expansion is a hard failure, and defining it after a use would make
+        # every run die at that guard. Cheap to break by moving the assignment.
+        code = "\n".join(ln for ln in self.runner.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        define = code.find('ARTICLE="content/posts/sports/')
+        self.assertGreater(define, 0)
+        self.assertLess(define, code.find('rm -f "$ARTICLE"'))
+        self.assertLess(define, code.find("claude -p"))
+        self.assertEqual(code.count('ARTICLE="content/posts/sports/'), 1,
+                         "exactly one definition; a second would shadow the first")
+
+    def test_a_dirty_session_state_stops_the_run(self):
+        # The runner inserts its entry by splitting SESSION_STATE.md at an
+        # anchor, so uncommitted edits already in that file would be committed
+        # under this run's message and attributed to this job.
+        code = "\n".join(ln for ln in self.runner.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertIn("REFUSING TO RUN", code)
+        i = code.find("REFUSING TO RUN")
+        self.assertLess(i, code.find("git push"), "the guard precedes the push")
+        self.assertIn("git status --porcelain -- SESSION_STATE.md", code)
+
+    def test_a_stale_article_is_removed_before_the_writer_runs(self):
+        # The dangerous outcome for the article path is not that a stale draft
+        # gets overwritten — it is that the WRITER fails and the runner then
+        # commits the stale draft under this run's title. Deleting it first
+        # makes the post-condition binary: the file exists because this run
+        # wrote it, or the run aborts for a missing file.
+        code = "\n".join(ln for ln in self.runner.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        i = code.find("removing a pre-existing")
+        self.assertGreater(i, 0)
+        self.assertIn('rm -f "$ARTICLE"', code)
+        self.assertLess(i, code.find("claude -p"),
+                        "the stale copy must go before the writer, not after")
+
+    def test_the_push_is_verified_rather_than_assumed(self):
+        # `git push` exit 0 after racing another push does not mean the commit
+        # landed, and a published report that never reached the remote looks
+        # exactly like success in the log.
+        self.assertIn("git rev-parse origin/main", self.runner)
+        self.assertIn("push did not land", self.runner)
+
+    def test_the_agent_cannot_commit_push_or_touch_session_state(self):
+        # The runner owns all three. An agent that could push could publish
+        # anything; an agent that wrote SESSION_STATE could assert a gate result
+        # it was unable to produce.
+        i = self.runner.find("--allowedTools")
+        self.assertGreater(i, 0)
+        grant = self.runner[i:self.runner.find("\n", self.runner.find(">> \"$OUT_LOG\"", i))]
+        self.assertNotIn("git", grant)
+        self.assertIn("Bash(python3 scripts/chiefs-report.py*)", grant)
+
+    def test_the_commit_names_only_the_article_and_the_state_file(self):
+        # `git add -A` would let a writer that wandered outside its brief get the
+        # result into a published commit. Comments are stripped first: the
+        # runner explains in prose that it does NOT use `git add -A`, and a test
+        # that matched its own documentation would be testing the wrong text.
+        code = "\n".join(ln for ln in self.runner.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertIn('git add "$ARTICLE" SESSION_STATE.md', code)
+        self.assertNotIn("git add -A", code)
+        self.assertNotIn("git add .", code)
+
+    def test_the_season_guard_exits_zero(self):
+        # A non-zero exit would raise the failure alert every Tuesday for six
+        # months, which is how a real alert gets learned as noise.
+        i = self.runner.find("off season, no report, exiting")
+        self.assertGreater(i, 0)
+        self.assertIn("exit 0", self.runner[i:i + 200])
+
+    def test_no_apostrophe_inside_a_default_expansion(self):
+        # bash 3.2 mis-parses it and reports the damage as a syntax error far
+        # later in the file. This cost a debugging round while writing the job.
+        for m in re.finditer(r"\$\{[A-Z_]+:-([^}]*)\}", self.runner):
+            self.assertNotIn("'", m.group(1), m.group(0)[:120])
+
+
+# --------------------------------------------------------------------------
 # The gates agree with the corpus they guard.
 # --------------------------------------------------------------------------
 class TestCorpusIntegration(unittest.TestCase):
+    def test_the_session_state_insert_lands_above_the_first_entry(self):
+        # The runner inserts its entry by finding the first "### Maintenance —"
+        # anchor. This reproduces that insert against a scratch copy of the real
+        # file: an entry appended at the bottom, or one written after the anchor
+        # in the wrong place, would quietly break the file that SESSION_STATE
+        # exists to be — the thing a session reads first.
+        import subprocess
+        import tempfile
+        state = REPO / "SESSION_STATE.md"
+        text = state.read_text(encoding="utf-8")
+        anchor = "### Maintenance —"
+        self.assertGreater(text.find(anchor), 0, "the anchor the runner depends on is gone")
+        # The exact snippet the runner runs, against a temp copy.
+        tmp = Path(tempfile.mkdtemp(prefix="chiefs-state-")) / "SESSION_STATE.md"
+        tmp.write_text(text, encoding="utf-8")
+        entry = "\n### Maintenance — January 6, 2027 — Published the Chiefs weekly report\n\nX\n\n---\n"
+        snippet = (
+            "import sys, pathlib\n"
+            "state = pathlib.Path(sys.argv[1]); entry = sys.argv[2]\n"
+            "text = state.read_text(encoding='utf-8')\n"
+            "anchor = '### Maintenance —'\n"
+            "i = text.find(anchor)\n"
+            "if i < 0: sys.exit('no anchor')\n"
+            "state.write_text(text[:i] + entry.lstrip('\\n') + '\\n' + text[i:], encoding='utf-8')\n"
+        )
+        r = subprocess.run([sys.executable, "-c", snippet, str(tmp), entry],
+                           capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        after = tmp.read_text(encoding="utf-8")
+        self.assertIn("January 6, 2027", after)
+        self.assertLess(after.find("January 6, 2027"), after.find(anchor) + len(anchor) + 60,
+                        "the new entry must be the FIRST maintenance entry")
+        # Nothing was dropped: everything before the anchor and everything from
+        # the anchor onward both survive, and the file grew only by the entry
+        # plus one separating blank line. (`assertIn(text, after)` would be the
+        # obvious check and is wrong — an insert in the middle breaks
+        # contiguity, which is the point of an insert.)
+        head, tail = text[:text.find(anchor)], text[text.find(anchor):]
+        self.assertTrue(after.startswith(head))
+        self.assertTrue(after.endswith(tail))
+        added = len(after.splitlines()) - len(text.splitlines())
+        self.assertEqual(added, len(entry.strip("\n").splitlines()) + 1)
+        self.assertIn("### Maintenance — September 24, 2026", after)
+
+    def test_every_runner_parses(self):
+        # This repo has no linter and no package.json; `bash -n` on the launchd
+        # runners is the only syntax check that exists. It matters more here than
+        # a style rule would: a runner with a syntax error is a scheduled job
+        # that fails at its next firing, unattended, and the failure surfaces as
+        # a log line nobody reads. The bash 3.2 apostrophe inside a
+        # `${VAR:-...}` default produces exactly that, and reports the error at
+        # a line far from the cause.
+        import subprocess
+        runners = sorted((REPO / "scripts").glob("*runner.sh"))
+        self.assertGreaterEqual(len(runners), 5, "the runner glob stopped matching")
+        for r in runners:
+            with self.subTest(runner=r.name):
+                proc = subprocess.run(["/bin/bash", "-n", str(r)],
+                                      capture_output=True, text=True)
+                self.assertEqual(proc.returncode, 0, f"{r.name}:\n{proc.stderr}")
+
     def test_em_dash_corpus_is_compliant(self):
         import subprocess
         r = subprocess.run([sys.executable, "scripts/check-emdashes.py", "--check"],

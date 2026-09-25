@@ -39,6 +39,10 @@ Practical and psychological insights into managing wealth and navigating fragile
 Condensed insights and critical reviews of the books that have shaped my thinking.
 👉 [Browse Summaries](/posts/summaries/)
 
+## 🏈 Chiefs Reports
+A weekly report on the Kansas City Chiefs — the game just played, the state of the team, and what to watch next.
+👉 [Read the Chiefs Reports](/posts/sports/)
+
 ## ✍️ Essays & Observations
 Miscellaneous thoughts on AI, geopolitics and the intersection of ideas.
 👉 [Read the Essays](/posts/essays/)

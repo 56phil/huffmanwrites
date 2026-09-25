@@ -104,7 +104,8 @@ jobs:
       # check. This suite tests the RULES those gates enforce — the exemption
       # logic, the fabrication patterns this corpus has produced, and the blind
       # spots that were actually fixed — so a regression fails here instead of
-      # shipping.
+      # shipping. It also syntax-checks every runner with `bash -n`, which is
+      # the only lint this repo has.
       - name: Run gate tests
         run: python3 scripts/test_gates.py
 

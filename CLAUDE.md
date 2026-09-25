@@ -40,6 +40,7 @@ The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (41 a
   - `investing/` — investing & risk.
   - `digests/` — weekly/monthly digests (frontmatter includes `sendfox_subject` for newsletter sends).
   - `summaries/` — book summaries; the canonical structure is in `content/posts/summaries/_index.md`. Each summary uses `sort_key` (LC: "Last, First") for ordering. Summaries paginate at 6/page via `layouts/posts/summaries/list.html`.
+  - `sports/` — the Kansas City Chiefs weekly report, published automatically every Tuesday in season by `com.huffmanwrites.chiefs-weekly-report`. The only content section whose pages are written and published by a scheduled job without a human review step; see `skills/chiefs-weekly-report.md` for the writer's brief and the "Scheduled jobs" section below for the runner's contract. Posts carry `featuredOnHome: true` because more than five flagged posts already exist and an unflagged post never reaches the home feed.
 - `content/challenge/`, `content/podcast/`, `content/community/`, `content/api/` — "Blue Sky" initiatives (see SESSION_STATE.md). All have custom layouts under `layouts/<section>/list.html`. (There was a `content/shop/` merchandise section until 2026-09-19; it was retired in full — no shop route, no storefront, no merchandise assets.)
 
 ### Layouts (`layouts/`)
@@ -74,6 +75,8 @@ The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (41 a
 
 - `hero-image-workflow.md` — generation + wiring conventions for hero images (aesthetic, naming, frontmatter mapping).
 - `kdp_cover_designer.md` — references `scripts/cover_generator.py` (out-of-repo, in `/Users/prh/Developer/LaTeX/AllMyBooks/`) for the 6×9 KDP wraparound covers.
+- `chiefs-weekly-report.md` — the writer's brief for the auto-published weekly Chiefs report. The one skill here whose output is not reviewed before it ships; read it before editing the job.
+- `docket-weekly-report.md`, `senate-race-report.md`, `ninety-days-report.md`, `post-election-senate-report.md`, `repair-plan-quarterly.md`, `kansas-post-debate.md` — briefs for the other scheduled and one-off report runs.
 
 ### Drafts and work-in-progress
 
@@ -90,6 +93,7 @@ The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (41 a
 - **New hero images** must be WebP. Use the `[NN]-[slug]_16x9.webp` / `_4x5.webp` naming convention.
 - **Book summaries** must include `sort_key` frontmatter (LC order: "Last, First") so the list template's `ByParam "sort_key"` keeps them in order. Established format: Executive Summary, 5 Core Arguments (numbered), thematic section, A Respectful Disagreement, Bottom Line, closing quote, `*PRH | [huffmanwrites.org] | © Philip Huffman*` attribution. Tone: positive, yet critical.
 - **All Hugo posts** should have `lastmod` frontmatter (git-based date is fine).
+- **The home page feed shows only `featuredOnHome: true` posts.** More than five posts carry that flag today, so an unflagged post never appears in Recent Posts at all; it is published and unseen. Any post that is meant to be discoverable from the home page needs the flag. (The summaries section is excluded the other way: its `_index.md` cascades `hiddenInHomeList: true` so book summaries stay in their own hub.)
 - **All post images** lazy-load except hero images, which use `loading="eager" fetchpriority="high"`.
 - **Never end a sentence with a preposition.** Established 2026-09-25 as a standing writing rule. "Who did you give it to?" becomes "To whom did you give it?"; "the man I was talking about" becomes "the man about whom I was talking"; "the house I live in" becomes "the house in which I live." This is a house style, not a claim about English usage: stranding a preposition is idiomatic and often better in speech, and the rule is adopted anyway because the site's register is formal and the discipline of restructuring the sentence tends to produce a tighter one. The rule covers body prose and frontmatter display fields alike (`title`, `description`, `hero_caption`), since a stranded preposition in a `description` is the summary a reader sees in a search result. Two exemptions, for the same reason the em-dash rule has them: (1) **inside quotation marks** — a quotation's grammar belongs to its author, and rewriting it would corrupt the quotation the citation gate exists to protect; (2) **inside a link, a code span, or a URL**, where the words are not prose. Enforced by `scripts/check-prepositions.py` (`--file <path>`, `--list` for the corpus, `--check` for the baseline ratchet); pre-rule occurrences in existing files are recorded in `scripts/preposition-baseline.txt` and may be reduced freely but must not grow.
 - **Copyedit + fact check every piece of content before it is committed.** Copyedit: spelling, grammar, punctuation, flow, the preposition rule above, and the em-dash limit (**no more than 3 in the prose you write**; prefer commas, colons, semicolons, or splitting sentences). Two categories are **not counted** against that limit, because they are not the editor's prose: (1) an em-dash **inside quotation marks** — a quotation's internal punctuation belongs to its author or translator, and rewriting it to save a mark would corrupt the quotation the citation gate exists to protect (the Thiel "franchise to women — two constituencies… libertarians —" line is the model case, and the same exemption covers a quoted title or description in frontmatter); (2) an em-dash standing as a **date or numeric range**. That second exemption is a guard rather than a licence: the **en-dash** (`–`) is the correct mark for a range (`1903–1977`, `Aug 25–31`, `53–47`), which is what the site already uses, so an em-dash between dates is a typo to fix rather than a dash to keep. Count with `python3 scripts/check-emdashes.py` (`--file <path>`, `--list` for the corpus, `--check` for the baseline ratchet). Fact check: every load-bearing claim (dates, names, figures, attributions) verified against a source; correct or flag anything unverifiable before publishing. This gate applies to essays, digests, summaries, and any other content.
@@ -109,7 +113,7 @@ The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (41 a
 
 ## Scheduled jobs (launchd)
 
-Eight unattended jobs run from `scripts/` via launchd. Each is a `com.huffmanwrites.*.plist` (repo copy) installed to `~/Library/LaunchAgents/`, invoked through a `*-runner.sh`, with output in `~/Library/Logs/`. `scripts/check-plists.py` gates them in CI: a malformed plist fails silently (`launchctl bootstrap` does not always report it), so a schedule that never runs is the defect it exists to catch.
+Nine unattended jobs run from `scripts/` via launchd. Each is a `com.huffmanwrites.*.plist` (repo copy) installed to `~/Library/LaunchAgents/`, invoked through a `*-runner.sh`, with output in `~/Library/Logs/`. `scripts/check-plists.py` gates them in CI: a malformed plist fails silently (`launchctl bootstrap` does not always report it), so a schedule that never runs is the defect it exists to catch.
 
 | Job | Schedule | What it does |
 |---|---|---|
@@ -121,6 +125,7 @@ Eight unattended jobs run from `scripts/` via launchd. Each is a `com.huffmanwri
 | `site-audit` | Mondays 13:00 | Builds and crawls the live site for broken links and CSP drift |
 | `wiki-check` | Mondays 13:30 | Audits and fixes the SimpleBrain wiki |
 | `weekly-integrity` | Mondays 14:00 | Online link sweep + online quotation verification |
+| `chiefs-weekly-report` | Tuesdays 18:30 | **Publishes** the weekly Chiefs report (in season only) |
 
 Rules for these, learned by shipping the failures:
 
@@ -129,6 +134,15 @@ Rules for these, learned by shipping the failures:
 - **Guard a start date with a non-zero-exit-free path.** A job installed before its first due date must `exit 0` and log why; exiting non-zero raises the failure alert every week and trains the alert into noise.
 - **`StartCalendarInterval` takes a single dict for a LaunchAgent.** An array of dicts is a LaunchDaemon form and is silently ignored, so the job parses cleanly and never fires.
 - **The docket registry is `check-docket.py`'s `CASES` map and nothing else.** Adding a case never means editing a runner or a plist. Both the watcher and the weekly report read the same registry, so a new docket appears in both.
+- **`chiefs-weekly-report` is the one job that publishes, and it is built accordingly.** Philip, 2026-09-25: "Every Tuesday, at 1830 CT, publish a comprehensive report on the Kansas City Chiefs." Every other report job files `draft: true` and leaves the file uncommitted; this one commits, pushes, and syncs SimpleBrain on its own, so a gate or build failure **aborts the push** rather than being logged alongside it — the gates are the only review the piece gets. Things to know before editing it:
+  - **The data is collected by a script, not by the agent.** `scripts/chiefs-report.py` writes a briefing pack (the week's game with both box scores and leaders, every scoring play, both injury reports, standings and seed list, season statistics, the next game with the feed's own odds and matchup projection, two weeks of tagged coverage with URLs). The writer reads the pack and is not permitted to recall a score. A pack failure is a hard stop.
+  - **Its frontmatter is validated by that script** (`--validate`), because the rules encode shipped failures: `draft: false`, `featuredOnHome: true` (more than five posts already carry the flag, so an unflagged post never reaches the home feed at all), and a date not ahead of the clock (`buildFuture: false` skips a future page *without failing the build*). The check lives in Python rather than shell because macOS `date -j -f` cannot parse the `-05:00` offset this repo writes — it fails with usage text, so the shell version silently skipped its most important check.
+  - **The runner writes the SESSION_STATE entry**, from the real gate results. The agent cannot run the gates, so an entry it authored could only assert them. Philip's call (2026-09-25) that this job records its own publishes.
+  - **`CHIEFS_DRY_RUN=1` exercises everything but the commit.** A pipeline that publishes unreviewed must be provable without being performed. `CHIEFS_SKIP_SIMPLEBRAIN=1` skips only the SimpleBrain half.
+  - **The season guard reads the league's own published calendar**, not a hardcoded month range, so it rolls over by itself. Off season it exits 0 (a non-zero exit would alert every Tuesday for six months).
+  - **ESPN's API refuses a browser User-Agent** (403 on all four endpoints used) and answers a default client. That is the opposite of every other script here and the reason `chiefs-report.py` sends no UA. Do not "normalize" it.
+  - **ESPN fails open on an unknown season.** `standings?season=2027` returns 200 with the 2026 standings; `schedule?season=2027` returns an empty list and `requestedSeason: null`. `assert_season` refuses a payload that does not name the year asked for, because a writer handed one would produce a report about the wrong season with nothing in it looking wrong.
+  - **`level=3` is required on the standings endpoint.** Without it the AFC node carries sixteen flat entries and **no** division children, so the division table and the seed list come back empty and those sections silently vanish from the pack.
 
 ## Deployment
 

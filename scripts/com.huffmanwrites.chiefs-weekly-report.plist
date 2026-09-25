@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.chiefs-weekly-report</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/chiefs-weekly-report-runner.sh</string>
+  </array>
+  <!-- Tuesday 18:30 CT, per Philip (2026-09-25): "Every Tuesday, at 1830 CT,
+       publish a comprehensive report on the Kansas City Chiefs."
+
+       Weekday 2 is Tuesday. Evening rather than morning because Monday Night
+       Football is a weekly fixture: a Tuesday-morning run would report a week
+       whose game had kicked off twelve hours earlier, and the final score, the
+       injury news, and the press conferences all land Tuesday afternoon. 18:30
+       is after the coach's Monday-review press availability and after the first
+       injury report, which is what the report's two most substantive sections
+       are built on.
+
+       No conflict with the existing schedules: the docket-watch fires at 07:30
+       and 18:30 daily, so this job and that one overlap on the minute. That is
+       harmless — one reads CourtListener, the other reads ESPN, and neither
+       writes anything the other touches — but it is worth knowing when reading
+       a log with both jobs' lines in it.
+
+       Season-only behavior is in the RUNNER, not here, and deliberately so. The
+       runner asks the league for its own calendar and exits 0 during the Off
+       Season phase. Hardcoding a month range in this file would need an annual
+       edit and would go quietly stale; the runner's guard rolls over with the
+       schedule, and a stale schedule is exactly the failure mode this repo's
+       plist gate exists to catch.
+
+       This job PUBLISHES. It is the only scheduled report here that commits and
+       pushes its own output; see scripts/chiefs-weekly-report-runner.sh for what
+       that changes about the verification order. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>2</integer>
+    <key>Hour</key>
+    <integer>18</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <!-- Keep the exported PATH used by the other huffmanwrites jobs so claude,
+       hugo, python3, git and the keychain-backed helpers resolve the same way.
+       SimpleBrain is a second repo this job writes to; it is reached by absolute
+       path from the runner, not by anything in this environment. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/prh/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/prh</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/chiefs-weekly-report.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/chiefs-weekly-report.err.log</string>
+</dict>
+</plist>
