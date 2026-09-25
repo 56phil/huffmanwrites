@@ -272,8 +272,29 @@ run_gate() {
   fi
 }
 
+# `--online --titles` is the check this job specifically cannot do without, and
+# it is deliberately NOT in the other runners. This is the only scheduled job
+# whose output publishes unreviewed, and the failure it must not ship is a link
+# that resolves to the wrong page — the repo's most dangerous error class. Two
+# distinct defects were measured while building this job:
+#
+#   1. ESPN's bot wall answers a browser User-Agent with 202 and a ~2 KB
+#      interstitial for EVERY url, live or dead. Read as 2xx that is a pass, and
+#      three dead ESPN links written by the first agent run survived both a
+#      whole-corpus sweep and a per-file sweep because of it. check-links.py now
+#      detects the challenge and retries with no User-Agent, which makes ESPN
+#      links genuinely checkable instead of falsely OK.
+#   2. ESPN serves 200 for an INVENTED story id and lands on an unrelated
+#      article — `.../story/_/id/99999999999/not-a-real-story` returns 200 with
+#      a WNBA playoff ranking. No status code can see that; --titles compares
+#      the citation's own link text against the page's <title>.
+#
+# DEAD links fail this (exit 1 on the gate). A title mismatch does not — it is
+# printed for the log, because the comparison is a heuristic and a gate that
+# fails a correct citation is worse than one that shows a human the sentence.
 run_gate "check-quotes --file"       "$REPO/scripts/check-quotes.py"       --file "$ARTICLE"
 run_gate "check-links --check"       "$REPO/scripts/check-links.py"        --check
+run_gate "check-links --online"      "$REPO/scripts/check-links.py"        --file "$ARTICLE" --online --titles
 run_gate "check-emdashes --file"     "$REPO/scripts/check-emdashes.py"     --file "$ARTICLE"
 run_gate "check-prepositions --file" "$REPO/scripts/check-prepositions.py" --file "$ARTICLE"
 run_gate "check-render-integrity"    "$REPO/scripts/check-render-integrity.py"

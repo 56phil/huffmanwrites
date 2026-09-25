@@ -1207,6 +1207,83 @@ class TestChiefsRunnerContract(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+# Link gate. Two rules, both learned by measurement on 2026-09-25 while
+# building the Chiefs job, and both are blind spots that reported OK.
+# --------------------------------------------------------------------------
+class TestLinkGateRules(unittest.TestCase):
+    def test_the_waf_challenge_is_recognised(self):
+        # ESPN answered a browser User-Agent with 202 and this body for a LIVE
+        # story and an INVENTED id alike. Read as a 2xx it passed, and three dead
+        # links survived a whole-corpus sweep plus a per-file sweep.
+        body = (b'<html><head><script>window.awsWafCookieDomainList = [];'
+                b'window.gokuProps = {};</script>'
+                b'<script src="https://x.token.awswaf.com/y/challenge.js"></script>'
+                b'</head></html>')
+        self.assertTrue(cl.is_waf_challenge(body))
+        self.assertTrue(cl.is_waf_challenge(
+            b'<noscript>In order to continue, we need to verify that you\'re not a robot.</noscript>'))
+
+    def test_an_ordinary_page_is_not_a_challenge(self):
+        self.assertFalse(cl.is_waf_challenge(b"<html><body><h1>A real article</h1></body></html>"))
+        self.assertFalse(cl.is_waf_challenge(b""))
+
+    def test_page_title_is_extracted_and_normalized(self):
+        self.assertEqual(
+            cl.page_title("<html><title>  Chiefs 33-30 Colts \n (Sep 20) - ESPN </title>"),
+            "Chiefs 33-30 Colts (Sep 20) - ESPN")
+        self.assertEqual(cl.page_title("<html>no title</html>"), "")
+
+    def test_a_wrong_article_is_a_mismatch(self):
+        # The real fabrication shape: an invented ESPN story id returns 200 and
+        # lands on an unrelated article. `200` is not proof of correctness.
+        self.assertIs(
+            cl.link_text_matches_title("Peter Thiel and mimetic desire",
+                                       "Ranking the top 25 WNBA players in the playoffs - ESPN"),
+            False)
+        self.assertIs(
+            cl.link_text_matches_title("How Democracies Die", "The Phantom Tollbooth - Wikipedia"),
+            False)
+
+    def test_a_correct_citation_is_not_a_mismatch(self):
+        # Paraphrase and the publisher's own decorations must not read as errors.
+        for anchor, title in (
+            ("Chiefs aim to reduce Kenneth Walker's workload 'a little bit'",
+             "Chiefs aim to reduce Kenneth Walker's workload 'a little bit' - ESPN"),
+            ("Colts' Shane Steichen defends OT playcalling in loss to Chiefs",
+             "Colts' Shane Steichen defends OT playcalling in loss to Chiefs - ESPN"),
+            ("Chiefs signing ex-Seahawks RB Kenneth Walker III, MVP of Super Bowl LX, to three-year deal",
+             "Chiefs signing ex-Seahawks RB Kenneth Walker III, MVP of Super Bowl LX - NFL.com"),
+        ):
+            with self.subTest(anchor=anchor):
+                self.assertIsNot(cl.link_text_matches_title(anchor, title), False)
+
+    def test_a_short_label_is_not_judged(self):
+        # "odds", "game page" carry too little vocabulary to compare. The answer
+        # must be None — guessing False here would accuse a correct citation.
+        for anchor in ("odds", "game page", "here"):
+            with self.subTest(anchor=anchor):
+                self.assertIsNone(cl.link_text_matches_title(anchor, "Anything At All"))
+
+    def test_only_headline_like_markdown_links_yield_anchors(self):
+        # link_texts reads markdown links with substantial anchor text; a bare
+        # URL carries nothing to compare and must not be invented.
+        import tempfile
+        d = Path(tempfile.mkdtemp(prefix="links-"))
+        p = d / "x.md"
+        p.write_text("Bare https://example.org/plain and [a real headline of several words]"
+                     "(https://example.org/a)\n", encoding="utf-8")
+        got = cl.link_texts(str(p))
+        self.assertEqual(got, {"https://example.org/a": "a real headline of several words"})
+
+    def test_the_online_gate_is_in_the_chiefs_runner(self):
+        # The check exists in the one job whose output nobody reviews. Its
+        # absence would be silent — a corpus sweep cannot see a brand-new file.
+        text = (REPO / "scripts" / "chiefs-weekly-report-runner.sh").read_text()
+        self.assertIn("--online --titles", text)
+        self.assertIn('--file "$ARTICLE"', text)
+
+
+# --------------------------------------------------------------------------
 # The gates agree with the corpus they guard.
 # --------------------------------------------------------------------------
 class TestCorpusIntegration(unittest.TestCase):
