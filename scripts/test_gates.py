@@ -1610,6 +1610,39 @@ class TestSecretDrift(unittest.TestCase):
             with self.subTest(cred=cred["name"]):
                 self.assertIn(cred.get("probe"), (None, "fal"))
 
+    def test_a_server_error_is_not_read_as_auth_success(self):
+        # A 5xx means the provider is broken, not that the key works. Reading
+        # it as "ok" would be the exact bug this gate exists to catch: a
+        # verdict that says OK while blind to the thing it checks.
+        import urllib.error
+        import unittest.mock as mock
+        err = urllib.error.HTTPError("http://x", 503, "Service Unavailable", {}, None)
+        with mock.patch("urllib.request.urlopen", side_effect=err):
+            verdict, _ = cs.probe_fal("any-key")
+        self.assertEqual(verdict, "unverified")
+
+    def test_a_404_is_read_as_auth_success(self):
+        # The expected answer for a request id that cannot exist. If this ever
+        # flips, the probe stops distinguishing a live key from a stale one.
+        import urllib.error
+        import unittest.mock as mock
+        err = urllib.error.HTTPError("http://x", 404, "Not Found", {}, None)
+        with mock.patch("urllib.request.urlopen", side_effect=err):
+            verdict, _ = cs.probe_fal("any-key")
+        self.assertEqual(verdict, "ok")
+
+    def test_a_401_is_read_as_auth_failure(self):
+        import io as _io
+        import urllib.error
+        import unittest.mock as mock
+        err = urllib.error.HTTPError(
+            "http://x", 401, "Unauthorized", {},
+            _io.BytesIO(b'{"detail":"invalid key credentials"}'))
+        with mock.patch("urllib.request.urlopen", side_effect=err):
+            verdict, detail = cs.probe_fal("any-key")
+        self.assertEqual(verdict, "auth-failed")
+        self.assertIn("invalid key credentials", detail)
+
     def test_the_guard_runs_clean_on_the_real_repo(self):
         # The end state, verified as the runner will see it: no drift, and the
         # one credential with a probe authenticates. Skipped rather than failed

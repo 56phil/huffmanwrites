@@ -235,8 +235,13 @@ def probe_fal(key: str, timeout: float = 20.0) -> "tuple[str, str]":
             except (ValueError, OSError):
                 detail = ""
             return "auth-failed", f"HTTP 401 {detail}".strip()
-        # Any other status means the key was accepted and the request reached
-        # the API: 404 is the expected answer for a request id that cannot exist.
+        if e.code >= 500:
+            # The provider is broken, not the key. Reporting this as success
+            # would be the exact shape of bug this gate exists to catch: a
+            # verdict that says OK while blind to the thing it checks.
+            return "unverified", f"HTTP {e.code} (provider error, key not judged)"
+        # Any other 4xx means the key was accepted and the request reached the
+        # API: 404 is the expected answer for a request id that cannot exist.
         return "ok", f"HTTP {e.code}"
     except (urllib.error.URLError, TimeoutError, OSError) as e:
         return "unverified", f"could not reach fal.ai ({e})"
