@@ -1,6 +1,6 @@
 ---
 title: "The Wall and the Slots: What the Epstein Files Case Is Actually About"
-description: "The House passed the Epstein Files Transparency Act 427 to 1 and the Senate by unanimous consent. A Miami journalist sued when the Justice Department did not comply. It answered nearly three months late, and it has never argued that the files were produced."
+description: "The House passed the Epstein Files Transparency Act 427 to 1 and the Senate by unanimous consent. A Miami journalist sued when the Justice Department did not comply. It answered nearly three months late, and it has answered only in the aggregate: a page count, never document by document."
 date: 2026-09-24T20:35:00-05:00
 author: Philip Huffman
 lastmod: 2026-09-24T20:35:00-05:00
