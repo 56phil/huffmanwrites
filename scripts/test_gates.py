@@ -24,6 +24,7 @@ import importlib.util
 import json
 import sys
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -393,6 +394,117 @@ class TestPlistRules(unittest.TestCase):
         for p in cp.repo_plists():
             import plistlib
             plistlib.loads(p.read_bytes())
+
+
+# --------------------------------------------------------------------------
+# Docket watch. The rules that matter are the two entry kinds the feed
+# interleaves (an ECF-numbered filing and a minute order), the per-case
+# watermark, and the legacy state-file migration — because the failure this
+# watcher actually had was a *missing* report, not a wrong one.
+# --------------------------------------------------------------------------
+cd = load("check-docket")
+
+
+class TestDocketRules(unittest.TestCase):
+    @staticmethod
+    def _feed(*blocks: str) -> str:
+        return "<feed>" + "".join(blocks) + "</feed>"
+
+    @staticmethod
+    def _entry(num: int, date: str, summary: str = "s") -> str:
+        return (f"<entry><title>Entry #{num} in X</title>"
+                f"<published>{date}T00:00:00-07:00</published>"
+                f"<summary>{summary}</summary></entry>")
+
+    @staticmethod
+    def _minute(mid: int, date: str, summary: str = "m") -> str:
+        return (f'<entry><title>Minute entry from {date} in X</title>'
+                f'<published>{date}T00:00:00-07:00</published>'
+                f'<summary>{summary}</summary>'
+                f'<id>https://x/#minute-entry-{mid}</id></entry>')
+
+    def test_parses_both_entry_kinds(self):
+        # The defect this guards: the parser used to key on "Entry #N" alone and
+        # silently dropped minute entries. In *Phang*, Sullivan rules and sets
+        # deadlines by minute order, so dropping them means reporting a quiet
+        # docket on the days the case actually moved.
+        got = cd.parse_entries(self._feed(self._entry(50, "2026-09-24"),
+                                          self._minute(478777445, "2026-09-21")))
+        self.assertEqual(len(got), 2)
+        self.assertEqual({e["kind"] for e in got}, {"entry", "minute"})
+
+    def test_ecf_entries_are_keyed_by_number_and_minutes_by_id(self):
+        got = cd.parse_entries(self._feed(self._entry(50, "2026-09-24"),
+                                          self._minute(478777445, "2026-09-21")))
+        by_kind = {e["kind"]: e for e in got}
+        self.assertEqual(by_kind["entry"]["num"], 50)
+        self.assertIsNone(by_kind["entry"]["mid"])
+        self.assertEqual(by_kind["minute"]["mid"], 478777445)
+        self.assertIsNone(by_kind["minute"]["num"])
+
+    def test_a_new_ecf_filing_is_reported(self):
+        entries = cd.parse_entries(self._feed(self._entry(50, "2026-09-24"),
+                                              self._minute(900, "2026-09-21")))
+        new = cd.new_entries(entries, last_entry=48, last_minute=900)
+        self.assertEqual([e["num"] for e in new], [50])
+
+    def test_a_new_minute_entry_is_reported(self):
+        entries = cd.parse_entries(self._feed(self._entry(50, "2026-09-24"),
+                                              self._minute(901, "2026-09-21")))
+        new = cd.new_entries(entries, last_entry=50, last_minute=900)
+        self.assertEqual([e["mid"] for e in new], [901])
+
+    def test_an_untracked_minute_watermark_reports_no_minute_history(self):
+        # None means the case has never tracked minute entries, so the first
+        # run records the newest and does not replay the backlog as a burst.
+        # 0 would be a real watermark and would report every minute entry.
+        entries = cd.parse_entries(self._feed(self._minute(900, "2026-09-21"),
+                                              self._minute(901, "2026-09-22")))
+        self.assertEqual(cd.new_entries(entries, last_entry=0, last_minute=None), [])
+        self.assertEqual(len(cd.new_entries(entries, last_entry=0, last_minute=0)), 2)
+
+    def test_no_change_yields_nothing(self):
+        entries = cd.parse_entries(self._feed(self._entry(50, "2026-09-24"),
+                                              self._minute(900, "2026-09-21")))
+        self.assertEqual(cd.new_entries(entries, last_entry=50, last_minute=900), [])
+
+    def test_legacy_flat_state_migrates_its_watermark_to_its_case(self):
+        # The file held one case at one watermark. That watermark is Beatty's,
+        # so it moves there. Renaming the key without carrying the value would
+        # re-alert on Beatty's whole filing history on the first run.
+        legacy = {"last_entry": 91, "updated": "2026-09-24T00:00:00Z",
+                  "case": "BEATTY v. TRUMP, 1:25-cv-04480"}
+        st = cd.migrate_state(legacy)
+        self.assertEqual(st["dockets"]["beatty"]["last_entry"], 91)
+        self.assertIsNone(st["dockets"]["beatty"]["last_minute"])
+        self.assertNotIn("phang", st["dockets"])
+
+    def test_migration_is_idempotent(self):
+        legacy = {"last_entry": 91, "updated": "x", "case": "c"}
+        once = cd.migrate_state(legacy)
+        self.assertEqual(cd.migrate_state(once), once)
+
+    def test_a_second_case_registers_without_a_manual_state_edit(self):
+        # A case absent from the state file is a first run; it must not inherit
+        # another case's watermark or alert on its backlog.
+        st = cd.migrate_state({"last_entry": 91, "updated": "x", "case": "c"})
+        self.assertNotIn("phang", st["dockets"])
+
+    def test_every_registered_case_has_the_fields_the_watcher_reads(self):
+        # A registry entry missing a key would fail inside a scheduled run, at
+        # 07:30, with the failure buried in a log. Assert the shape here.
+        for key, case in cd.CASES.items():
+            with self.subTest(case=key):
+                for field in ("case", "docket_id", "slug", "label", "known", "calendar"):
+                    self.assertIn(field, case)
+                self.assertTrue(case["docket_id"].isdigit())
+                for date, what in case["calendar"]:
+                    datetime.strptime(date, "%Y-%m-%d")
+                    self.assertTrue(what.strip())
+
+    def test_the_registry_covers_the_two_cases_the_site_follows(self):
+        self.assertEqual(set(cd.CASES), {"beatty", "phang"})
+        self.assertEqual(cd.CASES["phang"]["docket_id"], "73246595")
 
 
 # --------------------------------------------------------------------------

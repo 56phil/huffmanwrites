@@ -12,7 +12,9 @@
   <!-- Two runs a day: 07:30 and 18:30 CT. CourtListener's RECAP feed ingests
        new filings within hours of PACER, so the morning run catches anything
        filed overnight and the evening run catches the same-day burst (ECF 88
-       and 89 both landed after 8 p.m. on Sept 18). -->
+       and 89 both landed after 8 p.m. on Sept 18). One run covers every case
+       in the checker's registry; the case list lives in check-docket.py, not
+       here, so adding a docket never means editing this schedule. -->
   <key>StartCalendarInterval</key>
   <array>
     <dict>

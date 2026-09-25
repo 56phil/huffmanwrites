@@ -1,10 +1,13 @@
 #!/bin/bash
-# Kennedy Center docket watch runner.
+# Federal docket watch runner.
 # Invoked by launchd (com.huffmanwrites.docket-watch) twice daily.
 #
-# Philip, 2026-09-19: "I must keep an eye on this story." The Beatty v. Trump
-# docket (No. 1:25-cv-04480, D.D.C.) moves in day-scale bursts and the coverage
-# of it is unreliable, so watch the docket directly rather than the news.
+# Philip, 2026-09-19: "I must keep an eye on this story." (Kennedy Center.)
+# Philip, 2026-09-24: "I want to start following the docket ... regarding the
+# Epstein files." Both dockets — Beatty v. Trump (No. 1:25-cv-04480) and
+# Phang v. Blanche (No. 1:26-cv-01417) — move in day-scale bursts and the
+# coverage of each is unreliable, so watch the dockets directly, not the news.
+# The checker owns the case registry; this runner stays case-agnostic.
 #
 # Runs twice a day because filings cluster in the late afternoon and early
 # evening (ECF 89 landed at 8:55 p.m.), and because a docket check that misses
