@@ -40,7 +40,7 @@ OLLAMA_KEY="$(security find-generic-password -a "$USER" -s huffmanwrites-ollama 
 [ -z "$OLLAMA_KEY" ] && OLLAMA_KEY="$(grep -oE 'OLLAMA_API_KEY="[^"]+"' "$HOME/.secrets" 2>/dev/null | head -1 | cut -d'"' -f2)"
 export ANTHROPIC_API_KEY="${OLLAMA_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
-export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
+export ANTHROPIC_MODEL="deepseek-v4.1-flash:cloud"
 # The model has a 1M context window; Claude Code assumes 200k for unrecognized
 # model ids. Set the real window so the fact-check pass does not truncate.
 export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576

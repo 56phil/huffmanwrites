@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — September 24, 2026 — Repinned the scheduled runners off the `deepseek-v4-flash:0731` alias
+
+Ollama reported the scheduled jobs running `deepseek-v4-flash:0731`, which Philip had not selected. The cause was the tag, not the settings: the four runner scripts pinned `ANTHROPIC_MODEL="deepseek-v4-flash:cloud"`, and on Ollama Cloud `:cloud` is an **alias**, not a version. The pulled manifest's config blob states it outright — `"base_name": "deepseek-v4-flash:0731"`, `"remote_model": "deepseek-v4-flash:0731"` — so any `:cloud` pin resolved silently to the 0731 build while the settings screen showed only the clean-looking alias. Repinned all four to `deepseek-v4.1-flash:cloud`, whose blob resolves to `remote_model: deepseek-v4.1-flash` (763B, 1M context, vision) and does not chase a dated build.
+- **Files changed:** `scripts/senate-report-runner.sh`, `scripts/ninety-days-report-runner.sh`, `scripts/wiki-check-runner.sh`, `scripts/repair-plan-runner.sh`, `skills/senate-race-report.md` (the skill's provider-policy line names the model id), plus the `modelOverrides` example in the senate runner's suppression note. `CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576` is unchanged and still correct — the new model is also 1M.
+- **No stale pins anywhere else.** Swept `~/.zshrc`, `~/.zshenv`, `~/.zprofile`, `~/.bashrc`, `~/.secrets`, `~/.claude.json`, `~/.claude/settings{,.local}.json`, `~/.claude/CLAUDE.md`, `~/.omp/agent/config.yml`, `~/.ollama/{config,server}.json`, `~/.config/opencode/opencode.jsonc`, `~/Library/LaunchAgents` (no job carries an env dict), and both repos. `~/.zshrc` pins `OPENAI_MODEL=deepseek-v4-pro:cloud` — a different model, deliberate, and untouched.
+- **Verified by running it, not by reading it.** `claude -p` headless against the new pin printed `SMOKE-OK` (exit 0). Full `senate-report-runner.sh` and `repair-plan-runner.sh` smoke runs both exited 0, logged both verification builds OK and both content gates OK, and their stderr now names `deepseek-v4.1-flash:cloud` (was `deepseek-v4-flash:cloud`). `bash -n` clean on all four runners; `test_gates.py` 46/46 OK.
+- **The `[claude-code:unrecognized_model]` line persists, by design.** It is emitted per API call for any id Claude Code does not recognize, including the new one, and it is telemetry that cannot raise the failure alert. The senate runner's long note already records the three ways to silence it and why none is worth taking; the repin does not change that analysis, so the note stands and only the example id was updated.
+
+---
+
 ### Maintenance — September 24, 2026 — Published "Consider the Source": Project 2025, read against its own text and its own record
 
 Per Philip: "The title will be 'Consider the Source.' It will describe the plan, how much of it has been implemented, and its effect on the nation." All three parts are delivered, and the title does double duty — it is both the provenance question (where did this come from) and the reading instruction (open the document).

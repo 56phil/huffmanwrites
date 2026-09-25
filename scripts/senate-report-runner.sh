@@ -31,7 +31,7 @@ OLLAMA_KEY="$(security find-generic-password -a "$USER" -s huffmanwrites-ollama 
 [ -z "$OLLAMA_KEY" ] && OLLAMA_KEY="$(grep -oE 'OLLAMA_API_KEY="[^"]+"' "$HOME/.secrets" 2>/dev/null | head -1 | cut -d'"' -f2)"
 export ANTHROPIC_API_KEY="${OLLAMA_KEY:-}"
 export ANTHROPIC_BASE_URL="http://localhost:11434"
-export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
+export ANTHROPIC_MODEL="deepseek-v4.1-flash:cloud"
 # The model has a 1M context window; Claude Code assumes 200k for
 # unrecognized model ids. Set the real window so long drafts are not
 # auto-compact truncated mid-run.
@@ -56,7 +56,7 @@ export ANTHROPIC_MODEL="deepseek-v4-flash:cloud"
 #   - CLAUDE_CODE_SESSION_KIND=bg does, but that fakes a background session and
 #     changes permission handling, prompt injection and worktree isolation in
 #     the same binary. It is suppression with real side effects.
-#   - A modelOverrides mapping ({"claude-sonnet-4-5":"deepseek-v4-flash:cloud"})
+#   - A modelOverrides mapping ({"claude-sonnet-4-5":"deepseek-v4.1-flash:cloud"})
 #     does remove it, and is honored, but it makes the session lie about which
 #     model is running: the transcript then attributes the draft to
 #     claude-sonnet-4-5. Not worth it to hide one diagnostic line.
