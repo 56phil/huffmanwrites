@@ -20,7 +20,9 @@ Run:  python3 scripts/test_gates.py
 
 from __future__ import annotations
 
+import argparse
 import importlib.util
+import inspect
 import json
 import sys
 import unittest
@@ -539,6 +541,89 @@ class TestDocketRules(unittest.TestCase):
         self.assertEqual(len(got), 1)
         self.assertEqual(got[0]["kind"], "entry")
         self.assertEqual(got[0]["num"], 1208891196)
+
+    def test_circuit_entries_are_not_labelled_ecf(self):
+        # A circuit feed entry's number is a CourtListener document id, not an
+        # ECF number, and calling it "ECF 1208891196" invents a docket number a
+        # reader cannot look up. The registry carries the correct label and the
+        # formatter uses it.
+        self.assertEqual(cd.CASES["cadc"].get("number_label"), "Entry")
+        self.assertEqual(cd.CASES["beatty"].get("number_label", "ECF"), "ECF")
+        e = {"kind": "entry", "num": 1208891196, "mid": None,
+             "date": "2026-09-23", "summary": "s"}
+        self.assertTrue(
+            cd.describe(e, {}, cd.CASES["cadc"]["number_label"]).startswith("Entry 1208891196")
+        )
+
+    # -- window report (the weekly job's substrate) ------------------------
+
+    def test_a_window_report_counts_only_entries_inside_the_window(self):
+        # The weekly report asks "what is in the last N days", which is a
+        # different question from the watch loop's "what is new since I looked".
+        # A watermark cannot be recomputed; a window can, which is why the
+        # report survives a missed run.
+        feed = self._feed(self._entry(50, "2026-09-24"),
+                          self._entry(49, "2026-09-21"),
+                          self._entry(40, "2026-08-01"))
+        args = argparse.Namespace(today="2026-09-25", days=7, since=None, ahead=7)
+        r = cd.report_window("phang", cd.CASES["phang"], args, feed_xml=feed)
+        self.assertEqual([e["ecf"] for e in r["entries"]], [49, 50])
+        self.assertEqual(r["window"], ["2026-09-19", "2026-09-25"])
+
+    def test_a_window_is_inclusive_of_both_ends(self):
+        # Off-by-one here would silently drop a filing made on the boundary day,
+        # which is the day a Saturday run is most likely to be reporting.
+        feed = self._feed(self._entry(50, "2026-09-25"),
+                          self._entry(49, "2026-09-19"),
+                          self._entry(48, "2026-09-18"))
+        args = argparse.Namespace(today="2026-09-25", days=7, since=None, ahead=7)
+        r = cd.report_window("phang", cd.CASES["phang"], args, feed_xml=feed)
+        self.assertEqual([e["ecf"] for e in r["entries"]], [49, 50])
+
+    def test_a_truncated_feed_is_flagged_rather_than_reported_as_complete(self):
+        # The feed serves a fixed number of entries. A heavily filing case can
+        # fill the window with less than N days, and presenting that as a full
+        # week is the false-negative that makes the report untrustworthy.
+        feed = self._feed(self._entry(50, "2026-09-24"))  # oldest is 09-24
+        args = argparse.Namespace(today="2026-09-25", days=7, since=None, ahead=7)
+        r = cd.report_window("phang", cd.CASES["phang"], args, feed_xml=feed)
+        self.assertTrue(r["truncated"])
+        self.assertEqual(r["feed_oldest"], "2026-09-24")
+        self.assertIn("Coverage warning", cd.render_report([r], 7))
+
+    def test_a_complete_window_is_not_flagged(self):
+        feed = self._feed(self._entry(50, "2026-09-24"),
+                          self._entry(40, "2026-09-01"))
+        args = argparse.Namespace(today="2026-09-25", days=7, since=None, ahead=7)
+        r = cd.report_window("phang", cd.CASES["phang"], args, feed_xml=feed)
+        self.assertFalse(r["truncated"])
+        self.assertNotIn("Coverage warning", cd.render_report([r], 7))
+
+    def test_calendar_splits_into_covered_and_ahead(self):
+        # The report has to say both what the week covered and what the next
+        # week holds; a weekly reader needs the second as much as the first.
+        args = argparse.Namespace(today="2026-09-25", days=7, since=None, ahead=7)
+        r = cd.report_window("phang", cd.CASES["phang"], args,
+                             feed_xml=self._feed(self._entry(50, "2026-09-24")))
+        self.assertIn("2026-09-24", [c["date"] for c in r["calendar_covered"]])
+        self.assertIn("2026-10-01", [c["date"] for c in r["calendar_ahead"]])
+
+    def test_an_empty_window_is_stated_not_omitted(self):
+        # "Nothing filed" is a finding. Rendering it as an empty section would
+        # read as a gap in the report rather than a fact about the docket.
+        args = argparse.Namespace(today="2026-09-25", days=1, since=None, ahead=7)
+        r = cd.report_window("phang", cd.CASES["phang"], args,
+                             feed_xml=self._feed(self._entry(50, "2026-09-01")))
+        self.assertEqual(r["entries"], [])
+        self.assertIn("Nothing filed", cd.render_report([r], 1))
+
+    def test_report_window_never_touches_state(self):
+        # Read-only by contract: the weekly report must not move the watch
+        # loop's watermark, or the twice-daily alert would go silent for
+        # everything the weekly run had already consumed.
+        src = inspect.getsource(cd.report_window)
+        self.assertNotIn("save_state", src)
+        self.assertNotIn("load_state", src)
 
 
 # --------------------------------------------------------------------------

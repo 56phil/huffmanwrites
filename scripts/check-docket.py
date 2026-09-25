@@ -60,7 +60,7 @@ import json
 import re
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -159,6 +159,11 @@ CASES: "dict[str, dict]" = {
         "docket_id": "74696600",
         "slug": "katie-phang-v-todd-blanche",
         "label": "Epstein files appeal (D.C. Circuit)",
+        # The circuit does not use ECF numbers on its feed. Its entries carry
+        # a CourtListener id instead, which is opaque and NOT an ECF number, so
+        # labelling them "ECF 1208891769" would invent a docket number that
+        # cannot be looked up. Say what the number actually is.
+        "number_label": "Entry",
         "known": {
             1208881795: "NOTICE OF APPEAL (protective) -> appeal docketed as No. 26-5299.",
             1208881798: "CLERK'S ORDER [2189799] — initial submissions due 9/24/2026 (certificate as to parties, docketing statement, entry of appearance, procedural motions, appendix-deferral statement, statement of issues, transcript report, underlying decision); DISPOSITIVE motions due 10/9/2026; transcript status report every 30 days; and BRIEFING DEFERRED pending further order of the court.",
@@ -235,6 +240,14 @@ def parse_entries(xml: str) -> "list[dict]":
         date = (date_m.group(1) if date_m else "")[:10]
         summ_m = re.search(r"<summary[^>]*>(.*?)</summary>", block, re.S)
         summary = re.sub(r"\s+", " ", summ_m.group(1) if summ_m else "").strip()
+        # The document URL as the feed reports it. Captured rather than built:
+        # this is a link the feed itself supplied, so it is an observed URL and
+        # safe to cite, which a URL assembled from an ECF number would not be.
+        # Entries with no RECAP copy (sealed, or not yet scraped) have none.
+        doc_m = re.search(
+            r'<link[^>]*href="(https://storage\.courtlistener\.com/[^"]+)"', block
+        )
+        doc = doc_m.group(1) if doc_m else None
 
         m = re.search(r"Entry #(\d+)", block)
         if m:
@@ -246,13 +259,13 @@ def parse_entries(xml: str) -> "list[dict]":
                 summary,
             )
             out.append({"kind": "entry", "num": num, "mid": None,
-                        "date": date, "summary": summary[:400]})
+                        "date": date, "summary": summary[:400], "doc": doc})
             continue
 
         mid_m = re.search(r"minute-entry-(\d+)", block)
         if mid_m:
             out.append({"kind": "minute", "num": None, "mid": int(mid_m.group(1)),
-                        "date": date, "summary": summary[:400]})
+                        "date": date, "summary": summary[:400], "doc": doc})
     return out
 
 
@@ -344,10 +357,10 @@ def new_entries(entries: "list[dict]", last_entry: int, last_minute) -> "list[di
     return out
 
 
-def describe(e: dict, known: "dict[int, str]") -> str:
+def describe(e: dict, known: "dict[int, str]", number_label: str = "ECF") -> str:
     if e["kind"] == "entry":
         note = known.get(e["num"]) or e["summary"][:200]
-        return f"ECF {e['num']} ({e['date']}): {note}"
+        return f"{number_label} {e['num']} ({e['date']}): {note}"
     return f"Minute entry ({e['date']}): {e['summary'][:200] or '(no summary)'}"
 
 
@@ -446,7 +459,7 @@ def watch(key: str, case: dict, state: dict, args) -> "tuple[int, bool, dict]":
             bits.append(f"{n_min} minute entr{'y' if n_min == 1 else 'ies'}")
         lines.append(f"{' and '.join(bits)} new in {case['case']}:")
         for e in new:
-            lines.append("  " + describe(e, case["known"]))
+            lines.append("  " + describe(e, case["known"], case.get("number_label", "ECF")))
     if cal:
         lines.append("Calendar due:")
         for when, what in cal:
@@ -485,6 +498,116 @@ def watch(key: str, case: dict, state: dict, args) -> "tuple[int, bool, dict]":
     return 0, bool(new), state
 
 
+def report_window(key: str, case: dict, args, feed_xml: "str | None" = None) -> "dict":
+    """Return everything filed in a date window, for the weekly report.
+
+    Read-only: this mode never touches state. It answers a different question
+    from the watch loop — not "what is new since I last looked" (a watermark)
+    but "what is in the last N days" (a window). The distinction matters because
+    a watermark is a single point and cannot be re-derived after the fact, while
+    a window can be recomputed from the feed at any time. The weekly report must
+    survive a missed run, so it is built on the recomputable one.
+
+    `feed_xml` is the test seam: pass a feed to exercise the window logic
+    without a network call.
+
+    `truncated` is the honest-reporting guard: the feed serves a fixed number of
+    entries (about 30), so a case that files heavily can fill the window with
+    less than N days of history. When the oldest entry in the feed is NEWER than
+    the window start, the feed cannot prove the window is complete, and the
+    report says so rather than presenting a partial week as a full one.
+    """
+    entries = parse_entries(feed_xml if feed_xml is not None else fetch_feed(feed_url(case)))
+    today = args.today or datetime.now().strftime("%Y-%m-%d")
+
+    if args.since:
+        start = args.since
+    else:
+        start = (
+            datetime.strptime(today, "%Y-%m-%d") - timedelta(days=args.days - 1)
+        ).strftime("%Y-%m-%d")
+
+    in_window = [e for e in entries if start <= e["date"] <= today]
+    # Chronological, oldest first: a report is read forward, and the feed's own
+    # newest-first order would bury the first filing of the week at the bottom.
+    in_window.sort(key=lambda e: (e["date"], e["num"] or 0, e["mid"] or 0))
+    oldest = min((e["date"] for e in entries), default=None)
+    truncated = bool(oldest and oldest > start)
+
+    # Calendar items split by direction: what the window covered, and what the
+    # week ahead holds. A weekly report has to do both — the past week is the
+    # news, the next week is why the reader cares.
+    upcoming_to = (
+        datetime.strptime(today, "%Y-%m-%d") + timedelta(days=args.ahead)
+    ).strftime("%Y-%m-%d")
+    covered = [(d, w) for d, w in case["calendar"] if start <= d <= today]
+    ahead = [(d, w) for d, w in case["calendar"] if today < d <= upcoming_to]
+
+    return {
+        "key": key,
+        "case": case["case"],
+        "label": case["label"],
+        "docket": docket_url(case),
+        "feed": feed_url(case),
+        "window": [start, today],
+        "feed_oldest": oldest,
+        "truncated": truncated,
+        "entries": [
+            {"ecf": e["num"], "minute_id": e["mid"], "date": e["date"],
+             "kind": e["kind"],
+             "number": None if e["num"] is None else f"{case.get('number_label', 'ECF')} {e['num']}",
+             "doc": e.get("doc"),
+             "note": describe(e, case["known"], case.get("number_label", "ECF"))}
+            for e in in_window
+        ],
+        "calendar_covered": [{"date": d, "what": w} for d, w in covered],
+        "calendar_ahead": [{"date": d, "what": w} for d, w in ahead],
+    }
+
+
+def render_report(reports: "list[dict]", days: int) -> str:
+    """Render the window reports as markdown, for the weekly-report agent."""
+    out = []
+    for r in reports:
+        start, end = r["window"]
+        out.append(f"## {r['label']}")
+        out.append("")
+        out.append(f"*{r['case']}* — {r['docket']}")
+        out.append("")
+        n = len(r["entries"])
+        if r["truncated"]:
+            out.append(
+                f"**Coverage warning:** the feed's oldest entry is "
+                f"{r['feed_oldest']}, NEWER than this window's start "
+                f"({start}). The feed serves a fixed number of entries, so it "
+                f"cannot prove the window is complete. Say so in the report "
+                f"rather than presenting a partial week as a full one."
+            )
+            out.append("")
+        out.append(f"**Filed in the window ({start} to {end}): {n}**")
+        out.append("")
+        if n:
+            for e in r["entries"]:
+                doc = f" ([PDF]({e['doc']}))" if e.get("doc") else ""
+                out.append(f"- {e['date']} — {e['note']}{doc}")
+        else:
+            out.append("- Nothing filed in this window. That is a finding, not a gap: say so plainly.")
+        out.append("")
+        if r["calendar_covered"]:
+            out.append("**Calendar dates inside the window:**")
+            out.append("")
+            for c in r["calendar_covered"]:
+                out.append(f"- {c['date']}: {c['what']}")
+            out.append("")
+        if r["calendar_ahead"]:
+            out.append("**Calendar ahead:**")
+            out.append("")
+            for c in r["calendar_ahead"]:
+                out.append(f"- {c['date']}: {c['what']}")
+            out.append("")
+    return "\n".join(out).rstrip() + "\n"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Watch the site's federal dockets.")
     ap.add_argument("--case", action="append", choices=sorted(CASES),
@@ -493,9 +616,35 @@ def main() -> int:
     ap.add_argument("--no-update", action="store_true", help="report, keep watermarks")
     ap.add_argument("--quiet", action="store_true", help="only report on change")
     ap.add_argument("--status", action="store_true", help="show watermarks and newest entries")
+    ap.add_argument("--report", action="store_true",
+                    help="print a window report (markdown) instead of watching; read-only")
+    ap.add_argument("--days", type=int, default=7,
+                    help="window length in days for --report (default 7)")
+    ap.add_argument("--since", metavar="YYYY-MM-DD",
+                    help="window start for --report; overrides --days")
+    ap.add_argument("--ahead", type=int, default=7,
+                    help="how many days of calendar to look ahead for --report (default 7)")
+    ap.add_argument("--today", metavar="YYYY-MM-DD",
+                    help="treat this as today for --report (testing; default: the real date)")
+    ap.add_argument("--json", action="store_true", help="machine-readable output for --report")
     args = ap.parse_args()
 
     keys = args.case or sorted(CASES)
+
+    if args.report:
+        reports = []
+        for key in keys:
+            try:
+                reports.append(report_window(key, CASES[key], args))
+            except Exception as exc:
+                print(f"docket-watch [{key}]: ERROR: could not read feed: {exc}", file=sys.stderr)
+                return 2
+        if args.json:
+            print(json.dumps({"days": args.days, "reports": reports}, indent=2))
+        else:
+            print(render_report(reports, args.days))
+        return 0
+
     state = migrate_state(load_state())
 
     worst = 0

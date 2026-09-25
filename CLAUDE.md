@@ -107,6 +107,29 @@ The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (41 a
 - **`all-my-books.md`** is kept as an alternate entry point to `/books/` (renders via `book_catalog` shortcode). Do not delete.
 - **Empty non-Constitution stubs** should be deleted. Constitution stubs are kept and written up.
 
+## Scheduled jobs (launchd)
+
+Eight unattended jobs run from `scripts/` via launchd. Each is a `com.huffmanwrites.*.plist` (repo copy) installed to `~/Library/LaunchAgents/`, invoked through a `*-runner.sh`, with output in `~/Library/Logs/`. `scripts/check-plists.py` gates them in CI: a malformed plist fails silently (`launchctl bootstrap` does not always report it), so a schedule that never runs is the defect it exists to catch.
+
+| Job | Schedule | What it does |
+|---|---|---|
+| `docket-watch` | 07:30, 18:30 daily | Alerts on any new filing in the three watched dockets |
+| `docket-weekly-report` | Saturdays 08:00 | Drafts a weekly summary of the three dockets (first run 2026-10-03) |
+| `senate-report` | Sundays 07:00 | Drafts the weekly Senate race report (self-disables after 2026-11-02) |
+| `ninety-days-report` | 1st of each month | Drafts the bond and S&P ninety-day installments |
+| `repair-plan` | Quarterly (Jan/Apr/Jul/Oct 1) | Revises the long-horizon repair plan |
+| `site-audit` | Mondays 13:00 | Builds and crawls the live site for broken links and CSP drift |
+| `wiki-check` | Mondays 13:30 | Audits and fixes the SimpleBrain wiki |
+| `weekly-integrity` | Mondays 14:00 | Online link sweep + online quotation verification |
+
+Rules for these, learned by shipping the failures:
+
+- **A runner that runs the agent must run the verification itself.** The agent cannot execute the gates (they are deliberately absent from its allow-list), so a gate result in its summary is unverifiable. The runner runs the builds and the offline gates and puts the real exit codes in the log.
+- **Two builds, always.** The production build excludes `draft: true`, so it says nothing about the draft the job just wrote. The second build uses `--buildDrafts --destination <tmp>` so a draft is rendered and checked without leaving a draft page in `public/`, which deploys.
+- **Guard a start date with a non-zero-exit-free path.** A job installed before its first due date must `exit 0` and log why; exiting non-zero raises the failure alert every week and trains the alert into noise.
+- **`StartCalendarInterval` takes a single dict for a LaunchAgent.** An array of dicts is a LaunchDaemon form and is silently ignored, so the job parses cleanly and never fires.
+- **The docket registry is `check-docket.py`'s `CASES` map and nothing else.** Adding a case never means editing a runner or a plist. Both the watcher and the weekly report read the same registry, so a new docket appears in both.
+
 ## Deployment
 
 GitHub Pages, deployed automatically on push to `main` via `.github/workflows/hugo.yml`. The workflow installs Hugo 0.166.0 extended, builds with `hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"`, and uploads `./public` as a Pages artifact. `static/CNAME` ensures the custom domain `huffmanwrites.org` is preserved.

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.docket-weekly-report</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/docket-weekly-report-runner.sh</string>
+  </array>
+  <!-- Saturday 08:00 CT. Philip asked for a weekly summary every Saturday
+       beginning 2026-10-03 (2026-09-25), and October 3 is itself a Saturday,
+       so this schedule and that date line up exactly. The runner additionally
+       refuses to run before 2026-10-03, so installing the job today does not
+       produce a report on Saturday 2026-09-26.
+
+       Weekday 6 is Saturday. Morning rather than evening because the report is
+       a draft for review and the week's filings are already in the feed: the
+       twice-daily docket watcher (07:30 and 18:30) has ingested Friday's
+       filings by the time this runs, so the window closes cleanly on Friday.
+
+       This job does NOT replace com.huffmanwrites.docket-watch. That job
+       alerts on a filing the day it lands; this one summarizes the week once,
+       for a reader. Both read the same registry in check-docket.py, so adding
+       a fourth docket never means editing either schedule. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>6</integer>
+    <key>Hour</key>
+    <integer>8</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <!-- Keep the exported PATH used by the other huffmanwrites jobs so claude,
+       hugo, python3 and the keychain-backed helpers resolve the same way. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/prh/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/prh</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/docket-weekly-report.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/docket-weekly-report.err.log</string>
+</dict>
+</plist>
