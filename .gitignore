@@ -3,7 +3,6 @@ resources/
 .hugo_build.lock
 .DS_Store
 .sendfox_token
-.fal_token
 pending/archive/
 .hermes/
 .claude/launch.json

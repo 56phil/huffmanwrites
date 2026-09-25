@@ -12,7 +12,7 @@ Weekly report on all 35 U.S. Senate races in the 2026 cycle (33 regular Class 2 
 
 - **No Anthropic or OpenAI resources.** The only AI API keys available are FAL and Ollama. Do not call api.anthropic.com, api.openai.com, or any Anthropic/OpenAI endpoint; do not use the OpenAI key for anything.
 - The model runs on **Ollama, local or cloud** (cloud resources are fine). The runner currently points at the local Ollama daemon (`http://localhost:11434`), which serves both local models and `:cloud` models; model `deepseek-v4.1-flash:cloud` (must match `ollama list` exactly). Auth uses `OLLAMA_API_KEY` from `.zshrc`; the runner extracts it because launchd does not source the shell.
-- FAL (`FAL_KEY` in `.zshrc`) is available for image generation if a future report ever needs it; the weekly report does not use hero images.
+- FAL is available for image generation if a future report ever needs it (the key resolves through `FAL_KEY` from the login keychain `huffmanwrites-fal`, with `~/.secrets` as fallback); the weekly report does not use hero images.
 
 ## Mission
 

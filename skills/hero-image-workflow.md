@@ -30,6 +30,17 @@ After images are generated and placed in the assets folder, the post's frontmatt
 | `hero_alt` | Descriptive text for accessibility, matching the visual content. |
 | `hero_caption` | A poetic or philosophical caption reflecting the post's theme. |
 
+## Credentials (single source of truth)
+The fal.ai key has exactly one home: the **login keychain** as the generic password `huffmanwrites-fal`, with `~/.secrets` (chmod 600) as the fallback every launchd runner already reads. Never keep a third copy — a stale duplicate beside the live key is what silently 401s, and the difference is invisible until a generation fails.
+
+```bash
+# What the runners do, and what you should do too:
+FAL_KEY="$(security find-generic-password -a "$USER" -s huffmanwrites-fal -w)"
+[ -z "$FAL_KEY" ] && FAL_KEY="$(grep -oE 'FAL_KEY="[^"]+"' "$HOME/.secrets" | head -1 | cut -d'"' -f2)"
+```
+
+In an interactive shell, `.zshrc` already exports `FAL_KEY` from that keychain entry, so `$FAL_KEY` is set. Do not read a token out of a dotfile in the repo; a repo-local copy drifts from the keychain and nothing tells you.
+
 ## Operational Steps
 1. **Identify**: Select target post from `image-assignments.md`.
 2. **Prompt**: Utilize the specific prompt designated for that post, ensuring visual identity keywords are present.
