@@ -154,6 +154,34 @@ CASES: "dict[str, dict]" = {
             ("2026-10-15", "Defendant to produce the Administrative Record to Plaintiff (ECF 42)."),
         ],
     },
+    "cadc": {
+        "case": "PHANG v. BLANCHE, D.C. Cir. No. 26-5299 (consolidated with 26-5334)",
+        "docket_id": "74696600",
+        "slug": "katie-phang-v-todd-blanche",
+        "label": "Epstein files appeal (D.C. Circuit)",
+        "known": {
+            1208881795: "NOTICE OF APPEAL (protective) -> appeal docketed as No. 26-5299.",
+            1208881798: "CLERK'S ORDER [2189799] — initial submissions due 9/24/2026 (certificate as to parties, docketing statement, entry of appearance, procedural motions, appendix-deferral statement, statement of issues, transcript report, underlying decision); DISPOSITIVE motions due 10/9/2026; transcript status report every 30 days; and BRIEFING DEFERRED pending further order of the court.",
+            1208890202: "CLERK'S ORDER [2194153] — 26-5334 CONSOLIDATED with 26-5299; the Aug 25 deadlines now govern both. This is why watching 26-5299 sees both appeals.",
+            1208890756: "Entry of appearance — Michael Weisbuch for Appellant Blanche.",
+            1208890787: "Entry of appearance — Samuel T. Ward-Packard for Appellee Phang.",
+            1208890917: "MOTION [2194494] — Appellant's motion to STAY the underlying order pending appeal, and to expedite. The motion this watch exists to follow.",
+            1208891196: "PER CURIAM ORDER [2194635] — Srinivasan (C.J.), Pillard and Pan. Appellee's response to the stay motion due Fri 9/25/2026 at 11:59 p.m.; any reply due Tue 9/29/2026 at 4:00 p.m. The ruling itself will be a new entry on this docket.",
+            1208891675: "Docketing statement (Appellant).",
+            1208891687: "Certificate as to parties, rulings and related cases (Appellant).",
+            1208891716: "Transcript status report — all transcripts needed for the appeal complete; next report due 30 days out.",
+            1208891719: "Statement of issues (Appellant).",
+            1208891733: "Underlying decision from which the appeal arises (Appellant).",
+            1208891742: "Statement of intent re appendix deferral — deferred.",
+            1208891760: "Entry of appearance — Brendan Ballou for Appellee Phang.",
+            1208891769: "Certificate as to parties, rulings and related cases (Appellee Phang).",
+        },
+        "calendar": [
+            ("2026-09-25", "Appellee Phang's response to the motion for stay pending appeal due at 11:59 p.m. (per curiam order 9/23). A STAY GRANTED would pause the district court's foreign-language obligation; a denial leaves it live."),
+            ("2026-09-29", "Any reply in support of the stay motion due at 4:00 p.m."),
+            ("2026-10-09", "Dispositive motions due in the consolidated appeals (clerk order 8/25). Briefing is otherwise DEFERRED pending further order."),
+        ],
+    },
 }
 
 

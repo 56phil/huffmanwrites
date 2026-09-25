@@ -502,9 +502,42 @@ class TestDocketRules(unittest.TestCase):
                     datetime.strptime(date, "%Y-%m-%d")
                     self.assertTrue(what.strip())
 
-    def test_the_registry_covers_the_two_cases_the_site_follows(self):
-        self.assertEqual(set(cd.CASES), {"beatty", "phang"})
+    def test_the_registry_covers_the_cases_the_site_follows(self):
+        # The two district dockets, plus the D.C. Circuit appeal. The circuit
+        # docket is the one that was missing: the stay ruling on the
+        # foreign-language obligation — the nearest-term event that can change
+        # the case — issues from the circuit, and the feed URLs show why it
+        # belongs in the same registry (the circuit feed also titles its
+        # entries "Entry #<id>", so it parses without touching the parser).
+        self.assertEqual(set(cd.CASES), {"beatty", "phang", "cadc"})
         self.assertEqual(cd.CASES["phang"]["docket_id"], "73246595")
+        self.assertEqual(cd.CASES["cadc"]["docket_id"], "74696600")
+
+    def test_the_circuit_case_watches_the_consolidated_lead_appeal(self):
+        # 26-5334 was consolidated into 26-5299, so the clerk's order routed
+        # every subsequent deadline through 26-5299. Watching the lead docket
+        # therefore covers both appeals; watching 26-5334 alone would miss the
+        # stay ruling, which will be filed under the lead number.
+        cadc = cd.CASES["cadc"]
+        self.assertEqual(cadc["docket_id"], "74696600")
+        self.assertIn("26-5299", cadc["case"])
+        # The motion that matters is in the KNOWN map, so a report names it
+        # rather than printing a bare document number.
+        self.assertTrue(any("STAY" in v.upper() for v in cadc["known"].values()))
+
+    def test_circuit_entry_ids_are_large_and_numbered_like_ecf(self):
+        # The circuit keys its feed entries by a CourtListener document id
+        # (1208891196), not a small ECF number. They are compared with `>` and
+        # never formatted as "ECF N" in prose, so a large int is correct — but
+        # the parse must still classify them as `entry`, which is what lets the
+        # circuit docket share the district docket's code path.
+        got = cd.parse_entries(
+            "<feed><entry><title>Entry #1208891196 in Katie Phang v. Todd Blanche, 26-5299</title>"
+            "<published>2026-09-23</published><summary>PER CURIAM ORDER</summary></entry></feed>"
+        )
+        self.assertEqual(len(got), 1)
+        self.assertEqual(got[0]["kind"], "entry")
+        self.assertEqual(got[0]["num"], 1208891196)
 
 
 # --------------------------------------------------------------------------

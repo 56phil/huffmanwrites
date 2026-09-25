@@ -26,6 +26,17 @@ Per Philip: "Publish a piece summarizing the Phang case." Written the same day t
 
 ---
 
+### Maintenance — September 25, 2026 — Extended the docket watch to the D.C. Circuit, which is where the stay ruling will come from
+
+Philip: "Maintain vigilance. This case fascinates me." Polling both venues for new material found none, but reading the watcher against the case exposed a **coverage gap that mattered more than the quiet dockets: nothing was watching the D.C. Circuit**, and the nearest-term event that can change the case — the ruling on the motion to stay the foreign-language obligation — issues from there, not from Sullivan. The watcher followed the two district dockets only.
+- **Added `cadc` to the `CASES` registry** (`scripts/check-docket.py`), pointed at **No. 26-5299**, the **consolidated lead** appeal: 26-5334 was consolidated into it, and the clerk's order routed every subsequent deadline through 26-5299, so the lead docket covers both appeals. The `KNOWN` map names the sixteen current entries, the stay motion among them, so a report says *what* landed rather than printing a bare document number.
+- **No parser, runner, or plist change was needed — and that is the point of the registry design.** The circuit titles its feed entries `Entry #<courtlistener-id>` (`Entry #1208891196`), so `parse_entries` classifies them as `entry` exactly as it does a district `Entry #50`. The runner is case-agnostic and the plist invokes the runner, so registering the case was the whole change. The large ids are compared with `>` and never formatted as prose "ECF N".
+- **Three facts taken from the circuit's own orders rather than from the district opinion's paraphrase.** The clerk's initial order (Aug 25, doc 2189799) sets **dispositive motions due October 9, 2026** and states that **"briefing in this case be deferred pending further order of the court"** — the appeal is not on a merits briefing track yet. The per curiam order (Sept 23) gives **appellee's stay response due Sept 25 at 11:59 p.m.**, any **reply Sept 29 at 4:00 p.m.**, before Srinivasan (C.J.), Pillard and Pan.
+- **First run records the watermark, never the backlog.** The circuit feed holds ~16 historical entries; the first run set `last_entry` to the newest and replayed none of them — the same discipline the minute-entry migration used, for the same reason (a burst of year-old filings presented as news is the failure that teaches people to ignore the watcher).
+- **Verified by running it.** `--dry-run` reports all three dockets; a simulated new circuit entry (`ORDER ... denying the motion to stay`) is detected and described; the **installed launchd job** kicked to exit 0 and wrote the stay-response deadline to the durable log; **59/59 gate tests** (two new: the registry-coverage contract and the entry-classification contract); six content gates green.
+
+---
+
 ### Maintenance — September 25, 2026 — Accuracy pass on "The Wall and the Slots": the corrected claim was still wrong in the one field no gate reads
 
 Philip: "Continue striving for accuracy." Re-verifying the published piece against the live record, which found a defect the publish-day check had missed.
