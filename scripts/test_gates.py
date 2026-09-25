@@ -629,6 +629,22 @@ class TestPrepositionRules(unittest.TestCase):
         md = '---\nslug: the-tool-he-asked-for\ndate: 2026-09-25\n---\nclean prose.\n'
         self.assertEqual(cpn.frontmatter_prose(md.split("---")[1]), "")
 
+    def test_a_blanked_span_before_a_preposition_does_not_create_a_hit(self):
+        # The bug: blanking a code span or link PRECEDING a preposition left
+        # that preposition looking sentence-final ("deployed via `x.yml` on
+        # push to `main`."), because the erase removed the words between them.
+        # The replacement keeps a non-space token so word order survives.
+        self.assertEqual(
+            self.count("Deployed via [`x.yml`](https://example.org/a/b) on push to `main`."), 0)
+        self.assertEqual(self.count("Established in [`skills/x.md`](https://e.org/a)."), 0)
+
+    def test_adverbial_idioms_ending_in_a_listed_preposition(self):
+        # Each ends in a word that is a preposition elsewhere but an adverb here.
+        for text in ("and so on.", "We will cite it from here on.",
+                     "from now on.", "the point is to begin."):
+            with self.subTest(text=text):
+                self.assertEqual(self.count(text), 0)
+
     def test_the_baseline_keys_on_the_file(self):
         # The ratchet: a file may be reduced freely but may not grow past its
         # recorded count, so the rule catches up as each file is next touched.

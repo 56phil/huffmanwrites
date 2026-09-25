@@ -10,9 +10,7 @@
 # silence a new hit in a file you are already editing — fix the sentence.
 #
 # Regenerate only when a NEW file legitimately needs recording, and say why in
-# the commit message. Format: <path>\t<count>
-#
-content/about.md	1
+# the commit message. Format: content/about.md	1
 content/posts/civics/no-kings-a-nation-speaks.md	1
 content/posts/civics/the-erosion-of-liberty-how-we-got-here-and-what-we-must-do-about-it.md	1
 content/posts/civics/the-fourth-amendment-protecting-privacy-in-a-digital-age.md	1
@@ -20,7 +18,6 @@ content/posts/civics/what-the-constitution-says-about-federal-elections.md	2
 content/posts/digests/digest-for-august-29-2025.md	2
 content/posts/digests/digest-for-january-2-2026.md	1
 content/posts/digests/digest-for-october-17-2025.md	1
-content/posts/digests/digest-for-september-26-2025.md	1
 content/posts/digests/stoic-saturday-the-line-between-whats-ours-and-what-isnt.md	1
 content/posts/digests/stoic-saturday-the-obstacle-is-the-way.md	1
 content/posts/digests/stoic-saturday-the-rule-you-set-before-you-need-it.md	1
@@ -39,9 +36,9 @@ content/posts/essays/lamy-2000-vs-waterman-carene.md	1
 content/posts/essays/misaligned.md	2
 content/posts/essays/open-letter-to-peter-thiel.md	6
 content/posts/essays/phang-v-blanche.md	2
-content/posts/essays/presidential-grading-method.md	3
+content/posts/essays/presidential-grading-method.md	2
 content/posts/essays/ranking-the-speakers.md	4
-content/posts/essays/separate-from-the-plan.md	6
+content/posts/essays/separate-from-the-plan.md	5
 content/posts/essays/the-2026-senate-map-a-race-by-race-guide.md	1
 content/posts/essays/the-case-for-honest-leaders.md	1
 content/posts/essays/the-crimes-of-donald-j-trump.md	1
@@ -54,7 +51,7 @@ content/posts/essays/the-probability-of-ai-taking-over-the-world.md	3
 content/posts/essays/the-roots-of-violence.md	3
 content/posts/essays/the-standard-and-the-man.md	4
 content/posts/essays/trumps-greenland-gambit-revisited.md	1
-content/posts/essays/twenty-seventh-of-fifty-six.md	3
+content/posts/essays/twenty-seventh-of-fifty-six.md	2
 content/posts/essays/what-926-gigabytes-taught-me-about-proportion.md	1
 content/posts/essays/what-can-go-wrong-november-3.md	3
 content/posts/essays/what-courage-costs.md	4

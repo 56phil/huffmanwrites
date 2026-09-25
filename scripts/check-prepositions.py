@@ -301,6 +301,12 @@ _IDIOMS = (
     re.compile(r"\bto begin$", re.IGNORECASE),
     re.compile(r"\bto start$", re.IGNORECASE),
     re.compile(r"\bit depends$", re.IGNORECASE),
+    # "from here on" and "from now on" end in an adverbial "on". The pattern
+    # anchors on the "on" itself, so the text before it is "from here".
+    re.compile(r"\bfrom (here|now|then)$", re.IGNORECASE),
+    re.compile(r"\b(and|or)\s+so$", re.IGNORECASE),
+    re.compile(r"\blater$", re.IGNORECASE),
+    re.compile(r"\bearly$", re.IGNORECASE),
 )
 
 # Pronouns/possessives that may sit between a phrasal verb and its particle
@@ -344,13 +350,25 @@ def split_frontmatter(text: str) -> "tuple[str, str]":
 
 
 def _blank(span: str) -> str:
-    """Replace a span with spaces, preserving length and newlines.
+    """Replace a span with a placeholder that keeps it non-prose.
 
-    Whitespace-joining instead would let "word. Next" become "word. Next" with
-    a new sentence boundary lost; keeping the length and the line structure
-    means reported line numbers stay correct.
+    Not empty spaces: blanking a code span or link that PRECEDES a preposition
+    would leave that preposition looking sentence-final ("deployed via `x.yml`
+    on push to `main`." has 'to' before the terminator only because the span
+    between them was erased). A visible token keeps the word order intact so
+    the preposition is correctly seen as mid-sentence.
+
+    Length and newlines are preserved so line numbers stay correct.
     """
-    return "".join("\n" if ch == "\n" else " " for ch in span)
+    out = []
+    for ch in span:
+        if ch == "\n":
+            out.append("\n")
+        elif ch.isspace():
+            out.append(" ")
+        else:
+            out.append("\u00b7")  # middle dot: a non-prose, non-space token
+    return "".join(out)
 
 
 def strip_non_prose(text: str) -> str:
