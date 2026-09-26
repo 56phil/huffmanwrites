@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — September 26, 2026 — Cleanup: retired merch shells removed, stale vault links repaired
+
+Two cleanups, plus one correction to a figure I had reported wrongly.
+
+- **`static/img/shop/` and `static/img/Redbutton-Credo-Designs/` removed.** Both survived the 2026-09-19 merch retirement as empty shells holding only a `.DS_Store`; SESSION_STATE recorded the 103 MB of print masters as deleted but not the directories that held them. Untracked, referenced nowhere in code or content (the only mentions are CLAUDE.md and SESSION_STATE *saying* the surface was retired). Static files 354 → 352, pages unchanged at **422**, `check-render-integrity` clean, all gates green. Nothing tracked changed, so this needed no commit.
+- **SimpleBrain broken links repaired — and my earlier "45 broken links" figure was wrong.** I had reported it from a checker that assumed every `[[link]]` resolves inside `wiki/`. Obsidian resolves a wikilink by **basename anywhere in the vault**, and by path suffix, and it accepts a filename with or without its extension — so the first count was mostly false positives. Rewritten as `/tmp/sb-links.py` with those three rules (and excluding code spans, which Obsidian does not linkify): the true count was **25**, and **zero were in `wiki/`** — none of the notes I wrote.
+- **The links were stale paths, not missing notes.** All nine fixable ones pointed at notes that exist under hyphenated filenames (`[[Brian Tracy]]` → `wiki/people/brian-tracy.md`; `[[DVD ripping without MakeMKV]]` → `wiki/references/dvd-ripping-without-makemkv.md`), and the BB-LOR PDF pointed at a `PDFs/Miscellaneous/` path from the old Vault. Retargeted with explicit paths and display text, in the three `projects/personal/Brian/` files. The two `projects/personal/Lizz/` cross-links were checked and resolve correctly as-is.
+- **The remaining 16 are in `archive/` and are deliberately left.** Their targets (Dieter Rams, Lamy 2000, Industrial Design, the SSA-1099 PDF set) never came across from the old Vault, so they are genuinely dead rather than mispathed — and `AGENTS.md` forbids modifying anything after it lands in `/archive`. Recording them here is the correct disposition: the rule is the rule, and an archive that gets edited stops being a record.
+- **The lesson worth keeping:** a link checker is only as good as its model of the resolver. Mine reported 45 problems where there were 25 real ones and 0 in the area I had just written, which would have sent me editing correct files. Measure the tool against the semantics before trusting the number it prints.
+
+---
+
 ### Maintenance — September 26, 2026 — Commissioned the Chiefs Report series hero, and made it part of the publishing contract
 
 Philip: "I want a hero image dedicated to the weekly Chiefs report. This will be used for the rest of the season. Text is acceptable. The background will be the red used by the Chiefs instead of the routine dark navy blue." Every clause changed something: the plate is a **series** asset rather than a per-week one, it **carries a wordmark**, and it breaks the locked midnight-navy ground for the team's own red.
