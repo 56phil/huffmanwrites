@@ -385,10 +385,35 @@ class TestGalleryRules(unittest.TestCase):
     def test_latest_entries_are_discovered(self):
         # The three recurring series. A card that loses this key silently
         # reverts to a fixed link and starts going stale.
-        globs = dict(cg.latest_entries())
+        globs = {title: glob for title, glob, _ in cg.latest_entries()}
         self.assertIn("Chiefs Report", globs)
         self.assertIn("Senate Race Report", globs)
         self.assertIn("Docket Report", globs)
+
+    def test_the_unstarted_series_reports_its_fallback(self):
+        # The docket card has no installments yet, so what it DOES is decided by
+        # whether it carries a `link`. The gate must report the real behaviour,
+        # not assume one: the first version of this note said the card "renders
+        # without a Read Post link" after a fallback had already been added,
+        # which is the kind of stale note that misleads the next session.
+        entries = {t: (g, fb) for t, g, fb in cg.latest_entries()}
+        self.assertIn("Docket Report", entries)
+        _, has_fallback = entries["Docket Report"]
+        self.assertTrue(has_fallback, "the docket card needs a link fallback")
+
+    def test_a_card_with_a_glob_and_no_fallback_is_reported_as_dead(self):
+        # If the fallback is ever dropped, the note must say the card has no way
+        # through to any post — that is the state the user objected to.
+        from unittest import mock
+        real = cg.GALLERY_DATA.read_text(encoding="utf-8")
+        mutated = real.replace(
+            "  link: /posts/essays/three-walls-and-three-slots/\n", "")
+        self.assertNotEqual(real, mutated, "fixture did not change")
+        with mock.patch.object(cg, "GALLERY_DATA") as fake:
+            fake.read_text.return_value = mutated
+            failures, notes = cg.latest_problems()
+        self.assertEqual(failures, [], failures)
+        self.assertTrue(any("no `link` fallback" in n for n in notes), notes)
 
     def test_a_glob_pointing_at_a_missing_directory_fails(self):
         # The typo that can never match: `/posts/essay/` for `/posts/essays/`.

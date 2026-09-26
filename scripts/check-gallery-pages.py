@@ -121,12 +121,16 @@ def page_count(items: int, per_page: int) -> int:
     return (items + per_page - 1) // per_page
 
 
-def latest_entries() -> "list[tuple[str, str]]":
-    """(title, glob) for every card that resolves to the newest installment.
+def latest_entries() -> "list[tuple[str, str, bool]]":
+    """(title, glob, has_link_fallback) for every card resolving to the newest
+    installment.
 
     A recurring series shows one card and that card must lead to the current
     installment, so the entry carries `latest: /posts/<section>/<series>-*` and
-    the layout resolves it at build time (2026-09-26).
+    the layout resolves it at build time (2026-09-26). The third element matters
+    because `latest` only overrides `link` **on a match**: a card whose glob
+    matches nothing keeps whatever `link` it carries, so a fallback is what
+    keeps it from being a picture with no destination.
     """
     text = GALLERY_DATA.read_text(encoding="utf-8")
     blocks = [b for b in re.split(r"(?=^\s*-\s+image:)", text, flags=re.M) if b.strip()]
@@ -136,18 +140,20 @@ def latest_entries() -> "list[tuple[str, str]]":
         if not m:
             continue
         t = re.search(r"^\s*title:\s*(.+?)\s*$", b, re.M)
-        out.append((t.group(1).strip().strip('"') if t else "?", m.group(1).strip()))
+        has_link = bool(re.search(r"^\s*link:\s*\S", b, re.M))
+        out.append((t.group(1).strip().strip('"') if t else "?", m.group(1).strip(),
+                    has_link))
     return out
 
 
 def latest_problems() -> "tuple[list[str], list[str]]":
     """(failures, notes) for the `latest` globs.
 
-    A `latest` glob that matches nothing fails SILENTLY: the layout drops the
-    Read Post link, so a typo'd prefix leaves a card that looks fine and goes
-    nowhere. The pre-`latest` mechanism had the opposite failure — a fixed
-    `link` at a post that does not exist renders a link that 404s — and both are
-    worth catching.
+    A `latest` glob that matches nothing fails SILENTLY: the layout leaves the
+    card on whatever `link` it also carries, so a typo'd prefix leaves a card
+    pointing at a stale destination rather than at the series. The pre-`latest`
+    mechanism had a different failure — a fixed `link` at a post that does not
+    exist renders a link that 404s — and both are worth catching.
 
     The two cases are separated by what can actually be tested:
 
@@ -155,12 +161,14 @@ def latest_problems() -> "tuple[list[str], list[str]]":
         `/posts/essays/` is a typo, and it can never match anything.
       - **The directory exists but nothing matches** -> NOTE. This is the
         legitimate not-yet-started series (the docket report before its first
-        run on 2026-10-03), and it is indistinguishable from a stem typo by
-        matching alone, so it is surfaced rather than failed.
+        run on 2026-10-03). It is indistinguishable from a stem typo by matching
+        alone, so it is surfaced rather than failed; whether the card is still
+        useful depends on the `link` fallback, which is why the note reports
+        what the card will actually do.
     """
     failures: list[str] = []
     notes: list[str] = []
-    for title, glob in latest_entries():
+    for title, glob, has_fallback in latest_entries():
         dirname = Path(glob.rstrip("*")).parent.as_posix().lstrip("/")
         stem = Path(glob.rstrip("*")).name
         # The glob is written as a site path (/posts/essays/foo-*); content
@@ -174,11 +182,18 @@ def latest_problems() -> "tuple[list[str], list[str]]":
             continue
         matches = [p for p in search_dir.rglob("*.md") if p.name.startswith(stem)]
         if not matches:
-            notes.append(
-                f"{title}: latest glob '{glob}' matches no published installment "
-                "yet — the card renders without a Read Post link until the first "
-                "one lands (expected for a series that has not started)."
-            )
+            if has_fallback:
+                notes.append(
+                    f"{title}: latest glob '{glob}' matches nothing yet, so the "
+                    "card is falling back to its `link`. Expected until the "
+                    "series starts; a typo would look the same."
+                )
+            else:
+                notes.append(
+                    f"{title}: latest glob '{glob}' matches nothing yet AND the "
+                    "card has no `link` fallback — it renders a caption and a "
+                    "picture with no way through to any post."
+                )
     return failures, notes
 
 

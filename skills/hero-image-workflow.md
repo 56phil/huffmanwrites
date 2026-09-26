@@ -72,10 +72,20 @@ would go stale with every new one. Those entries carry `latest` instead:
 match by `Date`, and pulls the card's image from that post's own `hero_desktop` —
 which for a series plate is the same picture every week, so nothing visibly
 moves. Do **not** add a gallery entry per installment: the plate is one image, so
-a card per week would render the same picture N times. `scripts/check-gallery-pages.py`
-guards the globs: a glob pointing at a directory that does not exist fails, and a
-glob matching nothing yet is a note rather than a failure (a series that has not
-started has no installments, and that is legitimate).
+a card per week would render the same picture N times.
+
+**A series card that has not started yet also needs a `link`.** `latest` only
+overrides `link` **on a match**, so a card whose glob matches nothing keeps
+whatever `link` it carries. Give it a real destination — the docket card points at
+the published explainer on the same three dockets until its first report lands on
+2026-10-03, and switches itself over with no follow-up edit. Without a fallback
+the card is a caption and a picture with no way through to any post, which is a
+dead end dressed as a link.
+
+`scripts/check-gallery-pages.py` guards the globs: a glob pointing at a directory
+that does not exist fails, and a glob matching nothing yet is a note — reported
+differently depending on whether a `link` fallback is present, because that is
+what decides whether the card is still useful.
 
 ## Generation Requirements
 Every post requires a pair of images:

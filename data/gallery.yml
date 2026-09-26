@@ -498,4 +498,9 @@
 - image: /img/articles/104-docket-report_16x9.webp
   title: Docket Report
   caption: The record accumulates. One entry opens.
+  # Until the first report publishes (2026-10-03) this card points at the
+  # published explainer on the same three dockets, so it is never a picture
+  # with nothing to read. `latest` overrides `link` the moment a real
+  # `docket-report-*.md` exists, so the switch needs no follow-up edit.
+  link: /posts/essays/three-walls-and-three-slots/
   latest: /posts/essays/docket-report-*
