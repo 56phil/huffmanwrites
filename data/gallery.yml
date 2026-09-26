@@ -490,8 +490,12 @@
 - image: /img/articles/103-chiefs-report_16x9.webp
   title: Chiefs Report
   caption: A marble football under a blade of gold light, against the Chiefs' own red. The series plate for the weekly report.
-  link: /posts/sports/chiefs-report-2026-09-25/
+  latest: /posts/sports/chiefs-report-*
 - image: /img/articles/105-senate-race-report_16x9.webp
   title: Senate Race Report
   caption: Fifty seats in the arc. The light reaches one.
-  link: /posts/essays/senate-race-report-2026-09-20/
+  latest: /posts/essays/senate-race-report-*
+- image: /img/articles/104-docket-report_16x9.webp
+  title: Docket Report
+  caption: The record accumulates. One entry opens.
+  latest: /posts/essays/docket-report-*

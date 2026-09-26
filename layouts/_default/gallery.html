@@ -45,7 +45,44 @@
 
   <div class="gallery-grid">
     {{ range $i, $item := $galleryItems }}
-    {{- $linkedPage := site.GetPage $item.link -}}
+    {{- /* A recurring series shows one card, and that card should lead to the
+           newest installment rather than whichever one happened to be current
+           when the entry was written. `image` also moves with it: the series
+           plate is the same picture every week, so linking the card at the
+           latest post's hero keeps the picture and the destination in step —
+           and because the plate IS the same picture, nothing visibly changes
+           week to week. `link`/`image` remain the fallback for a fixed entry,
+           which is what every other card in the file is. */ -}}
+    {{- /* `default ""` matters: a card that declares only `latest` has no
+           `link` at all, and if the glob matches nothing (the docket report
+           before its first run) the value stays nil, which fails the whole
+           build with "invalid value; expected string". */ -}}
+    {{- $linkRaw := $item.link | default "" -}}
+    {{- $imgRaw := $item.image | default "" -}}
+    {{- with $item.latest -}}
+      {{- $prefix := strings.TrimSuffix "*" . -}}
+      {{- $matches := slice -}}
+      {{- range site.RegularPages -}}
+        {{- if strings.HasPrefix .RelPermalink $prefix -}}
+          {{- $matches = $matches | append . -}}
+        {{- end -}}
+      {{- end -}}
+      {{- with $matches -}}
+        {{- $p := index (sort . "Date" "desc") 0 -}}
+        {{- $linkRaw = $p.RelPermalink -}}
+        {{- with $p.Params.hero_desktop -}}
+          {{- $imgRaw = printf "/%s" . -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- /* Guard the empty case: `site.GetPage ""` returns the HOME page, not
+           nil, so an unresolved card would render a "Read Post" pointing at
+           "/" — a link that works and goes somewhere wrong, which is worse
+           than no link at all. */ -}}
+    {{- $linkedPage := "" -}}
+    {{- with $linkRaw -}}
+      {{- $linkedPage = site.GetPage . -}}
+    {{- end -}}
     {{- $caption := $item.caption -}}
     {{- if $linkedPage -}}
       {{- if $linkedPage.Description -}}
@@ -60,7 +97,7 @@
     {{- end -}}
     <div class="gallery-card{{ $hidden }}">
       <div class="gallery-img-wrapper">
-        {{- $imgSrc := $item.image | relURL -}}
+        {{- $imgSrc := $imgRaw | relURL -}}
         <a href="{{ $imgSrc }}" class="glightbox" data-title="{{ $item.title }}" data-description="{{ $caption }}">
           <img src="{{ $imgSrc }}" alt="{{ $item.title }}" class="gallery-img" loading="lazy">
         </a>
@@ -69,7 +106,7 @@
         <h3 class="gallery-title">{{ $item.title }}</h3>
         <p class="gallery-caption">{{ $caption }}</p>
         {{- if $linkedPage -}}
-        <a href="{{ $item.link | relURL }}" class="gallery-link">Read Post</a>
+        <a href="{{ $linkRaw | relURL }}" class="gallery-link">Read Post</a>
         {{- end -}}
       </div>
     </div>

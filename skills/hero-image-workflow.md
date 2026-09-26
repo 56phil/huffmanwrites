@@ -56,6 +56,27 @@ build and renders an empty box, so `scripts/check-hero-paths.py` asserts every
 `hero_desktop` / `hero_mobile` in `content/` resolves under `static/`, and the
 scheduled runners run it.
 
+**A recurring series gets ONE gallery card, and the card resolves to the newest
+installment.** A gallery entry holds a fixed `link`, so a series card would keep
+pointing at whichever installment happened to be current when it was written, and
+would go stale with every new one. Those entries carry `latest` instead:
+
+```yaml
+- image: /img/articles/105-senate-race-report_16x9.webp
+  title: Senate Race Report
+  caption: Fifty seats in the arc. The light reaches one.
+  latest: /posts/essays/senate-race-report-*
+```
+
+`layouts/_default/gallery.html` resolves the glob at build time, takes the newest
+match by `Date`, and pulls the card's image from that post's own `hero_desktop` —
+which for a series plate is the same picture every week, so nothing visibly
+moves. Do **not** add a gallery entry per installment: the plate is one image, so
+a card per week would render the same picture N times. `scripts/check-gallery-pages.py`
+guards the globs: a glob pointing at a directory that does not exist fails, and a
+glob matching nothing yet is a note rather than a failure (a series that has not
+started has no installments, and that is legitimate).
+
 ## Generation Requirements
 Every post requires a pair of images:
 1. **Desktop Version**: 16:9 aspect ratio.

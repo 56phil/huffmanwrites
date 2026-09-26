@@ -121,6 +121,67 @@ def page_count(items: int, per_page: int) -> int:
     return (items + per_page - 1) // per_page
 
 
+def latest_entries() -> "list[tuple[str, str]]":
+    """(title, glob) for every card that resolves to the newest installment.
+
+    A recurring series shows one card and that card must lead to the current
+    installment, so the entry carries `latest: /posts/<section>/<series>-*` and
+    the layout resolves it at build time (2026-09-26).
+    """
+    text = GALLERY_DATA.read_text(encoding="utf-8")
+    blocks = [b for b in re.split(r"(?=^\s*-\s+image:)", text, flags=re.M) if b.strip()]
+    out = []
+    for b in blocks:
+        m = re.search(r"^\s*latest:\s*(\S+)\s*$", b, re.M)
+        if not m:
+            continue
+        t = re.search(r"^\s*title:\s*(.+?)\s*$", b, re.M)
+        out.append((t.group(1).strip().strip('"') if t else "?", m.group(1).strip()))
+    return out
+
+
+def latest_problems() -> "tuple[list[str], list[str]]":
+    """(failures, notes) for the `latest` globs.
+
+    A `latest` glob that matches nothing fails SILENTLY: the layout drops the
+    Read Post link, so a typo'd prefix leaves a card that looks fine and goes
+    nowhere. The pre-`latest` mechanism had the opposite failure — a fixed
+    `link` at a post that does not exist renders a link that 404s — and both are
+    worth catching.
+
+    The two cases are separated by what can actually be tested:
+
+      - **The directory does not exist** -> FAILURE. `/posts/essay/` for
+        `/posts/essays/` is a typo, and it can never match anything.
+      - **The directory exists but nothing matches** -> NOTE. This is the
+        legitimate not-yet-started series (the docket report before its first
+        run on 2026-10-03), and it is indistinguishable from a stem typo by
+        matching alone, so it is surfaced rather than failed.
+    """
+    failures: list[str] = []
+    notes: list[str] = []
+    for title, glob in latest_entries():
+        dirname = Path(glob.rstrip("*")).parent.as_posix().lstrip("/")
+        stem = Path(glob.rstrip("*")).name
+        # The glob is written as a site path (/posts/essays/foo-*); content
+        # lives under content/ with the same shape.
+        search_dir = REPO / "content" / dirname
+        if not search_dir.is_dir():
+            failures.append(
+                f"{title}: latest glob '{glob}' points at content/{dirname}/, "
+                "which does not exist — this can never match a page."
+            )
+            continue
+        matches = [p for p in search_dir.rglob("*.md") if p.name.startswith(stem)]
+        if not matches:
+            notes.append(
+                f"{title}: latest glob '{glob}' matches no published installment "
+                "yet — the card renders without a Read Post link until the first "
+                "one lands (expected for a series that has not started)."
+            )
+    return failures, notes
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Guard the gallery pagination contract.")
     ap.add_argument(
@@ -180,6 +241,16 @@ def main() -> int:
             + ", ".join(f"{n}.md" for n in surplus),
             file=sys.stderr,
         )
+
+    # `latest` globs: a real typo fails, an unstarted series is only noted.
+    latest_fail, latest_notes = latest_problems()
+    for note in latest_notes:
+        print(f"gallery-pages: NOTE — {note}")
+    if latest_fail:
+        print("gallery-pages: FAIL — bad `latest` glob(s):", file=sys.stderr)
+        for f in latest_fail:
+            print(f"  {f}", file=sys.stderr)
+        return 1
 
     if not args.quiet:
         print("gallery-pages: OK — every required page stub is present")

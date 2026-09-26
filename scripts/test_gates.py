@@ -379,6 +379,55 @@ class TestGalleryRules(unittest.TestCase):
         self.assertGreater(total, 1)
         self.assertTrue(cg.existing_stubs(), "no gallery page stubs found")
 
+    # -- `latest` globs (2026-09-26): recurring series resolve to the newest
+    #    installment, so a card cannot go stale as installments accumulate.
+
+    def test_latest_entries_are_discovered(self):
+        # The three recurring series. A card that loses this key silently
+        # reverts to a fixed link and starts going stale.
+        globs = dict(cg.latest_entries())
+        self.assertIn("Chiefs Report", globs)
+        self.assertIn("Senate Race Report", globs)
+        self.assertIn("Docket Report", globs)
+
+    def test_a_glob_pointing_at_a_missing_directory_fails(self):
+        # The typo that can never match: `/posts/essay/` for `/posts/essays/`.
+        # This one is a hard failure because no future installments can fix it.
+        from unittest import mock
+        real = cg.GALLERY_DATA.read_text(encoding="utf-8")
+        mutated = real.replace(
+            "latest: /posts/essays/docket-report-*",
+            "latest: /posts/essay/docket-report-*")
+        self.assertNotEqual(real, mutated, "fixture did not change")
+        with mock.patch.object(cg, "GALLERY_DATA") as fake:
+            fake.read_text.return_value = mutated
+            failures, _ = cg.latest_problems()
+        self.assertTrue(any("does not exist" in f for f in failures), failures)
+
+    def test_an_unstarted_series_is_a_note_not_a_failure(self):
+        # The docket report has no published installment until 2026-10-03, and
+        # that is legitimate. It must not fail the gate, or CI would be red
+        # until the first run.
+        failures, notes = cg.latest_problems()
+        self.assertEqual([f for f in failures], [], failures)
+        self.assertTrue(any("Docket Report" in n for n in notes), notes)
+
+    def test_no_shipped_glob_fails(self):
+        failures, _ = cg.latest_problems()
+        self.assertEqual(failures, [])
+
+    def test_every_entry_has_a_way_to_resolve(self):
+        # Each card must carry either a fixed `link` or a `latest` glob.
+        # A card with neither renders a title and a picture that goes nowhere.
+        text = cg.GALLERY_DATA.read_text(encoding="utf-8")
+        blocks = [b for b in re.split(r"(?=^\s*-\s+image:)", text, flags=re.M)
+                  if b.strip()]
+        for b in blocks:
+            with self.subTest(block=b.strip().splitlines()[0][:60]):
+                self.assertTrue(
+                    re.search(r"^\s*(link|latest):", b, re.M),
+                    "gallery entry has neither link nor latest")
+
 
 # --------------------------------------------------------------------------
 # Plist gate: the silent-schedule failure.
