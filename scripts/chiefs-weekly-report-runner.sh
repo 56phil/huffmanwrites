@@ -426,7 +426,7 @@ if [ "${CHIEFS_SKIP_SIMPLEBRAIN:-0}" = "1" ]; then
 else
   mkdir -p "$SB/raw/content/posts/sports"
   cp "$REPO/$ARTICLE" "$SB/raw/content/posts/sports/"
-  SB_PROMPT="Read $SB/translate.md and follow it, then follow the post-commit SimpleBrain flow in /Users/prh/Developer/huffmanwrites/CLAUDE.md. The raw file is $SB/raw/content/posts/sports/chiefs-report-$TODAY.md. Write the translated entry to $SB/wiki/articles/chiefs-report-$TODAY.md, add a [[articles/chiefs-report-$TODAY|Title]] line to the Recent Highlights section of $SB/wiki/index.md (prune the oldest highlight if the list grows past 7), move the raw file to $SB/archive/, then commit the SimpleBrain repo. Do not push; the runner pushes."
+  SB_PROMPT="Read $SB/translate.md and follow it, then follow the post-commit SimpleBrain flow in /Users/prh/Developer/huffmanwrites/CLAUDE.md. The raw file is $SB/raw/content/posts/sports/chiefs-report-$TODAY.md. Write the translated entry to $SB/wiki/articles/chiefs-report-$TODAY.md, add a [Title](articles/chiefs-report-$TODAY.md) line to the Recent Highlights section of $SB/wiki/index.md (prune the oldest highlight if the list grows past 7), move the raw file to $SB/archive/, then commit the SimpleBrain repo. Do not push; the runner pushes."
   set +e
   claude -p "$SB_PROMPT" \
     -n "chiefs-simplebrain-$TODAY" \
