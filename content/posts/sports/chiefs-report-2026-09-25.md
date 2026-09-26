@@ -7,6 +7,10 @@ lastmod: 2026-09-25T08:20:00-05:00
 draft: false
 featuredOnHome: true
 tags: [sports, chiefs, nfl]
+hero_desktop: "img/articles/103-chiefs-report_16x9.webp"
+hero_mobile: "img/articles/103-chiefs-report_4x5.webp"
+hero_alt: "A football carved from pale veined marble resting on a dark plinth, lit by a blade of gold light against a deep crimson field, with the words Kansas City Chiefs Report set at the left."
+hero_caption: "The series plate for the weekly Chiefs report, kept for the rest of the season."
 ---
 
 **Question:** What is the most consequential thing the Chiefs have to manage at 2-0?

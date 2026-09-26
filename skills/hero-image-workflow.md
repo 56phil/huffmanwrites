@@ -9,6 +9,28 @@ All hero images must adhere to a strict conceptual aesthetic:
 - **Lighting**: Dramatic cinematic lighting (chiaroscuro), gold filigree details.
 - **Concept**: Metaphorical and conceptual rather than literal representations of the text.
 
+**One documented exception, and it is deliberate.** The **weekly Chiefs report**
+carries a *series plate* — one pair of images reused all season — whose ground is
+the team's own red (`#E31837`, gold `#FFB81C`) rather than midnight navy, with a
+wordmark composited in. Philip, 2026-09-26: "I want a hero image dedicated to the
+weekly Chiefs report. This will be used for the rest of the season. Text is
+acceptable. The background will be the red used by the Chiefs instead of the
+routine dark navy blue." The plate is `static/img/articles/103-chiefs-report_*`,
+it is wired into `skills/chiefs-weekly-report.md` as a fixed frontmatter contract,
+and `scripts/chiefs-report.py --validate` fails the publish if it is missing. **Do
+not regenerate it navy, and do not give an individual Chiefs report its own
+hero** — the plate belongs to the series, and two reports sharing one image is the
+intended result.
+
+Two mechanics from that build that generalize. **Text that must be readable is
+composited, never generated:** FLUX garbles letterforms whenever a prompt invites
+them, so ask the model for a clean field with a reserved blank area and explicitly
+forbid text, then draw the wordmark in ImageMagick with the site's own heading face
+(instanced from the upstream variable font with `fontTools`). **A brand color is
+graded, not described:** the model reads "crimson" about 14° warm of the target, so
+rotate only the red-family pixels onto the exact hex (`/tmp/chiefs-grade.py` is the
+scratch tool) and leave the stone and the light alone.
+
 ## Generation Requirements
 Every post requires a pair of images:
 1. **Desktop Version**: 16:9 aspect ratio.

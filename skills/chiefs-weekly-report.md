@@ -210,6 +210,10 @@ that says so. Do not manufacture length.
   draft: false
   featuredOnHome: true
   tags: [sports, chiefs, nfl]
+  hero_desktop: "img/articles/103-chiefs-report_16x9.webp"
+  hero_mobile: "img/articles/103-chiefs-report_4x5.webp"
+  hero_alt: "A football carved from pale veined marble resting on a dark plinth, lit by a blade of gold light against a deep crimson field, with the words Kansas City Chiefs Report set at the left."
+  hero_caption: "The series plate for the weekly Chiefs report, kept for the rest of the season."
   ---
   ```
   - `draft: false` — this job publishes; the runner will push it.
@@ -218,11 +222,20 @@ that says so. Do not manufacture length.
     considers anything else, and more than five flagged posts already exist, so
     an unflagged post does not appear in the feed at all. Without the flag the
     report is written and published and nobody sees it.
+  - **The four hero fields are copied verbatim from the block above — do not
+    invent, edit, or regenerate them.** They point at a **series plate**: one
+    pair of images commissioned for the report (number 103) and reused for
+    every installment of the season, the way a masthead is reused. Do not
+    generate a new hero, do not change the caption, and do not point the fields
+    at a different file. The plate belongs to the series, not to the week, so
+    two reports carrying the same image is the intended result. The runner's
+    validator fails the publish if any of the four is missing or if the paths do
+    not name files that exist on disk.
 - **Date guard:** the `date` must never be ahead of the wall clock when the file
   is written. Hugo's `buildFuture: false` silently skips future-dated content:
   the build succeeds and the page is simply absent, which is the failure that
   hides. At an 1830 CT run, stamp the run time; do not round it forward.
-- No hero image. No newsletter/sendfox fields.
+- No newsletter/sendfox fields.
 - **Do NOT run `hugo`, do NOT run the gate scripts, do NOT commit or push, and
   do NOT touch `SESSION_STATE.md`.** The gates are deliberately absent from your
   allow-list, so a gate result in your summary would be unverifiable, and the

@@ -347,11 +347,11 @@ ENTRY_FILE="$(mktemp "${TMPDIR:-/tmp}/chiefs-entry-XXXXXX")"
   echo "### Maintenance — $(date '+%B %-d, %Y') — Published the Chiefs weekly report (automated)"
   echo ""
   echo "Auto-published by \`com.huffmanwrites.chiefs-weekly-report\` (Tuesdays 18:30 CT, in season)."
-  echo "- **Published** \`$ARTICLE\` — \"$TITLE_LINE\", $WORDCOUNT words whole-file. \`draft: false\`, \`featuredOnHome: true\`, no hero image."
+  echo "- **Published** \`$ARTICLE\` — \"$TITLE_LINE\", $WORDCOUNT words whole-file. \`draft: false\`, \`featuredOnHome: true\`, the series hero plate \`103-chiefs-report\` (the same pair of images for every installment of the season)."
   if [ -n "$WEEK_LINE" ]; then
     echo "- **The week, as the piece frames it:** $WEEK_LINE"
   fi
-  echo "- **Verified by the runner before the push, not claimed by the writer.** Both builds OK (\`--gc --minify\` and \`--gc --minify --buildDrafts --destination <tmp>\`); six gates OK (quotes \`--file\`, links \`--check\`, em-dashes \`--file\`, prepositions \`--file\`, render integrity, gallery pages); the frontmatter check (draft false, \`featuredOnHome\` true, no future date, attribution present). A failure in any of those aborts the push rather than publishing anyway, which is the difference between this job and the four that file drafts."
+  echo "- **Verified by the runner before the push, not claimed by the writer.** Both builds OK (\`--gc --minify\` and \`--gc --minify --buildDrafts --destination <tmp>\`); six gates OK (quotes \`--file\`, links \`--check\`, em-dashes \`--file\`, prepositions \`--file\`, render integrity, gallery pages); the frontmatter check (draft false, \`featuredOnHome\` true, no future date, the four series-hero fields present and resolving to real files, attribution present). A failure in any of those aborts the push rather than publishing anyway, which is the difference between this job and the four that file drafts."
   echo "- **Data came from \`scripts/chiefs-report.py\`**, the briefing pack the runner writes before the writer starts: the week's game with both teams' box scores and leaders, every scoring play, both injury reports, the standings and seed list, the season statistics by category, the next game with the feed's own odds and its matchup projection, and two weeks of Chiefs-tagged coverage with its URLs. The writer is not permitted to recall a score or a record. URLs are cited from the feed or from a page the run fetched; a constructed URL is the repo's most dangerous failure and this is the job where one would ship unreviewed."
   echo "- **SimpleBrain synced** in the same run: raw copy, \`wiki/articles/\` entry, Recent Highlights line, archive move, committed and pushed."
   echo ""

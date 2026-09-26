@@ -1038,6 +1038,12 @@ class TestChiefsArticleValidation(unittest.TestCase):
             "date": "2026-09-29T18:30:00-05:00",
             "draft": "false",
             "featuredOnHome": "true",
+            # The series plate. Real paths, because the validator requires the
+            # files to exist — same reason the runner would catch a typo.
+            "hero_desktop": '"img/articles/103-chiefs-report_16x9.webp"',
+            "hero_mobile": '"img/articles/103-chiefs-report_4x5.webp"',
+            "hero_alt": '"A marble football against a crimson field."',
+            "hero_caption": '"The series plate for the weekly Chiefs report."',
         }
         fields.update(over)
         front = "\n".join(f"{k}: {v}" for k, v in fields.items())
@@ -1046,6 +1052,33 @@ class TestChiefsArticleValidation(unittest.TestCase):
     def test_a_good_article_passes(self):
         p = self.write(self.good())
         self.assertEqual(ck.validate_article(p, now=self.now), [])
+
+    def test_a_missing_hero_field_is_caught(self):
+        # Every report carries the same series plate; a report without it ships
+        # with no hero image at all, and nothing else in the pipeline notices.
+        for missing in ("hero_desktop", "hero_mobile", "hero_alt", "hero_caption"):
+            p = self.write("\n".join(
+                ln for ln in self.good().split("\n")
+                if not ln.startswith(missing + ":")))
+            with self.subTest(missing=missing):
+                problems = ck.validate_article(p, now=self.now)
+                self.assertTrue(any(missing in m for m in problems), (missing, problems))
+
+    def test_a_hero_path_that_names_no_file_is_caught(self):
+        # The failure this is for: a hero path that renders an empty box on a
+        # page nobody reviews before it ships.
+        p = self.write(self.good(hero_desktop='"img/articles/does-not-exist_16x9.webp"'))
+        problems = ck.validate_article(p, now=self.now)
+        self.assertTrue(any("does not exist" in m for m in problems), problems)
+        p2 = self.write(self.good(hero_mobile='"img/articles/also-missing_4x5.webp"'))
+        self.assertTrue(any("does not exist" in m for m in ck.validate_article(p2, now=self.now)))
+
+    def test_the_series_plate_actually_resolves_against_the_repo(self):
+        # Guards against the fixture drifting away from the real files: if the
+        # plate is renamed, the skill and this contract must be updated with it.
+        for rel in ("img/articles/103-chiefs-report_16x9.webp",
+                    "img/articles/103-chiefs-report_4x5.webp"):
+            self.assertTrue((REPO / "static" / rel).is_file(), rel)
 
     def test_a_draft_flag_left_true_is_caught(self):
         # It would deploy nothing while looking like it published.

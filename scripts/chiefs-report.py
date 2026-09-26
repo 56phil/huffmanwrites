@@ -963,7 +963,8 @@ def validate_article(path: "Path | str", now: "datetime | None" = None,
         future-dated page *without failing the build*, which is the failure that
         hides (recorded three times in SESSION_STATE);
       - the closing attribution line;
-      - and the tags/hero expectations the skill states.
+      - the series hero fields, and that the files they name exist (a hero path
+        that points at nothing renders a broken image on a page nobody reviews).
     """
     p = Path(path)
     if not p.is_file():
@@ -996,6 +997,20 @@ def validate_article(path: "Path | str", now: "datetime | None" = None,
             problems.append(f"no {name} in frontmatter")
     if not re.search(r"^\*PRH \|", body, re.M):
         problems.append("missing the closing attribution line (*PRH | …)")
+
+    # The series hero. Every Chiefs report carries the SAME plate — one pair of
+    # images commissioned for the report and reused all season — so the fields
+    # are a fixed contract, not a per-week choice. Checked here because the
+    # writer is not permitted to run the builds, and a hero path pointing at a
+    # file that does not exist renders an empty box on a page that ships
+    # unreviewed.
+    for name in ("hero_desktop", "hero_mobile", "hero_alt", "hero_caption"):
+        if not field(name):
+            problems.append(f"no {name} in frontmatter")
+    for name in ("hero_desktop", "hero_mobile"):
+        hero_path = field(name)
+        if hero_path and not (REPO / "static" / hero_path).is_file():
+            problems.append(f"{name} points at a file that does not exist: static/{hero_path}")
 
     raw = field("date")
     if raw:
@@ -1039,7 +1054,8 @@ def main() -> int:
                 print(f"  {p}", file=sys.stderr)
             return 1
         print(f"chiefs: {args.validate} is publishable (draft false, featuredOnHome "
-              f"true, date not ahead of the clock, attribution present)")
+              f"true, date not ahead of the clock, series hero present and resolving, "
+              f"attribution present)")
         return 0
 
     if args.json and args.season_state:
