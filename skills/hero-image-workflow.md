@@ -31,6 +31,31 @@ graded, not described:** the model reads "crimson" about 14° warm of the target
 rotate only the red-family pixels onto the exact hex (`/tmp/chiefs-grade.py` is the
 scratch tool) and leave the stone and the light alone.
 
+**Two more series plates joined it on 2026-09-26**, on the same contract, and both
+keep the house navy rather than a team color:
+- **`104-docket-report_*`** — the weekly Docket Report (Saturdays from 2026-10-03).
+  A stack of carved marble ledgers with gold light spilling from one opened volume.
+  Wired into `skills/docket-weekly-report.md`.
+- **`105-senate-race-report_*`** — the weekly Senate Race Report (Sundays through
+  2026-11-01). A marble bench of seats, one struck by a gold blade. Wired into
+  `skills/senate-race-report.md`, and into the three reports published before the
+  plate existed.
+
+Three mechanics those two builds added. **A reserved panel has to be described as a
+prohibition, not as negative space:** "the subject occupies the right third" was
+ignored across two passes, because FLUX centres a hero object by default, and the
+only thing that worked was naming what must *not* be in the panel (no floor, no
+horizon, no reflection, no vignette) and then reshaping the composition to a wide
+horizontal band low in the frame, which is a shape the model produces happily.
+**Match the existing plate's geometry by measuring it, not by eye:** the Chiefs
+plate's cap heights, rule width and insets were read off the file with NumPy and
+reused, so the family shares one treatment (Crimson Pro cap height is 0.5732 em,
+which converts a desired pixel cap height into a pointsize). **`check-hero-paths.py`
+is the cheap gate for this:** a hero path that names no file does not fail the Hugo
+build and renders an empty box, so `scripts/check-hero-paths.py` asserts every
+`hero_desktop` / `hero_mobile` in `content/` resolves under `static/`, and the
+scheduled runners run it.
+
 ## Generation Requirements
 Every post requires a pair of images:
 1. **Desktop Version**: 16:9 aspect ratio.

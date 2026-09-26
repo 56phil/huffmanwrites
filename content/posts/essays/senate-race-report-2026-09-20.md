@@ -3,8 +3,12 @@ title: "Senate Race Report: September 20, 2026"
 description: "Kansas put Adam Hamilton ahead in the first independent poll of the cycle, Kalshi's own desk put the Democrats at a record 57 percent for the Senate, and Minnesota went dead even while two forecasters nudged races toward toss-ups."
 date: 2026-09-20T07:00:00-05:00
 author: Philip Huffman
-lastmod: 2026-09-20T13:12:00-05:00
+lastmod: 2026-09-26T11:00:00-05:00
 draft: false
+hero_desktop: "img/articles/105-senate-race-report_16x9.webp"
+hero_mobile: "img/articles/105-senate-race-report_4x5.webp"
+hero_alt: "A shallow semicircular bench of individual carved marble seats sits deserted in deep midnight-blue darkness, its pale Parian stone veined with fine grey marbling and worn smooth at the edges. The arc recedes into shadow to either side; a single seat at the centre of the bench is struck by a narrow blade of warm amber-gold light, while every other seat falls away into unlit black."
+hero_caption: "Fifty seats in the arc. The light reaches one."
 tags:
   - politics
   - senate

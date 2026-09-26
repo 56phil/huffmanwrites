@@ -26,8 +26,8 @@ Saturday at 0800 CT beginning **October 3, 2026**.
   `:cloud` models; model `deepseek-v4.1-flash:cloud` (must match `ollama list`
   exactly). Auth uses `OLLAMA_API_KEY` from `.zshrc`; the runner extracts it
   because launchd does not source the shell.
-- FAL is available for images if a report ever needs one. This report does not
-  use hero images.
+- FAL is available for images. This report does not generate one: it carries the
+  **series plate** (see below), a fixed pair reused every week.
 
 ## Mission
 
@@ -171,6 +171,25 @@ report may say so.
    part for which a weekly reader subscribes.
 5. **Sources** — every linked claim, in the piece's citation apparatus.
 
+## The series plate (fixed, copied verbatim — do not generate one)
+
+Every Docket Report carries the **same** hero pair, commissioned once for the
+series and reused for every weekly installment, the way a masthead is reused. It
+is plate **104** and it is not a per-week choice:
+
+```yaml
+hero_desktop: "img/articles/104-docket-report_16x9.webp"
+hero_mobile: "img/articles/104-docket-report_4x5.webp"
+hero_alt: "A tall vertical stack of thick carved marble ledgers and sealed folios rises on a dark surface in deep midnight-blue darkness, pale Parian stone veined with fine grey marbling and weathered at the corners. One volume near the middle of the stack is drawn slightly out, and a narrow blade of intense amber-gold light spills from the opening gap and pools on the surface below."
+hero_caption: "The record accumulates. One entry opens."
+```
+
+Copy these four fields exactly. **Do not invent, edit, or regenerate them** — put
+them in the frontmatter byte-for-byte as written above. The plate belongs to the
+series, not to the week, so two reports carrying the same image is the intended
+result. Philip, 2026-09-26: "let's do for the other weekly reports what you did for
+the Chiefs report by giving them their own hero images."
+
 ## Output
 
 - File: `content/posts/essays/docket-report-YYYY-MM-DD.md` (date = run date).
@@ -186,6 +205,10 @@ report may say so.
   author: Philip Huffman
   lastmod: <same as date>
   draft: true
+  hero_desktop: "img/articles/104-docket-report_16x9.webp"
+  hero_mobile: "img/articles/104-docket-report_4x5.webp"
+  hero_alt: "<the hero_alt above, verbatim>"
+  hero_caption: "The record accumulates. One entry opens."
   tags: [civics, essays, law]
   ---
   ```
@@ -194,7 +217,7 @@ report may say so.
   future-dated content — the build succeeds and the page is simply absent, which
   is the failure that hides. At an 0800 CT run, stamp the run time; do not round
   it forward.
-- No hero image, no newsletter/sendfox fields.
+- The four **series-plate hero fields** (above) are required and are copied verbatim; the runner's `scripts/check-hero-paths.py` gate fails if a path names no file. No newsletter/sendfox fields.
 - Verify: do NOT run `hugo` or the gate scripts yourself; they are not in your
   allow-list and the runner does them immediately after this session ends,
   recording the real results in the log. Do not claim in your summary that a

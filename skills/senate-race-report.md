@@ -100,12 +100,34 @@ Republican-held (22):
    - **Freshness differs per column and must be stated, not averaged.** Sabato's column currently runs three weeks staler than Cook's. Never restamp the table with a single date.
 8. **The close** — personal stakes and a forward look to Election Day, in the voice of the canonical essays.
 
+## The series plate (fixed, copied verbatim — do not generate one)
+
+Every Senate Race Report carries the **same** hero pair, commissioned once for the
+series and reused for every installment, the way a masthead is reused. It is plate
+**105** and it is not a per-week choice:
+
+```yaml
+hero_desktop: "img/articles/105-senate-race-report_16x9.webp"
+hero_mobile: "img/articles/105-senate-race-report_4x5.webp"
+hero_alt: "A shallow semicircular bench of individual carved marble seats sits deserted in deep midnight-blue darkness, its pale Parian stone veined with fine grey marbling and worn smooth at the edges. The arc recedes into shadow to either side; a single seat at the centre of the bench is struck by a narrow blade of warm amber-gold light, while every other seat falls away into unlit black."
+hero_caption: "Fifty seats in the arc. The light reaches one."
+```
+
+Copy these four fields exactly. **Do not invent, edit, or regenerate them** — put
+them in the frontmatter byte-for-byte as written above. The plate belongs to the
+series, not to the week, so two reports carrying the same image is the intended
+result. Philip, 2026-09-26: "let's do for the other weekly reports what you did for
+the Chiefs report by giving them their own hero images."
+
+The three reports published before 2026-09-26 (`-09-06`, `-09-13`, `-09-20`) were
+wired by hand in the same commit that commissioned the plate.
+
 ## Output
 
 - File: `content/posts/essays/senate-race-report-YYYY-MM-DD.md` (date = run date).
-- Frontmatter: `title` ("Senate Race Report: <Month Day, Year>"), `description` (one sentence, article-style), `date` (run time, CT), `author: Philip Huffman`, `lastmod`, `draft: true`, `tags: [politics, senate, essays, civics]`.
+- Frontmatter: `title` ("Senate Race Report: <Month Day, Year>"), `description` (one sentence, article-style), `date` (run time, CT), `author: Philip Huffman`, `lastmod`, the four **series-plate hero fields above**, `draft: true`, `tags: [politics, senate, essays, civics]`.
 - Date guard: the `date` must never be in the future when the article is published. Hugo's default `buildFuture: false` silently skips future-dated content (the build succeeds but the page is absent). The weekly draft is dated on its run day, so publishing the same day is safe; if Philip publishes later, the date is already past and still safe. Never pre-date an article.
-- No hero image (weekly text report). No newsletter/sendfox fields.
+- The four **series-plate hero fields** (above) are required and are copied verbatim; the runner's `scripts/check-hero-paths.py` gate fails if a path names no file. No newsletter/sendfox fields.
 - Verify: do NOT run `hugo` or the gate scripts yourself — the runner does all of it immediately after
   this session ends and records the real results in the log. Do not claim in your summary that a gate
   passed: they are not in your allow-list, so you cannot have run them, and the log is what gets read.

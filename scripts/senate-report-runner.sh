@@ -150,8 +150,14 @@ run_gate() {
     echo "$(stamp): gate OK [$label]" >> "$OUT_LOG"
   fi
 }
-run_gate "check-quotes"  "$REPO/scripts/check-quotes.py"
-run_gate "check-links"   "$REPO/scripts/check-links.py" --check
+run_gate "check-quotes"     "$REPO/scripts/check-quotes.py"
+run_gate "check-links"      "$REPO/scripts/check-links.py" --check
+run_gate "check-emdashes"   "$REPO/scripts/check-emdashes.py" --check
+run_gate "check-prepositions" "$REPO/scripts/check-prepositions.py" --check
+# The report now carries the series plate, and a hero path that names no file
+# does not fail the Hugo build -- it renders an empty box on a page that ships.
+# Cheap, offline, and the only check that reads the frontmatter image paths.
+run_gate "check-hero-paths" "$REPO/scripts/check-hero-paths.py"
 
 # Unattended job: a non-zero exit used to leave nothing but a log line. On
 # 2026-09-06 this job exited 127 then 1 and nobody saw it. No-op on success.

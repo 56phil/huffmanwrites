@@ -3,8 +3,12 @@ title: "Senate Race Report: September 13, 2026"
 description: "The war with Iran pushed the Senate-control markets to a Democratic price for the first time, the GOP's biggest money finally arrived in Texas, and Kansas put Marshall and Hamilton on one stage."
 date: 2026-09-13T07:00:00-05:00
 author: Philip Huffman
-lastmod: 2026-09-13T07:00:00-05:00
+lastmod: 2026-09-26T11:00:00-05:00
 draft: false
+hero_desktop: "img/articles/105-senate-race-report_16x9.webp"
+hero_mobile: "img/articles/105-senate-race-report_4x5.webp"
+hero_alt: "A shallow semicircular bench of individual carved marble seats sits deserted in deep midnight-blue darkness, its pale Parian stone veined with fine grey marbling and worn smooth at the edges. The arc recedes into shadow to either side; a single seat at the centre of the bench is struck by a narrow blade of warm amber-gold light, while every other seat falls away into unlit black."
+hero_caption: "Fifty seats in the arc. The light reaches one."
 tags:
   - politics
   - senate

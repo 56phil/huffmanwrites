@@ -50,6 +50,7 @@ cg = load("check-gallery-pages")
 cp = load("check-plists")
 cpn = load("check-prepositions")
 cs = load("check-secrets")
+chp = load("check-hero-paths")
 
 EM = "\u2014"
 
@@ -1128,6 +1129,95 @@ class TestChiefsArticleValidation(unittest.TestCase):
     def test_no_frontmatter_is_caught(self):
         p = self.write("just prose, no frontmatter\n")
         self.assertTrue(any("frontmatter" in m for m in ck.validate_article(p, now=self.now)))
+
+
+class TestHeroPathGate(unittest.TestCase):
+    """The cheap gate for a hero path that names no file.
+
+    `check-render-integrity.py` catches this too, but only after a full Hugo
+    build, and it runs once a week from the site-audit job. The report jobs
+    draft or publish with no human review and their runners do not build
+    `public/`, so a hero typo would ship and the first person to see it would be
+    a reader looking at an empty box. These tests pin the rule and, more
+    importantly, pin that the gate does not go blind again.
+    """
+
+    def setUp(self):
+        import tempfile
+        self.dir = Path(tempfile.mkdtemp(prefix="hero-path-"))
+
+    def file(self, fm: str) -> Path:
+        p = self.dir / "x.md"
+        p.write_text(f"---\n{fm}\n---\n\nBody.\n", encoding="utf-8")
+        return p
+
+    def run_gate(self, path: Path) -> tuple[int, str]:
+        import io
+        import contextlib
+        buf = io.StringIO()
+        old = sys.argv
+        sys.argv = ["check-hero-paths.py", "--file", str(path)]
+        try:
+            with contextlib.redirect_stdout(buf):
+                rc = chp.main()
+        finally:
+            sys.argv = old
+        return rc, buf.getvalue()
+
+    def test_a_real_path_passes(self):
+        p = self.file('hero_desktop: "img/articles/103-chiefs-report_16x9.webp"')
+        rc, out = self.run_gate(p)
+        self.assertEqual(rc, 0, out)
+
+    def test_a_missing_file_fails(self):
+        # The exact defect: Hugo does NOT fail on a missing image, the page
+        # returns 200, and the hero is an empty box.
+        p = self.file('hero_desktop: "img/articles/no-such-plate_16x9.webp"')
+        rc, out = self.run_gate(p)
+        self.assertEqual(rc, 1, out)
+        self.assertIn("no such file", out)
+
+    def test_a_missing_mobile_path_is_caught_too(self):
+        # hero_mobile is what every phone reader gets; missing it is invisible
+        # on the desktop check.
+        p = self.file('hero_mobile: "img/articles/nope_4x5.webp"')
+        self.assertEqual(self.run_gate(p)[0], 1)
+
+    def test_the_field_extractor_reads_quoted_and_bare_values(self):
+        for value in ('"img/articles/103-chiefs-report_16x9.webp"',
+                      'img/articles/103-chiefs-report_16x9.webp',
+                      "'img/articles/103-chiefs-report_16x9.webp'"):
+            with self.subTest(value=value):
+                p = self.file(f"hero_desktop: {value}")
+                self.assertEqual(self.run_gate(p)[0], 0, value)
+
+    def test_a_file_with_no_hero_fields_passes(self):
+        # Most content has no hero; the gate must not invent a failure for it.
+        p = self.file("title: A post with no hero")
+        self.assertEqual(self.run_gate(p)[0], 0)
+
+    def test_both_new_series_plates_actually_resolve(self):
+        # Guards the fixture against drift: if a plate is renamed, the skill and
+        # this contract must move with it.
+        for rel in ("img/articles/104-docket-report_16x9.webp",
+                    "img/articles/104-docket-report_4x5.webp",
+                    "img/articles/105-senate-race-report_16x9.webp",
+                    "img/articles/105-senate-race-report_4x5.webp"):
+            self.assertTrue((REPO / "static" / rel).is_file(), rel)
+
+    def test_the_corpus_is_clean(self):
+        # Every hero in content/ resolves. This is the standing state, and a
+        # failure here means a real broken hero is checked in.
+        self.assertEqual(chp.check(verbose=False), [])
+
+    def test_the_runners_that_write_hero_reports_run_the_gate(self):
+        # A gate nobody runs is a gate that does not exist. Both jobs that now
+        # carry a series plate must invoke it.
+        for runner in ("docket-weekly-report-runner.sh",
+                       "senate-report-runner.sh"):
+            text = (SCRIPTS / runner).read_text(encoding="utf-8")
+            with self.subTest(runner=runner):
+                self.assertIn("check-hero-paths", text)
 
 
 class TestChiefsRunnerContract(unittest.TestCase):

@@ -88,6 +88,14 @@ jobs:
       - name: Check em-dash limit
         run: python3 scripts/check-emdashes.py --check
 
+      # Fail before deploy if a hero path names no file. Hugo does not fail on a
+      # missing image — the build succeeds, the page returns 200, and the hero
+      # renders as an empty box. check-render-integrity below catches it too,
+      # but only after a full build; this one is cheap enough for every run and
+      # is what the report runners use, since they never build public/.
+      - name: Check hero paths
+        run: python3 scripts/check-hero-paths.py
+
       # Fail before deploy if a credential has drifted between its homes. This
       # gate exists because the fal.ai key lived in three places and only one
       # worked, and nothing could see it: a stale key has the right length, the
