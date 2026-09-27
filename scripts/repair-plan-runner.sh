@@ -89,6 +89,24 @@ if [ "$RC" -eq 0 ]; then
   echo "$(stamp): gates: emdashes=$EM_RC links=$LK_RC" >> "$OUT_LOG"
   [ "$EM_RC" -ne 0 ] && [ "$RC" -eq 0 ] && RC="$EM_RC"
   [ "$LK_RC" -ne 0 ] && [ "$RC" -eq 0 ] && RC="$LK_RC"
+
+  # The offline check above only catches placeholders and blocklisted URLs. This
+  # plan is a governing document whose dated claims (a revocation window, a
+  # withdrawal date, four pending cases) are the reason it exists, and a source
+  # that has rotted since the last pass is exactly what a quarterly revision is
+  # for. Scoped to the one file: it cites many URLs and fetching only its own is
+  # seconds, where the corpus sweep belongs to weekly-integrity.
+  #
+  # Reported, not fatal, and for the same reason weekly-integrity's titles phase
+  # is: a 404 here is worth a human look, but a bot-block or a timeout is not
+  # evidence the source is gone, and this job's deliverable is a reviewed diff —
+  # failing the run would replace that diff with a failure alert.
+  echo "$(stamp): online link check (informational)" >> "$OUT_LOG"
+  set +e
+  /usr/bin/python3 "$REPO/scripts/check-links.py" --file "$PLAN" --online >> "$OUT_LOG" 2>> "$ERR_LOG"
+  OL_RC=$?
+  set -e
+  echo "$(stamp): online link check exit $OL_RC (does not fail this job)" >> "$OUT_LOG"
 fi
 
 # Working-tree state is the deliverable. The skill deliberately does NOT commit

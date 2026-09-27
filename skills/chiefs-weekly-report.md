@@ -201,6 +201,13 @@ themselves. Search for the week's coverage and read what carries the story:
    the trade deadline, a looming decision. Where the season is heading.
 7. **Sources** — every link you used, in the piece's citation apparatus.
 
+**The link text must be the thing cited, never a placeholder.** Write
+`[Chiefs 33-30 Colts (Sep 20, 2026) Game Recap](url), ESPN, September 21, 2026`,
+not `[text](url)`. The runner fetches each page and compares your link text
+against its `<title>`; a placeholder anchor gives it nothing to compare, so the
+wrong-page check is blind on that citation. `check-report-frontmatter.py` fails
+a report that uses one.
+
 A bye week, a quiet week, or a week with one real story gets a shorter report
 that says so. Do not manufacture length.
 

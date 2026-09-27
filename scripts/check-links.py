@@ -51,7 +51,26 @@ CONTENT = REPO / "content"
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120 Safari/537.36")
 
-URL = re.compile(r"https?://[^\s\)\]\"'<>]+")
+# A URL run may contain BALANCED parentheses and must not be cut at the first
+# `)`. Measured 2026-09-27 on the repair plan: its Wikisource citation is
+# `.../index.php?title=Page:Paris_Agreement_(English).pdf/24&action=raw`, and the
+# old class `[^\s\)\]...]` stopped at the `(` … `)` inside the title, so the
+# checker fetched a truncated URL, got a 404, and reported a **DEAD link that is
+# live** — a false alarm on a governing document. The class now admits `(` and
+# `)`, and `balanced()` below removes a closing paren that merely ends the prose
+# (the markdown-link case, where the URL sits inside `(...)`).
+URL = re.compile(r"https?://[^\s\]\"'<>]+")
+
+
+def balanced(url: str) -> str:
+    """Drop trailing `)` that are not matched by a `(` within the URL.
+
+    `See (https://example.org/x)` must yield `https://example.org/x`, while
+    `Page:Paris_Agreement_(English).pdf/24` must survive intact.
+    """
+    while url.endswith(")") and url.count("(") < url.count(")"):
+        url = url[:-1]
+    return url
 
 # Trailing punctuation that markdown prose leaves attached to a URL.
 TRAILING = ".,;:!?"
@@ -86,7 +105,7 @@ def die(msg: str, code: int = 2) -> "None":
 
 
 def clean(url: str) -> str:
-    return url.rstrip(TRAILING)
+    return balanced(url.rstrip(TRAILING))
 
 
 # Minimum plausible corpus. Used by every mode so a gate can never print a
@@ -178,7 +197,12 @@ def collect(only: "str | None" = None) -> "dict[str, list[str]]":
     return out
 
 
-_MD_LINK = re.compile(r"\[([^\]\n]{12,200})\]\(\s*(https?://[^\s\)]+)\s*\)")
+# The URL part admits balanced parens (see URL above) and is GREEDY: the class
+# already excludes whitespace, so it cannot run past the link, and greediness
+# makes it take the inner `)` and then backtrack to the one that actually closes
+# the markdown link. Non-greedy stopped at the first inner `)`, which is the same
+# truncation bug as URL's character class.
+_MD_LINK = re.compile(r"\[([^\]\n]{12,200})\]\(\s*(https?://[^\s\]\"'<>]+)\s*\)")
 
 
 def link_texts(only: "str | None" = None) -> "dict[str, str]":
@@ -204,6 +228,15 @@ def link_texts(only: "str | None" = None) -> "dict[str, str]":
         for m in _MD_LINK.finditer(text):
             anchor, url = m.group(1).strip(), clean(m.group(2))
             if is_own(url):
+                continue
+            # A link whose text is a label rather than a headline ("odds", "game
+            # page", "the report") carries too little vocabulary to compare, and
+            # comparing it produces false mismatches. MIN_HEADLINE_WORDS was
+            # defined for this and never used, which is why a 200-URL sample
+            # produced three "mismatches" that were all noise: a Wikiquote
+            # *author* page cited for a book title, and an Axios anchor that was
+            # a quoted line rather than the headline. Enforcing it now.
+            if len(_words(anchor)) < MIN_HEADLINE_WORDS:
                 continue
             # Prefer the longest anchor seen for a URL: a citation line often
             # repeats the link as both a short label and the full headline.
@@ -333,7 +366,25 @@ def page_title(html_text: str) -> str:
         return ""
     import html as _html
 
-    return re.sub(r"\s+", " ", _html.unescape(m.group(1))).strip()
+    title = re.sub(r"\s+", " ", _html.unescape(m.group(1))).strip()
+    return "" if is_wall_title(title) else title
+
+
+# A title that means "we did not serve you the page". Measured 2026-09-27:
+# openlibrary.org answered a search URL with `Human Verification | Open Library`,
+# and the title comparison reported the citation as a mismatch — accusing a
+# correct citation of pointing at the wrong page when the checker had simply
+# been blocked. Not a title, so it must not be compared against one.
+_WALL_TITLE = re.compile(
+    r"just a moment|attention required|are you a robot|human verification|"
+    r"access denied|verify you are human|checking your browser|"
+    r"one more step|enable javascript",
+    re.I,
+)
+
+
+def is_wall_title(title: str) -> bool:
+    return bool(title) and bool(_WALL_TITLE.search(title))
 
 
 def _words(text: str) -> "list[str]":

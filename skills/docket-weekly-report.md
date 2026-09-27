@@ -175,6 +175,14 @@ report may say so.
    part for which a weekly reader subscribes.
 5. **Sources** — every linked claim, in the piece's citation apparatus.
 
+**The link text must be the thing cited, never a placeholder.** Write
+`[Court order, September 24](url)`, not `[text](url)`: a reader who sees the
+literal word "text" learns nothing, and `check-links.py --titles` compares your
+link text against the page's own `<title>` to catch a URL that resolves to the
+**wrong** document. With `[text]` as the anchor there is nothing to compare, so
+that check — the only one that catches CLAUDE.md's most dangerous failure —
+is blind on it. `check-report-frontmatter.py` fails a report that uses one.
+
 ## The series plate (fixed, copied verbatim — do not generate one)
 
 Every Docket Report carries the **same** hero pair, commissioned once for the

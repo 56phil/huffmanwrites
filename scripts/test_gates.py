@@ -1260,6 +1260,135 @@ class TestReportFrontmatterGate(unittest.TestCase):
                 self.assertIn("check-report-frontmatter.py", text)
                 self.assertIn(f"--hero-plate {plate}", text)
 
+    def test_a_placeholder_anchor_is_caught(self):
+        # A reader sees the anchor, so `[text]` tells them nothing; and it leaves
+        # `check-links.py --titles` nothing to compare, so the wrong-page check —
+        # the only one that catches a URL serving an unrelated article — goes
+        # blind. The whole Senate series shipped this way.
+        body = self.good().replace(
+            "*PRH | [huffmanwrites.org] | © Philip Huffman*",
+            "See ([\"A real headline of several words\"](https://example.org/ok)) and "
+            "([text](https://example.org/bad)).\n\n*PRH | [huffmanwrites.org] | © Philip Huffman*")
+        p = self.write(body)
+        problems = crf.validate(p, now=self.now)
+        self.assertTrue(any("placeholder" in m for m in problems), problems)
+
+    def test_a_real_title_anchor_passes(self):
+        # The form the migration produced, and the only form the title check can
+        # use: the citation's own title as the link text.
+        body = self.good().replace(
+            "*PRH | [huffmanwrites.org] | © Philip Huffman*",
+            "Cook Political Report, [\"The Fight for the Senate Is a True Toss "
+            "Up\"](https://example.org/a), September 23, 2026.\n\n"
+            "*PRH | [huffmanwrites.org] | © Philip Huffman*")
+        p = self.write(body)
+        self.assertEqual(crf.validate(p, now=self.now), [])
+
+    def test_the_published_reports_carry_no_placeholder_anchors(self):
+        # The standing state for every published series installment.
+        for p in crf.series_installments():
+            self.assertFalse(crf.TEXT_ANCHOR.search(p.read_text(encoding="utf-8")),
+                             p.name)
+
+    def test_short_anchors_are_not_collected(self):
+        # MIN_HEADLINE_WORDS existed for this and was never used, which is why a
+        # 200-URL sample produced three mismatches that were all noise. A label
+        # ("odds", "game page") carries too little vocabulary to compare.
+        import tempfile
+        d = Path(tempfile.mkdtemp(prefix="links-short-"))
+        p = d / "a.md"
+        p.write_text("---\ntitle: t\n---\n\n[odds](https://example.org/a)\n"
+                     "[a real headline of several words](https://example.org/b)\n",
+                     encoding="utf-8")
+        got = cl.link_texts(str(p))
+        self.assertNotIn("https://example.org/a", got)
+        self.assertIn("https://example.org/b", got)
+
+    def test_a_bot_wall_title_is_not_a_title(self):
+        # openlibrary.org answered a search URL with `Human Verification | Open
+        # Library`, and the comparison reported the citation as a mismatch —
+        # accusing correct work of the defect this check exists to catch, when
+        # the checker had simply been blocked.
+        for wall in ("Human Verification | Open Library", "Just a moment...",
+                     "Attention Required! | Cloudflare", "Are you a robot?"):
+            with self.subTest(wall=wall):
+                self.assertEqual(cl.page_title(f"<title>{wall}</title>"), "")
+        self.assertEqual(cl.page_title("<title>Carl Sagan - Wikiquote</title>"),
+                         "Carl Sagan - Wikiquote")
+
+    def test_a_wall_title_yields_no_comparison(self):
+        # With no title, link_text_matches_title must not be reached at all in
+        # main(); this pins the guard that produces the empty title.
+        self.assertEqual(cl.page_title("<title>Checking your browser</title>"), "")
+
+    def test_a_url_containing_parentheses_is_not_truncated(self):
+        # Measured 2026-09-27: the repair plan cites a Wikisource page whose title
+        # contains `(English)`, and the old URL class stopped at the inner `)`.
+        # The checker then fetched a truncated URL, got a 404, and reported a
+        # DEAD link that is live — a false alarm on a governing document, and the
+        # same "we could not look" confusion the verdict table warns about.
+        full = ("https://en.wikisource.org/w/index.php?title=Page:Paris_Agreement_"
+                "(English).pdf/24&action=raw")
+        got = cl.URL.findall(f"see {full} and more")
+        self.assertEqual([cl.clean(u) for u in got], [full])
+
+    def test_prose_parentheses_are_trimmed_not_kept(self):
+        # The other direction: a URL inside prose `(...)` must lose the closing
+        # paren, or the fetch 404s on a correct link.
+        for text, expected in (
+            ("see (https://example.org/x) here", "https://example.org/x"),
+            ("link https://example.org/x. Next", "https://example.org/x"),
+            ("([text](https://example.org/y))", "https://example.org/y"),
+        ):
+            with self.subTest(text=text):
+                self.assertEqual([cl.clean(u) for u in cl.URL.findall(text)],
+                                 [expected])
+
+    def test_a_markdown_link_with_parentheses_keeps_them(self):
+        # The markdown extractor had the same truncation, with a non-greedy URL
+        # part that stopped at the first inner `)`.
+        full = ("https://en.wikisource.org/w/index.php?title=Page:Paris_Agreement_"
+                "(English).pdf/24&action=raw")
+        txt = f"[The Paris Agreement page text]({full})"
+        got = [m.group(2) for m in cl._MD_LINK.finditer(txt)]
+        self.assertEqual(got, [full])
+
+    def test_balanced_leaves_a_well_formed_url_alone(self):
+        for u in ("https://example.org/a", "https://example.org/a_(b)_c",
+                  "https://example.org/a(b)c(d)"):
+            with self.subTest(u=u):
+                self.assertEqual(cl.balanced(u), u)
+
+    def test_the_corpus_titles_phase_is_wired_and_non_fatal(self):
+        # The only place the wrong-page check covers content outside the three
+        # publishing jobs. It must be in the script AND must not fail the job:
+        # the comparison is a heuristic, and a gate that fails a correct citation
+        # is worse than one that shows a human the sentence.
+        text = (SCRIPTS / "weekly-integrity-check.sh").read_text(encoding="utf-8")
+        self.assertIn("check-links.py --online --titles", text)
+        self.assertIn("run_soft", text)
+        # The titles phase must use run_soft, not run.
+        self.assertIn('run_soft "links (titles)"', text)
+        self.assertNotIn('run "links (titles)"', text)
+
+    def test_the_short_label_rule_is_the_shared_constant(self):
+        # Guards against the filter being re-implemented with a different number
+        # in a second place, which is how the two would drift.
+        self.assertGreaterEqual(cl.MIN_HEADLINE_WORDS, 3)
+
+    def test_chiefs_skill_documents_the_anchor_rule(self):
+        text = (REPO / "skills" / "chiefs-weekly-report.md").read_text(encoding="utf-8")
+        self.assertIn("never a placeholder", text)
+
+    def test_every_report_skill_documents_the_anchor_rule(self):
+        # The three publishing jobs' writers must all know the form; the gate
+        # catches a violation, but the spec is what keeps it from happening.
+        for skill in ("senate-race-report.md", "docket-weekly-report.md",
+                      "chiefs-weekly-report.md"):
+            text = (REPO / "skills" / skill).read_text(encoding="utf-8")
+            with self.subTest(skill=skill):
+                self.assertIn("placeholder", text)
+
     def test_the_chiefs_collector_no_longer_carries_a_second_copy_of_the_rules(self):
         # The rules must live in exactly one place. A second copy is how the two
         # versions drift, and the drift is silent until a report ships wrong.

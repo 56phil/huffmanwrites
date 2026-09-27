@@ -66,6 +66,19 @@ REQUIRED = ("title", "description", "date", "lastmod", "author")
 HERO = ("hero_desktop", "hero_mobile", "hero_alt", "hero_caption")
 ATTRIBUTION = re.compile(r"^\*PRH \|", re.M)
 
+# A link whose visible text is a placeholder rather than the thing cited.
+#
+# Two defects in one, and both matter on a publishing job. A reader sees the
+# literal word "text" where a title should be. And `check-links.py --titles` has
+# nothing to compare, so the only check that catches a link resolving to the
+# WRONG page goes blind on that citation — which is what happened to the Senate
+# report: `... ([text](url))` gave it zero comparable anchors, so the wrong-page
+# check could not see the piece at all. The citation prose already names the
+# source, so the fix is to make that name the link.
+TEXT_ANCHOR = re.compile(
+    r"\[(text|link|here|source|pdf|article|this)\]\(\s*https?://", re.I
+)
+
 
 def split_frontmatter(text: str) -> "tuple[str, str] | None":
     """Return (frontmatter, body), or None if the file has no usable block."""
@@ -121,6 +134,16 @@ def validate(path: "Path | str", hero_plate: "str | None" = None,
             problems.append(f"no {name} in frontmatter")
     if not ATTRIBUTION.search(body):
         problems.append("missing the closing attribution line (*PRH | …)")
+
+    placeholders = TEXT_ANCHOR.findall(body)
+    if placeholders:
+        problems.append(
+            f"{len(placeholders)} link(s) whose visible text is a placeholder "
+            f"({', '.join(sorted({p for p in placeholders}))}) — the reader sees "
+            f"that word instead of the title, and check-links.py --titles has "
+            f"nothing to compare, so the wrong-page check is blind on it. Make "
+            f"the citation's own title the link text."
+        )
 
     for name in HERO:
         if not field(front, name):

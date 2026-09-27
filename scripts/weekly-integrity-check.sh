@@ -53,6 +53,19 @@ run() {
   return 0
 }
 
+# Report-only variant. For a check that is genuinely a heuristic: its output is
+# for a human to read, and its exit code must not raise the failure alert, which
+# is what `run` would do. The titles phase uses this — see its note below.
+run_soft() {
+  local label="$1"; shift
+  echo "=== $label ($(stamp)) ==="
+  local out rc
+  out="$("$@" 2>&1)"; rc=$?
+  printf '%s\n' "$out" | tail -80
+  echo "--- $label exit $rc (informational; does not fail this job)"
+  return 0
+}
+
 cd "$REPO" || { "$ALERT" "weekly-integrity" 2 "cannot cd to $REPO"; exit 2; }
 
 # Phase 1: links. --check first (offline, cheap, catches placeholders and any
@@ -61,6 +74,25 @@ cd "$REPO" || { "$ALERT" "weekly-integrity" 2 "cannot cd to $REPO"; exit 2; }
 # reported but do not fail the job.
 run "links (offline)" python3 scripts/check-links.py --check
 run "links (online)"  python3 scripts/check-links.py --online --quiet
+
+# Phase 1b: the same sweep WITH --titles, which is the only check in this repo
+# that can catch a link resolving to the WRONG page — a URL that returns 200 and
+# serves an unrelated article, CLAUDE.md's most dangerous failure class. The
+# per-file publishing runners run it on the article they just wrote; this is the
+# only place it covers the rest of the corpus, including content nobody has
+# touched in months.
+#
+# Reported, NOT fatal. The comparison is a heuristic (it asks whether the link
+# text shares vocabulary with the page's <title>), and a paraphrase or a page
+# that names its subject differently reads as a mismatch: measured on a 200-URL
+# sample, a Wikiquote author page cited for a book title and an Axios article
+# cited by a quoted line both flagged while being correct. A gate that fails on a
+# correct citation is worse than one that shows a human the sentence, so this
+# phase prints for review and its exit code is ignored. Two noise sources were
+# removed before wiring it in: anchors shorter than MIN_HEADLINE_WORDS are no
+# longer compared, and a bot-wall's "Human Verification" title is no longer read
+# as a title.
+run_soft "links (titles)" python3 scripts/check-links.py --online --titles
 
 # Phase 2: quotation wording. Fetches each epigraph's own author-linked URL and
 # requires the quoted words to actually be there after whitespace normalisation.

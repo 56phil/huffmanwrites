@@ -96,6 +96,37 @@ for flags in "--gc --minify" "--gc --minify --buildDrafts --destination $DRAFTS_
 done
 rm -rf "$DRAFTS_DEST"
 
+# Deterministic content gates. Both articles cite market data, and until
+# 2026-09-27 this runner ran no link check at all — not even the offline one —
+# so a fabricated or placeholder URL in either piece would have sat unnoticed
+# until a human read the file. The offline link check is instant; --online is
+# deliberately not run here, because these are drafts a person reviews before
+# publishing and the corpus-wide network sweep belongs to weekly-integrity.
+#
+# check-report-frontmatter is NOT run: these files are not installments of a
+# declared series (no gallery card), and they are intentionally still drafts, so
+# that gate's `draft: false` rule does not apply to them.
+GATE_FAILED=0
+run_gate() {
+  local label="$1"; shift
+  set +e
+  GATE_OUT="$(python3 "$@" 2>&1)"
+  GATE_RC=$?
+  set -e
+  if [ "$GATE_RC" -ne 0 ]; then
+    echo "$(stamp): gate FAILED [$label] (exit $GATE_RC)" >> "$OUT_LOG"
+    printf '%s\n' "$GATE_OUT" >> "$ERR_LOG"
+    GATE_FAILED=1
+  else
+    echo "$(stamp): gate OK [$label]" >> "$OUT_LOG"
+  fi
+}
+run_gate "check-links"       "$REPO/scripts/check-links.py" --check
+run_gate "check-quotes"      "$REPO/scripts/check-quotes.py"
+run_gate "check-emdashes"    "$REPO/scripts/check-emdashes.py" --check
+run_gate "check-prepositions" "$REPO/scripts/check-prepositions.py" --check
+[ "$GATE_FAILED" -ne 0 ] && [ "$RC" -eq 0 ] && RC=1
+
 # Unattended job: a non-zero exit used to leave nothing but a log line.
 # No-op on success. `|| true` keeps a missing/failing alert from replacing the
 # job's real exit code under `set -e`.

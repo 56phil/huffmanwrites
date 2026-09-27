@@ -28,6 +28,7 @@ Produce a fact-checked, house-style ARTICLE on the state of every Senate race, w
   date/number range (the en-dash is the right mark for a range; an em-dash there is a typo).
   Count with `python3 scripts/check-emdashes.py --file <path>`.
 - Every load-bearing claim (dates, names, figures, ratings, poll numbers, fundraising) MUST be verified against a source; cite with `[^n]` footnotes and a `## Notes` section. Flag anything unverifiable.
+- **The link text must be the thing cited, never the word "text".** Write `["The Fight for the Senate Is a True Toss Up,"](url) September 23, 2026`, not `([text](url))`. Two reasons, and the second is the important one: a reader who sees the literal word "text" learns nothing about where the link goes, and `check-links.py --titles` compares your link text against the page's own `<title>` to catch a URL that resolves to a **wrong** article — with `[text]` as the anchor there is nothing to compare, so that check is blind on the citation. The whole Senate series shipped with `[text]` anchors and therefore **zero** comparable citations; the wrong-page check, the only one that catches CLAUDE.md's most dangerous failure, could not see these reports at all. `check-report-frontmatter.py` now fails a report that uses a placeholder anchor.
 - Closing attribution: `*PRH | [huffmanwrites.org] | © Philip Huffman*`.
 
 ## The 35 races (baseline as of September 2026 — verify every name each week)
