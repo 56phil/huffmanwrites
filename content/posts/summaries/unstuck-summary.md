@@ -73,4 +73,4 @@ weight: -1
 ---
  *PRH | [prhuffman.ghost.io](https://www.huffmanwrites.org/) | © Philip Huffman*
 
- Buy it [here](https://a.co/d/9zZy9oI?ref=huffmanwrites.org).
+ Buy it [on Amazon](https://a.co/d/9zZy9oI?ref=huffmanwrites.org).

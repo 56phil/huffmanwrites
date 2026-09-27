@@ -51,7 +51,7 @@ Read it slowly, read it skeptically, and read it alongside Frankl, who took Niet
 
 ---
 > *"Man is something that is to be surpassed. What have ye done to surpass man?"*
-— Friedrich Nietzsche, *Thus Spoke Zarathustra*, Prologue §3 (trans. Thomas Common, 1909), [text](https://www.gutenberg.org/files/1998/1998-h/1998-h.htm)
+— Friedrich Nietzsche, *Thus Spoke Zarathustra[*Thus Spoke Zarathustra*, Prologue §3](https://www.gutenberg.org/files/1998/1998-h/1998-h.htm) (trans. Thomas Common, 1909)
 
 *Translation note: this page formerly read "Man must be surpassed. What have you done to surpass him?" That wording matches no published translation. Common renders it "is to be surpassed… surpass man"; Kaufmann renders it "shall be overcome… overcome him". The site's version was a modernized composite, and the genuine Common text now replaces it.*
 

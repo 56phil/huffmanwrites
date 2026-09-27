@@ -611,9 +611,29 @@ def check_online(url: str, needle: str, quiet: bool) -> "list[str]":
     # references decoded, inline tags removed. See fold() and html_to_text() for
     # why each of those is a false-accusation class rather than a leniency.
     if len(n) >= 25 and n not in fold(flat):
-        fails.append(f"{url}: does not contain {needle[:60]!r}")
-    if not quiet:
-        print(f"quotes:   checked {url}")
+        # A quotation may be STITCHED from two utterances of the same speaker
+        # with the attribution between them, which is how the Chiefs report cites
+        # Shane Steichen: the article reads `“Had a play called. Had to love the
+        # look to run it there,” Colts coach Shane Steichen said. “We took the
+        # delay and kicked the field goal.”` The citation joins the two into one
+        # quotation, so the contiguous search above cannot see it and the gate
+        # reported a correct citation as "does not contain" — the exact false
+        # accusation of fabrication this gate exists to prevent, shipped against
+        # the job whose output publishes unreviewed.
+        #
+        # Before accusing, require every SENTENCE of the quotation to appear.
+        # A genuine fabrication fails this (its sentences are absent too), so the
+        # check keeps its teeth; only the join is forgiven.
+        sentences = [fold(s) for s in re.split(r"(?<=[.!?])\s+", needle) if fold(s)]
+        joined_ok = len(sentences) > 1 and all(s in fold(flat) for s in sentences)
+        if not joined_ok:
+            fails.append(f"{url}: does not contain {needle[:60]!r}")
+        elif not quiet:
+            print(f"quotes:   checked {url} (stitched: every sentence present, "
+                  f"rejoined across an attribution)")
+    else:
+        if not quiet:
+            print(f"quotes:   checked {url}")
     return fails
 
 

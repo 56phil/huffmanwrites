@@ -62,7 +62,7 @@ The goal is not repair but agency: the capacity to choose what to preserve, what
 
 ---
 >  *“It is not that we have a short time to live, but that we waste a lot of it.”*
-— Seneca, *De Brevitate Vitae* §1, trans. C. D. N. Costa (Penguin, 1997), [text](https://archive.org/details/onshortnessoflif0000sene)
+— Seneca, *De Brevitate Vitae[*De Brevitate Vitae* §1, trans. C. D. N. Costa](https://archive.org/details/onshortnessoflif0000sene) (Penguin, 1997)
 
 *Translation note: this wording is Costa's. Basore's Loeb rendering of the same Latin reads “It is not that we have a short space of time, but that we waste much of it.”*
 
@@ -72,4 +72,4 @@ The goal is not repair but agency: the capacity to choose what to preserve, what
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
-Buy it [here](https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/B0GLX9JS3V/).
+Buy it [on Amazon](https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/B0GLX9JS3V/).

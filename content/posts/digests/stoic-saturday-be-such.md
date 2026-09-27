@@ -15,7 +15,7 @@ hero_caption: "A chisel does not describe the shape it wants. It cuts."
 draft: false
 ---
 
-"No longer talk at all about the kind of man that a good man ought to be, but be such." — Marcus Aurelius, *Meditations* 10.16 (trans. George Long, 1862), [text](https://en.wikisource.org/wiki/The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_X)
+"No longer talk at all about the kind of man that a good man ought to be, but be such." — Marcus Aurelius, *Meditations[*Meditations* 10.16](https://en.wikisource.org/wiki/The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_X) (trans. George Long, 1862)
 
 **The plan is not the strait.** Iran's foreign minister, Abbas Araghchi, told reporters at the United Nations that Tehran has handed Washington a proposal with a timetable: over the first four or five days, lift the naval blockade on Iran's oil ports, restore the waiver that lifted sanctions on Iranian oil exports, end the war on all fronts including Lebanon, and permit the release of some frozen assets. On the sixth day the Strait of Hormuz would reopen to shipping through a route designated by Oman and Iran. On the seventh day, nuclear talks would begin, accelerating what the June memorandum had scheduled for sixty days. He called the preconditions nothing new, contained in the Islamabad memorandum the president himself signed, and said he was not in a hurry. Traffic through the strait had fallen to nine vessel transits. The advantage of the offer is speed. Its defect is that the water is still closed ([The Guardian, 2026](#sources); [CNBC, 2026](#sources)).
 

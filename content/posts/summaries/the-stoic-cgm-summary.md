@@ -60,7 +60,7 @@ The body is not a machine to optimize. It is a system to comprehend, and that co
 
 ---
 > *“No man is free who is not master of himself.”*
-— Epictetus, Fragment 35 (trans. W. A. Oldfather, Loeb, 1928) — among the fragments Oldfather classes as doubtful, [text](https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Fragments)
+— Epictetus, [*Fragments* 35](https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Fragments) (trans. W. A. Oldfather, Loeb, 1928) — among the fragments Oldfather classes as doubtful
 
 
 
@@ -68,4 +68,4 @@ The body is not a machine to optimize. It is a system to comprehend, and that co
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
-Buy it [here](https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Yourself/dp/B0G6G12GPW/).
+Buy it [on Amazon](https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Yourself/dp/B0G6G12GPW/).

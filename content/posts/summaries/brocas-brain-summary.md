@@ -51,7 +51,7 @@ Most of all, read it for the title essay: a scientist standing in front of a jar
 
 ---
 > *"The brain is a very big place in a very small space."*
-— Carl Sagan, *Cosmos* (1980), ch. 11 (“The Persistence of Memory”), [text](https://publicism.info/science/cosmos/12.html)
+— Carl Sagan, [*Cosmos* (1980), ch. 11](https://publicism.info/science/cosmos/12.html) (“The Persistence of Memory”)
 
 *Source note: verified present in* Cosmos*, ch. 11, in the passage on the information content of the brain (the “twenty million volumes” comparison). Some sources also place it in* Broca's Brain* at p. 275; that could not be confirmed directly, and Sagan reused material across books, so both may be true. It is cited here to the work whose text was actually checked.*
 

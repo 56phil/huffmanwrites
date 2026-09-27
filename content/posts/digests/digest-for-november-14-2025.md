@@ -44,7 +44,7 @@ tags:
 ---
  ## ✦ **This Week’s Quiz: The Weight of Power**
 
- >  *"Power shows the man."* — Pittacus of Mytilene, as quoted by Diogenes Laërtius, *Lives of the Eminent Philosophers* I (trans. C. D. Yonge, 1853), [text](https://www.gutenberg.org/cache/epub/57342/pg57342.txt)
+ >  *"Power shows the man."* — Pittacus of Mytilene, as quoted by Diogenes Laërtius, *Lives of the Eminent Philosophers[*Lives of the Eminent Philosophers* I](https://www.gutenberg.org/cache/epub/57342/pg57342.txt) (trans. C. D. Yonge, 1853)
 
  
 

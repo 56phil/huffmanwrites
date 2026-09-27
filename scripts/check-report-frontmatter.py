@@ -221,6 +221,51 @@ def series_installments() -> "list[Path]":
     return out
 
 
+def published_posts() -> "list[Path]":
+    """Every published post in content/, for the rules that are not series-specific.
+
+    `series_installments()` above answers "what carries the report contract" —
+    `draft: false`, `featuredOnHome`, the hero fields. This answers a different
+    question: "what does a reader actually see", which is every non-draft page
+    under `content/posts/`. The anchor rule is the latter kind. It applies to all
+    of them because a placeholder anchor is a reader-facing defect wherever it
+    appears, and because `check-links.py --titles` goes blind on it wherever it
+    appears — a `[text]` link in a book summary hides a wrong-page link just as
+    effectively as one in a report, and nothing else watches those files.
+    """
+    out: "list[Path]" = []
+    for path in sorted((REPO / "content" / "posts").rglob("*.md")):
+        if path.name == "_index.md":
+            continue
+        split = split_frontmatter(path.read_text(encoding="utf-8", errors="ignore"))
+        if split is None:
+            continue
+        if field(split[0], "draft") == "true":
+            continue
+        out.append(path)
+    return out
+
+
+def anchor_problems(path: "Path | str") -> "list[str]":
+    """The placeholder-anchor rule alone, for one file."""
+    p = Path(path)
+    if not p.is_file():
+        return []
+    split = split_frontmatter(p.read_text(encoding="utf-8", errors="ignore"))
+    if split is None:
+        return []
+    placeholders = TEXT_ANCHOR.findall(split[1])
+    if not placeholders:
+        return []
+    return [
+        f"{len(placeholders)} link(s) whose visible text is a placeholder "
+        f"({', '.join(sorted({x for x in placeholders}))}) — the reader sees that "
+        f"word instead of the title, and check-links.py --titles has nothing to "
+        f"compare, so the wrong-page check is blind on it. Make the citation's "
+        f"own title the link text."
+    ]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -231,7 +276,27 @@ def main() -> int:
     ap.add_argument("--corpus", action="store_true",
                     help="check every published installment of every declared "
                          "series; the mode CI runs, where no single file is known")
+    ap.add_argument("--anchors-corpus", action="store_true",
+                    help="check the placeholder-anchor rule on EVERY published "
+                         "post, not only series installments")
     args = ap.parse_args()
+
+    if args.anchors_corpus:
+        targets = published_posts()
+        bad = []
+        for path in targets:
+            for problem in anchor_problems(path):
+                bad.append((path, problem))
+        for path, problem in bad:
+            print(f"  {path.relative_to(REPO)}:", file=sys.stderr)
+            print(f"    - {problem}", file=sys.stderr)
+        if bad:
+            print(f"report frontmatter: NOT PUBLISHABLE — {len(bad)} of "
+                  f"{len(targets)} published posts use a placeholder anchor",
+                  file=sys.stderr)
+            return 1
+        print(f"anchor check: OK — all {len(targets)} published posts name their links")
+        return 0
 
     if args.corpus:
         targets = series_installments()

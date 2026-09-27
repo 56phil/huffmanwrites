@@ -118,6 +118,16 @@ jobs:
       - name: Check report frontmatter
         run: python3 scripts/check-report-frontmatter.py --corpus
 
+      # Fail before deploy if ANY published post links with a placeholder anchor.
+      # A `[text]` link is a reader-facing defect wherever it appears, and it
+      # blinds `check-links.py --titles` on that citation wherever it appears —
+      # the check for a URL that returns 200 and serves an unrelated article.
+      # The report series is covered above; this covers the other 177 posts,
+      # which nothing else was watching. Measured before this was added: 36
+      # published files used a placeholder anchor.
+      - name: Check link anchors name what they link to
+        run: python3 scripts/check-report-frontmatter.py --anchors-corpus
+
       # Fail before deploy if a credential has drifted between its homes. This
       # gate exists because the fal.ai key lived in three places and only one
       # worked, and nothing could see it: a stale key has the right length, the

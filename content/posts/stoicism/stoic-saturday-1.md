@@ -11,7 +11,7 @@ hero_caption: "You don't build a fortress during the siege. You build it in peac
 lastmod: 2026-05-19
 ---
 
-"By looking forward to the coming of our sorrows we take the sting out of them when they come." — Seneca, *De Consolatione ad Marciam*, IX (trans. Aubrey Stewart, 1900), [text](https://en.wikisource.org/wiki/Of_Consolation:_To_Marcia)
+"By looking forward to the coming of our sorrows we take the sting out of them when they come." — Seneca, *De Consolatione ad Marciam[*De Consolatione ad Marciam*, IX](https://en.wikisource.org/wiki/Of_Consolation:_To_Marcia) (trans. Aubrey Stewart, 1900)
 
 *This epigraph previously read "The man who has anticipated the coming of troubles takes away their power when they arrive," attributed to Seneca. That wording is not Seneca's: it appears in no Seneca text and in no published translation, and traces to a modern paraphrase circulating online since about 2017. It has been replaced with the actual passage. A loose paraphrase of this same line, "He robs present ills of their power who has perceived their coming beforehand" (trans. J. W. Basore, Loeb, 1932), is also in circulation.*
 

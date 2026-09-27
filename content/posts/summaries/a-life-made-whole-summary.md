@@ -73,4 +73,4 @@ Integration, not perfection, is the path.
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
-Buy it [here](https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2GLKKCQ/).
+Buy it [on Amazon](https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2GLKKCQ/).

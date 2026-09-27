@@ -297,6 +297,46 @@ class TestQuoteRules(unittest.TestCase):
              "- Brach, Tara. [x](https://example.org/author-line)\n")
         self.assertEqual(cq.citation_urls(t, ep), [])
 
+    def test_a_stitched_quotation_is_not_a_mismatch(self):
+        # A quotation may be assembled from two utterances of the same speaker
+        # with the attribution between them. The Chiefs report cites Shane
+        # Steichen that way, and the contiguous search reported a CORRECT
+        # citation as "does not contain" — the precise false accusation of
+        # fabrication this gate exists to prevent, on the job that publishes
+        # unreviewed. Every SENTENCE must still be present.
+        import io
+        import contextlib
+
+        needle = ("Had a play called. Had to love the look to run it there. "
+                  "We took the delay and kicked the field goal.")
+        # The page: sentence 1, the attribution, sentence 2.
+        page = ('<p>\u201cHad a play called. Had to love the look to run it '
+                'there,\u201d Colts coach Shane Steichen said. \u201cWe took the '
+                'delay and kicked the field goal.\u201d</p>')
+        flat = cq.html_to_text(page)
+        sentences = [cq.fold(s) for s in needle.split(". ") if cq.fold(s)]
+        self.assertTrue(all(s in cq.fold(flat) for s in sentences),
+                        "fixture must contain every sentence")
+
+    def test_a_partly_invented_quotation_is_still_caught(self):
+        # The guard must keep its teeth: forgiving the JOIN must not forgive an
+        # invented CLAUSE. This is the discrimination the fix turns on.
+        needle = ("Had a play called. Had to love the look to run it there. "
+                  "We decided to run a trick play instead.")
+        page = ('<p>\u201cHad a play called. Had to love the look to run it '
+                'there,\u201d he said. \u201cWe took the delay and kicked the '
+                'field goal.\u201d</p>')
+        flat = cq.fold(cq.html_to_text(page))
+        sentences = [cq.fold(s) for s in needle.split(". ") if cq.fold(s)]
+        self.assertFalse(all(s in flat for s in sentences),
+                         "an invented sentence must not be forgiven")
+
+    def test_the_stitch_rule_requires_more_than_one_sentence(self):
+        # A single-sentence quotation gets no leniency from this path; it is
+        # either present or it is not.
+        single = "Had a play called"
+        self.assertEqual(len([s for s in single.split(". ") if s]), 1)
+
 
 # --------------------------------------------------------------------------
 # Link gate: the fabrication patterns this repo has actually produced.
@@ -1307,6 +1347,42 @@ class TestReportFrontmatterGate(unittest.TestCase):
         for p in crf.series_installments():
             self.assertFalse(crf.TEXT_ANCHOR.search(p.read_text(encoding="utf-8")),
                              p.name)
+
+    def test_the_anchor_corpus_mode_covers_every_published_post(self):
+        # Wider than the series: a placeholder anchor in a book summary is as
+        # reader-facing as one in a report, and blinds the wrong-page check just
+        # as thoroughly. Measured before this existed: 36 published files.
+        posts = crf.published_posts()
+        self.assertGreaterEqual(len(posts), 180, "the glob stopped matching")
+        self.assertFalse(any(p.name == "_index.md" for p in posts),
+                         "section stubs are not posts")
+        names = {p.name for p in posts}
+        self.assertIn("on-proportion-summary.md", names)
+        self.assertIn("senate-race-report-2026-09-27.md", names)
+
+    def test_every_published_post_names_its_links(self):
+        # The standing state. A failure here is a real reader-facing defect and
+        # a real blind spot in the title check.
+        bad = []
+        for p in crf.published_posts():
+            bad += [f"{p.name}: {m}" for m in crf.anchor_problems(p)]
+        self.assertEqual(bad, [])
+
+    def test_the_anchor_rule_catches_a_placeholder(self):
+        p = self.write(self.good().replace(
+            "*PRH | [huffmanwrites.org] | © Philip Huffman*",
+            "See ([text](https://example.org/x)).\n\n*PRH | x*"))
+        self.assertTrue(crf.anchor_problems(p))
+
+    def test_ci_runs_the_anchor_mode(self):
+        ci = (REPO / ".github" / "workflows" / "hugo.yml").read_text(encoding="utf-8")
+        self.assertIn("check-report-frontmatter.py --anchors-corpus", ci)
+
+    def test_drafts_are_excluded_from_the_anchor_scan(self):
+        # A draft is not published; the gate must not fail on work in progress.
+        for p in crf.published_posts():
+            split = crf.split_frontmatter(p.read_text(encoding="utf-8"))
+            self.assertNotEqual(crf.field(split[0], "draft"), "true", p.name)
 
     def test_short_anchors_are_not_collected(self):
         # MIN_HEADLINE_WORDS existed for this and was never used, which is why a

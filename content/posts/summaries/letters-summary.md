@@ -61,7 +61,7 @@ That is enough. That is the point.
 
 ---
 > *“If you would be a good reader, read; if a writer, write.”*
-— Epictetus, *Discourses* 2.18.1 (trans. George Long, 1862), [text](https://www.gutenberg.org/cache/epub/10661/pg10661.txt)
+— Epictetus, *Discourses[*Discourses* 2.18.1](https://www.gutenberg.org/cache/epub/10661/pg10661.txt) (trans. George Long, 1862)
 
 
 
@@ -69,4 +69,4 @@ That is enough. That is the point.
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
-Buy it [here](https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4N7/).
+Buy it [on Amazon](https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4N7/).

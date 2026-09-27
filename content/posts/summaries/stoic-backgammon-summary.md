@@ -75,4 +75,4 @@ That is the practice.
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
-Buy it [here](https://www.amazon.com/dp/B0GXW6KRDH/).
+Buy it [on Amazon](https://www.amazon.com/dp/B0GXW6KRDH/).
