@@ -1260,6 +1260,24 @@ class TestReportFrontmatterGate(unittest.TestCase):
                 self.assertIn("check-report-frontmatter.py", text)
                 self.assertIn(f"--hero-plate {plate}", text)
 
+    def test_a_fence_with_trailing_whitespace_is_still_parsed(self):
+        # One file in the corpus opens with `--- ` (a trailing space) and Hugo
+        # renders it, but splitting on the literal "---\n" skipped that fence,
+        # landed on the CLOSING one, and returned the frontmatter as if it were
+        # the body — so the gate reported "no title" for a file that has one.
+        body = self.good()
+        p = self.write("--- \n" + body[4:])
+        self.assertEqual(crf.validate(p, now=self.now), [],
+                         "a trailing space on the opening fence must not hide "
+                         "the frontmatter")
+
+    def test_the_real_corpus_file_with_the_trailing_space_is_parsed(self):
+        # The measured case, pinned against the actual file so a future rewrite
+        # of the splitter cannot silently un-parse it again.
+        p = REPO / "content/posts/digests/stoic-saturday-rule-of-law.md"
+        fm, _ = crf.split_frontmatter(p.read_text(encoding="utf-8"))
+        self.assertTrue(crf.field(fm, "title"), "title must be readable")
+
     def test_a_placeholder_anchor_is_caught(self):
         # A reader sees the anchor, so `[text]` tells them nothing; and it leaves
         # `check-links.py --titles` nothing to compare, so the wrong-page check —

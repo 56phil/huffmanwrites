@@ -81,13 +81,26 @@ TEXT_ANCHOR = re.compile(
 
 
 def split_frontmatter(text: str) -> "tuple[str, str] | None":
-    """Return (frontmatter, body), or None if the file has no usable block."""
+    """Return (frontmatter, body), or None if the file has no usable block.
+
+    The opening fence is matched as a LINE, not by splitting on the literal
+    `---\\n`. One file in this corpus opens with `--- ` (a trailing space) and
+    Hugo renders it correctly, but `split("---\\n", 2)` skipped that fence and
+    landed on the CLOSING one, so the splitter handed back the frontmatter block
+    as if it were the body and the gate reported "no title in frontmatter" for a
+    file that has one. Measured 2026-09-27: exactly one file
+    (`digests/stoic-saturday-rule-of-law.md`), but the failure is silent and
+    would have applied to any future file with the same whitespace.
+    """
     if not text.startswith("---"):
         return None
-    parts = text.split("---\n", 2)
-    if len(parts) < 3:
+    lines = text.split("\n")
+    if lines[0].strip() != "---":
         return None
-    return parts[1], parts[2]
+    for i in range(1, len(lines)):
+        if lines[i].strip() == "---":
+            return "\n".join(lines[1:i]), "\n".join(lines[i + 1:])
+    return None
 
 
 def field(front: str, name: str) -> "str | None":
