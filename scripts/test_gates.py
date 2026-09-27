@@ -51,6 +51,7 @@ cp = load("check-plists")
 cpn = load("check-prepositions")
 cs = load("check-secrets")
 chp = load("check-hero-paths")
+csp = load("check-series-posts")
 
 EM = "\u2014"
 
@@ -1292,6 +1293,139 @@ class TestHeroPathGate(unittest.TestCase):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
                 self.assertIn("check-hero-paths", text)
+
+
+class TestSeriesHomeFlagGate(unittest.TestCase):
+    """A published series installment must carry `featuredOnHome: true`.
+
+    The home page fills Recent Posts from flagged posts only, and more than five
+    are already flagged, so an unflagged installment publishes and reaches no
+    reader from the home page. Five Senate race reports shipped that way between
+    2026-09-06 and 2026-09-27 because the skill's frontmatter list omitted the
+    field. It is invisible to every other check: the build passes, the page
+    returns 200, and the RSS feed lists it.
+    """
+
+    def setUp(self):
+        import tempfile
+        self.dir = Path(tempfile.mkdtemp(prefix="series-flag-"))
+
+    def run_gate(self, *args: str) -> tuple[int, str]:
+        import io
+        import contextlib
+        buf = io.StringIO()
+        old = sys.argv
+        sys.argv = ["check-series-posts.py", *args]
+        try:
+            with contextlib.redirect_stdout(buf):
+                rc = csp.main()
+        finally:
+            sys.argv = old
+        return rc, buf.getvalue()
+
+    def test_the_series_come_from_the_gallery_not_a_hardcoded_list(self):
+        # A new report series is covered by adding its gallery card, the same
+        # declaration the gallery layout resolves a series card with. If this
+        # ever becomes a literal list in the gate, the list can drift from what
+        # the site treats as a series -- which is how this defect arose.
+        globs = csp.series_globs()
+        self.assertIn("/posts/essays/senate-race-report-*", globs)
+        self.assertIn("/posts/essays/docket-report-*", globs)
+        self.assertIn("/posts/sports/chiefs-report-*", globs)
+
+    def test_the_corpus_is_clean(self):
+        # Every published series installment on the site is flagged. A failure
+        # here is a real report that no reader can reach from the home page.
+        problems, _notes = csp.check(verbose=False)
+        self.assertEqual(problems, [])
+
+    def test_the_senate_series_really_was_the_defect(self):
+        # The five installments exist and every one is now flagged; this pins
+        # that the backfill was complete rather than partial.
+        posts = csp.installments("/posts/essays/senate-race-report-*")
+        self.assertGreaterEqual(len(posts), 4)
+        for p in posts:
+            fm = csp.frontmatter(p.read_text(encoding="utf-8"))
+            with self.subTest(post=p.name):
+                self.assertTrue(csp.is_flagged(fm), p.name)
+
+    def test_a_draft_is_skipped_by_the_corpus_scan(self):
+        # A draft is not published, so it has no home-feed obligation yet. This
+        # is also why the runner needs --file: the draft it just wrote is
+        # exactly the file a corpus scan cannot see.
+        fm = "draft: true\nfeaturedOnHome: false\ntitle: x"
+        self.assertTrue(csp.is_draft(fm))
+        self.assertFalse(csp.is_flagged(fm))
+
+    def test_the_flag_reader_requires_true_not_mere_presence(self):
+        for value, expected in (("true", True), ("false", False)):
+            with self.subTest(value=value):
+                self.assertEqual(
+                    csp.is_flagged(f"draft: false\nfeaturedOnHome: {value}\n"),
+                    expected)
+        self.assertFalse(csp.is_flagged("draft: false\n"))
+
+    def test_file_mode_catches_an_unflagged_draft_that_the_scan_skips(self):
+        # The runner's case: it just wrote a draft, and the corpus scan reports
+        # OK because the file is a draft. --file must still fail it.
+        slug = "senate-race-report-2999-01-01"
+        p = REPO / "content" / "posts" / "essays" / f"{slug}.md"
+        p.write_text("---\ntitle: x\ndraft: true\n---\n\nBody.\n", encoding="utf-8")
+        try:
+            rc, out = self.run_gate("--file", str(p))
+            self.assertEqual(rc, 1, out)
+            self.assertIn("featuredOnHome", out)
+        finally:
+            p.unlink()
+
+    def test_file_mode_passes_a_flagged_file(self):
+        slug = "senate-race-report-2999-01-02"
+        p = REPO / "content" / "posts" / "essays" / f"{slug}.md"
+        p.write_text("---\ntitle: x\ndraft: false\nfeaturedOnHome: true\n---\n\nBody.\n",
+                     encoding="utf-8")
+        try:
+            self.assertEqual(self.run_gate("--file", str(p))[0], 0)
+        finally:
+            p.unlink()
+
+    def test_file_mode_has_no_opinion_about_standalone_posts(self):
+        # Most content is not a series installment and may legitimately go
+        # unflagged; the gate must not invent a failure for it.
+        p = self.dir / "essays" / "a-standalone-essay.md"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text("---\ntitle: x\ndraft: false\n---\n\nBody.\n", encoding="utf-8")
+        self.assertEqual(self.run_gate("--file", str(p))[0], 0)
+
+    def test_directories_whose_series_has_not_started_are_a_note_not_a_failure(self):
+        # The docket series publishes from 2026-10-03. Failing a series that has
+        # not started would leave CI red for weeks, which trains people to
+        # ignore it -- the same reasoning as check-gallery-pages.py.
+        problems, notes = csp.check(verbose=False)
+        self.assertEqual(problems, [])
+        self.assertTrue(any("docket-report" in n for n in notes), notes)
+
+    def test_both_report_runners_run_the_gate_and_scope_it_to_the_draft(self):
+        # A gate nobody runs is not a gate, and an unscoped run would scan the
+        # corpus while the file that needs checking is a draft the scan skips.
+        for runner in ("senate-report-runner.sh",
+                       "docket-weekly-report-runner.sh"):
+            text = (SCRIPTS / runner).read_text(encoding="utf-8")
+            with self.subTest(runner=runner):
+                self.assertIn("check-series-posts", text)
+                self.assertIn('--file "$ARTICLE"', text)
+
+    def test_ci_runs_the_gate(self):
+        ci = (REPO / ".github" / "workflows" / "hugo.yml").read_text(encoding="utf-8")
+        self.assertIn("scripts/check-series-posts.py", ci)
+
+    def test_the_skill_that_omitted_the_field_now_requires_it(self):
+        # The root cause: the Senate skill listed the frontmatter fields and left
+        # this one out, so the writer had no way to know. A gate would catch it;
+        # the spec should not rely on the gate.
+        for skill in ("senate-race-report.md", "docket-weekly-report.md"):
+            text = (REPO / "skills" / skill).read_text(encoding="utf-8")
+            with self.subTest(skill=skill):
+                self.assertIn("featuredOnHome", text)
 
 
 class TestChiefsRunnerContract(unittest.TestCase):

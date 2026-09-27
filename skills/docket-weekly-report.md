@@ -205,6 +205,7 @@ the Chiefs report by giving them their own hero images."
   author: Philip Huffman
   lastmod: <same as date>
   draft: true
+  featuredOnHome: true
   hero_desktop: "img/articles/104-docket-report_16x9.webp"
   hero_mobile: "img/articles/104-docket-report_4x5.webp"
   hero_alt: "<the hero_alt above, verbatim>"
@@ -212,6 +213,7 @@ the Chiefs report by giving them their own hero images."
   tags: [civics, essays, law]
   ---
   ```
+- **`featuredOnHome: true` is required.** The home page shows five posts and takes them from those carrying this flag, so an unflagged post publishes and never appears in the Recent Posts feed. More than five flagged posts already exist, so the flag is what puts a given week's report on the page. The Senate skill was missing this line until 2026-09-27 and every one of its installments published before that date was invisible on the home page; do not repeat it here.
 - Date guard: the `date` must never be in the future relative to the wall clock
   when the file is written. Hugo's default `buildFuture: false` silently skips
   future-dated content — the build succeeds and the page is simply absent, which

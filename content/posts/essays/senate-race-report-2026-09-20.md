@@ -3,6 +3,7 @@ title: "Senate Race Report: September 20, 2026"
 description: "Kansas put Adam Hamilton ahead in the first independent poll of the cycle, Kalshi's own desk put the Democrats at a record 57 percent for the Senate, and Minnesota went dead even while two forecasters nudged races toward toss-ups."
 date: 2026-09-20T07:00:00-05:00
 author: Philip Huffman
+featuredOnHome: true
 lastmod: 2026-09-26T11:00:00-05:00
 draft: false
 hero_desktop: "img/articles/105-senate-race-report_16x9.webp"

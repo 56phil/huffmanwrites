@@ -96,6 +96,19 @@ jobs:
       - name: Check hero paths
         run: python3 scripts/check-hero-paths.py
 
+      # Fail before deploy if a published installment of a recurring series is
+      # missing `featuredOnHome: true`. The home page takes its five Recent Posts
+      # from flagged posts only, and more than five carry the flag, so an
+      # unflagged installment publishes and reaches no reader from the home page.
+      # Nothing else can see it: the build passes, the page returns 200, and the
+      # RSS feed lists it — it is simply absent from the one place a reader
+      # lands. Five Senate race reports shipped this way between Sept 6 and
+      # Sept 27, 2026, because the skill's frontmatter list omitted the field.
+      # The series are derived from data/gallery.yml's `latest` globs, so a new
+      # series is covered when its card is added and this list cannot drift.
+      - name: Check series posts reach the home page
+        run: python3 scripts/check-series-posts.py
+
       # Fail before deploy if a credential has drifted between its homes. This
       # gate exists because the fal.ai key lived in three places and only one
       # worked, and nothing could see it: a stale key has the right length, the

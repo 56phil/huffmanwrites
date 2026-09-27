@@ -158,6 +158,20 @@ run_gate "check-prepositions" "$REPO/scripts/check-prepositions.py" --check
 # does not fail the Hugo build -- it renders an empty box on a page that ships.
 # Cheap, offline, and the only check that reads the frontmatter image paths.
 run_gate "check-hero-paths" "$REPO/scripts/check-hero-paths.py"
+# A published installment of a series must carry `featuredOnHome: true`, or it
+# reaches no reader from the home page: the feed takes its five Recent Posts from
+# flagged posts only, and more than five are already flagged. Five Senate reports
+# shipped unflagged between Sept 6 and Sept 27, 2026, because the skill's
+# frontmatter list omitted the field and no gate read it. Scoped to the draft this
+# run just wrote, because the corpus scan skips drafts -- the file whose flag has
+# never been checked is exactly the one on disk right now.
+ARTICLE="$REPO/content/posts/essays/senate-race-report-$TODAY.md"
+if [ -f "$ARTICLE" ]; then
+  run_gate "check-series-posts" "$REPO/scripts/check-series-posts.py" --file "$ARTICLE"
+else
+  echo "$(stamp): note — no article at $ARTICLE; series gate ran unscoped" >> "$OUT_LOG"
+  run_gate "check-series-posts" "$REPO/scripts/check-series-posts.py"
+fi
 
 # Unattended job: a non-zero exit used to leave nothing but a log line. On
 # 2026-09-06 this job exited 127 then 1 and nobody saw it. No-op on success.

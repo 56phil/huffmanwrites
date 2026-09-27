@@ -3,6 +3,7 @@ title: "Senate Race Report: September 6, 2026"
 description: "The forecasters moved four races toward the Democrats this week, the president's super PAC made its first general-election buy of the cycle in Texas, and the models now call the Senate a coin flip."
 date: 2026-09-06T07:00:00-05:00
 author: Philip Huffman
+featuredOnHome: true
 lastmod: 2026-09-26T11:00:00-05:00
 draft: false
 hero_desktop: "img/articles/105-senate-race-report_16x9.webp"

@@ -3,8 +3,9 @@ title: "Senate Race Report: September 27, 2026"
 description: "The Cook Political Report called the Senate a true toss-up and moved Georgia, Kansas and South Carolina toward the Democrats, the national generic ballot reached its widest Democratic lead of the cycle, and Kansas now polls like a race the Republicans can lose."
 date: 2026-09-27T07:00:00-05:00
 author: Philip Huffman
-lastmod: 2026-09-27T08:45:00-05:00
+lastmod: 2026-09-27T08:54:00-05:00
 draft: false
+featuredOnHome: true
 hero_desktop: "img/articles/105-senate-race-report_16x9.webp"
 hero_mobile: "img/articles/105-senate-race-report_4x5.webp"
 hero_alt: "A shallow semicircular bench of individual carved marble seats sits deserted in deep midnight-blue darkness, its pale Parian stone veined with fine grey marbling and worn smooth at the edges. The arc recedes into shadow to either side; a single seat at the centre of the bench is struck by a narrow blade of warm amber-gold light, while every other seat falls away into unlit black."

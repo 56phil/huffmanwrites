@@ -3,6 +3,7 @@ title: "Senate Race Report: September 13, 2026"
 description: "The war with Iran pushed the Senate-control markets to a Democratic price for the first time, the GOP's biggest money finally arrived in Texas, and Kansas put Marshall and Hamilton on one stage."
 date: 2026-09-13T07:00:00-05:00
 author: Philip Huffman
+featuredOnHome: true
 lastmod: 2026-09-26T11:00:00-05:00
 draft: false
 hero_desktop: "img/articles/105-senate-race-report_16x9.webp"
