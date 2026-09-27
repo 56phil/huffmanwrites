@@ -17,10 +17,10 @@ weekly Chiefs report. This will be used for the rest of the season. Text is
 acceptable. The background will be the red used by the Chiefs instead of the
 routine dark navy blue." The plate is `static/img/articles/103-chiefs-report_*`,
 it is wired into `skills/chiefs-weekly-report.md` as a fixed frontmatter contract,
-and `scripts/chiefs-report.py --validate` fails the publish if it is missing. **Do
-not regenerate it navy, and do not give an individual Chiefs report its own
-hero** — the plate belongs to the series, and two reports sharing one image is the
-intended result.
+and `scripts/check-report-frontmatter.py --hero-plate 103-chiefs-report` fails the
+publish if it is missing. **Do not regenerate it navy, and do not give an
+individual Chiefs report its own hero** — the plate belongs to the series, and
+two reports sharing one image is the intended result.
 
 Two mechanics from that build that generalize. **Text that must be readable is
 composited, never generated:** FLUX garbles letterforms whenever a prompt invites

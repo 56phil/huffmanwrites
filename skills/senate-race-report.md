@@ -125,18 +125,23 @@ wired by hand in the same commit that commissioned the plate.
 ## Output
 
 - File: `content/posts/essays/senate-race-report-YYYY-MM-DD.md` (date = run date).
-- Frontmatter: `title` ("Senate Race Report: <Month Day, Year>"), `description` (one sentence, article-style), `date` (run time, CT), `author: Philip Huffman`, `lastmod`, `draft: true`, the four **series-plate hero fields above**, `tags: [politics, senate, essays, civics]`, and **`featuredOnHome: true`**.
+- Frontmatter: `title` ("Senate Race Report: <Month Day, Year>"), `description` (one sentence, article-style), `date` (run time, CT), `author: Philip Huffman`, `lastmod`, `draft: false`, the four **series-plate hero fields above**, `tags: [politics, senate, essays, civics]`, and **`featuredOnHome: true`**.
+- **This report is PUBLISHED on the run, not filed as a draft.** Philip, 2026-09-27: "publish weekly reports that have an exit code of 0 after passing all gates." The runner commits and pushes what you write and the site deploys on that push, so write to the publishing standard: every load-bearing claim checked, every quotation carrying a live link that contains its wording, and no placeholder left in the prose. `draft: true` is now a gate failure, not a neutral state: it would deploy nothing while every gate reported success.
 - **`featuredOnHome: true` is required, and it is the flag that decides whether the report is seen at all.** The home page shows five posts and takes them from those carrying this flag, so an unflagged post never appears there — it publishes and stays invisible. More than five flagged posts already exist, so the flag is the only thing that puts a given week's report on the page. It was **missing from this list until 2026-09-27, and every installment published before that date was absent from the home feed**, which is how the omission was found. `skills/chiefs-weekly-report.md` carries the same requirement for the same reason.
-- Date guard: the `date` must never be in the future when the article is published. Hugo's default `buildFuture: false` silently skips future-dated content (the build succeeds but the page is absent). The weekly draft is dated on its run day, so publishing the same day is safe; if Philip publishes later, the date is already past and still safe. Never pre-date an article.
-- The four **series-plate hero fields** (above) are required and are copied verbatim; the runner's `scripts/check-hero-paths.py` gate fails if a path names no file. No newsletter/sendfox fields.
+- Date guard: the `date` must never be in the future when the article is published. Hugo's default `buildFuture: false` silently skips future-dated content (the build succeeds but the page is absent). The report is published on its run day, so dating it to that day is safe. Never pre-date an article.
+- The four **series-plate hero fields** (above) are required and are copied verbatim; the runner's `scripts/check-report-frontmatter.py` gate fails if any is missing, if a path names no file, or if the plate is not `105-senate-race-report`. No newsletter/sendfox fields.
 - Verify: do NOT run `hugo` or the gate scripts yourself — the runner does all of it immediately after
   this session ends and records the real results in the log. Do not claim in your summary that a gate
   passed: they are not in your allow-list, so you cannot have run them, and the log is what gets read.
   The runner performs **two** builds (`hugo --gc --minify` for what deploys, and
-  `--gc --minify --buildDrafts --destination <tmp>` for the draft you just wrote — the production build
-  excludes `draft: true`, so it alone cannot see your file) and two offline gates
-  (`scripts/check-quotes.py`, `scripts/check-links.py --check`). Write the article; the script verifies it.
-- Leave the file uncommitted. Do NOT copy to SimpleBrain (that happens at publish). Do NOT commit or push.
+  `--gc --minify --buildDrafts --destination <tmp>` for the file you just wrote) and the content gates,
+  including **`check-links.py --online --titles`**, which fetches every URL your report cites and
+  compares the page's own title against your link text. That is the only check in this repo that can
+  catch a link resolving to the wrong page — a URL that returns 200 and shows the reader an unrelated
+  article. It is the failure CLAUDE.md calls the most dangerous one here, and on a publishing job it
+  ships unreviewed if you get it wrong, so **fetch every page you cite; never construct a URL from the
+  shape of a real one.**
+- Do NOT commit, push, or copy to SimpleBrain. The runner does all three after the gates pass.
 
 ## After the election
 

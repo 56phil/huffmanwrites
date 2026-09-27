@@ -44,6 +44,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
 import urllib.error
 import urllib.request
@@ -944,119 +945,31 @@ def render(pack: dict) -> str:
     return "\n".join(L)
 
 
-def validate_article(path: "Path | str", now: "datetime | None" = None,
-                     slack_seconds: int = 300) -> "list[str]":
-    """Pre-publication checks on the article itself. Returns a list of problems.
-
-    Lives here rather than in the runner for two reasons: shell date parsing on
-    macOS cannot read the frontmatter's own offset format (`date -j -f` accepts
-    `-0500`, not the `-05:00` this repo writes, and it fails by printing usage to
-    stderr and returning nothing), and a check that is a function can be tested.
-    The runner calls this; `scripts/test_gates.py` tests it.
-
-    Each rule is a defect this repo has actually shipped:
-      - `draft: false` — a draft flag left true deploys nothing while looking
-        like it published;
-      - `featuredOnHome: true` — more than five posts already carry the flag, so
-        an unflagged post never appears in the home feed at all;
-      - the date is not ahead of the clock — Hugo's `buildFuture: false` skips a
-        future-dated page *without failing the build*, which is the failure that
-        hides (recorded three times in SESSION_STATE);
-      - the closing attribution line;
-      - the series hero fields, and that the files they name exist (a hero path
-        that points at nothing renders a broken image on a page nobody reviews).
-    """
-    p = Path(path)
-    if not p.is_file():
-        return [f"no article at {p}"]
-    text = p.read_text(encoding="utf-8")
-    problems: "list[str]" = []
-
-    if not text.startswith("---"):
-        problems.append("no frontmatter block")
-        return problems
-    parts = text.split("---\n", 2)
-    if len(parts) < 3:
-        problems.append("frontmatter block is not closed")
-        return problems
-    front, body = parts[1], parts[2]
-
-    def field(name: str) -> "str | None":
-        m = re.search(rf"^{re.escape(name)}\s*:\s*(.*)$", front, re.M)
-        return m.group(1).strip().strip("\"'") if m else None
-
-    if field("draft") != "false":
-        problems.append(f"draft is {field('draft')!r}, not false — nothing would publish")
-    if field("featuredOnHome") != "true":
-        problems.append(
-            "featuredOnHome is not true — with more than five flagged posts already "
-            "on the site, an unflagged post never reaches the home feed"
-        )
-    for name in ("title", "description", "date"):
-        if not field(name):
-            problems.append(f"no {name} in frontmatter")
-    if not re.search(r"^\*PRH \|", body, re.M):
-        problems.append("missing the closing attribution line (*PRH | …)")
-
-    # The series hero. Every Chiefs report carries the SAME plate — one pair of
-    # images commissioned for the report and reused all season — so the fields
-    # are a fixed contract, not a per-week choice. Checked here because the
-    # writer is not permitted to run the builds, and a hero path pointing at a
-    # file that does not exist renders an empty box on a page that ships
-    # unreviewed.
-    for name in ("hero_desktop", "hero_mobile", "hero_alt", "hero_caption"):
-        if not field(name):
-            problems.append(f"no {name} in frontmatter")
-    for name in ("hero_desktop", "hero_mobile"):
-        hero_path = field(name)
-        if hero_path and not (REPO / "static" / hero_path).is_file():
-            problems.append(f"{name} points at a file that does not exist: static/{hero_path}")
-
-    raw = field("date")
-    if raw:
-        try:
-            stamp = datetime.fromisoformat(raw)
-        except ValueError:
-            problems.append(f"date {raw!r} is not ISO 8601")
-        else:
-            if stamp.tzinfo is None:
-                stamp = stamp.replace(tzinfo=CT)
-            reference = now or datetime.now(CT)
-            if reference.tzinfo is None:
-                reference = reference.replace(tzinfo=CT)
-            if stamp > reference + timedelta(seconds=slack_seconds):
-                problems.append(
-                    f"date {raw} is ahead of the clock "
-                    f"({reference.isoformat(timespec='seconds')}); buildFuture "
-                    f"would silently skip the page"
-                )
-    return problems
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(description="Collect the week's Chiefs data.")
     ap.add_argument("--season-state", action="store_true",
                     help="print the league phase; exit 3 when off season")
     ap.add_argument("--validate", metavar="PATH",
-                    help="check an article's frontmatter before publishing; "
-                         "exit 1 and print every problem if it is not publishable")
+                    help="check an article's frontmatter before publishing "
+                         "(delegates to scripts/check-report-frontmatter.py)")
     ap.add_argument("--json", action="store_true", help="emit the structured pack")
     ap.add_argument("--today", help="evaluate as if run on YYYY-MM-DD (for testing)")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
 
     if args.validate:
-        problems = validate_article(args.validate)
-        if problems:
-            print(f"chiefs: NOT PUBLISHABLE — {len(problems)} problem(s) in "
-                  f"{args.validate}", file=sys.stderr)
-            for p in problems:
-                print(f"  {p}", file=sys.stderr)
-            return 1
-        print(f"chiefs: {args.validate} is publishable (draft false, featuredOnHome "
-              f"true, date not ahead of the clock, series hero present and resolving, "
-              f"attribution present)")
-        return 0
+        # The rules moved to `scripts/check-report-frontmatter.py` when the
+        # Senate and docket jobs started publishing too: one gate for all three
+        # rather than three copies, because the duplication is how the
+        # `featuredOnHome` requirement went missing from one skill and not
+        # another. This flag is kept as a thin delegate so the existing habit and
+        # any script that calls it keep working.
+        gate = Path(__file__).with_name("check-report-frontmatter.py")
+        sys.stderr.write(
+            "chiefs: --validate now delegates to scripts/check-report-frontmatter.py; "
+            "call that directly.\n"
+        )
+        return subprocess.call([sys.executable, str(gate), "--file", args.validate])
 
     if args.json and args.season_state:
         print("chiefs: --json and --season-state are mutually exclusive", file=sys.stderr)

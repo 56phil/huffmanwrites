@@ -16,17 +16,25 @@ output goes live without Philip reading it first.
 
 ## The one thing that makes this job different
 
-Every other scheduled report here files a `draft: true` page and leaves it
-uncommitted for Philip to review. **This one publishes.** The runner commits and
-pushes the page it wrote, and the site deploys on that push. So the standard you
-are held to is the publishing standard, not the drafting standard: everything
-below is a requirement, not a preference, and there is no human gate behind you.
+**This job publishes.** The runner commits and pushes the page it wrote, and the
+site deploys on that push. So the standard you are held to is the publishing
+standard, not the drafting standard: everything below is a requirement, not a
+preference, and there is no human gate behind you.
+
+This used to be unique to the Chiefs report. On 2026-09-27 Philip extended it to
+the other weekly reports ("publish weekly reports that have an exit code of 0
+after passing all gates"), so the Senate race report and the weekly docket report
+now publish the same way. Three of the scheduled jobs publish; the monthly
+ninety-days installments and the quarterly repair plan still file drafts.
 
 Two consequences you should feel while writing.
 
 **A fabricated fact ships.** No one reads this before it is live. The repo's
 most dangerous failure class (CLAUDE.md §Citations) is a URL or a name that
-looks checkable and is wrong, and here it would go straight to production.
+looks checkable and is wrong, and here it would go straight to production. The
+runner fetches every URL you cite and compares the page's own title against your
+link text, which catches a link pointing at the wrong page — but it cannot catch
+a fact you got wrong on a page you did fetch.
 
 **A thin report is worse than no report.** You cannot pad a slow week with
 recalled history, generic analysis, or a "what this means for the season"
@@ -239,9 +247,10 @@ that says so. Do not manufacture length.
 - **Do NOT run `hugo`, do NOT run the gate scripts, do NOT commit or push, and
   do NOT touch `SESSION_STATE.md`.** The gates are deliberately absent from your
   allow-list, so a gate result in your summary would be unverifiable, and the
-  runner does all of it immediately after this session ends: two builds, six
-  offline gates, the commit, the push, the SESSION_STATE entry, and the
-  SimpleBrain sync. Do not claim in your summary that a gate passed.
+  runner does all of it immediately after this session ends: two builds, the
+  content gates (including the online link sweep with `--titles`), the commit,
+  the push, the SESSION_STATE entry, and the SimpleBrain sync, all via
+  `scripts/publish-report.sh`. Do not claim in your summary that a gate passed.
 
 ## Step 4 — Report back, in this shape
 

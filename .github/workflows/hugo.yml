@@ -109,6 +109,15 @@ jobs:
       - name: Check series posts reach the home page
         run: python3 scripts/check-series-posts.py
 
+      # Fail before deploy if a published series installment is not publishable.
+      # Every rule encodes a shipped failure, and `draft: true` is the one that
+      # matters: the site would build clean, return 200, and simply not carry the
+      # page — while every other gate reported OK. The runners check the file
+      # they just wrote (--file); this covers the corpus, so a report edited
+      # after it published cannot silently drop out of the deploy.
+      - name: Check report frontmatter
+        run: python3 scripts/check-report-frontmatter.py --corpus
+
       # Fail before deploy if a credential has drifted between its homes. This
       # gate exists because the fal.ai key lived in three places and only one
       # worked, and nothing could see it: a stale key has the right length, the

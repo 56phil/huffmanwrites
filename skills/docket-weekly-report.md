@@ -31,9 +31,13 @@ Saturday at 0800 CT beginning **October 3, 2026**.
 
 ## Mission
 
-Produce a fact-checked, house-style SUMMARY of the week in the three dockets,
-and file it as a **draft** in the site's digest section for Philip to review,
-edit, publish, or discard. Do NOT commit, push, send, or copy anything.
+Produce a fact-checked, house-style SUMMARY of the week in the three dockets.
+The report is **published** on the run: the runner commits and pushes what you
+write and the site deploys on that push (Philip, 2026-09-27: "publish weekly
+reports that have an exit code of 0 after passing all gates"). So write to the
+publishing standard — every load-bearing claim checked, every quotation carrying
+a live link that contains its wording, no placeholder left in the prose. Do not
+commit, push, or copy anything yourself; the runner does that after the gates pass.
 
 ## The three dockets
 
@@ -204,7 +208,7 @@ the Chiefs report by giving them their own hero images."
   date: <run time, CT>
   author: Philip Huffman
   lastmod: <same as date>
-  draft: true
+  draft: false
   featuredOnHome: true
   hero_desktop: "img/articles/104-docket-report_16x9.webp"
   hero_mobile: "img/articles/104-docket-report_4x5.webp"
@@ -213,24 +217,29 @@ the Chiefs report by giving them their own hero images."
   tags: [civics, essays, law]
   ---
   ```
+- **This report is PUBLISHED on the run, not filed as a draft.** `draft: false` is required, and `draft: true` is now a gate failure rather than a neutral state: the runner would commit and push successfully, every gate would report OK, and the deploy would carry nothing at all.
 - **`featuredOnHome: true` is required.** The home page shows five posts and takes them from those carrying this flag, so an unflagged post publishes and never appears in the Recent Posts feed. More than five flagged posts already exist, so the flag is what puts a given week's report on the page. The Senate skill was missing this line until 2026-09-27 and every one of its installments published before that date was invisible on the home page; do not repeat it here.
 - Date guard: the `date` must never be in the future relative to the wall clock
   when the file is written. Hugo's default `buildFuture: false` silently skips
   future-dated content — the build succeeds and the page is simply absent, which
   is the failure that hides. At an 0800 CT run, stamp the run time; do not round
   it forward.
-- The four **series-plate hero fields** (above) are required and are copied verbatim; the runner's `scripts/check-hero-paths.py` gate fails if a path names no file. No newsletter/sendfox fields.
+- The four **series-plate hero fields** (above) are required and are copied verbatim; the runner's `scripts/check-report-frontmatter.py` gate fails if any is missing, if a path names no file, or if the plate is not `104-docket-report`. No newsletter/sendfox fields.
 - Verify: do NOT run `hugo` or the gate scripts yourself; they are not in your
   allow-list and the runner does them immediately after this session ends,
   recording the real results in the log. Do not claim in your summary that a
   gate passed. The runner runs two builds (production, and `--buildDrafts` to a
-  scratch destination so the draft is actually rendered) plus the offline
-  content gates.
-- Leave the file uncommitted. Do NOT copy to SimpleBrain (that happens at
-  publish). Do NOT commit or push.
+  scratch destination so the file is actually rendered) plus the content gates,
+  including **`check-links.py --online --titles`**, which fetches every URL you
+  cite and compares the page's own title against your link text. That is the only
+  check in this repo that can catch a link resolving to the wrong page — a URL
+  that returns 200 and shows the reader an unrelated document.
+- Do NOT commit, push, or copy to SimpleBrain. The runner does all three after
+  the gates pass.
 
 ## After the run
 
-The report is a draft. Philip decides whether to publish. If he publishes it,
-the normal publish path applies: the SimpleBrain flow, the SESSION_STATE entry,
-one commit. That is not this job's work.
+The runner publishes the report on the run: SESSION_STATE entry, one commit,
+push, and the SimpleBrain mirror, all done by `scripts/publish-report.sh` after
+every gate passes. None of that is your work. If a gate fails, the run aborts
+without publishing and the article is left in place for review.

@@ -52,6 +52,7 @@ cpn = load("check-prepositions")
 cs = load("check-secrets")
 chp = load("check-hero-paths")
 csp = load("check-series-posts")
+crf = load("check-report-frontmatter")
 
 EM = "\u2014"
 
@@ -1093,13 +1094,21 @@ class TestChiefsReport(unittest.TestCase):
         self.assertEqual(ck.urls_in(blob), {"https://x.example/1", "https://y.example/2"})
 
 
-class TestChiefsArticleValidation(unittest.TestCase):
+class TestReportFrontmatterGate(unittest.TestCase):
     """The only review an auto-published article gets. Every rule here is a
-    defect this repo has actually shipped."""
+    defect this repo has actually shipped.
+
+    These rules used to live in `chiefs-report.py --validate`, which was the only
+    job that published. When the Senate and docket jobs started publishing too
+    (Philip, 2026-09-27), the rules moved to `scripts/check-report-frontmatter.py`
+    so one gate covers all three rather than three copies drifting apart — which
+    is exactly how the `featuredOnHome` requirement went missing from one skill
+    and not another, hiding five Senate reports from the home feed.
+    """
 
     def setUp(self):
         import tempfile
-        self.dir = Path(tempfile.mkdtemp(prefix="chiefs-validate-"))
+        self.dir = Path(tempfile.mkdtemp(prefix="report-fm-"))
         self.now = datetime(2026, 9, 29, 18, 30, tzinfo=ck.CT)
 
     def write(self, body: str) -> Path:
@@ -1112,10 +1121,12 @@ class TestChiefsArticleValidation(unittest.TestCase):
             "title": '"Chiefs Report: September 29, 2026"',
             "description": '"A one-sentence description."',
             "date": "2026-09-29T18:30:00-05:00",
+            "lastmod": "2026-09-29T18:30:00-05:00",
+            "author": "Philip Huffman",
             "draft": "false",
             "featuredOnHome": "true",
-            # The series plate. Real paths, because the validator requires the
-            # files to exist — same reason the runner would catch a typo.
+            # The series plate. Real paths, because the gate requires the files
+            # to exist — same reason the runner would catch a typo.
             "hero_desktop": '"img/articles/103-chiefs-report_16x9.webp"',
             "hero_mobile": '"img/articles/103-chiefs-report_4x5.webp"',
             "hero_alt": '"A marble football against a crimson field."',
@@ -1127,7 +1138,7 @@ class TestChiefsArticleValidation(unittest.TestCase):
 
     def test_a_good_article_passes(self):
         p = self.write(self.good())
-        self.assertEqual(ck.validate_article(p, now=self.now), [])
+        self.assertEqual(crf.validate(p, now=self.now), [])
 
     def test_a_missing_hero_field_is_caught(self):
         # Every report carries the same series plate; a report without it ships
@@ -1137,17 +1148,17 @@ class TestChiefsArticleValidation(unittest.TestCase):
                 ln for ln in self.good().split("\n")
                 if not ln.startswith(missing + ":")))
             with self.subTest(missing=missing):
-                problems = ck.validate_article(p, now=self.now)
+                problems = crf.validate(p, now=self.now)
                 self.assertTrue(any(missing in m for m in problems), (missing, problems))
 
     def test_a_hero_path_that_names_no_file_is_caught(self):
         # The failure this is for: a hero path that renders an empty box on a
         # page nobody reviews before it ships.
         p = self.write(self.good(hero_desktop='"img/articles/does-not-exist_16x9.webp"'))
-        problems = ck.validate_article(p, now=self.now)
+        problems = crf.validate(p, now=self.now)
         self.assertTrue(any("does not exist" in m for m in problems), problems)
         p2 = self.write(self.good(hero_mobile='"img/articles/also-missing_4x5.webp"'))
-        self.assertTrue(any("does not exist" in m for m in ck.validate_article(p2, now=self.now)))
+        self.assertTrue(any("does not exist" in m for m in crf.validate(p2, now=self.now)))
 
     def test_the_series_plate_actually_resolves_against_the_repo(self):
         # Guards against the fixture drifting away from the real files: if the
@@ -1156,54 +1167,151 @@ class TestChiefsArticleValidation(unittest.TestCase):
                     "img/articles/103-chiefs-report_4x5.webp"):
             self.assertTrue((REPO / "static" / rel).is_file(), rel)
 
+    def test_the_plate_pin_catches_a_series_that_drifted_to_another_image(self):
+        # A series uses one plate for every installment, so a report that quietly
+        # picks a different image loses the visual identity the plate exists to
+        # hold. Without the pin, any existing file satisfies the check above.
+        p = self.write(self.good())  # the Chiefs fixture, checked as the Senate series
+        problems = crf.validate(p, hero_plate="105-senate-race-report", now=self.now)
+        self.assertTrue(any("series plate" in m for m in problems), problems)
+        # And pinning the plate the fixture actually uses passes.
+        self.assertEqual(crf.validate(p, hero_plate="103-chiefs-report", now=self.now), [])
+
     def test_a_draft_flag_left_true_is_caught(self):
-        # It would deploy nothing while looking like it published.
+        # The failure that matters most now that these jobs publish: the commit
+        # and push succeed, every other gate reports OK, and the deploy carries
+        # nothing at all.
         p = self.write(self.good(draft="true"))
-        self.assertTrue(any("draft" in m for m in ck.validate_article(p, now=self.now)))
+        self.assertTrue(any("draft" in m for m in crf.validate(p, now=self.now)))
 
     def test_a_missing_home_flag_is_caught(self):
         # More than five posts already carry the flag, so an unflagged post
         # never reaches the home feed at all: published and unseen.
         p = self.write(self.good(featuredOnHome="false"))
-        self.assertTrue(any("featuredOnHome" in m for m in ck.validate_article(p, now=self.now)))
+        self.assertTrue(any("featuredOnHome" in m for m in crf.validate(p, now=self.now)))
         p2 = self.write("\n".join(
             ln for ln in self.good().split("\n") if not ln.startswith("featuredOnHome")))
-        self.assertTrue(any("featuredOnHome" in m for m in ck.validate_article(p2, now=self.now)))
+        self.assertTrue(any("featuredOnHome" in m for m in crf.validate(p2, now=self.now)))
 
     def test_a_future_date_is_caught(self):
         # buildFuture: false skips the page WITHOUT failing the build — the
         # failure recorded three times in SESSION_STATE.
         p = self.write(self.good(date="2026-09-29T23:30:00-05:00"))
-        problems = ck.validate_article(p, now=self.now)
+        problems = crf.validate(p, now=self.now)
         self.assertTrue(any("ahead of the clock" in m for m in problems), problems)
 
     def test_small_clock_slack_is_allowed(self):
         # The stamp is taken microseconds before the check runs, so a modest
         # drift must not fail a correct article. The default slack is 5 minutes.
         p = self.write(self.good(date="2026-09-29T18:33:00-05:00"))
-        self.assertEqual(ck.validate_article(p, now=self.now), [])
+        self.assertEqual(crf.validate(p, now=self.now), [])
 
     def test_an_unparseable_date_is_caught_rather_than_skipped(self):
         p = self.write(self.good(date="September 29, 2026"))
-        self.assertTrue(any("ISO 8601" in m for m in ck.validate_article(p, now=self.now)))
+        self.assertTrue(any("ISO 8601" in m for m in crf.validate(p, now=self.now)))
 
     def test_a_missing_attribution_is_caught(self):
         body = self.good().replace("*PRH | [huffmanwrites.org] | © Philip Huffman*\n", "")
         p = self.write(body)
-        self.assertTrue(any("attribution" in m for m in ck.validate_article(p, now=self.now)))
+        self.assertTrue(any("attribution" in m for m in crf.validate(p, now=self.now)))
 
     def test_missing_required_fields_are_named(self):
         p = self.write("---\ndraft: false\nfeaturedOnHome: true\n---\n*PRH | x*\n")
-        problems = ck.validate_article(p, now=self.now)
-        for name in ("title", "description", "date"):
+        problems = crf.validate(p, now=self.now)
+        for name in ("title", "description", "date", "lastmod", "author"):
             self.assertTrue(any(name in m for m in problems), (name, problems))
 
     def test_a_missing_file_is_a_problem_not_a_crash(self):
-        self.assertTrue(ck.validate_article(self.dir / "nope.md", now=self.now))
+        self.assertTrue(crf.validate(self.dir / "nope.md", now=self.now))
 
     def test_no_frontmatter_is_caught(self):
         p = self.write("just prose, no frontmatter\n")
-        self.assertTrue(any("frontmatter" in m for m in ck.validate_article(p, now=self.now)))
+        self.assertTrue(any("frontmatter" in m for m in crf.validate(p, now=self.now)))
+
+    def test_unclosed_frontmatter_is_named_as_such(self):
+        p = self.write("---\ntitle: x\ndraft: false\n\nbody with no closing fence\n")
+        self.assertTrue(any("not closed" in m for m in crf.validate(p, now=self.now)))
+
+    def test_the_gate_exits_nonzero_so_a_runner_can_abort_on_it(self):
+        # The runner branches on the exit code, so a gate that printed problems
+        # and returned 0 would abort nothing.
+        import io
+        import contextlib
+        p = self.write(self.good(draft="true"))
+        buf = io.StringIO()
+        old = sys.argv
+        sys.argv = ["check-report-frontmatter.py", "--file", str(p)]
+        try:
+            with contextlib.redirect_stderr(buf):
+                rc = crf.main()
+        finally:
+            sys.argv = old
+        self.assertEqual(rc, 1)
+        self.assertIn("NOT PUBLISHABLE", buf.getvalue())
+
+    def test_every_publishing_runner_runs_the_frontmatter_gate(self):
+        # A gate nobody runs is not a gate. All three jobs that now publish must
+        # call it, and must pin their own series plate.
+        for runner, plate in (("senate-report-runner.sh", "105-senate-race-report"),
+                              ("docket-weekly-report-runner.sh", "104-docket-report"),
+                              ("chiefs-weekly-report-runner.sh", "103-chiefs-report")):
+            text = (SCRIPTS / runner).read_text(encoding="utf-8")
+            with self.subTest(runner=runner):
+                self.assertIn("check-report-frontmatter.py", text)
+                self.assertIn(f"--hero-plate {plate}", text)
+
+    def test_the_chiefs_collector_no_longer_carries_a_second_copy_of_the_rules(self):
+        # The rules must live in exactly one place. A second copy is how the two
+        # versions drift, and the drift is silent until a report ships wrong.
+        src = (SCRIPTS / "chiefs-report.py").read_text(encoding="utf-8")
+        self.assertNotIn("def validate_article", src)
+        self.assertIn("check-report-frontmatter.py", src)
+
+    def test_corpus_mode_covers_every_published_series_installment(self):
+        # CI runs --corpus because it has no single file to check. It must find
+        # the same installments the series gate does — the two derive from
+        # data/gallery.yml, and a series recognised by one and not the other is
+        # how the featuredOnHome rule came to live in one skill and not another.
+        corpus = crf.series_installments()
+        self.assertGreaterEqual(len(corpus), 4)
+        for name in ("senate-race-report-2026-09-27.md",):
+            self.assertTrue(any(p.name == name for p in corpus), [p.name for p in corpus])
+
+    def test_corpus_mode_excludes_drafts(self):
+        # A draft is not published, so it has no publication obligation. If this
+        # ever included drafts, the gate would fail on every job's work in
+        # progress.
+        for p in crf.series_installments():
+            fm = crf.split_frontmatter(p.read_text(encoding="utf-8"))[0]
+            self.assertNotEqual(crf.field(fm, "draft"), "true", p.name)
+
+    def test_corpus_mode_passes_on_the_real_repo(self):
+        # The standing state: every published series installment is publishable.
+        # A failure here is a real report the deploy would silently drop.
+        problems = []
+        for p in crf.series_installments():
+            problems += [f"{p}: {m}" for m in crf.validate(p)]
+        self.assertEqual(problems, [])
+
+    def test_ci_runs_the_frontmatter_gate(self):
+        ci = (REPO / ".github" / "workflows" / "hugo.yml").read_text(encoding="utf-8")
+        self.assertIn("check-report-frontmatter.py --corpus", ci)
+
+    def test_a_missing_file_argument_is_an_error_not_a_silent_pass(self):
+        # A gate that exits 0 when misconfigured is worse than no gate: CI would
+        # be green while checking nothing.
+        import io
+        import contextlib
+        buf = io.StringIO()
+        old = sys.argv
+        sys.argv = ["check-report-frontmatter.py"]
+        try:
+            with contextlib.redirect_stderr(buf):
+                with self.assertRaises(SystemExit) as cm:
+                    crf.main()
+        finally:
+            sys.argv = old
+        self.assertNotEqual(cm.exception.code, 0)
 
 
 class TestHeroPathGate(unittest.TestCase):
@@ -1433,30 +1541,48 @@ class TestChiefsRunnerContract(unittest.TestCase):
 
     These are not style rules. Each asserts a property whose absence would let
     an unreviewed article reach production, and each is cheap to break by
-    editing the script without thinking about this job publishing."""
+    editing the script without thinking about this job publishing.
+
+    The publish tail itself — preflight, SESSION_STATE entry, commit, push, push
+    verification, SimpleBrain — now lives in `scripts/publish-report.sh`, shared
+    with the Senate and docket runners, so the assertions about it are on the
+    library (see TestPublishLibrary below) and this class asserts only what is
+    specific to the Chiefs job: that it calls into the library, that it cannot
+    publish without the library having succeeded, and that its own guards and
+    gates are wired.
+    """
 
     def setUp(self):
         self.runner = (REPO / "scripts" / "chiefs-weekly-report-runner.sh").read_text()
+        self.lib = (REPO / "scripts" / "publish-report.sh").read_text()
+
+    def test_it_sources_the_shared_publish_tail(self):
+        # The whole point of the library: one publish path, three jobs. Three
+        # copies of this logic is how the featuredOnHome rule drifted between
+        # skills and hid five reports from the home feed.
+        self.assertIn('. "$REPO/scripts/publish-report.sh"', self.runner)
 
     def test_a_gate_failure_aborts_the_push(self):
-        # In the four drafting jobs a failed gate is a note for Philip. Here it
-        # is the only review the piece gets, so it must stop the run.
-        i = self.runner.find("GATE_FAILED=1")
+        # The gate abort must come before anything publishes. In the library the
+        # publish is publish_article; the runner must not reach it on failure.
+        self.assertIn("GATE_FAILED=1", self.runner)
+        i = self.runner.find('if [ "$GATE_FAILED" -ne 0 ]')
         self.assertGreater(i, 0)
         after = self.runner[i:]
         self.assertIn("NOT PUBLISHING", after)
-        self.assertLess(after.find("NOT PUBLISHING"), after.find("git push"),
-                        "the gate abort must come before the push")
+        self.assertLess(after.find("NOT PUBLISHING"), after.find("publish_article"))
 
     def test_a_build_failure_aborts_the_push(self):
-        i = self.runner.find("BUILD_FAILED=1")
+        self.assertIn("BUILD_FAILED=1", self.runner)
+        i = self.runner.find('if [ "$BUILD_FAILED" -ne 0 ]')
         self.assertGreater(i, 0)
-        after = self.runner[i:]
-        self.assertIn("not publishing", after)
-        self.assertLess(after.find("not publishing"), after.find("git push"))
+        self.assertLess(self.runner.find("BUILD_FAILED=1"), self.runner.find("publish_article"))
 
-    def test_the_article_is_validated_before_the_builds(self):
-        self.assertLess(self.runner.find("--validate"), self.runner.find("check-quotes"))
+    def test_the_article_is_validated_before_it_is_published(self):
+        # The frontmatter gate reads the artifact as a publisher (draft false,
+        # featuredOnHome true); it must run before the library publishes.
+        self.assertLess(self.runner.find("check-report-frontmatter"),
+                        self.runner.find("publish_article"))
 
     def test_the_article_path_is_bound_before_anything_uses_it(self):
         # The guards and the commit all read $ARTICLE. Under `set -u` an unbound
@@ -1466,42 +1592,18 @@ class TestChiefsRunnerContract(unittest.TestCase):
                          if not ln.lstrip().startswith("#"))
         define = code.find('ARTICLE="content/posts/sports/')
         self.assertGreater(define, 0)
-        self.assertLess(define, code.find('rm -f "$ARTICLE"'))
+        self.assertLess(define, code.find('publish_preflight "$ARTICLE"'))
         self.assertLess(define, code.find("claude -p"))
         self.assertEqual(code.count('ARTICLE="content/posts/sports/'), 1,
                          "exactly one definition; a second would shadow the first")
 
-    def test_a_dirty_session_state_stops_the_run(self):
-        # The runner inserts its entry by splitting SESSION_STATE.md at an
-        # anchor, so uncommitted edits already in that file would be committed
-        # under this run's message and attributed to this job.
+    def test_the_preflight_guard_runs_before_the_writer(self):
+        # It deletes a stale file at $ARTICLE so the post-condition is binary:
+        # the file exists because this run wrote it, or the run aborts. Running
+        # it after the writer would delete this run's own work.
         code = "\n".join(ln for ln in self.runner.splitlines()
                          if not ln.lstrip().startswith("#"))
-        self.assertIn("REFUSING TO RUN", code)
-        i = code.find("REFUSING TO RUN")
-        self.assertLess(i, code.find("git push"), "the guard precedes the push")
-        self.assertIn("git status --porcelain -- SESSION_STATE.md", code)
-
-    def test_a_stale_article_is_removed_before_the_writer_runs(self):
-        # The dangerous outcome for the article path is not that a stale draft
-        # gets overwritten — it is that the WRITER fails and the runner then
-        # commits the stale draft under this run's title. Deleting it first
-        # makes the post-condition binary: the file exists because this run
-        # wrote it, or the run aborts for a missing file.
-        code = "\n".join(ln for ln in self.runner.splitlines()
-                         if not ln.lstrip().startswith("#"))
-        i = code.find("removing a pre-existing")
-        self.assertGreater(i, 0)
-        self.assertIn('rm -f "$ARTICLE"', code)
-        self.assertLess(i, code.find("claude -p"),
-                        "the stale copy must go before the writer, not after")
-
-    def test_the_push_is_verified_rather_than_assumed(self):
-        # `git push` exit 0 after racing another push does not mean the commit
-        # landed, and a published report that never reached the remote looks
-        # exactly like success in the log.
-        self.assertIn("git rev-parse origin/main", self.runner)
-        self.assertIn("push did not land", self.runner)
+        self.assertLess(code.find('publish_preflight "$ARTICLE"'), code.find("claude -p"))
 
     def test_the_agent_cannot_commit_push_or_touch_session_state(self):
         # The runner owns all three. An agent that could push could publish
@@ -1512,17 +1614,6 @@ class TestChiefsRunnerContract(unittest.TestCase):
         grant = self.runner[i:self.runner.find("\n", self.runner.find(">> \"$OUT_LOG\"", i))]
         self.assertNotIn("git", grant)
         self.assertIn("Bash(python3 scripts/chiefs-report.py*)", grant)
-
-    def test_the_commit_names_only_the_article_and_the_state_file(self):
-        # `git add -A` would let a writer that wandered outside its brief get the
-        # result into a published commit. Comments are stripped first: the
-        # runner explains in prose that it does NOT use `git add -A`, and a test
-        # that matched its own documentation would be testing the wrong text.
-        code = "\n".join(ln for ln in self.runner.splitlines()
-                         if not ln.lstrip().startswith("#"))
-        self.assertIn('git add "$ARTICLE" SESSION_STATE.md', code)
-        self.assertNotIn("git add -A", code)
-        self.assertNotIn("git add .", code)
 
     def test_the_season_guard_exits_zero(self):
         # A non-zero exit would raise the failure alert every Tuesday for six
@@ -1536,6 +1627,99 @@ class TestChiefsRunnerContract(unittest.TestCase):
         # later in the file. This cost a debugging round while writing the job.
         for m in re.finditer(r"\$\{[A-Z_]+:-([^}]*)\}", self.runner):
             self.assertNotIn("'", m.group(1), m.group(0)[:120])
+
+
+class TestPublishLibrary(unittest.TestCase):
+    """The shared publish tail, asserted once rather than per runner.
+
+    Every property here was previously asserted against the Chiefs runner. It is
+    the only job that publishes today, so the failures it learned from are the
+    failures the other two are now exposed to.
+    """
+
+    def setUp(self):
+        self.lib = (SCRIPTS / "publish-report.sh").read_text()
+
+    def test_a_gate_failure_stops_before_the_commit(self):
+        # The library is called only after a caller's gates pass, but the commit
+        # itself is guarded too: a failed `git add` or `git commit` must not fall
+        # through to a push. Comments are stripped first — the library's own
+        # prose mentions `git push` before the code reaches it, and a test that
+        # matched its documentation would be testing the wrong text.
+        code = "\n".join(ln for ln in self.lib.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertIn("git add failed", code)
+        self.assertIn("git commit failed", code)
+        self.assertLess(code.find("git add failed"), code.find("git push"))
+
+    def test_the_push_is_verified_rather_than_assumed(self):
+        # `git push` exit 0 after racing another push does not mean the commit
+        # landed, and a published report that never reached the remote looks
+        # exactly like success in the log.
+        self.assertIn("git rev-parse origin/main", self.lib)
+        self.assertIn("push did not land", self.lib)
+
+    def test_a_dirty_session_state_stops_the_run(self):
+        # The entry is inserted by splitting SESSION_STATE.md at an anchor, so
+        # uncommitted edits already there would be committed under this run's
+        # message and attributed to this job.
+        self.assertIn("REFUSING TO RUN", self.lib)
+        self.assertIn("git status --porcelain -- SESSION_STATE.md", self.lib)
+
+    def test_a_stale_article_is_removed_before_the_writer_runs(self):
+        # The dangerous outcome is not "it gets overwritten" — it is "the writer
+        # fails and the runner then commits a stale draft under this run's
+        # title". Deleting it first makes the post-condition binary.
+        self.assertIn("removing a pre-existing", self.lib)
+        self.assertIn('rm -f "$article"', self.lib)
+
+    def test_the_commit_names_only_the_article_and_the_state_file(self):
+        # `git add -A` would let a writer that wandered outside its brief get the
+        # result into a published commit. Comments are stripped first: the runner
+        # explains in prose that it does NOT use `git add -A`, and a test that
+        # matched its own documentation would be testing the wrong text.
+        code = "\n".join(ln for ln in self.lib.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertIn('git add "$article" SESSION_STATE.md', code)
+        self.assertNotIn("git add -A", code)
+        self.assertNotIn("git add .", code)
+
+    def test_the_entry_is_inserted_above_the_first_maintenance_entry(self):
+        # An entry appended at the bottom, or written in the wrong place, breaks
+        # the file SESSION_STATE exists to be — the thing a session reads first.
+        self.assertIn('anchor = "### Maintenance —"', self.lib)
+        self.assertIn("refusing to guess where the entry goes", self.lib)
+
+    def test_the_dry_run_stops_before_anything_touches_git(self):
+        # A pipeline that publishes unreviewed must be provable without being
+        # performed.
+        self.assertIn("publish_dry_run_stop", self.lib)
+        i = self.lib.find("publish_dry_run_stop()")
+        body = self.lib[i:i + 700]
+        self.assertIn("Nothing was published", body)
+
+    def test_the_historical_chiefs_switches_still_work(self):
+        # CHIEFS_DRY_RUN and CHIEFS_SKIP_SIMPLEBRAIN are documented in CLAUDE.md
+        # and used by the job's own smoke runs. The generic names must not have
+        # replaced them.
+        self.assertIn("CHIEFS_DRY_RUN", self.lib)
+        self.assertIn("CHIEFS_SKIP_SIMPLEBRAIN", self.lib)
+        self.assertIn("REPORT_DRY_RUN", self.lib)
+        self.assertIn("REPORT_SKIP_SIMPLEBRAIN", self.lib)
+
+    def test_a_simplebrain_failure_does_not_fail_the_site_publish(self):
+        # The article is already live and correct; the mirror is secondary. It is
+        # alerted so it is visible, but it must not be reported as a failed
+        # publish.
+        i = self.lib.find("SimpleBrain sync incomplete")
+        self.assertGreater(i, 0)
+        self.assertIn("the site publish stands", self.lib[i - 200:i + 200])
+
+    def test_it_never_dies_on_a_nonexistent_plate(self):
+        # The library is sourced by three runners; a `set -e` trip inside a
+        # function that is expected to return non-zero (the dry-run stop) would
+        # abort every real run before the publish.
+        self.assertIn("if ! report_dry_run; then", self.lib)
 
 
 # --------------------------------------------------------------------------
