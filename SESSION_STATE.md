@@ -12,6 +12,22 @@
 
 ---
 
+### Maintenance — September 28, 2026 — Amended "The Arch and the Keystone": the three-way split, and the binary cut was hiding a party effect
+
+Philip: "What about three states: unified Democrat control, unified Republican control, un-unified government?" then "Amend." **The two-way comparison was the wrong cut, and the amendment says so in the published piece.**
+
+- **The finding, and it is a correction to what the essay first published.** Splitting unified government in two (regimes assigned per the **House Historian's own `Party Government Since 1857` table**, which is now a cited source) shows the whole apparent advantage belongs to one of its two forms. Real GDP growth: **D-unified 5.21%** (n=36) vs **R-unified 1.56%** (n=12) vs **divided 2.26%** (n=48) over 1930–2025. Postwar: 4.02 / 2.47 / 2.78. Modern (1981+): 2.60 / 2.57 / 2.76 — hundredths of a point apart, and not in the order either folk theory predicts.
+- **The test that settles it is the within-party comparison**, because that is what separates a composition effect from a party effect. Composition effect (unified minus divided, same president's party): **+2.19 for Democratic presidents, −0.32 for Republican ones** (full sample). The interaction regression makes it explicit: `growth = 2.72 + 0.17·Dem − 0.25·Unified + 1.38·(Dem×Unified)`, where the independent Unified coefficient is **−0.25, t = −0.31** — nothing. All of the apparent premium is the interaction, and even that (t = 1.24) is not significant.
+- **Two things dissolve even the Democratic-unified effect.** Its years split cleanly by era (7.07% for 1933–46, 4.02% after) — still mostly Roosevelt and the war. And **R-unified's twelve years include 1930**, Hoover's −8.51%, which alone drags that mean down about a point; excluding it reads 2.47%, which is divided government to the tenth. The medians never supported the story either: R-unified medians 2.62–2.78 sit beside divided medians 2.74–2.86 throughout.
+- **One honest counter-finding, published with its own weakness attached.** Unemployment is *lower* under unified Republican government (4.80% vs 5.91%, t = −2.98; modern 4.92% vs 6.16%). But the years are 2001–2006 and 2017–2018, and the Democratic-unified modern mean is dragged by the inherited 2009–2010. Recorded as a handful of specific episodes, explicitly not a governing effect — the kind of finding a three-way split makes easy to generate and hard to defend.
+- **Fiscal measures do not separate under three states either**: deficit 2.65 / 2.37 / 2.66 percent of GDP and outlays 19.1 / 19.3 / 19.7. Neither form of unified government restrains spending, so the Niskanen claim fails the three-way test too.
+- **The title and framing were NOT changed, deliberately.** The arch metaphor still carries the revised argument (the keystone decides whether the arch locks or lets the daylight through), and the description, `hero_caption`, closing section, and §VIII verdict were rewritten to match. Renumbered IV–VIII. A new closing paragraph states the correction outright: an argument for a trifecta is an argument about what a party does with power, not about what the economy does with the party.
+- **A stale line was caught by the amendment.** The intro claimed the site forecast divided government "nine weeks out"; it was ten weeks when originally published and is now five days short of the election, so it reads "when the midterms were ten weeks out."
+- **Verified by running it.** Clean `hugo --gc --minify` **428 pages**; `test_gates.py` **229 OK**; gallery-pages OK; hero-paths OK; render-integrity **495 pages, no sentinels**; anchors-corpus OK (184 posts); links `--check` OK. `--online --titles --file`: **9 ok, 0 dead, 0 redirecting, 0 title mismatches** (FRED and the AEA PDF timed out on this run; both verified in earlier sweeps). Browser: all 8 sections + Sources in order, **3 tables rendering** (4×5, 7×7, 7×4), the new House Historian source live, and the revised description and caption on the page.
+- **Files changed:** `content/posts/essays/the-arch-and-the-keystone.md`.
+
+---
+
 ### Maintenance — September 28, 2026 — Published "The Arch and the Keystone," and a government-cycle effect that turns out to be a Depression artifact
 
 Philip: "Now do a similar piece on how the economy goes when one party controls the House, Senate, and White House." **A ~2,800-word companion to *The Tide and the Gate*, computed from scratch, with a published claim contradicted by the data.**

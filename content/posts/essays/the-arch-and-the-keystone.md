@@ -1,14 +1,14 @@
 ---
 title: "The Arch and the Keystone: Unified Government, Divided Government, and the Economy"
-description: "One party holding the House, the Senate, and the White House sounds like the condition for getting things done. The evidence says it barely moves the economy, and that what it changes instead is which laws get written."
+description: "One party holding the House, the Senate, and the White House sounds like the condition for getting things done. Split unified government in two, and the advantage belongs to only one of its forms: what looked like a composition effect is a party effect in disguise."
 date: 2026-09-28T13:40:00-05:00
 author: Philip Huffman
-lastmod: 2026-09-28T13:40:00-05:00
+lastmod: 2026-09-28T15:10:00-05:00
 featuredOnHome: true
 hero_desktop: "img/articles/107-trifecta_16x9.webp"
 hero_mobile: "img/articles/107-trifecta_4x5.webp"
 hero_alt: "A monumental arch of veined white marble standing alone in a deep midnight navy void, built from wedge-shaped blocks whose joints are cut true at the springing while the block at the crown sits a fraction out of alignment, a blade of amber-gold light escaping through the offset joint and falling as fine gold dust."
-hero_caption: "An arch holds because the outer stones bear the load. The keystone was never what kept it standing."
+hero_caption: "An arch holds because the outer stones bear the load. The keystone decides whether it locks or lets the daylight through."
 tags:
   - economy
   - politics
@@ -17,7 +17,8 @@ tags:
 draft: false
 ---
 
-On November 3 the country votes, and the most probable outcome, on the current arithmetic, is that one chamber changes hands and the other does not. That is the forecast this site already published nine weeks out, and if it holds, the next two years will be conducted under divided government. So the question worth asking now is not who wins. It is what divided government actually accomplishes.
+On November 3 the country votes, and the most probable outcome, on the current arithmetic, is that one chamber changes hands and the other does not. That is the forecast this site published when the midterms were ten weeks out, and if it holds, the next two years will be conducted under divided government. So the question worth asking now is not who wins. It is what divided government actually accomplishes.
+
 The folk theory runs in two directions and both are confident. One holds that a single party controlling the House, the Senate, and the White House is the condition for competence: unified government acts, divided government quarrels. The other holds the opposite, that gridlock is good, because a government that cannot pass anything cannot do harm. Neither theory is well supported, and the reason is instructive, because the thing divided government reliably changes is not the economy. It is the statute book.
 
 ## I. Two words, and what they cover
@@ -56,7 +57,51 @@ The reason is visible in the era split. Between 1930 and 1946, the two divided-g
 
 The other outcomes behave the same way. Unemployment averaged 5.34 percent under unified government and 5.91 under divided across 1948 to 2025, a difference that is not significant. The federal deficit averaged 2.66 percent of GDP under unified government and 2.69 percent under divided, which is to say the two are indistinguishable. Federal outlays ran at 19.2 percent of GDP under trifectas and 19.6 percent without them. On none of these measures does the composition of government separate the outcomes.
 
-## IV. The strongest claim, and why it does not survive
+## IV. Three states, not two
+
+The comparison above is the one everyone runs, and it is the wrong cut. There are three states, not two: unified under a Democratic president, unified under a Republican president, and divided. Split that way, the same years say something the two-way comparison cannot see. Regimes are assigned per the House Historian's own unified-government table ([U.S. House, 2025](#sources)).
+
+| Regime | 1930–2025 | n | 1947–2025 | n | 1981–2025 | n |
+| --- | --- | --- | --- | --- | --- | --- |
+| Unified, Democratic president | 5.21% | 36 | 4.02% | 22 | 2.60% | 6 |
+| Unified, Republican president | 1.56% | 12 | 2.47% | 11 | 2.57% | 9 |
+| Divided | 2.26% | 48 | 2.78% | 46 | 2.76% | 30 |
+| Democratic-unified vs divided (*t*) | +2.66 | | +1.85 | | −0.13 | |
+| Republican-unified vs divided (*t*) | −0.63 | | −0.57 | | −0.41 | |
+| Democratic- vs Republican-unified (*t*) | +2.59 | | +2.12 | | +0.02 | |
+
+The apparent advantage of unified government turns out to belong to one of its two forms. Unified Democratic government is the outlier. Unified Republican government performs no better than divided government, and in the full sample slightly worse.
+
+That reframes the question. The right test is not whether unified government helps but whether the composition of government matters *within* a party, because that is what separates a composition effect from a party effect:
+
+| President | Unified | Divided | Composition effect (*t*) |
+| --- | --- | --- | --- |
+| Democratic, 1930–2025 | 5.21% | 2.89% | +2.19 |
+| Republican, 1930–2025 | 1.56% | 1.95% | −0.32 |
+| Democratic, 1947–2025 | 4.02% | 2.89% | +1.63 |
+| Republican, 1947–2025 | 2.47% | 2.72% | −0.39 |
+| Democratic, 1981–2025 | 2.60% | 3.09% | −0.41 |
+| Republican, 1981–2025 | 2.57% | 2.46% | +0.15 |
+
+A regression on the postwar years makes it explicit. With an interaction term between the two:
+
+$$\text{growth} = 2.72 + 0.17\,\text{Democrat} - 0.25\,\text{Unified} + 1.38\,(\text{Democrat} \times \text{Unified})$$
+
+The independent effect of unified control is −0.25 points and indistinguishable from zero (*t* = −0.31). What looks like a unified-government premium is entirely an interaction: unified control pays only when the president is a Democrat, and even that coefficient (*t* = 1.24) does not reach significance.
+
+Then the war. Democratic unified years split cleanly by era: 7.07 percent for 1933 to 1946, 4.02 percent thereafter. What survives the three-way split is still mostly Roosevelt and the Second World War.
+
+And the Republican unified sample is smaller than its twelve years suggest, because one of them is 1930, when Hoover's last full year returned −8.51 percent. That single year drags the mean down by nearly a point on its own. Remove it and unified Republican government reads 2.47 percent, which is divided government to the tenth of a point. The medians were never the problem: Republican-unified medians of 2.62 to 2.78 sit beside the divided medians of 2.74 to 2.86 throughout.
+
+Since 1981 all three states read 2.60, 2.57, and 2.76 percent. The spread is hundredths of a point, and the ordering is not even the one either folk theory predicts.
+
+The fiscal measures do not separate either, and with three states visible this matters more than it did: the deficit ran 2.65 percent of GDP under Democratic trifectas, 2.37 under Republican ones, and 2.66 divided, with outlays at 19.1, 19.3, and 19.7. Neither form of unified government restrains spending.
+
+One result does run the other way, and it deserves its own weakness attached to it. Unemployment averaged 4.80 percent under unified Republican government against 5.91 divided, a significant difference (*t* = −2.98), and it holds in the modern window at 4.92 against 6.16. But read the years. Those are 2001 through 2006 and 2017 through 2018, the housing boom and the late expansion, while the Democratic-unified modern mean is dragged by 2009 and 2010, which were inherited. This is a handful of specific episodes rather than a governing effect, and it is the kind of finding a three-way split makes easy to generate and hard to defend.
+
+The correction matters more than the arithmetic. The two-way comparison was absorbing a party difference and relabeling it a composition difference. Split three ways, the composition effect collapses into the party effect, and the party effect is the one the companion essay already showed to be largely luck, largely Roosevelt, and absent since 1981.
+
+## V. The strongest claim, and why it does not survive
 
 There is a recent paper that argues the opposite, and it deserves to be taken seriously rather than waved away.
 
@@ -70,7 +115,7 @@ The first is that it is a conference paper, presented at ASSA, the EFA, and the 
 
 I want to be careful about that third point rather than score it. Their series is CRSP, which is the professional standard and covers 1927 onward; mine is an index average, which is a crude proxy and annual rather than monthly. A negative result from a worse instrument is weak evidence. What I can say is that the claim does not survive an independent attempt to check it with public data, that its effect is concentrated where the data are worst, and that a finding which reverses the received wisdom should be held to a higher standard than one that confirms it.
 
-## V. What divided government actually changes
+## VI. What divided government actually changes
 
 Here the literature is clearer, and the finding is more interesting than either folk theory.
 
@@ -82,7 +127,7 @@ That is the sharpest thing in this literature, and it is a finding that neither 
 
 Sarah Binder's measure tells the same story with more precision. She scored gridlock as the share of salient issues left unresolved, using New York Times editorials to define salience, and found that deadlock "was higher in periods of divided, rather than unified, party control." But the effect has been shrinking under her own measurement: in her later series it "misses standard levels of statistical significance (one-tailed test, p = .07)," and the main drivers turn out to be polarization and House–Senate divergence rather than which party holds what ([Binder, 2014](#sources)). Her most gridlocked Congress of the postwar era is the 112th, which was divided, at 71 percent of salient issues unresolved.
 
-## VI. The fiscal argument, tested
+## VII. The fiscal argument, tested
 
 The claim that divided government restrains spending is the one most often made and least often tested at the federal level. The best evidence is at the state level, where balanced-budget rules make the test cleaner.
 
@@ -90,11 +135,11 @@ That evidence is real. Alt and Lowry found that "divided government is less able
 
 Read those two together and the pattern is not restraint. It is *delay*. A divided government facing a shortfall does not cut harder or spend less; it fails to respond on time, and the deadline slips. That is a real cost, and it is a cost measured in legislative performance rather than in the deficit. My own numbers say the same: the deficit under unified and divided government differs by three hundredths of a percentage point over seventy-eight years, which is noise.
 
-## VII. What is actually true
+## VIII. What is actually true
 
 Here is the honest state of it.
 
-**For the economy, the composition of government barely matters, and the apparent effect is an artifact of the sample.** The full-period gap in growth looks significant until you split the sample, at which point it disappears; since 1981 it has been slightly *negative* and statistically indistinguishable from zero. Deficits, spending, and unemployment behave the same way. This is not a claim that policy does not matter. It is a claim that the specific question of which party holds which chamber is a weak instrument for policy, because presidents of both parties face both configurations and adjust to them.
+**For the economy, the composition of government barely matters, and the apparent effect is a party effect wearing a composition effect's clothes.** Splitting unified government in two shows the advantage belongs to one of its forms only; the independent effect of unified control is minus twenty-five hundredths of a point and insignificant. The rest is an interaction with the president's party, and that interaction does not survive the modern window: since 1981 all three states read within two-tenths of a point of one another. Deficits and spending behave the same way. This is not a claim that policy does not matter. It is a claim that which party holds which chamber is a weak instrument for policy.
 
 **The strongest contrary finding is real work but unproven.** Papamichalis and his coauthors have produced the best case for unified government, with a genuine identification strategy and international replication. It is also unpublished, its effect is concentrated in the era where the data are worst, and my own check with public data did not reproduce it. Treat it as a serious finding awaiting review, not as a settled one.
 
@@ -102,7 +147,11 @@ Here is the honest state of it.
 
 **And the folk theories are both wrong in the same direction.** "Unified governments act" is wrong because a trifecta does not repeal the filibuster, and the 107th Congress held one for months without much of a record. "Gridlock is good" is wrong because divided government does not produce stasis, it produces a different *kind* of law, and the trivial statutes it passes in greater numbers are not obviously the ones anyone wanted. Alesina and Rosenthal's moderation story is the most interesting of the three, and it is a claim about what voters intend rather than about what the economy delivers.
 
-An arch holds because the stones on either side of the crown are cut true and bear the load down through the springing. The keystone is what locks it, and an arch with a keystone slightly out of place still stands. It simply does not lock, and the light comes through the joint. That is what divided government is: a structure that carries its weight, admits more daylight than its builders intended, and does not fall down. The question for November is not whether the economy will notice. It almost certainly will not. It is which stones the next two years will set.
+An arch holds because the stones on either side of the crown are cut true and bear the load down through the springing. The keystone is what locks it, and an arch with a keystone slightly out of place still stands. It simply does not lock, and the light comes through the joint. The question for November is not whether the economy will notice. It almost certainly will not. It is which stones the next two years will set.
+
+The three-way split is the part worth keeping, because it corrects how the question is usually asked. "Unified government" is two different countries, and only one of them has ever shown the economic advantage attributed to the whole category. The other has shown none at all, and since 1981 neither has shown anything distinguishable from noise. An argument for a trifecta is an argument about what a party will do with the power, not about what the economy will do with the party. Those are different claims, and only the first survives contact with the record.
+
+That is the arch and the keystone together. The load-bearing structure is the economy, and it does not care which party cut the stones. What the keystone decides is whether the structure locks or lets the daylight through. Divided government does not fall down. It admits more light than its builders intended, which is either the defect or the point, depending on the purpose the building was meant to serve.
 
 ---
 
@@ -120,3 +169,4 @@ An arch holds because the stones on either side of the crown are cut true and be
 - Mayhew, D. R. (2005). [*Divided We Govern: Party Control, Lawmaking, and Investigations, 1946–2002*](https://yalebooks.yale.edu/book/9780300102888/divided-we-govern/). Yale University Press.
 - Niskanen, W. A. (2003, March). [*A Case for Divided Government*](https://www.cato.org/sites/cato.org/files/serials/files/policy-report/2003/3/niskanen.pdf). *Cato Policy Report*. (Advocacy publication, not peer-reviewed.)
 - Papamichalis, T., Ryu, D., & Wilson, M. (2025). [*Divided Government and the Stock Market*](https://www.aeaweb.org/conference/2025/program/paper/A5i6sHya). AEA/ASSA Annual Meeting conference paper.
+- U.S. House of Representatives, History, Art & Archives. (2025). [*Party Government Since 1857*](https://history.house.gov/Institution/Presidents-Coinciding/Party-Government/).
