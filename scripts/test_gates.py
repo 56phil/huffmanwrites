@@ -352,6 +352,41 @@ class TestLinkRules(unittest.TestCase):
         self.assertEqual(cl.clean("https://example.org/a."), "https://example.org/a")
         self.assertEqual(cl.clean("https://example.org/a,"), "https://example.org/a")
 
+    def test_markdown_emphasis_around_a_link_is_stripped(self):
+        # Measured 2026-09-28: an italicised markdown link — `*[text](url)*` —
+        # left the closing `)` AND the emphasis `*` on the captured URL, so the
+        # checker fetched `…/Book_VI)*`, got a 404, and reported a LIVE citation
+        # as DEAD. Stripping sentence punctuation alone could not reach it: the
+        # string ends in `*`, so `balanced()` never ran. This is the second time
+        # this false-alarm class shipped, so it is pinned twice over.
+        full = ("https://en.wikisource.org/wiki/"
+                "The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_VI")
+        for tail in (")*", ")*.", ").", ")", ")*,"):
+            with self.subTest(tail=tail):
+                self.assertEqual(cl.clean(full + tail), full)
+
+    def test_a_footnote_marker_is_stripped_from_a_url(self):
+        # `[Vote.gov](https://vote.gov/).[^6]` — the marker sits outside the
+        # period, and the bare-URL capture kept both. Same defect class.
+        self.assertEqual(cl.clean("https://vote.gov/).[^6"), "https://vote.gov/")
+        self.assertEqual(cl.clean("https://vote.gov/)[^6]"), "https://vote.gov/")
+
+    def test_a_url_inside_prose_parens_loses_only_the_prose_paren(self):
+        # The repair-plan Wikisource citation carries BALANCED parens of its own
+        # and must survive; a prose `(...)` wrapper must not.
+        keep = ("https://en.wikisource.org/w/index.php?title="
+                "Page:Paris_Agreement_(English).pdf/24&action=raw")
+        self.assertEqual(cl.clean(keep + ")"), keep)
+        self.assertEqual(cl.clean(keep), keep)
+
+    def test_the_emphasis_strip_does_not_eat_a_legitimate_url(self):
+        # A `*` or `_` can be part of a real path. Only a TRAILING wrapper is
+        # removed, and only when it is not followed by more path.
+        for u in ("https://example.org/a*b", "https://example.org/a_b",
+                  "https://example.org/path_here/more"):
+            with self.subTest(u=u):
+                self.assertEqual(cl.clean(u), u)
+
     def test_bot_blocking_hosts_are_recognised_including_subdomains(self):
         # A 403 from these says nothing about whether the link is real. Assert
         # against the gate's own list rather than a guessed host: the list is

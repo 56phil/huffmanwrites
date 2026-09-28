@@ -72,8 +72,39 @@ def balanced(url: str) -> str:
         url = url[:-1]
     return url
 
-# Trailing punctuation that markdown prose leaves attached to a URL.
-TRAILING = ".,;:!?"
+# Trailing characters that markdown prose hangs off the end of a URL: sentence
+# punctuation, and the emphasis wrappers (`*`, `_`, `~`, backtick) that close a
+# link whose text was italicised or bolded.
+#
+# The wrappers belong here because of a measured failure, not a theory. On
+# 2026-09-28 a bare-URL capture of `[text](https://en.wikisource.org/wiki/…/Book_VI)*`
+# kept the emphasis `*` AND the markdown-link `)`: `…/Book_VI)*`. Stripping
+# sentence punctuation alone changed nothing (the string ends in `*`), so
+# `balanced()` below never ran, the checker fetched `…/Book_VI)*`, got a 404 and
+# reported a **live citation as DEAD** — the second time this exact false-alarm
+# class shipped. `https://vote.gov/).[^6` is the same shape with a footnote.
+TRAILING = ".,;:!?*_~`"
+
+# A footnote marker the prose left stuck to the URL: `).[^6` or `…[^12]`.
+_FOOTNOTE_TAIL = re.compile(r"\[\^[^\]]*\]?$")
+
+
+def clean(url: str) -> str:
+    """Strip the markdown that the bare-URL class swallowed.
+
+    Iterated to a fixpoint, because the artefacts stack in the order markdown
+    nests them: the footnote marker sits outside the sentence period, the
+    emphasis wrapper outside the link paren, and the unbalanced paren is only
+    reachable once the wrapper is gone. A single pass fixes the first and
+    misses the rest, which is how `…/Book_VI)*` survived.
+    """
+    prev = None
+    while url != prev:
+        prev = url
+        url = _FOOTNOTE_TAIL.sub("", url)
+        url = url.rstrip(TRAILING)
+        url = balanced(url)
+    return url
 
 # Hosts that refuse automated clients as a matter of policy. A 403 here is
 # expected and says nothing about whether the link is real. Kept explicit so the
@@ -102,10 +133,6 @@ OWN = ("huffmanwrites.org", "localhost")
 def die(msg: str, code: int = 2) -> "None":
     print(f"links: ERROR: {msg}", file=sys.stderr)
     sys.exit(code)
-
-
-def clean(url: str) -> str:
-    return balanced(url.rstrip(TRAILING))
 
 
 # Minimum plausible corpus. Used by every mode so a gate can never print a
