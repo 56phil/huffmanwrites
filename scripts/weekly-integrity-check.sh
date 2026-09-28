@@ -39,6 +39,30 @@ mkdir -p "$(dirname "$LOG")"
 stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 rc_total=0
 
+# How much of a phase's output reaches the log.
+#
+# This is a diagnosis window, and getting it wrong is how a week of failures
+# stayed invisible. `check-links.py` prints the DEAD block FIRST and its counts
+# LAST, and the counts go to stderr — so in the merged capture the two things
+# that matter sit at opposite ends and, depending on buffering, the summary can
+# land anywhere. Keeping only `tail -40` therefore logged `--- links (online)
+# exit 1` with neither the DEAD block nor the summary line: the record said a
+# phase failed and threw away the reason. Measured 2026-09-28 on a run whose
+# merged output was 140 lines with the verdict at line 1 and the counts at 138.
+#
+# So the rule is by outcome, not by position: a phase that FAILS logs its whole
+# output (these are bounded, a couple hundred lines at most), and a phase that
+# passes logs only its tail. `log_output` keeps that in one place for both
+# helpers.
+log_output() {
+  local out="$1" rc="$2" tail_n="$3"
+  if [ "$rc" -ne 0 ]; then
+    printf '%s\n' "$out"
+    return 0
+  fi
+  printf '%s\n' "$out" | tail -"$tail_n"
+}
+
 run() {
   local label="$1"; shift
   echo "=== $label ($(stamp)) ==="
@@ -47,7 +71,7 @@ run() {
   # reported OK while blind. Run it, keep its status, then show the tail.
   local out rc
   out="$("$@" 2>&1)"; rc=$?
-  printf '%s\n' "$out" | tail -40
+  log_output "$out" "$rc" 40
   echo "--- $label exit $rc"
   [ "$rc" -ne 0 ] && rc_total=1
   return 0
@@ -61,7 +85,7 @@ run_soft() {
   echo "=== $label ($(stamp)) ==="
   local out rc
   out="$("$@" 2>&1)"; rc=$?
-  printf '%s\n' "$out" | tail -80
+  log_output "$out" "$rc" 80
   echo "--- $label exit $rc (informational; does not fail this job)"
   return 0
 }

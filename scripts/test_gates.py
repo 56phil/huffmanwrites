@@ -1500,6 +1500,37 @@ class TestReportFrontmatterGate(unittest.TestCase):
         self.assertIn('run_soft "links (titles)"', text)
         self.assertNotIn('run "links (titles)"', text)
 
+    def test_a_failing_phase_logs_its_whole_output_not_just_the_tail(self):
+        # Measured 2026-09-28: the weekly-integrity job logged `--- links
+        # (online) exit 1` with neither the DEAD block nor the counts, because
+        # run() kept only the last 40 lines and check-links.py puts its verdict
+        # block first and its counts last (on stderr). The log said a phase
+        # failed and discarded the reason. A failing phase must keep everything;
+        # a passing one keeps only its tail, so the log stays readable.
+        text = (SCRIPTS / "weekly-integrity-check.sh").read_text(encoding="utf-8")
+        self.assertIn("log_output()", text)
+        self.assertIn("log_output \"$out\" \"$rc\" 40", text)
+        self.assertIn("log_output \"$out\" \"$rc\" 80", text)
+        # The old shape — an unconditional tail on captured output — must be gone.
+        self.assertNotIn('printf \'%s\\n\' "$out" | tail -40', text)
+        self.assertNotIn('printf \'%s\\n\' "$out" | tail -80', text)
+
+    def test_the_log_output_rule_favours_the_failure(self):
+        # Same rule, exercised as behaviour rather than as source text: on a
+        # failure the head (where the verdict block lives) must survive.
+        import subprocess
+        sample = "REDIRECT (45):\n" + "  row\n" * 60 + "links: 9 ok, 0 dead\n"
+        script = (
+            'log_output() { local out="$1" rc="$2" n="$3"; '
+            'if [ "$rc" -ne 0 ]; then printf "%s\\n" "$out"; '
+            'else printf "%s\\n" "$out" | tail -"$n"; fi; }; '
+            'out=$(printf "%s" "$SAMPLE"); log_output "$out" 1 40'
+        )
+        got = subprocess.run(["bash", "-c", script], env={"SAMPLE": sample},
+                             capture_output=True, text=True).stdout
+        self.assertIn("REDIRECT (45):", got)
+        self.assertIn("links: 9 ok, 0 dead", got)
+
     def test_the_short_label_rule_is_the_shared_constant(self):
         # Guards against the filter being re-implemented with a different number
         # in a second place, which is how the two would drift.
