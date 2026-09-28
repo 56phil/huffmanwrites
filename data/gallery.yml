@@ -504,6 +504,11 @@
   # `docket-report-*.md` exists, so the switch needs no follow-up edit.
   link: /posts/essays/three-walls-and-three-slots/
   latest: /posts/essays/docket-report-*
+- image: /img/articles/107-trifecta_16x9.webp
+  title: The Arch and the Keystone
+  caption: An arch holds because the outer stones bear the load. The keystone was
+    never what kept it standing.
+  link: /posts/essays/the-arch-and-the-keystone/
 - image: /img/articles/106-tide-wheel_16x9.webp
   title: The Tide and the Gate
   caption: The tide arrives whether or not anyone governs it. The gate decides
