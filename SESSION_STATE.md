@@ -1473,6 +1473,17 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Pending / Next Actions
 
+- **Decide how the six AI-driven jobs reach Ollama — before Oct 3, 2026.** All five report runners
+  plus `wiki-check` set `ANTHROPIC_BASE_URL=http://localhost:11434`, and **nothing ensures that
+  server is running.** Ollama is not a brew service, has no LaunchAgent, and is not a login item; it
+  runs only while the desktop app is open. `wiki-check` failed at 13:30 on 2026-09-28 for exactly
+  this reason (`API Error: Connection refused`) and passed once the app was up. Two options:
+  install `ollama serve` as a LaunchAgent, or point the runners at Ollama Cloud with the keychain
+  key they already read. Either closes it; the failure mode is quiet (a connection error in a log
+  and an article that never appears), and the docket report starts publishing on this dependency on
+  Oct 3. Whichever is chosen, add a port probe to the shared preflight so the jobs fail loudly and
+  early rather than mid-run.
+
 ## Architecture Notes
 
 ## Visual Identity (Established)
