@@ -12,6 +12,21 @@
 
 ---
 
+### Maintenance — September 28, 2026 — The weekly-integrity job was failing on two live links, and the defect was in my own gate
+
+Found by answering "is there anything I should do?" and reading the logs rather than the alerts headline. **The job had been exiting 1 every Monday since 2026-09-21**, and the last two runs were worse than the ones before.
+
+- **The failure was a false alarm, and it was mine.** `clean()` in `scripts/check-links.py` strips sentence punctuation and *then* drops an unbalanced `)`. A markdown link inside emphasis closes as `[text](url)*`: the captured string ends in `*`, so `rstrip(".,;:!?")` changed nothing, `endswith(")")` was false, and `balanced()` never ran. The checker fetched `…/Book_VI)*`, got a 404, and printed **DEAD** for a citation that is live (verified 200).
+- **Three citations affected, all live:** `stoic-saturday-the-same-standard.md` (Wikisource `…/Book_VI)*`), `no-kings-vote-early-october-17.md` (`https://vote.gov/).[^6`), and `digest-for-november-14-2025.md` (archive.org `…djvu.txt).*`). Only the first two surfaced in the log; the third was found by scanning the corpus against the old implementation.
+- **This is the second time this class shipped.** Commit `0c0ed46` widened the URL class to admit `(` and `)` so a *truncated* URL would stop reading as dead — and the same widening is what lets the trailing `)` survive when a `*` sits outside it. Two false alarms, opposite directions, same function.
+- **The fix**: `clean()` now strips the markdown wrappers (`*`, `_`, `~`, backtick) and a trailing footnote marker, iterated to a fixpoint, because the artefacts stack in the order markdown nests them — footnote outside the period, emphasis outside the link paren, and the unbalanced paren is only reachable once the wrapper is gone. A **dead duplicate `clean()`** (defined twice, the plain version second) was removed; it would have silently won.
+- **Measured, not assumed.** Corpus-wide diff against the real previous implementation (loaded via `git show HEAD:scripts/check-links.py`, not reimplemented from memory — my first hand-written comparison reported 598 spurious changes): **exactly 3 URLs change, all three the false-positive class, and no legitimate URL loses a character.** Online sweep **2 dead → 0 dead, exit 0**. **233 gate tests** (4 new, pinning emphasis, footnote, prose-paren, and does-not-over-strip).
+- **A separate, real defect found while reading the logs, and already fixed.** The Chiefs job on 2026-09-27 failed on a dead ESPN citation — `.../preview/_/gameId=401872952` (equals) instead of `.../preview/_/gameId/401872952` (slash). That was the **09-27 draft**, which is gone; the corpus scan found **0** remaining equals-form occurrences and the published 09-25 report's seven ESPN URLs all return 200 (fetched with no User-Agent, the one header ESPN's wall does not intercept). Nothing to repair.
+- **The other two failures were not defects.** The docket job's `date ahead of the clock` was a manual test run against a `2026-10-03` draft — the start-date guard now exits 0 and logs "first report not due," which is the intended behaviour. `wiki-check` exited 1 on `API Error: Connection refused`: `claude -p` could not reach its API at all, so the audit never ran. Both are recorded rather than "fixed," because neither is a code fault.
+- **The pattern worth keeping:** I had raised a *hypothesis* about semantic-release twice without checking it, and here I found a real gate failure only by reading the log tail rather than trusting that "0 failures" in the alert summary meant the jobs were healthy. **The alert said FAILED; the summary line said "informational." Both were true, and only the log said which.**
+
+---
+
 ### Maintenance — September 28, 2026 — Closed the semantic-release question: there is no analyzer, and the premise was never true
 
 **An item I raised twice and never tested, now tested and closed.** The claim was that content commits drive a semantic-release **minor bump** via the `feat` type, and that the type should therefore be pulled out of the analyzer's view. Philip: "Yes, I agree, close it."
