@@ -504,3 +504,8 @@
   # `docket-report-*.md` exists, so the switch needs no follow-up edit.
   link: /posts/essays/three-walls-and-three-slots/
   latest: /posts/essays/docket-report-*
+- image: /img/articles/106-tide-wheel_16x9.webp
+  title: The Tide and the Gate
+  caption: The tide arrives whether or not anyone governs it. The gate decides
+    how much of it a man may claim.
+  link: /posts/essays/the-tide-and-the-gate/
