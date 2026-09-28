@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — September 28, 2026 — Closed the semantic-release question: there is no analyzer, and the premise was never true
+
+**An item I raised twice and never tested, now tested and closed.** The claim was that content commits drive a semantic-release **minor bump** via the `feat` type, and that the type should therefore be pulled out of the analyzer's view. Philip: "Yes, I agree, close it."
+
+- **There is no analyzer.** No `.releaserc`, `release.config.*`, `.versionrc`, or `.changeset` in the repo. `.github/workflows/hugo.yml` has no release step — its only actions are `checkout`, `configure-pages`, `upload-pages-artifact`, `deploy-pages`. No script, hook, or workflow parses commit subjects (`core.hooksPath` is `.git/hooks`, which holds no active hooks). No `package.json`, no `CHANGELOG.md`, and **zero git tags in the repo's entire history**. Nothing consumes the bump, because there is nothing to bump.
+- **What the `feat`/`fix` distinction actually buys.** Not a version signal — the only machine-readable record of intent in the log, which is how the gate suite and the blind-spot history stay navigable. `feat` separates new content from repair; `ci`/`chore`/`harden` separate infrastructure. Stripping the type from content commits would cost that and protect nothing.
+- **The real asymmetry, which the item did not name.** `scripts/publish-report.sh` commits as `Publish: $title` — **no conventional type at all**. So the three automated publishing jobs (Senate, docket, Chiefs) are already invisible to any conventional-commit analyzer; one added later would parse zero of their commits. Left as written deliberately: making the report jobs emit `feat(essays)` to satisfy a toolchain that does not exist would be the same error in the opposite direction.
+- **The lesson worth keeping.** `skill://commit-message` states what bump a commit *would imply* as an advisory heuristic. It is generic harness guidance, not repo configuration, and it is what made the hypothesis feel real without being checked. **A claim about what a tool does is not evidence that the tool exists** — the check is `ls` on the config path, and it took one command.
+- **One caveat that could not be closed.** If a release workflow runs at the GitHub *organization* level rather than from this repo's `.github/workflows/`, it would be invisible from the checkout. Told Philip; no such workflow is known. Nothing needed to change before Oct 3, when the docket report starts publishing under the same gate.
+
+---
+
 ### Maintenance — September 28, 2026 — Amended "The Arch and the Keystone": the three-way split, and the binary cut was hiding a party effect
 
 Philip: "What about three states: unified Democrat control, unified Republican control, un-unified government?" then "Amend." **The two-way comparison was the wrong cut, and the amendment says so in the published piece.**
