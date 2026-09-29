@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — September 29, 2026 — Published the chiefs-weekly-report report (automated)
+
+Auto-published by `com.huffmanwrites.chiefs-weekly-report` after every gate passed.
+- **Published** `content/posts/sports/chiefs-report-2026-09-29.md` — "Chiefs Report: September 29, 2026", 2670 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The week, as the piece frames it:** **Answer:** A September game that decides the AFC West. Kansas City and Las Vegas are both unbeaten, they have scored exactly the same number of points, and they meet Sunday with the Chiefs' left tackle still missing.
+- **Data came from `scripts/chiefs-report.py`**, the briefing pack the runner writes before the writer starts: the week's game with both teams' box scores and leaders, every scoring play, both injury reports, the standings and seed list, the season statistics by category, the next game with the feed's own odds and its matchup projection, and two weeks of Chiefs-tagged coverage with its URLs. The writer is not permitted to recall a score or a record. URLs are cited from the feed or from a page the run fetched; a constructed URL is the repo's most dangerous failure and this is the job where one would ship unreviewed.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **SimpleBrain synced** in the same run: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed.
+
+---
+
 ### Maintenance — September 28, 2026 — Two defects in the weekly-integrity job: a gate that cried dead on live links, and a log that hid the reason
 
 Found by answering "is there anything I should do?" and reading the logs rather than the alert headline. **The job had been exiting 1 every Monday since 2026-09-21**, and the reason had never been visible.
