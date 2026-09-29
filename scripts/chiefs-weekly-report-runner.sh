@@ -289,6 +289,34 @@ echo "$(stamp): all gates OK" >> "$OUT_LOG"
 publish_dry_run_stop "$ARTICLE" && exit 0
 
 # ---------------------------------------------------------------------------
+# The market chart is a generated asset, so it is staged HERE, before the shared
+# tail commits. Two reasons it is this runner's job and not the library's:
+#
+#   1. It belongs to this series. `publish-report.sh` is shared by three jobs,
+#      and naming a Chiefs asset path inside it would have staged the Chiefs
+#      chart into a Senate or docket publish commit.
+#   2. Only the collector knows where it writes. The path is asserted against
+#      the tree rather than assumed: if the collector's `CHART_PATH` ever moves,
+#      this adds nothing and the next gate fails loudly instead of the chart
+#      silently going missing from the deploy.
+#
+# A missing chart is not fatal — the collector already omits the figure from the
+# pack when it cannot draw one, so the writer will not have referenced it. It is
+# logged so a chart that stops being generated is visible rather than silent.
+# ---------------------------------------------------------------------------
+CHART="static/img/articles/103-chiefs-markets.svg"
+if [ -f "$CHART" ]; then
+  if git add "$CHART"; then
+    echo "$(stamp): staged the market chart ($CHART)" >> "$OUT_LOG"
+  else
+    echo "$(stamp): could not stage $CHART; publishing without it" >> "$OUT_LOG"
+    "$REPO/scripts/alert-failure.sh" "$JOB" 1 "could not stage the market chart; see $OUT_LOG" || true
+  fi
+else
+  echo "$(stamp): no market chart at $CHART; the report publishes without the figure" >> "$OUT_LOG"
+fi
+
+# ---------------------------------------------------------------------------
 # SESSION_STATE entry, commit, push, push verification — written and performed
 # by `scripts/publish-report.sh` from the results above, so all three publishing
 # jobs record and deliver their output identically.

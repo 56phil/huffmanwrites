@@ -1168,6 +1168,399 @@ class TestChiefsReport(unittest.TestCase):
         blob = {"a": ["https://x.example/1", {"b": "see https://y.example/2 for more"}]}
         self.assertEqual(ck.urls_in(blob), {"https://x.example/1", "https://y.example/2"})
 
+    # -----------------------------------------------------------------------
+    # Prediction markets. The rules that matter are the ones that keep a wrong
+    # or misleading number out of a table the reader will trust: the dollars
+    # fields are the live ones, a stale quote is still returned (and dated), a
+    # wide book is flagged rather than averaged, and discovery never constructs
+    # a URL.
+    # -----------------------------------------------------------------------
+    def test_prices_read_the_dollars_fields_not_the_null_cents_fields(self):
+        # Current Kalshi payloads set `yes_bid_dollars` and leave the legacy
+        # integer `yes_bid` null. Reading the legacy field would report every
+        # market as blank, which reads as "no market" rather than "a bug".
+        row = {
+            "yes_bid_dollars": "0.5300", "yes_ask_dollars": "0.5500",
+            "last_price_dollars": "0.5500", "yes_bid": None, "yes_ask": None,
+            "volume_fp": "145232.76", "volume_24h_fp": "2842.42",
+            "open_interest_fp": "123406.00",
+            "yes_sub_title": "Kansas City", "status": "active",
+            "updated_time": "2026-07-13T21:35:20Z", "ticker": "KXNFLAFCWEST-27-KC",
+        }
+        got = ck.kalshi_quote({"markets": [row]}, "Kansas City")
+        self.assertEqual(got["yes_bid"], 0.53)
+        self.assertEqual(got["yes_ask"], 0.55)
+        self.assertEqual(got["mid"], 0.54)
+        self.assertEqual(got["open_interest"], 123406.0)
+        self.assertEqual(got["volume_24h"], 2842.42)
+
+    def test_kalshi_updated_time_is_carried_but_is_not_a_freshness_signal(self):
+        # The trap this repo would otherwise publish. Kalshi's `updated_time` is
+        # a series-level metadata write, NOT a trade time: measured 2026-09-28,
+        # thirty-two markets across the whole playoff series share ONE value to
+        # the microsecond, and the AFC West market read 2026-07-13 while trading
+        # $2,842 in the prior day. So the field is carried (it is real data) but
+        # the currency signals are `volume_24h` and `moved`, and the renderer
+        # must not present `updated_time` as staleness.
+        row = {"yes_bid_dollars": "0.5200", "yes_ask_dollars": "0.5300",
+               "previous_yes_bid_dollars": "0.5300", "previous_yes_ask_dollars": "0.5500",
+               "volume_24h_fp": "2842.42", "yes_sub_title": "Kansas City",
+               "status": "active", "updated_time": "2026-07-13T21:35:20Z"}
+        got = ck.kalshi_quote({"markets": [row]}, "Kansas City")
+        self.assertEqual(got["updated"], "2026-07-13T21:35:20Z")
+        self.assertEqual(got["volume_24h"], 2842.42,
+                         "24h volume is the live-trading signal")
+        self.assertEqual(got["moved"], -0.01,
+                         "the bid moved from 0.53 to 0.52 — the market is live")
+
+    def test_the_market_block_does_not_call_a_traded_market_stale(self):
+        # The end-to-end guard: a market with 24h volume must not be described as
+        # stale anywhere in the rendered pack on the strength of updated_time.
+        out = ck.render({
+            "today": "2026-09-28", "generated": "x", "team": {"name": "KC"},
+            "season": {"phase": "Regular Season", "period": "Week 3",
+                       "period_detail": "", "starts": "a", "ends": "b"},
+            "games_played": 3, "news": [],
+            "markets": {"polymarket": [], "kalshi_win_total": [], "failures": [],
+                        "kalshi": [dict(ck.kalshi_quote({"markets": [{
+                            "yes_bid_dollars": "0.5200", "yes_ask_dollars": "0.5300",
+                            "volume_24h_fp": "2842.42", "volume_fp": "145248",
+                            "yes_sub_title": "Kansas City", "status": "active",
+                            "updated_time": "2026-07-13T21:35:20Z"}]}, "Kansas City"),
+                            label_short="AFC West champion", venue="Kalshi",
+                            source_url="https://example.org/kalshi")]}})
+        self.assertIn("as a trade time; it is not one", out)
+        self.assertIn("24h vol", out)
+        self.assertNotIn("has not moved in weeks is not a current price", out)
+
+    def test_polymarket_surfaces_real_activity_fields(self):
+        # Polymarket, unlike Kalshi, publishes real trade activity: volume24hr
+        # and oneHourPriceChange. Measured 2026-09-28 on the AFC West market.
+        event = {"slug": "pro-football-afc-west-champion",
+                 "updatedAt": "2026-09-28T22:20:26Z",
+                 "markets": [{"groupItemTitle": "Kansas City Chiefs",
+                              "outcomePrices": '["0.575", "0.425"]',
+                              "volume24hr": 168.54, "oneHourPriceChange": -0.005,
+                              "lastTradePrice": 0.55}]}
+        got = ck.polymarket_quote(event, "Kansas City Chiefs")
+        self.assertEqual(got["volume_24h"], 168.54)
+        self.assertEqual(got["price_change_1h"], -0.005)
+        self.assertEqual(got["last_trade"], 0.55)
+
+    def test_a_wide_book_is_flagged_and_its_midpoint_is_not_trusted(self):
+        # Measured 2026-09-28: the Kalshi 13+ wins rung quoted 0.32/0.64, whose
+        # midpoint (48%) sat above the tighter 12+ rung (46%) and made the
+        # ladder non-monotonic. The midpoint of a thin book is an artifact.
+        row = {"yes_bid_dollars": "0.32", "yes_ask_dollars": "0.64",
+               "yes_sub_title": "13+ wins", "status": "active"}
+        got = ck.kalshi_quote({"markets": [row]}, "13+ wins")
+        self.assertTrue(got["wide"])
+        self.assertAlmostEqual(got["spread"], 0.32)
+
+    def test_a_tight_book_is_not_flagged_wide(self):
+        row = {"yes_bid_dollars": "0.46", "yes_ask_dollars": "0.47",
+               "yes_sub_title": "12+ wins", "status": "active"}
+        self.assertFalse(ck.kalshi_quote({"markets": [row]}, "12+ wins")["wide"])
+
+    def test_a_market_with_no_quote_is_none_not_zero(self):
+        # An empty book is a fact about the market. Returning 0 would print as a
+        # 0% forecast, which is a different and false claim.
+        row = {"yes_bid_dollars": None, "yes_ask_dollars": None,
+               "yes_sub_title": "Kansas City", "status": "active"}
+        got = ck.kalshi_quote({"markets": [row]}, "Kansas City")
+        self.assertIsNone(got["yes_bid"])
+        self.assertIsNone(got["mid"])
+
+    def test_a_series_without_the_named_team_is_reported_not_guessed(self):
+        # The match is by name because the win-total and seed series carry many
+        # rows; a name that is absent must yield None, never another team's row.
+        rows = [{"yes_bid_dollars": "0.5", "yes_ask_dollars": "0.5",
+                 "yes_sub_title": "Denver", "status": "active"}]
+        self.assertIsNone(ck.kalshi_quote({"markets": rows}, "Kansas City"))
+
+    def test_polymarket_prices_are_json_encoded_strings(self):
+        # Gamma serves outcomePrices as a STRING containing JSON, not a list.
+        # Indexing it directly yields a character, and float('[') raises.
+        self.assertEqual(ck.polymarket_number('["0.575", "0.425"]', 0), 0.575)
+        self.assertEqual(ck.polymarket_number('["0.575", "0.425"]', 1), 0.425)
+        self.assertIsNone(ck.polymarket_number("not json", 0))
+        self.assertIsNone(ck.polymarket_number(None, 0))
+        self.assertIsNone(ck.polymarket_number('["0.5"]', 3))
+
+    def test_polymarket_selects_the_chiefs_row_by_title(self):
+        event = {
+            "slug": "pro-football-afc-west-champion",
+            "updatedAt": "2026-09-28T22:00:00Z",
+            "markets": [
+                {"groupItemTitle": "Denver Broncos", "outcomePrices": '["0.27", "0.73"]'},
+                {"groupItemTitle": "Kansas City Chiefs", "outcomePrices": '["0.575", "0.425"]',
+                 "bestBid": 0.56, "bestAsk": 0.59, "volumeNum": 17930.2},
+            ],
+        }
+        got = ck.polymarket_quote(event, "Kansas City Chiefs")
+        self.assertEqual(got["yes"], 0.575)
+        self.assertEqual(got["mid"], 0.575)
+        self.assertEqual(got["updated"], "2026-09-28T22:00:00Z")
+
+    def test_the_polymarket_citation_is_the_api_url_not_a_constructed_page(self):
+        # polymarket.com serves HTTP 200 and its generic title for a slug that
+        # does not exist (measured 2026-09-28), so a constructed page URL could
+        # not be verified — exactly the fabricated-link class CLAUDE.md names.
+        # The citation is the Gamma endpoint, which returns the market's JSON.
+        event = {"slug": "pro-football-afc-west-champion",
+                 "markets": [{"groupItemTitle": "Kansas City Chiefs",
+                              "outcomePrices": '["0.575", "0.425"]'}]}
+        got = ck.polymarket_quote(event, "Kansas City Chiefs")
+        self.assertTrue(got["source_url"].startswith("https://gamma-api.polymarket.com/"))
+        self.assertIn("pro-football-afc-west-champion", got["source_url"])
+        self.assertNotIn("polymarket.com/event/", got["source_url"])
+
+    def test_the_kalshi_window_url_templates_the_series_in(self):
+        tpl = ck.market_sources()["kalshi"]
+        self.assertIn("{series}", tpl)
+        self.assertIn("status=open", tpl,
+                      "a series carries closed prior-season events; status=open "
+                      "is what keeps last February's market out of today's table")
+
+    # -- chart ---------------------------------------------------------------
+    # The chart is drawn from the venues' own history, so the rules that matter
+    # are the ones that keep the picture honest: it must use the same quantity
+    # the table prints, it must not draw a half-finished day as a settled close,
+    # and it must never claim a week's change from three days of data.
+    def _points(self, *closes):
+        # Daily points ending today, one per close.
+        import time
+        now = int(time.time())
+        return [{"ts": now - (len(closes) - 1 - i) * 86400, "close": c,
+                 "date": "2026-09-2%d" % (i + 1), "volume": 1.0}
+                for i, c in enumerate(closes)]
+
+    def test_the_delta_compares_against_a_point_a_week_back(self):
+        # Nine days of history: 0.40 early, 0.60 today. The 7-day delta must
+        # compare against the point a week back, not the oldest point.
+        import time
+        now = int(time.time())
+        pts = [{"ts": now - (8 - i) * 86400, "close": (0.40 if i < 8 else 0.60),
+                "date": "d%d" % i, "volume": 0.0} for i in range(9)]
+        d = ck.week_delta(pts, 7)
+        self.assertEqual(d["span_days"], 7)
+        self.assertAlmostEqual(d["from"], 0.40)
+        self.assertAlmostEqual(d["to"], 0.60)
+        self.assertAlmostEqual(d["change"], 0.20)
+
+    def test_a_young_series_reports_its_own_short_span(self):
+        # Three days of history is a three-day change. Reporting it as a week
+        # would be the chart overstating what it knows.
+        import time
+        now = int(time.time())
+        pts = [{"ts": now - (2 - i) * 86400, "close": 0.40 + i * 0.05,
+                "date": "d%d" % i, "volume": 0.0} for i in range(3)]
+        d = ck.week_delta(pts, 7)
+        self.assertEqual(d["span_days"], 2)
+        self.assertAlmostEqual(d["change"], 0.10)
+
+    def test_a_single_point_has_no_delta(self):
+        self.assertIsNone(ck.week_delta(self._points(0.5), 7))
+
+    def test_the_chart_uses_the_candle_bid_ask_mid_not_the_traded_price(self):
+        # Regression against a self-contradicting report. Measured 2026-09-28:
+        # `price.close_dollars` read 0.63 on a candle whose book was 0.58/0.61,
+        # while this pack's own table prints a bid/ask mid. Using the traded
+        # series made the chart disagree with the table printed above it.
+        from unittest import mock
+        payload = {"candlesticks": [{
+            "end_period_ts": 1787000000,
+            "price": {"close_dollars": "0.6300"},
+            "yes_bid": {"close_dollars": "0.5800"},
+            "yes_ask": {"close_dollars": "0.6100"},
+            "volume_fp": "10.0",
+        }]}
+        with mock.patch.object(ck, "fetch", return_value=payload):
+            pts, err = ck.kalshi_history("KXNFLAFCWEST", "KXNFLAFCWEST-27-KC")
+        self.assertEqual(err, "")
+        self.assertAlmostEqual(pts[0]["close"], 0.595,
+                               msg="must be (0.58 + 0.61) / 2, not 0.63")
+
+    def test_the_chart_falls_back_to_the_traded_price_when_no_book_quoted(self):
+        from unittest import mock
+        payload = {"candlesticks": [{
+            "end_period_ts": 1787000000,
+            "price": {"close_dollars": "0.6300"},
+            "yes_bid": {}, "yes_ask": {},
+            "volume_fp": "10.0",
+        }]}
+        with mock.patch.object(ck, "fetch", return_value=payload):
+            pts, err = ck.kalshi_history("KX", "KX-27")
+        self.assertAlmostEqual(pts[0]["close"], 0.63)
+
+    def test_the_chart_is_inline_svg_with_no_script_or_external_fetch(self):
+        # Three deliberate constraints: goldmark escapes raw HTML in a post body
+        # so the chart ships as a file; a script tag would put a third-party
+        # dependency on an unreviewed page; and an external image URL would be an
+        # unverifiable citation.
+        series = [{"label": "AFC West champion", "colour": "#D4820A",
+                   "points": self._points(0.40, 0.45, 0.52), "now": 0.52}]
+        svg = ck.build_chart_svg(series)
+        self.assertTrue(svg.startswith("<svg"))
+        self.assertIn("</svg>", svg)
+        self.assertNotIn("<script", svg)
+        self.assertNotIn("http", svg.replace('xmlns="http://www.w3.org/2000/svg"', ""))
+        self.assertIn('role="img"', svg, "a decorative chart still needs a text alternative")
+
+    def test_the_chart_escapes_a_label_that_would_break_the_markup(self):
+        series = [{"label": "A & B <script>", "points": self._points(0.4, 0.5),
+                   "now": 0.5}]
+        svg = ck.build_chart_svg(series)
+        self.assertNotIn("<script>", svg)
+        self.assertIn("&amp;", svg)
+
+    def test_a_chart_with_too_little_history_renders_nothing_rather_than_a_dot(self):
+        # One point is not a line. Returning a one-point chart would draw a dot
+        # that reads as a flat market.
+        self.assertEqual(ck.build_chart_svg([{"label": "x", "points": [], "now": None}]), "")
+
+    def _pack(self, markets: dict) -> dict:
+        return {"today": "2026-09-28", "generated": "x", "team": {"name": "KC"},
+                "season": {"phase": "Regular Season", "period": "Week 3",
+                           "period_detail": "", "starts": "a", "ends": "b"},
+                "games_played": 3, "news": [], "markets": markets}
+
+    def test_every_end_label_fits_inside_the_canvas(self):
+        # The first render clipped two labels: "AFC West champion 52%" ran past
+        # the right edge of the viewBox and "Super Bowl champion 8%" was pushed
+        # past the bottom. Both are geometry bugs that no unit test would catch
+        # unless it checks the coordinates, so this checks them.
+        import re
+        series = [
+            {"label": "Playoff qualifier", "colour": "#8FBF7F",
+             "points": self._points(0.60, 0.80, 0.84), "now": 0.84},
+            {"label": "AFC West champion", "colour": "#7FB2E5",
+             "points": self._points(0.33, 0.52, 0.52), "now": 0.52},
+            {"label": "AFC champion", "colour": "#F2EDD8",
+             "points": self._points(0.11, 0.14, 0.14), "now": 0.14},
+            {"label": "Super Bowl champion", "colour": "#D4820A",
+             "points": self._points(0.07, 0.08, 0.08), "now": 0.08},
+        ]
+        svg = ck.build_chart_svg(series)
+        for m in re.finditer(r'<text x="([\d.]+)" y="([\d.]+)"[^>]*>([^<]+)</text>', svg):
+            x, y, body = float(m.group(1)), float(m.group(2)), m.group(3)
+            # ~6.2px per character at font-size 11 in this font stack.
+            right = x + len(body) * 6.2
+            with self.subTest(label=body):
+                self.assertLess(right, 720, "label runs off the right edge")
+                self.assertGreater(y, 0, "label above the canvas")
+                self.assertLess(y, 340, "label below the canvas")
+
+    def test_two_close_lines_do_not_overprint_their_labels(self):
+        # Four series finishing within a few points is the real case (Super Bowl
+        # 8%, AFC 14%), so the labels must be spread rather than drawn on top of
+        # each other.
+        import re
+        series = [{"label": f"Series {i}", "points": self._points(0.10 + i * 0.001),
+                   "now": 0.10 + i * 0.001} for i in range(4)]
+        svg = ck.build_chart_svg(series)
+        ys = sorted(float(m.group(1)) for m in
+                    re.finditer(r'<text x="624" y="([\d.]+)"', svg))
+        for a, b in zip(ys, ys[1:]):
+            self.assertGreaterEqual(b - a, 14, "labels overlap")
+
+    def test_the_chart_colours_come_from_the_repos_documented_palette(self):
+        # The first draft used an invented blue (#7FB2E5) and green (#8FBF7F).
+        # The green appears nowhere in the repo, which is exactly the drift the
+        # locked visual identity exists to prevent — a decorative chart is not
+        # the place to introduce a new brand colour. Every stroke must be one of
+        # the four the palette documents: accent amber, Parian cream, the
+        # high-contrast link blue, and the Chiefs red.
+        documented = {"#D4820A", "#F2EDD8", "#7DC4FF", "#E31837"}
+        got = {c for _, _, _, c in ck.CHART_SERIES}
+        self.assertEqual(got, documented)
+        self.assertEqual(len(got), 4, "four lines need four distinct colours")
+
+    def test_the_chart_lines_clear_non_text_contrast_on_the_navy_ground(self):
+        # WCAG 1.4.11 asks 3:1 for graphical objects. A 2px line below that is
+        # a line a reader cannot follow, which defeats the chart's only purpose.
+        def lum(h: str) -> float:
+            h = h.lstrip("#")
+            parts = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+            chan = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+                    for c in parts]
+            return 0.2126 * chan[0] + 0.7152 * chan[1] + 0.0722 * chan[2]
+
+        bg = lum("#131E39")
+        for _, _, _, colour in ck.CHART_SERIES:
+            fg = lum(colour)
+            ratio = (max(fg, bg) + 0.05) / (min(fg, bg) + 0.05)
+            with self.subTest(colour=colour):
+                self.assertGreaterEqual(round(ratio, 2), 3.0)
+
+    def test_the_renderer_names_the_chart_path_or_says_there_is_none(self):
+        series = [{"label": "AFC West champion", "colour": "#x",
+                   "points": self._points(0.40, 0.45, 0.52), "now": 0.52,
+                   "delta_7d": {"from": 0.40, "to": 0.52, "change": 0.12,
+                                "span_days": 2, "from_date": "d0", "to_date": "d2"}}]
+        with_chart = ck.render(self._pack({
+            "kalshi": [], "polymarket": [], "kalshi_win_total": [], "failures": [],
+            "chart_series": series,
+            "chart_path": "static/img/articles/103-chiefs-markets.svg",
+            "chart_url": "/img/articles/103-chiefs-markets.svg", "chart_error": ""}))
+        self.assertIn("103-chiefs-markets.svg", with_chart)
+        self.assertIn("2 days", with_chart)
+
+        no_chart = ck.render(self._pack({
+            "kalshi": [], "polymarket": [], "kalshi_win_total": [], "failures": [],
+            "chart_series": [], "chart_path": "", "chart_url": "",
+            "chart_error": "not enough history"}))
+        self.assertIn("No chart this week", no_chart)
+        self.assertIn("do not reference a chart", no_chart)
+
+    def test_market_failures_default_to_empty_rather_than_a_placeholder_row(self):
+        # A venue that cannot be read must yield no rows and a named failure —
+        # never a zero priced as a market. Both venues are optional, so this is
+        # exercised with the fetch stubbed out rather than over the network.
+        #
+        # `kalshi_history` and `write_chart` are patched too, and that is not
+        # belt-and-braces: without them this test reaches the network AND writes
+        # a real SVG into static/img/articles/, which a unit test must not do.
+        from unittest import mock
+        with mock.patch.object(ck, "kalshi_markets", return_value=([], ["Kalshi: boom"])), \
+             mock.patch.object(ck, "kalshi_win_total_ladder", return_value=([], [])), \
+             mock.patch.object(ck, "polymarket_markets", return_value=([], ["Poly: boom"])), \
+             mock.patch.object(ck, "kalshi_history", return_value=([], "boom")), \
+             mock.patch.object(ck, "write_chart", return_value="boom"):
+            block = ck.collect_markets()
+        self.assertEqual(block["kalshi"], [])
+        self.assertEqual(block["polymarket"], [])
+        self.assertEqual(block["chart_url"], "")
+        self.assertTrue(any("boom" in f for f in block["failures"]))
+
+    def test_the_renderer_states_a_market_outage_rather_than_printing_a_zero(self):
+        # The gap between "the venue is quiet" and "the venue was unreachable"
+        # is the whole reason failures are carried separately.
+        out = ck.render({"today": "2026-09-28", "generated": "x", "team": {"name": "KC"},
+                         "season": {"phase": "Regular Season", "period": "Week 3",
+                                    "period_detail": "", "starts": "a", "ends": "b"},
+                         "games_played": 3, "news": [],
+                         "markets": {"kalshi": [], "polymarket": [], "kalshi_win_total": [],
+                                     "failures": ["Kalshi Super Bowl champion: timeout"]}})
+        self.assertIn("Neither venue returned a usable market", out)
+        self.assertIn("Kalshi Super Bowl champion: timeout", out)
+
+    def test_the_priced_as_certain_rungs_are_dropped_from_the_ladder(self):
+        # 4+, 5+ and 6+ wins sat at ask 1.00 on 2026-09-28; printing them made
+        # the ladder read backwards at the top (98%, 96%, 99%). They carry no
+        # information about the season's shape.
+        from unittest import mock
+        payload = {"event": {"markets": [
+            {"status": "active", "yes_sub_title": "6+ wins", "floor_strike": 6,
+             "yes_bid_dollars": "0.98", "yes_ask_dollars": "1.00"},
+            {"status": "active", "yes_sub_title": "12+ wins", "floor_strike": 12,
+             "yes_bid_dollars": "0.46", "yes_ask_dollars": "0.47"},
+        ]}}
+        with mock.patch.object(ck, "fetch", return_value=payload):
+            rows, failures = ck.kalshi_win_total_ladder()
+        self.assertEqual([r["label"] for r in rows], ["12+ wins"])
+        self.assertEqual(failures, [])
+
 
 class TestReportFrontmatterGate(unittest.TestCase):
     """The only review an auto-published article gets. Every rule here is a
@@ -1334,6 +1727,21 @@ class TestReportFrontmatterGate(unittest.TestCase):
             with self.subTest(runner=runner):
                 self.assertIn("check-report-frontmatter.py", text)
                 self.assertIn(f"--hero-plate {plate}", text)
+
+    def test_the_shared_publish_tail_names_no_series_asset(self):
+        # The defect this pins, introduced and caught 2026-09-28: the market
+        # chart was staged by a literal path inside `publish-report.sh`, which
+        # three jobs share. On a Senate or docket run that would have committed
+        # the Chiefs chart into someone else's publish commit — the "stray file
+        # rides along" case the surrounding comment forbids — and it put one
+        # series' detail in the library all three source.
+        tail = (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8")
+        self.assertNotIn("103-chiefs", tail)
+        self.assertNotIn("img/articles", tail)
+        # And the runner that owns the asset must stage it itself.
+        chiefs = (SCRIPTS / "chiefs-weekly-report-runner.sh").read_text(encoding="utf-8")
+        self.assertIn("103-chiefs-markets.svg", chiefs)
+        self.assertIn("git add", chiefs)
 
     def test_a_fence_with_trailing_whitespace_is_still_parsed(self):
         # One file in the corpus opens with `--- ` (a trailing space) and Hugo

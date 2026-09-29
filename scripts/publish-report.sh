@@ -143,6 +143,14 @@ PY
   # one-commit-per-publish rule. `git add -A` is deliberately not used: a writer
   # that wandered outside its brief must not get the result into a published
   # commit.
+  #
+  # Anything a series generates besides its article (the Chiefs job's market
+  # chart) is staged by that runner BEFORE this is called, so it rides along in
+  # the index. Naming a series' asset path in this shared file was a mistake
+  # worth recording: it would have staged the Chiefs chart inside a Senate or
+  # docket publish commit, which is the "stray file in someone else's publish"
+  # case the line above exists to forbid — and it put one series' detail in the
+  # library three of them share.
   if ! git add "$article" SESSION_STATE.md; then
     echo "$(stamp): git add failed; nothing was committed" >> "$OUT_LOG"
     "$REPO/scripts/alert-failure.sh" "$JOB" 1 "git add failed; see $OUT_LOG" || true

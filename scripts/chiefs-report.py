@@ -82,12 +82,15 @@ class FetchError(RuntimeError):
 # ---------------------------------------------------------------------------
 # Fetching
 # ---------------------------------------------------------------------------
-def fetch(url: str, timeout: float = 30.0) -> dict:
+def fetch(url: str, timeout: float = 30.0, ua: str = "") -> dict:
     """GET a JSON endpoint. Raises FetchError, never returns a partial payload.
 
-    No User-Agent: see the module docstring. ESPN 403s a browser UA here.
+    No User-Agent by default: see the module docstring. ESPN 403s a browser UA
+    here. `ua` exists for the prediction-market venues, which are the opposite
+    rule — Polymarket's Gamma API answers a default client with 403 and a named
+    client with 200 (measured 2026-09-28), so the caller passes one explicitly.
     """
-    req = urllib.request.Request(url)
+    req = urllib.request.Request(url, headers={"User-Agent": ua} if ua else {})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             body = r.read()
@@ -587,6 +590,729 @@ def team_form(summary: dict, abbr: str) -> "list[dict]":
     return out
 
 
+# ---------------------------------------------------------------------------
+# Prediction markets (Kalshi and Polymarket)
+#
+# Philip, 2026-09-28: "add a Kalshi/Polymarket table … to the weekly Chiefs
+# Report." The report is about the games, so the markets here are the season-
+# long ones that frame the games (championship, conference, division, playoff
+# odds, win total) plus the one player market a reader follows. The single-game
+# spread stays where it already lives — in the ESPN `pickcenter` block, which is
+# the feed's own line and is attributed to the book it names.
+#
+# Three decisions worth naming, because each is a way this goes wrong.
+#
+# **Nothing here is constructed.** Every figure is read from the venues' own
+# public JSON, and the two venue names are the only strings this module writes
+# that are not in a payload. This is the repo's most dangerous rule (CLAUDE.md
+# §Citations): a quote that looks checkable and is wrong. The failure it is
+# exposed to here is subtler than an invented URL — a market that has gone
+# STALE reads exactly like a live one, because the bid, the ask and the last
+# trade all remain valid-looking long after the last trade. So every quote
+# carries `updated_time`, the section prints it, and the writer is told to
+# distrust a Kalshi season market that has not moved in weeks. That is not
+# hypothetical: on 2026-09-28 the Kalshi AFC West and AFC title markets had not
+# updated since 2026-07-13, two months before the season, while Polymarket's
+# equivalent carried current prices. One venue's number is not the other's, and
+# which one is stale is the reader's only defence.
+#
+# **A failure is a gap, not a zero.** Neither venue is required for the report
+# to ship. If Kalshi times out, the Polymarket table still prints; if both fail,
+# the section says so in the pack and the writer is told to omit the table
+# rather than write around absent numbers. `market_sources` returns per-venue
+# errors and the renderer prints them, so "the venue was unreachable" can never
+# be misread as "the market is quiet".
+#
+# **Markets are matched by meaning, not by season.** Kalshi encodes the season
+# in the event ticker (`KXSB-27`, `KXNFL1SEED-AFC26`) and Polymarket bakes a
+# creation timestamp into the slug for some events
+# (`…-2027-champion-20260729185915366`) but not others. Hardcoding either would
+# be wrong by next season and wrong quietly. So Kalshi is discovered through the
+# SERIES ticker with `status=open` (the open event is selected; a series has one
+# open event at a time) and Polymarket through the NFL tag listing by slug
+# shape. A market that disappears is reported as absent, never guessed at.
+# ---------------------------------------------------------------------------
+
+# Polymarket's Gamma API refuses a default client; a named one is answered.
+MARKET_UA = "huffmanwrites-chiefs-report/1.0 (+https://huffmanwrites.org)"
+
+# A bid/ask spread this wide is a thin book, not a price. The midpoint of a
+# 0.32/0.64 book is 0.48, which reads as a real 48% forecast and is not one —
+# measured on the Kalshi win-total ladder 2026-09-28, it made the ladder
+# non-monotonic. Such a row is printed with its spread and marked.
+WIDE_SPREAD = 0.10
+
+KALSHI_API = "https://api.elections.kalshi.com/trade-api/v2"
+GAMMA_API = "https://gamma-api.polymarket.com"
+
+# The Kalshi series the report reads, keyed by the label the pack prints. The
+# value is (series_ticker, market_sub_title_match or None). `match` selects one
+# row out of a multi-market event: the win-total series carries a ladder of
+# fourteen thresholds, and the AFC seed series carries both conferences.
+KALSHI_SERIES = [
+    ("Super Bowl champion", "KXSB", "Kansas City"),
+    ("AFC champion", "KXNFLAFCCHAMP", "Kansas City"),
+    ("AFC West champion", "KXNFLAFCWEST", "Kansas City"),
+    ("Playoff qualifier", "KXNFLPLAYOFF", "Kansas City"),
+    ("AFC No. 1 seed", "KXNFL1SEED", "Kansas City"),
+    ("MVP", "KXNFLMVP", "Patrick Mahomes"),
+]
+# The win total is a separate shape (a ladder, not a named team), so it is read
+# on its own and summarised at the thresholds that bracket the median rather
+# than printed fourteen rows deep.
+KALSHI_WIN_TOTAL_SERIES = "KXNFLWINS"
+KALSHI_WIN_TOTAL_EVENT = "KXNFLWINS-27KC"
+
+# Polymarket events, keyed by the label the pack prints, matched by slug shape.
+# `None` means the event carries one row per team and the Chiefs row is
+# selected by `groupItemTitle`; a string selects the event outright.
+POLYMARKET_EVENTS = [
+    ("Super Bowl champion", "-2027-champion-", "Kansas City Chiefs"),
+    ("AFC champion", "-2027-afc-champion", "Kansas City Chiefs"),
+    ("AFC West champion", "-afc-west-champion", "Kansas City Chiefs"),
+    ("Playoff qualifier", "nfl-team-to-make-postseason", "Kansas City Chiefs"),
+    # The MVP event label is "2026 MVP Winner" while the season it prices is
+    # 2026-27; the slug is matched on its shape rather than the year.
+    ("MVP", "-mvp-winner", "Patrick Mahomes"),
+]
+
+
+def market_sources() -> "dict[str, str]":
+    """The two venue listing endpoints, in one place."""
+    return {
+        "kalshi": f"{KALSHI_API}/events?series_ticker={{series}}&status=open&limit=20",
+        "polymarket": f"{GAMMA_API}/events?tag_slug=nfl&limit=100&active=true&closed=false",
+    }
+
+
+def _dollars(value) -> "float | None":
+    """Kalshi's `*_dollars` strings -> float. A null or unparseable value is None.
+
+    The API serves prices as decimal STRINGS in dollars ('0.5300'), and the
+    older integer-cents fields (`yes_bid`) are null on current payloads, so
+    reading those would report every market as blank. None is the honest result
+    for a market with no quote: it is not zero.
+    """
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def kalshi_quote(event: dict, match: "str | None") -> "dict | None":
+    """One market out of a Kalshi event, or None when it is not there.
+
+    `match` selects by `yes_sub_title` (the team or player the row is about).
+    A market with no bid and no ask is returned with None prices rather than
+    dropped: an open market nobody is quoting is a fact about the market, and
+    silently omitting it would make the table look more complete than it is.
+
+    **`volume_24h_fp` and `moved`, never `updated_time`.** Kalshi's
+    `updated_time` is not a trade time and must not be read as freshness. The
+    evidence, measured 2026-09-28: thirty-two markets across the whole playoff
+    series share one `updated_time` to the microsecond
+    (`2026-09-03T15:33:13.064423Z`), whole series batches share others, and the
+    AFC West market was stamped `2026-07-13` while its `volume_24h_fp` read
+    2,842 — it was trading. It is a series-level metadata write. The field that
+    actually answers "is this current" is `volume_24h_fp`, with `moved` (today's
+    quote against the venue's own `previous_*`) as corroboration: on the same
+    market the book went 0.53/0.55 to 0.52/0.53 between two calls minutes apart.
+    Kalshi publishes no last-trade timestamp at all, so none is invented here.
+    """
+    markets = event.get("markets") or []
+    row = None
+    if match is None:
+        row = markets[0] if markets else None
+    else:
+        row = next((m for m in markets if (m.get("yes_sub_title") or "") == match), None)
+    if row is None:
+        return None
+    bid = _dollars(row.get("yes_bid_dollars"))
+    ask = _dollars(row.get("yes_ask_dollars"))
+    last = _dollars(row.get("last_price_dollars"))
+    # The midpoint is the fair read when both sides are quoted; when the book is
+    # empty it is None (not the last trade), because a stale last trade is the
+    # exact failure this section warns about. A WIDE book is the third case and
+    # the one that misleads: on 2026-09-28 the Kalshi 13+ wins rung quoted
+    # 0.32/0.64, whose midpoint (48%) sat above the tighter 12+ rung's (46%) and
+    # made the win-total ladder non-monotonic — an artifact of one thin book,
+    # read as a real inversion. So the spread is measured and a wide one is
+    # flagged rather than averaged.
+    mid = round((bid + ask) / 2, 3) if bid is not None and ask is not None else None
+    spread = round(ask - bid, 3) if bid is not None and ask is not None else None
+    # How much the quote has moved since the venue's own previous print. This is
+    # the honest motion signal: `previous_*` is part of the same payload as the
+    # live quote, so comparing them needs no timestamp.
+    prev_bid = _dollars(row.get("previous_yes_bid_dollars"))
+    prev_ask = _dollars(row.get("previous_yes_ask_dollars"))
+    moved = None
+    if bid is not None and prev_bid is not None:
+        moved = round(bid - prev_bid, 3)
+    elif ask is not None and prev_ask is not None:
+        moved = round(ask - prev_ask, 3)
+    return {
+        "label": row.get("yes_sub_title") or row.get("title") or "",
+        "title": row.get("title") or "",
+        "yes_bid": bid,
+        "yes_ask": ask,
+        "last": last,
+        "mid": mid,
+        "spread": spread,
+        "wide": bool(spread is not None and spread > WIDE_SPREAD),
+        "volume": _dollars(row.get("volume_fp")),
+        "open_interest": _dollars(row.get("open_interest_fp")),
+        "volume_24h": _dollars(row.get("volume_24h_fp")),
+        "previous_bid": prev_bid,
+        "moved": moved,
+        "status": row.get("status") or "",
+        "ticker": row.get("ticker") or "",
+        # Kept for the record but NOT used as a freshness signal; see above.
+        "updated": row.get("updated_time") or "",
+    }
+
+
+def kalshi_markets() -> "tuple[list[dict], list[str]]":
+    """Every KC-relevant Kalshi market, plus the failures. Never raises.
+
+    Discovery is per series with `status=open`: a series carries one open event
+    per season and the closed ones from prior seasons stay in the listing, so
+    filtering on status is what keeps last February's market out of today's
+    table. The nested-markets form is requested alongside it so one request per
+    series returns the quotes as well as the event.
+    """
+    out: "list[dict]" = []
+    failures: "list[str]" = []
+    tpl = market_sources()["kalshi"]
+    for label, series, match in KALSHI_SERIES:
+        url = tpl.format(series=series) + "&with_nested_markets=true"
+        try:
+            payload = fetch(url, ua=MARKET_UA)
+        except FetchError as e:
+            failures.append(f"Kalshi {label}: {e}")
+            continue
+        events = payload.get("events") or []
+        if not events:
+            failures.append(f"Kalshi {label}: no open event for series {series}")
+            continue
+        quote = kalshi_quote(events[0], match)
+        if quote is None:
+            failures.append(f"Kalshi {label}: series {series} has no market for {match!r}")
+            continue
+        quote["label_short"] = label
+        quote["venue"] = "Kalshi"
+        # The URL that was actually fetched, kept as the citation the writer can
+        # point at. A market page URL is NOT constructed here: kalshi.com serves
+        # 429 to automated clients and the payload carries no page URL, so a
+        # guessed path could not be checked (CLAUDE.md §Citations).
+        quote["source_url"] = url
+        out.append(quote)
+    return out, failures
+
+
+def kalshi_history(event_ticker: str, market_ticker: str, days: int = 45) -> "tuple[list[dict], str]":
+    """Daily closes for one Kalshi market. Returns (points, error).
+
+    **This is why the chart needs no accumulating history file.** Kalshi's
+    candlestick endpoint serves the whole published series on demand, so the
+    first run draws a full chart rather than starting a line from today and
+    filling in over a season. Measured 2026-09-28: 45 daily candles for the AFC
+    West market, each with `close_dollars` and `volume_fp`.
+
+    `period_interval=1440` is minutes, i.e. daily. The chart is a weekly report,
+    so a daily resolution is already more than it needs; hourly would be a
+    thousand points of noise.
+    """
+    end = int(datetime.now(timezone.utc).timestamp())
+    start = end - days * 86400
+    url = (f"{KALSHI_API}/series/{event_ticker}/markets/{market_ticker}"
+           f"/candlesticks?start_ts={start}&end_ts={end}&period_interval=1440")
+    try:
+        payload = fetch(url, ua=MARKET_UA)
+    except FetchError as e:
+        return [], str(e)
+    out: "list[dict]" = []
+    for c in payload.get("candlesticks") or []:
+        ts = c.get("end_period_ts")
+        # The mid of the candle's own quoted bid/ask, NOT `price.close_dollars`.
+        # The `price` block is a traded-price series and disagrees with the book
+        # (measured 2026-09-28: price.close 0.63 against a 0.58/0.61 book on the
+        # same candle), while the live table in this same pack reports a bid/ask
+        # mid. Using the same quantity in both is what keeps the chart and the
+        # table from contradicting each other.
+        bid_close = _dollars((c.get("yes_bid") or {}).get("close_dollars"))
+        ask_close = _dollars((c.get("yes_ask") or {}).get("close_dollars"))
+        if bid_close is not None and ask_close is not None:
+            close = round((bid_close + ask_close) / 2, 3)
+        else:
+            close = _dollars((c.get("price") or {}).get("close_dollars"))
+        if ts is None or close is None:
+            continue
+        out.append({
+            "ts": int(ts),
+            "date": datetime.fromtimestamp(int(ts), timezone.utc).date().isoformat(),
+            "close": close,
+            "volume": _dollars(c.get("volume_fp")) or 0.0,
+        })
+    out.sort(key=lambda p: p["ts"])
+    return out, ""
+
+
+def week_delta(points: "list[dict]", days: int = 7) -> "dict | None":
+    """The change over `days`, comparing the newest close to the nearest older
+    close at least `days` back.
+
+    Comparing to a fixed calendar date would return None on the first run of a
+    series that has only a few days of history; comparing to the oldest point
+    that is far enough back lets a young series still report a delta, and `span`
+    says how many days it actually covers so the writer never presents a
+    three-day move as a week.
+    """
+    if len(points) < 2:
+        return None
+    newest = points[-1]
+    cutoff = newest["ts"] - days * 86400
+    older = [p for p in points if p["ts"] <= cutoff]
+    ref = older[-1] if older else points[0]
+    if ref is newest:
+        return None
+    return {
+        "from_date": ref["date"],
+        "to_date": newest["date"],
+        "from": ref["close"],
+        "to": newest["close"],
+        "change": round(newest["close"] - ref["close"], 3),
+        "span_days": round((newest["ts"] - ref["ts"]) / 86400),
+    }
+
+
+def _svg_escape(text: str) -> str:
+    return (str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def build_chart_svg(series: "list[dict]", width: int = 720, height: int = 340) -> str:
+    """A static line chart of the season-long market prices, as inline SVG.
+
+    **Hand-rolled, deliberately, and with no JavaScript and no external request.**
+    Three reasons, each of which decides the design:
+
+    1. `goldmark.renderer.unsafe` is `false` in `hugo.toml`, so a hand-written
+       `<svg>` in a post body would be escaped to text. The chart is therefore
+       an `<img>` pointing at a file, which Hugo serves without touching the
+       markup (the same reason `hero_desktop` is a file path, not inline SVG).
+    2. A charting library would be a script tag on a site whose CSP and whose
+       whole posture is script-light, and an auto-published page is the last
+       place to add a third-party fetch that can fail silently in production.
+    3. It is ~60 lines of arithmetic. A dependency would cost more than it saves.
+
+    Colours are the locked palette from `skills/hero-image-workflow.md`:
+    midnight-navy ground, Parian-cream line, deep-amber accent. The chart is
+    decorative in the literal sense — every number it draws is printed in the
+    table beside it — so it carries `role="img"` with a text alternative rather
+    than being interactive.
+    """
+    # Geometry. The right margin is sized for the end labels, which are drawn
+    # OUTSIDE the plot; too narrow and they are clipped by the viewBox, which is
+    # what shipped on the first render ("AFC West champion 52%" cut mid-label).
+    ml, mr, mt, mb = 54, 150, 30, 40
+    pw, ph = width - ml - mr, height - mt - mb
+    palette = {"navy": "#131E39", "cream": "#F2EDD8", "amber": "#D4820A",
+               "muted": "#8A93A8", "grid": "#2A3554"}
+
+    usable = [s for s in series if len(s.get("points") or []) >= 2]
+    if not usable:
+        return ""
+
+    all_ts = [p["ts"] for s in usable for p in s["points"]]
+    t0, t1 = min(all_ts), max(all_ts)
+    if t1 <= t0:
+        return ""
+    values = [p["close"] for s in usable for p in s["points"]]
+    vmin, vmax = min(values), max(values)
+    # A little headroom so the extremes are not painted on the frame edge, and a
+    # floor on the span so a flat series does not divide by zero.
+    span = max(vmax - vmin, 0.02)
+    lo, hi = max(0.0, vmin - span * 0.15), min(1.0, vmax + span * 0.15)
+    if hi - lo < 1e-9:
+        hi = lo + 0.02
+
+    def x(ts: float) -> float:
+        return ml + (ts - t0) / (t1 - t0) * pw
+
+    def y(v: float) -> float:
+        return mt + (hi - v) / (hi - lo) * ph
+
+    L: "list[str]" = []
+    L.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
+             f'width="{width}" height="{height}" role="img" '
+             f'aria-label="Kansas City Chiefs championship, conference, division, '
+             f'playoff and MVP market prices over the last several weeks.">')
+    L.append(f'<rect width="{width}" height="{height}" fill="{palette["navy"]}"/>')
+
+    # Horizontal gridlines at 20-point intervals, labelled as percentages.
+    step = 0.1 if (hi - lo) > 0.25 else 0.05
+    v = (int(lo / step) + 1) * step
+    while v < hi:
+        yy = y(v)
+        L.append(f'<line x1="{ml}" y1="{yy:.1f}" x2="{ml + pw}" y2="{yy:.1f}" '
+                 f'stroke="{palette["grid"]}" stroke-width="1"/>')
+        L.append(f'<text x="{ml - 8}" y="{yy + 4:.1f}" fill="{palette["muted"]}" '
+                 f'font-family="system-ui,sans-serif" font-size="11" '
+                 f'text-anchor="end">{v * 100:.0f}%</text>')
+        v += step
+
+    # Axis frame + first/last date labels.
+    L.append(f'<line x1="{ml}" y1="{mt + ph}" x2="{ml + pw}" y2="{mt + ph}" '
+             f'stroke="{palette["muted"]}" stroke-width="1"/>')
+    for ts, anchor in ((t0, "start"), (t1, "end")):
+        xx = x(ts)
+        label = datetime.fromtimestamp(ts, timezone.utc).date().isoformat()
+        L.append(f'<text x="{xx:.1f}" y="{mt + ph + 20}" fill="{palette["muted"]}" '
+                 f'font-family="system-ui,sans-serif" font-size="11" '
+                 f'text-anchor="{anchor}">{label}</text>')
+
+    # One polyline per series, then all the end labels in a single pass.
+    #
+    # Label placement is done top-down after the lines are drawn, rather than
+    # nudging each label against the ones already placed. The nudge approach
+    # shipped a clipped label on each edge: pushed down past the frame, and cut
+    # off by the viewBox. A top-down pass with a minimum gap cannot overlap by
+    # construction, and clamping the whole column into the plot's vertical band
+    # cannot clip.
+    drawn: "list[dict]" = []
+    for s in usable:
+        pts = " ".join(f"{x(p['ts']):.1f},{y(p['close']):.1f}" for p in s["points"])
+        colour = s.get("colour") or palette["amber"]
+        L.append(f'<polyline points="{pts}" fill="none" stroke="{colour}" '
+                 f'stroke-width="2" stroke-linejoin="round"/>')
+        end_value = s.get("now")
+        if end_value is None:
+            end_value = s["points"][-1]["close"]
+        drawn.append({"s": s, "colour": colour, "value": end_value})
+
+    drawn.sort(key=lambda d: -d["value"])
+    gap, top, bottom = 15, mt + 8, mt + ph - 2
+    ys: "list[float]" = []
+    cursor = top - gap
+    for d in drawn:
+        cursor = max(y(d["value"]), cursor + gap)
+        ys.append(cursor)
+    # If the column overflowed the lower bound, lift the whole stack by the
+    # overflow so the bottom label sits on the floor and the rest follow.
+    overflow = ys[-1] - bottom if ys else 0
+    if overflow > 0:
+        ys = [yy - overflow for yy in ys]
+
+    for d, yy in zip(drawn, ys):
+        L.append(f'<text x="{ml + pw + 8}" y="{yy + 4:.1f}" fill="{d["colour"]}" '
+                 f'font-family="system-ui,sans-serif" font-size="11">'
+                 f'{_svg_escape(d["s"]["label"])} {d["value"] * 100:.0f}%</text>')
+
+    L.append("</svg>")
+    return "\n".join(L)
+
+
+def write_chart(series: "list[dict]", path: Path) -> "str":
+    """Render and write the chart. Returns '' on success, a reason on failure.
+
+    A failure here is not fatal to the report: the chart is a visual aid and
+    every number in it is printed in the table. So this returns a reason the
+    pack can carry rather than raising, and the writer is told to omit the
+    figure rather than reference a file that was never written — which would be
+    a broken image on a page nobody reviews.
+    """
+    svg = build_chart_svg(series)
+    if not svg:
+        return "not enough history to draw a chart"
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(svg, encoding="utf-8")
+    except OSError as e:
+        return f"could not write {path}: {e}"
+    return ""
+
+
+def kalshi_win_total_ladder() -> "tuple[list[dict], list[str]]":
+    """The Chiefs win-total ladder: every rung, cheapest first.
+
+    This is a threshold ladder (`9+ wins`, `10+ wins`, … `17 wins`), not a set of
+    competing outcomes, so it is reported whole rather than reduced to one
+    number. The writer reads the 50% crossing off it for the market's expected
+    win total. Finalized rungs (a threshold already cleared by the games played)
+    are dropped: `2+ wins` is settled, not a forecast.
+    """
+    url = (f"{KALSHI_API}/events/{KALSHI_WIN_TOTAL_EVENT}"
+           "?with_nested_markets=true")
+    try:
+        payload = fetch(url, ua=MARKET_UA)
+    except FetchError as e:
+        return [], [f"Kalshi win total: {e}"]
+    markets = (payload.get("event") or {}).get("markets") or []
+    out: "list[dict]" = []
+    for m in markets:
+        if (m.get("status") or "") != "active":
+            continue
+        bid = _dollars(m.get("yes_bid_dollars"))
+        ask = _dollars(m.get("yes_ask_dollars"))
+        # A rung the market prices as certain is not a forecast. Three rungs sat
+        # at ask 1.00 on 2026-09-28 (4+, 5+, 6+ wins), and printing them made the
+        # ladder read backwards at the top: 98%, 96%, 99%. Dropping them leaves
+        # the rungs that still carry information about the season's shape.
+        if ask is not None and ask >= 0.99:
+            continue
+        spread = round(ask - bid, 3) if bid is not None and ask is not None else None
+        prev_bid = _dollars(m.get("previous_yes_bid_dollars"))
+        out.append({
+            "label": m.get("yes_sub_title") or "",
+            "floor": m.get("floor_strike"),
+            "yes_bid": bid,
+            "yes_ask": ask,
+            "mid": round((bid + ask) / 2, 3) if bid is not None and ask is not None else None,
+            "spread": spread,
+            "wide": bool(spread is not None and spread > WIDE_SPREAD),
+            "volume": _dollars(m.get("volume_fp")),
+            "volume_24h": _dollars(m.get("volume_24h_fp")),
+            "moved": (round(bid - prev_bid, 3)
+                      if bid is not None and prev_bid is not None else None),
+            # Same warning as `kalshi_quote`: this is a series metadata write,
+            # not a trade time, and it is not used as a freshness signal.
+            "updated": m.get("updated_time") or "",
+        })
+    out.sort(key=lambda r: (r["floor"] is None, r["floor"]))
+    return out, []
+
+
+def polymarket_number(value, index: int = 0) -> "float | None":
+    """Gamma serves outcomes and prices as JSON-encoded STRINGS in a list.
+
+    `outcomePrices` is `'["0.575", "0.425"]'` — a string, not an array — so it
+    must be decoded before it can be indexed. A malformed value yields None
+    rather than raising, because one bad market must not fail the whole table.
+    """
+    if value is None:
+        return None
+    seq = value
+    if isinstance(value, str):
+        try:
+            seq = json.loads(value)
+        except ValueError:
+            return None
+    if not isinstance(seq, list) or index >= len(seq):
+        return None
+    try:
+        return float(seq[index])
+    except (TypeError, ValueError):
+        return None
+
+
+def polymarket_event_map() -> "tuple[dict[str, dict], list[str]]":
+    """Every active NFL event on Polymarket, keyed by slug. Plus failures.
+
+    One paginated listing rather than a request per market: the tag listing is
+    the venue's own index of what it currently offers, so a market that has been
+    withdrawn simply is not in it, and nothing has to be guessed from a slug.
+    The listing is capped (three pages of 100) so a runaway tag cannot turn a
+    weekly job into an unbounded crawl.
+    """
+    tpl = market_sources()["polymarket"]
+    out: "dict[str, dict]" = {}
+    failures: "list[str]" = []
+    for offset in (0, 100, 200):
+        try:
+            page = fetch(f"{tpl}&offset={offset}", ua=MARKET_UA)
+        except FetchError as e:
+            failures.append(f"Polymarket listing offset {offset}: {e}")
+            break
+        if not isinstance(page, list) or not page:
+            break
+        for e in page:
+            if e.get("slug"):
+                out[e["slug"]] = e
+        if len(page) < 100:
+            break
+    return out, failures
+
+
+def polymarket_quote(event: dict, match: "str | None") -> "dict | None":
+    """One team's row out of a Polymarket event, or None.
+
+    `outcomePrices[0]` is the YES price. The bid/ask are used for the fair read
+    where both are quoted; the YES price is the fallback, and it is reported as
+    `last` rather than as a midpoint so a reader can tell a traded price from a
+    quoted spread.
+    """
+    markets = event.get("markets") or []
+    row = None
+    if match is None:
+        row = markets[0] if markets else None
+    else:
+        row = next((m for m in markets
+                    if (m.get("groupItemTitle") or "") == match), None)
+    if row is None:
+        return None
+    yes = polymarket_number(row.get("outcomePrices"), 0)
+    bid = _dollars(row.get("bestBid"))
+    ask = _dollars(row.get("bestAsk"))
+    mid = round((bid + ask) / 2, 3) if bid is not None and ask is not None else None
+    slug = event.get("slug") or ""
+    # Polymarket, unlike Kalshi, does publish real activity: `volume24hr` is
+    # traded volume over the last day and `oneHourPriceChange` is the move over
+    # the last hour (measured 2026-09-28: the AFC West market carried
+    # volume24hr 168.54 and oneHourPriceChange -0.005). `updatedAt` here is the
+    # event's book-refresh stamp, which for a live market is seconds old, so the
+    # two venues' activity fields are NOT comparable and the pack says so.
+    return {
+        "label": row.get("groupItemTitle") or event.get("title") or "",
+        "question": row.get("question") or "",
+        "yes": yes,
+        "yes_bid": bid,
+        "yes_ask": ask,
+        "mid": mid,
+        "volume": _dollars(row.get("volumeNum") if row.get("volumeNum") is not None
+                           else row.get("volume")),
+        "volume_24h": _dollars(row.get("volume24hr")
+                               if row.get("volume24hr") is not None
+                               else event.get("volume24hr")),
+        "price_change_1h": _dollars(row.get("oneHourPriceChange")),
+        "last_trade": _dollars(row.get("lastTradePrice")),
+        "updated": event.get("updatedAt") or "",
+        "slug": slug,
+        # The API URL that will actually be fetched, not the human page. A
+        # constructed `polymarket.com/event/<slug>` would be unverifiable:
+        # the site serves HTTP 200 and its generic title for a slug that does
+        # not exist (measured 2026-09-28), so the citation gate could not tell a
+        # real market page from an invented one. The Gamma endpoint returns the
+        # market's own JSON and is checkable.
+        "source_url": (f"{GAMMA_API}/events?slug={slug}" if slug else ""),
+    }
+
+
+def polymarket_markets() -> "tuple[list[dict], list[str]]":
+    """Every KC-relevant Polymarket market, plus the failures. Never raises.
+
+    Discovery goes through the tag listing (the venue's own index of what it
+    currently offers) and the quote is then read from a **per-slug fetch of the
+    exact URL the pack prints**. That second fetch is not redundant: it is what
+    makes the citation observed rather than constructed. CLAUDE.md allows a URL
+    only after the page has been retrieved and confirmed to be the thing cited,
+    and the listed slug is a fact from one payload while the URL is written from
+    it — so the URL is fetched before it is printed.
+    """
+    events, failures = polymarket_event_map()
+    out: "list[dict]" = []
+    for label, slug_key, match in POLYMARKET_EVENTS:
+        event = None
+        for slug, e in events.items():
+            if slug_key in slug:
+                event = e
+                break
+        if event is None:
+            failures.append(f"Polymarket {label}: no active event matching {slug_key!r}")
+            continue
+        url = f"{GAMMA_API}/events?slug={event.get('slug')}"
+        try:
+            fetched = fetch(url, ua=MARKET_UA)
+        except FetchError as e:
+            failures.append(f"Polymarket {label}: {e}")
+            continue
+        if not isinstance(fetched, list) or not fetched:
+            failures.append(f"Polymarket {label}: {url} returned no event")
+            continue
+        quote = polymarket_quote(fetched[0], match)
+        if quote is None:
+            failures.append(
+                f"Polymarket {label}: event {event.get('slug')} has no row for {match!r}")
+            continue
+        quote["label_short"] = label
+        quote["venue"] = "Polymarket"
+        out.append(quote)
+    return out, failures
+
+
+# The chart's series, by the pack label each one draws. Four lines is the most
+# that stays readable at this size; the win-total ladder is deliberately not a
+# line (it is a threshold ladder, not a probability over time) and MVP is left
+# off because a fifth line overprints the others at the top of the range.
+#
+# Every colour is one the repo already documents, not one chosen here —
+# `#D4820A` is the accent amber, `#F2EDD8` the Parian cream (`--primary`),
+# `#7DC4FF` the high-contrast link blue, and `#E31837` the Chiefs red the series
+# plate is built on (`skills/hero-image-workflow.md`). The first draft of this
+# used an invented blue and green, which is exactly the drift a locked identity
+# exists to prevent.
+CHART_SERIES = [
+    ("Super Bowl champion", "KXSB", "KXSB-27-KC", "#D4820A"),
+    ("AFC champion", "KXNFLAFCCHAMP", "KXNFLAFCCHAMP-27-KC", "#F2EDD8"),
+    ("AFC West champion", "KXNFLAFCWEST", "KXNFLAFCWEST-27-KC", "#7DC4FF"),
+    ("Playoff qualifier", "KXNFLPLAYOFF", "KXNFLPLAYOFF-27-KC", "#E31837"),
+]
+
+# Where the chart is written. Absolute, because the collector may be run from any
+# cwd by a test or by hand, and the chart must land in the tree the runner commits.
+CHART_PATH = REPO / "static" / "img" / "articles" / "103-chiefs-markets.svg"
+
+
+def collect_markets() -> "dict":
+    """Assemble the market block. Never raises; failures are the block's content.
+
+    Both venues are optional. A total failure of one leaves the other's table
+    intact, and a total failure of both is reported so the writer omits the
+    section rather than writing around numbers that are not there.
+    """
+    kalshi, kalshi_fail = kalshi_markets()
+    ladder, ladder_fail = kalshi_win_total_ladder()
+    poly, poly_fail = polymarket_markets()
+
+    # History is fetched per chart series and is optional in the same way: the
+    # tables stand without it.
+    live_by_label = {m["label_short"]: m for m in kalshi}
+    chart_series: "list[dict]" = []
+    history_fail: "list[str]" = []
+    today = datetime.now(CT).date().isoformat()
+    for label, event_ticker, market_ticker, colour in CHART_SERIES:
+        points, err = kalshi_history(event_ticker, market_ticker)
+        if err:
+            history_fail.append(f"Kalshi history {label}: {err}")
+            continue
+        # Drop the CURRENT day's candle: it covers a partial period, so its
+        # "close" is the book as of the last update inside the candle and can
+        # differ from the live quote by many points (measured 2026-09-28: candle
+        # 0.63 against a live 0.52/0.53). Drawing a partial day as if it were a
+        # settled close is how a chart and its own table end up disagreeing. The
+        # live quote carries today instead, appended as the final point.
+        points = [p for p in points if p["date"] < today]
+        live = live_by_label.get(label)
+        live_mid = (live or {}).get("mid")
+        if live_mid is not None:
+            points.append({"ts": int(datetime.now(timezone.utc).timestamp()),
+                           "date": today, "close": live_mid, "volume": 0.0,
+                           "live": True})
+        if len(points) < 2:
+            history_fail.append(f"Kalshi history {label}: only {len(points)} point(s)")
+            continue
+        chart_series.append({
+            "label": label,
+            "colour": colour,
+            "points": points,
+            "now": live_mid,
+            "delta_7d": week_delta(points, 7),
+        })
+
+    chart_error = write_chart(chart_series, CHART_PATH) if chart_series else \
+        "no series had enough history"
+    return {
+        "kalshi": kalshi,
+        "kalshi_win_total": ladder,
+        "polymarket": poly,
+        "chart_series": chart_series,
+        "chart_path": str(CHART_PATH.relative_to(REPO)) if not chart_error else "",
+        "chart_url": "/img/articles/103-chiefs-markets.svg" if not chart_error else "",
+        "chart_error": chart_error,
+        "failures": kalshi_fail + ladder_fail + poly_fail + history_fail,
+    }
+
+
 def season_stats(payload: dict) -> "dict":
     """Team season totals, category by category, straight from the payload."""
     results = payload.get("results") or {}
@@ -692,6 +1418,7 @@ def collect(today: date, season_year: int | None = None) -> "dict":
         },
         "standings": division_standings(standings, TEAM) if standings else {},
         "season_stats": season_stats(stats) if stats else {},
+        "markets": collect_markets(),
         "news": recent_news(news, today) if news else [],
         "fetch_failures": failures,
     }
@@ -923,6 +1650,157 @@ def render(pack: dict) -> str:
             L.append(f"- **{cat}:** "
                      + ", ".join(f"{k} {v}" for k, v in pairs if v not in (None, "")))
 
+    mk = pack.get("markets") or {}
+    L.append("")
+    L.append("## Prediction markets (season-long)")
+    L.append("")
+    L.append("Read from Kalshi and Polymarket's own public APIs by this script. "
+             "These are the venues' prices, not this site's opinion; quote them "
+             "and attribute them to the venue. They move continuously, and each "
+             "row carries the field that shows it is live.")
+    if not (mk.get("kalshi") or mk.get("polymarket") or mk.get("kalshi_win_total")):
+        L.append("")
+        L.append("Neither venue returned a usable market. Omit the table from the "
+                 "report and say the venues were unreachable; do not write around "
+                 "absent numbers.")
+    def _pct(v):
+        return "—" if v is None else f"{v * 100:.0f}%"
+
+    def _pct1(v):
+        """One decimal, for the delta table.
+
+        Whole-number percentages hide a real move: a series going 13.5% to 14.5%
+        prints as "14% → 14%, +1pt", which reads as a contradiction. The level
+        and the change have to be shown at the same precision for the row to be
+        checkable by eye.
+        """
+        return "—" if v is None else f"{v * 100:.1f}%"
+
+    def _signed(v, unit=""):
+        """A signed move, or an em dash. Never '+' on a None."""
+        if v is None:
+            return "—"
+        return f"{v:+.0f}{unit}" if abs(v) >= 1 else f"{v:+.2f}{unit}"
+
+    if mk.get("polymarket"):
+        L.append("")
+        L.append("**Polymarket** (bid/ask midpoint; `last` is the YES price; "
+                 "`24h` is traded volume in the last day; `1h` is the price move "
+                 "over the last hour):")
+        L.append("")
+        L.append("| Market | KC | bid | ask | last | 24h vol | 1h move | book updated |")
+        L.append("|---|---|---|---|---|---|---|---|")
+        for m in mk["polymarket"]:
+            mv = m.get("price_change_1h")
+            mv_pts = None if mv is None else mv * 100
+            L.append(f"| {m['label_short']} | {_pct(m.get('mid'))} "
+                     f"| {m.get('yes_bid') if m.get('yes_bid') is not None else '—'} "
+                     f"| {m.get('yes_ask') if m.get('yes_ask') is not None else '—'} "
+                     f"| {_pct(m.get('yes'))} "
+                     f"| {round(m['volume_24h']) if m.get('volume_24h') else '—'} "
+                     f"| {_signed(mv_pts, 'pt')} "
+                     f"| {(m.get('updated') or '')[:16]} |")
+        L.append("")
+        L.append("Event pages: " + " | ".join(
+            f"{m['label_short']} {m['source_url']}" for m in mk["polymarket"] if m.get("source_url")))
+
+    if mk.get("kalshi"):
+        L.append("")
+        L.append("**Kalshi** (yes bid/ask as a probability; `mid` is the bid/ask "
+                 "midpoint unless the book is wide; `24h` is traded volume in the "
+                 "last day; `moved` is the bid's change against the venue's own "
+                 "previous print):")
+        L.append("")
+        L.append("| Market | bid | ask | mid | wide? | 24h vol | total vol | moved | open interest |")
+        L.append("|---|---|---|---|---|---|---|---|---|")
+        for m in mk["kalshi"]:
+            mv = m.get("moved")
+            L.append(f"| {m['label_short']} | {m.get('yes_bid') if m.get('yes_bid') is not None else '—'} "
+                     f"| {m.get('yes_ask') if m.get('yes_ask') is not None else '—'} "
+                     f"| {'wide' if m.get('wide') else _pct(m.get('mid'))} "
+                     f"| {'WIDE' if m.get('wide') else ''} "
+                     f"| {round(m['volume_24h']) if m.get('volume_24h') else '—'} "
+                     f"| {round(m['volume']) if m.get('volume') else '—'} "
+                     f"| {_signed(mv)} "
+                     f"| {round(m['open_interest']) if m.get('open_interest') else '—'} |")
+        L.append("")
+        L.append("Series sources (the endpoints this script fetched): " + " | ".join(
+            f"{m['label_short']} {m['source_url']}" for m in mk["kalshi"] if m.get("source_url")))
+
+    if mk.get("kalshi_win_total"):
+        L.append("")
+        L.append("**Kalshi win-total ladder** (a threshold ladder, not competing "
+                 "outcomes; the ~50% rung is the market's expected win total):")
+        L.append("")
+        L.append(_li([
+            f"{m['label']}: "
+            + ("WIDE BOOK — no price" if m.get("wide") else _pct(m.get('mid')))
+            + f" (bid {m.get('yes_bid') if m.get('yes_bid') is not None else '—'}/"
+            f"ask {m.get('yes_ask') if m.get('yes_ask') is not None else '—'}"
+            + f", 24h vol {round(m['volume_24h']) if m.get('volume_24h') else '—'}"
+            + f", total vol {round(m['volume']) if m.get('volume') else '—'})"
+            for m in mk["kalshi_win_total"]
+        ]))
+        L.append("")
+        L.append("Win-total source: "
+                 f"{KALSHI_API}/events/{KALSHI_WIN_TOTAL_EVENT}?with_nested_markets=true")
+
+    if mk.get("chart_series"):
+        L.append("")
+        L.append("**Weekly change (the line chart on the page).** The chart is "
+                 f"written to `{mk.get('chart_path')}` and referenced in the post "
+                 f"as `{mk.get('chart_url')}`.")
+        L.append("")
+        L.append("| Series | now | 7 days ago | change | span |")
+        L.append("|---|---|---|---|---|")
+        for s in mk["chart_series"]:
+            d = s.get("delta_7d") or {}
+            now = s.get("now")
+            if now is None:
+                now = s["points"][-1]["close"]
+            L.append(f"| {s['label']} | {_pct1(now)} "
+                     f"| {_pct1(d.get('from')) if d else '—'} "
+                     f"| {_signed(d['change'] * 100, 'pt') if d else '—'} "
+                     f"| {str(d.get('span_days')) + ' days' if d else '—'} |")
+        L.append("")
+        L.append("The `now` column is the live book quote from the tables above, "
+                 "so the chart and the table cannot disagree. Quote a change only "
+                 "from this table, and quote the span with it: a series with only "
+                 "three days of history reports a three-day change, not a week.")
+    elif mk.get("chart_error"):
+        L.append("")
+        L.append(f"**No chart this week:** {mk['chart_error']}. Write the market "
+                 "section from the tables above and do not reference a chart "
+                 "image, because none was written.")
+
+    if mk.get("failures"):
+        L.append("")
+        L.append("**Market fetch failures — one venue failing does not invalidate "
+                 "the other; say so rather than papering over it:**")
+        L.append(_li(mk["failures"]))
+
+    if mk.get("kalshi") or mk.get("polymarket"):
+        L.append("")
+        L.append("**On currency, and the trap in Kalshi's timestamps.** These "
+                 "markets trade continuously and their prices do move — but "
+                 "**do not read Kalshi's `updated_time` as a trade time; it is "
+                 "not one.** Measured 2026-09-28: thirty-two markets across the "
+                 "entire playoff series share a single `updated_time` to the "
+                 "microsecond, whole series batches share others, and the AFC "
+                 "West market was stamped 2026-07-13 while trading $2,842 in the "
+                 "prior day. It is a series-level metadata write.")
+        L.append("")
+        L.append("The honest currency signals are the ones printed above: "
+                 "**`24h vol`** (traded volume in the last day) and **`moved`** "
+                 "(today's bid against the venue's own previous print). A market "
+                 "with 24h volume is live, whatever its `updated_time` says. "
+                 "Kalshi publishes no last-trade timestamp, so none is invented "
+                 "here — cite the price and, if you want to convey motion, cite "
+                 "the volume and the move. Polymarket's `book updated` is a real "
+                 "book-refresh time and its `1h move` is a real price change; "
+                 "the two venues' activity fields are not comparable to each "
+                 "other, so quote each on its own terms.")
+
     news = pack.get("news") or []
     L.append("")
     L.append(f"## Chiefs-tagged coverage, last {NEWS_WINDOW_DAYS} days (newest first)")
@@ -939,9 +1817,10 @@ def render(pack: dict) -> str:
     L.append("")
     L.append("---")
     L.append("")
-    L.append("Every number and URL above was read from the ESPN NFL API by "
-             "`scripts/chiefs-report.py`. If a fact you want is not here, fetch it "
-             "and cite the page you fetched — do not fill the gap from memory.")
+    L.append("Every number and URL above was read from the ESPN NFL API, Kalshi's "
+             "trade API, and Polymarket's Gamma API by `scripts/chiefs-report.py`. "
+             "If a fact you want is not here, fetch it and cite the page you "
+             "fetched — do not fill the gap from memory.")
     return "\n".join(L)
 
 

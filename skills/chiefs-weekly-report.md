@@ -61,7 +61,9 @@ full box score, both teams' leaders, every scoring play, both injury reports,
 both records, venue, broadcast), the next game (venue, broadcast, the feed's
 own odds attributed to the provider it names, the feed's matchup projection,
 the opponent's last five games, both injury reports), the AFC West standings,
-the AFC seed list, the team's season statistics by category, and the last two
+the AFC seed list, the team's season statistics by category, the season-long
+prediction markets (Kalshi and Polymarket: championship, conference, division,
+playoff and MVP prices, plus the Kalshi win-total ladder), and the last two
 weeks of Chiefs-tagged coverage with its URLs.
 
 - `--json` for the same data structured, if you want to pull specific fields.
@@ -73,7 +75,7 @@ yourself.** You do not recall scores, records, stats, odds, or schedules. If a
 number you want is not in the pack, run the pack again, fetch the page that
 carries it, or leave it out. Do not fill the gap from memory.
 
-Three things in the pack that need care:
+Five things in the pack that need care:
 
 - **The odds are the feed's, and they are attributed.** The pack names the
   provider (DraftKings, say). Write "DraftKings lists Kansas City at -10.5" or
@@ -88,6 +90,47 @@ Three things in the pack that need care:
   game is not the same as a game-day designation. If you cite a designation,
   give its date, and prefer "listed as questionable on September 23" to
   "questionable" as a standing fact.
+- **The prediction markets are the venues' prices, not ours, and Kalshi's
+  `updated_time` is a trap.** These markets trade continuously and their prices
+  do move, so quote them as the live prices they are. But **never read Kalshi's
+  `updated_time` as a trade time — it is not one.** Measured 2026-09-28:
+  thirty-two markets across the whole playoff series share one `updated_time` to
+  the microsecond, and the AFC West market was stamped 2026-07-13 while trading
+  $2,842 in the prior day. It is a series-level metadata write, so a market that
+  looks months stale may be trading right now. The pack prints the signals that
+  actually mean currency: **`24h vol`** (traded in the last day) and **`moved`**
+  (the bid's change against the venue's own previous print). A market with 24h
+  volume is live. If you want to convey motion, cite the volume and the move;
+  Kalshi publishes no last-trade timestamp, so do not write one. **A row marked
+  `WIDE` has a bid/ask spread too wide to price** — quote the bid and ask, or
+  leave the row out; do not average a thin book into a single number that looks
+  like a forecast. Attribute every market figure to the venue that carries it
+  ("Kalshi prices Kansas City at…", "Polymarket has Kansas City at…"), never as
+  the site's own view.
+- **The chart is a file, and you reference it with a shortcode.** The pack writes
+  the season-long market chart to `static/img/articles/103-chiefs-markets.svg`
+  and names it in the `Weekly change` table. Include it in the market section as
+  an `<img>` through Hugo's raw-HTML escape hatch, because `hugo.toml` sets
+  `markup.goldmark.renderer.unsafe = false` and a bare `<img>` in the body would
+  be shown as escaped text:
+
+  ```
+  {{< rawhtml >}}
+  <figure class="market-chart">
+    <img src="/img/articles/103-chiefs-markets.svg" width="720" height="340"
+         loading="lazy"
+         alt="Line chart of the Chiefs' Super Bowl, AFC championship, AFC West and playoff market prices over the last several weeks.">
+    <figcaption>Season-long Chiefs market prices, Kalshi. Every figure also appears in the table above.</figcaption>
+  </figure>
+  {{< /rawhtml >}}
+  ```
+
+  Quote a *change* only from the pack's `Weekly change` table, never by reading
+  the chart by eye, and quote the span with it — a series with three days of
+  history has a three-day change, not a week's. If the pack says there is no
+  chart this week (a history fetch failed), omit the figure entirely; do not
+  reference an image that was not written. The runner stages the chart file into
+  the publish commit for you.
 
 ## Step 2 — Get what the pack cannot give you.
 
@@ -199,6 +242,14 @@ themselves. Search for the week's coverage and read what carries the story:
    recent form, the line (attributed), and what to watch for.
 6. **What to watch beyond Sunday** — the standings math, the next few weeks,
    the trade deadline, a looming decision. Where the season is heading.
+   **The season-long prediction markets belong here** when they carry a story:
+   the championship, conference, division and playoff prices, and the win-total
+   ladder. Use them as a lens on how the market reads the season rather than as
+   a prediction this site endorses, and attribute each figure to the venue that
+   carries it. They are live prices, so quote them as such — but never infer
+   staleness from Kalshi's `updated_time`, which is a metadata stamp and not a
+   trade time (see the note in Step 1). Not every week needs them; a table
+   bolted on to every installment is filler.
 7. **Sources** — every link you used, in the piece's citation apparatus.
 
 **The link text must be the thing cited, never a placeholder.** Write
