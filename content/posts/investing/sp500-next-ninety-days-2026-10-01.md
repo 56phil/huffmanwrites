@@ -1,5 +1,5 @@
 ---
-title: "The S&P 500's Next Ninety Days: December 30, and the Wall That Holds the Roof Up"
+title: "The S&P 500's Next Ninety Days: December 30, and the Column That Holds the Roof Up"
 description: "Ninety days from this morning is December 30. The quarter closed with the index two percent below its record and one sector carrying it, the strategists have started raising targets again, and the date that decides the year is not the election but November 17."
 date: 2026-10-01T07:00:00-05:00
 author: Philip Huffman
