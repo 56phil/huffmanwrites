@@ -877,6 +877,24 @@ class TestPrepositionRules(unittest.TestCase):
             self.count("Deployed via [`x.yml`](https://example.org/a/b) on push to `main`."), 0)
         self.assertEqual(self.count("Established in [`skills/x.md`](https://e.org/a)."), 0)
 
+    def test_citation_anchor_text_is_exempt(self):
+        # CLAUDE.md exempts the preposition rule "inside a link," and the
+        # decisive case is the citation anchor: `check-links.py --titles`
+        # requires the anchor to be the source's OWN title, and headlines
+        # routinely end in a preposition. Counting the anchor flags a REQUIRED
+        # citation as a defect, and the sentence cannot be rewritten without
+        # corrupting the quotation the anchor carries. Measured 2026-10-01: the
+        # ninety-days drafts carried the FXStreet headline "…it was built on"
+        # as an anchor and the gate counted it, failing the run and the ratchet.
+        anchor = ("- FXStreet. (2026). [The Fed's October hike shrinks with the "
+                  "inflation it was built on](https://example.org/x).")
+        self.assertEqual(self.count(anchor), 0)
+        # Prose outside the link is still scanned: a real stranded preposition
+        # after a blanked link must not be hidden by the exemption.
+        self.assertEqual(
+            self.count("See [the note](https://example.org/a) for the tool he asked for."),
+            1)
+
     def test_adverbial_idioms_ending_in_a_listed_preposition(self):
         # Each ends in a word that is a preposition elsewhere but an adverb here.
         for text in ("and so on.", "We will cite it from here on.",

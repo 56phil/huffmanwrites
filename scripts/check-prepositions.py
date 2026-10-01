@@ -327,9 +327,17 @@ _TERMINAL = re.compile(
 # Spans that are not the editor's prose.
 _QUOTES = re.compile(r"\u201c[^\u201d]*\u201d|\"[^\"]*\"")
 _CODE = re.compile(r"`[^`]*`")
-# Markdown link: keep the visible text (it is prose the reader sees), drop the
-# destination (it is a URL, where the words are not prose).
-_MD_LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+# Markdown link. The whole span is blanked, visible text included: CLAUDE.md
+# exempts the preposition rule "inside a link," and the decisive case is the
+# citation anchor. A citation's link text must be the source's OWN title so
+# `check-links.py --titles` has something to compare against the fetched page
+# title, and headlines routinely end in a preposition ("The Fed's October hike
+# shrinks with the inflation it was built on"). Counting the anchor would flag
+# a *required* citation as a defect, and "rewriting the sentence" is not an
+# option — it would corrupt the quotation the anchor is there to carry. A gate
+# that fails a build on correct writing is the failure this file's docstring
+# says matters most.
+_MD_LINK = re.compile(r"\[[^\]]*\]\([^)]*\)")
 _AUTOLINK = re.compile(r"<https?://[^>]*>")
 _BARE_URL = re.compile(r"https?://\S+")
 # Footnote definitions and HTML comments are apparatus, not sentences.
@@ -378,7 +386,7 @@ def strip_non_prose(text: str) -> str:
     text = _FOOTNOTE_DEF.sub(lambda m: _blank(m.group(0)), text)
     text = _CODE.sub(lambda m: _blank(m.group(0)), text)
     text = _AUTOLINK.sub(lambda m: _blank(m.group(0)), text)
-    text = _MD_LINK.sub(lambda m: _blank(m.group(0)) + m.group(1), text)
+    text = _MD_LINK.sub(lambda m: _blank(m.group(0)), text)
     text = _BARE_URL.sub(lambda m: _blank(m.group(0)), text)
     # Quotation spans LAST, so a markdown link inside a quotation is already
     # reduced and the quotation still blanks cleanly.
