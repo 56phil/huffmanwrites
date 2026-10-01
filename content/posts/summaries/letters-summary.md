@@ -61,7 +61,7 @@ That is enough. That is the point.
 
 ---
 > *“If you would be a good reader, read; if a writer, write.”*
-— Epictetus, *Discourses[*Discourses* 2.18.1](https://www.gutenberg.org/cache/epub/10661/pg10661.txt) (trans. George Long, 1862)
+— Epictetus, [*Discourses* 2.18.1](https://www.gutenberg.org/cache/epub/10661/pg10661.txt) (trans. George Long, 1862)
 
 
 

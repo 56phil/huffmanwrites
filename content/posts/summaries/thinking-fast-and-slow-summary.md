@@ -51,7 +51,7 @@ Read it alongside Sagan's baloney detection kit. Sagan tells you what questions 
 
 ---
 > *"Nothing in life is as important as you think it is when you are thinking about it."*
-— Daniel Kahneman, *Thinking, Fast and Slow[*Thinking, Fast and Slow*](https://openlibrary.org/search/inside?q=%22important+as+you+think+it+is+when+you+are+thinking+about+it%22) (2011)
+— Daniel Kahneman, [*Thinking, Fast and Slow*](https://openlibrary.org/search/inside?q=%22important+as+you+think+it+is+when+you+are+thinking+about+it%22) (2011)
 
 *Wording note: the page formerly read “…while you are thinking about it.” The book says “when.” A one-word drift inside quotation marks is still a misquote, so it has been corrected to the published text.*
 

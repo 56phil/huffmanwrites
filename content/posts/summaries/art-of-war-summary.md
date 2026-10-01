@@ -1,5 +1,5 @@
 ---
-title: "The Art of War — Sun Tzu, *Art of War[*Art of War* III §2](https://www.gutenberg.org/cache/epub/132/pg132.txt) (trans. Lionel Giles, 1910)"
+title: "The Art of War — Sun Tzu, [*Art of War* III §2](https://www.gutenberg.org/cache/epub/132/pg132.txt) (trans. Lionel Giles, 1910)"
 description: "A summary and review of Sun Tzu's foundational text on strategy, deception, and the discipline of knowing yourself before you engage the enemy."
 date: 2026-05-31T00:00:00Z
 author: Philip Huffman
@@ -51,7 +51,7 @@ What Sun Tzu understood, and what most people miss, is that strategy is a form o
 
 ---
 > *"Supreme excellence consists in breaking the enemy's resistance without fighting."*
-— Sun Tzu, *The Art of War[*The Art of War*, ch. III §2](https://www.gutenberg.org/cache/epub/132/pg132.txt) (trans. Lionel Giles, 1910)
+— Sun Tzu, [*The Art of War*, ch. III §2](https://www.gutenberg.org/cache/epub/132/pg132.txt) (trans. Lionel Giles, 1910)
 
 ---
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*

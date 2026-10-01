@@ -79,6 +79,31 @@ TEXT_ANCHOR = re.compile(
     r"\[(text|link|here|source|pdf|article|this)\]\(\s*https?://", re.I
 )
 
+# A work title doubled by a botched anchor rewrite: `*Meditations[*Meditations*
+# 10.16](url)`, which renders as literal `*MeditationsMeditations 10.16` with a
+# stray asterisk (the inner `*` does not italicise once it follows a `*` with no
+# space). Introduced on 2026-09-27 by the batch that converted `[text]` anchors
+# to work titles: the author's original was `*Meditations* 10.16 … , [text](url)`
+# and the rewrite kept the italic span and prefixed a link, producing the doubled
+# form in 27 published lines. The reader-visible damage is the doubled title; the
+# gate exists so the NEXT such batch cannot ship it, and so these are found by a
+# rule rather than by eye. Two groups that must match is the tell — a real
+# citation never names the same work twice in a row.
+DOUBLED_WORK_TITLE = re.compile(r"\*([^*\[\]]+?)\[\*\1")
+
+
+def malformed_citation_problems(body: str) -> "list[str]":
+    """Citations a rewrite mangled, independent of frontmatter validity."""
+    hit = DOUBLED_WORK_TITLE.search(body)
+    if not hit:
+        return []
+    return [
+        f"a doubled work title in a citation: {hit.group(0)!r} — the anchor "
+        f"rewrite left the title twice, and it renders as "
+        f"“{hit.group(1)}{hit.group(1)}” with a stray asterisk. The correct "
+        f"form is [*{hit.group(1)}* <rest>](url)."
+    ]
+
 
 def split_frontmatter(text: str) -> "tuple[str, str] | None":
     """Return (frontmatter, body), or None if the file has no usable block.
@@ -147,6 +172,8 @@ def validate(path: "Path | str", hero_plate: "str | None" = None,
             problems.append(f"no {name} in frontmatter")
     if not ATTRIBUTION.search(body):
         problems.append("missing the closing attribution line (*PRH | …)")
+
+    problems.extend(malformed_citation_problems(body))
 
     placeholders = TEXT_ANCHOR.findall(body)
     if placeholders:
@@ -247,23 +274,25 @@ def published_posts() -> "list[Path]":
 
 
 def anchor_problems(path: "Path | str") -> "list[str]":
-    """The placeholder-anchor rule alone, for one file."""
+    """The citation-anchor rules alone, for one file: no placeholder anchor, and
+    no work title doubled by a botched rewrite."""
     p = Path(path)
     if not p.is_file():
         return []
     split = split_frontmatter(p.read_text(encoding="utf-8", errors="ignore"))
     if split is None:
         return []
+    problems = malformed_citation_problems(split[1])
     placeholders = TEXT_ANCHOR.findall(split[1])
-    if not placeholders:
-        return []
-    return [
-        f"{len(placeholders)} link(s) whose visible text is a placeholder "
-        f"({', '.join(sorted({x for x in placeholders}))}) — the reader sees that "
-        f"word instead of the title, and check-links.py --titles has nothing to "
-        f"compare, so the wrong-page check is blind on it. Make the citation's "
-        f"own title the link text."
-    ]
+    if placeholders:
+        problems.append(
+            f"{len(placeholders)} link(s) whose visible text is a placeholder "
+            f"({', '.join(sorted({x for x in placeholders}))}) — the reader sees that "
+            f"word instead of the title, and check-links.py --titles has nothing to "
+            f"compare, so the wrong-page check is blind on it. Make the citation's "
+            f"own title the link text."
+        )
+    return problems
 
 
 def main() -> int:

@@ -51,7 +51,7 @@ Read it as a companion to [*The Stoic Citizen*](/books/stoic-citizen/). Tocquevi
 
 ---
 > *"In democratic countries the science of association is the mother of science; the progress of all the rest depends upon the progress it has made."*
-— Alexis de Tocqueville, *Democracy in America[*Democracy in America*, Vol. II, Book Two, ch. 5](https://www.gutenberg.org/cache/epub/816/pg816.txt) (trans. Henry Reeve)
+— Alexis de Tocqueville, [*Democracy in America*, Vol. II, Book Two, ch. 5](https://www.gutenberg.org/cache/epub/816/pg816.txt) (trans. Henry Reeve)
 
 *Attribution note: this page formerly quoted a different line: "The health of a democratic society may be measured by the quality of functions performed by private citizens." That sentence appears in neither volume of Democracy in America (both Reeve volumes were searched in full) and survives only in quotation dictionaries and civic-volunteerism literature. It was replaced with the genuine passage above.*
 

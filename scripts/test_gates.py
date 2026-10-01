@@ -1839,6 +1839,19 @@ class TestReportFrontmatterGate(unittest.TestCase):
             "See ([text](https://example.org/x)).\n\n*PRH | x*"))
         self.assertTrue(crf.anchor_problems(p))
 
+    def test_the_anchor_rule_catches_a_doubled_work_title(self):
+        # The 2026-09-27 batch rewrite produced `*Meditations[*Meditations* 10.16]`
+        # in 27 published lines; it renders as literal `*MeditationsMeditations`
+        # because the inner `*` never italicises. The rule finds the shape (a work
+        # title repeated immediately) so the NEXT batch cannot ship it.
+        bad = "— Marcus Aurelius, *Meditations[*Meditations* 10.16](https://x/y)"
+        self.assertTrue(crf.malformed_citation_problems(bad))
+        good = "— Marcus Aurelius, [*Meditations* 10.16](https://x/y) (trans. Long)"
+        self.assertEqual(crf.malformed_citation_problems(good), [])
+        # A title that merely repeats a word is not a doubled title.
+        self.assertEqual(
+            crf.malformed_citation_problems("See *The Art of War* by Sun Tzu."), [])
+
     def test_ci_runs_the_anchor_mode(self):
         ci = (REPO / ".github" / "workflows" / "hugo.yml").read_text(encoding="utf-8")
         self.assertIn("check-report-frontmatter.py --anchors-corpus", ci)

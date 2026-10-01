@@ -62,7 +62,7 @@ The child who can think is the child who can survive, your absence included.
 
 ---
 >  *“Some things are in our own power, and others in the power of others.”*
-— Epictetus, *Enchiridion[*Enchiridion* 1](https://www.gutenberg.org/cache/epub/10661/pg10661.txt) (trans. George Long, 1862)
+— Epictetus, [*Enchiridion* 1](https://www.gutenberg.org/cache/epub/10661/pg10661.txt) (trans. George Long, 1862)
 
 *Attribution note: this page formerly read “It is the nature of the wise to resist pleasures, but the foolish to be a slave to them,” attributed to Epictetus. That sentence appears nowhere in the Epictetus corpus (not in the Enchiridion, the Discourses, or Oldfather's fragments) and survives only in modern quotation anthologies. It was replaced with the opening of the Enchiridion, the foundational Epictetus passage on what is and is not ours.*
 

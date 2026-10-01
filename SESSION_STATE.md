@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — October 1, 2026 — Repaired 27 doubled work titles our own anchor fix shipped, and gated the shape
+
+- **The 2026-09-27 batch that converted `[text]` anchors to work titles mangled 27 epigraph lines across 25 published files.** The author's original was `*Meditations* 10.16 (trans. George Long, 1862), [text](url)`; the rewrite kept the italic span and prefixed a link, producing `*Meditations[*Meditations* 10.16](url)`. Because a `*` immediately after a `*` with no space never opens emphasis, it rendered as literal `*MeditationsMeditations 10.16` — a stray asterisk and a doubled work title on the page and in the JSON-LD `articleBody`. Found by reading the published `stoic-saturday-be-such.md` while checking a stale `pending/` file, not by any gate.
+- **The correct form is `[*Work* §N](url)`, the title italic inside the link.** Replaced the doubled form on all 27 lines (Marcus Aurelius, Epictetus, Seneca, Sun Tzu, Tocqueville, Sagan, de Beauvoir, Pope Francis, and others). The URL was untouched — only the anchor text changed.
+- **Gated so the next batch cannot ship it.** `check-report-frontmatter.py` now carries `DOUBLED_WORK_TITLE` (`\*([^*\[\]]+?)\[\*\1` — the same work title twice in a row), surfaced through `malformed_citation_problems()`, wired into both `anchor_problems()` (the `--anchors-corpus` CI mode) and `validate()` (the series-installment gate). Pinned by `test_the_anchor_rule_catches_a_doubled_work_title`. The detection is by rule, not memory: the shape is unambiguous, and a real citation never names the same work twice consecutively.
+- **The SimpleBrain vault was checked and is clean** — zero hits. The wiki articles are translations written from the source, not byte copies, so they never carried the mangled anchors.
+- **Verified by running it.** Rendered `stoic-saturday-be-such` now reads `— Marcus Aurelius, [*Meditations* 10.16](url) (trans. George Long, 1862)`; JSON-LD `articleBody` reads "Meditations 10.16" with no doubling. `test_gates.py` **267/267**; every gate green including `check-report-frontmatter --anchors-corpus` (**189 published posts**) and `--corpus`; clean **508-page** build and `check-render-integrity` clean.
+- **Files changed:** 25 content files (27 lines), `scripts/check-report-frontmatter.py`, `scripts/test_gates.py`.
+
+---
+
 ### Maintenance — October 1, 2026 — Published the October ninety-days pair; hardened the weekly-report pipeline
 
 - **Published** the two October ninety-days installments the morning job drafted and left for review: `content/posts/investing/bond-market-ninety-days-2026-10-01.md` ("The Bond Market's Next Ninety Days: December 30", **5,876 words** whole-file) and `content/posts/investing/sp500-next-ninety-days-2026-10-01.md` ("The S&P 500's Next Ninety Days: December 30, and the Column That Holds the Roof Up", **4,748 words**). Both `draft: false`; heroes NN **109**/**110**; gallery cards and the new `content/gallery/page/11.md` stub ship in the same commit, because the cards link to the drafts' URLs and a card without its post is a deploy 404. Neither carries `featuredOnHome`, matching every prior ninety-days installment (they are gallery/feed cards, not home-feed series installments).
