@@ -66,11 +66,22 @@ PROMPT="${DOCKET_REPORT_PROMPT:-Read $SKILL and follow it exactly. Write the wee
 # simply not due yet, and a non-zero code here would raise the failure alert
 # every week until October, which is how a real alert gets learned as noise.
 # ---------------------------------------------------------------------------
+# DOCKET_REPORT_IGNORE_START_GUARD=1 runs the job before that date. It exists so
+# the pipeline can be exercised WITHOUT waiting for — or performing — the launch:
+# this job publishes unattended, and the first attempt at a brand-new report
+# should not also be the first time its build-and-gate tail ever runs. Pair it
+# with REPORT_DRY_RUN=1, which exercises everything up to and including
+# verification and stops before the commit. The override is an env var rather
+# than an edit to the date so a live run can never accidentally publish early:
+# the scheduled run sets no such variable and still waits for 2026-10-03.
+# ---------------------------------------------------------------------------
 TODAY="$(date '+%Y-%m-%d')"
-if [[ "$TODAY" < "2026-10-03" ]]; then
+if [[ "$TODAY" < "2026-10-03" ]] && [ "${DOCKET_REPORT_IGNORE_START_GUARD:-0}" != "1" ]; then
   echo "$(stamp): before 2026-10-03, first report not due, exiting" >> "$OUT_LOG"
   exit 0
 fi
+[ "${DOCKET_REPORT_IGNORE_START_GUARD:-0}" = "1" ] && \
+  echo "$(stamp): start guard overridden (DOCKET_REPORT_IGNORE_START_GUARD=1); running before 2026-10-03" >> "$OUT_LOG"
 
 cd "$REPO"
 
@@ -124,78 +135,18 @@ fi
 # the file this run just wrote (the production build has nothing to say about it
 # until `draft: false`, which the frontmatter gate requires); the production
 # build is what the deploy will actually do, so it is the one that must not fail.
-DRAFTS_DEST="$(mktemp -d "${TMPDIR:-/tmp}/hugo-drafts-XXXXXX")"
-echo "$(stamp): running verification builds" >> "$OUT_LOG"
-BUILD_FAILED=0
-for flags in "--gc --minify" "--gc --minify --buildDrafts --destination $DRAFTS_DEST"; do
-  set +e
-  BUILD_OUT="$(hugo $flags 2>&1)"
-  BUILD_RC=$?
-  set -e
-  if [ "$BUILD_RC" -ne 0 ]; then
-    echo "$(stamp): build FAILED [$flags] (exit $BUILD_RC)" >> "$OUT_LOG"
-    printf '%s\n' "$BUILD_OUT" >> "$ERR_LOG"
-    BUILD_FAILED=1
-  else
-    echo "$(stamp): build OK [$flags]" >> "$OUT_LOG"
-  fi
-done
-rm -rf "$DRAFTS_DEST"
+report_build "$ARTICLE"
 
 # Deterministic content gates, run here for the same reason the build is: a
 # result the agent could not have produced must not be taken from the agent's
-# summary.
+# summary. The gate list lives in `scripts/publish-report.sh` (run_report_gates)
+# so Senate, docket and Chiefs run exactly the same set.
 #
-# A gate failure now ABORTS the publish rather than being noted for review. That
-# is the change publishing brings: in a drafting job a failed gate is a note for
-# Philip, and here it is the only thing between an unreviewed draft and
-# production.
-GATE_FAILED=0
-run_gate() {
-  local label="$1"; shift
-  set +e
-  GATE_OUT="$(python3 "$@" 2>&1)"
-  GATE_RC=$?
-  set -e
-  if [ "$GATE_RC" -ne 0 ]; then
-    echo "$(stamp): gate FAILED [$label] (exit $GATE_RC)" >> "$OUT_LOG"
-    printf '%s\n' "$GATE_OUT" >> "$ERR_LOG"
-    GATE_FAILED=1
-  else
-    echo "$(stamp): gate OK [$label]" >> "$OUT_LOG"
-  fi
-}
+# A gate failure ABORTS the publish rather than being noted for review: here the
+# gates are the only thing between an unreviewed draft and production.
+run_report_gates "$ARTICLE" --plate 104-docket-report
 
-# The frontmatter gate reads the artifact the way a publisher does. `draft: true`
-# left in place is the failure that would matter most here: commit and push would
-# succeed, every other gate would report OK, and the deploy would carry nothing.
-run_gate "check-report-frontmatter" "$REPO/scripts/check-report-frontmatter.py" \
-  --file "$ARTICLE" --hero-plate 104-docket-report
-run_gate "check-quotes --file"     "$REPO/scripts/check-quotes.py"       --file "$ARTICLE"
-run_gate "check-links --check"     "$REPO/scripts/check-links.py"        --check
-# `--online --titles` is new here and it is not optional for a publishing job.
-# It fetches every URL this report cites and compares the page's own <title>
-# against the citation's link text, which is the ONLY check in this repo that can
-# catch a link resolving to the wrong page -- CLAUDE.md's most dangerous failure,
-# invisible to a status code because the URL returns 200. Court and agency
-# documents are the citations this report leans on, and a wrong one is exactly
-# the failure that looks checkable. DEAD links fail this; a title mismatch is
-# printed for the log and does not.
-run_gate "check-links --online"    "$REPO/scripts/check-links.py"        --file "$ARTICLE" --online --titles
-run_gate "check-emdashes --file"   "$REPO/scripts/check-emdashes.py"     --file "$ARTICLE"
-run_gate "check-prepositions --file" "$REPO/scripts/check-prepositions.py" --file "$ARTICLE"
-# The corpus-wide hero check: the frontmatter gate above reads this article's own
-# paths, and this one reads every hero in content/, so a path already broken
-# elsewhere cannot ride along into a deploy.
-run_gate "check-hero-paths"        "$REPO/scripts/check-hero-paths.py"
-run_gate "check-render-integrity"  "$REPO/scripts/check-render-integrity.py"
-run_gate "check-gallery-pages"     "$REPO/scripts/check-gallery-pages.py"
-# A published installment of a series must carry `featuredOnHome: true`, or it
-# reaches no reader from the home page: the feed takes its five Recent Posts from
-# flagged posts only, and more than five are already flagged.
-run_gate "check-series-posts"      "$REPO/scripts/check-series-posts.py" --file "$ARTICLE"
-
-if [ "$BUILD_FAILED" -ne 0 ] || [ "$GATE_FAILED" -ne 0 ]; then
+if [ "$BUILD_FAILED" -ne 0 ] || report_gates_failed; then
   echo "$(stamp): a build or gate failed; NOT PUBLISHING. The article is left in place for review." >> "$OUT_LOG"
   "$REPO/scripts/alert-failure.sh" "docket-weekly-report" 1 "a build or gate failed; see $ERR_LOG" || true
   exit 1
@@ -210,7 +161,12 @@ publish_dry_run_stop "$ARTICLE" && exit 0
 DETAIL="$(mktemp "${TMPDIR:-/tmp}/docket-detail-XXXXXX")"
 {
   echo "- **The filings came from \`scripts/check-docket.py\`**, the same registry the docket watcher reads, because the three watched dockets are declared there and nowhere else. The writer is required to read the script rather than reconstruct the filing list from coverage."
+  echo "- **The registry's \`known\` map is committed with the article.** The skill tells the writer to record each meaningful filing's one-line note there, and that map is the registry's memory — if it were left in the tree it would be lost every week. \`publish_article\` stages it by name (via \`PUBLISH_EXTRA_PATHS\`), never by wildcard."
 } > "$DETAIL"
+# The skill has the writer grow the `known` map in scripts/check-docket.py. That
+# file must ride along in this commit or the note it just wrote is discarded by
+# the next run. Named explicitly so a stray file cannot be swept in.
+PUBLISH_EXTRA_PATHS="scripts/check-docket.py"
 TITLE_LINE="$(grep -m1 '^title: ' "$ARTICLE" | sed 's/^title: *//' | tr -d '"')"
 publish_article "$ARTICLE" "$TITLE_LINE" "$DETAIL"
 rm -f "$DETAIL"

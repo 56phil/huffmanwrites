@@ -55,6 +55,13 @@ export FAL_KEY="${FAL_KEY:-}"
 # Note: no apostrophes inside the ${VAR:-...} default; bash 3.2 mis-parses them.
 PROMPT="${NINETY_DAYS_PROMPT:-Read $SKILL and follow it exactly. Draft both ninety-days articles for this month.}"
 
+# The shared publish library, sourced for its reusable pieces — the two-build
+# verifier and the gate runner — even though this job does not publish (it
+# drafts). Sourcing it also defines JOB for the alert below and keeps one
+# definition of `run_gate` across all four report jobs.
+JOB="ninety-days-report"
+. "$REPO/scripts/publish-report.sh"
+
 cd "$REPO"
 
 echo "$(stamp): starting ninety-days report run" >> "$OUT_LOG"
@@ -76,25 +83,13 @@ echo "$(stamp): run finished (exit $RC)" >> "$OUT_LOG"
 # is how the Sept 13 Senate run ended with the build never executed. Two
 # checks: the production build (what actually deploys) and the draft-inclusive
 # build (proves today's draft:true installments render).
-echo "$(stamp): running verification builds" >> "$OUT_LOG"
-# The drafts build renders to a scratch destination, not public/. public/ is
-# what deploys, and site-audit builds it with --cleanDestinationDir and then
-# crawls it — a draft page left there would be crawled as if it were live.
-DRAFTS_DEST="$(mktemp -d "${TMPDIR:-/tmp}/hugo-drafts-XXXXXX")"
-for flags in "--gc --minify" "--gc --minify --buildDrafts --destination $DRAFTS_DEST"; do
-  set +e
-  BUILD_OUT="$(hugo $flags 2>&1)"
-  BUILD_RC=$?
-  set -e
-  if [ "$BUILD_RC" -ne 0 ]; then
-    echo "$(stamp): build FAILED [$flags] (exit $BUILD_RC)" >> "$OUT_LOG"
-    echo "$BUILD_OUT" >> "$ERR_LOG"
-    [ "$RC" -eq 0 ] && RC=1
-  else
-    echo "$(stamp): build OK [$flags]" >> "$OUT_LOG"
-  fi
-done
-rm -rf "$DRAFTS_DEST"
+# Two builds, run through the shared library so all four report jobs verify
+# identically. The drafts build renders to a scratch destination, not public/:
+# public/ is what deploys, and site-audit builds it with --cleanDestinationDir
+# and then crawls it — a draft page left there would be crawled as if live. A
+# build failure sets RC, which the alert at the bottom reports.
+report_build ""
+if [ "$BUILD_FAILED" -ne 0 ] && [ "$RC" -eq 0 ]; then RC=1; fi
 
 # Deterministic content gates. Both articles cite market data, and until
 # 2026-09-27 this runner ran no link check at all — not even the offline one —
@@ -103,28 +98,23 @@ rm -rf "$DRAFTS_DEST"
 # deliberately not run here, because these are drafts a person reviews before
 # publishing and the corpus-wide network sweep belongs to weekly-integrity.
 #
-# check-report-frontmatter is NOT run: these files are not installments of a
-# declared series (no gallery card), and they are intentionally still drafts, so
-# that gate's `draft: false` rule does not apply to them.
-GATE_FAILED=0
-run_gate() {
-  local label="$1"; shift
-  set +e
-  GATE_OUT="$(python3 "$@" 2>&1)"
-  GATE_RC=$?
-  set -e
-  if [ "$GATE_RC" -ne 0 ]; then
-    echo "$(stamp): gate FAILED [$label] (exit $GATE_RC)" >> "$OUT_LOG"
-    printf '%s\n' "$GATE_OUT" >> "$ERR_LOG"
-    GATE_FAILED=1
-  else
-    echo "$(stamp): gate OK [$label]" >> "$OUT_LOG"
-  fi
-}
-run_gate "check-links"       "$REPO/scripts/check-links.py" --check
-run_gate "check-quotes"      "$REPO/scripts/check-quotes.py"
-run_gate "check-emdashes"    "$REPO/scripts/check-emdashes.py" --check
+# This job DRAFTS, so it does not call run_report_gates(): that set includes
+# check-report-frontmatter, whose `draft: false` rule does not apply to files
+# that are intentionally still drafts. But the corpus-wide gates that ARE
+# relevant to a drafting job were missing here through 2026-10-01 — the run that
+# added two gallery cards across a page boundary left no page stub, and
+# `check-gallery-pages` was not in this list, so a deploy 404 was invisible to
+# the job that caused it. They are added now.
+#
+# The four prose/link gates run corpus-wide (--check) because these drafts have
+# no baseline entry yet; the rest are the same scripts the publishing jobs run.
+run_gate "check-links"        "$REPO/scripts/check-links.py" --check
+run_gate "check-quotes"       "$REPO/scripts/check-quotes.py"
+run_gate "check-emdashes"     "$REPO/scripts/check-emdashes.py" --check
 run_gate "check-prepositions" "$REPO/scripts/check-prepositions.py" --check
+run_gate "check-hero-paths"   "$REPO/scripts/check-hero-paths.py"
+run_gate "check-gallery-pages" "$REPO/scripts/check-gallery-pages.py"
+run_gate "check-render-integrity" "$REPO/scripts/check-render-integrity.py"
 [ "$GATE_FAILED" -ne 0 ] && [ "$RC" -eq 0 ] && RC=1
 
 # Unattended job: a non-zero exit used to leave nothing but a log line.

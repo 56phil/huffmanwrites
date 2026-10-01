@@ -1737,14 +1737,18 @@ class TestReportFrontmatterGate(unittest.TestCase):
 
     def test_every_publishing_runner_runs_the_frontmatter_gate(self):
         # A gate nobody runs is not a gate. All three jobs that now publish must
-        # call it, and must pin their own series plate.
+        # select it, and must pin their own series plate. The gate and its call
+        # live in the shared library (run_report_gates) since the list was
+        # centralized on 2026-10-01; each runner passes its plate.
+        lib = (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8")
+        self.assertIn("check-report-frontmatter.py", lib)
         for runner, plate in (("senate-report-runner.sh", "105-senate-race-report"),
                               ("docket-weekly-report-runner.sh", "104-docket-report"),
                               ("chiefs-weekly-report-runner.sh", "103-chiefs-report")):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
-                self.assertIn("check-report-frontmatter.py", text)
-                self.assertIn(f"--hero-plate {plate}", text)
+                self.assertIn("run_report_gates", text)
+                self.assertIn(f"--plate {plate}", text)
 
     def test_the_shared_publish_tail_names_no_series_asset(self):
         # The defect this pins, introduced and caught 2026-09-28: the market
@@ -2109,13 +2113,20 @@ class TestHeroPathGate(unittest.TestCase):
         self.assertEqual(chp.check(verbose=False), [])
 
     def test_the_runners_that_write_hero_reports_run_the_gate(self):
-        # A gate nobody runs is a gate that does not exist. Both jobs that now
-        # carry a series plate must invoke it.
+        # A gate nobody runs is a gate that does not exist. The corpus-wide hero
+        # check lives in the shared list (run_report_gates) for the three
+        # publishing jobs; the drafting ninety-days runner, which does not call
+        # that list, names it directly.
+        self.assertIn("check-hero-paths",
+                      (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8"))
         for runner in ("docket-weekly-report-runner.sh",
-                       "senate-report-runner.sh"):
+                       "senate-report-runner.sh",
+                       "chiefs-weekly-report-runner.sh"):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
-                self.assertIn("check-hero-paths", text)
+                self.assertIn("run_report_gates", text)
+        ninety = (SCRIPTS / "ninety-days-report-runner.sh").read_text(encoding="utf-8")
+        self.assertIn("check-hero-paths", ninety)
 
 
 class TestSeriesHomeFlagGate(unittest.TestCase):
@@ -2230,12 +2241,16 @@ class TestSeriesHomeFlagGate(unittest.TestCase):
     def test_both_report_runners_run_the_gate_and_scope_it_to_the_draft(self):
         # A gate nobody runs is not a gate, and an unscoped run would scan the
         # corpus while the file that needs checking is a draft the scan skips.
+        # Both now select the gate through the shared list, which scopes it with
+        # `--file "$article"`.
+        lib = (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8")
+        self.assertIn("check-series-posts", lib)
+        self.assertIn('--file "$article"', lib)
         for runner in ("senate-report-runner.sh",
                        "docket-weekly-report-runner.sh"):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
-                self.assertIn("check-series-posts", text)
-                self.assertIn('--file "$ARTICLE"', text)
+                self.assertIn("run_report_gates", text)
 
     def test_ci_runs_the_gate(self):
         ci = (REPO / ".github" / "workflows" / "hugo.yml").read_text(encoding="utf-8")
@@ -2278,20 +2293,25 @@ class TestChiefsRunnerContract(unittest.TestCase):
         self.assertIn('. "$REPO/scripts/publish-report.sh"', self.runner)
 
     def test_a_gate_failure_aborts_the_push(self):
-        # The gate abort must come before anything publishes. In the library the
-        # publish is publish_article; the runner must not reach it on failure.
-        self.assertIn("GATE_FAILED=1", self.runner)
-        i = self.runner.find('if [ "$GATE_FAILED" -ne 0 ]')
+        # The gate abort must come before anything publishes. The gate runner
+        # and its GATE_FAILED flag live in the library now (run_report_gates);
+        # the runner reads the flag through report_gates_failed() and must not
+        # reach publish_article on failure.
+        self.assertIn("GATE_FAILED=1", self.lib)
+        self.assertIn("report_gates_failed", self.lib)
+        i = self.runner.find("report_gates_failed")
         self.assertGreater(i, 0)
         after = self.runner[i:]
         self.assertIn("NOT PUBLISHING", after)
         self.assertLess(after.find("NOT PUBLISHING"), after.find("publish_article"))
 
     def test_a_build_failure_aborts_the_push(self):
-        self.assertIn("BUILD_FAILED=1", self.runner)
+        # report_build (library) sets BUILD_FAILED; the runner aborts before
+        # publishing.
+        self.assertIn("BUILD_FAILED=1", self.lib)
         i = self.runner.find('if [ "$BUILD_FAILED" -ne 0 ]')
         self.assertGreater(i, 0)
-        self.assertLess(self.runner.find("BUILD_FAILED=1"), self.runner.find("publish_article"))
+        self.assertGreater(self.runner.find("publish_article"), i)
 
     def test_the_article_is_validated_before_it_is_published(self):
         # The frontmatter gate reads the artifact as a publisher (draft false,
@@ -2398,6 +2418,21 @@ class TestPublishLibrary(unittest.TestCase):
         self.assertIn('git add "$article" SESSION_STATE.md', code)
         self.assertNotIn("git add -A", code)
         self.assertNotIn("git add .", code)
+
+    def test_series_extra_paths_are_staged_by_name_not_wildcard(self):
+        # The docket job grows scripts/check-docket.py's `known` map as part of
+        # every run (skills/docket-weekly-report.md requires it) and that file
+        # must ride along in the publish commit, or the one-line note the writer
+        # just recorded is discarded by the next run. Staged through a variable
+        # naming exact paths, never a wildcard, so a writer that wandered outside
+        # its brief still cannot get a stray file into a published commit.
+        code = "\n".join(ln for ln in self.lib.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertIn("PUBLISH_EXTRA_PATHS", code)
+        self.assertIn('git add "$article" SESSION_STATE.md ${PUBLISH_EXTRA_PATHS:-}', code)
+        docket = (SCRIPTS / "docket-weekly-report-runner.sh").read_text(encoding="utf-8")
+        self.assertIn("PUBLISH_EXTRA_PATHS=", docket)
+        self.assertIn("scripts/check-docket.py", docket)
 
     def test_the_entry_is_inserted_above_the_first_maintenance_entry(self):
         # An entry appended at the bottom, or written in the wrong place, breaks
@@ -2506,12 +2541,20 @@ class TestLinkGateRules(unittest.TestCase):
         got = cl.link_texts(str(p))
         self.assertEqual(got, {"https://example.org/a": "a real headline of several words"})
 
-    def test_the_online_gate_is_in_the_chiefs_runner(self):
-        # The check exists in the one job whose output nobody reviews. Its
-        # absence would be silent — a corpus sweep cannot see a brand-new file.
-        text = (REPO / "scripts" / "chiefs-weekly-report-runner.sh").read_text()
-        self.assertIn("--online --titles", text)
-        self.assertIn('--file "$ARTICLE"', text)
+    def test_the_online_gate_runs_in_every_publishing_job(self):
+        # The check exists so an unreviewed article cannot ship a link that
+        # resolves to the wrong page — a corpus sweep cannot see a brand-new
+        # file, so it must run scoped with --file on the article just written.
+        # It lives in the shared list now, so all three publishing jobs get it.
+        lib = (SCRIPTS / "publish-report.sh").read_text()
+        self.assertIn("--online --titles", lib)
+        self.assertIn('--file "$article"', lib)
+        for runner in ("chiefs-weekly-report-runner.sh",
+                       "senate-report-runner.sh",
+                       "docket-weekly-report-runner.sh"):
+            text = (SCRIPTS / runner).read_text()
+            with self.subTest(runner=runner):
+                self.assertIn("run_report_gates", text)
 
 
 # --------------------------------------------------------------------------

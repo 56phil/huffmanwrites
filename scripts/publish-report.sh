@@ -40,6 +40,136 @@ report_dry_run() { [ "${REPORT_DRY_RUN:-0}" = "1" ] || [ "${CHIEFS_DRY_RUN:-0}" 
 report_skip_simplebrain() { [ "${REPORT_SKIP_SIMPLEBRAIN:-0}" = "1" ] || [ "${CHIEFS_SKIP_SIMPLEBRAIN:-0}" = "1" ]; }
 
 # ---------------------------------------------------------------------------
+# The content gate list, in ONE place.
+#
+# This moved here from the three runners because the gate sets had already
+# drifted. The ninety-days runner ran only the offline link check and the four
+# prose gates, so when its run added two gallery cards across a page boundary
+# with no page stub on 2026-10-01, `check-gallery-pages` — which would have
+# caught the 404 before a deploy — was not in its list and the defect was
+# invisible to the job that caused it. A gate nobody runs is a gate that does
+# not exist, and three copies of a list is how the featuredOnHome rule came to
+# live in one skill and not another.
+#
+# `run_report_gates <article> [--plate <basename>] [--published]`
+#
+#   default (no --published)  the set for a series that PUBLISHES (Senate,
+#                             docket, Chiefs). Includes the online link sweep
+#                             with --titles, the frontmatter gate, the
+#                             corpus-wide hero check, the render check, the
+#                             gallery check, and the series-post check.
+#   --published               force the publishing set (currently the default).
+#   --plate <basename>        pin the series hero plate (e.g. 105-senate-race-report).
+#
+# The ninety-days job is a DRAFTING job whose pieces are not a declared series,
+# so it does not call this; it runs the prose and link gates on the whole corpus
+# via report_gate() instead (see its runner). A series that later publishes can
+# adopt this function unchanged.
+#
+# A gate failure sets GATE_FAILED=1; the caller decides what that costs (abort
+# the push in a publishing job).
+# ---------------------------------------------------------------------------
+GATE_FAILED=0
+run_gate() {
+  local label="$1"; shift
+  local out rc
+  set +e
+  out="$(python3 "$@" 2>&1)"
+  rc=$?
+  set -e
+  if [ "$rc" -ne 0 ]; then
+    echo "$(stamp): gate FAILED [$label] (exit $rc)" >> "$OUT_LOG"
+    printf '%s\n' "$out" >> "$ERR_LOG"
+    GATE_FAILED=1
+  else
+    echo "$(stamp): gate OK [$label]" >> "$OUT_LOG"
+  fi
+}
+
+run_report_gates() {
+  local article="$1"; shift
+  local plate="" want_published=1
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --plate) plate="$2"; shift 2 ;;
+      --draft) want_published=0; shift ;;
+      *) shift ;;
+    esac
+  done
+  GATE_FAILED=0
+
+  # The frontmatter gate reads the artifact the way a publisher does. `draft:
+  # true` left in place is the failure that matters most: commit and push would
+  # succeed, every other gate would report OK, and the deploy would carry
+  # nothing. `--hero-plate` pins the series plate, which the skill says to copy
+  # verbatim — this is what makes "verbatim" checkable rather than trusted.
+  if [ "$want_published" -eq 1 ]; then
+    if [ -n "$plate" ]; then
+      run_gate "check-report-frontmatter" "$REPO/scripts/check-report-frontmatter.py" \
+        --file "$article" --hero-plate "$plate"
+    else
+      run_gate "check-report-frontmatter" "$REPO/scripts/check-report-frontmatter.py" \
+        --file "$article"
+    fi
+  fi
+
+  run_gate "check-quotes --file"     "$REPO/scripts/check-quotes.py"       --file "$article"
+  run_gate "check-links --check"     "$REPO/scripts/check-links.py"        --check
+  # `--online --titles` is not optional for a publishing job. It fetches every
+  # URL the report cites and compares the page's own <title> against the
+  # citation's link text — the ONLY check in this repo that catches a link
+  # resolving to the wrong page, CLAUDE.md's most dangerous failure, invisible
+  # to a status code because the URL returns 200. A corpus sweep cannot see a
+  # brand-new file, so it must run here, scoped with --file. DEAD links fail
+  # this; a title mismatch is printed for the log and does not, because the
+  # comparison is a heuristic and failing a correct citation is worse.
+  run_gate "check-links --online"    "$REPO/scripts/check-links.py"        --file "$article" --online --titles
+  run_gate "check-emdashes --file"   "$REPO/scripts/check-emdashes.py"     --file "$article"
+  run_gate "check-prepositions --file" "$REPO/scripts/check-prepositions.py" --file "$article"
+  # Corpus-wide hero check: the frontmatter gate reads this article's own paths,
+  # and this reads every hero in content/, so a path already broken elsewhere
+  # cannot ride along into a deploy.
+  run_gate "check-hero-paths"        "$REPO/scripts/check-hero-paths.py"
+  run_gate "check-render-integrity"  "$REPO/scripts/check-render-integrity.py"
+  # A new gallery card can cross a page boundary and leave every gallery link to
+  # that page pointing at a 404. This is the gate the ninety-days run lacked.
+  run_gate "check-gallery-pages"     "$REPO/scripts/check-gallery-pages.py"
+  # A published installment of a series must carry `featuredOnHome: true`, or it
+  # reaches no reader from the home page: the feed takes its five Recent Posts
+  # from flagged posts only, and more than five are already flagged.
+  run_gate "check-series-posts"      "$REPO/scripts/check-series-posts.py" --file "$article"
+}
+report_gates_failed() { [ "$GATE_FAILED" -ne 0 ]; }
+
+# The two verification builds every report job runs. TWO, and both matters: the
+# production build excludes `draft: true`, so it says nothing about the file a
+# drafting job just wrote; the drafts build renders that file to a scratch
+# destination (not public/, which deploys and which site-audit crawls).
+# `report_build <article>` sets BUILD_FAILED.
+report_build() {
+  local article="$1"
+  local dest
+  dest="$(mktemp -d "${TMPDIR:-/tmp}/hugo-drafts-XXXXXX")"
+  BUILD_FAILED=0
+  echo "$(stamp): running verification builds" >> "$OUT_LOG"
+  local flags out rc
+  for flags in "--gc --minify" "--gc --minify --buildDrafts --destination $dest"; do
+    set +e
+    out="$(hugo $flags 2>&1)"
+    rc=$?
+    set -e
+    if [ "$rc" -ne 0 ]; then
+      echo "$(stamp): build FAILED [$flags] (exit $rc)" >> "$OUT_LOG"
+      printf '%s\n' "$out" >> "$ERR_LOG"
+      BUILD_FAILED=1
+    else
+      echo "$(stamp): build OK [$flags]" >> "$OUT_LOG"
+    fi
+  done
+  rm -rf "$dest"
+}
+
+# ---------------------------------------------------------------------------
 # Pre-run tree guard. Must be called BEFORE the writer runs.
 #
 # The runner commits exactly two things: the article and SESSION_STATE.md. Two
@@ -70,12 +200,21 @@ publish_preflight() {
   fi
 
   if [ -n "$(git status --porcelain -- SESSION_STATE.md)" ]; then
-    echo "$(stamp): REFUSING TO RUN — SESSION_STATE.md is already dirty:" >> "$OUT_LOG"
-    git status --porcelain -- SESSION_STATE.md >> "$OUT_LOG"
-    echo "$(stamp): its uncommitted edits would be committed under this run's message" >> "$OUT_LOG"
-    "$REPO/scripts/alert-failure.sh" "$JOB" 1 \
-      "SESSION_STATE.md was already dirty; see $OUT_LOG" || true
-    exit 1
+    # A dry run never reaches publish_article, so it never commits
+    # SESSION_STATE.md and the hazard this guard exists for cannot occur.
+    # Refusing anyway would make an off-date dry run (see the docket start-guard
+    # override) impossible while any unrelated work sits in the tree, and a
+    # pipeline that cannot be exercised is the thing the override is for.
+    if report_dry_run; then
+      echo "$(stamp): SESSION_STATE.md is dirty, but this is a DRY RUN — nothing will be committed." >> "$OUT_LOG"
+    else
+      echo "$(stamp): REFUSING TO RUN — SESSION_STATE.md is already dirty:" >> "$OUT_LOG"
+      git status --porcelain -- SESSION_STATE.md >> "$OUT_LOG"
+      echo "$(stamp): its uncommitted edits would be committed under this run's message" >> "$OUT_LOG"
+      "$REPO/scripts/alert-failure.sh" "$JOB" 1 \
+        "SESSION_STATE.md was already dirty; see $OUT_LOG" || true
+      exit 1
+    fi
   fi
 
   if [ -f "$article" ]; then
@@ -144,14 +283,16 @@ PY
   # that wandered outside its brief must not get the result into a published
   # commit.
   #
-  # Anything a series generates besides its article (the Chiefs job's market
-  # chart) is staged by that runner BEFORE this is called, so it rides along in
-  # the index. Naming a series' asset path in this shared file was a mistake
-  # worth recording: it would have staged the Chiefs chart inside a Senate or
-  # docket publish commit, which is the "stray file in someone else's publish"
-  # case the line above exists to forbid — and it put one series' detail in the
-  # library three of them share.
-  if ! git add "$article" SESSION_STATE.md; then
+  # A series that legitimately writes something besides its article names those
+  # paths in PUBLISH_EXTRA_PATHS (space-separated), and they are added by name
+  # here — never by wildcard, which would carry a stray file. The Chief's market
+  # chart was the first, staged by its runner before this call; the docket job's
+  # `scripts/check-docket.py` `known`-map growth is the second, and it MUST ride
+  # along or the registry's memory is lost every week. Naming a series' asset
+  # path literally in this shared file was a mistake once recorded: it would
+  # have staged the Chiefs chart inside a Senate or docket publish commit. The
+  # variable keeps that separation — each runner supplies its own.
+  if ! git add "$article" SESSION_STATE.md ${PUBLISH_EXTRA_PATHS:-}; then
     echo "$(stamp): git add failed; nothing was committed" >> "$OUT_LOG"
     "$REPO/scripts/alert-failure.sh" "$JOB" 1 "git add failed; see $OUT_LOG" || true
     exit 1

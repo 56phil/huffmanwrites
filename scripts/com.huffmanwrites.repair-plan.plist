@@ -9,7 +9,7 @@
     <string>/bin/bash</string>
     <string>/Users/prh/Developer/huffmanwrites/scripts/repair-plan-runner.sh</string>
   </array>
-  <!-- Quarterly, on the first day of January, April, July and October at 07:00 CT.
+  <!-- Quarterly, on the first day of January, April, July and October at 07:30 CT.
 
        launchd's StartCalendarInterval takes a SINGLE dict, not an array of
        dicts: an array of schedules is a LaunchDaemon-only form and is silently
@@ -19,10 +19,14 @@
        key. So Month as a four-value array fires on the 1st of each of those
        four months, which is what "quarterly" means here.
 
-       07:00 CT deliberately matches the ninety-days job on the 1st of the
-       month, so both land before Philip's morning review, and sits clear of the
-       Monday cluster (site audit 13:00, wiki check 13:30, weekly integrity
-       14:00) even on the occasions when the 1st is a Monday. -->
+       07:30 CT, thirty minutes after the ninety-days job, not 07:00 with it.
+       Both land on the 1st of the month and both must finish before Philip's
+       morning review, but running them in the same minute (measured
+       2026-10-01: both started at 07:00:05) put two concurrent fal.ai
+       submissions on the shared queue, and the two jobs' hero images came back
+       crossed with each other. Sequential runs keep both clear of the Monday
+       cluster (site audit 13:00, wiki check 13:30, weekly integrity 14:00)
+       even when the 1st is a Monday. -->
   <key>StartCalendarInterval</key>
   <dict>
     <key>Month</key>
@@ -37,7 +41,7 @@
     <key>Hour</key>
     <integer>7</integer>
     <key>Minute</key>
-    <integer>0</integer>
+    <integer>30</integer>
   </dict>
   <key>WorkingDirectory</key>
   <string>/Users/prh/Developer/huffmanwrites</string>

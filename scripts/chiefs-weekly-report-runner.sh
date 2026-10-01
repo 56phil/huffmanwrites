@@ -188,24 +188,9 @@ fi
 # Verification builds, run here rather than by the agent. TWO builds, and the
 # second is the one that matters: the production build excludes draft: true
 # content, so it says nothing about a draft. Both must pass before the push.
+# Shared with the other publishing runners (see scripts/publish-report.sh).
 # ---------------------------------------------------------------------------
-DRAFTS_DEST="$(mktemp -d "${TMPDIR:-/tmp}/hugo-drafts-XXXXXX")"
-echo "$(stamp): running verification builds" >> "$OUT_LOG"
-BUILD_FAILED=0
-for flags in "--gc --minify" "--gc --minify --buildDrafts --destination $DRAFTS_DEST"; do
-  set +e
-  BUILD_OUT="$(hugo $flags 2>&1)"
-  BUILD_RC=$?
-  set -e
-  if [ "$BUILD_RC" -ne 0 ]; then
-    echo "$(stamp): build FAILED [$flags] (exit $BUILD_RC)" >> "$OUT_LOG"
-    echo "$BUILD_OUT" >> "$ERR_LOG"
-    BUILD_FAILED=1
-  else
-    echo "$(stamp): build OK [$flags]" >> "$OUT_LOG"
-  fi
-done
-rm -rf "$DRAFTS_DEST"
+report_build "$ARTICLE"
 if [ "$BUILD_FAILED" -ne 0 ]; then
   echo "$(stamp): a build failed; not publishing" >> "$OUT_LOG"
   "$REPO/scripts/alert-failure.sh" "chiefs-weekly-report" 1 "a build failed; see $ERR_LOG" || true
@@ -218,59 +203,14 @@ fi
 # so the gates are the review, and a gate result the agent could not have
 # produced must not be left to the agent's summary.
 #
-# --file for the two ratchet gates is deliberate: they are keyed by file, and a
-# brand-new file has no baseline entry, so `--check` treats it as a regression
-# by construction. The per-file mode is the one that answers the real question —
-# is THIS article inside the limit.
+# The list lives in `scripts/publish-report.sh` (run_report_gates), shared with
+# the Senate and docket jobs. It already included `check-hero-paths`, which this
+# runner's own list had drifted to omit, and it is the one place a new gate has
+# to be added for all three.
 # ---------------------------------------------------------------------------
-GATE_FAILED=0
-run_gate() {
-  local label="$1"; shift
-  set +e
-  GATE_OUT="$(python3 "$@" 2>&1)"
-  GATE_RC=$?
-  set -e
-  if [ "$GATE_RC" -ne 0 ]; then
-    echo "$(stamp): gate FAILED [$label] (exit $GATE_RC)" >> "$OUT_LOG"
-    printf '%s\n' "$GATE_OUT" >> "$ERR_LOG"
-    GATE_FAILED=1
-  else
-    echo "$(stamp): gate OK [$label]" >> "$OUT_LOG"
-  fi
-}
+run_report_gates "$ARTICLE" --plate 103-chiefs-report
 
-# `--online --titles` is the check this job specifically cannot do without, and
-# it is deliberately NOT in the other runners. This is the only scheduled job
-# whose output publishes unreviewed, and the failure it must not ship is a link
-# that resolves to the wrong page — the repo's most dangerous error class. Two
-# distinct defects were measured while building this job:
-#
-#   1. ESPN's bot wall answers a browser User-Agent with 202 and a ~2 KB
-#      interstitial for EVERY url, live or dead. Read as 2xx that is a pass, and
-#      three dead ESPN links written by the first agent run survived both a
-#      whole-corpus sweep and a per-file sweep because of it. check-links.py now
-#      detects the challenge and retries with no User-Agent, which makes ESPN
-#      links genuinely checkable instead of falsely OK.
-#   2. ESPN serves 200 for an INVENTED story id and lands on an unrelated
-#      article — `.../story/_/id/99999999999/not-a-real-story` returns 200 with
-#      a WNBA playoff ranking. No status code can see that; --titles compares
-#      the citation's own link text against the page's <title>.
-#
-# DEAD links fail this (exit 1 on the gate). A title mismatch does not — it is
-# printed for the log, because the comparison is a heuristic and a gate that
-# fails a correct citation is worse than one that shows a human the sentence.
-run_gate "check-report-frontmatter" "$REPO/scripts/check-report-frontmatter.py" \
-  --file "$ARTICLE" --hero-plate 103-chiefs-report
-run_gate "check-quotes --file"       "$REPO/scripts/check-quotes.py"       --file "$ARTICLE"
-run_gate "check-links --check"       "$REPO/scripts/check-links.py"        --check
-run_gate "check-links --online"      "$REPO/scripts/check-links.py"        --file "$ARTICLE" --online --titles
-run_gate "check-emdashes --file"     "$REPO/scripts/check-emdashes.py"     --file "$ARTICLE"
-run_gate "check-prepositions --file" "$REPO/scripts/check-prepositions.py" --file "$ARTICLE"
-run_gate "check-render-integrity"    "$REPO/scripts/check-render-integrity.py"
-run_gate "check-gallery-pages"       "$REPO/scripts/check-gallery-pages.py"
-run_gate "check-series-posts"        "$REPO/scripts/check-series-posts.py" --file "$ARTICLE"
-
-if [ "$GATE_FAILED" -ne 0 ]; then
+if report_gates_failed; then
   echo "$(stamp): a gate failed; NOT PUBLISHING. The article is left in place for review." >> "$OUT_LOG"
   "$REPO/scripts/alert-failure.sh" "chiefs-weekly-report" 1 "a content gate failed; see $ERR_LOG" || true
   exit 1
