@@ -387,6 +387,28 @@ class TestLinkRules(unittest.TestCase):
             with self.subTest(u=u):
                 self.assertEqual(cl.clean(u), u)
 
+    def test_a_trailing_smart_quote_is_stripped(self):
+        # Measured 2026-10-01: `…%22)%E2%80%9D` — a bare URL ending inside a
+        # chapter-title quotation — kept the prose paren and the closing `”`,
+        # because `”` was not in TRAILING so nothing stripped it and
+        # `balanced()` never ran on a string ending in `”`.
+        u = ("https://openlibrary.org/search/inside?q=%22Socratic+Pedagogy"
+             "%3A+The+Importance+of+Argument%22")
+        for tail in (")”", "’)", "”", "’"):
+            with self.subTest(tail=tail):
+                self.assertEqual(cl.clean(u + tail), u)
+
+    def test_an_html_entity_ends_a_bare_url(self):
+        # The April 18 digest's link list is `[Medium](url),&nbsp;[Substack](url)`.
+        # The bare-URL class swallowed `),&nbsp;[Substack` as part of the first
+        # URL, so the checker fetched an invented address. Everything from the
+        # `&` is markup, not the URL.
+        text = ("[Medium](https://medium.com/?ref=huffmanwrites.org),&nbsp;"
+                "[Substack](https://substack.com/?ref=huffmanwrites.org)")
+        self.assertEqual([cl.clean(u) for u in cl.URL.findall(text)],
+                         ["https://medium.com/?ref=huffmanwrites.org",
+                          "https://substack.com/?ref=huffmanwrites.org"])
+
     def test_bot_blocking_hosts_are_recognised_including_subdomains(self):
         # A 403 from these says nothing about whether the link is real. Assert
         # against the gate's own list rather than a guessed host: the list is

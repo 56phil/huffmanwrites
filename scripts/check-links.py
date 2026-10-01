@@ -73,8 +73,9 @@ def balanced(url: str) -> str:
     return url
 
 # Trailing characters that markdown prose hangs off the end of a URL: sentence
-# punctuation, and the emphasis wrappers (`*`, `_`, `~`, backtick) that close a
-# link whose text was italicised or bolded.
+# punctuation, the emphasis wrappers (`*`, `_`, `~`, backtick) that close a link
+# whose text was italicised or bolded, and the typographic quote marks a
+# quotation or a chapter title leaves behind.
 #
 # The wrappers belong here because of a measured failure, not a theory. On
 # 2026-09-28 a bare-URL capture of `[text](https://en.wikisource.org/wiki/…/Book_VI)*`
@@ -83,7 +84,19 @@ def balanced(url: str) -> str:
 # `balanced()` below never ran, the checker fetched `…/Book_VI)*`, got a 404 and
 # reported a **live citation as DEAD** — the second time this exact false-alarm
 # class shipped. `https://vote.gov/).[^6` is the same shape with a footnote.
-TRAILING = ".,;:!?*_~`"
+#
+# The smart quotes were added 2026-10-01 for the same reason: `…%22)”` (a bare
+# URL ending inside a quotation mark and a prose paren) kept both, because
+# `”` is not in TRAILING so nothing stripped it and `balanced()` never ran on a
+# string that ends in `”` rather than `)`.
+TRAILING = ".,;:!?*_~`\u201d\u2019"
+
+# An HTML entity the markdown source left glued to the end of a bare URL — the
+# `,` before it belongs to the link list, and everything from the `&` onward is
+# markup, not the address. Truncate at it. Measured on the April 18 digest,
+# whose link list reads `[Medium](url),&nbsp;[Substack](url), and&nbsp;[LinkedIn]`;
+# the bare-URL class swallowed `),&nbsp;[Substack` as part of the first URL.
+_ENTITY_TAIL = re.compile(r"&[a-z]+;.*$", re.IGNORECASE)
 
 # A footnote marker the prose left stuck to the URL: `).[^6` or `…[^12]`.
 _FOOTNOTE_TAIL = re.compile(r"\[\^[^\]]*\]?$")
@@ -102,6 +115,7 @@ def clean(url: str) -> str:
     while url != prev:
         prev = url
         url = _FOOTNOTE_TAIL.sub("", url)
+        url = _ENTITY_TAIL.sub("", url)
         url = url.rstrip(TRAILING)
         url = balanced(url)
     return url
