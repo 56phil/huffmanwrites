@@ -27,8 +27,17 @@ So this checks two things, one offline and one online:
   2. LIVENESS (--online). Ask the provider whether the resolved key
      authenticates. For fal.ai this is a GET on a request id that cannot
      exist: a good key answers `404 Request not found`, a stale key answers
-     `401 invalid key credentials`. It submits nothing, generates nothing, and
-     costs nothing — the point is to detect a dead key without spending it.
+     `401 invalid key credentials`. For SendFox it is a GET on `/lists`, which
+     answers `200` for a live token and `401 Unauthenticated` for a stale one.
+     Neither request creates a campaign, submits a generation, or reaches a
+     reader, so both cost nothing — the point is to detect a dead key without
+     spending it.
+
+     This half is what catches the case drift cannot: on 2026-10-02 the
+     SendFox keychain item and `~/.secrets` held **the same stale value** and
+     agreed perfectly, so a home-comparison called it clean while a
+     gitignored `.sendfox_token` did the work. The rule that catches the real
+     defect is not "the homes match" but "the resolved key authenticates".
 
 Values are never printed. Only a short SHA-256 prefix, so a finding is
 comparable across runs without putting a secret in a log file.
@@ -37,7 +46,7 @@ Exit codes: 0 clean, 1 problems found, 2 the check could not run.
 
 Usage:
   check-secrets.py                 # drift only (no network)
-  check-secrets.py --online        # drift + fal.ai liveness probe
+  check-secrets.py --online        # drift + provider liveness probes
   check-secrets.py --quiet
 """
 
@@ -61,8 +70,9 @@ SECRETS_FILE = Path.home() / ".secrets"
 # docket registry, so a new key never means editing the runner.
 #
 # `legacy_repo_files` names files that once held this credential in the repo
-# and must not come back. `.fal_token` is the one that shipped; it is listed so
-# its reintroduction fails here rather than waiting for the next 401.
+# and must not come back. `.fal_token` and `.sendfox_token` are both listed
+# because both shipped; listing them means their reintroduction fails here
+# rather than waiting for the next 401.
 CREDENTIALS: "list[dict]" = [
     {
         "name": "FAL_KEY",
@@ -82,8 +92,8 @@ CREDENTIALS: "list[dict]" = [
         "name": "SENDFOX_CLIENT_SECRET",
         "keychain": "huffmanwrites-sendfox",
         "secrets_var": "SENDFOX_CLIENT_SECRET",
-        "legacy_repo_files": [],
-        "probe": None,
+        "legacy_repo_files": [".sendfox_token"],
+        "probe": "sendfox",
     },
     {
         "name": "FIRECRAWL_API_KEY",
@@ -247,6 +257,58 @@ def probe_fal(key: str, timeout: float = 20.0) -> "tuple[str, str]":
         return "unverified", f"could not reach fal.ai ({e})"
 
 
+def probe_sendfox(key: str, timeout: float = 20.0) -> "tuple[str, str]":
+    """Ask SendFox whether this token authenticates, without sending anything.
+
+    A GET on `/lists` is the cheapest possible auth check: a live token
+    answers 200 with the account's lists, a stale one answers 401. It sends no
+    campaign and touches no subscriber, so it is safe to run every week.
+
+    One trap, learned the hard way: SendFox sits behind Cloudflare, and
+    urllib's default User-Agent is answered with **HTTP 403 `error code 1010`**
+    before the request ever reaches the API. Read literally that is "auth
+    denied", which would report a working token as dead. So the probe retries
+    with a browser User-Agent, and only a 401 from an answered request counts
+    as a stale key; a bare 403 is `unverified` ("we could not look").
+
+    Returns (verdict, detail) where verdict is ok / auth-failed / unverified.
+    """
+    browser_ua = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/128 Safari/537.36")
+    url = "https://api.sendfox.com/lists"
+
+    def attempt(user_agent: "str | None"):
+        headers = {"Authorization": f"Bearer {key}"}
+        if user_agent:
+            headers["User-Agent"] = user_agent
+        req = urllib.request.Request(url, headers=headers)
+        return urllib.request.urlopen(req, timeout=timeout)
+
+    try:
+        try:
+            with attempt(None) as resp:
+                return "ok", f"HTTP {resp.status}"
+        except urllib.error.HTTPError as e:
+            if e.code != 403:
+                raise
+        # 403 on the default UA is the Cloudflare wall, not a verdict.
+        with attempt(browser_ua) as resp:
+            return "ok", f"HTTP {resp.status}"
+    except urllib.error.HTTPError as e:
+        if e.code == 401:
+            return "auth-failed", "HTTP 401 Unauthenticated"
+        if e.code == 403:
+            # Challenged both ways: we could not look. Never claim the key is
+            # dead on a wall that answers every request the same way.
+            return "unverified", f"HTTP {e.code} (bot challenge, key not judged)"
+        if e.code >= 500:
+            return "unverified", f"HTTP {e.code} (provider error, key not judged)"
+        return "unverified", f"HTTP {e.code}"
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        return "unverified", f"could not reach sendfox.com ({e})"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -270,13 +332,14 @@ def main() -> int:
         cred_problems = check_drift(cred)
         problems.extend(cred_problems)
 
-        if args.online and cred.get("probe") == "fal":
+        if args.online and cred.get("probe"):
             key = (keychain_lookup(cred["keychain"])
                    or secrets_lookup(cred["secrets_var"]))
             if not key:
                 problems.append(f"{cred['name']}: nothing to probe (no value in any home)")
                 continue
-            verdict, detail = probe_fal(key)
+            prober = {"fal": probe_fal, "sendfox": probe_sendfox}[cred["probe"]]
+            verdict, detail = prober(key)
             if verdict == "auth-failed":
                 problems.append(
                     f"{cred['name']}: the resolved key does NOT authenticate "

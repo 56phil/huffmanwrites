@@ -2911,12 +2911,12 @@ class TestSecretDrift(unittest.TestCase):
         self.assertTrue(any("repo-local copy exists" in p for p in problems))
 
     def test_credentials_without_a_probe_are_not_probed(self):
-        # Only fal.ai has a cheap, free liveness probe. A key with no probe
-        # must not be sent anywhere — asserting the registry shape keeps a
-        # later edit from inventing one by accident.
+        # Two providers have a cheap, free liveness probe: fal.ai and SendFox.
+        # A key with no probe must not be sent anywhere — asserting the
+        # registry shape keeps a later edit from inventing one by accident.
         for cred in cs.CREDENTIALS:
             with self.subTest(cred=cred["name"]):
-                self.assertIn(cred.get("probe"), (None, "fal"))
+                self.assertIn(cred.get("probe"), (None, "fal", "sendfox"))
 
     def test_a_server_error_is_not_read_as_auth_success(self):
         # A 5xx means the provider is broken, not that the key works. Reading
@@ -2950,6 +2950,66 @@ class TestSecretDrift(unittest.TestCase):
             verdict, detail = cs.probe_fal("any-key")
         self.assertEqual(verdict, "auth-failed")
         self.assertIn("invalid key credentials", detail)
+
+    def test_sendfox_a_200_is_a_live_token(self):
+        import unittest.mock as mock
+        resp = mock.MagicMock()
+        resp.status = 200
+        resp.__enter__ = lambda s: s
+        resp.__exit__ = mock.MagicMock(return_value=False)
+        with mock.patch("urllib.request.urlopen", return_value=resp):
+            verdict, detail = cs.probe_sendfox("any-token")
+        self.assertEqual(verdict, "ok")
+        self.assertIn("200", detail)
+
+    def test_sendfox_a_401_is_a_stale_token(self):
+        import io as _io
+        import urllib.error
+        import unittest.mock as mock
+        err = urllib.error.HTTPError(
+            "http://x", 401, "Unauthorized", {},
+            _io.BytesIO(b'{"message":"Unauthenticated."}'))
+        # The default UA gets 401 too, so the browser retry also 401s and the
+        # verdict is the same — that is the shape the real API produces.
+        with mock.patch("urllib.request.urlopen", side_effect=err):
+            verdict, detail = cs.probe_sendfox("any-token")
+        self.assertEqual(verdict, "auth-failed")
+        self.assertIn("401", detail)
+
+    def test_sendfox_a_cloudflare_wall_is_not_a_stale_token(self):
+        # Cloudflare answers urllib's default UA with 403 error 1010 for a
+        # working token. Read as "auth failed" it would report a live key as
+        # dead; read as "ok" it would report a dead one as live. It is neither:
+        # we could not look. Simulate a 403 on every attempt.
+        import io as _io
+        import urllib.error
+        import unittest.mock as mock
+        err = urllib.error.HTTPError(
+            "http://x", 403, "Forbidden", {}, _io.BytesIO(b"error code: 1010"))
+        with mock.patch("urllib.request.urlopen", side_effect=err):
+            verdict, _ = cs.probe_sendfox("any-token")
+        self.assertEqual(verdict, "unverified")
+
+    def test_sendfox_a_server_error_is_not_read_as_auth_success(self):
+        import io as _io
+        import urllib.error
+        import unittest.mock as mock
+        err = urllib.error.HTTPError(
+            "http://x", 503, "Service Unavailable", {}, _io.BytesIO(b""))
+        with mock.patch("urllib.request.urlopen", side_effect=err):
+            verdict, _ = cs.probe_sendfox("any-token")
+        self.assertEqual(verdict, "unverified")
+
+    def test_sendfox_a_stale_key_is_reported_even_when_homes_agree(self):
+        # The 2026-10-02 failure exactly: keychain and ~/.secrets held the same
+        # stale SendFox value, so compare_homes reported nothing and the gate
+        # said OK while a repo-local `.sendfox_token` did the work. The only
+        # thing that catches it is probing the resolved key. Assert the
+        # registry now carries a probe, so --online cannot go blind again.
+        sendfox = [c for c in cs.CREDENTIALS
+                   if c["name"] == "SENDFOX_CLIENT_SECRET"][0]
+        self.assertEqual(sendfox["probe"], "sendfox")
+        self.assertIn(".sendfox_token", sendfox["legacy_repo_files"])
 
     def test_the_guard_runs_clean_on_the_real_repo(self):
         # The end state, verified as the runner will see it: no drift, and the
