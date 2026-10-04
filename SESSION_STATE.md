@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — October 3, 2026 — Added a sixth Knowledge Hub card (Periodic Digests)
+
+Philip: "The uneven columns in the knowledge hub messes with my sense of aesthetics. Can we add a sixth card to even things out?"
+
+- **The cause is the grid, not the cards.** `.hub-grid` is `grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))` inside a `.dashboard` capped at `max-width: 900px`, which resolves to a **fixed 724px content column and therefore exactly 2 columns at every viewport width** (measured in a real browser at 1280 and 1920 px; the column never becomes 3). Five cards therefore wrapped **2 + 2 + 1**, leaving the last row half-empty. Six gives **2 + 2 + 2**, which is even at every width the site actually renders.
+- **The sixth card is `Periodic Digests`** (`/posts/digests/`, 31 posts) — chosen by Philip from two candidates (the other was Investing & Risk, 17 posts). Copy: "Weekly letters on philosophy, geopolitics, and culture." Placed last, beside the other recurring series, so the top four rows keep the topical grouping (stoicism, civics, essays, summaries).
+- **Verified by running it, not by counting markup.** Clean `hugo --gc --minify` (439 pages); the built home page carries **6** hub cards; read in a real browser: 6 cards, `grid-template-columns` = 2 columns, **3 rows of 2**, all cards 324 px wide — the imbalance is gone; screenshot confirms the even 3×2 block. `check-render-integrity` 510 pages, no sentinels.
+- **Files changed:** `layouts/index.html` (one card). No CSS change: the grid already did the right thing with six items, and the fix is the even count rather than a rule.
+
+---
+
 ### Maintenance — October 3, 2026 — Stoic Saturday now summarizes the latest weekly reports
 
 Philip: "From now on, Stoic Saturday will include a brief summary of the most recent weekly reports including a link to the full report."
