@@ -15,7 +15,7 @@ hero_caption: "The series plate for the weekly Chiefs report, kept for the rest 
 
 **Question:** What has a 3-0 start bought the Chiefs?
 
-**Answer:** A September game that decides the AFC West. Kansas City and Las Vegas are both unbeaten, they have scored exactly the same number of points, and they meet Sunday with the Chiefs' left tackle still missing.
+**Answer:** An October game that decides the AFC West. Kansas City and Las Vegas are both unbeaten, they have scored exactly the same number of points, and they meet Sunday with the Chiefs' left tackle still missing.
 
 ## The game just played
 
