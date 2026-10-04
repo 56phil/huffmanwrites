@@ -90,7 +90,12 @@ cd "$REPO"
 ARTICLE="content/posts/essays/docket-report-$TODAY.md"
 
 # Shared publish tail: preflight guard, SESSION_STATE entry, commit, push, push
-# verification, and the SimpleBrain mirror.
+# verification, and the SimpleBrain mirror. JOB is the label suffix the library
+# expands inside publish_article and in every alert; it MUST be bound before the
+# source, or the first real publish dies at the SESSION_STATE-entry line under
+# `set -u` with "JOB: unbound variable" — which is exactly what happened on
+# 2026-10-03, after the writer and every gate had already succeeded.
+JOB="docket-weekly-report"
 . "$REPO/scripts/publish-report.sh"
 
 echo "$(stamp): starting weekly docket report run" >> "$OUT_LOG"

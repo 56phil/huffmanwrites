@@ -89,7 +89,11 @@ ARTICLE="content/posts/essays/senate-race-report-$TODAY.md"
 
 # Shared publish tail: preflight guard, SESSION_STATE entry, commit, push, push
 # verification, and the SimpleBrain mirror. Three jobs share it, so the parts
-# that must not drift live in one file.
+# that must not drift live in one file. JOB is the label suffix the library
+# expands inside publish_article and in every alert; it MUST be bound before the
+# source, or the first real publish dies at the SESSION_STATE-entry line under
+# `set -u` with "JOB: unbound variable".
+JOB="senate-report"
 . "$REPO/scripts/publish-report.sh"
 
 echo "$(stamp): starting Senate race report run" >> "$OUT_LOG"

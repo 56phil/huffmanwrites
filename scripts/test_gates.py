@@ -501,16 +501,30 @@ class TestGalleryRules(unittest.TestCase):
         self.assertTrue(has_fallback, "the docket card needs a link fallback")
 
     def test_a_card_with_a_glob_and_no_fallback_is_reported_as_dead(self):
-        # If the fallback is ever dropped, the note must say the card has no way
-        # through to any post — that is the state the user objected to.
+        # If a card that resolves to the newest installment loses its `link`
+        # fallback while the series has not started, the note must say the card
+        # has no way through to any post — that is the state the user objected
+        # to.
+        #
+        # Both the data AND the filesystem are mocked, because this state only
+        # exists before a series has installments. The test used to mutate the
+        # real gallery alone; once the docket report published its first
+        # installment (2026-10-03) the real glob started matching, the note was
+        # never emitted, and this test broke the deploy gate for the wrong
+        # reason. The empty content tree keeps it about the rule.
         from unittest import mock
+        import tempfile
         real = cg.GALLERY_DATA.read_text(encoding="utf-8")
         mutated = real.replace(
             "  link: /posts/essays/three-walls-and-three-slots/\n", "")
         self.assertNotEqual(real, mutated, "fixture did not change")
-        with mock.patch.object(cg, "GALLERY_DATA") as fake:
-            fake.read_text.return_value = mutated
-            failures, notes = cg.latest_problems()
+        with tempfile.TemporaryDirectory() as tmp:
+            for sub in ("posts/essays", "posts/sports"):
+                (Path(tmp) / "content" / sub).mkdir(parents=True)
+            with mock.patch.object(cg, "GALLERY_DATA") as fake, \
+                    mock.patch.object(cg, "REPO", Path(tmp)):
+                fake.read_text.return_value = mutated
+                failures, notes = cg.latest_problems()
         self.assertEqual(failures, [], failures)
         self.assertTrue(any("no `link` fallback" in n for n in notes), notes)
 
@@ -529,12 +543,25 @@ class TestGalleryRules(unittest.TestCase):
         self.assertTrue(any("does not exist" in f for f in failures), failures)
 
     def test_an_unstarted_series_is_a_note_not_a_failure(self):
-        # The docket report has no published installment until 2026-10-03, and
-        # that is legitimate. It must not fail the gate, or CI would be red
-        # until the first run.
-        failures, notes = cg.latest_problems()
-        self.assertEqual([f for f in failures], [], failures)
+        # A declared series with no installments yet is legitimate, so the gate
+        # notes it rather than failing — otherwise CI would be red until the
+        # first run, which is how a real alert gets learned as noise.
+        #
+        # The docket series published its first installment on 2026-10-03. This
+        # asserts the RULE, so "has not started" is simulated by pointing the
+        # scan at an empty content tree rather than at a series that happens to
+        # be unstarted today: the shipped-gallery version of this test went
+        # stale the moment that installment landed and skipped the deploy.
+        from unittest import mock
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            for sub in ("posts/essays", "posts/sports"):
+                (Path(tmp) / "content" / sub).mkdir(parents=True)
+            with mock.patch.object(cg, "REPO", Path(tmp)):
+                failures, notes = cg.latest_problems()
+        self.assertEqual(failures, [], failures)
         self.assertTrue(any("Docket Report" in n for n in notes), notes)
+        self.assertTrue(any("falling back to its `link`" in n for n in notes), notes)
 
     def test_no_shipped_glob_fails(self):
         failures, _ = cg.latest_problems()
@@ -2266,10 +2293,18 @@ class TestSeriesHomeFlagGate(unittest.TestCase):
         self.assertEqual(self.run_gate("--file", str(p))[0], 0)
 
     def test_directories_whose_series_has_not_started_are_a_note_not_a_failure(self):
-        # The docket series publishes from 2026-10-03. Failing a series that has
-        # not started would leave CI red for weeks, which trains people to
-        # ignore it -- the same reasoning as check-gallery-pages.py.
-        problems, notes = csp.check(verbose=False)
+        # A declared series with no published installment yet is legitimate and
+        # must be a note, not a failure: failing it would leave CI red for
+        # weeks, which trains people to ignore it -- the same reasoning as
+        # check-gallery-pages.py. The docket series published its first
+        # installment on 2026-10-03, so the "has not started" state is
+        # simulated by scanning an empty content tree rather than a shipped
+        # series that happens to be unstarted today.
+        from unittest import mock
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(csp, "CONTENT", Path(tmp)):
+                problems, notes = csp.check(verbose=False)
         self.assertEqual(problems, [])
         self.assertTrue(any("docket-report" in n for n in notes), notes)
 
@@ -2505,6 +2540,35 @@ class TestPublishLibrary(unittest.TestCase):
         # function that is expected to return non-zero (the dry-run stop) would
         # abort every real run before the publish.
         self.assertIn("if ! report_dry_run; then", self.lib)
+
+    def test_the_library_asserts_the_job_contract(self):
+        # JOB is expanded inside publish_article and in every alert, under the
+        # caller's `set -u`. The library names the contract so an unbound JOB is
+        # a sentence about the requirement, not the cryptic line number the
+        # docket and senate runners produced on 2026-10-03.
+        self.assertIn(': "${JOB:?publish-report.sh requires JOB', self.lib)
+
+    def test_every_sourcing_runner_binds_job_first(self):
+        # The rule the guard above depends on: a runner that sources the library
+        # must bind JOB beforehand. The docket and senate runners omitted it, so
+        # their first real publish died with "JOB: unbound variable" after the
+        # writer and every gate had already succeeded — a failure reachable only
+        # on the publish path, which a dry run never runs.
+        sourced = re.compile(r'^\.\s+"\$REPO/scripts/publish-report\.sh"', re.M)
+        checked = 0
+        for runner in sorted(SCRIPTS.glob("*-runner.sh")):
+            text = runner.read_text(encoding="utf-8")
+            m = sourced.search(text)
+            if not m:
+                continue
+            checked += 1
+            with self.subTest(runner=runner.name):
+                self.assertIsNotNone(
+                    re.search(r'^JOB="', text[:m.start()], re.M),
+                    f"{runner.name} sources the publish library without binding JOB")
+        self.assertGreaterEqual(
+            checked, 4,
+            "the four report runners (chiefs, docket, senate, ninety-days) source the library")
 
 
 # --------------------------------------------------------------------------

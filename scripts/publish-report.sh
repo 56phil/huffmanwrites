@@ -35,6 +35,16 @@ if ! declare -f stamp >/dev/null 2>&1; then
   stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 fi
 
+# The caller MUST have bound JOB before sourcing. The library expands it inside
+# publish_article (the SESSION_STATE entry, the commit message) and in every
+# alert-failure.sh call, all under the caller's `set -u`. Naming it here turns an
+# unbound JOB into a sentence about the contract instead of the cryptic
+# "publish-report.sh: line 250: JOB: unbound variable" the docket and senate
+# runners produced on their first real publish (2026-10-03) — a failure that
+# happens only when the pipeline runs to completion, after the writer and every
+# gate have already succeeded, so a dry run can never surface it.
+: "${JOB:?publish-report.sh requires JOB (the launchd label suffix) to be set by the caller}"
+
 # Accept either the generic switch or the job's historical name.
 report_dry_run() { [ "${REPORT_DRY_RUN:-0}" = "1" ] || [ "${CHIEFS_DRY_RUN:-0}" = "1" ]; }
 report_skip_simplebrain() { [ "${REPORT_SKIP_SIMPLEBRAIN:-0}" = "1" ] || [ "${CHIEFS_SKIP_SIMPLEBRAIN:-0}" = "1" ]; }
