@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 4, 2026 — Published the senate-report report (automated)
+
+Auto-published by `com.huffmanwrites.senate-report` after every gate passed.
+- **Published** `content/posts/essays/senate-race-report-2026-10-04.md` — "Senate Race Report: October 4, 2026", 9075 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **Manual publish after a gate-aborted automated run.** The 2026-10-04 07:00 run wrote the article, then aborted the push when two gates failed: `check-links --online` (one dead URL) and `check-prepositions --file` (one sentence-final preposition). Both were corrected and every gate re-run in this session before the commit.
+- **Corrections.** The Fox News Alaska citation's slug carried a stray `has-a-` and returned HTTP 404; it now points at the live slug, which serves the cited headline. Footnote 47 quoted the name as `Daniel J. Sullivan Jr.`, wording the source does not contain; the article reads `Daniel J. Sullivan`, so the quotation was corrected to match. The sentence-final preposition closing "The Close" was restructured to `for which the incumbent has to answer`.
+- **One non-fatal title mismatch remains**, from the `--online --titles` sweep: the Marist (Michigan) poll link's page title is the generic "Home of the Marist Poll," so the cited figures may sit on a different URL. Left as-is pending a check; the other three mismatches are retitles of correctly linked articles.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **SimpleBrain synced** in the same run: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed.
+
+---
+
 ### Maintenance — October 3, 2026 — Added a sixth Knowledge Hub card (Periodic Digests)
 
 Philip: "The uneven columns in the knowledge hub messes with my sense of aesthetics. Can we add a sixth card to even things out?"
