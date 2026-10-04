@@ -124,6 +124,18 @@ run_report_gates() {
   fi
 
   run_gate "check-quotes --file"     "$REPO/scripts/check-quotes.py"       --file "$article"
+  # The NARROW half of quotation fidelity. `check-quotes.py --online` is inert on
+  # a report: it audits epigraph-shaped attributions (`"quote" — Author`) and a
+  # newspaper footnote is not that shape, so it scans this article as "0
+  # attributions" and verifies nothing. This gate checks the one thing that is
+  # both checkable and was actually wrong — a quoted person-name DETAIL (middle
+  # initial or generational suffix) that does not appear on any page the line
+  # cites. The 2026-10-04 report quoted "Daniel J. Sullivan Jr." where the source
+  # says "Daniel J. Sullivan"; every other gate reported OK. A general
+  # every-quotation check was tried and rejected: it reported 70 false positives
+  # on that same report (titles, ellipses, paywalled pages), and a gate that
+  # fails correct reports is worse than none.
+  run_gate "check-quote-names --online" "$REPO/scripts/check-quote-names.py" --file "$article" --online
   run_gate "check-links --check"     "$REPO/scripts/check-links.py"        --check
   # `--online --titles` is not optional for a publishing job. It fetches every
   # URL the report cites and compares the page's own <title> against the

@@ -53,6 +53,7 @@ cs = load("check-secrets")
 chp = load("check-hero-paths")
 csp = load("check-series-posts")
 crf = load("check-report-frontmatter")
+cqn = load("check-quote-names")
 
 EM = "\u2014"
 
@@ -964,6 +965,90 @@ class TestPrepositionRules(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+# Quoted name-detail fidelity. The gate exists because the 2026-10-04 Senate
+# report quoted a reconstructed name ("Daniel J. Sullivan Jr." where the source
+# says "Daniel J. Sullivan") and every other gate reported OK. It is deliberately
+# NARROW: it checks only quoted person-name DETAILS (a middle initial or a
+# generational suffix), because a general every-quotation check reported 70 false
+# positives on that same report. These tests pin both halves: that the narrow
+# detail is caught, and that ordinary quoted prose, a quoted TITLE, and an
+# ellipsis are not dragged in.
+# --------------------------------------------------------------------------
+class TestQuoteNameRules(unittest.TestCase):
+    def test_middle_initial_is_a_name_detail(self):
+        self.assertTrue(cqn.has_name_detail("Dan S. Sullivan is on the ballot"))
+        self.assertTrue(cqn.has_name_detail("Daniel J. Sullivan,"))
+
+    def test_generational_suffix_is_a_name_detail(self):
+        self.assertTrue(cqn.has_name_detail("Daniel J. Sullivan Jr."))
+        self.assertTrue(cqn.has_name_detail("Sammy Davis Sr."))
+        self.assertTrue(cqn.has_name_detail("Henry III"))
+
+    def test_ordinary_quoted_prose_is_not_a_name_detail(self):
+        # The noise that made the general check unusable: prose quotations and
+        # quoted headlines must not be candidates.
+        self.assertFalse(cqn.has_name_detail("They'll pay $200 to heckle me"))
+        self.assertFalse(cqn.has_name_detail("a retired schoolteacher and registered Republican"))
+        self.assertFalse(cqn.has_name_detail("Fox News Poll: Turek, Hinson in close Iowa Senate race"))
+
+    def test_extract_pairs_a_detail_with_its_line_urls(self):
+        text = (
+            "Body references the race.[^1]\n\n"
+            "[^1]: Fox News, [\"Alaska\"](https://example.org/alaska), September 24, 2026: "
+            "the incumbent \"Dan S. Sullivan\" and \"Daniel J. Sullivan Jr.,\" \"a retired "
+            "schoolteacher.\"\n"
+        )
+        cands = cqn.extract_candidates(text)
+        frags = sorted(c["fragment"] for c in cands)
+        self.assertEqual(frags, ["Dan S. Sullivan", "Daniel J. Sullivan Jr.,"])
+        # The URL comes from the same footnote, not from the body.
+        self.assertEqual(cands[0]["urls"], ["https://example.org/alaska"])
+
+    def test_a_quoted_fragment_with_no_url_is_unverifiable_not_missing(self):
+        # "Cannot fetch" is a statement about the checker, never an accusation
+        # about the citation — the failure this gate must not reproduce.
+        cand = {"line": 1, "fragment": "Daniel J. Sullivan Jr.", "urls": []}
+        self.assertEqual(cqn.check_online(cand), "unverified")
+
+    def test_fragment_present_normalizes_whitespace(self):
+        # Hard-wrapped HTML breaks lines mid-name; a literal test would miss.
+        self.assertTrue(cqn.fragment_present("Daniel J. Sullivan,",
+                                             "the ballot. Daniel J.   Sullivan, a retired teacher"))
+        self.assertFalse(cqn.fragment_present("Daniel J. Sullivan Jr.",
+                                              "the ballot. Daniel J. Sullivan, a retired teacher"))
+
+    def test_frontmatter_is_not_scanned(self):
+        # A `description` is display text, not a quotation of a source. A corpus
+        # scan surfaced "Kenneth Walker III's workload" from a chiefs description.
+        text = ('---\ndescription: "Andy Reid says Kenneth Walker III\'s workload '
+                'has to come down."\n---\n\nBody with no quotes.\n')
+        self.assertEqual(cqn.extract_candidates(text), [])
+
+    def test_a_quoted_link_title_is_not_a_candidate(self):
+        # A fragment containing a markdown link is a citation ANCHOR — the
+        # source's own title, which check-links.py --titles already compares
+        # against the fetched page. Testing it as a quotation flags correct
+        # citations (corpus scan: "John F. Kennedy: Domestic Affairs").
+        text = ('[^1]: [How John F. Kennedy Fell for the Lost Cause.]'
+                '(https://example.org/a), 2026.\n')
+        self.assertEqual(cqn.extract_candidates(text), [])
+
+    def test_the_corrected_report_passes_online(self):
+        # End-to-end on the real citation: the corrected file's quoted names
+        # ("Dan S. Sullivan", "Daniel J. Sullivan") are confirmed against the
+        # live source. This is the regression fixture for the 2026-10-04 defect;
+        # reinstating the "Jr." would fail here.
+        import subprocess
+        clean = REPO / "content/posts/essays/senate-race-report-2026-10-04.md"
+        if not clean.exists():
+            self.skipTest("the 2026-10-04 installment is not present")
+        r = subprocess.run(
+            [sys.executable, "scripts/check-quote-names.py", "--file", str(clean), "--online"],
+            cwd=REPO, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
+
+# --------------------------------------------------------------------------
 # Chiefs weekly report. The rules that matter are the ones that decide whether a
 # thing gets PUBLISHED and whether the pack's numbers can be trusted: the
 # season guard that keeps the job silent in the off season, the assertion that
@@ -1798,6 +1883,17 @@ class TestReportFrontmatterGate(unittest.TestCase):
             with self.subTest(runner=runner):
                 self.assertIn("run_report_gates", text)
                 self.assertIn(f"--plate {plate}", text)
+
+    def test_the_shared_gate_set_runs_the_quote_name_gate(self):
+        # A gate nobody runs is not a gate. `check-quotes.py --online` is INERT
+        # on a report (it audits em-dash epigraphs, not newspaper footnotes), so
+        # the narrow name-detail gate is the only mechanical check on quoted
+        # name fidelity. It must be in the shared set, or the 2026-10-04 failure
+        # ("Daniel J. Sullivan Jr." quoted where the source says "Daniel J.
+        # Sullivan") is again caught only by a human reading the footnote.
+        lib = (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8")
+        self.assertIn("check-quote-names.py", lib)
+        self.assertIn("check-quote-names --online", lib)
 
     def test_the_shared_publish_tail_names_no_series_asset(self):
         # The defect this pins, introduced and caught 2026-09-28: the market
