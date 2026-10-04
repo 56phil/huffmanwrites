@@ -94,6 +94,13 @@ Credentials have exactly one home: the **login keychain** (a `huffmanwrites-*` g
 ## Conventions
 
 - **Tone:** Personal stakes + historical context + contemporary urgency. Not yelling, not lecturing. Think *with* the reader.
+- **Every Stoic Saturday digest carries a brief summary of the most recent weekly reports, each linked to its full report.** Added 2026-10-03 as a standing structural element: the reader gets the week's reports in the letter, not a bare schedule of them. For each publishing series, summarize the **most recent published installment** in a sentence or two and link it. The series and the URL shapes they resolve to:
+  - **Senate Race Report** — `content/posts/essays/senate-race-report-<DATE>.md` → `/posts/essays/senate-race-report-<DATE>/` (Sundays 07:00 CT, through 2026-11-01).
+  - **Docket Report** — `content/posts/essays/docket-report-<DATE>.md` → `/posts/essays/docket-report-<DATE>/` (Saturdays 08:00 CT, from 2026-10-03).
+  - **Ninety-Days Report** — two monthly installments, `content/posts/investing/bond-market-ninety-days-<DATE>.md` and `content/posts/investing/sp500-next-ninety-days-<DATE>.md` (the 1st of each month).
+  - **Chiefs Report** — `content/posts/sports/chiefs-report-<DATE>.md` → `/posts/sports/chiefs-report-<DATE>/` (Tuesdays 18:30 CT, in season).
+  - The **Repair Plan** is a quarterly working document for a future administration, not a reader-facing report, and is not included.
+  Every summary and link must name a report that actually exists (fetch the URL and confirm it resolves before writing it in, per the URL rules below; when a series has not yet published its first installment, say so rather than linking a nonexistent page). A summary states what the latest installment found — not the cadence, which the reader already knows — so the letter reports the reports rather than advertising them. The 2026-09-25 issue's `**The weekly reports**` section is the predecessor (it named the cadences only); this supersedes it.
 - **First Amendment** content gets full essay length; narrower amendments get shorter explainers.
 - **`hero_caption`** is for the hero image; **`image_caption`** is for the book cover. Never mix them.
 - **New hero images** must be WebP. Use the `[NN]-[slug]_16x9.webp` / `_4x5.webp` naming convention.

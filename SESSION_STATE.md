@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 3, 2026 — Stoic Saturday now summarizes the latest weekly reports
+
+Philip: "From now on, Stoic Saturday will include a brief summary of the most recent weekly reports including a link to the full report."
+
+- **A standing structural rule for every future digest**, not a one-off edit to the current issue. The predecessor is the 2026-09-25 issue's `**The weekly reports**` section, which named the cadences only; this supersedes it: the letter now **reports the reports** rather than advertising a schedule. For each publishing series it carries a sentence or two on the **most recent published installment** with a link to it.
+- **Recorded in two places, because no scheduled job drafts Stoic Saturday.** There is no digest runner and no skill — the letter is hand-drafted each week — so the rule cannot be enforced by a gate. It lives in **CLAUDE.md's Conventions** (the series list and the exact URL shapes, so neither has to be re-derived: Senate `essays/senate-race-report-<DATE>`, Docket `essays/docket-report-<DATE>`, Ninety-Days `investing/{bond-market,sp500-next-ninety-days}-<DATE>`, Chiefs `sports/chiefs-report-<DATE>`) and as a line in **SESSION_STATE.md → User Preferences**.
+- **Scope decided, and stated:** the four publishing report series are included; the **Repair Plan** is excluded because it is a working document for a future administration, not reader-facing. Cadences were read off the installed plists rather than recalled.
+- **The link rule is inherited, not new.** Every summary must name a report that actually exists and must be fetched and confirmed before the URL is written in (the NEVER-construct-a-URL rule); when a series has not published its first installment, the digest says so rather than linking a nonexistent page. Summary states what the latest installment *found*, not when it publishes.
+- **Verified:** `test_gates.py` **276/276** still green (a docs-only change touches no gate); both edits read back in place.
+
+---
+
 ### Maintenance — October 3, 2026 — Fixed the two defects that stopped the first docket publish, and restored the deploy
 
 The docket report's first scheduled run (Saturday 08:00 CT) wrote its article and passed all ten gates, then died at the publish step. Two shipped defects, both reachable **only** on the path a dry run never exercises, and between them they cost the deploy.
@@ -1634,6 +1646,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Delete empty stubs unless Constitution-related.
 - Gallery link hover colors (`blue`/`red`) are intentional -- do not suggest changing them.
 - Always check for spelling/grammar errors before committing and pushing.
+- **Every Stoic Saturday digest includes a brief summary of the most recent weekly reports, each linked to the full report** (Philip, 2026-10-03). Encoded in CLAUDE.md's Conventions, with the series list and URL shapes.
 
 ---
 
