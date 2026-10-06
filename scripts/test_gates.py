@@ -1047,6 +1047,64 @@ class TestQuoteNameRules(unittest.TestCase):
             cwd=REPO, capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
+    def test_a_pdf_source_is_extracted_not_decoded_as_bytes(self):
+        # A cited URL may serve a PDF (court filings, agency reports, the Project
+        # 2025 volume), and this gate cites 170 of them. A real PDF's content
+        # stream is Flate-compressed, so decoding its bytes as UTF-8 yields the
+        # compressor's output rather than its words: a quotation that IS present
+        # is reported "missing" — a false accusation of fabrication, the exact
+        # failure this gate exists to catch. Pin the rule by exercising the real
+        # fetch through a local server that serves a compressed PDF whose text
+        # the checker can only recover by shelling out to pdftotext.
+        import http.server
+        import shutil
+        import tempfile
+        import threading
+        import zlib
+        if not shutil.which("pdftotext") or not shutil.which("curl"):
+            self.skipTest("pdftotext/curl not available")
+
+        text = b"BT /F1 12 Tf 20 100 Td (Daniel J. Sullivan Jr.) Tj ET\n"
+        stream = zlib.compress(text)          # compressed, as every real PDF is
+        # The literal name must NOT be findable in the file's raw bytes.
+        self.assertNotIn(b"Daniel J. Sullivan Jr.", stream)
+
+        objs = {
+            "1": b"<</Type/Catalog/Pages 2 0 R>>",
+            "2": b"<</Type/Pages/Kids[3 0 R]/Count 1>>",
+            "3": (b"<</Type/Page/Parent 2 0 R/MediaBox[0 0 200 200]"
+                  b"/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>>>>>"),
+            "4": (b"<</Length " + str(len(stream)).encode() +
+                  b"/Filter/FlateDecode>>stream\n" + stream + b"\nendstream"),
+            "5": b"<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>",
+        }
+        pdf = b"%PDF-1.4\n"
+        for n, body in objs.items():
+            pdf += n.encode() + b" 0 obj" + body + b"endobj\n"
+        pdf += b"trailer<</Root 1 0 R>>\n%%EOF\n"
+
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / "doc.pdf").write_bytes(pdf)
+
+            class H(http.server.SimpleHTTPRequestHandler):
+                def log_message(self, *a):
+                    pass
+
+            srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), lambda *a, **k:
+                                                  H(*a, directory=d, **k))
+            t = threading.Thread(target=srv.serve_forever, daemon=True)
+            t.start()
+            try:
+                url = f"http://127.0.0.1:{srv.server_address[1]}/doc.pdf"
+                code, body = cqn.fetch_text(url)
+                self.assertEqual(code, "200", (code, body[:200]))
+                self.assertIn("Daniel J. Sullivan Jr.", body,
+                              "the PDF's words must reach the checker, not its bytes")
+                self.assertTrue(cqn.fragment_present("Daniel J. Sullivan Jr.", body))
+            finally:
+                srv.shutdown()
+                srv.server_close()
+
 
 # --------------------------------------------------------------------------
 # Chiefs weekly report. The rules that matter are the ones that decide whether a

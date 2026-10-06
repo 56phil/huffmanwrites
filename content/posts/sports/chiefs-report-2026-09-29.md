@@ -61,7 +61,7 @@ There is a roster clock as well as a medical one. A to Z Sports reported that if
 
 Chamarri Conner is closer. The safety has been out since a training camp collision with receiver Tyquan Thornton, and he was ruled out for Miami after limited practices all week. Reid was optimistic on Monday.
 
-> "Yeah, so he practiced last week, and he'll get going this week, too. So, there's a good chance he'll be out there."
+> "Yeah, so he practiced last week, and he'll get going this week, too," Reid said. "So there's a good chance he'll be out there."
 
 — Andy Reid, [Monday news conference, via A to Z Sports, September 29](https://atozsports.com/nfl/kansas-city-chiefs-news/chiefs-andy-reid-latest-injury-updates-josh-simmons-chamarri-conner-week-3-win-dolphins/)
 

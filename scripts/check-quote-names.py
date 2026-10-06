@@ -53,9 +53,11 @@ line cites.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 
@@ -154,22 +156,45 @@ def extract_candidates(text: str) -> "list[dict]":
 
 
 def fetch_text(url: str) -> "tuple[str, str]":
-    """Return (http_code, text). Never raises; a fetch failure is ('000', '')."""
+    """Return (http_code, text). Never raises; a fetch failure is ('000', '').
+
+    Bytes, not text: a cited URL may serve a PDF, and this gate cites plenty of
+    them (court filings, agency reports, the Project 2025 volume). Decoding a
+    PDF as UTF-8 yields its compressed byte soup rather than its words, so a
+    quotation that IS present is reported missing — a false accusation of
+    fabrication, the exact failure this gate exists to catch. Extract text with
+    `pdftotext` first, as `check-quotes.py` does for the same reason.
+    """
     try:
         proc = subprocess.run(
             ["curl", "-sL", "--compressed", "-A", "Mozilla/5.0", "--max-time", "25",
-             "-w", "\n%{http_code}", url],
+             "-w", "\n@@%{http_code}", url],
             capture_output=True,
         )
     except Exception:
         return "000", ""
-    raw = proc.stdout.decode("utf-8", "ignore")
-    body, _, code = raw.rpartition("\n")
-    if not code.strip().isdigit():
-        return "000", raw
+    raw = proc.stdout
+    code = raw.rsplit(b"@@", 1)[-1].strip().decode("ascii", "replace")
+    body_bytes = raw.rsplit(b"\n@@", 1)[0]
+    if not code.isdigit():
+        return "000", ""
+
+    if body_bytes[:5] == b"%PDF-":
+        if not shutil.which("pdftotext"):
+            return code, ""
+        tmp = pathlib.Path("/tmp") / (
+            f"qnames-{hashlib.sha1(url.encode()).hexdigest()[:10]}.pdf")
+        tmp.write_bytes(body_bytes)
+        try:
+            p = subprocess.run(["pdftotext", str(tmp), "-"], capture_output=True)
+        finally:
+            tmp.unlink(missing_ok=True)
+        return code, p.stdout.decode("utf-8", "replace")
+
+    body = body_bytes.decode("utf-8", "ignore")
     body = re.sub(r"<script.*?</script>", " ", body, flags=re.S | re.I)
     body = re.sub(r"<style.*?</style>", " ", body, flags=re.S | re.I)
-    return code.strip(), normalize(html.unescape(re.sub(r"<[^>]+>", " ", body)))
+    return code, normalize(html.unescape(re.sub(r"<[^>]+>", " ", body)))
 
 
 def fragment_present(fragment: str, body: str) -> bool:
