@@ -184,9 +184,21 @@ themselves. Search for the week's coverage and read what carries the story:
   to be the thing cited.** Never build a URL from the pattern of a real one,
   never infer a slug from a headline, never guess a date-and-slug. This is the
   failure the pack exists to prevent: the pack supplies observed URLs from the
-  feed, and those are safe to cite. Anything you assemble is not.
-- **The pack's links are safe to use and are the preferred citation.** They came
-  out of the ESPN payload. Cite the game page, the recap, the preview.
+  feed, so nothing you cite is assembled — but **an observed URL is not the same
+  as a live one, and the pack's links are not all citable.** ESPN advertises a
+  `/nfl/odds/_/gameId/<id>` page for every scheduled game, and its web page for
+  a game two weeks out does not exist yet even though the feed (and its own
+  betting line) does: measured 2026-10-06, every game from 17 days out returned
+  404 on `/odds/` while its `/nfl/game/_/gameId/<id>` page returned 200. The
+  runner's online link sweep fetches every URL you cite and fails the publish on
+  a 404, so a link the feed advertised but never built will stop the report.
+  **Cite the `game` page for the matchup, not the `/odds/` page**, and take the
+  line itself from the pack's `pickcenter` block — the feed's own odds carry the
+  number without needing a page that may not exist.
+- **The pack's links are the preferred citation when the page exists.** They came
+  out of the ESPN payload, so they are observed rather than constructed. Cite
+  the game page, the recap, the preview — the game page is the one that exists
+  for every scheduled game, including ones whose odds page has not been built.
 - Cite coverage as coverage and the feed as the feed. A quotation from a
   coach or player needs a link that contains the wording; if you cannot link it,
   attribute the idea in prose without quotation marks.

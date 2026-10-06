@@ -2809,6 +2809,64 @@ class TestLinkGateRules(unittest.TestCase):
             with self.subTest(runner=runner):
                 self.assertIn("run_report_gates", text)
 
+    def test_a_404_is_confirmed_before_it_is_called_dead(self):
+        # Measured 2026-10-06: the ESPN odds page for the Oct 18 game 404'd once
+        # at 18:32 and served 518 KB at 18:44, and that single 404 aborted a live
+        # publish. A 404 that clears on a second fetch is a page the host was
+        # mid-rebuild, not rot; it must NOT be reported DEAD.
+        import unittest.mock as mock
+        calls = []
+
+        def one_404_then_200(url, timeout, headers):
+            calls.append(headers)
+            if len(calls) == 1:
+                return 404, url, b"", "HTTP 404"
+            return 200, url, b"<html><title>Chargers vs. Chiefs - ESPN</title></html>", ""
+
+        with mock.patch.object(cl, "probe_once", side_effect=one_404_then_200), \
+             mock.patch.object(cl, "CONFIRM_DELAY", 0):
+            got = cl.probe(("https://www.espn.com/nfl/odds/_/gameId/401873006", 5.0))
+        self.assertEqual(len(calls), 2, "a lone 404 must be re-fetched before it is believed")
+        self.assertEqual(got[2], "OK", got)
+
+    def test_a_404_that_repeats_is_dead(self):
+        # The other direction, and the one that must not regress: a resource
+        # that is genuinely gone 404s again. Confirming a 404 must not turn a
+        # dead link into a pass.
+        import unittest.mock as mock
+        with mock.patch.object(cl, "probe_once",
+                               return_value=(404, "https://x.example/gone", b"", "HTTP 404")), \
+             mock.patch.object(cl, "CONFIRM_DELAY", 0):
+            got = cl.probe(("https://x.example/gone", 5.0))
+        self.assertEqual(got[2], "DEAD", got)
+        self.assertIn("two fetches", got[3])
+
+    def test_the_confirmation_fetch_happens_only_on_a_404(self):
+        # The extra request is spent only on a url about to be reported as rot.
+        # A clean sweep must pay nothing for it — the corpus is ~750 urls and a
+        # doubling of requests there would be a real cost for no information.
+        import unittest.mock as mock
+        with mock.patch.object(cl, "probe_once",
+                               return_value=(200, "https://x.example/ok", b"<html></html>", "")) as m:
+            got = cl.probe(("https://x.example/ok", 5.0))
+        self.assertEqual(got[2], "OK", got)
+        self.assertEqual(m.call_count, 1, "a 200 must not be re-fetched")
+
+    def test_probe_with_title_reads_the_title_from_the_same_response(self):
+        # The title and the verdict must describe ONE page. Fetching the page a
+        # second time for its title could quote a title from a response the
+        # verdict never saw — exactly the mismatch this pair reports.
+        import unittest.mock as mock
+        seq = [(200, "https://x.example/a", b"<html><title>First Fetch Title</title></html>", ""),
+               (200, "https://x.example/a", b"<html><title>Second Fetch Title</title></html>", "")]
+
+        def fetch(url, timeout, headers):
+            return seq.pop(0) if len(seq) > 1 else seq[0]
+
+        with mock.patch.object(cl, "probe_once", side_effect=fetch):
+            got = cl.probe_with_title(("https://x.example/a", 5.0))
+        self.assertEqual(got[4], "First Fetch Title", got)
+
 
 # --------------------------------------------------------------------------
 # SESSION_STATE splitter. The rules that matter are the ones whose absence

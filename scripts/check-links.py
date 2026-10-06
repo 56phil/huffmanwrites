@@ -15,8 +15,11 @@ is fabricated. Run it before publishing, and periodically.
 
 Verdicts, in order of how much they should worry you:
 
-  DEAD     404/410 — the resource is definitively gone. This is the ONLY status
-           that is evidence of rot. Check it.
+  DEAD     404/410 on two consecutive fetches — the resource is gone. This is
+           the ONLY status that is evidence of rot, and it is CONFIRMED before
+           it is believed: one 404 can be a page the host is mid-rebuild
+           (measured 2026-10-06 on ESPN, where a live page 404'd once and served
+           518 KB minutes later), and a link that is truly gone 404s again.
   REDIRECT the link resolves but lands somewhere else (often a homepage). The
            cited page may not exist; the reader will not see what was promised.
   BLOCKED  401/403/429. The host refuses automated clients as a matter of
@@ -40,6 +43,7 @@ import re
 import socket
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
@@ -198,6 +202,18 @@ _WAF_CHALLENGE = re.compile(
 def is_waf_challenge(body: bytes) -> bool:
     """True when the body is a bot challenge, not the page that was requested."""
     return bool(body) and bool(_WAF_CHALLENGE.search(body[:4096]))
+
+
+# How long to wait before re-fetching a url that just 404'd, to tell rot from a
+# page the host is mid-rebuild. Measured 2026-10-06: the ESPN odds page for the
+# Oct 18 game 404'd once and served 518 KB minutes later, and that single 404
+# aborted a live publish. One second is enough to leave a rebuild window and
+# costs nothing on a clean sweep, because it is spent only on a url about to be
+# reported as rot.
+CONFIRM_DELAY = 1.5
+
+# Total fetches (the first plus confirmations) before a 404/410 is believed.
+CONFIRM_ATTEMPTS = 3
 
 
 def collect(only: "str | None" = None) -> "dict[str, list[str]]":
@@ -512,9 +528,30 @@ def probe_once(url: str, timeout: float, headers: "dict[str, str]") -> "tuple[in
         return 0, url, b"", f"{type(e).__name__}: {str(e)[:40]}"
 
 
-def probe(args: "tuple[str, float]") -> "tuple[str, int, str, str]":
-    """Return (url, status, verdict, detail). Never raises."""
-    url, timeout = args
+def observe(url: str, timeout: float) -> "tuple[int, str, bytes, str]":
+    """The most trustworthy observation of `url`: (code, final, body, err).
+
+    Two retries, each for a failure this corpus produced, each measured.
+
+    **A bot-challenge wall is not the page.** A browser User-Agent makes ESPN
+    answer 202 with a ~2 KB AWS WAF interstitial for EVERY url, live or dead —
+    read as a 2xx, that hid three dead links through a whole-corpus sweep AND a
+    per-file sweep. The wall is keyed on the header, and the SAME url fetched
+    with no User-Agent at all answers truthfully (404 for the bad one, 200 with
+    a 130-480 KB body for the live ones), which is how scripts/chiefs-report.py
+    reads this host. So a challenge is retried bare. If it is challenged both
+    ways the challenge body is returned and the caller reports UNVERIFIED: a
+    wall is "we could not look", not "it is gone".
+
+    **A single 404 is not proof of rot.** Measured 2026-10-06: the ESPN odds page
+    for the Oct 18 game returned 404 at 18:32 and served 518 KB (a real page,
+    `Last-Modified` after the gate had run) at 18:44 — the same url, minutes
+    apart, and the single 404 aborted a live publish. A resource that is
+    genuinely gone 404s again, so a 404/410 is CONFIRMED in the mode that
+    produced it before the caller may call it DEAD. The extra request is spent
+    only on a url about to be reported as rot, and a truly dead link is still
+    DEAD — just asked twice.
+    """
     headers = {
         "User-Agent": UA,
         "Accept": "text/html,application/xhtml+xml,*/*",
@@ -522,31 +559,36 @@ def probe(args: "tuple[str, float]") -> "tuple[str, int, str, str]":
         "Referer": "https://huffmanwrites.org/",
     }
     code, final, body, err = probe_once(url, timeout, headers)
-
-    # A bot-challenge wall answers a browser User-Agent with a 202 interstitial
-    # for EVERY url, live or dead. Measured 2026-09-25 on espn.com: a working
-    # story and a made-up one both returned 202 / 1987 bytes /
-    # `x-amzn-waf-action: challenge`. Read as a 2xx, that hid three dead ESPN
-    # links through a full-corpus sweep and a per-file sweep.
-    #
-    # The header is what triggers the wall: the SAME url fetched with no
-    # User-Agent at all answers truthfully (404 for the bad one, 200 with a
-    # ~130-480 KB body for the live ones), which is how scripts/chiefs-report.py
-    # reads this host. So a challenge is retried bare before giving up, and that
-    # is what makes ESPN citable links actually checkable here.
-    #
-    # If the bare retry does not produce a decisive answer either — challenged
-    # again, refused, or timed out — the verdict is UNVERIFIED, "we could not
-    # look". That is deliberately not fatal, for the same reason BLOCKED is not:
-    # a wall is not evidence of rot. But it is no longer reported as OK.
     if is_waf_challenge(body):
         code2, final2, body2, err2 = probe_once(url, timeout, {})
         if is_waf_challenge(body2) or code2 == 0:
-            return url, code, "UNVERIFIED", (
-                "bot challenge (AWS WAF) with and without a User-Agent; "
-                "the page was not served")
+            return code, final, body, err
+        # The wall is keyed on the header; ask the same way again to confirm.
+        headers = {}
         code, final, body, err = code2, final2, body2, err2
 
+    if err.startswith("HTTP ") and int(err.split()[1]) in (404, 410):
+        # Not in the same instant, and not only once: a page caught mid-rebuild
+        # can 404 and serve moments later, and consecutive requests can both land
+        # inside that window. The measured case (2026-10-06) was still serving 200
+        # three minutes after the 404 that aborted the publish, so the window is
+        # seconds-to-minutes, not milliseconds. A resource that is genuinely gone
+        # 404s every time; the cost is a couple of seconds, and it is spent only
+        # on a url about to be reported as rot, so a clean sweep pays nothing.
+        for _ in range(CONFIRM_ATTEMPTS - 1):
+            time.sleep(CONFIRM_DELAY)
+            code, final, body, err = probe_once(url, timeout, headers)
+            if not (err.startswith("HTTP ") and int(err.split()[1]) in (404, 410)):
+                break
+    return code, final, body, err
+
+
+def _decide(url: str, code: int, final: str, body: bytes, err: str) -> "tuple[str, int, str, str]":
+    """The verdict for one observation. Never raises; shared by both probes."""
+    if is_waf_challenge(body):
+        return url, code, "UNVERIFIED", (
+            "bot challenge (AWS WAF) with and without a User-Agent; "
+            "the page was not served")
     if err.startswith("HTTP "):
         code = int(err.split()[1])
         if code in (401, 403, 429) and is_blocking(url):
@@ -554,8 +596,8 @@ def probe(args: "tuple[str, float]") -> "tuple[str, int, str, str]":
         if code in (401, 403, 429):
             return url, code, "BLOCKED", f"{code} (not a known bot-blocker)"
         if code in (404, 410):
-            # The ONLY status that is definitive evidence the resource is gone.
-            return url, code, "DEAD", f"HTTP {code}"
+            # Confirmed by observe(): a 404 that survives a second fetch is rot.
+            return url, code, "DEAD", f"HTTP {code} (confirmed on two fetches)"
         if code == 406:
             # A content-negotiation refusal, not a missing page. arXiv answers
             # an Accept header it dislikes this way on PDF URLs that exist.
@@ -574,33 +616,28 @@ def probe(args: "tuple[str, float]") -> "tuple[str, int, str, str]":
     return url, code, "OK", ""
 
 
+def probe(args: "tuple[str, float]") -> "tuple[str, int, str, str]":
+    """Return (url, status, verdict, detail). Never raises."""
+    url, timeout = args
+    return _decide(url, *observe(url, timeout))
+
+
 def probe_with_title(args: "tuple[str, float]") -> "tuple[str, int, str, str, str]":
     """probe(), plus the fetched page's <title>. Same contract; never raises.
 
-    Kept separate from `probe` so the existing verdict logic — and its tests —
-    stay untouched. This one adds the one thing a status code cannot provide:
-    the page that was actually served, which is what exposes a link that
-    resolves to the wrong article.
+    This adds the one thing a status code cannot provide — the page that was
+    actually served, which is what exposes a link resolving to the wrong
+    article. It shares observe() with probe() rather than fetching a second
+    time, so the <title> always comes from the SAME response the verdict was
+    read off; a title taken from a separate fetch could describe a page the
+    verdict never saw, which is the one thing this pair must not disagree about.
     """
     url, timeout = args
-    status, verdict, detail = None, None, None
+    code, final, body, err = observe(url, timeout)
     title = ""
-    # probe() already knows how to get a decision out of a challenge wall; this
-    # mirrors its bare-retry so the title comes from the page, not the interstitial.
-    code, final, body, err = probe_once(url, timeout, {
-        "User-Agent": UA,
-        "Accept": "text/html,application/xhtml+xml,*/*",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://huffmanwrites.org/",
-    })
-    if is_waf_challenge(body):
-        c2, f2, b2, e2 = probe_once(url, timeout, {})
-        if not is_waf_challenge(b2) and c2 != 0:
-            code, final, body, err = c2, f2, b2, e2
     if body and not is_waf_challenge(body):
         title = page_title(body.decode("utf-8", "replace"))
-    url2, code2, verdict2, detail2 = probe((url, timeout))
-    return url2, code2, verdict2, detail2, title
+    return (*_decide(url, code, final, body, err), title)
 
 
 def main() -> int:
