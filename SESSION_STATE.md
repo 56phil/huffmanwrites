@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 6, 2026 — Published the chiefs-weekly-report report (automated)
+
+Auto-published by `com.huffmanwrites.chiefs-weekly-report` after every gate passed.
+- **Published** `content/posts/sports/chiefs-report-2026-10-06.md` — "Chiefs Report: October 6, 2026", 2699 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The week, as the piece frames it:** **Answer:** Both of the receivers who made it work. Kansas City is 4-0 and alone atop the AFC going into its bye, with Tyquan Thornton's season in doubt, Rashee Rice's hamstring unresolved, and the name Tyreek Hill back in the conversation.
+- **Data came from `scripts/chiefs-report.py`**, the briefing pack the runner wrote before the writer started: the week's game with both teams' box scores and leaders, every scoring play, both injury reports, the standings and seed list, the season statistics by category, the next game with the feed's own odds and its matchup projection, and two weeks of Chiefs-tagged coverage with its URLs. The writer is not permitted to recall a score or a record. URLs are cited from the feed or from a page the run fetched; a constructed URL is the repo's most dangerous failure and this is the job where one would ship unreviewed.
+- **Publish was originally aborted and then completed by hand.** The 18:30 scheduled run wrote this article, passed both builds and every gate except `check-links --online`, which reported one DEAD URL — the feed-supplied ESPN odds page — on a single HTTP 404. Fetched minutes later the same URL served a 518 KB page with a `Last-Modified` twelve minutes after the gate had run: the host was mid-rebuild. `check-links.py` now confirms a 404/410 on up to three fetches before calling a link DEAD, and the full gate set was re-run green in this session before the commit.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **SimpleBrain synced** in the same run: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed.
+
+---
+
 ### Maintenance — October 6, 2026 — The Chiefs report was blocked by a 404 that was gone minutes later, and the gate believed it
 
 Philip: "I think the Chiefs report hit a snag. Investigate." The snag was real, it was two defects, and only one of them was about the report.
