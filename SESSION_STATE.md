@@ -12,6 +12,19 @@
 
 ---
 
+### Maintenance — October 7, 2026 — Published "My Apologies," a satire of the apologies that made the record normal
+
+Philip: "I want a serious essay that mocks Trump." Chose the **ironic-confession** form (his pick from four) delivered **fully wired** (his pick from three): a first-person confession by "the man who explains," seven apologies each undone by the administration's own next sentence. The mirror image of "I Am Proud to Have TDS" — an apology rather than a defense — and the only register that lets the record do the mocking without the essay reaching for it.
+
+- **Published** `content/posts/essays/my-apologies.md` — "My Apologies," 1,702 words of body prose (1,492 rendered, per Hugo), `draft: false`, `featuredOnHome: true`, hero pair `113-apology-fingers-crossed_*`.
+- **Hero pair 113 generated this session**, fal.ai FLUX.1 dev: a clenched Parian-marble fist with the fingers crossed, midnight navy void, gold rim light. The 16:9 first pass was unusable — the gesture read as a splayed reaching hand, not crossed fingers — so it was regenerated with a tighter framed-fist composition; the 4:5 first pass was already legible and kept. Cropped to 1365×768 and 896×1120, WebP q92. Concept: the gesture that means "I do not mean this."
+- **Every quotation verified verbatim against its fetched page**, not against a summary of it. A dedicated sweep normalized whitespace, extracted PDFs with `pdftotext`, and searched the exact wording on each cited page: 23 of 23 fragments located on their sources. Three sources refuse a scripted fetch (AP, Axios, and one WaPo URL) but the `read` tool fetched them; two anchors were re-pointed at the pages' **actual** `<title>` lines after the `--titles` sweep flagged them as paraphrases of the header rather than the header (Fox, New Republic), and the uncited WaPo link was removed rather than shipped unverifiable. The "small potatoes" quotation is cited to **Snopes**, which reproduces the White House video transcript verbatim, rather than to the outlet whose headline only paraphrases his phrasing.
+- **Verified by running it.** Clean `hugo --gc --minify` (**442 pages**) and a second `--buildDrafts` build to a scratch destination; `check-render-integrity` **516 pages, no sentinels**; `check-gallery-pages` OK; `check-series-posts` OK; local HTTP server read in a real browser at 1440 px and 390 px (hero eager + `fetchpriority="high"`, mobile plate resolves from the `<picture>` source, no horizontal overflow), the home feed carries the post, and the new gallery card renders its image and caption. `check-links.py --file --online --titles` → **21 ok, 0 dead, 0 mismatches**; em-dash 0, sentence-final preposition 0, quotes OK, quote-names OK, heropaths OK, frontmatter OK.
+- **Files changed:** `content/posts/essays/my-apologies.md` (new), `static/img/articles/113-apology-fingers-crossed_{16x9,4x5}.webp` (new), `data/gallery.yml` (one card), this entry. Single commit, pushed once; SimpleBrain mirrored in the same run.
+- **Note for the next session:** the seven sections quote, in order, his rally line on Los Angeles and San Diego; the ballroom demolition and the Anti-Weaponization Fund; the 185-IQ lawn mower and the administration's own AI conceding 2020; the inspectors-general purge and the memecoin; the Nobel; the Kennedy Center renaming and the chiseled-name escalation; and "small potatoes" beside "I don't think about anybody." Each quotation is on the source line in `## Sources`; editing one withdraws nothing here (this file carries no baseline exemption), so any later change must be re-verified against the page.
+
+---
+
 ### Maintenance — October 6, 2026 — Published the chiefs-weekly-report report (automated)
 
 Auto-published by `com.huffmanwrites.chiefs-weekly-report` after every gate passed.
