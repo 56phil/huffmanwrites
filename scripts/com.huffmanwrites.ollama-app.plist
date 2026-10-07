@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.ollama-app</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/open</string>
+    <string>-a</string>
+    <string>/Applications/Ollama.app</string>
+  </array>
+  <!-- Opens the Ollama desktop app at login so its server is up before the
+       scheduled AI jobs run. Seven jobs (the five report runners, wiki-check,
+       repair-plan) call http://localhost:11434, and that port is served by the
+       app, not by a daemon of our own.
+
+       Why this exists rather than the app's own login item. The app can register
+       itself as a login item (SMAppService), and on 2026-10-07 it was added that
+       way and verified enabled. It did not survive: a plain restart of the app
+       dropped the enrolment, and the app's own strings show why ("removing
+       dangling login item", "removing login item") — it reconciles its login
+       items on start and removed one it considered stale. A GUI setting that a
+       restart can silently clear is not a durable answer for an unattended
+       publish, so the enrolment is done here instead, in a file that lives in
+       git and is checked by scripts/check-plists.py.
+
+       RunAtLoad and NOT KeepAlive, deliberately. This job starts the app; it does
+       not keep it alive. KeepAlive would relaunch the app every time it was quit,
+       which fights the person using it. If the app is closed on purpose or dies,
+       the run fails loudly instead: scripts/ollama-probe.sh runs in every AI
+       runner before its writer and raises the failure alert if the server is
+       unreachable.
+
+       It launches the app, never a second server. That distinction is the whole
+       reason this file exists: an earlier LaunchAgent ran `ollama serve` directly
+       and duplicated the server the app already provides on the same port. `open`
+       cannot do that; it hands the bundle to LaunchServices, which starts the app
+       if it is not already running and otherwise just brings it forward. One
+       `ollama serve` process either way. -->
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/ollama-app.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/ollama-app.err.log</string>
+</dict>
+</plist>

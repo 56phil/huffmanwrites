@@ -13,13 +13,16 @@
 # list carried the fix ("add a port probe to the shared preflight so the jobs
 # fail loudly and early rather than mid-run") from that day.
 #
-# The durability half is now settled on the app itself: its login item is
-# **enabled** (Philip, 2026-10-07), so the server starts at login with no
-# LaunchAgent and no dependence on the app being opened by hand. A LaunchAgent was
-# tried first and retired the same day — it ran a second `ollama serve` on the
-# port the app already serves, which is duplicate machinery for no gain.
+# The durability half is settled, but not by the app's own login item: that was
+# added on 2026-10-07, verified enabled, then silently dropped when the app was
+# restarted (it reconciles its own login items on start). The enrolment now lives
+# in a repo plist instead — `com.huffmanwrites.ollama-app` opens the app at login
+# (`open -a`, RunAtLoad, no KeepAlive), so the server is up before the 07:00 jobs
+# and one `ollama serve` is still the only server. An earlier LaunchAgent ran
+# `ollama serve` directly and duplicated the app's server on the same port; it was
+# retired the same day.
 #
-# This probe is the remaining half, and stays useful independently: if the app has
+# This probe is the other half, and stays useful independently: if the app has
 # quit, crashed, or failed to start, the job says so in one line at the top of its
 # log and raises the failure alert, instead of spending a model call on a
 # connection-refused error halfway through a draft.
@@ -57,7 +60,7 @@ ollama_require() {
   done
 
   echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): ABORTING — Ollama is not reachable at $base after $OLLAMA_PROBE_TRIES tries." >> "$out_log"
-  echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): is the Ollama desktop app running? Its server serves $base. The app IS enabled as a login item, so if this fires the app has quit, crashed, or failed to start — open Ollama, or check System Settings → General → Login Items." >> "$out_log"
+  echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): is the Ollama desktop app running? Its server serves $base. com.huffmanwrites.ollama-app opens it at login, so if this fires the app has quit, crashed, or failed to start — open Ollama, or check 'launchctl print gui/\$UID/com.huffmanwrites.ollama-app'." >> "$out_log"
   echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): Ollama unreachable at $base; the writer never ran. See $out_log" >&2
   "$OLLAMA_PROBE_ALERT" "$job" 1 "Ollama unreachable at $base; see $out_log" || true
   return 1
