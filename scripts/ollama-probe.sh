@@ -5,21 +5,22 @@
 #
 # Why this exists. Seven unattended jobs (the five report runners, wiki-check,
 # repair-plan) set ANTHROPIC_BASE_URL=http://localhost:11434 and call the model
-# through it. Before 2026-10-07 nothing guaranteed that server was running: the
-# Ollama desktop app's login item is disabled and its updater helper does not
-# start the server, so it lived only while the app happened to be open. The
-# failure mode is quiet — a connection error in a log and an article that never
-# appears — which is why wiki-check failed at 13:30 on 2026-09-28 and nobody
-# noticed until the log was read a week later. The pending list carried the fix
-# ("add a port probe to the shared preflight so the jobs fail loudly and early
-# rather than mid-run") from that day.
+# through it. That server is the **Ollama desktop app's**. Before 2026-10-07
+# nothing checked it was there: the app's login item is disabled and its updater
+# helper does not start the server, so the server lived only while the app
+# happened to be open. The failure mode is quiet — a connection error in a log
+# and an article that never appears — which is why wiki-check failed at 13:30 on
+# 2026-09-28 and nobody noticed until the log was read a week later. The pending
+# list carried the fix ("add a port probe to the shared preflight so the jobs
+# fail loudly and early rather than mid-run") from that day.
 #
-# `com.huffmanwrites.ollama-serve` now keeps the server up, which is the fix
-# proper. This probe is the second half and stays useful independently: if that
-# LaunchAgent is ever uninstalled, or the server dies between restarts, the job
-# says so in one line at the top of its own log and raises the failure alert,
-# instead of spending a model call on a connection-refused error halfway
-# through a draft.
+# This probe IS that half. A LaunchAgent was tried as the durability half and
+# retired the same day: it ran a second `ollama serve` on the same port the app
+# already serves, which is duplicate machinery for no gain. So the server stays
+# the app's, and this probe is what makes "the app is not running" a one-line
+# abort at the top of the log instead of a mid-draft connection error. The
+# durable fix for the reboot case is to keep the app open (or re-enable it in
+# System Settings → General → Login Items).
 #
 # One definition, sourced by all seven runners. The repo has already learned
 # this lesson twice — the featuredOnHome rule and the gate list each drifted
@@ -54,7 +55,7 @@ ollama_require() {
   done
 
   echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): ABORTING — Ollama is not reachable at $base after $OLLAMA_PROBE_TRIES tries." >> "$out_log"
-  echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): is com.huffmanwrites.ollama-serve loaded? (launchctl print gui/\$UID/com.huffmanwrites.ollama-serve)" >> "$out_log"
+  echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): is the Ollama desktop app running? Its server serves $base; the app's login item is disabled, so after a reboot it must be opened (or re-enabled in System Settings → General → Login Items)." >> "$out_log"
   echo "$(date '+%Y-%m-%d %H:%M:%S %Z'): Ollama unreachable at $base; the writer never ran. See $out_log" >&2
   "$OLLAMA_PROBE_ALERT" "$job" 1 "Ollama unreachable at $base; see $out_log" || true
   return 1

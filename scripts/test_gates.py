@@ -602,31 +602,6 @@ class TestPlistRules(unittest.TestCase):
             import plistlib
             plistlib.loads(p.read_bytes())
 
-    def test_the_ollama_service_plist_keeps_a_server_up_on_loopback(self):
-        # The reachability fix (2026-10-07). Seven AI jobs call localhost:11434
-        # and nothing guaranteed the server was running. Three properties make
-        # the LaunchAgent the fix, and each is load-bearing:
-        #   - RunAtLoad + KeepAlive, so it is up at login and restarts if it
-        #     dies (a plain schedule would leave the same gap);
-        #   - OLLAMA_HOST on IPv4 loopback, which is what lets it coexist with
-        #     the desktop app's own *:11434 IPv6 socket instead of colliding;
-        #   - the app's bundle binary, not the /opt/homebrew/bin symlink the app
-        #     manages (a dangling symlink is a permanent KeepAlive crash loop).
-        import plistlib
-        p = SCRIPTS / "com.huffmanwrites.ollama-serve.plist"
-        self.assertTrue(p.is_file(), "the Ollama service plist is missing")
-        d = plistlib.loads(p.read_bytes())
-        self.assertTrue(d.get("RunAtLoad"), "must start at login")
-        self.assertTrue(d.get("KeepAlive"), "must restart if it dies")
-        self.assertEqual(
-            d.get("EnvironmentVariables", {}).get("OLLAMA_HOST"),
-            "127.0.0.1:11434",
-            "must bind loopback so it does not collide with the app's wildcard socket")
-        prog = d.get("ProgramArguments", [])
-        self.assertTrue(prog and prog[0].startswith("/Applications/"),
-                        "bind the app bundle binary, not the app-managed symlink")
-        self.assertIn("serve", prog)
-
 
 # --------------------------------------------------------------------------
 # Docket watch. The rules that matter are the two entry kinds the feed
