@@ -111,6 +111,11 @@ ARTICLE="content/posts/essays/weekly-satire-$TODAY.md"
 JOB="weekly-satire"
 . "$REPO/scripts/publish-report.sh"
 
+# Reachability guard: fail loudly and early if the local Ollama server is down.
+# See scripts/ollama-probe.sh.
+. "$REPO/scripts/ollama-probe.sh"
+ollama_require "$JOB" "$OUT_LOG" || exit 1
+
 echo "$(stamp): starting Weekly Satire run" >> "$OUT_LOG"
 
 # Removes a stale file at $ARTICLE before the writer runs, so the post-condition

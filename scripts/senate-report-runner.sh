@@ -96,6 +96,12 @@ ARTICLE="content/posts/essays/senate-race-report-$TODAY.md"
 JOB="senate-report"
 . "$REPO/scripts/publish-report.sh"
 
+# Reachability guard: the writer is useless if the local Ollama server is down.
+# Fails loudly here rather than mid-draft on a connection error. See
+# scripts/ollama-probe.sh for why this exists and what keeps the server up.
+. "$REPO/scripts/ollama-probe.sh"
+ollama_require "$JOB" "$OUT_LOG" || exit 1
+
 echo "$(stamp): starting Senate race report run" >> "$OUT_LOG"
 
 # Removes a stale file at $ARTICLE before the writer runs, so the post-condition

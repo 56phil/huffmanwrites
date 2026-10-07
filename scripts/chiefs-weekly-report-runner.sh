@@ -137,6 +137,12 @@ ARTICLE="content/posts/sports/chiefs-report-$TODAY.md"
 JOB="chiefs-weekly-report"
 . "$REPO/scripts/publish-report.sh"
 
+# Reachability guard: the season guard has already exited 0 off-season, so by
+# here a real report is due. Fail loudly and early if the local Ollama server
+# is down rather than mid-draft on a connection error. See scripts/ollama-probe.sh.
+. "$REPO/scripts/ollama-probe.sh"
+ollama_require "$JOB" "$OUT_LOG" || exit 1
+
 # ---------------------------------------------------------------------------
 # Pre-run tree guard: see the long note in scripts/publish-report.sh. Two
 # hazards, handled differently — a dirty SESSION_STATE.md is a refusal (someone

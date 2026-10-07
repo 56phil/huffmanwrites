@@ -42,6 +42,14 @@ export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 # Note: no apostrophes inside the ${VAR:-...} default; bash 3.2 mis-parses them.
 PROMPT="${WIKI_CHECK_PROMPT:-Read $PROMPT_FILE and follow it exactly. Run the wiki check and fix pass on the SimpleBrain repo at $SB.}"
 
+# Reachability guard: fail loudly and early if the local Ollama server is down.
+# This runner does not source the publish library, so JOB is bound here for the
+# alert the guard raises. See scripts/ollama-probe.sh.
+JOB="wiki-check"
+REPO="/Users/prh/Developer/huffmanwrites"
+. "$REPO/scripts/ollama-probe.sh"
+ollama_require "$JOB" "$OUT_LOG" || exit 1
+
 cd "$SB"
 
 echo "$(stamp): starting wiki check & fix run" >> "$OUT_LOG"

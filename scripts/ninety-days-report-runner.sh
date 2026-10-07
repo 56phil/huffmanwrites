@@ -62,6 +62,11 @@ PROMPT="${NINETY_DAYS_PROMPT:-Read $SKILL and follow it exactly. Draft both nine
 JOB="ninety-days-report"
 . "$REPO/scripts/publish-report.sh"
 
+# Reachability guard: fail loudly and early if the local Ollama server is down.
+# See scripts/ollama-probe.sh.
+. "$REPO/scripts/ollama-probe.sh"
+ollama_require "$JOB" "$OUT_LOG" || exit 1
+
 cd "$REPO"
 
 echo "$(stamp): starting ninety-days report run" >> "$OUT_LOG"

@@ -49,6 +49,13 @@ export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 # Note: no apostrophes inside the ${VAR:-...} default; bash 3.2 mis-parses them.
 PROMPT="${REPAIR_PLAN_PROMPT:-Read $SKILL and follow it exactly. Run the quarterly revision pass on $PLAN.}"
 
+# Reachability guard: fail loudly and early if the local Ollama server is down.
+# This runner does not source the publish library, so JOB is bound here for the
+# alert the guard raises. See scripts/ollama-probe.sh.
+JOB="repair-plan"
+. "$REPO/scripts/ollama-probe.sh"
+ollama_require "$JOB" "$OUT_LOG" || exit 1
+
 cd "$REPO"
 
 echo "$(stamp): starting repair-plan revision" >> "$OUT_LOG"

@@ -602,6 +602,31 @@ class TestPlistRules(unittest.TestCase):
             import plistlib
             plistlib.loads(p.read_bytes())
 
+    def test_the_ollama_service_plist_keeps_a_server_up_on_loopback(self):
+        # The reachability fix (2026-10-07). Seven AI jobs call localhost:11434
+        # and nothing guaranteed the server was running. Three properties make
+        # the LaunchAgent the fix, and each is load-bearing:
+        #   - RunAtLoad + KeepAlive, so it is up at login and restarts if it
+        #     dies (a plain schedule would leave the same gap);
+        #   - OLLAMA_HOST on IPv4 loopback, which is what lets it coexist with
+        #     the desktop app's own *:11434 IPv6 socket instead of colliding;
+        #   - the app's bundle binary, not the /opt/homebrew/bin symlink the app
+        #     manages (a dangling symlink is a permanent KeepAlive crash loop).
+        import plistlib
+        p = SCRIPTS / "com.huffmanwrites.ollama-serve.plist"
+        self.assertTrue(p.is_file(), "the Ollama service plist is missing")
+        d = plistlib.loads(p.read_bytes())
+        self.assertTrue(d.get("RunAtLoad"), "must start at login")
+        self.assertTrue(d.get("KeepAlive"), "must restart if it dies")
+        self.assertEqual(
+            d.get("EnvironmentVariables", {}).get("OLLAMA_HOST"),
+            "127.0.0.1:11434",
+            "must bind loopback so it does not collide with the app's wildcard socket")
+        prog = d.get("ProgramArguments", [])
+        self.assertTrue(prog and prog[0].startswith("/Applications/"),
+                        "bind the app bundle binary, not the app-managed symlink")
+        self.assertIn("serve", prog)
+
 
 # --------------------------------------------------------------------------
 # Docket watch. The rules that matter are the two entry kinds the feed
@@ -2726,6 +2751,38 @@ class TestPublishLibrary(unittest.TestCase):
         self.assertGreaterEqual(
             checked, 4,
             "the four report runners (chiefs, docket, senate, ninety-days) source the library")
+
+    def test_every_ai_runner_guards_ollama_reachability(self):
+        # The quiet-failure shape this repo keeps re-learning: seven jobs call
+        # the local Ollama server and, before 2026-10-07, nothing checked it was
+        # running. wiki-check failed at 13:30 on 2026-09-28 on a connection
+        # error and it was read a week later in a log. The guard must be in
+        # EVERY job that calls the model, and it must run before the writer:
+        # a runner that omits it fails mid-draft on a connection error instead
+        # of loudly at the top, which is the whole point. A runner that gains an
+        # `ollama_require` call but never sources the probe file would die under
+        # `set -e` on an unknown command, so both halves are asserted.
+        ai_runners = [
+            "senate-report-runner.sh",
+            "docket-weekly-report-runner.sh",
+            "chiefs-weekly-report-runner.sh",
+            "ninety-days-report-runner.sh",
+            "weekly-satire-runner.sh",
+            "repair-plan-runner.sh",
+            "wiki-check-runner.sh",
+        ]
+        self.assertGreaterEqual(len(ai_runners), 7)
+        for name in ai_runners:
+            text = (SCRIPTS / name).read_text(encoding="utf-8")
+            with self.subTest(runner=name):
+                self.assertIn("scripts/ollama-probe.sh", text,
+                              f"{name} does not source the reachability probe")
+                self.assertIn('ollama_require "$JOB"', text,
+                              f"{name} never calls ollama_require")
+                # The probe must precede the writer, or it cannot fail early.
+                self.assertLess(text.find("ollama_require"),
+                                text.find("claude -p"),
+                                f"{name} probes Ollama after the writer starts")
 
 
 # --------------------------------------------------------------------------
