@@ -504,6 +504,16 @@
   # `docket-report-*.md` exists, so the switch needs no follow-up edit.
   link: /posts/essays/three-walls-and-three-slots/
   latest: /posts/essays/docket-report-*
+- image: /img/articles/114-weekly-satire_16x9.webp
+  title: Weekly Satire
+  caption: The face is empty. The frame was paid for in full.
+  # Until the first installment publishes (Monday 2026-10-12) this card points
+  # at My Apologies, the essay that established the register the series works
+  # in, so it is never a picture with nothing to read. `latest` overrides
+  # `link` the moment a real `weekly-satire-*.md` exists, so the switch needs
+  # no follow-up edit.
+  link: /posts/essays/my-apologies/
+  latest: /posts/essays/weekly-satire-*
 - image: /img/articles/107-trifecta_16x9.webp
   title: The Arch and the Keystone
   caption: An arch holds because the outer stones bear the load. The keystone was

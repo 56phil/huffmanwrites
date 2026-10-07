@@ -25,7 +25,7 @@ hugo --gc --minify
 
 Hugo v0.166.0+extended is installed via Homebrew at `/opt/homebrew/bin/hugo`. The CI workflow (`.github/workflows/hugo.yml`) pins the same version — the extended variant is required for Dart Sass and image processing. **Keep these two in step:** a build that differs between the local toolchain and production is the kind of difference that surprises you once, in production.
 
-The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (284 tests over the rules the gates enforce — the exemption logic, the fabrication patterns this corpus has produced, and the blind spots that were actually fixed). CI runs it before the build. Beyond that there is no package.json and no linter; a clean `hugo --gc --minify` plus the gates is the check.
+The gates in `scripts/` have a test suite: `python3 scripts/test_gates.py` (291 tests over the rules the gates enforce — the exemption logic, the fabrication patterns this corpus has produced, and the blind spots that were actually fixed). CI runs it before the build. Beyond that there is no package.json and no linter; a clean `hugo --gc --minify` plus the gates is the check.
 
 Credentials have exactly one home: the **login keychain** (a `huffmanwrites-*` generic password), with `~/.secrets` (chmod 600) as the fallback every launchd runner reads. `scripts/check-secrets.py` enforces that. Offline it fails if two homes disagree or a listed repo-local copy reappears. With `--online` it also asks each provider whether the resolved key authenticates: fal.ai gets a GET on a request id that cannot exist (`404` = live, `401` = stale) and SendFox gets a GET on `/lists` (`200` = live, `401` = stale). Neither submits a generation or sends a campaign, so both cost nothing. It runs in CI (where it no-ops: no keychain) and as phase 3 of `weekly-integrity-check.sh`. The gate exists because the fal.ai key lived in three places on 2026-09-24 and only one worked, and nothing could see it: a stale key has the right length, right prefix, and right home, and is wrong only in a way you learn by spending it. **The offline half alone cannot catch the worst case**, and 2026-10-02 proved it again on SendFox: the keychain item and `~/.secrets` held *the same stale value* and agreed with each other, so a homes-comparison called it clean while a gitignored `.sendfox_token` did the work. The rule that catches the real defect is not "the homes agree" but "the resolved key authenticates" — which is why the provider probes exist and why every credential that can be probed now is. **Do not add a repo-local key file** — `.fal_token` and `.sendfox_token` were both that mistake; they are listed as legacy repo files and read the keychain.
 
@@ -78,6 +78,7 @@ Credentials have exactly one home: the **login keychain** (a `huffmanwrites-*` g
 - `hero-image-workflow.md` — generation + wiring conventions for hero images (aesthetic, naming, frontmatter mapping).
 - `kdp_cover_designer.md` — references `scripts/cover_generator.py` (out-of-repo, in `/Users/prh/Developer/LaTeX/AllMyBooks/`) for the 6×9 KDP wraparound covers.
 - `chiefs-weekly-report.md` — the writer's brief for the auto-published weekly Chiefs report. The one skill here whose output is not reviewed before it ships; read it before editing the job.
+- `weekly-satire.md` — the writer's brief for the auto-published **Weekly Satire** series (Mondays 07:00 CT, 2026-10-12 through 2026-11-02). Its output is also unreviewed. The one writing job whose material is *selected* rather than collected by a script, so the skill's fetch-before-cite rules are the primary control; read it before editing the job.
 - `docket-weekly-report.md`, `senate-race-report.md`, `ninety-days-report.md`, `post-election-senate-report.md`, `repair-plan-quarterly.md`, `kansas-post-debate.md` — briefs for the other scheduled and one-off report runs.
 
 ### Drafts and work-in-progress
@@ -130,7 +131,7 @@ Credentials have exactly one home: the **login keychain** (a `huffmanwrites-*` g
 
 ## Scheduled jobs (launchd)
 
-Nine unattended jobs run from `scripts/` via launchd. Each is a `com.huffmanwrites.*.plist` (repo copy) installed to `~/Library/LaunchAgents/`, invoked through a `*-runner.sh`, with output in `~/Library/Logs/`. `scripts/check-plists.py` gates them in CI: a malformed plist fails silently (`launchctl bootstrap` does not always report it), so a schedule that never runs is the defect it exists to catch.
+Ten unattended jobs run from `scripts/` via launchd. Each is a `com.huffmanwrites.*.plist` (repo copy) installed to `~/Library/LaunchAgents/`, invoked through a `*-runner.sh`, with output in `~/Library/Logs/`. `scripts/check-plists.py` gates them in CI: a malformed plist fails silently (`launchctl bootstrap` does not always report it), so a schedule that never runs is the defect it exists to catch.
 
 | Job | Schedule | What it does |
 |---|---|---|
@@ -143,10 +144,11 @@ Nine unattended jobs run from `scripts/` via launchd. Each is a `com.huffmanwrit
 | `wiki-check` | Mondays 13:30 | Audits and fixes the SimpleBrain wiki |
 | `weekly-integrity` | Mondays 14:00 | Online link sweep + online quotation verification |
 | `chiefs-weekly-report` | Tuesdays 18:30 | **Publishes** the weekly Chiefs report (in season only) |
+| `weekly-satire` | Mondays 07:00 | **Publishes** the Weekly Satire series (2026-10-12 through 2026-11-02, then self-disables) |
 
 Rules for these, learned by shipping the failures:
 
-- **The three weekly reports publish; the rest file drafts.** Philip, 2026-09-27: "publish weekly reports that have an exit code of 0 after passing all gates." Senate, docket and Chiefs write, verify, commit, push and mirror in one run. Ninety-days and repair-plan still file `draft: true` and leave the file uncommitted. **The difference is what a gate failure costs:** in a publishing job the gates are the only review the piece gets, so a failure **aborts the push**; in a drafting job it is a note for Philip.
+- **The weekly reports publish; the rest file drafts.** Philip, 2026-09-27: "publish weekly reports that have an exit code of 0 after passing all gates." Senate, docket, Chiefs and Weekly Satire write, verify, commit, push and mirror in one run. Ninety-days and repair-plan still file `draft: true` and leave the file uncommitted. **The difference is what a gate failure costs:** in a publishing job the gates are the only review the piece gets, so a failure **aborts the push**; in a drafting job it is a note for Philip.
 - **A runner that runs the agent must run the verification itself.** The agent cannot execute the gates (they are deliberately absent from its allow-list), so a gate result in its summary is unverifiable. The runner runs the builds and the gates and puts the real exit codes in the log.
 - **Two builds, always.** The production build excludes `draft: true`, so it says nothing about the draft the job just wrote. The second build uses `--buildDrafts --destination <tmp>` so the file is rendered and checked without leaving a draft page in `public/`, which deploys.
 - **Publishing jobs must run `check-links.py --online --titles`, scoped with `--file`.** An offline-only gate set cannot see the failure CLAUDE.md calls the most dangerous one here — a link that resolves to the wrong page. `--titles` fetches each cited URL and compares the page's own `<title>` against the citation's link text, and it is the only check in the repo that can catch it. The drafting jobs deliberately left it out ("not in a job that should finish in minutes"); a job that publishes cannot.
@@ -163,6 +165,10 @@ Rules for these, learned by shipping the failures:
   - **ESPN's API refuses a browser User-Agent** (403 on all four endpoints used) and answers a default client. That is the opposite of every other script here and the reason `chiefs-report.py` sends no UA. Do not "normalize" it.
   - **ESPN fails open on an unknown season.** `standings?season=2027` returns 200 with the 2026 standings; `schedule?season=2027` returns an empty list and `requestedSeason: null`. `assert_season` refuses a payload that does not name the year asked for, because a writer handed one would produce a report about the wrong season with nothing in it looking wrong.
   - **`level=3` is required on the standings endpoint.** Without it the AFC node carries sixteen flat entries and **no** division children, so the division table and the seed list come back empty and those sections silently vanish from the pack.
+- **Things to know before editing the Weekly Satire job:**
+  - **It is the only writing job whose material is *selected*, not collected.** There is no briefing-pack script and there cannot be one, because the subject differs every week. The fabrication risk a pack removes is handled instead by the skill's fetch-before-cite rules (`skills/weekly-satire.md`) and by the gate set: the runner aborts the push on a dead link, a placeholder anchor, or a quoted name detail that appears on none of the pages the citing line links. If a future session wants to harden it, the lever is a collector that pre-fetches a candidate pool for the writer to select from, not a longer set of instructions.
+  - **It self-disables on a date, in both directions.** `WEEKLY_SATIRE_IGNORE_GUARDS=1` runs it outside the 2026-10-12 / 2026-11-02 window so the pipeline can be exercised without publishing early or late; the scheduled run sets no such variable. The end guard is what makes "End the task 03NOV26" true — the last installment is Monday 2026-11-02 and every Monday after exits 0.
+  - **One fixed hero plate, not a fresh image per run.** `114-weekly-satire_*`, pinned by `--plate 114-weekly-satire`, like the Senate/docket/Chiefs plates. Do not give an individual installment its own hero.
 
 ## Deployment
 

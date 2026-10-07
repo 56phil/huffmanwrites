@@ -1936,7 +1936,8 @@ class TestReportFrontmatterGate(unittest.TestCase):
         self.assertIn("check-report-frontmatter.py", lib)
         for runner, plate in (("senate-report-runner.sh", "105-senate-race-report"),
                               ("docket-weekly-report-runner.sh", "104-docket-report"),
-                              ("chiefs-weekly-report-runner.sh", "103-chiefs-report")):
+                              ("chiefs-weekly-report-runner.sh", "103-chiefs-report"),
+                              ("weekly-satire-runner.sh", "114-weekly-satire")):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
                 self.assertIn("run_report_gates", text)
@@ -2337,7 +2338,8 @@ class TestHeroPathGate(unittest.TestCase):
                       (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8"))
         for runner in ("docket-weekly-report-runner.sh",
                        "senate-report-runner.sh",
-                       "chiefs-weekly-report-runner.sh"):
+                       "chiefs-weekly-report-runner.sh",
+                       "weekly-satire-runner.sh"):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
                 self.assertIn("run_report_gates", text)
@@ -2471,7 +2473,8 @@ class TestSeriesHomeFlagGate(unittest.TestCase):
         self.assertIn("check-series-posts", lib)
         self.assertIn('--file "$article"', lib)
         for runner in ("senate-report-runner.sh",
-                       "docket-weekly-report-runner.sh"):
+                       "docket-weekly-report-runner.sh",
+                       "weekly-satire-runner.sh"):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
                 self.assertIn("run_report_gates", text)
