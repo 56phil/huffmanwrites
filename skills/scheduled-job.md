@@ -17,14 +17,20 @@ to `~/Library/LaunchAgents/`, then `launchctl bootout` and `launchctl bootstrap`
 `scripts/check-plists.py` warns when the two differ: a repo showing the schedule
 you intend while the job keeps the schedule you had.
 
-## 2. `StartCalendarInterval` takes a single dict
+## 2. One dict for one time a day, an array for more than one
 
-A LaunchAgent takes one `<dict>`; an array of dicts is the LaunchDaemon form and
-launchd ignores it silently, so the job parses cleanly and never fires. Use `Hour`
-and `Minute`, plus `Weekday` for a weekly run
-(`scripts/com.huffmanwrites.daily-sitrep.plist`,
-`scripts/com.huffmanwrites.senate-report.plist`). `test_gates.py` (TestDailySitrep)
-asserts the daily plist carries a dict, not a list, and no `Weekday` key.
+`StartCalendarInterval` takes a dict with `Hour` and `Minute`, plus `Weekday` for a
+weekly run (`scripts/com.huffmanwrites.senate-report.plist`). It also takes an
+**array** of such dicts, and then the job fires at every time in the list:
+`com.huffmanwrites.docket-watch` has carried an array of two since 2026-09-20 and
+its log shows 07:30 and 18:30 both firing, every day, with the installed copy
+identical to the repo copy. `com.huffmanwrites.sitrep-watchdog` uses the array
+form for four daily checks. Both forms work in a LaunchAgent — an earlier version
+of this rule asserted that launchd ignores an array "silently, so the job parses
+cleanly and never fires", and that was wrong; the failure it was written for is
+rule 3's illegal comment. `test_gates.py` (TestDailySitrep) asserts the daily
+plist carries a single dict, which is how "one time a day" is written down, and
+no `Weekday` key.
 
 ## 3. A malformed plist fails silently
 

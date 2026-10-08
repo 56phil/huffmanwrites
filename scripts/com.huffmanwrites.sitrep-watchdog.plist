@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.sitrep-watchdog</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/sitrep-watchdog-runner.sh</string>
+  </array>
+  <!-- Watches for a SITREP edition that does not exist. Every other job alerts
+       when it fails; this one alerts when the 06:00 job never ran at all, which
+       nothing else can see. Added 2026-10-08 at Philip's request.
+
+       Four times a day, and the first is 07:00 CT: the run starts at 06:00 and
+       finished at 06:05:58 on its first unattended morning, so 07:00 leaves
+       about an hour for a slow pack plus the Pages deploy. The later three are
+       not more chances to notice the same thing — they cover the case where the
+       machine was asleep at 07:00 (launchd runs a missed calendar event on
+       wake) and the case where an edition was published and then lost. The
+       checker alerts once per day per kind, so four checks cannot become four
+       banners; the later ones log that the alert was already raised.
+
+       RunAtLoad is on for the machine that was OFF, not asleep: launchd does
+       not run a missed StartCalendarInterval event at boot, so without this a
+       morning spent powered down would be reported by nothing until 12:00, and
+       a login after the deadline is the first honest moment to look. A load
+       before 07:00 says nothing at all — the checker exits 0 with "not due
+       until 07:00 CT", so a login at 05:00 cannot raise a banner about a report
+       whose writer has not started.
+
+       The array form is deliberate and it works: `com.huffmanwrites.docket-watch`
+       has carried an array of two dicts since 2026-09-20 and fires at both
+       times, every day, with the installed copy matching the repo copy. See the
+       note in skills/scheduled-job.md for why the older claim that launchd
+       ignores an array was wrong. -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict>
+      <key>Hour</key>
+      <integer>7</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+    <dict>
+      <key>Hour</key>
+      <integer>12</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+    <dict>
+      <key>Hour</key>
+      <integer>18</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+    <dict>
+      <key>Hour</key>
+      <integer>22</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/sitrep-watchdog.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/sitrep-watchdog.err.log</string>
+</dict>
+</plist>

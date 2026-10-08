@@ -17,10 +17,14 @@
        technology was a fifth beat and was removed on 2026-10-07; the pack does
        not read those tags and the writer must not carry the subject.
 
-       No Weekday key, deliberately: a single dict with Hour and Minute fires
-       daily. A LaunchAgent takes a single dict here; an ARRAY of dicts is a
-       LaunchDaemon form and launchd ignores it silently, which is how a job
-       parses cleanly and never fires. See check-plists.py.
+       A single dict with Hour and Minute and no Weekday key fires daily, which
+       is exactly the requirement here and is why the shape is one dict: the
+       schedule says "once a day, every day" and nothing else. (An ARRAY of
+       dicts also works in a LaunchAgent — com.huffmanwrites.docket-watch has
+       used that form since 2026-09-20 and fires at both of its times daily. An
+       older comment here claimed launchd ignores an array; that was wrong, and
+       what actually went wrong in the case it was written for was a double
+       hyphen inside an XML comment, which is what check-plists.py names.)
 
        06:00 rather than 07:00 because 07:00 already holds two jobs (weekly
        satire on Mondays, the Senate race report on Sundays), 08:00 holds the

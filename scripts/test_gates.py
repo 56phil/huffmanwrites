@@ -35,10 +35,23 @@ SCRIPTS = REPO / "scripts"
 
 
 def load(name: str):
-    """Import a gate module. None of them import at call time, so this is safe."""
+    """Import a gate module. None of them import at call time, so this is safe.
+
+    The module is registered in `sys.modules` before it executes. Python 3.14's
+    `dataclasses` resolves a field's module through `sys.modules[cls.__module__]`,
+    so a module that uses `@dataclass` and is loaded any other way raises
+    AttributeError on `NoneType` at decoration time — which is how
+    `sitrep-watchdog.py` first failed here. Registering is also what the import
+    system itself does.
+    """
     spec = importlib.util.spec_from_file_location(name, SCRIPTS / f"{name}.py")
     mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
+    sys.modules[name] = mod
+    try:
+        spec.loader.exec_module(mod)
+    except BaseException:
+        sys.modules.pop(name, None)
+        raise
     return mod
 
 
@@ -2885,17 +2898,22 @@ class TestDailySitrep(unittest.TestCase):
                                 f"{name} is missing; every edition's frontmatter pins it")
 
     def test_the_job_fires_every_day_at_six(self):
-        # A LaunchAgent's StartCalendarInterval takes a SINGLE dict; an array of
-        # dicts is the LaunchDaemon form and launchd ignores it silently, so the
-        # job parses cleanly and never fires. And a `Weekday` key here would turn
-        # a daily report into a weekly one without any other symptom.
+        # The requirement is "06:00 CT, seven days a week" (Philip, 2026-10-08,
+        # confirming the schedule that was already in place), and a single dict
+        # with Hour and Minute is how "one time a day, every day" is written
+        # down. A `Weekday` key would turn a daily report into a weekly one with
+        # no other symptom. An array of dicts would be the form for several
+        # times a day and is a change of requirement rather than a bug — see the
+        # note in skills/scheduled-job.md: launchd honours both forms, and this
+        # repo asserted the opposite until 2026-10-08, when docket-watch's log
+        # showed its two-entry array firing at both times every day.
         import plistlib
         p = SCRIPTS / "com.huffmanwrites.daily-sitrep.plist"
         self.assertTrue(p.is_file(), "the daily SITREP plist is missing")
         d = plistlib.loads(p.read_bytes())
         self.assertEqual(d.get("Label"), "com.huffmanwrites.daily-sitrep")
         sched = d.get("StartCalendarInterval")
-        self.assertIsInstance(sched, dict, "a list here is silently ignored by launchd")
+        self.assertIsInstance(sched, dict, "the daily job's schedule is one time, every day")
         self.assertNotIn("Weekday", sched, "a Weekday key makes this a weekly job")
         self.assertEqual((sched.get("Hour"), sched.get("Minute")), (6, 0))
         self.assertIn("daily-sitrep-runner.sh", " ".join(d.get("ProgramArguments", [])))
@@ -2976,6 +2994,210 @@ class TestSitrepBeats(unittest.TestCase):
         self.assertEqual(len(line), 1, "expected exactly one beat-collector sentence")
         self.assertIn("The world-news beat has no collector", line[0])
         self.assertNotIn("AI", line[0], "the removed beat is named in the entry again")
+
+
+class TestSitrepWatchdog(unittest.TestCase):
+    """The job that watches for an ABSENCE, not for a failure.
+
+    Every other job in this repo alerts from inside a run. The daily SITREP is
+    the only one that publishes every day, and the failure that matters most for
+    it is a run that never happened: launchd writes nothing for a job that did
+    not fire, no alert is reachable from outside a run, and the reader finds an
+    empty morning. Added 2026-10-08 at Philip's request, the day after the first
+    edition shipped.
+
+    What is pinned here is the POLICY — which combination of "is the file there"
+    and "does the page serve it" means what, and why the two halves are needed —
+    plus the two properties that keep a four-checks-a-day watcher from becoming a
+    nuisance: it says nothing before the edition is due, and it raises one alert
+    per day per kind rather than one per check.
+    """
+
+    DAY = date(2026, 10, 9)
+    NOON = datetime(2026, 10, 9, 12, 0)
+
+    def setUp(self):
+        self.wd = load("sitrep-watchdog")
+
+    def at(self, hour, minute=0, day=None):
+        d = day or self.DAY
+        return datetime(d.year, d.month, d.day, hour, minute, tzinfo=self.wd.TZ)
+
+    def page(self, status=200, title=None, error="", day=None):
+        return self.wd.Page(status=status, error=error, title=title, checked=True)
+
+    def title_of(self, day):
+        return f"SITREP: {day:%B} {day.day}, {day.year}"
+
+    # ---- the policy ---------------------------------------------------------
+    def test_a_published_edition_is_present(self):
+        v = self.wd.decide(self.DAY, self.at(12), True, self.page(title=self.title_of(self.DAY)))
+        self.assertEqual((v.status, v.kind, v.exit_code), ("present", "", 0))
+
+    def test_a_file_with_a_404_page_is_missing_and_names_the_deploy(self):
+        # The case that needs a different fix from "the run never happened": the
+        # article is in the repo and the site does not carry it, so the push or
+        # the Pages deploy did not land. Neither check alone can tell the two
+        # apart, which is why the watchdog fetches a page it does not need for
+        # the file half.
+        v = self.wd.decide(self.DAY, self.at(12), True, self.page(status=404))
+        self.assertEqual((v.status, v.kind, v.exit_code), ("missing", "missing", 1))
+        self.assertIn("deploy", v.line)
+
+    def test_nothing_anywhere_is_missing_and_names_the_run(self):
+        v = self.wd.decide(self.DAY, self.at(12), False, self.page(status=404))
+        self.assertEqual((v.status, v.exit_code), ("missing", 1))
+        self.assertIn("run never happened", v.line)
+
+    def test_a_page_that_is_not_this_edition_is_unverified(self):
+        # A 200 is not evidence that the page is the one asked for — the lesson
+        # `check-links.py --titles` exists for. Here it means a wrong or stale
+        # page sits at the address, which is neither "published" nor provably
+        # absent.
+        v = self.wd.decide(self.DAY, self.at(12), True,
+                           self.page(title=self.title_of(date(2026, 10, 7))))
+        self.assertEqual((v.status, v.exit_code), ("unverified", 3))
+
+    def test_a_transport_failure_with_the_file_present_is_unverified(self):
+        # "I could not look" must not be reported as "it is not there" — the
+        # distinction the docket watcher makes for the same reason.
+        v = self.wd.decide(self.DAY, self.at(12), True,
+                           self.page(status=None, error="URLError: offline"))
+        self.assertEqual((v.status, v.exit_code), ("unverified", 3))
+        self.assertIn("unconfirmed", v.line)
+
+    def test_before_the_deadline_an_absence_is_not_a_finding(self):
+        # `RunAtLoad` fires at login, so a login at 05:00 must not raise a banner
+        # about a report whose writer has not started.
+        v = self.wd.decide(self.DAY, self.at(5), False, self.page(status=404))
+        self.assertEqual((v.status, v.exit_code), ("not-due", 0))
+
+    def test_before_the_deadline_a_presence_is_still_reported(self):
+        # The deadline excuses an absence, never a presence: a 06:30 check of an
+        # edition published at 06:04 reports the edition, not the clock.
+        v = self.wd.decide(self.DAY, self.at(6, 30), True,
+                           self.page(title=self.title_of(self.DAY)))
+        self.assertEqual((v.status, v.exit_code), ("present", 0))
+
+    def test_the_deadline_does_not_excuse_another_day(self):
+        # A deadline is about today's edition being due. A past date is either
+        # published or it is a finding, whatever the clock says.
+        v = self.wd.decide(date(2026, 10, 7), self.at(6, 30), False, self.page(status=404))
+        self.assertEqual((v.status, v.exit_code), ("missing", 1))
+
+    def test_a_date_before_the_series_is_not_watched(self):
+        v = self.wd.decide(date(2026, 10, 6), self.at(12), False, self.page(status=404))
+        self.assertEqual((v.status, v.exit_code), ("not-due", 0))
+
+    def test_no_fetch_still_decides_whether_the_run_happened(self):
+        # `--no-fetch` is for a reading offline. The local half is decisive about
+        # the run; the line says the deployed page was not checked, so a pass is
+        # never mistaken for a confirmed deploy.
+        unfetched = self.wd.Page()
+        present = self.wd.decide(self.DAY, self.at(12), True, unfetched)
+        missing = self.wd.decide(self.DAY, self.at(12), False, unfetched)
+        self.assertEqual((present.status, present.exit_code), ("present", 0))
+        self.assertEqual((missing.status, missing.exit_code), ("missing", 1))
+        self.assertIn("not checked", present.line)
+
+    def test_the_state_file_is_kept_out_of_the_repo(self):
+        # The publishing tail stages the working tree, so a state file written
+        # inside the checkout would be swept into the next publish commit, under
+        # that job's message. `docket-watch-state.json` lives in scripts/ because
+        # its content is worth versioning; "the last date alerted" is not.
+        self.assertNotIn(REPO, self.wd.STATE_FILE.parents)
+
+    def test_the_deadline_leaves_room_after_the_six_am_run(self):
+        # The run starts at 06:00 and took 5m53s on its first unattended
+        # morning. A deadline inside the run would alert on an ordinary day,
+        # which is how an alert becomes noise.
+        from datetime import time
+        self.assertGreater(self.wd.DEADLINE, time(6, 40))
+
+    # ---- the runner, executed rather than read ------------------------------
+    def stub(self, tmp):
+        """A stub alert and an isolated log dir.
+
+        Both are overridable in the runner for exactly this: a test can exercise
+        the whole path — the checker, the exit code, the alert call, the dedup —
+        without posting a banner on the desktop or appending to the real log.
+        """
+        import os
+        stub = tmp / "stub-alert.sh"
+        stub.write_text('#!/bin/bash\nprintf "%s %s\\n" "$1" "$2" >> "$0.calls"\n',
+                        encoding="utf-8")
+        stub.chmod(0o755)
+        env = dict(os.environ)
+        env["SITREP_WATCHDOG_ALERT"] = str(stub)
+        env["SITREP_WATCHDOG_LOG_DIR"] = str(tmp / "logs")
+        return env, Path(str(stub) + ".calls")
+
+    def run_runner(self, tmp, *args, env=None):
+        import subprocess
+        return subprocess.run(
+            ["/bin/bash", str(SCRIPTS / "sitrep-watchdog-runner.sh"), *args],
+            env=env, capture_output=True, text=True,
+        )
+
+    def test_the_runner_alerts_once_and_then_stays_quiet(self):
+        # The whole contract, and none of it needs the network: `--no-fetch` on a
+        # date with no edition is a definite "missing", the runner routes that to
+        # the shared alert, and the checker's state stops the second check of the
+        # same day from raising a second banner. That is what lets four checks a
+        # day be a watch rather than a nuisance.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            tmp = Path(d)
+            env, calls = self.stub(tmp)
+            args = ("--date", "2026-10-09", "--no-fetch", "--state", str(tmp / "state.json"))
+            first = self.run_runner(tmp, *args, env=env)
+            self.assertEqual(first.returncode, 1, first.stderr)
+            self.assertTrue(calls.is_file(), "the runner never reached the shared alert")
+            self.assertEqual(len(calls.read_text().splitlines()), 1)
+            self.assertIn("sitrep-watchdog 1", calls.read_text())
+            second = self.run_runner(tmp, *args, env=env)
+            self.assertEqual(second.returncode, 0, "a second check must not alert again")
+            self.assertEqual(len(calls.read_text().splitlines()), 1)
+            log = (tmp / "logs" / "sitrep-watchdog.out.log").read_text(encoding="utf-8")
+            self.assertIn("already alerted", log)
+
+    def test_the_runner_survives_an_empty_argument_list_under_bash_32(self):
+        # `set -u` plus macOS's bash 3.2 treats the expansion of an EMPTY array
+        # as an unbound variable, so `"${ARGS[@]}"` aborts the script before the
+        # checker runs. This runner's first load-time fire died that way, exited
+        # 1, and raised a banner for a job that had not started; the portable
+        # form is `${ARGS[@]+"${ARGS[@]}"}`. A date before the series needs no
+        # network and writes no state, so this exercises the hazard and nothing
+        # else.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            tmp = Path(d)
+            env, calls = self.stub(tmp)
+            r = self.run_runner(tmp, "--date", "2026-10-06", env=env)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertFalse(calls.exists(), "a not-due date must not alert")
+            log = (tmp / "logs" / "sitrep-watchdog.out.log").read_text(encoding="utf-8")
+            self.assertIn("before the first edition", log)
+
+    def test_the_plist_checks_after_the_run_and_at_login(self):
+        # The schedule is part of the policy: 07:00 is the first check after a
+        # 06:00 run, the later entries cover a machine asleep at the deadline,
+        # and RunAtLoad covers a machine that was OFF — launchd runs a missed
+        # calendar event on wake but not at boot, so without it a morning spent
+        # powered down would be reported by nothing until noon.
+        import plistlib
+        p = SCRIPTS / "com.huffmanwrites.sitrep-watchdog.plist"
+        self.assertTrue(p.is_file(), "the watchdog plist is missing")
+        d = plistlib.loads(p.read_bytes())
+        self.assertEqual(d.get("Label"), "com.huffmanwrites.sitrep-watchdog")
+        entries = d.get("StartCalendarInterval")
+        self.assertIsInstance(entries, list, "several checks a day is the point")
+        times = {(e["Hour"], e["Minute"]) for e in entries}
+        self.assertIn((7, 0), times, "the first check must follow the 06:00 run")
+        self.assertGreaterEqual(len(times), 2,
+                                "a machine asleep at 07:00 needs a later check")
+        self.assertTrue(d.get("RunAtLoad"), "a machine that was off at the deadline has no other check")
+        self.assertIn("sitrep-watchdog-runner.sh", " ".join(d.get("ProgramArguments", [])))
 
 
 class TestPublishLibrary(unittest.TestCase):
