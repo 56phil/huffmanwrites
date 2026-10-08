@@ -3,7 +3,7 @@
 #
 # SOURCED, not executed: `. "$REPO/scripts/ollama-probe.sh"`.
 #
-# Why this exists. Seven unattended jobs (the five report runners, wiki-check,
+# Why this exists. Eight unattended jobs (the six report runners, wiki-check,
 # repair-plan) set ANTHROPIC_BASE_URL=http://localhost:11434 and call the model
 # through it. That server is the **Ollama desktop app's**. Before 2026-10-07
 # nothing checked it was there, and the app's server lived only while the app
@@ -27,7 +27,7 @@
 # log and raises the failure alert, instead of spending a model call on a
 # connection-refused error halfway through a draft.
 #
-# One definition, sourced by all seven runners. The repo has already learned
+# One definition, sourced by all eight runners. The repo has already learned
 # this lesson twice — the featuredOnHome rule and the gate list each drifted
 # when they existed in more than one place — so the probe is written once.
 #

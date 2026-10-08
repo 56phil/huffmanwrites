@@ -57,6 +57,39 @@
     </div>
   </section>
 
+  {{/*
+     The daily SITREP, surfaced as itself rather than through Recent Posts.
+
+     Philip asked for a report every day of the week (2026-10-07) and chose the
+     shape "a global SITREP every day". At seven installments a week, a series
+     competing for the five slots in Recent Posts would occupy all five
+     permanently and bury every other post the site publishes, so the section's
+     `_index.md` cascades `hiddenInHomeList: true` and this block gives the
+     current edition its own surface instead. Same reasoning as the summaries
+     section, which is excluded from the feed for the same kind of reason.
+
+     It reads the section's newest `featuredOnHome` page directly and renders
+     nothing at all before the first edition exists, so the page is never a
+     heading over an empty box, and the flag the frontmatter gate requires means
+     what it says — this is the surface it selects. Uses the Recent Posts classes
+     deliberately: no new CSS, and the two news surfaces read as siblings.
+  */}}
+  {{ with .Site.GetPage "/posts/sitrep" }}
+    {{ range first 1 (sort (where .Pages ".Params.featuredOnHome" true) "Date" "desc") }}
+  <section class="latest-posts">
+    <h2>The Daily SITREP</h2>
+    <div class="recent-post">
+      <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+      <time>{{ .Date.Format "January 2, 2006" }}</time>
+      <p>{{ .Summary | plainify | truncate 180 }}</p>
+    </div>
+    <div class="view-all">
+      <a href="/posts/sitrep/">Every edition →</a>
+    </div>
+  </section>
+    {{ end }}
+  {{ end }}
+
   {{ with .Site.GetPage "now" }}
   <section class="now-teaser">
     <h2>Right Now</h2>

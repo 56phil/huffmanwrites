@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.daily-sitrep</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/daily-sitrep-runner.sh</string>
+  </array>
+  <!-- Every day at 06:00 CT. Philip asked for a report every day of the week
+       (2026-10-07); the shape he chose from the options put to him was a single
+       daily Global SITREP rather than a new weekly series for each empty
+       weekday, and the beats he chose were the courts, the administration and
+       the rule of law, markets and the economy, elections and civics, and AI
+       and technology.
+
+       No Weekday key, deliberately: a single dict with Hour and Minute fires
+       daily. A LaunchAgent takes a single dict here; an ARRAY of dicts is a
+       LaunchDaemon form and launchd ignores it silently, which is how a job
+       parses cleanly and never fires. See check-plists.py.
+
+       06:00 rather than 07:00 because 07:00 already holds two jobs (weekly
+       satire on Mondays, the Senate race report on Sundays), 08:00 holds the
+       docket report on Saturdays, and 13:00 through 14:00 on Mondays holds
+       site-audit, wiki-check and weekly-integrity. A daily job cannot afford to
+       be the one that collides.
+
+       This job does NOT replace any of them. It is the daily edition; the
+       weekly series keep their own days and their own beats. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>6</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <!-- Keep the exported PATH used by the other huffmanwrites jobs so claude,
+       hugo, python3 and the keychain-backed helpers resolve the same way. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/prh/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/prh</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/daily-sitrep.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/daily-sitrep.err.log</string>
+</dict>
+</plist>

@@ -514,6 +514,18 @@
   # no follow-up edit.
   link: /posts/essays/my-apologies/
   latest: /posts/essays/weekly-satire-*
+- image: /img/articles/115-sitrep_16x9.webp
+  title: Global SITREP
+  caption: Nothing in the rings moves. Everything they measure does.
+  # The daily series (Philip, 2026-10-07). `latest` overrides `link` from the
+  # first edition onward; the fallback is the section index, so the card is
+  # never a picture with no way through. Unlike the other series cards, this one
+  # leads to a section deliberately kept out of the home page's Recent Posts
+  # feed — seven editions a week would occupy every slot — with the current
+  # edition surfaced in its own block instead. See
+  # content/posts/sitrep/_index.md and layouts/index.html.
+  link: /posts/sitrep/
+  latest: /posts/sitrep/sitrep-*
 - image: /img/articles/107-trifecta_16x9.webp
   title: The Arch and the Keystone
   caption: An arch holds because the outer stones bear the load. The keystone was

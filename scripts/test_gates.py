@@ -461,6 +461,21 @@ class TestRenderRules(unittest.TestCase):
 # Gallery gate: the contract that produced a live 404.
 # --------------------------------------------------------------------------
 class TestGalleryRules(unittest.TestCase):
+    @staticmethod
+    def _empty_content_tree(root: Path) -> None:
+        """Create the directory every shipped `latest` glob points at, empty.
+
+        Derived from the gallery rather than hardcoded. The fixture used to name
+        `posts/essays` and `posts/sports` by hand, so adding a series — the daily
+        SITREP, 2026-10-07 — turned both tests below into failures about a
+        directory no rule said anything about. The rule under test is "an
+        unstarted series is a note, not a failure"; a fixture that must be edited
+        for every new series is testing the fixture.
+        """
+        for _, glob, _ in cg.latest_entries():
+            d = Path(glob.rstrip("*")).parent.as_posix().lstrip("/")
+            (root / "content" / d).mkdir(parents=True, exist_ok=True)
+
     def test_page_count_rounds_up(self):
         # 101 items at 12 per page is 9 pages, not 8. Rounding down leaves the
         # final page unbuilt while the paginator still links to it — the 404.
@@ -520,8 +535,7 @@ class TestGalleryRules(unittest.TestCase):
             "  link: /posts/essays/three-walls-and-three-slots/\n", "")
         self.assertNotEqual(real, mutated, "fixture did not change")
         with tempfile.TemporaryDirectory() as tmp:
-            for sub in ("posts/essays", "posts/sports"):
-                (Path(tmp) / "content" / sub).mkdir(parents=True)
+            self._empty_content_tree(Path(tmp))
             with mock.patch.object(cg, "GALLERY_DATA") as fake, \
                     mock.patch.object(cg, "REPO", Path(tmp)):
                 fake.read_text.return_value = mutated
@@ -556,8 +570,7 @@ class TestGalleryRules(unittest.TestCase):
         from unittest import mock
         import tempfile
         with tempfile.TemporaryDirectory() as tmp:
-            for sub in ("posts/essays", "posts/sports"):
-                (Path(tmp) / "content" / sub).mkdir(parents=True)
+            self._empty_content_tree(Path(tmp))
             with mock.patch.object(cg, "REPO", Path(tmp)):
                 failures, notes = cg.latest_problems()
         self.assertEqual(failures, [], failures)
@@ -1973,7 +1986,8 @@ class TestReportFrontmatterGate(unittest.TestCase):
         for runner, plate in (("senate-report-runner.sh", "105-senate-race-report"),
                               ("docket-weekly-report-runner.sh", "104-docket-report"),
                               ("chiefs-weekly-report-runner.sh", "103-chiefs-report"),
-                              ("weekly-satire-runner.sh", "114-weekly-satire")):
+                              ("weekly-satire-runner.sh", "114-weekly-satire"),
+                              ("daily-sitrep-runner.sh", "115-sitrep")):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
                 self.assertIn("run_report_gates", text)
@@ -2375,7 +2389,8 @@ class TestHeroPathGate(unittest.TestCase):
         for runner in ("docket-weekly-report-runner.sh",
                        "senate-report-runner.sh",
                        "chiefs-weekly-report-runner.sh",
-                       "weekly-satire-runner.sh"):
+                       "weekly-satire-runner.sh",
+                       "daily-sitrep-runner.sh"):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
                 self.assertIn("run_report_gates", text)
@@ -2510,7 +2525,8 @@ class TestSeriesHomeFlagGate(unittest.TestCase):
         self.assertIn('--file "$article"', lib)
         for runner in ("senate-report-runner.sh",
                        "docket-weekly-report-runner.sh",
-                       "weekly-satire-runner.sh"):
+                       "weekly-satire-runner.sh",
+                       "daily-sitrep-runner.sh"):
             text = (SCRIPTS / runner).read_text(encoding="utf-8")
             with self.subTest(runner=runner):
                 self.assertIn("run_report_gates", text)
@@ -2523,7 +2539,8 @@ class TestSeriesHomeFlagGate(unittest.TestCase):
         # The root cause: the Senate skill listed the frontmatter fields and left
         # this one out, so the writer had no way to know. A gate would catch it;
         # the spec should not rely on the gate.
-        for skill in ("senate-race-report.md", "docket-weekly-report.md"):
+        for skill in ("senate-race-report.md", "docket-weekly-report.md",
+                      "daily-sitrep.md"):
             text = (REPO / "skills" / skill).read_text(encoding="utf-8")
             with self.subTest(skill=skill):
                 self.assertIn("featuredOnHome", text)
@@ -2625,6 +2642,153 @@ class TestChiefsRunnerContract(unittest.TestCase):
         # later in the file. This cost a debugging round while writing the job.
         for m in re.finditer(r"\$\{[A-Z_]+:-([^}]*)\}", self.runner):
             self.assertNotIn("'", m.group(1), m.group(0)[:120])
+
+
+class TestDailySitrep(unittest.TestCase):
+    """The daily Global SITREP — the first job that publishes every day.
+
+    Every invariant here is the same class of property asserted for the weekly
+    jobs, but the cost of breaking one is different: a mistake in a Tuesday
+    report is wrong once, and a mistake in this job is wrong seven times a week,
+    unattended, with no review window at all. So the assertions are about the
+    wiring rather than about any edition — an article that passes every gate can
+    still be fabricated if the pack never ran, and a section nobody can reach is
+    a job whose output nobody reads.
+    """
+
+    def setUp(self):
+        self.runner = (SCRIPTS / "daily-sitrep-runner.sh").read_text(encoding="utf-8")
+        # Comments stripped before any ordering assertion: this runner explains
+        # its own design in prose, and a test that matched the explanation would
+        # be testing the wrong text.
+        self.code = "\n".join(ln for ln in self.runner.splitlines()
+                              if not ln.lstrip().startswith("#"))
+
+    def grant(self) -> str:
+        i = self.runner.find("--allowedTools")
+        self.assertGreater(i, 0, "the runner grants the writer nothing at all")
+        end = self.runner.find("\n", self.runner.find('>> "$OUT_LOG"', i))
+        self.assertGreater(end, i, "could not isolate the --allowedTools line")
+        return self.runner[i:end]
+
+    def test_the_briefing_pack_runs_before_the_writer_and_is_a_hard_stop(self):
+        # The one fact a headless writer can never know is today's numbers, and
+        # `scripts/sitrep-pack.py` is the only thing in the pipeline that has
+        # seen them. A run that reaches `claude -p` without a pack is a report
+        # whose every figure is recalled — the fabrication path CLAUDE.md was
+        # written about, and the reason the Chiefs job stops the same way.
+        self.assertIn("sitrep-pack.py", self.code)
+        self.assertLess(self.code.find("sitrep-pack.py"), self.code.find("claude -p"),
+                        "the collector must run before the writer")
+        i = self.code.find("PACK_RC")
+        self.assertGreater(i, 0, "the pack's exit code is never read")
+        self.assertIn("NOT PUBLISHING", self.code[i:i + 500],
+                      "a failed briefing pack must abort the run, not degrade it")
+
+    def test_the_article_path_is_bound_before_anything_uses_it(self):
+        # The guards, the gates and the commit all read $ARTICLE. Under `set -u`
+        # an unbound expansion is a hard failure, and moving the assignment below
+        # a caller would make every run die at the first guard.
+        define = self.code.find('ARTICLE="content/posts/sitrep/sitrep-$TODAY.md"')
+        self.assertGreater(define, 0)
+        for user in ('publish_preflight "$ARTICLE"',
+                     'run_report_gates "$ARTICLE"',
+                     "claude -p"):
+            with self.subTest(uses=user):
+                self.assertGreater(self.code.find(user), define)
+
+    def test_the_preflight_runs_before_the_writer(self):
+        # The stale-file cleanup guards the case where the writer fails and the
+        # runner then commits yesterday's text under today's title. Running it
+        # after the writer would delete this run's own work instead.
+        self.assertLess(self.code.find('publish_preflight "$ARTICLE"'),
+                        self.code.find("claude -p"))
+
+    def test_a_missing_article_aborts_rather_than_committing_nothing(self):
+        i = self.code.find('if [ ! -f "$ARTICLE" ]')
+        self.assertGreater(i, 0)
+        self.assertIn("NOT PUBLISHING", self.code[i:i + 400])
+
+    def test_the_agent_cannot_commit_push_or_touch_session_state(self):
+        # The runner owns the commit, the push and the SESSION_STATE entry. An
+        # agent that could push could publish anything; an agent that wrote the
+        # entry could assert a gate result it was unable to produce.
+        grant = self.grant()
+        for forbidden in ("git", "hugo", "SESSION_STATE"):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, grant)
+
+    def test_the_writer_can_rerun_the_collector(self):
+        # Required, not optional: the skill's steps re-run the collector for
+        # specific fields. Without the grant the writer fetches the Federal
+        # Register and the Treasury by hand and can only reconstruct the numbers
+        # from memory — a machine-local settings file allowing it by accident is
+        # not something an unattended run may depend on.
+        self.assertIn("Bash(python3 scripts/sitrep-pack.py*)", self.grant())
+
+    def test_every_script_the_skill_tells_the_writer_to_run_is_granted(self):
+        # The Senate runner learned this the hard way: its skill's steps called a
+        # script that was not on the allow-list, so the permission layer denied
+        # it and the run only worked because a machine-local settings file
+        # happened to permit the shape. An unattended job may not depend on that.
+        # Every `python3 scripts/<x>.py` the skill names must be a prefix the
+        # runner grants.
+        skill = (REPO / "skills" / "daily-sitrep.md").read_text(encoding="utf-8")
+        grant = self.grant()
+        named = set(re.findall(r"python3 (scripts/[A-Za-z0-9_.-]+\.py)", skill))
+        self.assertGreater(len(named), 1,
+                           "the scan for runner commands in the skill matched nothing")
+        for script in sorted(named):
+            with self.subTest(script=script):
+                self.assertIn(f"Bash(python3 {script}*)", grant,
+                              f"the skill tells the writer to run {script}, which it is not granted")
+
+    def test_the_series_plate_files_exist(self):
+        # Every edition pins these two paths in its frontmatter. A missing file
+        # is caught by the gate at 06:00; catching it here means it is caught
+        # before the first scheduled run rather than by it.
+        for name in ("115-sitrep_16x9.webp", "115-sitrep_4x5.webp"):
+            with self.subTest(name=name):
+                self.assertTrue((REPO / "static" / "img" / "articles" / name).is_file(),
+                                f"{name} is missing; every edition's frontmatter pins it")
+
+    def test_the_job_fires_every_day_at_six(self):
+        # A LaunchAgent's StartCalendarInterval takes a SINGLE dict; an array of
+        # dicts is the LaunchDaemon form and launchd ignores it silently, so the
+        # job parses cleanly and never fires. And a `Weekday` key here would turn
+        # a daily report into a weekly one without any other symptom.
+        import plistlib
+        p = SCRIPTS / "com.huffmanwrites.daily-sitrep.plist"
+        self.assertTrue(p.is_file(), "the daily SITREP plist is missing")
+        d = plistlib.loads(p.read_bytes())
+        self.assertEqual(d.get("Label"), "com.huffmanwrites.daily-sitrep")
+        sched = d.get("StartCalendarInterval")
+        self.assertIsInstance(sched, dict, "a list here is silently ignored by launchd")
+        self.assertNotIn("Weekday", sched, "a Weekday key makes this a weekly job")
+        self.assertEqual((sched.get("Hour"), sched.get("Minute")), (6, 0))
+        self.assertIn("daily-sitrep-runner.sh", " ".join(d.get("ProgramArguments", [])))
+
+    def test_the_section_is_out_of_the_feed_and_surfaced_directly(self):
+        # Seven installments a week competing for five Recent Posts slots would
+        # occupy all five permanently and bury every other post the site
+        # publishes. The section index excludes them from the feed, and the home
+        # page surfaces the current edition itself — selected on the same
+        # `featuredOnHome` flag the frontmatter gate requires, so the flag is
+        # still the thing that puts a piece in front of a reader.
+        idx = (REPO / "content" / "posts" / "sitrep" / "_index.md").read_text(encoding="utf-8")
+        self.assertIn("hiddenInHomeList: true", idx)
+        home = (REPO / "layouts" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('"/posts/sitrep"', home)
+        self.assertIn('.Params.featuredOnHome', home)
+
+    def test_the_series_is_declared_in_the_gallery(self):
+        # The gallery glob is the site's own definition of a series, and the
+        # series gate reads it: without this card, installments could publish
+        # unflagged and nothing would notice — which is exactly how five Senate
+        # reports went unseen.
+        g = (REPO / "data" / "gallery.yml").read_text(encoding="utf-8")
+        self.assertIn("/posts/sitrep/sitrep-*", g)
+        self.assertIn("/img/articles/115-sitrep_16x9.webp", g)
 
 
 class TestPublishLibrary(unittest.TestCase):
@@ -2781,8 +2945,9 @@ class TestPublishLibrary(unittest.TestCase):
             "weekly-satire-runner.sh",
             "repair-plan-runner.sh",
             "wiki-check-runner.sh",
+            "daily-sitrep-runner.sh",
         ]
-        self.assertGreaterEqual(len(ai_runners), 7)
+        self.assertGreaterEqual(len(ai_runners), 8)
         for name in ai_runners:
             text = (SCRIPTS / name).read_text(encoding="utf-8")
             with self.subTest(runner=name):

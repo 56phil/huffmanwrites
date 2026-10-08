@@ -10,7 +10,7 @@
     <string>/Users/prh/Developer/huffmanwrites/scripts/ollama-app-launch.sh</string>
   </array>
   <!-- Opens the Ollama desktop app at login so its server is up before the
-       scheduled AI jobs run. Seven jobs (the five report runners, wiki-check,
+       scheduled AI jobs run. Eight jobs (the six report runners, wiki-check,
        repair-plan) call http://localhost:11434, and that port is served by the
        app, not by a daemon of our own.
 
