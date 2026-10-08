@@ -17,7 +17,11 @@ set -euo pipefail
 # /opt/homebrew/bin (hugo, pdftotext). Export the full interactive PATH.
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-REPO="/Users/prh/Developer/huffmanwrites"
+# Derived from this script's own location, never a path baked in here: in CI the
+# checkout sits elsewhere, so a hardcoded "/Users/<who>/Developer/<repo>" names a
+# missing file, python3 exits 2, and the Pages deploy goes red (2026-10-08). A
+# test in scripts/test_gates.py holds the rule for every script under scripts/.
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL="$REPO/skills/repair-plan-quarterly.md"
 PLAN="$REPO/future-pieces/repair-plan-48th-president.md"
 ALERT="$REPO/scripts/alert-failure.sh"
@@ -70,7 +74,7 @@ set +e
 claude -p "$PROMPT" \
   -n "repair-plan-$(date '+%Y-%m-%d')" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(curl *),Bash(pdftotext *),Bash(python3 scripts/*),Bash(md5 *),Bash(jq *),Bash(sed *),Bash(grep *),Bash(mkdir *),Bash(ls *),Bash(git -C /Users/prh/Developer/huffmanwrites status *),Bash(git -C /Users/prh/Developer/huffmanwrites diff *)" \
+  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(curl *),Bash(pdftotext *),Bash(python3 scripts/*),Bash(md5 *),Bash(jq *),Bash(sed *),Bash(grep *),Bash(mkdir *),Bash(ls *),Bash(git -C $REPO status *),Bash(git -C $REPO diff *)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e

@@ -9,7 +9,11 @@ set -euo pipefail
 # python3). Export the full interactive PATH explicitly.
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-REPO="/Users/prh/Developer/huffmanwrites"
+# Derived from this script's own location, never a path baked in here: in CI the
+# checkout sits elsewhere, so a hardcoded "/Users/<who>/Developer/<repo>" names a
+# missing file, python3 exits 2, and the Pages deploy goes red (2026-10-08). A
+# test in scripts/test_gates.py holds the rule for every script under scripts/.
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CRAWLER="$REPO/scripts/site-audit-crawler.py"
 GALLERY_GUARD="$REPO/scripts/check-gallery-pages.py"
 LOG_DIR="$HOME/Library/Logs"

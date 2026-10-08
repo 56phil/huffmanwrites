@@ -3762,6 +3762,35 @@ class TestCorpusIntegration(unittest.TestCase):
                                       capture_output=True, text=True)
                 self.assertEqual(proc.returncode, 0, f"{r.name}:\n{proc.stderr}")
 
+    def test_no_shell_script_names_this_checkout_by_path(self):
+        # A script must find the repo it lives in from its own location. On
+        # 2026-10-08 this was a red CI build: two tests in TestSitrepWatchdog
+        # execute sitrep-watchdog-runner.sh, whose CHECKER was built from a
+        # hardcoded /Users/prh/Developer/huffmanwrites. In the CI checkout that
+        # path does not exist, so python3 exited 2 ("can't open file") before the
+        # checker ran, the build job failed at "Run gate tests", and no Pages
+        # deploy landed from 11:51Z until every runner derived its root from
+        # `${BASH_SOURCE[0]}`. The two failures were one cause, and nothing in
+        # the repo could see it: the scripts parsed, the plists matched, and the
+        # path is correct on the machine the jobs run on.
+        #
+        # Scope is the shell scripts, where the checkout path was baked in and
+        # where a test executes the file. The python gates are not scanned: each
+        # takes its root from `Path(__file__)`. Plists are exempt on purpose —
+        # launchd needs an absolute program path, and `check-plists.py` exists to
+        # keep the installed copies honest. A path naming another repo
+        # (/Users/prh/Developer/SimpleBrain) is not this rule's business, and
+        # `huffmanwrites` at the end of the match is what keeps it out.
+        pattern = re.compile(r"(?:/Users/|/home/)\S*huffmanwrites")
+        scripts = sorted((REPO / "scripts").glob("*.sh"))
+        self.assertGreaterEqual(len(scripts), 10, "the shell glob stopped matching")
+        for path in scripts:
+            with self.subTest(script=path.name):
+                hit = pattern.search(path.read_text(encoding="utf-8"))
+                self.assertIsNone(
+                    hit, f"{path.name} names this checkout by path: {hit.group(0) if hit else ''}",
+                )
+
     def test_em_dash_corpus_is_compliant(self):
         import subprocess
         r = subprocess.run([sys.executable, "scripts/check-emdashes.py", "--check"],

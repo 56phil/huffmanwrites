@@ -22,7 +22,11 @@ set -euo pipefail
 # launchd does not source the shell; export the full interactive PATH.
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-REPO="/Users/prh/Developer/huffmanwrites"
+# Derived from this script's own location, never a path baked in here: in CI the
+# checkout sits elsewhere, so a hardcoded "/Users/<who>/Developer/<repo>" names a
+# missing file, python3 exits 2, and the Pages deploy goes red (2026-10-08). A
+# test in scripts/test_gates.py holds the rule for every script under scripts/.
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CHECKER="$REPO/scripts/check-docket.py"
 ALERT="$REPO/scripts/alert-failure.sh"
 LOG_DIR="$HOME/Library/Logs"

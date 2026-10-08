@@ -37,7 +37,12 @@
 # returns 1 (callers run under `set -e`, so a bare call aborts the run; an
 # explicit `|| exit 1` is also fine). On success it returns 0 and is silent.
 
-OLLAMA_PROBE_ALERT="${OLLAMA_PROBE_ALERT:-/Users/prh/Developer/huffmanwrites/scripts/alert-failure.sh}"
+# Derived from this file's own location, never baked in: inside a sourced file
+# `BASH_SOURCE[0]` is the sourced file, and the gate tests execute the runners
+# that source this one from a CI checkout at a different path. Same rule as the
+# runners — a hardcoded checkout path names a missing file (2026-10-08).
+OLLAMA_PROBE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+OLLAMA_PROBE_ALERT="${OLLAMA_PROBE_ALERT:-$OLLAMA_PROBE_DIR/alert-failure.sh}"
 OLLAMA_PROBE_TRIES="${OLLAMA_PROBE_TRIES:-10}"
 OLLAMA_PROBE_TIMEOUT="${OLLAMA_PROBE_TIMEOUT:-5}"
 
