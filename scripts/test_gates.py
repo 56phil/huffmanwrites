@@ -606,14 +606,18 @@ class TestPlistRules(unittest.TestCase):
         # The durability fix (2026-10-07). Seven AI jobs call localhost:11434, the
         # Ollama app serves it, and the app's own login item did not survive a
         # restart (it reconciles its login items on start and dropped the one
-        # added by hand). So a LaunchAgent opens the app at login instead. Three
+        # added by hand). So a LaunchAgent opens the app at login instead. The
         # properties are load-bearing, each a failure this repo has seen:
         #   - RunAtLoad, so the app is up before the 07:00 jobs run;
         #   - NOT KeepAlive, because relaunching an app the user deliberately quit
         #     fights the person using it, and the probe is the guard instead;
-        #   - `open -a <bundle>` rather than an `ollama serve` argument, because an
-        #     earlier LaunchAgent ran the server binary directly and put a second
-        #     `ollama serve` on the port the app already serves.
+        #   - the launcher script rather than a bare `open -a`, because `open`
+        #     exits 0 the moment LaunchServices accepts the request and so cannot
+        #     distinguish "the app came up" from "nothing happened" — which is
+        #     exactly the question that could not be answered on 2026-10-07;
+        #   - and never a server binary, because an earlier LaunchAgent ran
+        #     `ollama serve` directly and put a second server on the port the app
+        #     already serves.
         import plistlib
         p = SCRIPTS / "com.huffmanwrites.ollama-app.plist"
         self.assertTrue(p.is_file(), "the Ollama app launcher plist is missing")
@@ -622,11 +626,17 @@ class TestPlistRules(unittest.TestCase):
         self.assertFalse(d.get("KeepAlive"),
                          "KeepAlive would fight a deliberate quit; the probe guards instead")
         prog = d.get("ProgramArguments", [])
-        self.assertEqual(prog[:2], ["/usr/bin/open", "-a"],
-                         "must open the app bundle, not run a server binary")
-        self.assertIn("Ollama.app", " ".join(prog))
-        self.assertNotIn("serve", prog,
-                         "this job must open the app, never run `ollama serve`")
+        self.assertEqual(prog[0], "/bin/bash")
+        self.assertIn("ollama-app-launch.sh", prog[1])
+
+        # The script must open the app bundle and then verify the port answered.
+        script = (SCRIPTS / "ollama-app-launch.sh").read_text(encoding="utf-8")
+        self.assertIn("/usr/bin/open", script)
+        self.assertIn("/Applications/Ollama.app", script)
+        self.assertIn("/api/version", script,
+                      "the launcher must verify reachability, not just fire `open`")
+        # It starts the app; it must not run a server itself.
+        self.assertNotIn("ollama serve", script)
 
 
 # --------------------------------------------------------------------------

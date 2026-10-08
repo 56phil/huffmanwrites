@@ -6,14 +6,21 @@
   <string>com.huffmanwrites.ollama-app</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/usr/bin/open</string>
-    <string>-a</string>
-    <string>/Applications/Ollama.app</string>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/ollama-app-launch.sh</string>
   </array>
   <!-- Opens the Ollama desktop app at login so its server is up before the
        scheduled AI jobs run. Seven jobs (the five report runners, wiki-check,
        repair-plan) call http://localhost:11434, and that port is served by the
        app, not by a daemon of our own.
+
+       The work is in the script rather than an inline `open -a` because `open`
+       exits 0 as soon as LaunchServices accepts the request: it reports success
+       whether or not the app comes up, so a login where Ollama never started
+       would look identical in the log to one where it did. The script opens the
+       app and then waits for :11434 to answer, logging the elapsed time or
+       raising the shared alert. That is what makes "did Ollama start at login?"
+       answerable after the fact instead of a question for the next session.
 
        Why this exists rather than the app's own login item. The app can register
        itself as a login item (SMAppService), and on 2026-10-07 it was added that
