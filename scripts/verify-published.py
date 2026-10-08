@@ -187,9 +187,17 @@ def verify(
             time.sleep(delay)
 
     if page.status == 404:
+        # This function fetched a URL; it did not read git. So it states the one
+        # fact it observed and stops. The causal claim — the article is on main
+        # and the deploy did not land — belongs to the caller that checked
+        # `origin/main` first, and `publish-report.sh` makes it in its alert.
+        # An earlier wording asserted it here ("is on main but the deploy did not
+        # land") and was wrong the first time the checker was run by hand against
+        # a file that had never been pushed: the script said a thing it had not
+        # looked at, which is the defect the whole check exists to catch.
         return 1, (
             f"verify-published: {url} is 404 on all {tries} checks over {window}s; "
-            f"{article} is on main but the deploy did not land"
+            f"the site serves no page for {article}"
         )
     if page.status is not None:
         return 3, (

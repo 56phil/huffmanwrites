@@ -3294,7 +3294,13 @@ class TestPublishedPageCheck(unittest.TestCase):
 
         code, line = verdict(self.vp.Page(status=404, error="HTTP 404"))
         self.assertEqual(code, 1)
-        self.assertIn("did not land", line)
+        self.assertIn("serves no page", line)
+        # The absence sentence states what was fetched and nothing else. It once
+        # ended "… is on main but the deploy did not land", which the checker has
+        # no grounds for: it reads a URL, not git, and the claim was false the
+        # first time it was run by hand against an unpushed file. The caller that
+        # checked `origin/main` makes that claim, in its own alert.
+        self.assertNotIn("on main", line)
 
         code, line = verdict(self.vp.Page(status=200, title="Something else"))
         self.assertEqual(code, 3)
@@ -3374,7 +3380,7 @@ class TestPublishedPageCheck(unittest.TestCase):
             r = self.run_checker(article, base, "--tries", "2", "--delay", "0",
                                  "--timeout", "5")
             self.assertEqual(r.returncode, 1, r.stdout + r.stderr)
-            self.assertIn("did not land", r.stdout)
+            self.assertIn("serves no page", r.stdout)
             self.assertIn(article, r.stdout)
         finally:
             srv.shutdown()
