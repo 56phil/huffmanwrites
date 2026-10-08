@@ -1,6 +1,6 @@
 ---
 title: "Global SITREP"
-description: "A daily situation report: what the courts did, what the administration did, where the markets and the odds moved, and what changed in the world and in technology."
+description: "A daily situation report: what the courts did, what the administration did, where the markets and the odds moved, and what changed in the world."
 lastmod: 2026-10-07
 cascade:
   hiddenInHomeList: true

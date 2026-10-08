@@ -2791,6 +2791,47 @@ class TestDailySitrep(unittest.TestCase):
         self.assertIn("/img/articles/115-sitrep_16x9.webp", g)
 
 
+class TestSitrepBeats(unittest.TestCase):
+    """The SITREP's beat list, which is a decision and not a default.
+
+    Philip removed the technology and AI beat on 2026-10-07, the day after the
+    first edition shipped: it had a prediction-market half and a fetched half,
+    and the fetched half was the one place in the report where the writer chose
+    what to assert with no collector behind the choice. Reinstating it as an
+    "improvement" is the failure these tests exist to make visible, because
+    nothing else in the pipeline would notice.
+    """
+
+    def setUp(self):
+        self.pack = load("sitrep-pack")
+
+    def test_no_section_reads_the_ai_or_technology_tags(self):
+        tags = {t for _, _, ts in self.pack.POLY_SECTIONS for t in ts}
+        for gone in ("ai", "technology"):
+            with self.subTest(tag=gone):
+                self.assertNotIn(gone, tags, "the removed beat is being collected again")
+        # And the two that stayed are still read, so this cannot pass by the
+        # section list having been emptied.
+        self.assertIn("midterms", tags)
+        self.assertIn("world", tags)
+
+    def test_the_pack_sections_are_numbered_without_a_hole(self):
+        # A section removed from the middle leaves a reader (and the writer)
+        # concluding something is missing rather than that it was dropped on
+        # purpose.
+        headings = [h for _, h, _ in self.pack.POLY_SECTIONS]
+        self.assertEqual(headings, ["5. Elections and the midterms", "6. The world"])
+        source = (SCRIPTS / "sitrep-pack.py").read_text(encoding="utf-8")
+        self.assertIn("## 7. Not in this pack", source)
+        self.assertNotIn("## 8.", source)
+
+    def test_the_skill_forbids_the_beat_in_the_report(self):
+        skill = (REPO / "skills" / "daily-sitrep.md").read_text(encoding="utf-8")
+        self.assertIn("Do not write about technology or AI", skill)
+        self.assertNotIn("**Technology and AI** —", skill,
+                         "the skill still asks for a section that was removed")
+
+
 class TestPublishLibrary(unittest.TestCase):
     """The shared publish tail, asserted once rather than per runner.
 

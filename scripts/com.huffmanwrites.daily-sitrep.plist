@@ -13,8 +13,9 @@
        (2026-10-07); the shape he chose from the options put to him was a single
        daily Global SITREP rather than a new weekly series for each empty
        weekday, and the beats he chose were the courts, the administration and
-       the rule of law, markets and the economy, elections and civics, and AI
-       and technology.
+       the rule of law, markets and the economy, and elections and civics. AI and
+       technology was a fifth beat and was removed on 2026-10-07; the pack does
+       not read those tags and the writer must not carry the subject.
 
        No Weekday key, deliberately: a single dict with Hour and Minute fires
        daily. A LaunchAgent takes a single dict here; an ARRAY of dicts is a

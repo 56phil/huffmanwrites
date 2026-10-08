@@ -17,8 +17,10 @@ file, with no human reading it first.
   today's title. Write the file fresh. Do not go looking for yesterday's text to
   revise.
 - The beats, in Philip's words (2026-10-07): the courts, the administration and
-  the rule of law, markets and the economy, elections and civics, and AI and
-  technology. "Global" adds the world-news beat.
+  the rule of law, markets and the economy, and elections and civics. "Global"
+  adds the world-news beat. **Technology and AI is not a beat** — it was one of
+  the five he chose, and he removed it on 2026-10-07: "That risk concerns me.
+  Let's eliminate the AI beat." See "Do not write about technology or AI" below.
 
 ## Provider policy (Philip, 2026-09-06)
 
@@ -109,18 +111,42 @@ silence from memory, and never present a partial section as a whole one.
 ## Step 2 — Get what the pack cannot give you.
 
 The pack carries the day's hard record. It is not reporting, and it does not
-cover every beat. Two sections of the report have **no collector at all** and are
+cover every beat. **One** section of the report has **no collector at all** and is
 entirely yours to fetch:
 
 - **The world** — one story from outside the United States that actually moved.
-- **Technology and AI** — one development in AI or technology that matters.
 
-For these, and for any context the pack cannot supply, search and read what
-carries the story. Fetch the page before you cite it. A fact in these sections is
+For that, and for any context the pack cannot supply, search and read what
+carries the story. Fetch the page before you cite it. A fact in that section is
 held to exactly the same standard as a number in the pack: fetched, and linked.
 
-Do not let the two fetched beats swallow the piece. One story each, chosen for
-what changed, is the shape. A general-news digest is not this report.
+Do not let the fetched beat swallow the piece. One story, chosen for what
+changed, is the shape. A general-news digest is not this report.
+
+### Do not write about technology or AI
+
+There is no technology or AI section, and adding one is a failure rather than
+initiative. It was a beat of the first version and Philip removed it on
+2026-10-07, the day after the first edition shipped, because the fetched half of
+that beat was the one place in the report where the writer chose what to assert
+with no collector behind the choice.
+
+So: no AI-model releases, no data-centre or chip news, no technology-company
+items, no "and in technology" paragraph — not as a section, not inside another
+section, not in the lede, and not in `## Sources`. The pack does not raise the
+subject (see its `## 7. Not in this pack`) and neither do you. If the day's news
+is dominated by it, the report is shorter and says nothing about it, which is
+correct.
+
+**What the ban does not cover.** A government action that merely mentions
+technology belongs to the beat it is actually part of, and reporting it is not
+the removed beat. A Federal Register notice continuing the Section 301 actions
+against China over technology transfer is trade policy; it goes in the
+administration section, named as the trade action it is. An agency rule on
+medical devices goes in the administration section. The test is which beat the
+item is, not which words appear in its title. A private company's product
+launch, a model release, or an industry trend is the removed beat and does not
+appear at all.
 
 ## Step 3 — Write it.
 
@@ -193,8 +219,10 @@ the reasoning and the failure each one prevents.
    prices, not this site's view; attribute each figure to the venue that carries
    it, and never average a thin book into a number that reads as a forecast.
 7. **The world** — one story from outside the country, fetched and cited.
-8. **Technology and AI** — one development, fetched and cited.
-9. **Sources** — every link you used, in the piece's citation apparatus.
+8. **Sources** — every link you used, in the piece's citation apparatus.
+
+There is no technology or AI section. See "Do not write about technology or AI"
+in Step 2 for why, and for what that rules out.
 
 A section with nothing in it is a sentence, not a heading padded to look full. If
 the courts were quiet, say the courts were quiet. If a source for a beat was
@@ -218,7 +246,7 @@ correct.
   lastmod: <same as date>
   draft: false
   featuredOnHome: true
-  tags: [sitrep, civics, markets, ai]
+  tags: [sitrep, civics, markets]
   hero_desktop: "img/articles/115-sitrep_16x9.webp"
   hero_mobile: "img/articles/115-sitrep_4x5.webp"
   hero_alt: "An armillary instrument of Parian marble: nested open rings crossed by a slender gold needle above a dark granite dome, lit by a single shaft of gold against midnight navy."
@@ -295,18 +323,27 @@ Keep it under 200 words. The runner reads your file, not your prose.
 **What is deliberately not in the pack, and why.** The collector covers the beats
 that have an API: the Federal Register, the CourtListener search API, the Treasury
 yield curve, FiscalData, CNBC's quote service, the BLS public API, and Polymarket's
-Gamma API. **World affairs and technology/AI news have no collector.** There is no
-feed for "the one story that moved", and a daily-cadence collector cannot be given
-a stable query for it, so those two beats are fetched and cited by the writer, and
-they are the two sections where a fabrication is most likely to originate. The
-gates catch a dead link, a placeholder anchor, and a quoted name detail that
-appears on no cited page; they cannot catch a story the writer half-remembered and
-cited to a page it did fetch for a different reason.
+Gamma API. **World affairs has no collector.** There is no feed for "the one story
+that moved", and a daily-cadence collector cannot be given a stable query for it,
+so that beat is fetched and cited by the writer, and it is the one section where a
+fabrication is most likely to originate. The gates catch a dead link, a
+placeholder anchor, and a quoted name detail that appears on no cited page; they
+cannot catch a story the writer half-remembered and cited to a page it did fetch
+for a different reason.
 
-**The lever for hardening this job is a wider collector, not a longer set of
-instructions.** If a future session wants to remove the residual risk in the
-world and AI beats, the move is to build a collector that pre-fetches a candidate
-pool of stories for the writer to *select from*, the way `scripts/sitrep-pack.py`
-pre-fetches the day's documents — not to add another paragraph of fetch-before-cite
-prose to this file. Instructions bind only the writer that reads them; a collector
-binds every run. Do not mistake the length of this skill for its strength.
+**The AI and technology beat is gone, and the reason generalizes.** It had the
+same shape as the world beat: half of it came from a collector (prediction-market
+prices) and half was fetched. On 2026-10-07 Philip read that risk stated plainly —
+"It concerns me" — and removed the beat outright. That is the cheapest available
+answer to an uncollected beat, and it is worth remembering as the first option
+rather than the last: a beat nobody collects is a beat the writer invents, and a
+beat the series does not carry cannot be invented. Removing it cost one entry in
+this file and one tuple in the collector.
+
+**The lever for hardening what remains is a wider collector, not a longer set of
+instructions.** If a future session wants to remove the residual risk in the world
+beat, the move is to build a collector that pre-fetches a candidate pool of stories
+for the writer to *select from*, the way `scripts/sitrep-pack.py` pre-fetches the
+day's documents — not to add another paragraph of fetch-before-cite prose to this
+file. Instructions bind only the writer that reads them; a collector binds every
+run. Do not mistake the length of this skill for its strength.

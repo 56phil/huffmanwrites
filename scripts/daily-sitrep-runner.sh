@@ -7,8 +7,10 @@
 # one recurring series, seven installments a week, rather than a new weekly
 # series for each empty weekday. Asked which beats it should cover, he chose
 # the courts, the administration and the rule of law, markets and the economy,
-# elections and civics, and AI and technology. The world-news beat is implied
-# by "global".
+# and elections and civics. The world-news beat is implied by "global". **AI and
+# technology is not a beat**: it was one of the five he chose and he removed it
+# the next day, once the residual risk of an uncollected section was spelled out
+# — see the note above the Polymarket tags in scripts/sitrep-pack.py.
 #
 # PUBLISHES. This job goes to production in the same run it writes the file, so a
 # gate or build failure ABORTS the push rather than being logged alongside it:

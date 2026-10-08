@@ -147,12 +147,27 @@ BLS_SERIES = (
 GAMMA_API = "https://gamma-api.polymarket.com/events"
 
 # Section -> the Polymarket tags that feed it. A section reads more than one tag
-# where the venue's own taxonomy splits a beat in two (`geopolitics` and `world`
-# are the same news read through two tag trees; `ai` and `technology` likewise).
+# where the venue's own taxonomy splits a beat in two: `geopolitics` and `world`
+# are the same news read through two tag trees.
+#
+# **There is no AI or technology section here, and that is a decision rather
+# than an omission.** The beat shipped in the first version of this file. Half of
+# it was a prediction market; the other half was fetched news, and the fetched
+# half is where a fabrication would come from — there is no feed for "the one AI
+# story that moved", so that section was the one place where the writer chose
+# what to assert with no collector behind the choice. On 2026-10-07, after the
+# first edition published, Philip read that risk stated plainly and removed the
+# beat: "That risk concerns me. Let's eliminate the AI beat." So the `ai` and
+# `technology` tags are not read, and the subject does not appear in the report
+# in any form — not as a section, not in this pack, and not in the list of beats
+# the writer is allowed to fetch. Deleting the section was the whole change: the
+# writer cannot write a beat the pack does not raise.
+#
+# The world beat keeps exactly the same shape and the same residual risk, which
+# is stated in `skills/daily-sitrep.md` rather than implied away.
 POLY_SECTIONS = (
     ("elections", "5. Elections and the midterms", ("midterms",)),
     ("world", "6. The world", ("geopolitics", "world")),
-    ("technology", "7. Technology and AI", ("ai", "technology")),
 )
 
 
@@ -765,7 +780,7 @@ def build_pack(as_of: str, window_days: int, now_ct: datetime) -> dict:
     )
     pack["economy"] = economy
 
-    # 5-7. Prediction markets ----------------------------------------------
+    # 5-6. Prediction markets ----------------------------------------------
     for key, heading, tags in POLY_SECTIONS:
         data = attempt(
             heading,
@@ -775,15 +790,19 @@ def build_pack(as_of: str, window_days: int, now_ct: datetime) -> dict:
         )
         pack[key] = {"heading": heading, "tags": list(tags), "markets": data}
 
-    # 8. What has no collector ---------------------------------------------
+    # 7. What has no collector ---------------------------------------------
     pack["not_in_pack"] = (
-        "Beats with no collector in this pack, which the writer must fetch and "
-        "cite if the report needs them: congressional legislation and votes "
-        "(the Congress.gov API requires a key); state and local government "
-        "action; campaign finance filings (FEC bulk data is not real-time); "
-        "corporate earnings and business news; international diplomacy and "
-        "conflict beyond what prediction markets price; science and health "
-        "agency actions outside the Federal Register; and sport, culture, and "
+        "**Technology and AI is not a beat of this series.** It was removed on "
+        "2026-10-07 and must not appear in the report, in any section, fetched "
+        "or otherwise. If the day's news is dominated by it, the report still "
+        "does not carry it; say nothing rather than fill it.\n\n"
+        "Beats with no collector that the writer MAY fetch and cite if the "
+        "report needs them: congressional legislation and votes (the "
+        "Congress.gov API requires a key); state and local government action; "
+        "campaign finance filings (FEC bulk data is not real-time); corporate "
+        "earnings and business news; international diplomacy and conflict "
+        "beyond what prediction markets price; science and health agency "
+        "actions outside the Federal Register; and sport, culture, and "
         "obituaries. None of these is a gap in the pack to be papered over with "
         "recalled facts — a missing beat is reported as absent or not reported."
     )
@@ -1061,7 +1080,7 @@ def render(pack: dict) -> str:
         L.append(f"Source: {BLS_API}")
         L.append("")
 
-    # 5-7 -------------------------------------------------------------------
+    # 5-6 -------------------------------------------------------------------
     for key, heading, tags in POLY_SECTIONS:
         L.append(f"## {heading}")
         L.append("")
@@ -1114,8 +1133,8 @@ def render(pack: dict) -> str:
         )
         L.append("")
 
-    # 8 ---------------------------------------------------------------------
-    L.append("## 8. Not in this pack")
+    # 7 ---------------------------------------------------------------------
+    L.append("## 7. Not in this pack")
     L.append("")
     L.append(pack["not_in_pack"])
     L.append("")
