@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — October 7, 2026 — Published the daily-sitrep report (automated)
+
+Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
+- **Published** `content/posts/sitrep/sitrep-2026-10-07.md` — "SITREP: October 7, 2026", 2641 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The pack behind it:** 382 lines from `scripts/sitrep-pack.py`, 0 source(s) unavailable on this run. The Federal Register, the CourtListener search API, the U.S. Treasury daily yield curve, FiscalData, CNBC's quote service, the BLS public API and Polymarket's Gamma API supply it; the writer may not recall a figure, so every number in the piece is one the collector fetched. The world-news and AI-news beats have no collector and were fetched and cited by the writer.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **SimpleBrain synced** in the same run: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed.
+
+---
+
 ### Maintenance — October 7, 2026 — Built the daily Global SITREP: a report every day of the week, written from a collector and published unreviewed
 
 Philip: "I want to publish a weekly report every day of the week." That is four readings, so three were put to him: a new weekly series for each empty weekday, one report that runs every day, or the existing four re-timed. He chose **one daily series** — "Let's do a global SITREP every day" — and chose its beats from a list: the courts, the administration and the rule of law, markets and the economy, elections and civics, and AI and technology. "Global" carries the world-news beat. Before this, Wednesday, Thursday and Friday had no report at all, Monday's ends 2026-11-02 and Tuesday's is in season only.
