@@ -2927,6 +2927,29 @@ class TestPublishLibrary(unittest.TestCase):
             checked, 4,
             "the four report runners (chiefs, docket, senate, ninety-days) source the library")
 
+    def test_the_entry_never_asserts_a_mirror_result_it_has_not_seen(self):
+        # The entry is written before the SimpleBrain mirror runs, so it cannot
+        # report the mirror's outcome. Its first version asserted "SimpleBrain
+        # synced … committed and pushed" unconditionally, which made the one
+        # paragraph a reader is told to trust predict instead of report. Caught
+        # by the SimpleBrain agent reading the 2026-10-07 entry back.
+        #
+        # Asserted as a shape rather than as wording: the entry may describe the
+        # mirror and name the log, but it may not claim the mirror is done. A
+        # reworded version that reintroduces the claim must fail this test.
+        code = "\n".join(ln for ln in self.lib.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        m = re.search(r'\{\n(.*?)\n  \} > "\$entry_file"', code, re.S)
+        self.assertIsNotNone(m, "could not isolate the SESSION_STATE entry template")
+        template = m.group(1)
+        self.assertIn("SimpleBrain mirror", template,
+                      "the entry no longer says anything about the mirror")
+        # The claim that shipped: the mirror was asserted as done, in the entry,
+        # before it had run. A reworded version that reintroduces it fails here.
+        for claim in ("SimpleBrain synced", "SimpleBrain FAILED", "SimpleBrain pushed"):
+            with self.subTest(claim=claim):
+                self.assertNotIn(claim, template)
+
     def test_every_ai_runner_guards_ollama_reachability(self):
         # The quiet-failure shape this repo keeps re-learning: seven jobs call
         # the local Ollama server and, before 2026-10-07, nothing checked it was

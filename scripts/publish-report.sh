@@ -254,6 +254,19 @@ publish_preflight() {
 # so an entry it authored could only assert a result it did not produce. Every
 # claim in the entry below is a line from this log.
 #
+# **Except the SimpleBrain line, and the exception is deliberate.** The mirror
+# runs AFTER this function, because it is the last thing the runner does, so at
+# the moment the entry is written the runner has not yet observed whether it
+# worked. The first version of this line asserted "SimpleBrain synced … committed
+# and pushed" unconditionally, which made the entry predict rather than report —
+# a claim of exactly the kind this function exists to prevent, in the one place
+# the reader is told to trust. It was caught on 2026-10-07 by the SimpleBrain
+# agent itself, which read the entry and noted that the step it described had not
+# yet run. Ordering the mirror first would let the entry report it, but that path
+# cannot be exercised by a dry run and changing it would be first tested in
+# production. So the line states what the runner does, names where the outcome
+# is, and asserts nothing it has not seen.
+#
 # `$3` is a file of extra `- **…**` bullet lines specific to the series; the
 # standard frame is written once here rather than three times.
 #
@@ -277,7 +290,7 @@ publish_article() {
       cat "$detail_file"
     fi
     echo "- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (\`--gc --minify\` for what deploys, and \`--gc --minify --buildDrafts --destination <tmp>\` for the file just written — the production build excludes \`draft: true\` and so cannot see it); every gate OK, including the online link sweep (\`check-links.py --online --titles\`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires \`draft: false\` and \`featuredOnHome: true\`. A failure in any of those aborts the push rather than publishing anyway."
-    echo "- **SimpleBrain synced** in the same run: raw copy, \`wiki/articles/\` entry, Recent Highlights line, archive move, committed and pushed."
+    echo "- **SimpleBrain mirror** runs immediately after this push: raw copy, \`wiki/articles/\` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in \`$OUT_LOG\`."
     echo ""
     echo "---"
   } > "$entry_file"
