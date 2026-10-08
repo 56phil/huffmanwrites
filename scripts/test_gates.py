@@ -3733,6 +3733,129 @@ class TestSecretDrift(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+# Content frontmatter: the fields a layout reads, which Hugo renders blank.
+# --------------------------------------------------------------------------
+class TestContentFrontmatterGate(unittest.TestCase):
+    """The rules `check-content-frontmatter.py` enforces.
+
+    Hugo does not fail on a missing field: it renders a blank spot or falls back
+    to an unintended default, and the build stays green. Each rule is pinned here
+    so a later edit cannot quietly drop one, and the two documented exceptions
+    are pinned so a later edit cannot quietly widen them.
+
+    The module's tree roots are patched to a temp tree rather than the rules
+    being driven through the real `content/` — a stray file under
+    `content/books/` would be built by the next `hugo` run.
+    """
+
+    BOOK = (
+        'title: "T"\n'
+        'subtitle: "S"\n'
+        'image: "img/books/x.jpg"\n'
+        'image_desktop: "img/articles/x-16x9.webp"\n'
+        'image_mobile: "img/articles/x-4x5.webp"\n'
+        'image_alt: "alt"\n'
+        'hero_caption: "hero line"\n'
+        'image_caption: "cover line"\n'
+        'link: "https://example.org/buy"\n'
+        'lastmod: 2026-01-01'
+    )
+
+    def setUp(self):
+        import tempfile
+        self.root = Path(tempfile.mkdtemp(prefix="cfm-"))
+        (self.root / "posts" / "summaries").mkdir(parents=True)
+        (self.root / "books" / "slug").mkdir(parents=True)
+        self.old = (ccf.POSTS, ccf.SUMMARIES, ccf.BOOKS)
+        ccf.POSTS = self.root / "posts"
+        ccf.SUMMARIES = self.root / "posts" / "summaries"
+        ccf.BOOKS = self.root / "books"
+
+    def tearDown(self):
+        ccf.POSTS, ccf.SUMMARIES, ccf.BOOKS = self.old
+
+    def write(self, rel, fm):
+        p = self.root / rel
+        p.write_text(f"---\n{fm}\n---\n\nBody.\n", encoding="utf-8")
+        return p
+
+    def problems(self, rel, fm):
+        return ccf.audit_file(self.write(rel, fm))
+
+    def without(self, line):
+        """Drop one field. Matched on the whole key: `image` must not take
+        `image_desktop`, `image_mobile` and `image_caption` with it."""
+        return "\n".join(l for l in self.BOOK.split("\n")
+                         if l.split(":", 1)[0].strip() != line)
+
+    # R1 / R2 -----------------------------------------------------------------
+    def test_a_post_without_lastmod_fails(self):
+        self.assertEqual(self.problems("posts/a.md", 'title: "a"\nlastmod: 2026-01-01'), [])
+        out = self.problems("posts/b.md", 'title: "b"')
+        self.assertEqual(len(out), 1, out)
+        self.assertIn("R1 lastmod", out[0])
+
+    def test_a_summary_without_sort_key_fails(self):
+        fm = 'title: "s"\nlastmod: 2026-01-01\nsort_key: "Huffman, Philip - X"'
+        self.assertEqual(self.problems("posts/summaries/s.md", fm), [])
+        out = self.problems("posts/summaries/t.md", 'title: "t"\nlastmod: 2026-01-01')
+        self.assertEqual(len(out), 1, out)
+        self.assertIn("R2 sort_key", out[0])
+
+    # R3 ----------------------------------------------------------------------
+    def test_a_complete_book_page_passes(self):
+        self.assertEqual(self.problems("books/slug/index.md", self.BOOK), [])
+
+    def test_a_book_field_the_layout_reads_is_required(self):
+        for field in ("title", "image", "image_desktop", "image_mobile",
+                      "image_alt", "hero_caption", "image_caption", "lastmod"):
+            with self.subTest(field=field):
+                out = self.problems("books/slug/index.md", self.without(field))
+                self.assertEqual(len(out), 1, out)
+                self.assertIn(f"R3 book field '{field}'", out[0])
+
+    def test_link_is_required_only_of_a_released_book(self):
+        # `raisem-right` is announced for early 2027 and has no purchase URL; the
+        # layout guards the button with `{{ if .Params.link }}`, so an absent
+        # link there is correct and requiring it would be a permanently-failing
+        # gate.
+        out = self.problems("books/slug/index.md", self.without("link"))
+        self.assertEqual(len(out), 1, out)
+        self.assertIn("'link'", out[0])
+        unreleased = "availability: \"Expected: early 2027.\"\n" + self.without("link")
+        self.assertEqual(self.problems("books/slug/index.md", unreleased), [])
+
+    def test_subtitle_may_be_absent_but_never_blank(self):
+        # `The Stoic Citizen` has no subtitle; its own cover configuration sets
+        # `subtitle: ''`. Inventing one would put a line on the site the book
+        # does not carry, so absence is respected — but a key that is present
+        # and empty is a mangled field, which is a violation.
+        self.assertEqual(self.problems("books/slug/index.md", self.without("subtitle")), [])
+        blank = self.BOOK.replace('subtitle: "S"', "subtitle:")
+        out = self.problems("books/slug/index.md", blank)
+        self.assertEqual(len(out), 1, out)
+        self.assertIn("'subtitle' present but empty", out[0])
+
+    # R4 ----------------------------------------------------------------------
+    def test_a_book_whose_two_captions_match_fails(self):
+        # The hero caption is for the hero, the image caption is for the cover,
+        # and an equal pair means one was copy-pasted onto the wrong image.
+        same = self.BOOK.replace('image_caption: "cover line"',
+                                 'image_caption: "hero line"')
+        out = self.problems("books/slug/index.md", same)
+        self.assertEqual(len(out), 1, out)
+        self.assertIn("R4 hero_caption equals image_caption", out[0])
+
+    def test_the_real_corpus_is_clean(self):
+        # The standing state. A failure here is a real missing field in a real
+        # file, not a rule drifting.
+        problems = []
+        for p in sorted((REPO / "content").rglob("*.md")):
+            problems += ccf.audit_file(p)
+        self.assertEqual(problems, [])
+
+
+# --------------------------------------------------------------------------
 # Coverage: what a gate inspected, so a blind gate cannot report OK.
 # --------------------------------------------------------------------------
 class TestGateCoverage(unittest.TestCase):
@@ -3828,6 +3951,16 @@ class TestCorpusGateWiring(unittest.TestCase):
         text = (SCRIPTS / "corpus-gates.sh").read_text(encoding="utf-8")
         self.assertIn("check-quote-names.py", text)
         self.assertIn("--online", text)
+
+    def test_the_publish_tail_checks_the_frontmatter_a_layout_depends_on(self):
+        # CI is too late for a job that pushes. A runner whose article omits
+        # `lastmod` would commit, push, report every gate green, and fail the
+        # DEPLOY — the article on `main`, the site without the page. So the tail
+        # runs the corpus-wide frontmatter gate, the way it already runs the
+        # corpus-wide hero-path gate. The string asserted is the gate
+        # INVOCATION, not a mention of its name.
+        tail = (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8")
+        self.assertIn('run_gate "check-content-frontmatter"', tail)
 
     def test_no_gate_is_orphaned(self):
         # A gate nobody runs is a gate that does not exist. Every check script

@@ -113,6 +113,13 @@ run_report_gates() {
   # succeed, every other gate would report OK, and the deploy would carry
   # nothing. `--hero-plate` pins the series plate, which the skill says to copy
   # verbatim — this is what makes "verbatim" checkable rather than trusted.
+  #
+  # `check-content-frontmatter.py` then reads EVERY content file, the same way
+  # `check-hero-paths` below does: `lastmod` on the post being published, and the
+  # fields the book pages depend on. It runs in CI, which is too late for a
+  # runner: a job that omits `lastmod` would commit, push, report every gate
+  # green, and fail the DEPLOY — the article is on `main` and the site does not
+  # carry it. Added 2026-10-08, the day the corpus-wide gate was written.
   if [ "$want_published" -eq 1 ]; then
     if [ -n "$plate" ]; then
       run_gate "check-report-frontmatter" "$REPO/scripts/check-report-frontmatter.py" \
@@ -121,6 +128,7 @@ run_report_gates() {
       run_gate "check-report-frontmatter" "$REPO/scripts/check-report-frontmatter.py" \
         --file "$article"
     fi
+    run_gate "check-content-frontmatter" "$REPO/scripts/check-content-frontmatter.py"
   fi
 
   run_gate "check-quotes --file"     "$REPO/scripts/check-quotes.py"       --file "$article"
