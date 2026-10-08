@@ -91,8 +91,9 @@ page, invisible to a status code because the URL returns 200. Scope it with
 ## 8. The publish tail lives once, in `scripts/publish-report.sh`
 
 Five publishing runners share it: preflight guard, SESSION_STATE entry, commit,
-push, push verification, and the SimpleBrain mirror. A runner supplies only what
-is specific to its series. Two things a new runner must get right:
+push, push verification, delivery verification, and the SimpleBrain mirror. A
+runner supplies only what is specific to its series. Three things a new runner
+must get right:
 
 - **Bind `JOB` before sourcing** (the library expands it under `set -u`). The
   docket and Senate runners omitted it, so their first real publish died with
@@ -100,11 +101,19 @@ is specific to its series. Two things a new runner must get right:
 - **`REPORT_DRY_RUN=1` exercises everything but the commit;
   `REPORT_SKIP_SIMPLEBRAIN=1` skips only the mirror.** The Chiefs job's historical
   `CHIEFS_DRY_RUN` and `CHIEFS_SKIP_SIMPLEBRAIN` names still work.
+- **The push landing is not the same as the piece being served.** After the push
+  is confirmed, the tail fetches the article at its own URL
+  (`scripts/verify-published.py`) and requires the page's own `<title>` to carry
+  the article's title, retrying for a bounded window because a 404 is expected
+  until the deploy lands. A settled absence alerts and fails the run. Nothing
+  checked this until 2026-10-08, when three consecutive pushes reached `main`
+  while no deploy landed for a day.
 
 The SESSION_STATE entry is written by the runner from the real gate results, never
-by the agent, which could only assert a result it did not produce. (The one
-exception is still a report, not a prediction: the SimpleBrain bullet is written
-before the mirror runs, so it names the log rather than claiming success.)
+by the agent, which could only assert a result it did not produce. (The two
+exceptions are reports rather than predictions: the SimpleBrain bullet and the
+delivery bullet are written before the steps they describe have run, so each names
+the log instead of claiming success.)
 
 ## 9. One fixed hero plate per series, pinned with `--plate`
 

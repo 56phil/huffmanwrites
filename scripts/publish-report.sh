@@ -281,6 +281,11 @@ publish_preflight() {
 # production. So the line states what the runner does, names where the outcome
 # is, and asserts nothing it has not seen.
 #
+# The delivery check (`scripts/verify-published.py`, added 2026-10-08) runs after
+# this entry has been committed, for the same structural reason, and is written
+# in the same shape: it states what the runner does and names the log, so the
+# entry never has to be corrected to match an outcome it could not have seen.
+#
 # `$3` is a file of extra `- **…**` bullet lines specific to the series; the
 # standard frame is written once here rather than three times.
 #
@@ -304,6 +309,7 @@ publish_article() {
       cat "$detail_file"
     fi
     echo "- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (\`--gc --minify\` for what deploys, and \`--gc --minify --buildDrafts --destination <tmp>\` for the file just written — the production build excludes \`draft: true\` and so cannot see it); every gate OK, including the online link sweep (\`check-links.py --online --titles\`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires \`draft: false\` and \`featuredOnHome: true\`. A failure in any of those aborts the push rather than publishing anyway."
+    echo "- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own \`<title>\` to carry the article's \`title\` (\`scripts/verify-published.py\`, the rule \`sitrep-watchdog.py\` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence raises the shared alert and fails the run: the article is on \`main\` and no reader has it. The outcome is in \`$OUT_LOG\`."
     echo "- **SimpleBrain mirror** runs immediately after this push: raw copy, \`wiki/articles/\` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in \`$OUT_LOG\`."
     echo ""
     echo "---"
@@ -377,6 +383,30 @@ from those results." >> "$OUT_LOG" 2>> "$ERR_LOG"; then
     exit 1
   fi
   echo "$(stamp): push verified — origin/main is $local_sha" >> "$OUT_LOG"
+
+  # The push landed; that is not the same as delivered. `git push` reaching
+  # origin says the commit is on `main` and says nothing about whether the Pages
+  # workflow built it, and on 2026-10-08 three consecutive runs reached `main`
+  # while no deploy landed for a day. So the piece is fetched at its OWN URL and
+  # the page's own `<title>` must carry the article's title: the rule
+  # scripts/sitrep-watchdog.py applies from the outside, applied here in the run
+  # that published it. A 404 is expected until the deploy lands, so the checker
+  # retries for a bounded window before it calls an absence settled.
+  #
+  # A settled absence alerts and fails the run. The article is on `main` and no
+  # reader has it, which is not a log line; the mirror is skipped the way it
+  # would be for any other abort in the tail. `exit "$live_rc"` keeps the
+  # checker's vocabulary (1 absent, 3 unconfirmed) in the runner's exit code.
+  local live_out live_rc=0
+  live_out="$(python3 "$REPO/scripts/verify-published.py" --article "$article" 2>>"$ERR_LOG")" || live_rc=$?
+  printf '%s\n' "$live_out" >> "$OUT_LOG"
+  if [ "$live_rc" -ne 0 ]; then
+    echo "$(stamp): live verification FAILED (exit $live_rc)" >> "$OUT_LOG"
+    "$REPO/scripts/alert-failure.sh" "$JOB" "$live_rc" \
+      "published to main but not served: ${live_out#verify-published: }" || true
+    exit "$live_rc"
+  fi
+  echo "$(stamp): live verification OK — the site serves the article" >> "$OUT_LOG"
 }
 
 # ---------------------------------------------------------------------------

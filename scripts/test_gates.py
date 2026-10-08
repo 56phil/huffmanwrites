@@ -3200,6 +3200,206 @@ class TestSitrepWatchdog(unittest.TestCase):
         self.assertIn("sitrep-watchdog-runner.sh", " ".join(d.get("ProgramArguments", [])))
 
 
+# --------------------------------------------------------------------------
+# The published-page check: delivery is verified, not assumed.
+# --------------------------------------------------------------------------
+class TestPublishedPageCheck(unittest.TestCase):
+    """`scripts/verify-published.py`, the check the publish tail runs after the push.
+
+    `origin/main` equalling HEAD is not delivery. On 2026-10-08 three consecutive
+    runs reached `main` while no deploy landed for a day, so a report could be
+    written, committed, pushed, reported green — and reach no reader. The rules
+    asserted here are what make the check evidence rather than a ritual: the URL
+    and the expected title both come from the article itself, a 200 that is not
+    this article is not success, and a 404 straight after a push is the expected
+    state rather than a finding.
+    """
+
+    def setUp(self):
+        self.vp = load("verify-published")
+
+    # ---- the URL is derived, never passed alongside the article -------------
+    def test_the_url_comes_from_the_article_path(self):
+        self.assertEqual(
+            self.vp.post_url("content/posts/essays/report-a.md"),
+            "https://huffmanwrites.org/posts/essays/report-a/")
+        self.assertEqual(
+            self.vp.post_url("content/posts/sports/chiefs-report-2026-09-29.md",
+                             "http://127.0.0.1:8080"),
+            "http://127.0.0.1:8080/posts/sports/chiefs-report-2026-09-29/")
+
+    def test_an_article_outside_the_posts_tree_is_refused(self):
+        # A guessed URL checks a different page and can pass, which is the very
+        # failure this check exists to catch. Refusing is the only safe answer.
+        with self.assertRaises(SystemExit):
+            self.vp.post_url("content/books/letters/index.md")
+
+    def test_the_expected_title_is_the_articles_own(self):
+        self.assertEqual(
+            self.vp.frontmatter_title("title: SITREP: October 8, 2026\n"),
+            "SITREP: October 8, 2026")
+        self.assertEqual(self.vp.frontmatter_title('title: "A Quoted: Title"\n'),
+                         "A Quoted: Title")
+        with self.assertRaises(SystemExit):
+            self.vp.frontmatter_title("subtitle: nothing here\n")
+
+    # ---- the matching rules -------------------------------------------------
+    def test_a_200_that_is_not_this_article_is_not_success(self):
+        title = "SITREP: October 8, 2026"
+        self.assertTrue(
+            self.vp.Page(status=200, title=f"{title} | Huffman Writes").serves(title))
+        self.assertFalse(
+            self.vp.Page(status=200, title="Ranking the top 25 WNBA players").serves(title))
+        self.assertFalse(self.vp.Page(status=404, title=title).serves(title))
+        self.assertFalse(
+            self.vp.Page(status=None, error="URLError: offline").serves(title))
+        # No <title> to read: the body is a fallback, not a verdict of OK.
+        self.assertTrue(self.vp.Page(status=200, body=f"<h1>{title}</h1>").serves(title))
+
+    def test_entities_and_wrapping_do_not_hide_a_match(self):
+        # Hugo escapes `&` in a <title>, and a title written across two lines in
+        # frontmatter arrives here with the newline still in it. A literal
+        # substring test would call both of those a miss on a correct page.
+        self.assertTrue(
+            self.vp.Page(status=200, title="Civics &amp; the Court | Huffman Writes")
+            .serves("Civics & the Court"))
+        self.assertTrue(
+            self.vp.Page(status=200, title="A very\n  long title").serves("A very long title"))
+
+    # ---- the decision, against a stub fetch ---------------------------------
+    def test_a_404_that_becomes_a_page_is_a_pass(self):
+        # The window exists because a 404 immediately after a push is expected.
+        # If the check called that absent, every publish would alert about a
+        # deploy that was simply still building.
+        calls = {"n": 0}
+
+        def flaky(url, timeout):
+            calls["n"] += 1
+            if calls["n"] < 3:
+                return self.vp.Page(status=404, error="HTTP 404")
+            return self.vp.Page(status=200, title="T | Huffman Writes")
+
+        code, line = self.vp.verify("content/posts/essays/x.md", "T",
+                                    "http://x/posts/essays/x/",
+                                    tries=5, delay=0, fetch_fn=flaky)
+        self.assertEqual(code, 0)
+        self.assertIn("check 3", line)
+
+    def test_a_settled_404_is_an_absence_and_an_unreadable_site_is_unconfirmed(self):
+        def verdict(page):
+            return self.vp.verify("content/posts/essays/x.md", "T",
+                                  "http://x/posts/essays/x/",
+                                  tries=2, delay=0,
+                                  fetch_fn=lambda url, timeout: page)
+
+        code, line = verdict(self.vp.Page(status=404, error="HTTP 404"))
+        self.assertEqual(code, 1)
+        self.assertIn("did not land", line)
+
+        code, line = verdict(self.vp.Page(status=200, title="Something else"))
+        self.assertEqual(code, 3)
+        self.assertIn("wrong page", line)
+
+        code, line = verdict(self.vp.Page(status=None, error="URLError: offline"))
+        self.assertEqual(code, 3)
+        self.assertIn("unconfirmed", line)
+
+    # ---- through a real server ----------------------------------------------
+    @staticmethod
+    def serve(root):
+        import functools
+        import http.server
+        import threading
+
+        class Quiet(http.server.SimpleHTTPRequestHandler):
+            def log_message(self, *args):
+                pass
+
+        srv = http.server.ThreadingHTTPServer(
+            ("127.0.0.1", 0), functools.partial(Quiet, directory=str(root)))
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        return srv
+
+    def run_checker(self, article, base, *extra):
+        import subprocess
+        return subprocess.run(
+            [sys.executable, "scripts/verify-published.py",
+             "--article", article, "--base-url", base, *extra],
+            cwd=REPO, capture_output=True, text=True)
+
+    def published_article(self):
+        """A real, published edition to check against — never a fixture."""
+        editions = sorted((REPO / "content/posts/sitrep").glob("sitrep-*.md"))
+        self.assertTrue(editions, "no SITREP edition in the tree to check against")
+        return editions[0].relative_to(REPO).as_posix()
+
+    def write_page(self, root, article, title):
+        out = root / self.vp.post_url(article, "").strip("/") / "index.html"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(f"<html><head><title>{title}</title></head><body>x</body></html>",
+                       encoding="utf-8")
+        return out
+
+    def test_the_checker_reads_a_real_page_over_http(self):
+        # The stub-fetch tests prove the decision; this proves the plumbing —
+        # a real request, a real server, and the URL derivation agreeing with
+        # the path the page is served from.
+        import tempfile
+        article = self.published_article()
+        expected = self.vp.frontmatter_title(
+            (REPO / article).read_text(encoding="utf-8"))
+        root = Path(tempfile.mkdtemp(prefix="verify-published-"))
+        self.write_page(root, article, f"{expected} | Huffman Writes")
+        srv = self.serve(root)
+        try:
+            base = f"http://127.0.0.1:{srv.server_address[1]}"
+            r = self.run_checker(article, base, "--tries", "2", "--delay", "0",
+                                 "--timeout", "5")
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            self.assertIn(expected, r.stdout)
+        finally:
+            srv.shutdown()
+            srv.server_close()
+
+    def test_a_published_article_the_site_does_not_serve_is_a_failure(self):
+        # The failure of 2026-10-08, staged: the article is committed and on
+        # `main`, the server has nothing at its URL, and the check must say so
+        # instead of passing.
+        import tempfile
+        article = self.published_article()
+        root = Path(tempfile.mkdtemp(prefix="verify-published-empty-"))
+        srv = self.serve(root)
+        try:
+            base = f"http://127.0.0.1:{srv.server_address[1]}"
+            r = self.run_checker(article, base, "--tries", "2", "--delay", "0",
+                                 "--timeout", "5")
+            self.assertEqual(r.returncode, 1, r.stdout + r.stderr)
+            self.assertIn("did not land", r.stdout)
+            self.assertIn(article, r.stdout)
+        finally:
+            srv.shutdown()
+            srv.server_close()
+
+    def test_a_200_for_a_different_page_is_not_success(self):
+        import tempfile
+        article = self.published_article()
+        root = Path(tempfile.mkdtemp(prefix="verify-published-wrong-"))
+        self.write_page(root, article, "Ranking the top 25 WNBA players")
+        srv = self.serve(root)
+        try:
+            base = f"http://127.0.0.1:{srv.server_address[1]}"
+            r = self.run_checker(article, base, "--tries", "1", "--delay", "0",
+                                 "--timeout", "5")
+            self.assertEqual(r.returncode, 3, r.stdout + r.stderr)
+            self.assertIn("wrong page", r.stdout)
+        finally:
+            srv.shutdown()
+            srv.server_close()
+
+
+# --------------------------------------------------------------------------
+# The shared publish tail, asserted once rather than per runner.
+# --------------------------------------------------------------------------
 class TestPublishLibrary(unittest.TestCase):
     """The shared publish tail, asserted once rather than per runner.
 
@@ -3229,6 +3429,48 @@ class TestPublishLibrary(unittest.TestCase):
         # exactly like success in the log.
         self.assertIn("git rev-parse origin/main", self.lib)
         self.assertIn("push did not land", self.lib)
+
+    def test_the_site_is_verified_to_serve_the_article_after_the_push(self):
+        # `origin/main` equalling HEAD says the commit landed, not that the Pages
+        # workflow built it: three consecutive runs on 2026-10-08 reached `main`
+        # while no deploy landed for a day. The tail fetches the piece at its own
+        # URL and requires the page's own `<title>` to carry the article's title.
+        # Comments stripped first: the push check's own prose mentions the
+        # deploy, and a test that matched its documentation would be testing the
+        # wrong text.
+        code = "\n".join(ln for ln in self.lib.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        # The INVOCATION, counted as the command that runs it: the entry's
+        # bullet names the file too, and that is prose rather than a call site.
+        call = 'python3 "$REPO/scripts/verify-published.py"'
+        self.assertEqual(code.count(call), 1,
+                         "the delivery check belongs in the shared tail, once")
+        self.assertLess(code.find("git rev-parse origin/main"),
+                        code.find(call),
+                        "delivery is checked after the push is confirmed, not before")
+        self.assertIn('exit "$live_rc"', code)
+        self.assertIn("published to main but not served", code)
+
+    def test_a_dry_run_never_reaches_the_delivery_check(self):
+        # The delivery check lives inside publish_article, and every publishing
+        # runner calls publish_dry_run_stop before it. So a dry run proves the
+        # pipeline without fetching the live site and without alerting about a
+        # deploy nobody asked for — the property the dry-run switch exists for.
+        # Comments stripped: every runner explains the ordering in prose, and
+        # three of them name publish_article in a comment ABOVE the stop.
+        runners = ("senate-report-runner.sh", "docket-weekly-report-runner.sh",
+                   "chiefs-weekly-report-runner.sh", "weekly-satire-runner.sh",
+                   "daily-sitrep-runner.sh")
+        for name in runners:
+            text = (SCRIPTS / name).read_text(encoding="utf-8")
+            code = "\n".join(ln for ln in text.splitlines()
+                             if not ln.lstrip().startswith("#"))
+            with self.subTest(runner=name):
+                stop = code.find("publish_dry_run_stop")
+                pub = code.find("publish_article")
+                self.assertGreater(stop, 0, f"{name} never calls publish_dry_run_stop")
+                self.assertLess(stop, pub,
+                                f"{name} reaches publish_article without a dry-run stop")
 
     def test_a_dirty_session_state_stops_the_run(self):
         # The entry is inserted by splitting SESSION_STATE.md at an anchor, so
@@ -3356,6 +3598,25 @@ class TestPublishLibrary(unittest.TestCase):
         # The claim that shipped: the mirror was asserted as done, in the entry,
         # before it had run. A reworded version that reintroduces it fails here.
         for claim in ("SimpleBrain synced", "SimpleBrain FAILED", "SimpleBrain pushed"):
+            with self.subTest(claim=claim):
+                self.assertNotIn(claim, template)
+
+    def test_the_entry_describes_the_delivery_check_without_asserting_it(self):
+        # Same shape as the mirror line, same structural reason: the delivery
+        # check runs after the entry has been committed, so the entry may
+        # describe the step and name the log, and may not claim the site serves
+        # the piece. It is written once here, in the shared tail, because five
+        # jobs now publish through it.
+        code = "\n".join(ln for ln in self.lib.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        m = re.search(r'\{\n(.*?)\n  \} > "\$entry_file"', code, re.S)
+        self.assertIsNotNone(m, "could not isolate the SESSION_STATE entry template")
+        template = m.group(1)
+        self.assertIn("Delivery is verified", template,
+                      "the entry no longer says anything about delivery")
+        self.assertIn("$OUT_LOG", template, "the entry must name where the outcome is")
+        for claim in ("serves the article", "live verification OK", "is live at",
+                      "published and served"):
             with self.subTest(claim=claim):
                 self.assertNotIn(claim, template)
 
@@ -3753,9 +4014,14 @@ class TestCorpusIntegration(unittest.TestCase):
         # a log line nobody reads. The bash 3.2 apostrophe inside a
         # `${VAR:-...}` default produces exactly that, and reports the error at
         # a line far from the cause.
+        #
+        # Every shell script, not just `*runner.sh`: the shared libraries these
+        # runners source — `publish-report.sh` above all, which the five
+        # publishing jobs parse only when they fire — are executed code too, and
+        # a syntax error in one of them reaches production the same way.
         import subprocess
-        runners = sorted((REPO / "scripts").glob("*runner.sh"))
-        self.assertGreaterEqual(len(runners), 5, "the runner glob stopped matching")
+        runners = sorted((REPO / "scripts").glob("*.sh"))
+        self.assertGreaterEqual(len(runners), 15, "the shell glob stopped matching")
         for r in runners:
             with self.subTest(runner=r.name):
                 proc = subprocess.run(["/bin/bash", "-n", str(r)],
