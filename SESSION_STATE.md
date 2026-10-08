@@ -12,11 +12,22 @@
 
 ---
 
+### Maintenance — October 8, 2026 — The daily SITREP was already 06:00 CT seven days a week; verified, and the runner's boilerplate corrected
+
+Philip read the October 8 edition, liked it, and asked for the schedule to run at 06:00 CT seven days a week. **It already did, so nothing was changed.** `com.huffmanwrites.daily-sitrep` carries a single `StartCalendarInterval` dict (`Hour` 6, `Minute` 0) and no `Weekday` key, which is the form that fires every day; launchd reads it in the machine's local time, which is CT, so DST does not shift it. The installed plist is byte-identical to the repo copy and `check-plists.py` reports every schedule OK. What may have looked otherwise is the **first** edition: it was published by hand at 19:45 on 2026-10-07, during installation. The first fire under launchd was 2026-10-08 06:00:05, exit 0.
+
+- **Where "seven days a week" is enforced rather than assumed:** `TestDailySitrep.test_the_job_fires_every_day_at_six` asserts the single-dict form, the absence of a `Weekday` key, and `(Hour, Minute) == (6, 0)`. Whoever changes the schedule meets the requirement's own wording.
+- **One way a day is still missed, and it is not alerted.** launchd runs a calendar job at the next wake if the machine was asleep at 06:00; a machine that is **off** at 06:00 skips that day with no catch-up. Nothing watches for a *missing* edition — only for a failing one, through the shared alert. A morning watchdog is unbuilt; the lever is a check on the live site for an edition dated today.
+- **The runner's state entry no longer names a beat that was removed.** Its boilerplate said "the world-news and AI-news beats have no collector", a day after the AI beat was removed (`b0eec6f`), and it would have repeated that in every future edition — in the one file written from real gate results so that it cannot assert something untrue. The sentence is corrected in `scripts/daily-sitrep-runner.sh` (`92b6eb8`) and pinned by `TestSitrepBeats`; the same wrong line inside the October 8 entry above was corrected in place, with the correction marked.
+- **The frontmatter gate reached a live publish the same morning.** `run_report_gates` was given the corpus-wide `check-content-frontmatter.py` at 05:57 (`b603177`, because CI is too late for a job that pushes), and the 06:00 run's log carries `gate OK [check-content-frontmatter]` as its first real use.
+
+---
+
 ### Maintenance — October 8, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
 - **Published** `content/posts/sitrep/sitrep-2026-10-08.md` — "SITREP: October 8, 2026", 2468 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
-- **The pack behind it:** 378 lines from `scripts/sitrep-pack.py`, 0 source(s) unavailable on this run. The Federal Register, the CourtListener search API, the U.S. Treasury daily yield curve, FiscalData, CNBC's quote service, the BLS public API and Polymarket's Gamma API supply it; the writer may not recall a figure, so every number in the piece is one the collector fetched. The world-news and AI-news beats have no collector and were fetched and cited by the writer.
+- **The pack behind it:** 378 lines from `scripts/sitrep-pack.py`, 0 source(s) unavailable on this run. The Federal Register, the CourtListener search API, the U.S. Treasury daily yield curve, FiscalData, CNBC's quote service, the BLS public API and Polymarket's Gamma API supply it; the writer may not recall a figure, so every number in the piece is one the collector fetched. The world-news beat has no collector and was fetched and cited by the writer. (Corrected 2026-10-08: the runner's boilerplate named "the world-news and AI-news beats"; the AI beat was removed on 2026-10-07 — see the entry above.)
 - **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
 - **SimpleBrain mirror** runs immediately after this push: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in `/Users/prh/Library/Logs/daily-sitrep.out.log`.
 
