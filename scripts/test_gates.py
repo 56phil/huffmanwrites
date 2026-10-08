@@ -2963,6 +2963,20 @@ class TestSitrepBeats(unittest.TestCase):
         self.assertNotIn("**Technology and AI** —", skill,
                          "the skill still asks for a section that was removed")
 
+    def test_the_runner_entry_does_not_name_the_removed_beat(self):
+        # The runner writes the SESSION_STATE entry, and the entry states which
+        # beats have no collector. Its line still said "the world-news and
+        # AI-news beats" on 2026-10-08 — a day after the AI beat was removed, and
+        # in the one file a reader trusts for what the run did. The entry is
+        # written from the real gate results precisely so it cannot assert
+        # something untrue; a hardcoded beat list is the exception that undoes
+        # that, so it is pinned here.
+        runner = (SCRIPTS / "daily-sitrep-runner.sh").read_text(encoding="utf-8")
+        line = [l for l in runner.splitlines() if "have no collector" in l or "has no collector" in l]
+        self.assertEqual(len(line), 1, "expected exactly one beat-collector sentence")
+        self.assertIn("The world-news beat has no collector", line[0])
+        self.assertNotIn("AI", line[0], "the removed beat is named in the entry again")
+
 
 class TestPublishLibrary(unittest.TestCase):
     """The shared publish tail, asserted once rather than per runner.
