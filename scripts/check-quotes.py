@@ -683,6 +683,7 @@ def main() -> int:
             f"quotes: baseline updated — {len(blessed)} attribution(s) blessed "
             f"({len(violations)} of them non-compliant, now exempt until edited)"
         )
+        print(f"coverage: {total} attributions")
         return 0
 
     if not args.quiet:
@@ -745,6 +746,7 @@ def main() -> int:
                   f"the words they are cited for:", file=sys.stderr)
             for f in online_fails:
                 print(f"  {f}", file=sys.stderr)
+            print(f"coverage: {total} attributions")
             return 1
         if unsourced:
             # Not a failure. An epigraph whose citation line points at no
@@ -777,10 +779,12 @@ def main() -> int:
             "  rule, run: scripts/check-quotes.py --update-baseline",
             file=sys.stderr,
         )
+        print(f"coverage: {total} attributions")
         return 1
 
     if not args.quiet:
         print(f"quotes: OK — all attributions checkable ({len(baseline)} pre-rule)")
+    print(f"coverage: {total} attributions")
     return 0
 
 

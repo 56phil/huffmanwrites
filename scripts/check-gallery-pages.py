@@ -248,6 +248,7 @@ def main() -> int:
             "  Fix: scripts/check-gallery-pages.py --fix",
             file=sys.stderr,
         )
+        print(f"coverage: {items} items")
         return 1
 
     if surplus:
@@ -265,10 +266,12 @@ def main() -> int:
         print("gallery-pages: FAIL — bad `latest` glob(s):", file=sys.stderr)
         for f in latest_fail:
             print(f"  {f}", file=sys.stderr)
+        print(f"coverage: {items} items")
         return 1
 
     if not args.quiet:
         print("gallery-pages: OK — every required page stub is present")
+    print(f"coverage: {items} items")
     return 0
 
 

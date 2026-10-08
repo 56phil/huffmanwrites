@@ -154,6 +154,7 @@ def main() -> int:
         print(f"  frontmatter (reported, not counted): {r['frontmatter']}")
         for lineno, k, text in r["lines"]:
             print(f"    L{lineno} x{k}: {text[:150]}")
+        print(f"coverage: 1 files")
         return 0 if n <= LIMIT else 1
 
     files = content_files()
@@ -185,6 +186,7 @@ def main() -> int:
             body.append(f"{k}\t{n}")
         BASELINE.write_text("\n".join(body) + "\n", encoding="utf-8")
         print(f"emdashes: baseline updated — {len(over)} file(s) recorded over the limit")
+        print(f"coverage: {len(files)} files")
         return 0
 
     if args.check:
@@ -200,9 +202,11 @@ def main() -> int:
             print("emdashes: REGRESSIONS", file=sys.stderr)
             for r in regressions:
                 print(f"  {r}", file=sys.stderr)
+            print(f"coverage: {len(files)} files")
             return 1
         print(f"emdashes: OK — no file over its baseline "
               f"({len(baseline)} recorded, {len(over)} currently over the {LIMIT} limit)")
+        print(f"coverage: {len(files)} files")
         return 0
 
     if args.list:
@@ -214,6 +218,7 @@ def main() -> int:
     print(f"emdashes: {len(files)} content files; {total_counted} counted prose "
           f"em-dash(es); {total_quote} exempt inside quotations; "
           f"{total_range} exempt as date/number ranges; {len(over)} file(s) over {LIMIT}")
+    print(f"coverage: {len(files)} files")
     return 0
 
 

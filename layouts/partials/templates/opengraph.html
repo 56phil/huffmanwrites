@@ -81,6 +81,22 @@
   {{- $ogImageAlt = "Huffman Writes - Stoicism, Philosophy, and the Pursuit of a Well-Lived Life" -}}
 {{- end -}}
 {{- $ogImage = printf "%s/%s" (strings.TrimSuffix "/" site.BaseURL) (strings.TrimPrefix "/" $ogImageRel) -}}
+{{- /* The URL above is the raw path, and the raw path is not always a URL the
+       site serves. A cover that lives in `assets/` is published only when a
+       template resolves it as a resource; `resources.Get` is what does that, and
+       `img.html` calls it for the picture on the page. Nothing resolved the
+       cover for the meta tag, so the raw `/img/books/x.jpg` was emitted and it
+       404s. Measured 2026-10-08: seven of nine book pages published an og:image
+       that returns 404, and every link preview for those books was blank.
+       Resolution order: a file served from `static/` keeps its plain path (that
+       is how the article heroes work and it must not change), otherwise the
+       asset is resolved and its published URL is used, otherwise the default. */ -}}
+{{- $ogRaw := strings.TrimPrefix "/" $ogImageRel -}}
+{{- if not (fileExists (printf "static/%s" $ogRaw)) -}}
+  {{- if $res := resources.Get $ogRaw -}}
+    {{- $ogImage = printf "%s%s" (strings.TrimSuffix "/" site.BaseURL) $res.RelPermalink -}}
+  {{- end -}}
+{{- end -}}
 {{- /* Dimensions: read from the actual file. Book covers live in
        assets/, article heroes and og-default in static/ — probe both
        with os.Stat, then imageConfig for the dims. */ -}}

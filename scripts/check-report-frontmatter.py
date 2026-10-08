@@ -323,8 +323,10 @@ def main() -> int:
             print(f"report frontmatter: NOT PUBLISHABLE — {len(bad)} of "
                   f"{len(targets)} published posts use a placeholder anchor",
                   file=sys.stderr)
+            print(f"coverage: {len(targets)} posts")
             return 1
         print(f"anchor check: OK — all {len(targets)} published posts name their links")
+        print(f"coverage: {len(targets)} posts")
         return 0
 
     if args.corpus:
@@ -340,9 +342,11 @@ def main() -> int:
         if failures:
             print(f"report frontmatter: NOT PUBLISHABLE — {failures} of "
                   f"{len(targets)} series installments", file=sys.stderr)
+            print(f"coverage: {len(targets)} posts")
             return 1
         print(f"report frontmatter: OK — all {len(targets)} series installments "
               f"are publishable")
+        print(f"coverage: {len(targets)} posts")
         return 0
 
     if not args.file:
@@ -354,8 +358,10 @@ def main() -> int:
               f"in {args.file}", file=sys.stderr)
         for p in problems:
             print(f"  - {p}", file=sys.stderr)
+        print(f"coverage: 1 posts")
         return 1
     print(f"report frontmatter: OK — {Path(args.file).name} is publishable")
+    print(f"coverage: 1 posts")
     return 0
 
 

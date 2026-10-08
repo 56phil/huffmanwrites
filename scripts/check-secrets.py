@@ -323,6 +323,7 @@ def main() -> int:
         # gate that cannot run is not a gate that found something.
         if not args.quiet:
             print("secrets: skipped — no login keychain on this platform (expected in CI)")
+        print("coverage: 0 credentials")
         return 0
 
     problems: "list[str]" = []
@@ -357,12 +358,14 @@ def main() -> int:
         print("secrets: PROBLEMS FOUND")
         for p in problems:
             print(f"  - {p}")
+        print(f"coverage: {len(CREDENTIALS)} credentials")
         return 1
 
     if not args.quiet:
         tail = ", keys authenticate" if args.online else ""
         print(f"secrets: OK — {len(CREDENTIALS)} credential(s) checked, "
               f"homes agree{tail}")
+    print(f"coverage: {len(CREDENTIALS)} credentials")
     return 0
 
 

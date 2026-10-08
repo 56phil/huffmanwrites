@@ -54,6 +54,7 @@ chp = load("check-hero-paths")
 csp = load("check-series-posts")
 crf = load("check-report-frontmatter")
 cqn = load("check-quote-names")
+ccf = load("check-content-frontmatter")
 
 EM = "\u2014"
 
@@ -1032,6 +1033,34 @@ class TestQuoteNameRules(unittest.TestCase):
         self.assertTrue(cqn.has_name_detail("Daniel J. Sullivan Jr."))
         self.assertTrue(cqn.has_name_detail("Sammy Davis Sr."))
         self.assertTrue(cqn.has_name_detail("Henry III"))
+
+    def test_a_structural_numeral_is_not_a_name_detail(self):
+        # Measured 2026-10-08, the first full-corpus run of this gate: it accused
+        # three published quotations of fabrication, and all three were CORRECT.
+        # The words are verbatim in the cited Project 2025 PDF (checked by
+        # extracting it with pdftotext); the trigger was a bare numeral in
+        # "Article II of the U.S. Constitution" and "In Pillar IV". A gate that
+        # fails a correct citation is worse than one that shows a human the
+        # sentence, so a numeral now needs a non-structural word in front of it.
+        for prose in (
+            "in its opening words, Article II of the U.S. Constitution makes it "
+            "abundantly clear that '[t]he executive power shall be vested in a "
+            "President of the United States of America,'",
+            "In Pillar IV\u2014the Playbook\u2014we are forming agency teams and "
+            "drafting transition plans",
+            "Section II of the Act",
+            "World War II",
+            "Chapter IV, verse 2",
+        ):
+            with self.subTest(prose=prose[:40]):
+                self.assertFalse(cqn.has_name_detail(prose), prose)
+
+    def test_a_name_before_a_numeral_is_still_a_detail(self):
+        # The rule must not swallow a real generational suffix: the numeral's
+        # preceder is what decides, and a person's name is not structural.
+        self.assertTrue(cqn.has_name_detail("Henry III"))
+        self.assertTrue(cqn.has_name_detail("President Kennedy III"))
+        self.assertTrue(cqn.has_name_detail("the plaintiff, John Smith III,"))
 
     def test_ordinary_quoted_prose_is_not_a_name_detail(self):
         # The noise that made the general check unusable: prose quotations and
@@ -2187,15 +2216,20 @@ class TestReportFrontmatterGate(unittest.TestCase):
 
     def test_the_corpus_titles_phase_is_wired_and_non_fatal(self):
         # The only place the wrong-page check covers content outside the three
-        # publishing jobs. It must be in the script AND must not fail the job:
-        # the comparison is a heuristic, and a gate that fails a correct citation
-        # is worse than one that shows a human the sentence.
-        text = (SCRIPTS / "weekly-integrity-check.sh").read_text(encoding="utf-8")
-        self.assertIn("check-links.py --online --titles", text)
-        self.assertIn("run_soft", text)
-        # The titles phase must use run_soft, not run.
-        self.assertIn('run_soft "links (titles)"', text)
-        self.assertNotIn('run "links (titles)"', text)
+        # publishing jobs. It must be wired AND must not fail the job: the
+        # comparison is a heuristic, and a gate that fails a correct citation is
+        # worse than one that shows a human the sentence.
+        #
+        # 2026-10-08: the invocation moved into the shared corpus list, so the
+        # assertion follows it there — and the job must still be the thing that
+        # runs that list.
+        shared = (SCRIPTS / "corpus-gates.sh").read_text(encoding="utf-8")
+        self.assertIn("check-links.py --online --titles", shared)
+        # The titles phase must be soft, not fatal.
+        self.assertIn('soft "links (titles)"', shared)
+        self.assertNotIn('fatal "links (titles)"', shared)
+        job = (SCRIPTS / "weekly-integrity-check.sh").read_text(encoding="utf-8")
+        self.assertIn("run_corpus_gates run run_soft", job)
 
     def test_a_failing_phase_logs_its_whole_output_not_just_the_tail(self):
         # Measured 2026-09-28: the weekly-integrity job logged `--- links
@@ -2344,7 +2378,7 @@ class TestHeroPathGate(unittest.TestCase):
         p = self.file('hero_desktop: "img/articles/no-such-plate_16x9.webp"')
         rc, out = self.run_gate(p)
         self.assertEqual(rc, 1, out)
-        self.assertIn("no such file", out)
+        self.assertIn("not in assets/ or static/", out)
 
     def test_a_missing_mobile_path_is_caught_too(self):
         # hero_mobile is what every phone reader gets; missing it is invisible
@@ -2375,9 +2409,107 @@ class TestHeroPathGate(unittest.TestCase):
             self.assertTrue((REPO / "static" / rel).is_file(), rel)
 
     def test_the_corpus_is_clean(self):
-        # Every hero in content/ resolves. This is the standing state, and a
-        # failure here means a real broken hero is checked in.
-        self.assertEqual(chp.check(verbose=False), [])
+        # Every hero, cover and image path in content/ resolves. This is the
+        # standing state, and a failure here means a real broken image path is
+        # checked in.
+        problems = []
+        for p in sorted((REPO / "content").rglob("*.md")):
+            problems += chp.audit_file(p)[0]
+        self.assertEqual(problems, [])
+
+    # --- the cover home rule (2026-10-08) ------------------------------------
+    #
+    # A book page's `image` is rendered ONLY through `resources.Get`, which
+    # reads `assets/`. The covers used to live in two homes and one copy was
+    # stale: `static/img/books/unstuck.jpg` differed from the `assets/` file of
+    # the same name, so the site served art the build never rendered. These
+    # tests drive the rule against temp homes, so they never touch the repo's
+    # own static/ tree.
+
+    def homes(self, **files):
+        """Two temp dirs; `files` maps a home name to {relpath: bytes}."""
+        import tempfile
+        out = {}
+        for name in ("assets", "static"):
+            d = Path(tempfile.mkdtemp(prefix=f"hero-{name}-"))
+            for rel, data in files.get(name, {}).items():
+                (d / rel).parent.mkdir(parents=True, exist_ok=True)
+                (d / rel).write_bytes(data)
+            out[name] = d
+        return out["assets"], out["static"]
+
+    def audit_as_book(self, fm, **homes_kw):
+        """Audit a temp page AS a book, against temp image homes.
+
+        `is_book` is patched rather than implied: a real book page would have to
+        be created under `content/books/`, and a stray file there is built by
+        the next `hugo` run — a test that can break CI is not a test.
+        """
+        import unittest.mock as mock
+        p = self.file(fm)
+        assets, static = self.homes(**homes_kw)
+        old = (chp.ASSETS, chp.STATIC)
+        chp.ASSETS, chp.STATIC = assets, static
+        try:
+            with mock.patch.object(chp, "is_book", return_value=True):
+                return chp.audit_file(p)
+        finally:
+            chp.ASSETS, chp.STATIC = old
+
+    def test_only_book_pages_get_the_cover_rule(self):
+        self.assertTrue(chp.is_book(REPO / "content/books/letters/index.md"))
+        self.assertFalse(chp.is_book(REPO / "content/books/_index.md"))
+        self.assertFalse(chp.is_book(REPO / "content/posts/summaries/letters-summary.md"))
+
+    def test_a_book_cover_in_assets_alone_passes(self):
+        problems, notes, checked = self.audit_as_book(
+            'image: "img/books/letters.jpg"',
+            assets={"img/books/letters.jpg": b"cover"})
+        self.assertEqual(problems, [], problems)
+        self.assertEqual(notes, [])
+        self.assertEqual(checked, 1)
+
+    def test_a_book_cover_only_in_static_fails(self):
+        # Builds green, warns once, and renders "Cover Coming Soon" on a live
+        # page: no book layout reads `static/` directly.
+        problems, _, _ = self.audit_as_book(
+            'image: "img/books/letters.jpg"',
+            static={"img/books/letters.jpg": b"cover"})
+        self.assertEqual(len(problems), 1, problems)
+        self.assertIn("must be in assets/", problems[0])
+
+    def test_a_book_cover_in_both_homes_with_different_bytes_fails(self):
+        problems, _, _ = self.audit_as_book(
+            'image: "img/books/letters.jpg"',
+            assets={"img/books/letters.jpg": b"the art the build renders"},
+            static={"img/books/letters.jpg": b"the art the site serves"})
+        self.assertEqual(len(problems), 1, problems)
+        self.assertIn("different bytes", problems[0])
+
+    def test_a_book_cover_in_both_homes_with_identical_bytes_is_a_note(self):
+        # Drift to clean up, not a broken page: the reader sees the right image
+        # either way, so this must not fail a build.
+        problems, notes, _ = self.audit_as_book(
+            'image: "img/books/letters.jpg"',
+            assets={"img/books/letters.jpg": b"same"},
+            static={"img/books/letters.jpg": b"same"})
+        self.assertEqual(problems, [])
+        self.assertEqual(len(notes), 1, notes)
+        self.assertIn("duplicated in static/", notes[0])
+
+    def test_the_same_path_on_a_post_is_fine_in_either_home(self):
+        # Only a book cover carries the assets/ requirement: a section layout
+        # emits `<img src="{{ .Params.image }}">` verbatim, which `static/`
+        # serves, so the rule must not fire for those pages.
+        p = self.file('image: "img/books/letters.jpg"')
+        assets, static = self.homes(static={"img/books/letters.jpg": b"cover"})
+        old = (chp.ASSETS, chp.STATIC)
+        chp.ASSETS, chp.STATIC = assets, static
+        try:
+            problems, _, _ = chp.audit_file(p)
+        finally:
+            chp.ASSETS, chp.STATIC = old
+        self.assertEqual(problems, [], problems)
 
     def test_the_runners_that_write_hero_reports_run_the_gate(self):
         # A gate nobody runs is a gate that does not exist. The corpus-wide hero
@@ -3598,6 +3730,132 @@ class TestSecretDrift(unittest.TestCase):
         r = subprocess.run([sys.executable, "scripts/check-secrets.py", "--online"],
                            cwd=REPO, capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
+
+# --------------------------------------------------------------------------
+# Coverage: what a gate inspected, so a blind gate cannot report OK.
+# --------------------------------------------------------------------------
+class TestGateCoverage(unittest.TestCase):
+    """Every corpus gate states what it inspected, and must inspect something.
+
+    Why this exists. `check-quotes.py --online` once scanned a published report
+    as "0 attributions" and verified nothing while every gate reported OK — the
+    quotation-shape blind spot CLAUDE.md records for 2026-10-04. A gate whose
+    SELECTOR breaks fails the same way: a glob that stops matching, a path that
+    moves, a parser that stops recognising the shape. It finds nothing, reports
+    nothing wrong, and exits 0. The gate that is worst at its job is the one
+    that says OK.
+
+    So each gate ends with `coverage: <N> <unit>`, and these tests run the
+    offline gates against the real corpus and require the count to stay above a
+    recorded floor. The floor is a low-water mark, not a measurement: raise it
+    freely, lower it only with a reason. A count of zero means the gate is
+    blind, and this is the only place that is a failure.
+
+    Excluded, each for a stated reason:
+      * check-render-integrity.py — needs a built `public/` tree.
+      * check-secrets.py          — a host with no login keychain (CI has none)
+                                    has no credentials to count, and 0 is the
+                                    correct answer there.
+      * check-docket.py           — a network watcher; zero new filings is an
+                                    honest answer rather than blindness.
+    """
+
+    COVERAGE_RE = re.compile(r"^coverage:\s*(\d+)\s+(\S+)", re.M)
+
+    # (script, args, floor, unit)
+    GATES = (
+        ("check-quotes.py", (), 20, "attributions"),
+        ("check-quote-names.py", (), 10, "details"),
+        ("check-links.py", ("--check",), 500, "links"),
+        ("check-prepositions.py", (), 100, "files"),
+        ("check-emdashes.py", (), 100, "files"),
+        ("check-report-frontmatter.py", ("--corpus",), 5, "posts"),
+        ("check-report-frontmatter.py", ("--anchors-corpus",), 100, "posts"),
+        ("check-series-posts.py", (), 5, "installments"),
+        ("check-gallery-pages.py", (), 40, "items"),
+        ("check-hero-paths.py", (), 100, "paths"),
+        ("check-content-frontmatter.py", (), 100, "files"),
+    )
+
+    def coverage_of(self, script, args):
+        import subprocess
+        r = subprocess.run([sys.executable, f"scripts/{script}", *args],
+                           cwd=REPO, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        m = self.COVERAGE_RE.search(r.stdout)
+        self.assertIsNotNone(
+            m, f"{script} {list(args)} printed no `coverage:` line:\n{r.stdout}")
+        return int(m.group(1)), m.group(2)
+
+    def test_every_corpus_gate_inspects_something(self):
+        for script, args, floor, unit in self.GATES:
+            with self.subTest(gate=script, args=args):
+                n, reported = self.coverage_of(script, args)
+                self.assertEqual(reported, unit)
+                self.assertGreaterEqual(
+                    n, floor,
+                    f"{script} {list(args)} inspected {n} {unit}, floor {floor}. "
+                    f"A collapsing count means the gate's selector broke, not "
+                    f"that the corpus shrank.")
+
+
+# --------------------------------------------------------------------------
+# Gate wiring: one corpus list, and no orphan.
+# --------------------------------------------------------------------------
+class TestCorpusGateWiring(unittest.TestCase):
+    """The weekly sweep and the publishing tail must share one gate list.
+
+    Each used to carry its own copy, and they drifted: `check-quote-names.py`
+    joined the publishing set on 2026-10-04 and never reached
+    `weekly-integrity-check.sh`, the one job that sweeps content nobody has
+    touched in months, so the quoted-name detail rule guarded exactly the
+    articles it was written during and nothing else. The list now lives in
+    `scripts/corpus-gates.sh` and these tests pin that shape.
+    """
+
+    def test_the_weekly_job_runs_the_shared_corpus_list(self):
+        text = (SCRIPTS / "weekly-integrity-check.sh").read_text(encoding="utf-8")
+        self.assertIn("corpus-gates.sh", text)
+        self.assertIn("run_corpus_gates", text)
+        # No second copy: the job must not invoke those gates itself.
+        for script in ("check-quotes.py", "check-links.py", "check-quote-names.py"):
+            with self.subTest(script=script):
+                self.assertNotIn(f"scripts/{script}", text)
+
+    def test_the_shared_list_carries_the_quoted_name_gate(self):
+        # The specific regression: this gate lived in the publishing set only.
+        text = (SCRIPTS / "corpus-gates.sh").read_text(encoding="utf-8")
+        self.assertIn("check-quote-names.py", text)
+        self.assertIn("--online", text)
+
+    def test_no_gate_is_orphaned(self):
+        # A gate nobody runs is a gate that does not exist. Every check script
+        # must be invoked by CI, by a shell runner, or by another script.
+        gates = sorted(p.name for p in SCRIPTS.glob("check-*.py"))
+        self.assertGreaterEqual(len(gates), 10, "the gate glob stopped matching")
+        haystack = (REPO / ".github/workflows/hugo.yml").read_text(encoding="utf-8")
+        for p in sorted(SCRIPTS.glob("*")):
+            if p.name in gates or p.name == "test_gates.py" or p.is_dir():
+                continue
+            if p.suffix in (".sh", ".py"):
+                haystack += p.read_text(encoding="utf-8", errors="ignore")
+        for g in gates:
+            with self.subTest(gate=g):
+                self.assertIn(g, haystack)
+
+    def test_the_baseline_ratchets_run_in_ci(self):
+        # Being named by *some* runner is not enough for a ratchet: the em-dash
+        # and preposition gates each compare a file's count against
+        # `scripts/*-baseline.txt`, and only the corpus run enforces that. Each
+        # was wired per-file in the publishing tail first, and measured
+        # 2026-10-08 the preposition ratchet ran in NO CI step at all — so a
+        # hand-written post could grow its count freely. This is the assertion
+        # that would have found that.
+        ci = (REPO / ".github/workflows/hugo.yml").read_text(encoding="utf-8")
+        for gate in ("check-emdashes.py --check", "check-prepositions.py --check"):
+            with self.subTest(gate=gate):
+                self.assertIn(gate, ci)
 
 
 if __name__ == "__main__":

@@ -494,10 +494,12 @@ def main() -> int:
         hits = audit(p)
         if not hits:
             print(f"{rel(p)}: 0 sentence-final preposition(s) — OK")
+            print(f"coverage: 1 files")
             return 0
         print(f"{rel(p)}: {len(hits)} sentence-final preposition(s)")
         for line, prep, tail in hits:
             print(f"  {line}: …{tail}")
+        print(f"coverage: 1 files")
         return 1
 
     files = content_files()
@@ -519,9 +521,11 @@ def main() -> int:
             print(f"prepositions: {len(over)} file(s) over baseline")
             for path, n, allowed in over:
                 print(f"  {path}: {n} (baseline {allowed})")
+            print(f"coverage: {len(files)} files")
             return 1
         print(f"prepositions: OK — no file over its baseline "
               f"({sum(baseline.values())} recorded, 0 currently over)")
+        print(f"coverage: {len(files)} files")
         return 0
 
     if args.list:
@@ -529,12 +533,14 @@ def main() -> int:
             if n:
                 print(f"{n:>4}  {path}")
         print(f"prepositions: {total} across {sum(1 for n in counts.values() if n)} file(s)")
+        print(f"coverage: {len(files)} files")
         return 0
 
     for path, n in sorted(counts.items()):
         if n:
             print(f"{rel(REPO / path)}: {n}")
     print(f"prepositions: {total} across {len(files)} file(s) scanned")
+    print(f"coverage: {len(files)} files")
     return 0
 
 

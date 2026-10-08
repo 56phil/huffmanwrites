@@ -153,6 +153,12 @@ run_report_gates() {
   # cannot ride along into a deploy.
   run_gate "check-hero-paths"        "$REPO/scripts/check-hero-paths.py"
   run_gate "check-render-integrity"  "$REPO/scripts/check-render-integrity.py"
+  # NOTE: the corpus entries below are the deterministic set. The ONLINE corpus
+  # set — the one only the weekly job can run — lives once in
+  # `scripts/corpus-gates.sh`, and `test_gates.py` asserts that job runs it and
+  # that no gate is orphaned. A gate added here but not there (or the reverse)
+  # is how `check-quote-names.py` guarded the publishing path for four days and
+  # nothing else.
   # A new gallery card can cross a page boundary and leave every gallery link to
   # that page pointing at a 404. This is the gate the ninety-days run lacked.
   run_gate "check-gallery-pages"     "$REPO/scripts/check-gallery-pages.py"

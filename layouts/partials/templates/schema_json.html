@@ -82,7 +82,18 @@
     "name": {{ .Params.author | default site.Params.author | default "Philip Huffman" }}
   },
   {{- if .Params.image }}
+  {{- /* The raw path is not always a served URL: a cover in `assets/` is
+         published only when a template resolves it as a resource, and this
+         block emitted the bare `/img/books/x.jpg`, which 404s. Measured
+         2026-10-08: seven of nine book pages published a Book `image` that
+         returns 404. A file served from `static/` keeps its plain path;
+         otherwise the asset is resolved and its published URL is used. */ -}}
+  {{- $schemaImgRel := strings.TrimPrefix "/" .Params.image -}}
+  {{- if fileExists (printf "static/%s" $schemaImgRel) }}
   "image": {{ .Params.image | absURL }},
+  {{- else if $img := resources.Get $schemaImgRel }}
+  "image": {{ $img.RelPermalink | absURL }},
+  {{- end }}
   {{- end }}
   {{- with .Params.isbn }}
   "isbn": "{{ . }}",

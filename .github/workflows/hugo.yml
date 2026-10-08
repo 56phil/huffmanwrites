@@ -28,7 +28,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.166.0
+      HUGO_VERSION: 0.167.0
     steps:
       - name: Install Hugo CLI
         run: |
@@ -88,6 +88,17 @@ jobs:
       - name: Check em-dash limit
         run: python3 scripts/check-emdashes.py --check
 
+      # Fail before deploy if a file's stranded-preposition count grows. Same
+      # ratchet shape as the em-dash gate above: the baseline is a low-water
+      # mark, reducing is free, growing fails. Measured 2026-10-08, this workflow
+      # ran the em-dash ratchet and NOT this one — the preposition rule was
+      # enforced per-file in the publishing tail from 2026-09-25 and across the
+      # corpus by nothing, so hand-written posts could add sentence-final
+      # prepositions freely. A rule with no enforcement point is a rule that
+      # holds only where someone remembered it.
+      - name: Check stranded prepositions
+        run: python3 scripts/check-prepositions.py --check
+
       # Fail before deploy if a hero path names no file. Hugo does not fail on a
       # missing image — the build succeeds, the page returns 200, and the hero
       # renders as an empty box. check-render-integrity below catches it too,
@@ -118,13 +129,27 @@ jobs:
       - name: Check report frontmatter
         run: python3 scripts/check-report-frontmatter.py --corpus
 
+      # Fail before deploy if a frontmatter field a layout depends on is absent.
+      # Hugo does not fail on a missing field — it renders a blank spot or falls
+      # back to an unintended default — so a post with no `lastmod`, a summary
+      # with no `sort_key`, or a book page missing a hero field ships green. The
+      # summary hub is ordered by `sort_key` (`ByParam`), so a summary without
+      # the key is not rejected; it sorts by zero-value and lands wherever
+      # Hugo's fallback puts it. The gate prints how many files it inspected
+      # (`coverage: N files`), which is the number to trust rather than any
+      # count written here.
+      - name: Check content frontmatter
+        run: python3 scripts/check-content-frontmatter.py
+
       # Fail before deploy if ANY published post links with a placeholder anchor.
       # A `[text]` link is a reader-facing defect wherever it appears, and it
       # blinds `check-links.py --titles` on that citation wherever it appears —
       # the check for a URL that returns 200 and serves an unrelated article.
-      # The report series is covered above; this covers the other 177 posts,
-      # which nothing else was watching. Measured before this was added: 36
-      # published files used a placeholder anchor.
+      # The report series is covered above; this covers every other published
+      # post, which nothing else was watching. Measured before this was added:
+      # 36 published files used a placeholder anchor. The gate prints the
+      # population it scanned (`coverage: N posts`); trust that line, not this
+      # comment.
       - name: Check link anchors name what they link to
         run: python3 scripts/check-report-frontmatter.py --anchors-corpus
 

@@ -409,10 +409,12 @@ def deterministic_scan() -> int:
             "  See CLAUDE.md §Citations, and scripts/check-links-blocklist.txt.",
             file=sys.stderr,
         )
+        print(f"coverage: {urls_seen} links")
         return 1
 
     print(f"links: OK — no placeholder or blocklisted URLs "
           f"({len(bad_block)} known-bad recorded)")
+    print(f"coverage: {urls_seen} links")
     return 0
 
 
@@ -668,10 +670,12 @@ def main() -> int:
         print(f"\nlinks: {len(table)} external URL(s) across "
               f"{len({f for v in table.values() for f in v})} file(s). "
               f"Re-run with --online to verify them.", file=sys.stderr)
+        print(f"coverage: {len(table)} links")
         return 0
 
     if not table:
         print("links: no external URLs in content/", file=sys.stderr)
+        print(f"coverage: {len(table)} links")
         return 0
 
     # The coverage floor guards a whole-corpus sweep against a broken glob. It
@@ -726,6 +730,7 @@ def main() -> int:
         print(json.dumps([{"url": u, "status": s, "verdict": v, "detail": d,
                            "title": titles.get(u, ""), "files": table[u]}
                           for u, s, v, d in results], indent=2))
+        print(f"coverage: {len(table)} links")
         return 1 if (dead or redir) else 0
 
     if mismatches:
@@ -766,6 +771,7 @@ def main() -> int:
     # and kept serving the page), and failing on them would make the job noisy
     # enough to ignore. The fabrication signature is a redirect, so it still
     # appears prominently in the report for a human to read.
+    print(f"coverage: {len(table)} links")
     return 1 if dead else 0
 
 

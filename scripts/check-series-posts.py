@@ -96,6 +96,17 @@ def installments(glob: str) -> list[Path]:
     return sorted(p for p in directory.glob("*.md") if p.name.startswith(prefix))
 
 
+def published_installments(glob: str) -> list[tuple[Path, str]]:
+    """Published (non-draft) installments of one series glob, with frontmatter."""
+    out: list[tuple[Path, str]] = []
+    for path in installments(glob):
+        fm = frontmatter(path.read_text(encoding="utf-8", errors="ignore"))
+        if is_draft(fm):
+            continue
+        out.append((path, fm))
+    return out
+
+
 def check(verbose: bool = False) -> tuple[list[str], list[str]]:
     """Returns (problems, notes)."""
     problems: list[str] = []
@@ -103,13 +114,7 @@ def check(verbose: bool = False) -> tuple[list[str], list[str]]:
     total = 0
 
     for glob in series_globs():
-        posts = installments(glob)
-        published = []
-        for path in posts:
-            fm = frontmatter(path.read_text(encoding="utf-8", errors="ignore"))
-            if is_draft(fm):
-                continue
-            published.append((path, fm))
+        published = published_installments(glob)
 
         if not published:
             notes.append(f"{glob}: no published installment yet")
@@ -171,19 +176,24 @@ def main() -> int:
         if problems:
             for p in problems:
                 print(f"  {p}")
+            print(f"coverage: 1 installments")
             return 1
         print(f"series check: OK — {Path(args.file).name} is flagged for the home page")
+        print(f"coverage: 1 installments")
         return 0
 
     problems, notes = check(args.verbose)
     for note in notes:
         print(f"  note: {note}")
+    checked = sum(len(published_installments(g)) for g in series_globs())
     if problems:
         print(f"series posts missing the home flag: {len(problems)}")
         for p in problems:
             print(f"  {p}")
+        print(f"coverage: {checked} installments")
         return 1
     print("series check: OK — every published installment is flagged for the home page")
+    print(f"coverage: {checked} installments")
     return 0
 
 

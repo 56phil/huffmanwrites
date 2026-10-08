@@ -170,11 +170,13 @@ def scan(quiet: bool) -> int:
             "  for unescaped spaces or a rejected value (Go emits ZgotmplZ).",
             file=sys.stderr,
         )
+        print(f"coverage: {len(built)} pages")
         return 1
 
     if not quiet:
         print(f"render: OK — {len(pages())} pages, no sentinels, "
               f"all local refs resolve")
+    print(f"coverage: {len(built)} pages")
     return 0
 
 

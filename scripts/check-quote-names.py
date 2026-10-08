@@ -68,7 +68,39 @@ CONTENT = REPO / "content"
 # are fixed strings whose exact form is what reconstruction corrupts, and both
 # are rare enough in quoted prose that the gate stays quiet.
 _MIDDLE_INITIAL = re.compile(r"\b[A-Z][a-z]+\s+[A-Z]\.\s+[A-Z][a-z]+\b")
-_SUFFIX = re.compile(r"\b(?:Jr|Sr|II|III|IV)\b\.?")
+_SUFFIX_ALWAYS = re.compile(r"\b(?:Jr|Sr)\b\.?")
+_NUMERAL_PRECEDER = re.compile(r"([A-Za-z][A-Za-z'\u2019.\-]*)\s+(?:II|III|IV)\b\.?")
+
+# Structural nouns that take a Roman numeral. None of them is a person, and a
+# numeral after one is a section number rather than a generational suffix.
+#
+# Why this list exists, with the measurement that earned it. On 2026-10-08 this
+# gate was wired into the weekly corpus sweep for the first time, and its first
+# full-corpus run accused three published quotations of fabrication. All three
+# were CORRECT: the words are verbatim in the cited Project 2025 PDF (verified by
+# extracting it with pdftotext), and the only thing wrong was the trigger — a
+# bare numeral in "Article II of the U.S. Constitution" and "In Pillar IV". A
+# gate that fails a correct citation is worse than one that shows a human the
+# sentence, so a numeral counts only when the word in front of it is not one of
+# these. `Jr`/`Sr` are unambiguous and always count.
+_STRUCTURAL_NOUNS = frozenset("""
+article amendment section clause chapter part title appendix exhibit table figure
+pillar phase stage step act bill proposition ballot measure initiative referendum
+war volume edition version round match game season quarter half period cycle
+tier level grade class type model cohort arm group category
+book canto stanza line page note item point rule policy objective goal priority
+recommendation finding rank degree count number area region zone district circuit
+program schedule annex attachment series
+""".split())
+
+
+def _numeral_is_a_name_detail(fragment: str) -> bool:
+    """True if a Roman numeral follows something that is not a structural noun."""
+    for m in _NUMERAL_PRECEDER.finditer(fragment):
+        if m.group(1).lower().strip(".'\u2019-") not in _STRUCTURAL_NOUNS:
+            return True
+    return False
+
 
 # Quoted spans. Both straight and curly quotes; the report writes straight.
 _QUOTED = re.compile(r"[\"\u201c]([^\"\u201d]{4,})[\"\u201d]")
@@ -90,8 +122,13 @@ def normalize(text: str) -> str:
 
 
 def has_name_detail(fragment: str) -> bool:
-    """True if the fragment contains a middle initial or a generational suffix."""
-    return bool(_MIDDLE_INITIAL.search(fragment) or _SUFFIX.search(fragment))
+    """True if the fragment contains a middle initial or a generational suffix.
+
+    See `_STRUCTURAL_NOUNS` for why a bare Roman numeral is not enough.
+    """
+    return bool(_MIDDLE_INITIAL.search(fragment)
+                or _SUFFIX_ALWAYS.search(fragment)
+                or _numeral_is_a_name_detail(fragment))
 
 
 def extract_candidates(text: str) -> "list[dict]":
@@ -275,15 +312,18 @@ def main() -> int:
         if not args.quiet:
             print(f"quote-names: {checked} quoted name detail(s) found "
                   f"(run with --online to verify against their sources)")
+        print(f"coverage: {checked} details")
         return 0
 
     if problems:
         print(f"quote-names: FAIL — {problems} quoted name detail(s) absent from "
               f"the page(s) their line cites:", file=sys.stderr)
+        print(f"coverage: {checked} details")
         return 1
     if not args.quiet:
         print(f"quote-names: OK — {checked} quoted name detail(s) confirmed or "
               f"unverifiable (0 absent)")
+    print(f"coverage: {checked} details")
     return 0
 
 
