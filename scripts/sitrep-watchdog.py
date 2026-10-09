@@ -60,6 +60,16 @@ REPO = Path(__file__).resolve().parent.parent
 SECTION = REPO / "content" / "posts" / "sitrep"
 STATE_FILE = Path.home() / "Library" / "Logs" / "sitrep-watchdog-state.json"
 
+# The clock and the content root are overridable so a test can pin both. This is
+# not decoration: on 2026-10-09 a test that ran this checker against the REAL
+# section with a REAL date asserted "no edition exists for 2026-10-09", the
+# 06:04 publish created exactly that file, and the assertion went red inside the
+# SITREP job's own CI run. Nothing deployed from 11:04Z — the edition and the
+# next two pushes reached no reader. A check whose answer depends on today's
+# date and on what happens to be in `content/` cannot be asserted about; it can
+# only be observed. Pinning both makes the test a statement about the RULES
+# rather than about the calendar.
+
 # The canonical host: hugo.toml's baseURL and static/CNAME. Not www — the site
 # answers there too, but a URL this repo writes names huffmanwrites.org.
 SITE = "https://huffmanwrites.org"
@@ -127,8 +137,8 @@ def rel(path: Path) -> str:
         return str(path)
 
 
-def edition_path(day: date) -> Path:
-    return SECTION / f"sitrep-{day.isoformat()}.md"
+def edition_path(day: date, section: "Path | None" = None) -> Path:
+    return (section or SECTION) / f"sitrep-{day.isoformat()}.md"
 
 
 def edition_url(day: date) -> str:
@@ -142,6 +152,7 @@ def decide(
     page: Page,
     deadline: time = DEADLINE,
     series_start: date = SERIES_START,
+    section: "Path | None" = None,
 ) -> Verdict:
     """The whole policy, in one place and with no I/O.
 
@@ -152,7 +163,7 @@ def decide(
     """
     expected = f"{day:%B} {day.day}, {day.year}"  # "October 9, 2026"
     url = edition_url(day)
-    path = rel(edition_path(day))
+    path = rel(edition_path(day, section))
 
     if day < series_start:
         return Verdict(
@@ -324,22 +335,34 @@ def main() -> int:
                     help="do not read or write the dedup state (always alert)")
     ap.add_argument("--no-fetch", action="store_true",
                     help="check the local file only; do not fetch the deployed page")
+    ap.add_argument("--now", help="ISO datetime to treat as the wall clock (CT), "
+                                  "so a test can pin the hour instead of inheriting it")
+    ap.add_argument("--section", help="content directory to read instead of the real "
+                                      "content/posts/sitrep (a test fixture)")
     args = ap.parse_args()
 
-    now = datetime.now(TZ)
+    if args.now:
+        try:
+            now = datetime.fromisoformat(args.now)
+        except ValueError:
+            raise SystemExit(f"sitrep-watchdog: --now wants an ISO datetime, got {args.now!r}")
+        now = now.replace(tzinfo=TZ) if now.tzinfo is None else now.astimezone(TZ)
+    else:
+        now = datetime.now(TZ)
     try:
         day = date.fromisoformat(args.date) if args.date else now.date()
     except ValueError:
         raise SystemExit(f"sitrep-watchdog: --date wants YYYY-MM-DD, got {args.date!r}")
     deadline = parse_deadline(args.deadline)
 
-    local = edition_path(day).exists()
+    section = Path(args.section) if args.section else None
+    local = edition_path(day, section).exists()
     # Skip the fetch when the deadline has not arrived: the verdict is decided
     # by the clock, and a request at 05:00 answers a question nobody asked.
-    pre = decide(day, now, local, Page(), deadline=deadline)
+    pre = decide(day, now, local, Page(), deadline=deadline, section=section)
     page = Page() if pre.status == "not-due" or args.no_fetch else fetch(edition_url(day))
 
-    verdict = decide(day, now, local, page, deadline=deadline)
+    verdict = decide(day, now, local, page, deadline=deadline, section=section)
     print(f"sitrep-watchdog: {verdict.line}")
 
     state_path = Path(args.state) if args.state else STATE_FILE

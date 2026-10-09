@@ -3164,12 +3164,22 @@ class TestSitrepWatchdog(unittest.TestCase):
         # the shared alert, and the checker's state stops the second check of the
         # same day from raising a second banner. That is what lets four checks a
         # day be a watch rather than a nuisance.
+        #
+        # Both the clock and the content root are PINNED. This test used to run
+        # against the real `content/posts/sitrep` with the real date 2026-10-09,
+        # and at 06:04 that morning the SITREP job published exactly that
+        # edition; `--no-fetch` then answered "present", the assertion became
+        # 0 != 1, and the deploy went red inside the job's own run. The fix is
+        # not a cleverer date — it is to stop asserting about a calendar at all.
+        # `--now` fixes the hour, `--section` fixes an empty tree, and the test
+        # is now a statement about the RULES.
         import tempfile
         with tempfile.TemporaryDirectory() as d:
             tmp = Path(d)
             env, calls = self.stub(tmp)
-            args = ("--date", self.undated().isoformat(), "--no-fetch",
-                    "--state", str(tmp / "state.json"))
+            args = ("--date", "2026-10-09", "--now", "2026-10-09T12:00:00",
+                    "--section", str(self.empty_section(tmp)),
+                    "--no-fetch", "--state", str(tmp / "state.json"))
             first = self.run_runner(tmp, *args, env=env)
             self.assertEqual(first.returncode, 1, first.stderr)
             self.assertTrue(calls.is_file(), "the runner never reached the shared alert")
@@ -3181,19 +3191,55 @@ class TestSitrepWatchdog(unittest.TestCase):
             log = (tmp / "logs" / "sitrep-watchdog.out.log").read_text(encoding="utf-8")
             self.assertIn("already alerted", log)
 
-    def test_the_runner_survives_an_empty_argument_list_under_bash_32(self):
-        # `set -u` plus macOS's bash 3.2 treats the expansion of an EMPTY array
-        # as an unbound variable, so `"${ARGS[@]}"` aborts the script before the
-        # checker runs. This runner's first load-time fire died that way, exited
-        # 1, and raised a banner for a job that had not started; the portable
-        # form is `${ARGS[@]+"${ARGS[@]}"}`. A date before the series needs no
-        # network and writes no state, so this exercises the hazard and nothing
-        # else.
+    def test_the_runner_would_see_a_real_edition_if_one_existed(self):
+        # The other direction of the same fixture, and the reason pinning the
+        # section is a fix rather than a way to make the test agree with itself:
+        # with the SAME pinned clock and a section that DOES hold the edition,
+        # the checker reports it published and exits 0, without touching the
+        # network. If the empty-section fixture were hiding a real defect — a
+        # checker that always says "missing" — this catches it.
         import tempfile
         with tempfile.TemporaryDirectory() as d:
             tmp = Path(d)
             env, calls = self.stub(tmp)
-            r = self.run_runner(tmp, "--date", "2026-10-06", env=env)
+            section = self.empty_section(tmp)
+            (section / "sitrep-2026-10-09.md").write_text("---\ntitle: x\n---\n", encoding="utf-8")
+            r = self.run_runner(tmp, "--date", "2026-10-09", "--now", "2026-10-09T12:00:00",
+                                "--section", str(section), "--no-fetch", env=env)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertFalse(calls.exists(), "a published edition must not alert")
+            log = (tmp / "logs" / "sitrep-watchdog.out.log").read_text(encoding="utf-8")
+            self.assertIn("is in the repo", log)
+
+    def empty_section(self, tmp):
+        """A content root the series has never written to.
+
+        Paired with a pinned `--now`, this is what makes the two runner tests
+        statements about the RULES instead of about today. The suite used to
+        point them at `content/posts/sitrep` and at real dates: one hardcoded
+        2026-10-09 (which the 06:04 publish invalidated, going red inside that
+        job's own CI run and blocking every deploy until it was found) and one
+        hardcoded 2026-10-06 (safe only because it sits before SERIES_START, so
+        it would have survived — but it was a second instance of the same bet).
+        """
+        d = tmp / "section"
+        d.mkdir()
+        return d
+
+    def test_the_runner_survives_an_empty_argument_list_under_bash_32(self):
+        # `set -u` plus macOS's bash 3.2 — the /bin/bash launchd runs — treats
+        # the expansion of an EMPTY array as an unbound variable, so
+        # `"${ARGS[@]}"` aborts the script before the checker runs. This
+        # runner's first load-time fire died that way, exited 1, and raised a
+        # banner for a job that had not started; the portable form is
+        # `${ARGS[@]+"${ARGS[@]}"}`. A date before the series needs no network
+        # and writes no state, so this exercises the hazard and nothing else.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            tmp = Path(d)
+            env, calls = self.stub(tmp)
+            r = self.run_runner(tmp, "--date", "2026-10-06",
+                                "--section", str(self.empty_section(tmp)), env=env)
             self.assertEqual(r.returncode, 0, r.stderr)
             self.assertFalse(calls.exists(), "a not-due date must not alert")
             log = (tmp / "logs" / "sitrep-watchdog.out.log").read_text(encoding="utf-8")
@@ -3218,6 +3264,233 @@ class TestSitrepWatchdog(unittest.TestCase):
                                 "a machine asleep at 07:00 needs a later check")
         self.assertTrue(d.get("RunAtLoad"), "a machine that was off at the deadline has no other check")
         self.assertIn("sitrep-watchdog-runner.sh", " ".join(d.get("ProgramArguments", [])))
+
+
+# --------------------------------------------------------------------------
+# The fixture-rot class. Three failures in two days, all one shape.
+# --------------------------------------------------------------------------
+class TestNoTestAssertsAboutToday(unittest.TestCase):
+    """A date handed to a script must come with the fixture that pins it.
+
+    The shape this catches, from the three failures in two days:
+
+      * `check-gallery-pages` asserted a fixed set of section directories
+        existed, so adding a series turned two tests red.
+      * The gallery "series has not started" test pointed at the real
+        `data/gallery.yml`, so the docket's first installment made the note it
+        asserted stop being emitted.
+      * `test_the_runner_alerts_once_and_then_stays_quiet` ran the watchdog with
+        `--date 2026-10-09 --no-fetch` and asserted the edition was MISSING. At
+        06:04 that morning the SITREP job published `sitrep-2026-10-09.md`, the
+        checker answered "present", the assertion became 0 != 1, and the deploy
+        was red from 11:04Z inside that job's own CI run — the edition and the
+        next two pushes reached no reader.
+
+    Each was fixed where it broke. This is the guard for the next one, and it is
+    mechanical because the fix is always a judgement ("that date is safe") and
+    the judgement is what the calendar overturns.
+
+    The rule: **a date passed to a script as an argument must be accompanied by
+    the fixture that fixes what the script compares it against.** The watchdog
+    test failed not because 2026-10-09 was the wrong date but because the checker
+    read the REAL `content/posts/sitrep` to decide it — so adding `--section`
+    (a temp tree) is the fix, and `--now` pins the hour besides. A date inside a
+    FILENAME (`senate-race-report-2026-10-04.md`) is a slug naming a fixed
+    artifact, not a fixture date, and is not flagged: those tests assert an
+    invariant about a published file and hold forever.
+
+    Deliberately not a ban on dates or on reading `content/`: both are
+    load-bearing here, and a gate that forbade them would be turned off.
+    """
+
+    # How far a date must be from today to be out of the calendar's reach on its
+    # own. Generous on purpose: the 2026-10-06 fixture was three days old and
+    # survived only because it sat before SERIES_START, so "three days back" is
+    # not a safe reading. Pinning is what makes a near date safe, not age.
+    WINDOW_DAYS = 400
+
+    # Isolation: something that fixes what a script compares its date against.
+    #
+    # Only content-injecting arguments count. `TemporaryDirectory` and a helper
+    # like `empty_section` do NOT — a temp dir can hold the state file, the log,
+    # or the alert stub while the script still reads the real `content/`, and
+    # that was a live false negative: injecting the original defect (a temp dir
+    # for `--state`, the real section) left the guard silent, because the temp
+    # dir matched. `--now` alone is excluded on the same grounds: pinning the
+    # hour does not pin what the date is looked up in. What must be present is
+    # the thing that redirects the read — `--section` (the watchdog), `--as-of`
+    # (the splitter), or a mocked module.
+    PIN = re.compile(r"--section|--as-of|mock\.patch")
+    # A subprocess invocation — evidence the date is an argument to a script.
+    RUNS = re.compile(r"subprocess\.run|run_runner\(|run_split\(|run_checker\(|"
+                      r"run_gate\(|/bin/bash")
+    # A string that names a file rather than carrying a fixture date.
+    SLUG = re.compile(r"\.md")
+
+    @staticmethod
+    def _is_date_only(s: str) -> bool:
+        """True when the string is a date and nothing else — a fixture.
+
+        The distinction that makes this gate usable. `"2026-10-06"` is a date a
+        script is told to act on. `"the 2026-10-04 installment is not present"`
+        is a sentence, and its date is prose about a fixture, not the fixture —
+        flagging it would be a false positive on the current suite, and a gate
+        that cries wolf is a gate that gets deleted. Filenames fall out for the
+        reason: `senate-race-report-2026-10-04.md` has words left over.
+
+        The surrounding quote characters are stripped first: a token's `.string`
+        carries them, so `'"2026-10-06"'` is not date-only until they are gone.
+        That was a bug in the first draft — the pattern silently matched nothing,
+        and a guard that matches nothing passes.
+        """
+        s = s.strip()
+        for q in ('"""', "'''", '"', "'"):
+            if len(s) >= 2 * len(q) and s.startswith(q) and s.endswith(q):
+                s = s[len(q):-len(q)]
+                break
+        leftover = re.sub(r"\b20\d\d-\d\d-\d\d\b", "", s)
+        return re.fullmatch(r"[\s\-_.:/]*", leftover) is not None
+
+    @staticmethod
+    def _code_date_strings():
+        """(class, method, line, date) for date literals in live code.
+
+        Tokenised, so a date in a comment or a docstring — which is prose about a
+        failure, not a fixture — is not counted. That distinction is why this
+        can be enforced at all: the file mentions dated failures constantly, and
+        a regex over the raw text would drown in false positives.
+        """
+        import datetime as _dt
+        import io
+        import tokenize
+
+        text = (SCRIPTS / "test_gates.py").read_text(encoding="utf-8")
+        lines = text.splitlines()
+
+        docstring_lines = set()
+        for tok in tokenize.generate_tokens(io.StringIO(text).readline):
+            if tok.type == tokenize.STRING and tok.line.strip().startswith(
+                    ('"""', "'''", 'r"""', "r'''")):
+                docstring_lines.add(tok.start[0])
+
+        owner = {}
+        cls = meth = None
+        for i, ln in enumerate(lines, 1):
+            m = re.match(r"class (\w+)", ln)
+            if m:
+                cls, meth = m.group(1), None
+            m = re.match(r"    def (\w+)", ln)
+            if m:
+                meth = m.group(1)
+            owner[i] = (cls, meth)
+
+        iso = re.compile(r"\b(20\d\d)-(\d\d)-(\d\d)\b")
+        out = []
+        for tok in tokenize.generate_tokens(io.StringIO(text).readline):
+            if tok.type != tokenize.STRING or tok.start[0] in docstring_lines:
+                continue
+            cls, meth = owner[tok.start[0]]
+            if not cls or not meth:
+                continue
+            if not TestNoTestAssertsAboutToday._is_date_only(tok.string):
+                continue  # a sentence or a filename, not a fixture date
+            for m in iso.finditer(tok.string):
+                try:
+                    d = _dt.date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+                except ValueError:
+                    continue
+                out.append((cls, meth, tok.start[0], d))
+        return out
+
+    @staticmethod
+    def _bodies():
+        """Each test's source with `#` comments blanked out.
+
+        Comments are stripped because PIN and RUNS are matched against this text,
+        and prose is not code: the first draft matched the explanatory comment
+        above the fixed fixture — the one that *names* `--section` — and reported
+        an injected defect as already pinned. A comment describing a fix is not
+        the fix. Columns are blanked rather than lines deleted, so line numbers
+        in a failure message still point where a reader expects.
+        """
+        import io
+        import tokenize
+
+        text = (SCRIPTS / "test_gates.py").read_text(encoding="utf-8")
+        lines = text.splitlines()
+        for tok in tokenize.generate_tokens(io.StringIO(text).readline):
+            if tok.type != tokenize.COMMENT:
+                continue
+            row = tok.start[0] - 1
+            lines[row] = (lines[row][:tok.start[1]]
+                          + " " * (tok.end[1] - tok.start[1])
+                          + lines[row][tok.end[1]:])
+
+        bodies, cur = {}, None
+        for ln in lines:
+            m = re.match(r"    def (\w+)", ln)
+            if m:
+                cur = m.group(1)
+                bodies[cur] = []
+            elif cur is not None:
+                bodies[cur].append(ln)
+        return {k: "\n".join(v) for k, v in bodies.items()}
+
+    def test_no_date_is_handed_to_a_script_without_pinning_its_input(self):
+        import datetime as _dt
+
+        bodies = self._bodies()
+        today = _dt.date.today()
+        offenders = []
+        for cls, meth, line_no, d in self._code_date_strings():
+            body = bodies.get(meth, "")
+            if not self.RUNS.search(body):
+                continue          # no script is being handed this date
+            if self.PIN.search(body):
+                continue          # pinned: a statement about the rule
+            if (d - today).days < self.WINDOW_DAYS:
+                offenders.append((f"{cls}.{meth}", line_no, d.isoformat()))
+
+        self.assertEqual(
+            offenders, [],
+            "these tests hand a near-today date to a script without pinning what "
+            "the script compares it against, so they are true only today — the "
+            "class that broke the deploy three times in two days. Add the fixture "
+            "(`--section`, `--now`, `--as-of`, a temp tree, or mock.patch):\n  "
+            + "\n  ".join(f"{m} (line {n}) — {d}" for m, n, d in offenders),
+        )
+
+    def test_the_guard_would_catch_the_regression_it_was_written_for(self):
+        # A guard that cannot fail is not a guard. Take the exact body that broke
+        # the deploy and assert the rule flags it, then add the fix and assert it
+        # stops. Without this, a later edit that neuters the `RUNS` or `PIN`
+        # pattern would leave the suite green and the guard useless.
+        broken = ('r = self.run_runner(tmp, "--date", "2026-10-09", "--no-fetch",\n'
+                  '                    "--state", str(tmp / "state.json"))\n'
+                  'with tempfile.TemporaryDirectory() as d:\n')
+        self.assertTrue(self.RUNS.search(broken), "RUNS no longer matches a runner call")
+        self.assertFalse(
+            self.PIN.search(broken),
+            "a temp dir for --state must NOT read as pinning the content the date "
+            "is looked up in — that was the false negative in the first draft of "
+            "this guard, and injecting the original defect left it silent")
+        fixed = broken.replace('"--no-fetch"',
+                               '"--section", str(self.empty_section(tmp)), "--no-fetch"')
+        self.assertTrue(self.PIN.search(fixed),
+                        "adding --section must read as pinning the input")
+
+    def test_a_date_inside_a_filename_is_not_a_fixture(self):
+        # The exclusion that keeps this gate usable. `senate-race-report-
+        # 2026-10-04.md` names a published file and the assertion about it holds
+        # forever; flagging it would be three false positives on the current
+        # suite, and a gate that cries wolf gets deleted.
+        import io
+        import tokenize
+        text = (SCRIPTS / "test_gates.py").read_text(encoding="utf-8")
+        slugs = {tok.string for tok in tokenize.generate_tokens(io.StringIO(text).readline)
+                 if tok.type == tokenize.STRING and self.SLUG.search(tok.string)}
+        self.assertTrue(any("senate-race-report-2026-10-04.md" in s for s in slugs),
+                        "the corpus filenames this exclusion exists for are gone")
 
 
 # --------------------------------------------------------------------------
