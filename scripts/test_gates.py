@@ -3139,6 +3139,25 @@ class TestSitrepWatchdog(unittest.TestCase):
             env=env, capture_output=True, text=True,
         )
 
+    def undated(self):
+        """A date the series can never have published, so the fixture cannot rot.
+
+        This test used to hardcode 2026-10-09 and assert that the checker called
+        it missing. That held until 06:04 CT on 2026-10-09, when the SITREP job
+        published exactly that edition — the file appeared, `--no-fetch` answered
+        "present", and the assertion became 0 != 1. It went red inside the
+        sitrep publish's own CI run, and the next two pushes failed the same way
+        for a reason neither of them had anything to do with: nothing deployed,
+        so the October 9 edition and the essay pushed after it both reached no
+        reader. A fixture that a scheduled job can invalidate by succeeding is
+        testing the calendar. Tomorrow is always beyond the series and always
+        will be; the file for it cannot exist yet, and cannot start existing
+        without the clock moving the target too.
+        """
+        from datetime import timedelta
+        today = datetime.now(self.wd.TZ).date()
+        return max(today, self.wd.SERIES_START) + timedelta(days=1)
+
     def test_the_runner_alerts_once_and_then_stays_quiet(self):
         # The whole contract, and none of it needs the network: `--no-fetch` on a
         # date with no edition is a definite "missing", the runner routes that to
@@ -3149,7 +3168,8 @@ class TestSitrepWatchdog(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             tmp = Path(d)
             env, calls = self.stub(tmp)
-            args = ("--date", "2026-10-09", "--no-fetch", "--state", str(tmp / "state.json"))
+            args = ("--date", self.undated().isoformat(), "--no-fetch",
+                    "--state", str(tmp / "state.json"))
             first = self.run_runner(tmp, *args, env=env)
             self.assertEqual(first.returncode, 1, first.stderr)
             self.assertTrue(calls.is_file(), "the runner never reached the shared alert")
