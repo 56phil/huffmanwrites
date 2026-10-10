@@ -1,9 +1,9 @@
 #!/bin/bash
 # Weekly Satire runner.
-# Invoked by launchd (com.huffmanwrites.weekly-satire) every Monday at 07:00 CT,
-# from Monday 2026-10-19 through Monday 2026-11-02. Self-disables after
-# 2026-11-02. (The first installment, 2026-10-12, was written and reviewed by
-# hand — see the date-guard comment below.)
+# Invoked by launchd (com.huffmanwrites.weekly-satire) every Monday at 07:00 CT.
+# RETIRED 2026-10-10: the series is complete — all four installments are
+# pre-written and embargoed to their dates — so every firing exits 0 before the
+# preflight. See the retirement guard below.
 #
 # Philip, 2026-10-07: "Set up a weekly task to publish a piece mocking Trump
 # start next Monday. End the task 03NOV26." Asked what form each piece should
@@ -66,45 +66,50 @@ export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 PROMPT="${WEEKLY_SATIRE_PROMPT:-Read $SKILL and follow it exactly. Write the Weekly Satire piece for this week. It will be published on this run if every gate passes.}"
 
 # ---------------------------------------------------------------------------
-# Date guard: run only from Monday 2026-10-19 through Monday 2026-11-02.
+# Retirement guard: the series is complete, and this job no longer writes.
 #
-# The start guard is 2026-10-19, not 2026-10-12. The first installment, for
-# Monday 2026-10-12, was written and reviewed by hand and committed as
-# `content/posts/essays/weekly-satire-2026-10-12.md`, embargoed to its 07:00 CT
-# date (Philip, 2026-10-10: "Set it up with an embargo for 0700 Monday
-# morning"). Letting this job fire on 2026-10-12 would have it write the SAME
-# path — `ARTICLE` is bound to `weekly-satire-$TODAY.md` below — and its preflight
-# deletes any file already there, so it would silently discard the reviewed piece
-# and publish an unreviewed one in its place. The remaining three installments
-# (Oct 19, Oct 26, Nov 2) are the job's, which is the "four articles for this
-# project" Philip asked for. The END guard is the self-disable ("End the task
-# 03NOV26"): the schedule fires every Monday, so the last installment is Monday
-# 2026-11-02, and every Monday after that exits 0. Exit 0, not an error: the job
-# is simply no longer due, and a non-zero code would raise the failure alert
-# every Monday forever, which is how a real alert gets learned as noise. Same
-# reasoning as the docket start guard and the Chiefs season guard.
+# Philip, 2026-10-10: "We need four articles for this project," then, choosing
+# to pre-produce rather than publish-weekly, "Pre-produce all four now." All
+# four installments are committed as `content/posts/essays/weekly-satire-2026-
+# {10-12,10-19,10-26,11-02}.md`, each embargoed to its Monday 07:00 CT date and
+# all four reviewed before they ship. There is nothing left for this job to
+# write, so it exits 0 on every firing.
 #
-# WEEKLY_SATIRE_IGNORE_GUARDS=1 runs outside the window. It exists so the
-# pipeline can be exercised WITHOUT waiting for — or performing — the launch:
-# this job publishes unattended, and the first attempt at a brand-new series
-# should not also be the first time its build-and-gate tail ever runs. Pair it
-# with REPORT_DRY_RUN=1, which exercises everything up to and including
-# verification and stops before the commit. The override is an env var rather
-# than an edit to the dates so a live run can never accidentally publish early
-# or late: the scheduled run sets no such variable.
+# Exit 0, and at the very top — before publish_preflight. The preflight deletes
+# any file already at $ARTICLE, and $ARTICLE is bound to `weekly-satire-$TODAY.md`
+# below, so a firing on 2026-10-19, 10-26 or 11-02 would silently discard that
+# week's reviewed installment and could not put anything in its place. The guard
+# must therefore precede the preflight, not follow it. Exit 0 rather than an
+# error for the same reason the old date guard used it: a non-zero code would
+# raise the failure alert every Monday forever, which is how a real alert gets
+# learned as noise.
+#
+# WEEKLY_SATIRE_IGNORE_GUARDS=1 still runs the writer, so the pipeline can be
+# exercised without publishing. Pair it with REPORT_DRY_RUN=1 as before; a live
+# run sets no such variable, and the scheduled run never reaches the writer.
+#
+# The plist stays installed and valid (a job with no schedule key fails
+# check-plists.py), and the runner keeps every contract the tests read, so this
+# is a retirement in place rather than a deletion. If the series is ever revived,
+# replace this block with a real start date — do not merely delete it, or the
+# preflight's delete-the-old-file behavior returns with it.
+# ---------------------------------------------------------------------------
+if [ "${WEEKLY_SATIRE_IGNORE_GUARDS:-0}" != "1" ]; then
+  echo "$(stamp): the series is complete; all four installments are pre-written, exiting" >> "$OUT_LOG"
+  exit 0
+fi
+
+# ---------------------------------------------------------------------------
+# Date guard: the range this job would have run, from Monday 2026-10-19 through
+# Monday 2026-11-02. Reached only under WEEKLY_SATIRE_IGNORE_GUARDS=1, so it is
+# the pipeline-exercise path and not a schedule; the retirement guard above is
+# what the installed job hits. The END guard is still the self-disable ("End the
+# task 03NOV26"): every Monday after 2026-11-02 exits 0.
 # ---------------------------------------------------------------------------
 TODAY="$(date '+%Y-%m-%d')"
-if [ "${WEEKLY_SATIRE_IGNORE_GUARDS:-0}" != "1" ]; then
-  if [[ "$TODAY" < "2026-10-19" ]]; then
-    echo "$(stamp): before the start date (2026-10-19); no piece due, exiting" >> "$OUT_LOG"
-    exit 0
-  fi
-  if [[ "$TODAY" > "2026-11-02" ]]; then
-    echo "$(stamp): the series ended 2026-11-02; self-disabled, exiting" >> "$OUT_LOG"
-    exit 0
-  fi
-else
-  echo "$(stamp): date guards overridden (WEEKLY_SATIRE_IGNORE_GUARDS=1); running at $TODAY" >> "$OUT_LOG"
+if [[ "$TODAY" > "2026-11-02" ]]; then
+  echo "$(stamp): the series ended 2026-11-02; self-disabled, exiting" >> "$OUT_LOG"
+  exit 0
 fi
 
 cd "$REPO"

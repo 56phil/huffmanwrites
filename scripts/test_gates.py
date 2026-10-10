@@ -2987,6 +2987,63 @@ class TestChiefsRunnerContract(unittest.TestCase):
             self.assertNotIn("'", m.group(1), m.group(0)[:120])
 
 
+class TestWeeklySatireRetirement(unittest.TestCase):
+    """The Weekly Satire runner is retired, and the retirement must hold.
+
+    All four installments are pre-written and reviewed. The job fires every
+    Monday, and the one behavior that must never happen is a firing that reaches
+    `publish_preflight`: it deletes whatever sits at `$ARTICLE`
+    (`weekly-satire-$TODAY.md`), which on 2026-10-19, 10-26 and 11-02 is that
+    week's reviewed piece. So the guard is asserted to exit 0 AND to precede the
+    preflight — the second half is the load-bearing half, and moving the guard
+    below the preflight would pass a test that only checked for `exit 0`.
+    """
+
+    def setUp(self):
+        self.runner = (SCRIPTS / "weekly-satire-runner.sh").read_text(encoding="utf-8")
+
+    def test_the_retirement_guard_exits_zero(self):
+        # Match the guard's own log line, not the word "complete" — the header
+        # comment also says "the series is complete", and matching there would
+        # pass while the executable guard was deleted.
+        i = self.runner.find("all four installments are pre-written, exiting")
+        self.assertGreater(i, 0, "the retirement guard is gone")
+        self.assertIn("exit 0", self.runner[i:i + 160])
+
+    def test_the_guard_precedes_the_preflight(self):
+        # The defect this pins: the preflight deletes the reviewed installment
+        # at this run's path, so a guard placed after it is no guard at all.
+        guard = self.runner.find("all four installments are pre-written, exiting")
+        preflight = self.runner.find('publish_preflight "$ARTICLE"')
+        self.assertGreater(preflight, 0)
+        self.assertLess(guard, preflight,
+                        "the retirement guard must run before publish_preflight, "
+                        "which deletes the file at this run's article path")
+
+    def test_the_plist_stays_valid_and_installed(self):
+        # Retirement in place, not deletion: a plist with no schedule key fails
+        # check-plists.py, and the runner keeps every contract the other tests
+        # read (JOB bound, ollama probe, run_report_gates).
+        plist = (SCRIPTS / "com.huffmanwrites.weekly-satire.plist").read_text(encoding="utf-8")
+        self.assertIn("StartCalendarInterval", plist)
+        for needle in ("JOB=\"weekly-satire\"", "scripts/ollama-probe.sh",
+                       "run_report_gates"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, self.runner)
+
+    def test_the_series_is_four_pieces(self):
+        # "We need four articles for this project" — the four dates that make
+        # the retirement correct. If a date is added or removed, this fails.
+        stems = sorted(p.name for p in
+                       (REPO / "content" / "posts" / "essays").glob("weekly-satire-*.md"))
+        self.assertEqual(stems, [
+            "weekly-satire-2026-10-12.md",
+            "weekly-satire-2026-10-19.md",
+            "weekly-satire-2026-10-26.md",
+            "weekly-satire-2026-11-02.md",
+        ])
+
+
 class TestDailySitrep(unittest.TestCase):
     """The daily Global SITREP — the first job that publishes every day.
 

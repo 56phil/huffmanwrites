@@ -1,11 +1,13 @@
 # Skill: Weekly Satire
 
 The writer's brief for the **Weekly Satire** series — one piece every Monday,
-07:00 CT. The **first installment (2026-10-12) was written and reviewed by hand**
-and is already committed as `content/posts/essays/weekly-satire-2026-10-12.md`,
-embargoed to its 07:00 CT date; the runner does not write that one. The
-**auto-published** installments are 2026-10-19, 2026-10-26 and 2026-11-02, and the
-job self-disables after 2026-11-02.
+07:00 CT. **The series is complete as of 2026-10-10 and the runner is retired.**
+All four installments (`content/posts/essays/weekly-satire-2026-10-12.md`,
+`-10-19`, `-10-26`, `-11-02`) were written and reviewed before their dates and
+are embargoed to them; the Monday job exits 0 without writing. Nothing below
+runs on a schedule any longer. It is kept because reviving the series means
+replacing the runner's retirement guard with a start date and reading this brief
+again first.
 
 **This job publishes without human review.** The runner writes the file, runs
 both builds and every gate, and pushes to production in one run. A gate failure
@@ -77,10 +79,14 @@ said, which is documented; leave the rest alone.
 
 ## Form — select one at random each week
 
-Each week, **pick one of the four at random** (vary it; do not repeat last
-week's if you can tell what that was — read the newest
-`content/posts/essays/weekly-satire-*.md` and avoid its form). All four are
-built on documented facts; the form changes the frame, never the licence to
+> **The series is closed.** The four published installments used all four forms, one each:
+> The Receipt ("Paid for by the U.S. Government", 10-12), The Mock Institution (the
+> international-office fee notice, 10-19), The Weekly Apology ("An Apology to the
+> Seventy Million", 10-26), and The Absurdist Set Piece (the betting slip, 11-02).
+> A revival starts a new series; if it keeps this masthead, do not repeat a form a
+> recent installment used, and read the retirement note at the top of the runner.
+
+All four are built on documented facts; the form changes the frame, never the licence to
 invent.
 
 1. **The Receipt.** One documented absurdity from the week, stated flatly in the
@@ -104,9 +110,9 @@ invent.
 ---
 title: "Weekly Satire: <Subject>, <Month D, YYYY>"
 description: "<One sentence. No stranded preposition.>"
-date: <today>T00:00:00Z
+date: <today>T07:00:00-05:00
 author: Philip Huffman
-lastmod: <today>T00:00:00Z
+lastmod: <today>T07:00:00-05:00
 featuredOnHome: true
 hero_desktop: "img/articles/114-weekly-satire_16x9.webp"
 hero_mobile: "img/articles/114-weekly-satire_4x5.webp"
