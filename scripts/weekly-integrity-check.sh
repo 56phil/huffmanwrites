@@ -104,7 +104,7 @@ run_corpus_gates run run_soft
 
 
 if [ "$rc_total" -ne 0 ]; then
-  "$ALERT" "weekly-integrity" 1 "link, citation, or credential problems; see $LOG"
+  "$ALERT" "weekly-integrity" 1 "link, citation, credential, or vault-currency problems; see $LOG"
   echo "weekly-integrity: PROBLEMS FOUND"
 else
   echo "weekly-integrity: clean"
