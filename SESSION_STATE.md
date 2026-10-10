@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — October 10, 2026 — The corpus sweep now runs twice a week
+
+Philip: "Could a second integrity be added for late Friday? around 2100 CT."
+
+- **`com.huffmanwrites.weekly-integrity` fires at Monday 14:00 and Friday 21:00 CT.** One fire was not enough once the vault-currency gate joined the shared list: a post published on a Tuesday and missed by its publishing runner's mirror sat invisible for six days, and this sweep is the only thing in either repo that looks at the vault. Friday 21:00 halves that worst case and catches the week's weekday posts before the weekend, while the Saturday docket report, the Sunday Senate report and the Tuesday Chiefs report still land on the Monday side. 21:00 is clear of every other job — the daily SITREP writes at 06:00 and the watchdog checks at 07:00, 12:00, 18:00 and 22:00.
+- **The array form, not a second job.** `StartCalendarInterval` accepts an array of dicts; `com.huffmanwrites.docket-watch` has carried one since 2026-09-20 with both times firing daily, and the rule that claimed launchd ignores an array in a LaunchAgent was corrected on 2026-10-08. One job keeps one log, one alert name and one plist, and the Friday fire would otherwise need a runner that re-invokes the same script.
+- **Installed and loaded, not just edited.** `cp` to `~/Library/LaunchAgents/`, then `launchctl bootout` and `launchctl bootstrap`; `launchctl print` afterwards shows both `com.apple.launchd.calendarinterval` entries, Weekday 1 at 14:00 and Weekday 5 at 21:00. `check-plists.py` confirms the installed copy matches the repo copy, and `TestWeeklyIntegrityJob` pins the two fires and the plist→script→shared-list chain.
+
+---
+
 ### Maintenance — October 10, 2026 — Emptied pending/, and repaired the vault's missing October 9 SITREP
 
 Philip: "Clean up the pending directory and make sure that SimpleBrain is current."

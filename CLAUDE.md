@@ -154,7 +154,7 @@ Unattended jobs run from `scripts/` via launchd, and `scripts/check-plists.py` p
 | `repair-plan` | Quarterly (Jan/Apr/Jul/Oct 1) | Revises the long-horizon repair plan |
 | `site-audit` | Mondays 13:00 | Builds and crawls the live site for broken links and CSP drift |
 | `wiki-check` | Mondays 13:30 | Audits and fixes the SimpleBrain wiki |
-| `weekly-integrity` | Mondays 14:00 | Online link sweep + online quotation verification |
+| `weekly-integrity` | Mondays 14:00, Fridays 21:00 | Online link sweep + online quotation verification, credential liveness, and vault currency |
 | `chiefs-weekly-report` | Tuesdays 18:30 | **Publishes** the weekly Chiefs report (in season only) |
 | `weekly-satire` | Mondays 07:00 | **Publishes** the Weekly Satire series (2026-10-12 through 2026-11-02, then self-disables) |
 | `daily-sitrep` | Every day 06:00 | **Publishes** the Global SITREP (2026-10-07, open-ended) |

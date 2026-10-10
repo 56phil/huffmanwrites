@@ -4970,5 +4970,48 @@ class TestCorpusGateWiring(unittest.TestCase):
                 self.assertIn(gate, ci)
 
 
+# --------------------------------------------------------------------------
+class TestWeeklyIntegrityJob(unittest.TestCase):
+    """The corpus sweep's schedule, which is a decision and not a default.
+
+    It carries two fires since 2026-10-10. One was not enough once the
+    vault-currency gate joined the shared list: a post published on a Tuesday and
+    missed by its publishing runner's mirror then sat invisible until the
+    following Monday, six days later, and this sweep is the only thing in either
+    repo that looks at the vault. The Friday fire halves that worst case, and the
+    two together bracket the publishing week: the Saturday docket report, the
+    Sunday Senate report and the Tuesday Chiefs report all land after Friday and
+    before Monday.
+    """
+
+    def test_the_job_fires_twice_a_week(self):
+        import plistlib
+        p = SCRIPTS / "com.huffmanwrites.weekly-integrity.plist"
+        self.assertTrue(p.is_file(), "the corpus sweep's plist is missing")
+        d = plistlib.loads(p.read_bytes())
+        self.assertEqual(d.get("Label"), "com.huffmanwrites.weekly-integrity")
+        sched = d.get("StartCalendarInterval")
+        # The array form is deliberate. `com.huffmanwrites.docket-watch` has
+        # carried an array of two since 2026-09-20 and its log shows both times
+        # firing every day; an earlier version of the rule claimed launchd ignores
+        # an array in a LaunchAgent, and that was wrong.
+        self.assertIsInstance(sched, list, "two fires a week is the array form")
+        fires = {(e.get("Weekday"), e.get("Hour"), e.get("Minute")) for e in sched}
+        self.assertIn((1, 14, 0), fires, "Monday 14:00 CT, after the audit and the wiki check")
+        self.assertIn((5, 21, 0), fires, "Friday 21:00 CT, the fire that shortens the window")
+
+    def test_the_plist_runs_the_check_that_runs_the_shared_list(self):
+        # This job has no separate runner: the plist names the check script
+        # directly, and the script logs and alerts for itself. The shared list is
+        # what makes one sweep cover the whole corpus.
+        import plistlib
+        d = plistlib.loads((SCRIPTS / "com.huffmanwrites.weekly-integrity.plist").read_bytes())
+        args = d.get("ProgramArguments") or []
+        self.assertTrue(any(a.endswith("weekly-integrity-check.sh") for a in args),
+                        "the plist must name the check script")
+        text = (SCRIPTS / "weekly-integrity-check.sh").read_text(encoding="utf-8")
+        self.assertIn("run_corpus_gates run run_soft", text)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])

@@ -9,9 +9,18 @@
     <string>/bin/bash</string>
     <string>/Users/prh/Developer/huffmanwrites/scripts/weekly-integrity-check.sh</string>
   </array>
-  <!-- Monday 14:00 CT, an hour after the site audit (13:00) and the wiki check
-       (13:30) so the three do not contend, and so a failure here is read
-       alongside whatever the audit already reported.
+  <!-- Two fires a week, and both earn their place. Until 2026-10-10 this job ran
+       only on Monday 14:00 CT, an hour after the site audit at 13:00 and the wiki
+       check at 13:30 so the three do not contend and a failure here is read
+       alongside whatever the audit already reported. One fire was not enough once
+       the vault-currency gate joined the list: a post published on a Tuesday and
+       missed by the publishing runner's mirror then sat invisible for six days,
+       and this sweep is the only thing in either repo that looks at the vault.
+       Friday 21:00 CT halves the worst case and catches the week's weekday posts
+       before the weekend, while the Saturday docket report, the Sunday Senate
+       report and the Tuesday Chiefs report still land on the Monday side. 21:00
+       is clear of every other job: the daily SITREP writes at 06:00 and the
+       watchdog checks at 07:00, 12:00, 18:00 and 22:00.
 
        Weekly rather than per-commit on purpose: the deterministic gates run in
        CI on every push, but the expensive checks (fetch every cited URL, verify
@@ -20,14 +29,24 @@
        touched in months, which is where every defect found on 2026-09-19 had
        been sitting. -->
   <key>StartCalendarInterval</key>
-  <dict>
-    <key>Weekday</key>
-    <integer>1</integer>
-    <key>Hour</key>
-    <integer>14</integer>
-    <key>Minute</key>
-    <integer>0</integer>
-  </dict>
+  <array>
+    <dict>
+      <key>Weekday</key>
+      <integer>1</integer>
+      <key>Hour</key>
+      <integer>14</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+    <dict>
+      <key>Weekday</key>
+      <integer>5</integer>
+      <key>Hour</key>
+      <integer>21</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+  </array>
   <key>WorkingDirectory</key>
   <string>/Users/prh/Developer/huffmanwrites</string>
   <!-- Keep the exported PATH used by the other huffmanwrites jobs so hugo,
