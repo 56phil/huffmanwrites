@@ -11,7 +11,7 @@ tags:
   - civics
 hero_desktop: "img/articles/117-thing-not-done_16x9.webp"
 hero_mobile: "img/articles/117-thing-not-done_4x5.webp"
-hero_alt: "A plain Parian marble ballot box standing closed in a midnight navy void, its slot empty and dark, a horizontal gold line incised across the lid that has been struck through and cancelled by a second diagonal cut, fine gold dust settled beneath the stone."
+hero_alt: "A plain Parian marble ballot box standing closed on a dark polished marble floor, its lid plain with an empty slot, a seam of glowing amber-gold light along the joint where lid meets box, and a small pile of gold dust settled at its base."
 hero_caption: "The box is where corruption is answered. A line left uncut is an answer withheld."
 draft: false
 featuredOnHome: true
