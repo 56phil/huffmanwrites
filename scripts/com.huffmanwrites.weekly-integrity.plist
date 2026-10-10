@@ -22,6 +22,17 @@
        is clear of every other job: the daily SITREP writes at 06:00 and the
        watchdog checks at 07:00, 12:00, 18:00 and 22:00.
 
+       StartInterval 96 hours was weighed as the alternative on 2026-10-10 and
+       rejected, and the reason is measured rather than assumed. An interval's
+       phase belongs to the loaded job, not to the file: a 15-second probe agent
+       fired at +15s and +30s, and after bootout/bootstrap the next fires came
+       at +17s and +32s, one full interval after the reload instead of where the
+       old phase would have put them. So this plist could state an integer and
+       not a time, no test could pin the schedule, and the reinstall that
+       follows every plist edit would re-anchor the clock. 96 hours is also
+       exactly four days, so the weekday advances by four and a Friday fire
+       lands once per four weeks.
+
        Weekly rather than per-commit on purpose: the deterministic gates run in
        CI on every push, but the expensive checks (fetch every cited URL, verify
        every quotation against its own source) need network and are far too slow
