@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 10, 2026 — The reflection is now the letter's center; this week's letter amended
+
+Philip: "the central component of the Stoic Saturday newsletter will be a reflection consisting of no less than three well written paragraphs. The reflection is missing from this weeks newsletter. That's on me. I was in too big of a hurry."
+
+- **The rule is recorded in two places.** `skills/weekly-digest.md` gains a **The reflection** section and a corrected Structure line; CLAUDE.md's Conventions gains a matching standing rule. The reflection is the letter's **central component** — no fewer than three well-written paragraphs, under the bold heading **The reflection**, placed immediately after the epigraph, with the epigraph chosen to suit it, the week's items following as support, and **The Practice** left at the bottom.
+- **The email could not be recalled; the site's copy was amended.** SendFox campaign `3063218` was checked and is sent — `sent_at 2026-10-10T11:00:01Z` — so the 06:00 CT letter reached readers without a reflection. `content/posts/digests/stoic-saturday-the-thing-not-done.md` was therefore rewritten: the reflection (four paragraphs) now sits under **The reflection** directly after the Marcus 9.5 epigraph, and the two-paragraph "honest reading" it grew out of was removed from its old place before **The weekly reports**. The reflection absorbed it rather than standing beside it, so the letter has one reflective passage, not two.
+- **The reflection keeps the letter's argument and the letter's rules.** It reads corruption as omission — a republic maintained or neglected one omitted duty at a time — grounds that in the epigraph's line about what a hand declines to do, and closes on the ballot, thirty days out. 0 counted em-dashes, 0 sentence-final prepositions, 1 attribution (the epigraph, translator named and link intact).
+- **Verified by running it.** `check-emdashes --file` (2 counted, unchanged: the epigraph attribution and the sign-off), `check-prepositions --file` (0), `check-quotes --file` (1 OK), both ratchets (241 files), `check-content-frontmatter` (210 files), `check-hero-paths` (287 paths), `check-series-posts` (13 installments), **`test_gates.py` 364/364**, and `hugo --gc --minify` clean. The built page carries the new order — epigraph, **The reflection**, the items, **The weekly reports**, **The Practice** — and the letter reads 1,664 words, up from 1,534.
+- **`pending/2026-10-10-Stoic-Saturday.md` was left as sent.** It is the record of the email that actually went out; only the site's copy changed, because an email cannot be recalled and the page is the copy a reader returns to.
+
+---
+
 ### Maintenance — October 10, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.

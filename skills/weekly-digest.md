@@ -1,9 +1,9 @@
 # Skill: Stoic Saturday Digest
 
-The weekly newsletter: a Stoic epigraph, the week's news read through it, a
-practice for the reader, and a roundup of this site's report series. Drafted
-Saturday morning into `pending/`, sent through SendFox, then mirrored to
-`content/posts/digests/`.
+The weekly newsletter: a Stoic epigraph, a reflection at its center, the week's
+news read through it, a practice for the reader, and a roundup of this site's
+report series. Drafted Saturday morning into `pending/`, sent through SendFox,
+then mirrored to `content/posts/digests/`.
 
 Unlike the weekly reports, **this file is not published by a runner.** Philip reads and
 edits it before it sends, so nothing here commits or pushes on your behalf.
@@ -52,6 +52,32 @@ featuredOnHome: true
   `[NN]-[slug]_16x9.webp` and `[NN]-[slug]_4x5.webp` (see `skills/hero-image-workflow.md`).
   `scripts/check-hero-paths.py` fails a path that names no file.
 
+## The reflection
+
+**The letter's central component**, established 2026-10-10. Every Stoic Saturday carries a
+reflection of **no fewer than three well-written paragraphs**. The letter is built around it;
+the week's items support it rather than the other way around.
+
+- **Where it sits.** Immediately after the epigraph, near the top of the letter, under the
+  bold heading **The reflection**. The week's items follow it.
+- **What it is.** A sustained piece of thinking, not a summary of the items. It names the
+  meaning the week carries and turns it over: what the pattern is, what the Stoic line above
+  it actually says and refuses to say, and what it asks of the reader. The items below supply
+  the facts; the reflection supplies the reading of them.
+- **The epigraph serves the reflection.** Choose the line above it for the reflection, not the
+  reflection for the line: the epigraph is the one that sorts what the reflection argues.
+- **Three paragraphs is the floor, not the target.** A reflection that restates the items in
+  shorter words is not a reflection. It has to take a position and hold it.
+
+Where a letter shipped without one, the fix is to write it and amend the published page —
+the email cannot be recalled, but the site's copy is the record a reader returns to. The
+2026-10-10 letter ("The Thing Not Done") went out without a reflection and was amended the
+same morning.
+
+**Not mechanically gated.** Length has a floor, but whether the reflection is *well written*
+and truly central is a judgment, and it is the one the reader is owed. The gates named below
+cover the rest.
+
 ## The weekly-reports roundup
 
 A **standing structural element**, added 2026-10-03, under the heading **The weekly
@@ -85,10 +111,11 @@ administration, not a reader-facing report, and it does not appear in the roundu
 ## Writing rules
 
 Tone: personal stakes + historical context + contemporary urgency. Not yelling, not
-lecturing. Think *with* the reader. Structure: the epigraph; the week's items with bold
-lead-ins; the honest reading in prose; **The weekly reports**; **The Practice**; the
-sign-off ("See you next Saturday. — Phil"); the sources line; the `## Sources` list; and the
-closing attribution `*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*`.
+lecturing. Think *with* the reader. Structure: the epigraph; **the reflection** (the central
+component, no fewer than three paragraphs, immediately after the epigraph); the week's items
+with bold lead-ins; **The weekly reports**; **The Practice**; the sign-off ("See you next
+Saturday. — Phil"); the sources line; the `## Sources` list; and the closing attribution
+`*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*`.
 
 These rules are enforced, and each names its gate.
 
@@ -130,6 +157,10 @@ These rules are enforced, and each names its gate.
 
 ## What is not gated
 
+- **The reflection is a writing judgment.** Its floor is three paragraphs, but no gate counts
+  them or reads them, and none can check that the reflection is the letter's center rather
+  than a restatement of the items. Whether it is worth reading is the part a reader is owed,
+  and it is yours.
 - **The roundup judgment is a writing decision.** No gate checks which installment is the
   most recent, which one you surface, or whether your sentence states what it found. That is
   the part a reader is owed, and it is yours.
