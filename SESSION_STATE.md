@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 10, 2026 — Published the docket-weekly-report report (automated)
+
+Auto-published by `com.huffmanwrites.docket-weekly-report` after every gate passed.
+- **Published** `content/posts/essays/docket-report-2026-10-10.md` — "Docket Report: October 10, 2026", 4144 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The filings came from `scripts/check-docket.py`**, the same registry the docket watcher reads, because the three watched dockets are declared there and nowhere else. The writer is required to read the script rather than reconstruct the filing list from coverage.
+- **The registry's `known` map is committed with the article.** The skill tells the writer to record each meaningful filing's one-line note there, and that map is the registry's memory — if it were left in the tree it would be lost every week. `publish_article` stages it by name (via `PUBLISH_EXTRA_PATHS`), never by wildcard.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own `<title>` to carry the article's `title` (`scripts/verify-published.py`, the rule `sitrep-watchdog.py` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence raises the shared alert and fails the run: the article is on `main` and no reader has it. The outcome is in `/Users/prh/Library/Logs/docket-weekly-report.out.log`.
+- **SimpleBrain mirror** runs immediately after this push: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in `/Users/prh/Library/Logs/docket-weekly-report.out.log`.
+
+---
+
 ### Maintenance — October 10, 2026 — The corpus sweep now runs twice a week
 
 Philip: "Could a second integrity be added for late Friday? around 2100 CT."
