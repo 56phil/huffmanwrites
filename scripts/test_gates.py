@@ -68,6 +68,7 @@ csp = load("check-series-posts")
 crf = load("check-report-frontmatter")
 cqn = load("check-quote-names")
 ccf = load("check-content-frontmatter")
+cvc = load("check-vault-currency")
 
 EM = "\u2014"
 
@@ -2541,6 +2542,154 @@ class TestHeroPathGate(unittest.TestCase):
                 self.assertIn("run_report_gates", text)
         ninety = (SCRIPTS / "ninety-days-report-runner.sh").read_text(encoding="utf-8")
         self.assertIn("check-hero-paths", ninety)
+
+
+class TestVaultCurrencyRules(unittest.TestCase):
+    """Every published post must reach the vault, and nothing watched for it.
+
+    Why this exists. The publishing runners mirror the article they just wrote
+    into `~/SimpleBrain`, but the mirror step runs after the post-push delivery
+    check. On 2026-10-09 the SITREP run pushed, the deploy did not land, the
+    delivery check exited 1, and the mirror never ran: `sitrep-2026-10-09.md` was
+    published and absent from the vault, invisible to every job in either repo
+    until a human found it the next day. These tests pin the rule and each way it
+    can be made to lie.
+
+    Every fixture is a `tempfile` tree passed as `--content`/`--vault`, so no test
+    reads the real content tree or the real vault: the gate's whole input is
+    pinned, which is what keeps these true on any day.
+    """
+
+    def setUp(self):
+        import tempfile
+        self.root = Path(tempfile.mkdtemp(prefix="vault-currency-"))
+        self.content = self.root / "content"
+        self.vault = self.root / "vault"
+        self.content.mkdir()
+        self.vault.mkdir()
+
+    def post(self, name, *, date=None, draft=False):
+        p = self.content / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        lines = ["title: T"]
+        if date is not None:
+            lines.append(f"date: {date}")
+        lines.append(f"draft: {'true' if draft else 'false'}")
+        p.write_text("---\n" + "\n".join(lines) + "\n---\n\nBody.\n",
+                     encoding="utf-8")
+        return p
+
+    def vault_file(self, name):
+        p = self.vault / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text("mirrored\n", encoding="utf-8")
+        return p
+
+    def invoke(self, *extra):
+        import io
+        import contextlib
+        buf = io.StringIO()
+        old = sys.argv
+        sys.argv = ["check-vault-currency.py",
+                    "--content", str(self.content),
+                    "--vault", str(self.vault), *extra]
+        try:
+            with contextlib.redirect_stdout(buf):
+                rc = cvc.main()
+        finally:
+            sys.argv = old
+        return rc, buf.getvalue()
+
+    def test_a_post_with_a_counterpart_passes(self):
+        self.post("posts/sitrep-2026-10-09.md", date="2026-10-09")
+        self.vault_file("archive/sitrep-2026-10-09.md")
+        rc, out = self.invoke()
+        self.assertEqual(rc, 0, out)
+        self.assertIn("coverage: 1 posts", out)
+
+    def test_a_post_without_a_counterpart_fails_and_is_named(self):
+        # The 2026-10-09 defect exactly: published on the site, absent from the
+        # vault, nothing watching.
+        self.post("posts/sitrep-2026-10-09.md", date="2026-10-09")
+        rc, out = self.invoke()
+        self.assertEqual(rc, 1, out)
+        self.assertIn("sitrep-2026-10-09", out)
+        self.assertIn("no file in the vault has stem", out)
+
+    def test_a_counterpart_counts_anywhere_with_any_extension(self):
+        # The vault is not organised to mirror Hugo's tree: the raw file moves to
+        # `archive/`, the translation lives in `wiki/articles/`, and an image may
+        # share the stem. Stem and any depth is the whole rule.
+        self.post("posts/essay.md", date="2026-01-01")
+        self.vault_file("wiki/articles/deep/essay.md")
+        self.assertEqual(self.invoke()[0], 0)
+        self.post("posts/other.md", date="2026-01-01")
+        self.vault_file("images/other.png")
+        self.assertEqual(self.invoke()[0], 0)
+
+    def test_a_draft_is_ignored(self):
+        # A draft is never published, so a publishing runner never mirrors it;
+        # requiring a counterpart would fail every drafting job.
+        self.post("posts/wip.md", date="2026-10-09", draft=True)
+        rc, out = self.invoke()
+        self.assertEqual(rc, 0, out)
+        self.assertIn("coverage: 0 posts", out)
+
+    def test_a_section_index_is_ignored(self):
+        self.post("posts/sitrep/_index.md", date="2026-10-09")
+        rc, out = self.invoke()
+        self.assertEqual(rc, 0, out)
+        self.assertIn("coverage: 0 posts", out)
+
+    def test_a_post_before_since_is_ignored(self):
+        # The `--since` floor is how the weekly job asks about recent posts only,
+        # so that decades of older content does not swamp the report.
+        self.post("posts/old.md", date="2026-09-01")
+        rc, out = self.invoke("--since", "2026-09-25")
+        self.assertEqual(rc, 0, out)
+        self.assertIn("coverage: 0 posts", out)
+
+    def test_a_future_dated_post_is_not_yet_due(self):
+        # The Stoic Saturday digest is committed the day before with
+        # `draft: false` and a `date:` of 06:00 the next morning, and sits in that
+        # state overnight. It is published to no one yet, so it has no vault
+        # counterpart to be behind. `--now` pins the clock, so the rule is stated
+        # against a fixed moment rather than against today.
+        self.post("posts/digest.md", date="2026-10-11T06:00:00-05:00")
+        rc, out = self.invoke("--now", "2026-10-10T09:00:00")
+        self.assertEqual(rc, 0, out)
+        self.assertIn("coverage: 0 posts", out)
+
+    def test_a_post_whose_embargo_has_lifted_is_due(self):
+        # The other side of the same boundary: at 09:00 the same day, the 06:00
+        # post is out, so a missing counterpart is a real miss.
+        self.post("posts/digest.md", date="2026-10-10T06:00:00-05:00")
+        rc, out = self.invoke("--now", "2026-10-10T09:00:00")
+        self.assertEqual(rc, 1, out)
+        self.assertIn("digest", out)
+
+    def test_the_vault_absent_path_exits_zero_and_reports_coverage(self):
+        # Local-only gate: on CI, or any machine without the vault, there is no
+        # mirror to be behind, and a gate that cannot run is not a gate that found
+        # something.
+        self.post("posts/sitrep-2026-10-09.md", date="2026-10-09")
+        self.vault = self.root / "no-such-vault"
+        rc, out = self.invoke()
+        self.assertEqual(rc, 0, out)
+        self.assertIn("does not exist", out)
+        self.assertIn("coverage: 1 posts", out)
+
+    def test_a_missing_content_dir_is_not_a_failure(self):
+        self.content = self.root / "no-such-content"
+        rc, out = self.invoke()
+        self.assertEqual(rc, 0, out)
+        self.assertIn("coverage: 0 posts", out)
+
+    def test_the_weekly_job_runs_the_vault_check(self):
+        # A gate nobody runs is a gate that does not exist; this one must be in
+        # the shared list, which is where a corpus-wide rule lives.
+        text = (SCRIPTS / "corpus-gates.sh").read_text(encoding="utf-8")
+        self.assertIn("check-vault-currency.py", text)
 
 
 class TestSeriesHomeFlagGate(unittest.TestCase):

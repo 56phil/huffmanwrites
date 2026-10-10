@@ -18,11 +18,20 @@
 # than its own copy, and (b) that every `scripts/check-*.py` is invoked by CI or
 # by some runner — no gate is orphaned, and none is silently dropped from a job.
 #
-# Scope, stated plainly: these are the ONLINE corpus gates, the ones no other job
-# can run. The deterministic corpus gates (hero paths, render integrity, gallery
-# pages, series posts, report frontmatter, content frontmatter, dashes,
-# prepositions) run in CI on every push and, per-file, in the publishing tail;
-# this file does not duplicate them.
+# Scope, stated plainly: this file carries the corpus gates that no other job
+# can run — the ONLINE ones (link rot, quotation wording, credential liveness)
+# and one that is offline but local to this machine: the vault-currency check,
+# which asks whether every published post reached `~/SimpleBrain`. The rest of
+# the deterministic corpus gates (hero paths, render integrity, gallery pages,
+# series posts, report frontmatter, content frontmatter, dashes, prepositions)
+# run in CI on every push and, per-file, in the publishing tail; this file does
+# not duplicate them.
+#
+# Why a local-only gate lives here rather than in a second list: the same reason
+# this file exists at all. A rule that lives in one runner and not another holds
+# only where it was written, and the vault-currency rule had no runner at all —
+# the mirror step runs inside the publishing tail, so nothing could see a run
+# that exited before reaching it.
 #
 # Usage (from a job that has already defined `run` and `run_soft`):
 #
@@ -96,4 +105,15 @@ run_corpus_gates() {
   # where the keychain and ~/.secrets agreed with each other and both were dead.
   _corpus_gate "$hard" "$soft" fatal "secrets (drift)"    python3 scripts/check-secrets.py --quiet
   _corpus_gate "$hard" "$soft" fatal "secrets (liveness)" python3 scripts/check-secrets.py --online --quiet
+
+  # Vault currency. Every publishing runner mirrors the article it just wrote
+  # into `~/SimpleBrain`, but that mirror step runs AFTER the runner's post-push
+  # delivery check. On 2026-10-09 the daily SITREP run pushed
+  # `sitrep-2026-10-09.md`, the deploy did not land, the delivery check found the
+  # page 404 and exited 1, and the mirror never ran: the edition was published and
+  # never reached the vault, and no job in either repo could see it. This gate is
+  # the watch. It is local-only and no-ops with a note on a machine without the
+  # vault (CI included), so it can be fatal here: when the vault IS present, a
+  # miss is a real published post that no reader of the vault can find.
+  _corpus_gate "$hard" "$soft" fatal "vault (currency)" python3 scripts/check-vault-currency.py
 }
