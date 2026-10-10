@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — October 10, 2026 — Emptied pending/, and repaired the vault's missing October 9 SITREP
+
+Philip: "Clean up the pending directory and make sure that SimpleBrain is current."
+
+- **`pending/` now holds only `TEMPLATE.md` and `archive/`.** The October 3 Stoic Saturday draft — the last send copy still sitting in the live directory, weeks after the September 12 and 19 copies were archived — moved to `pending/archive/` unchanged, and the stray Finder `.DS_Store` was removed. Committed `f0ff83e`; because `pending/archive/` is gitignored, the archive move shows up as a tracked deletion, which is how the earlier archive commits read too.
+- **SimpleBrain was short exactly one item, and the cause is worth keeping.** A sweep of every `content/` file dated since 2026-09-25 against the vault found **one** missing: `sitrep-2026-10-09`. The reason is in `~/Library/Logs/daily-sitrep.out.log`: that morning's run committed and pushed the edition, then `verify-published.py` found the page 404 on all 24 checks over 360 seconds — the deploy was red, so the site served nothing — and the run exited 1 at `live verification FAILED`. **The publish tail runs the SimpleBrain mirror after the delivery check, so the mirror never ran.** The next day's vault agent said so in its own summary: "there is no October 9 SITREP in the vault." The page has since gone live (200, correct title, verified today), and the edition is mirrored now (`a61c1c7`): article, index highlight, raw→archive move, plus the October 10 article's backlink corrected from October 8 to October 9 and the oldest highlight (Chiefs, October 6) pruned to hold the list at seven.
+- **The systemic half is the part to carry forward.** A job that fails alerts, and that run did — but a *delivery* failure takes the run down before the mirror step and before the mirror's own verification, so the vault can fall short in silence while the operator sees only the deploy failure. Nothing in the repo looks at the vault the way `sitrep-watchdog.py` looks at the site. That check is the obvious gap; it is not built.
+
+---
+
 ### Maintenance — October 10, 2026 — The reflection is now the letter's center; this week's letter amended
 
 Philip: "the central component of the Stoic Saturday newsletter will be a reflection consisting of no less than three well written paragraphs. The reflection is missing from this weeks newsletter. That's on me. I was in too big of a hurry."
