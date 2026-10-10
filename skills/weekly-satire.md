@@ -1,8 +1,11 @@
 # Skill: Weekly Satire
 
 The writer's brief for the **Weekly Satire** series — one piece every Monday,
-07:00 CT, from 2026-10-12 through 2026-11-02. The job self-disables after
-2026-11-02.
+07:00 CT. The **first installment (2026-10-12) was written and reviewed by hand**
+and is already committed as `content/posts/essays/weekly-satire-2026-10-12.md`,
+embargoed to its 07:00 CT date; the runner does not write that one. The
+**auto-published** installments are 2026-10-19, 2026-10-26 and 2026-11-02, and the
+job self-disables after 2026-11-02.
 
 **This job publishes without human review.** The runner writes the file, runs
 both builds and every gate, and pushes to production in one run. A gate failure

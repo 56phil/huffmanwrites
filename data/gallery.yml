@@ -507,11 +507,11 @@
 - image: /img/articles/114-weekly-satire_16x9.webp
   title: Weekly Satire
   caption: The face is empty. The frame was paid for in full.
-  # Until the first installment publishes (Monday 2026-10-12) this card points
-  # at My Apologies, the essay that established the register the series works
-  # in, so it is never a picture with nothing to read. `latest` overrides
-  # `link` the moment a real `weekly-satire-*.md` exists, so the switch needs
-  # no follow-up edit.
+  # The first installment, 2026-10-12, was written and reviewed by hand and is
+  # embargoed to its 07:00 CT date; the Monday runner writes from 2026-10-19. The
+  # `latest` glob matches the committed installment now, so the `link` fallback
+  # (the essay that established the series register) is already superseded and
+  # survives only for the moment before the first file lands.
   link: /posts/essays/my-apologies/
   latest: /posts/essays/weekly-satire-*
 - image: /img/articles/115-sitrep_16x9.webp

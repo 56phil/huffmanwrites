@@ -1,8 +1,9 @@
 #!/bin/bash
 # Weekly Satire runner.
 # Invoked by launchd (com.huffmanwrites.weekly-satire) every Monday at 07:00 CT,
-# from Monday 2026-10-12 through Monday 2026-11-02. Self-disables after
-# 2026-11-02.
+# from Monday 2026-10-19 through Monday 2026-11-02. Self-disables after
+# 2026-11-02. (The first installment, 2026-10-12, was written and reviewed by
+# hand — see the date-guard comment below.)
 #
 # Philip, 2026-10-07: "Set up a weekly task to publish a piece mocking Trump
 # start next Monday. End the task 03NOV26." Asked what form each piece should
@@ -65,17 +66,23 @@ export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 PROMPT="${WEEKLY_SATIRE_PROMPT:-Read $SKILL and follow it exactly. Write the Weekly Satire piece for this week. It will be published on this run if every gate passes.}"
 
 # ---------------------------------------------------------------------------
-# Date guard: run only from Monday 2026-10-12 through Monday 2026-11-02.
+# Date guard: run only from Monday 2026-10-19 through Monday 2026-11-02.
 #
-# The job is installed on 2026-10-07, so without the start guard its first
-# scheduled firing would be the next Monday, which is the date Philip asked for
-# anyway — but the guard makes "start next Monday" true by construction rather
-# than by the accident of an install date. The END guard is the self-disable
-# ("End the task 03NOV26"): the schedule fires every Monday, so the last
-# installment is Monday 2026-11-02, and every Monday after that exits 0. Exit 0,
-# not an error: the job is simply no longer due, and a non-zero code would raise
-# the failure alert every Monday forever, which is how a real alert gets learned
-# as noise. Same reasoning as the docket start guard and the Chiefs season guard.
+# The start guard is 2026-10-19, not 2026-10-12. The first installment, for
+# Monday 2026-10-12, was written and reviewed by hand and committed as
+# `content/posts/essays/weekly-satire-2026-10-12.md`, embargoed to its 07:00 CT
+# date (Philip, 2026-10-10: "Set it up with an embargo for 0700 Monday
+# morning"). Letting this job fire on 2026-10-12 would have it write the SAME
+# path — `ARTICLE` is bound to `weekly-satire-$TODAY.md` below — and its preflight
+# deletes any file already there, so it would silently discard the reviewed piece
+# and publish an unreviewed one in its place. The remaining three installments
+# (Oct 19, Oct 26, Nov 2) are the job's, which is the "four articles for this
+# project" Philip asked for. The END guard is the self-disable ("End the task
+# 03NOV26"): the schedule fires every Monday, so the last installment is Monday
+# 2026-11-02, and every Monday after that exits 0. Exit 0, not an error: the job
+# is simply no longer due, and a non-zero code would raise the failure alert
+# every Monday forever, which is how a real alert gets learned as noise. Same
+# reasoning as the docket start guard and the Chiefs season guard.
 #
 # WEEKLY_SATIRE_IGNORE_GUARDS=1 runs outside the window. It exists so the
 # pipeline can be exercised WITHOUT waiting for — or performing — the launch:
@@ -88,8 +95,8 @@ PROMPT="${WEEKLY_SATIRE_PROMPT:-Read $SKILL and follow it exactly. Write the Wee
 # ---------------------------------------------------------------------------
 TODAY="$(date '+%Y-%m-%d')"
 if [ "${WEEKLY_SATIRE_IGNORE_GUARDS:-0}" != "1" ]; then
-  if [[ "$TODAY" < "2026-10-12" ]]; then
-    echo "$(stamp): before the start date (2026-10-12); no piece due, exiting" >> "$OUT_LOG"
+  if [[ "$TODAY" < "2026-10-19" ]]; then
+    echo "$(stamp): before the start date (2026-10-19); no piece due, exiting" >> "$OUT_LOG"
     exit 0
   fi
   if [[ "$TODAY" > "2026-11-02" ]]; then

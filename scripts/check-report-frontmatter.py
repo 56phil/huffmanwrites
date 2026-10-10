@@ -135,7 +135,8 @@ def field(front: str, name: str) -> "str | None":
 
 
 def validate(path: "Path | str", hero_plate: "str | None" = None,
-             now: "datetime | None" = None, slack_seconds: int = 300) -> "list[str]":
+             now: "datetime | None" = None, slack_seconds: int = 300,
+             future_ok: bool = False) -> "list[str]":
     """Every reason this file must not be published. Empty list means publish.
 
     `hero_plate` pins the series plate when a series uses one fixed pair of
@@ -144,6 +145,19 @@ def validate(path: "Path | str", hero_plate: "str | None" = None,
     verbatim; this is what makes "verbatim" checkable rather than trusted, and a
     series that quietly drifts to a different plate loses the visual identity
     the plate exists to hold.
+
+    `future_ok` is the scheduling mode: it drops the "date ahead of the clock"
+    rule for a file that is *deliberately* dated to an hour that has not arrived,
+    whose page the deploy publishes at the stroke of that hour (the 12:00 UTC
+    build in `.github/workflows/hugo.yml`, or a later push). The rule exists
+    because a future date normally means a mistake — a `date`/`lastmod` typo, or
+    a report dated tomorrow — and Hugo skips such a page silently, so the run
+    reports success and the reader gets nothing. Corpus mode is the one place
+    that cannot tell an appointment from a typo by the clock alone, because it
+    runs on every other day and the same file is future today and past on its
+    date. The publishing runners and the `--file` mode stay strict: a job that
+    has just written "today" must never be permitted a future date. Do NOT
+    default this on.
     """
     p = Path(path)
     if not p.is_file():
@@ -216,7 +230,7 @@ def validate(path: "Path | str", hero_plate: "str | None" = None,
             reference = now or datetime.now(CT)
             if reference.tzinfo is None:
                 reference = reference.replace(tzinfo=CT)
-            if stamp > reference + timedelta(seconds=slack_seconds):
+            if not future_ok and stamp > reference + timedelta(seconds=slack_seconds):
                 problems.append(
                     f"date {raw} is ahead of the clock "
                     f"({reference.isoformat(timespec='seconds')}); buildFuture "
@@ -333,7 +347,13 @@ def main() -> int:
         targets = series_installments()
         failures = 0
         for path in targets:
-            problems = validate(path)
+            # Corpus mode is a scheduling scan, and a deliberately future-dated
+            # appointment is exactly what a publishing series can legitimately
+            # carry between its commit and its hour (the Weekly Satire's Monday
+            # 07:00 embargo). The date rule stays live in --file mode and in the
+            # runners, where "today" is the only date a just-written report may
+            # carry. See validate()'s `future_ok` note.
+            problems = validate(path, future_ok=True)
             if problems:
                 failures += 1
                 print(f"  {path.relative_to(REPO)}:", file=sys.stderr)

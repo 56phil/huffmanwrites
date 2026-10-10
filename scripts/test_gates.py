@@ -2320,12 +2320,61 @@ class TestReportFrontmatterGate(unittest.TestCase):
             self.assertNotEqual(crf.field(fm, "draft"), "true", p.name)
 
     def test_corpus_mode_passes_on_the_real_repo(self):
-        # The standing state: every published series installment is publishable.
-        # A failure here is a real report the deploy would silently drop.
+        # The standing state: every published series installment is publishable
+        # under the SAME rules CI runs. `--corpus` is a scheduling scan, so it
+        # passes future_ok=True: a series may legitimately carry one deliberately
+        # future-dated appointment between its commit and its hour (the Weekly
+        # Satire's Monday 07:00 embargo). This mirrors `main()` rather than
+        # calling validate() bare — an earlier version of this test did the
+        # latter and went red the moment the embargoed installment landed, which
+        # is the wrong failure. A failure here is still a real report the deploy
+        # would silently drop.
         problems = []
         for p in crf.series_installments():
-            problems += [f"{p}: {m}" for m in crf.validate(p)]
+            problems += [f"{p}: {m}" for m in crf.validate(p, future_ok=True)]
         self.assertEqual(problems, [])
+
+    def test_the_future_date_exemption_is_narrow_and_file_mode_keeps_its_teeth(self):
+        # The exemption must drop ONLY the future-date rule. Pinned with a fixed
+        # `now`, so the assertion cannot invert on the day the embargoed file
+        # publishes: a fixture dated two days ahead, checked against a clock two
+        # days BEHIND it, is future in the assertion's frame whichever day the
+        # suite runs.
+        import tempfile
+        from datetime import datetime
+        now = datetime(2026, 10, 1, 12, 0, tzinfo=crf.CT)
+        body = ("---\n"
+                'title: "Weekly Satire: Test, October 3, 2026"\n'
+                'description: "A sentence with no stranded preposition here."\n'
+                "date: 2026-10-03T07:00:00-05:00\n"
+                "lastmod: 2026-10-03T07:00:00-05:00\n"
+                "author: Philip Huffman\n"
+                "featuredOnHome: true\n"
+                'hero_desktop: "img/articles/114-weekly-satire_16x9.webp"\n'
+                'hero_mobile: "img/articles/114-weekly-satire_4x5.webp"\n'
+                'hero_alt: "x"\n'
+                'hero_caption: "y"\n'
+                "tags:\n  - satire\n"
+                "draft: false\n"
+                "---\n\n"
+                "Body text.\n\n"
+                "*PRH | huffmanwrites.org | © Philip Huffman*\n")
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "weekly-satire-2026-10-03.md"
+            p.write_text(body, encoding="utf-8")
+            strict = crf.validate(p, now=now)
+            scheduled = crf.validate(p, now=now, future_ok=True)
+            # Strict (the runners and --file) flags the future date...
+            self.assertTrue(any("ahead of the clock" in m for m in strict), strict)
+            # ...and the flag is the only difference: nothing else about the file
+            # is forgiven, so the exemption cannot be widened into a blind spot.
+            self.assertEqual(scheduled, [], scheduled)
+            # And the flag does not disarm a different rule: a draft flag still
+            # fails under future_ok=True.
+            bad = p.read_text(encoding="utf-8").replace("draft: false", "draft: true")
+            p.write_text(bad, encoding="utf-8")
+            self.assertTrue(any("draft" in m
+                                for m in crf.validate(p, now=now, future_ok=True)))
 
     def test_ci_runs_the_frontmatter_gate(self):
         ci = (REPO / ".github" / "workflows" / "hugo.yml").read_text(encoding="utf-8")

@@ -9,6 +9,13 @@ on:
     - cron: '0 5 * * *'
     # 11:00 UTC = 06:00 Central Time (CDT). Publishes the Saturday digest at 6 AM.
     - cron: '0 11 * * *'
+    # 12:00 UTC = 07:00 Central Time (CDT). Publishes a post embargoed to 07:00 CT
+    # (the Weekly Satire, whose launchd job fires the same minute) at the stroke
+    # of its date. Without this fire a post dated 07:00 is still future at the
+    # 06:00 build and waits for the next push — the "date ahead of the clock"
+    # failure wearing different clothes. The three fires are 05:00, 11:00 and
+    # 12:00 UTC, i.e. 00:00, 06:00 and 07:00 CT; add a fourth only for a new hour.
+    - cron: '0 12 * * *'
   workflow_dispatch:
 
 permissions:
