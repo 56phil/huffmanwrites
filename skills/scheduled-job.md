@@ -60,9 +60,16 @@ Every AI job sets `ANTHROPIC_BASE_URL=http://localhost:11434`, sources
 `com.huffmanwrites.ollama-app` opens at login (`RunAtLoad`, no `KeepAlive`, via
 `scripts/ollama-app-launch.sh`, which confirms the port answered). Without the
 probe, a crashed app is a connection error mid-draft and an article that never
-appears. `test_gates.py` (TestPublishLibrary) asserts all eight AI runners probe
-before the writer. Point no job at a server binary: an earlier one ran
-`ollama serve` and duplicated the app's server.
+appears. Since 2026-10-11 the probe **heals as well as reports**: it fast-passes
+when the server answers, and otherwise reopens the app and waits up to
+`OLLAMA_PROBE_START_WAIT` before failing. That reopen fires only when a job is
+blocked on the server, so it is not a `KeepAlive` and cannot fight a user who
+closed the app. The login job covers "the app was never open"; the probe covers
+"the app was open and then died" (the 2026-10-11 SITREP miss). `test_gates.py`
+(TestPublishLibrary) asserts all eight AI runners probe before the writer, and
+(TestOllamaProbe) that the probe reopens rather than only aborting. Point no job
+at a server binary: an earlier one ran `ollama serve` and duplicated the app's
+server.
 
 ## 6. The runner runs the verification, not the writer
 

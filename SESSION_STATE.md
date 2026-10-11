@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 11, 2026 — The Ollama probe heals a dead server; the mirror resolves its own auth; the Deployment version line corrected
+
+Philip: "Is there anything about which I should worry," then, on the ranked list, "Very well. Make it so." Three fixes, each a defect found by reading today's logs rather than by a gate.
+
+- **The Ollama probe now reopens the app instead of only aborting.** `~/.ollama/logs/app-2.log` shows the app received SIGINT/SIGTERM at **05:49:26** and shut down — its auto-updater had staged 0.40.3 at 02:19 and was re-checking hourly. The **06:00** SITREP run found `:11434` dead and aborted (`FAILED daily-sitrep — Ollama unreachable`), `sitrep-watchdog` alerted at 07:00 that no edition existed, and the app did not return until 07:36. The edition then published late, at 07:54. The login job (`com.huffmanwrites.ollama-app`) covers "the app was never open"; nothing covered "the app was open and then died", which is a state no login-time job is running to see. `scripts/ollama-probe.sh` now fast-passes when the server answers and otherwise does what the login job does — `open -a` and wait up to `OLLAMA_PROBE_START_WAIT` (90 s) — before raising the alert. It fires only when a job is actually blocked on the server, at the minute that job runs, so it is not a `KeepAlive` and cannot fight a user who closed the app. Inherited by all eight AI runners for free, since they already source the probe.
+- **The SimpleBrain mirror resolves its own model auth, so a hand-run recovery works too.** The two mirror failures this week — Chiefs 2026-10-06 and Senate 2026-10-11, both `Failed to authenticate: OAuth session expired and could not be refreshed`, all five mirror checks failing — were on **manual recovery sessions**, not the scheduled runners. The runners bind `ANTHROPIC_API_KEY` from the Ollama keychain; a hand-run that sources `scripts/publish-report.sh` directly does not, and without it `claude` falls back to a stale OAuth token (measured 2026-10-11: with the key it reaches the local server, without it it prints that exact line and exits 1). `report_model_env()` in the library now resolves the key from the same two homes in the same order the runners use, and `publish_simplebrain` calls it before its `claude` session. Any caller, scheduled or by hand, gets the same environment.
+- **CLAUDE.md's Deployment section said "Hugo 0.166.0" while the workflow pins 0.167.0.** The same drift the intro line documents ("a version written into prose is a version that drifts"); corrected to 0.167.0. The scheduled-job skill's rule 5, the probe's own header, and `ollama-app-launch.sh`'s comment all now describe the heal/report split.
+- **Verified by running it.** 387/387 gate tests (was 382; `TestOllamaProbe` adds four behavioral tests and `TestPublishLibrary` one, all executing the reopen path and the auth path under stubs rather than reading prose). The heal path was smoke-tested **against the real app**: quit Ollama, ran `ollama_require`, and it reopened the app and saw the server answer in 2 s. The auth fix was smoke-tested end-to-end **with no key in the environment**, against a scratch SimpleBrain: `publish_simplebrain` resolved auth, translated, passed all five checks, and pushed. `check-plists` 13/13, every `scripts/*.sh` parses, `hugo --gc --minify` clean, and the offline corpus gates (links, dashes, prepositions, content frontmatter, hero paths, vault currency) all green.
+
+---
+
+
 ### Maintenance — October 11, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.

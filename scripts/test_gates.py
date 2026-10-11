@@ -4207,6 +4207,151 @@ class TestPublishLibrary(unittest.TestCase):
                                 text.find("claude -p"),
                                 f"{name} probes Ollama after the writer starts")
 
+    def test_the_mirror_session_resolves_its_own_model_auth(self):
+        # The mirror's `claude` call needs ANTHROPIC_API_KEY; without it the
+        # session falls back to a dead OAuth token and prints "Failed to
+        # authenticate: OAuth session expired and could not be refreshed", then
+        # exits 1 — all five mirror checks fail and the vault goes without the
+        # piece. The scheduled runners bind the key, so a scheduled run works; a
+        # hand-run recovery that sources this library directly does not, and that
+        # is exactly how it shipped twice (Chiefs 2026-10-06, Senate 2026-10-11).
+        # The library must resolve it itself so any caller gets the same
+        # environment. Comments stripped: this file explains the failure in prose.
+        code = "\n".join(ln for ln in self.lib.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertIn("report_model_env()", code)
+        # Resolution reads the same two homes, in the same order, the runners do.
+        self.assertIn("huffmanwrites-ollama", code)
+        self.assertIn("OLLAMA_API_KEY", code)
+        # It must run before the mirror's claude call, or it cannot help it.
+        i = code.find("report_model_env()")
+        body = code[code.find("publish_simplebrain()"):]
+        self.assertIn("report_model_env", body,
+                      "publish_simplebrain never resolves model auth")
+        self.assertLess(body.find("report_model_env"), body.find("claude -p"),
+                        "the mirror resolves auth after starting the session")
+
+
+# --------------------------------------------------------------------------
+class TestOllamaProbe(unittest.TestCase):
+    """`scripts/ollama-probe.sh` heals the server, not only reports it.
+
+    Before 2026-10-11 the probe's only two outcomes were "reachable" and "abort
+    and alert". That is right for "the app was never opened" — a job should not
+    pretend it can fix a machine where Ollama is not installed — but wrong for
+    "the app was open and then died", which is what happened: the app was
+    SIGTERMed at 05:49 and the 06:00 SITREP aborted on a dead port. A login job
+    cannot see that state; only a job that is about to need the server can. So
+    the probe now reopens the app and waits, and these tests execute that path
+    with the app launch and the port check stubbed, so the outcome is asserted
+    rather than read.
+    """
+
+    def run_probe(self, tmp, *, reachable_after_open, base="http://127.0.0.1:9"):
+        """Source the probe and call ollama_require under stubs.
+
+        `curl` is stubbed on PATH so no real port is needed: it answers only once
+        the marker file exists. `OLLAMA_PROBE_OPEN` is stubbed so no window opens.
+        Returns (returncode, combined_output, open_called, alert_called).
+        """
+        import os
+        import subprocess
+
+        marker = tmp / "server-up"
+        if reachable_after_open is False:
+            pass  # the open stub never creates the marker
+        open_log = tmp / "open.calls"
+        alert_log = tmp / "alert.calls"
+
+        bindir = tmp / "bin"
+        bindir.mkdir()
+        # A curl that reports success only when the marker exists.
+        curl = bindir / "curl"
+        curl.write_text(
+            "#!/bin/bash\n"
+            f'[ -f "{marker}" ] && exit 0 || exit 7\n',
+            encoding="utf-8")
+        curl.chmod(0o755)
+        # The open stub either brings the server up (reachable_after_open) or not.
+        opener = tmp / "opener.sh"
+        opener.write_text(
+            "#!/bin/bash\n"
+            f'echo "$@" >> "{open_log}"\n'
+            + (f'touch "{marker}"\n' if reachable_after_open else ""),
+            encoding="utf-8")
+        opener.chmod(0o755)
+        stub_alert = tmp / "alert.sh"
+        stub_alert.write_text(
+            f'#!/bin/bash\necho "$1 $2" >> "{alert_log}"\n', encoding="utf-8")
+        stub_alert.chmod(0o755)
+
+        env = dict(os.environ)
+        env["PATH"] = f"{bindir}:/usr/bin:/bin"
+        env["OLLAMA_PROBE_OPEN"] = str(opener)
+        env["OLLAMA_PROBE_ALERT"] = str(stub_alert)
+        env["OLLAMA_PROBE_TRIES"] = "1"
+        env["OLLAMA_PROBE_TIMEOUT"] = "1"
+        env["OLLAMA_PROBE_START_WAIT"] = "3"
+        env["ANTHROPIC_BASE_URL"] = base
+
+        script = (
+            f'source "{SCRIPTS / "ollama-probe.sh"}"\n'
+            'ollama_require test-job /dev/stdout\n'
+            'echo "RC=$?"\n'
+        )
+        r = subprocess.run(["/bin/bash", "-c", script],
+                           env=env, capture_output=True, text=True)
+        out = r.stdout + r.stderr
+        return (r.returncode,
+                out,
+                open_log.exists(),
+                alert_log.exists())
+
+    def test_a_reachable_server_is_not_reopened(self):
+        # The common case: the app is up, so the probe must do nothing but say so.
+        # Reopening here would be the KeepAlive behaviour the design forbids.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            tmp = Path(d)
+            (tmp / "server-up").touch()  # already reachable
+            rc, out, opened, alerted = self.run_probe(tmp, reachable_after_open=False)
+        self.assertIn("RC=0", out, out)
+        self.assertFalse(opened, "the probe reopened a server that was already up")
+        self.assertFalse(alerted, "the probe alerted about a reachable server")
+
+    def test_a_dead_server_is_reopened_before_giving_up(self):
+        # The 2026-10-11 failure: the app was open at login and died hours later.
+        # The probe opens it and the server comes back, so the job proceeds.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            tmp = Path(d)
+            rc, out, opened, alerted = self.run_probe(tmp, reachable_after_open=True)
+        self.assertIn("RC=0", out, out)
+        self.assertTrue(opened, "the probe did not reopen a dead server")
+        self.assertFalse(alerted, "the probe alerted although the reopen worked")
+        self.assertIn("app reopened", out)
+
+    def test_a_reopen_that_does_not_help_still_alerts(self):
+        # If the app cannot be brought up, the old behaviour must hold: a clear
+        # line and the shared alert, not a silent proceed into a failed draft.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            tmp = Path(d)
+            rc, out, opened, alerted = self.run_probe(tmp, reachable_after_open=False)
+        self.assertIn("RC=1", out, out)
+        self.assertTrue(opened, "the probe gave up without even trying to reopen")
+        self.assertTrue(alerted, "the probe failed without raising the alert")
+
+    def test_the_reopen_is_not_a_timer(self):
+        # The property that keeps this from being a KeepAlive: nothing in the
+        # probe opens the app on a schedule or in a loop — the only `open` is on
+        # the path taken after the server was found unreachable.
+        probe = (SCRIPTS / "ollama-probe.sh").read_text(encoding="utf-8")
+        code = "\n".join(ln for ln in probe.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertEqual(code.count("$OLLAMA_PROBE_OPEN"), 1,
+                         "the app is opened from more than one place")
+
 
 # --------------------------------------------------------------------------
 # Link gate. Two rules, both learned by measurement on 2026-09-25 while

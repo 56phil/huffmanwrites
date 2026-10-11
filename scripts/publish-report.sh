@@ -50,6 +50,38 @@ report_dry_run() { [ "${REPORT_DRY_RUN:-0}" = "1" ] || [ "${CHIEFS_DRY_RUN:-0}" 
 report_skip_simplebrain() { [ "${REPORT_SKIP_SIMPLEBRAIN:-0}" = "1" ] || [ "${CHIEFS_SKIP_SIMPLEBRAIN:-0}" = "1" ]; }
 
 # ---------------------------------------------------------------------------
+# Model auth for the mirror session, resolved here rather than only in the
+# runner.
+#
+# The publishing runners bind ANTHROPIC_API_KEY from the Ollama keychain before
+# they source this library, and a scheduled run therefore works. The gap is a
+# MANUAL recovery session that sources this library directly and inherits only
+# the interactive shell's environment, with no key. It shipped twice — 2026-10-06
+# (Chiefs) and 2026-10-11 (Senate), both on a hand-run recovery:
+#
+#   Failed to authenticate: OAuth session expired and could not be refreshed
+#
+# Measured 2026-10-11: `claude` with ANTHROPIC_API_KEY set reaches the local
+# server; without it, it falls back to a stale OAuth token, prints exactly that
+# line, and exits 1. The site publish is unaffected (the article is already
+# live), but all five mirror checks fail and the vault goes without the piece.
+#
+# Resolving it here makes the mirror step self-sufficient: any caller, scheduled
+# or by hand, gets the same working environment, and a future recovery session
+# need not know the key exists. It reads the same two homes in the same order the
+# runners do (login keychain, then ~/.secrets), so there is still one rule.
+report_model_env() {
+  export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-http://localhost:11434}"
+  export ANTHROPIC_MODEL="${ANTHROPIC_MODEL:-deepseek-v4.1-flash:cloud}"
+  if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+    local key
+    key="$(security find-generic-password -a "$USER" -s huffmanwrites-ollama -w 2>/dev/null)"
+    [ -z "$key" ] && key="$(grep -oE 'OLLAMA_API_KEY="[^"]+"' "$HOME/.secrets" 2>/dev/null | head -1 | cut -d'"' -f2)"
+    [ -n "$key" ] && export ANTHROPIC_API_KEY="$key"
+  fi
+}
+
+# ---------------------------------------------------------------------------
 # The content gate list, in ONE place.
 #
 # This moved here from the three runners because the gate sets had already
@@ -440,6 +472,10 @@ publish_simplebrain() {
 
   local sb_prompt
   sb_prompt="Read $sb/translate.md and follow it, then follow the post-commit SimpleBrain flow in $REPO/CLAUDE.md. The raw file is $sb/raw/content/posts/$subdir/$slug.md. Write the translated entry to $sb/wiki/articles/$slug.md, add a [$slug](articles/$slug.md) line to the Recent Highlights section of $sb/wiki/index.md (prune the oldest highlight if the list grows past 7), move the raw file to $sb/archive/, then commit the SimpleBrain repo. Do not push; the runner pushes."
+  # Resolve model auth here rather than trusting the caller's environment: a
+  # hand-run recovery does not bind ANTHROPIC_API_KEY, and without it this
+  # session falls back to a dead OAuth token (2026-10-06, 2026-10-11).
+  report_model_env
   sb_rc=0
   claude -p "$sb_prompt" \
     -n "$JOB-simplebrain-$(date '+%Y-%m-%d')" \

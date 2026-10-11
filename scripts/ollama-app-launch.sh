@@ -12,8 +12,11 @@
 # self-verifying, the same way the report runners verify their own output.
 #
 # It is NOT a KeepAlive. It runs once at login, waits for the server, logs what
-# happened, and exits. If the app is closed by hand later, nothing reopens it;
-# scripts/ollama-probe.sh is what makes that visible to the jobs that need it.
+# happened, and exits. If the app is closed by hand later, nothing here reopens
+# it on a timer; scripts/ollama-probe.sh reopens it only at the minute a job is
+# actually blocked on the server (added 2026-10-11), and alerts if even that
+# fails. That split is deliberate: the login job covers "the app was never open",
+# the probe covers "the app was open and then died".
 #
 # Exit 0 = server reachable (logged with the elapsed time).
 # Exit 1 = the app never produced a server; the shared alert is raised.
