@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — October 12, 2026 — Raise 'Em Right cover updated to the hardcover art (capped Lamy 2000)
+
+Philip: "The cover for rtr on the site is obsolete. The writing device shown is a pencil. The new cover has a capped Lamy 2000." The site's cover was the old art (a black pencil at the notebook's lower edge); the current hardcover art replaces it.
+
+- **Replaced** `assets/img/books/raisem-right.jpg` with the source hardcover render `/Users/prh/Developer/LaTeX/AllMyBooks/rtr/cover/hc-rtr.jpg` — byte-identical (SHA `a4af8dc8…`), **2033×2771** (was 1919×2771). No frontmatter or template change: `content/books/raisem-right/index.md` points `image:` at `img/books/raisem-right.jpg`, and `layouts/shortcodes/book.html` / the book layouts re-derive the WebP from the source hash automatically. `assets/img/books/` is the only home — no `static/` copy exists, so `check-hero-paths.py` sees one path.
+- **The `og:image` follows the same file.** The book page's `og:image` points at the served `https://huffmanwrites.org/img/books/raisem-right.jpg` (the `static`-served resolution the OpenGraph/schema partials prefer), and the built `public/img/books/raisem-right.jpg` carries the new bytes and dimensions, so link previews update with the cover.
+- **Verified by a clean rebuild and by eye.** `rm -rf resources/_gen && hugo --gc --minify` (468 pages, 0 errors) regenerated four new WebP variants; the book page (`/books/raisem-right/`) and catalog (`/books/`) both request the new-hash variants `…_hu_58782a541bfe5c60.webp` and `…_hu_873be1ca4e812ce0.webp`; the served WebP was opened and shows the capped Lamy 2000. Gates green: `check-hero-paths` (313 paths), `check-content-frontmatter` (223 files), and 387/387 gate tests.
+
+---
+
 ### Maintenance — October 12, 2026 — Published "Too Little Too Late"
 
 Philip: "I want an essay about Trump's new deal with Russia for truck fuel. The title should be Too Little Too Late." An essay on the October 9, 2026 deal to import Russian diesel, and the arithmetic that makes it a gesture rather than a policy.
