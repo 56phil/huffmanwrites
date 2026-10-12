@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — October 12, 2026 — Added "The Obstacle Is the Way" to the book summaries
+
+Philip: "I think Ryan Holiday is under represented in the book summary section of the site. Add \"The Obstacle is the Way\" to the list." Holiday had one summary (`ego-is-the-enemy-summary`); this is his second.
+
+- **New** `content/posts/summaries/the-obstacle-is-the-way-summary.md` — *The Obstacle Is the Way* (2014), 5 sections in the house format: Executive Summary, 5 Core Arguments, a thematic section (**The Three Disciplines**, on the perception/action/will structure), A Respectful Disagreement, Bottom Line, closing quote. **1,010 words** whole-file, **1 em-dash**, **0 stranded prepositions**, `draft` unset (a summary is not a report — `buildFuture: false` publishes a past date), `sort_key: "Holiday, Ryan - The Obstacle Is the Way"`.
+- **Sort-key convention applied.** A second book by one author takes the `Last, First - Title` form the corpus already uses for four Sagan books and nine Huffman books; `ego-is-the-enemy-summary.md` was updated from the bare `"Holiday, Ryan"` to `"Holiday, Ryan - Ego Is the Enemy"` so the two sort together and in the right order (E before T). Verified in the built hub: `Ego is the Enemy — Holiday` then `The Obstacle Is the Way — Holiday`.
+- **The closing quote is a verbatim, linked quotation.** `"Great individuals, like great companies, find a way to transform weakness into strength."` is copied from the book's introduction as reproduced on the publisher's page, cited to that page (Penguin Random House Library Marketing, the ISBN-9780593786635 landing page), which carries the preface and introduction in full. Verified the wording is a substring of the fetched page after whitespace normalisation; `check-links.py --file … --online --titles` returns 1 ok of 1. The epigraph the book is built on (*Meditations* 5.20) is cited in the body to the Hays 2002 rendering, the same rendering the existing `stoic-saturday-the-obstacle-is-the-way` digest uses.
+- **Verified by running it.** Clean `hugo --gc --minify`; the page builds at `/posts/summaries/the-obstacle-is-the-way-summary/` with the right `<title>`, the closing quote, and the attribution line; it appears on summaries hub page 3. **392/392 gate tests**; every offline gate green (content frontmatter 224 files, prepositions 256, em-dashes 256, quotes 64, links 2,709, anchors/attribution 215 posts, series 21, gallery 133 items, hero paths 313). The preposition gate caught one stranded preposition in my first draft (`…the difficulty actually belongs to`), fixed to `…which of the three levels owns the difficulty`.
+
+---
+
 ### Maintenance — October 12, 2026 — Closing attribution line made a standing rule; corpus swept and gated
 
 Philip: "From now on put \"PRH | [huffmanwrites.org] | © Philip Huffman\" at the bottom of all my essays posted to the site. Additionally, amend the posts that are missing it." Scope chosen: **every authored post, all sections.**
