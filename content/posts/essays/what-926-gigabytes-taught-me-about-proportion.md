@@ -53,3 +53,5 @@ In my own writing, I see the same pattern. There is always the temptation, when 
 What I saved this weekend wasn't just disk space. It was my own configuration: the accumulated toolchain, the aliases, the minor customizations that make a machine feel like mine. The stuff that you don't remember until it's gone. That is what brute force always costs you: not just time, but the invisible infrastructure of habit. The clean install gives you a blank slate, but a blank slate is just another word for amnesia. The real art is in excising the tumor without killing the patient.
 
 Precision before power. That is the metric. Not how fast we moved, but how little we broke on the way to fixing what mattered.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -84,4 +84,4 @@ That is the book's final argument: not repair, but agency. Not the recovery of w
 
 ---
 
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

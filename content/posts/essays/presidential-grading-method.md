@@ -385,4 +385,4 @@ automated requests rather than the file, so they are not cited as the verificati
 route: a reader following them may land on a consent gate instead of the data. The
 HTML results page above is reachable and carries the same figures.
 
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

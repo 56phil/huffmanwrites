@@ -120,7 +120,6 @@ That is what makes the final month more legible than the last one. The Democrats
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Notes
 
@@ -178,3 +177,5 @@ That is what makes the final month more legible than the last one. The Democrats
 [^52]: KULR8, ["Montana Senate race: Kurt Alme tops Bodnar and Bankhead in new poll findings"](https://www.kulr8.com/elections/montana-senate-race-kurt-alme-tops-bodnar-and-bankhead-in-new-poll-findings/article_222a168a-5b28-5138-83d2-9d37e88c6f54.html), September 28, 2026, reporting a NonStop Local and American Pulse survey fielded September 19 to 24 with 604 Montanans: Alme 45.1, Bodnar 26.1, Bankhead 18.9. Seth Bodnar is the independent and Alani Bankhead is the Democrat. Flathead Beacon, ["The Daily Roundup: Senate Candidates Meet for Debate in Whitefish"](https://flatheadbeacon.com/newsletters/the-daily-roundup-senate-candidates-meet-for-debate-in-whitefish/), October 2, 2026: "Independent Seth Bodnar, Democrat Alani Bankhead and Libertarian Kyle Austin answered," while "Absent was Republican Kurt Alme, the undeniable frontrunner." NBC Montana, ["Analysts: Vote-splitting could seal Montana U.S. Senate race for GOP nominee"](https://nbcmontana.com/news/local/analysts-vote-splitting-could-seal-montana-senate-race-for-gop-nominee), September 30, 2026, describing "a 3 1/2-way race."
 [^53]: Political Wire, ["Graham Barely Leads in South Carolina Senate Race"](https://politicalwire.com/2026/10/02/graham-barely-leads-in-south-carolina-senate-race-2/), October 2, 2026, reporting an InsiderAdvantage survey of September 28 to 29 with 1,200 likely voters and a margin of error of 2.83 percent: Graham 46, Andrews 45, Hackett (C) 3, Whitener (L) 2. The Post and Courier, ["Darline Graham, Annie Andrews Senate poll"](https://www.postandcourier.com/politics/darline-graham-annie-andrews-senate-poll/article_60a8a6da-13a1-47da-8d64-edbd205e7bed.html), October 2, 2026: Andrews is "outspending, outraising Darline Graham" while remaining "the underdog," and "A string of recent polls have found the race a virtual toss-up." The SCETV debate is October 11, per SCETV, ["South Carolina ETV and Public Radio to host U.S. Senate debate"](https://www.scetv.org/stories/2026/south-carolina-etv-and-public-radio-host-broadcast-and-livestream-south-carolina), September 25, 2026.
 [^54]: The nightmare arithmetic is unchanged from prior installments: with 13 Democratic seats to defend and a four-seat net gain needed, one defensive loss raises the requirement to five flips.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

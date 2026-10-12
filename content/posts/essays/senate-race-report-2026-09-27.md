@@ -122,7 +122,6 @@ But the direction is no longer seriously in dispute, and the shape of the endgam
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Notes
 
@@ -161,3 +160,5 @@ But the direction is no longer seriously in dispute, and the shape of the endgam
 [^33]: Montana Free Press, "Alme holds an 8-point lead over Bodnar in Senate race," September 11, 2026 (Rutgers-Eagleton, August 27 to September 7, 845 registered voters, margin of error 4.2 points: Alme 38, Bodnar 30, Bankhead 16, Austin 5; 53 percent of Democrats said they would back Bodnar over their own party's nominee, Bankhead, who was at 41 percent); Quantus Insights, September 14-15, 2026 (625 likely voters: Alme 44, Bodnar 24, Bankhead 23). Decision Desk HQ's Montana polling average has Alme up about 15.
 [^34]: This report's ratings script, run September 27, 2026, reading the Wikipedia aggregate ratings table, Inside Elections' own machine-readable export, and each forecaster's published ratings. Moves relative to the September 20 installment: Cook (Georgia lean to likely Democratic, Kansas likely to lean Republican, South Carolina solid to likely Republican); Sabato (Iowa lean Republican to toss-up, Michigan toss-up to lean Democratic); RCP (New Hampshire toss-up to lean Democratic, Nebraska lean Republican to toss-up); DDHQ (Alaska toss-up to lean Democratic); Silver (Iowa toss-up to lean Democratic, Michigan lean to likely Democratic, Kansas likely to lean Republican, Georgia solid to likely Democratic). The ratings baseline is stored at scripts/senate-ratings-state.json (gitignored, last written 2026-09-19), so every move listed here is relative to the ratings the September 20 installment printed.
 [^35]: The nightmare arithmetic is unchanged from prior installments: with 13 Democratic seats to defend and a four-seat net gain needed, one defensive loss raises the requirement to five flips.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

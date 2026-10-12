@@ -83,3 +83,5 @@ tags:
  ## 🔮 Coming Soon
 
  **Topic**: A followup for the No Kings protest of October 18th.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

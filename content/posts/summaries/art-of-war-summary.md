@@ -54,4 +54,5 @@ What Sun Tzu understood, and what most people miss, is that strategy is a form o
 — Sun Tzu, [*The Art of War*, ch. III §2](https://www.gutenberg.org/cache/epub/132/pg132.txt) (trans. Lionel Giles, 1910)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

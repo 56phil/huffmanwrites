@@ -85,3 +85,5 @@ The market will keep moving. That is its nature. The investor's work is not to m
 Hold the line, but know why you are holding it. Rebalance when your rules say to rebalance. Save when your plan says to save. Ignore what deserves to be ignored. Study what deserves to be studied. Let volatility test the structure, not rewrite it.
 
 The Stoic investor does not predict the storm. He builds a house that can hear thunder without mistaking it for collapse.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

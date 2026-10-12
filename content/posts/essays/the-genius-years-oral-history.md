@@ -63,3 +63,5 @@ Several historians, reflecting on the period between fits of nervous laughter, l
 The Genius Years never happened, of course, no matter how good that printer sounds. But somewhere underneath the bird-catching and the crayon diplomacy is a small, mildly annoying truth: we don't lack for genius so much as we lack a taste for the boring part where it gets built. That has never required a higher IQ. It has only ever required doing the reading before the cameras roll — which, it turns out, is a much harder trick than any of it looked.
 
 *Think clearly. Live intentionally. Love deeply.*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

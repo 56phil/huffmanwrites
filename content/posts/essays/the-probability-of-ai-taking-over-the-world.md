@@ -176,4 +176,4 @@ The question was never "what is the probability?" The question is "what are we g
 
 ---
 
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -134,3 +134,5 @@ The con works only as long as we keep buying. The deepfake works only as long as
 - TechCrunch. (2025, August 7). [*Truth Social's AI search is powered by Perplexity, but the platform can set limits on sources*](https://techcrunch.com/2025/08/07/truth-socials-ai-search-is-powered-by-perplexity-but-the-platform-can-set-limits-on-sources/).
 - The Hill. (2025, July 21). [*Trump posts fake video of Obama getting arrested*](https://thehill.com/homenews/administration/5411827-trump-ai-generated-video-obama/).
 - The White House. (2025, July 23). [*Preventing Woke AI in the Federal Government*](https://www.whitehouse.gov/presidential-actions/2025/07/preventing-woke-ai-in-the-federal-government/). Executive Order 14319.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

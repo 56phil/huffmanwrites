@@ -54,4 +54,5 @@ Read it for the cosmic perspective chapter alone. The argument that astrophysics
 — Neil deGrasse Tyson, *Astrophysics for People in a Hurry* (2017), ch. 1, [Wikiquote text](https://en.wikiquote.org/wiki/Neil_deGrasse_Tyson)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

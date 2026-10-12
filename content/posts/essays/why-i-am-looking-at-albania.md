@@ -68,3 +68,5 @@ I’m not chasing a fantasy of elsewhere. I’m chasing a better use of my remai
  If that’s what I can build there (simple, honest, enough), then looking at Albania isn’t running away. It’s choosing how to stand. It’s about crafting a chapter that feels alive, not just endured.
 
  That’s why I’m looking at Albania. Because in the end, life is not about where you’ve been but about where you choose to stand, and how you choose to live, with the time you have left.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

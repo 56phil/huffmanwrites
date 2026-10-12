@@ -65,3 +65,5 @@ tags:
  Sagan never asked us to worship the cosmos; he asked us to take responsibility for our place in it. To look at the night sky is to feel both infinitesimal and indispensable. We are, as he said, “starstuff pondering the stars.”
 
  On this birthday, the best tribute is not nostalgia but participation: to keep asking questions, testing ideas, and defending reason against the tide of unreason. Wonder, after all, is the beginning of wisdom, but evidence is its completion.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

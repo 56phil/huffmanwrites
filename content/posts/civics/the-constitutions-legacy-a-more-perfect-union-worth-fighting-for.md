@@ -56,3 +56,5 @@ A more perfect union is not a destination. It is a direction. It requires each g
 That work is never finished. But it is always worth doing. Because the alternative (accepting the union as it is, with all its gaps and compromises) is not stability. It is surrender.
 
 The Constitution's legacy is not what it has achieved. It is what it still demands.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -66,6 +66,7 @@ The body is not a machine to optimize. It is a system to comprehend, and that co
 
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
 Buy it [on Amazon](https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Yourself/dp/B0G6G12GPW/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

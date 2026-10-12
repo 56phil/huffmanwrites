@@ -76,3 +76,5 @@ What should concern an ordinary investor, or an ordinary citizen with a retireme
 - TheStreet. (2026, June 5). [*Stock market today: Nasdaq falls 4% as semiconductor slide wipes $1T from markets*](https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-june-05-2026).
 - Usvyatsky, O. (2025, December 7). [*Depreciation of GPUs: Between useful lives and useful myths*](https://deepquarry.substack.com/p/depreciation-of-gpus-between-useful). Deep Quarry.
 - Zitron, E. (2026). [*OpenAI had a negative 122% non-GAAP operating margin in Q1 2026, and ChatGPT growth has stalled*](https://www.wheresyoured.at/news-openai-had-a-negative-122-operating-margin-in-q1-2026-and-chatgpt-growth-has-stalled/). Where's Your Ed At.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -106,3 +106,5 @@ tags:
  ## 🔮 Coming Soon
 
  **Topic**: Risk Management
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

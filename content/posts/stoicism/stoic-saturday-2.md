@@ -35,3 +35,4 @@ Write down the answer. Then, let the image go and return to your day, carrying t
 
 See you next Saturday. — Phil
 
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

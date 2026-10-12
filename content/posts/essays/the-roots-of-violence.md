@@ -55,3 +55,5 @@ I am not calling for civility theater. Some things deserve fierce opposition. Bu
 Speak to someone you disagree with not to win, but to understand. Refuse the headline that reduces a human being to a caricature. When you feel the heat rising—the tunnel vision, the ancient thing in the chest—pause. Name it. *This is powerlessness looking for a target.* Then choose a different target. Write. Walk. Call a friend. Do anything except transmit the pain forward.
 
 Violence ends where responsibility begins. Not the responsibility to fix the world. The responsibility to stop making it worse, one internal choice at a time.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

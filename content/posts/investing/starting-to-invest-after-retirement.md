@@ -33,3 +33,5 @@ I used to believe investing was something you did while you worked. You built a 
  Investing after retirement is different. The focus shifts from accumulation to alignment: making sure money supports the life I want. My investments don’t need to make me rich. They need to make me secure, steady, and whole.
 
  And in the end, the real return isn’t measured in percentages. It’s measured in peace of mind, and the freedom to watch my grandkids grow without worrying about the market ticker.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -106,3 +106,5 @@ tags:
  ## 🔮 Coming Soon
 
  **Topic**: The Federal Shutdown
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

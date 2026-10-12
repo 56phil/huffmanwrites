@@ -118,3 +118,5 @@ The people who stand up for the law today are the ones who **keep the future fro
 
 ---
 **—PRH**
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

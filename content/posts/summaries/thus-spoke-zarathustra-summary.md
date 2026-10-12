@@ -56,4 +56,5 @@ Read it slowly, read it skeptically, and read it alongside Frankl, who took Niet
 *Translation note: this page formerly read "Man must be surpassed. What have you done to surpass him?" That wording matches no published translation. Common renders it "is to be surpassed… surpass man"; Kaufmann renders it "shall be overcome… overcome him". The site's version was a modernized composite, and the genuine Common text now replaces it.*
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

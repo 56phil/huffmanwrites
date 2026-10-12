@@ -44,4 +44,4 @@ I feel better for having said all this. I hope the children do.
 - Dickler, J., & Dore, K. (2026, October 1). ["Trump Accounts have auto-enrolled more than 60 million children, Treasury says"](https://www.cnbc.com/2026/10/01/treasury-trump-accounts-auto-enroll-more-than-60-million-children.html). CNBC.
 - The White House. (2026, October 7). ["Trump Accounts Put 70 Million Kids on the Path to Financial Freedom"](https://www.whitehouse.gov/releases/2026/10/a-financial-stake-in-the-future-for-nearly-70-million-american-children-trump-accounts-made-it-possible/).
 
-*PRH | huffmanwrites.org | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -56,4 +56,5 @@ Read it as a companion to Sagan. Together they make the case that clarity of tho
 *Attribution note: this was presented as a quotation with an ellipsis. The chapter title is real, but the sentence is a modern compression of Nussbaum's argument and does not appear verbatim in the book. It is now written as a summary so it is not mistaken for her words.*
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -78,3 +78,5 @@ Restoring Fourth Amendment privacy in the digital age requires more than court r
 **Civically**, citizens must demand that their representatives treat privacy as a non-negotiable right, not a negotiable inconvenience. Every expansion of surveillance power, every new database, every "for your safety" justification must be met with the same question the Framers asked: what is the probable cause, who swore to it, and what exactly are you looking for?
 
 The Fourth Amendment is not obsolete. It is overdue.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -56,3 +56,5 @@ The Fourteenth Amendment was written in the shadow of slavery, ratified in the h
 That work is not finished. Disparities in policing, sentencing, education funding, and voting access all raise Fourteenth Amendment questions. The amendment is not a magic spell. It is a standard, a demanding standard, that requires each generation to measure its laws against the promise of equal dignity.
 
 The question is not whether the Fourteenth Amendment has been perfectly enforced. It has not. The question is whether we still believe in the promise enough to keep pressing for it. Because the alternative, accepting unequal protection as the natural order, is not pragmatism. It is abandonment of the constitutional project itself.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

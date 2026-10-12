@@ -56,4 +56,5 @@ Read it for the signal. Skim through the spiritual inflation. The truth undernea
 — Eckhart Tolle, *The Power of Now* (1997), ch. 3, [full text](https://archive.org/download/ThePowerOfNow_201407/The%20power%20of%20now_djvu.txt)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

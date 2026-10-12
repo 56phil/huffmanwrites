@@ -136,3 +136,5 @@ tags:
  ## 🔮 Coming Soon
 
  **Topic**: Power and responsibility. The moral weight of influence, from individuals to institutions.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -140,4 +140,4 @@ A ranking can tell you where a man stands. It cannot tell you what he did to the
 - Nichols, J. "Mike Johnson Is the Most Dangerous House Speaker in American History." *The Nation*, September 21, 2026. https://www.thenation.com/article/politics/mike-johnson-is-the-most-dangerous-house-speaker-in-american-history/
   "Johnson—astonishingly, a more ignorant and disengaged leader even than Trump—had different ideas." (Quotation-internal dash; the writer's, not mine.)
 
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

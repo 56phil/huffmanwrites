@@ -56,4 +56,5 @@ Read it as a companion to [*The Stoic Citizen*](/books/stoic-citizen/). Tocquevi
 *Attribution note: this page formerly quoted a different line: "The health of a democratic society may be measured by the quality of functions performed by private citizens." That sentence appears in neither volume of Democracy in America (both Reeve volumes were searched in full) and survives only in quotation dictionaries and civic-volunteerism literature. It was replaced with the genuine passage above.*
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

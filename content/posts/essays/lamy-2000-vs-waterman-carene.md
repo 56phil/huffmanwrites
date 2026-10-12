@@ -43,3 +43,5 @@ Neither pen is wrong. The Lamy 2000 is the pen for the days you write to think. 
 What does it say about a man who loves both? That he is not confused; he is complete. The two pens are not rivals but the two halves of the same practice: the Lamy the discipline that disappears so the work can appear, the Carène the attention that insists the act matters. A man who loves both has stopped choosing between them. He has accepted that thinking and remembering are different activities, each deserving its own instrument. That is not indecision; it is discernment. The Stoic ideal was never one tool for all seasons, but the right tool for the season at hand, chosen deliberately.
 
 The only real risk is the man who loves only one. The Lamy-only man thinks clearly but forgets to honor what he thinks. The Carène-only man performs the ceremony but has nothing underneath it. Both pens, loved honestly, mean he is doing the actual work: showing up, paying attention, and knowing which of those he is doing at any given moment. The pens are just the evidence.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

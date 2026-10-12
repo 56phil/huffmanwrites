@@ -82,3 +82,5 @@ Real strategic interests (the radar at Pituffik, the minerals under Kvanefjeld, 
 [^15]: Newsweek. (2026, July 31). Trump predicts US will control Greenland by 2029: 'Make that bet.' https://www.newsweek.com/trump-greenland-control-2029-make-that-bet-12275042
 
 [^16]: Al Jazeera. (2026, January 10). 'We do not want to be Americans': Greenland parties reject Trump's threats. https://www.aljazeera.com/news/2026/1/10/we-do-not-want-to-be-americans-greenland-parties-reject-trumps-threats
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

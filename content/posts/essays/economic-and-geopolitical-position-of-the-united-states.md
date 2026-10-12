@@ -64,3 +64,5 @@ The principal finding is that the country's most significant vulnerabilities are
 - RCK Analytics. (2026). [*Fed holds rates 9-3 as GDP slows, inflation cools*](https://rckanalytics.com/macroeconomy/us-macroeconomic-report-fed-holds-rates-as-growth-slows-inflation-cools-week-of-july-24-31-2026/).
 - U.S. Bureau of Economic Analysis. (2026). [*GDP (advance estimate), 2nd quarter 2026*](https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026).
 - Visual Capitalist. (2026). [*How the world views China vs. the U.S. in 2026*](https://www.visualcapitalist.com/how-the-world-sees-china-and-the-us-in-2026/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

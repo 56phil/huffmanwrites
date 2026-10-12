@@ -106,7 +106,6 @@ Election Day is November 3. Between now and then, the New Hampshire primary land
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Notes
 
@@ -146,3 +145,5 @@ Election Day is November 3. Between now and then, the New Hampshire primary land
 [^34]: Reuters/Ipsos poll, August 2026; Silver Bulletin generic ballot, September 4, 2026.
 
 A note on the numbers: prediction market prices are point-in-time snapshots from early September 2026 and move continuously. The Overton Strategies Texas poll (a 50-50 dead heat) and the Global Strategy Group Kansas poll (Hamilton 44-43) are single surveys; the Colom internal poll (46-45) and the Impact Research South Carolina poll (Andrews 42-39) are campaign- or party-commissioned. Kansas has a history of September polls showing Democrats competitive, followed by double-digit Republican wins in November, in 2014 and 2020. The Montana and South Carolina baselines differ from earlier published lists: Steve Daines withdrew in March and Kurt Alme is the Republican nominee, and Lindsey Graham died in July and his sister Darline Graham is the Republican nominee.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

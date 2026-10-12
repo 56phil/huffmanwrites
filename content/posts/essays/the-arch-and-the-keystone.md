@@ -155,7 +155,6 @@ That is the arch and the keystone together. The load-bearing structure is the ec
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Sources
 
@@ -170,3 +169,5 @@ That is the arch and the keystone together. The load-bearing structure is the ec
 - Niskanen, W. A. (2003, March). [*A Case for Divided Government*](https://www.cato.org/sites/cato.org/files/serials/files/policy-report/2003/3/niskanen.pdf). *Cato Policy Report*. (Advocacy publication, not peer-reviewed.)
 - Papamichalis, T., Ryu, D., & Wilson, M. (2025). [*Divided Government and the Stock Market*](https://www.aeaweb.org/conference/2025/program/paper/A5i6sHya). AEA/ASSA Annual Meeting conference paper.
 - U.S. House of Representatives, History, Art & Archives. (2025). [*Party Government Since 1857*](https://history.house.gov/Institution/Presidents-Coinciding/Party-Government/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

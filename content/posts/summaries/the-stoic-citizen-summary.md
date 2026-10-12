@@ -66,6 +66,7 @@ Virtue is not a trophy. It is the infrastructure that holds when the institution
 
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
 Buy it [on Amazon](https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

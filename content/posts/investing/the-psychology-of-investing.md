@@ -36,3 +36,5 @@ Investing isn’t just a numbers game. It’s an emotional one. Charts, spreadsh
  Markets will rise and fall. News will always be dramatic. And our brains will always try to protect us in ways that don’t necessarily align with good investing. The most successful investors aren’t those who outsmart the market; they’re the ones who outsmart themselves.
 
  **The real test of investing isn’t intelligence. It’s discipline. And the battle is fought between your ears.**
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

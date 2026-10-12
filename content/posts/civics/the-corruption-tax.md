@@ -105,3 +105,5 @@ The corruption tax is assessed by no legislature and cannot be repealed by one. 
 - Transparency International U.S. (2026b, July 28). [*Testimony of Scott Greytak for HSGAC hearing on "Trump's Crypto Corruption"*](https://us.transparency.org/resource/testimony-of-ti-us-deputy-executive-director-scott-greytak-for-hsgac-hearing-on-trumps-crypto-corruption/).
 - Transparency International U.S. (2026c, August 11). [*Treasury rule enables drug cartels and corrupt officials to launder money through U.S. anonymous companies*](https://us.transparency.org/news/treasury-rule-enables-drug-cartels-and-corrupt-officials-to-launder-money-through-u-s-anonymous-companies/).
 - World Gold Council. (2026). [*Gold demand trends: Q2 2026, central banks*](https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q2-2026/central-banks).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

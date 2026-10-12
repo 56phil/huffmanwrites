@@ -35,3 +35,5 @@ And let’s be honest: the situation is likely to become worse before it gets be
 We must stand tall for democracy, not because it is perfect, but because it is our best hope for a just and free society. Courage, clarity, and collective resistance will be required. We may be tested, but we are not powerless.
 
 America remains worth fighting for, but only if we remember that democracy doesn't protect itself. It needs us.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

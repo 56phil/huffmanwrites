@@ -53,3 +53,5 @@ The honest forecast at this distance is that the House is likelier than not to f
 [^4]: CNN Politics. (2026, August 10). *The 9 Senate seats most likely to flip in 2026*. https://www.cnn.com/2026/08/10/politics/senate-race-rankings-august-2026
 [^5]: Huffman, P. (2026, August 2). *The 2026 Senate map: A race-by-race guide*. https://huffmanwrites.org/posts/essays/the-2026-senate-map-a-race-by-race-guide/
 [^6]: Pew Research Center. (2026, July 23). *As the 2026 midterms approach, economy is front and center*. https://www.pewresearch.org/politics/2026/07/23/as-the-2026-midterms-approach-economy-is-front-and-center/
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

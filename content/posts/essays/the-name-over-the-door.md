@@ -189,4 +189,4 @@ The name over the door is not his. If we want it to stay that way, we have to ke
 - Washington Times. (2026, September 17). [*Judge bans Trump from demolishing Kennedy Center without permission*](https://www.washingtontimes.com/news/2026/sep/17/judge-bans-trump-demolishing-kennedy-center-without-permission/).
 - Whitehouse Letter. (2026, July 9). [*Letter to Matt Floca re: facilities*, Senate EPW](https://www.epw.senate.gov/public/_cache/files/8/5/85852c84-59f4-48b1-a9a6-13a091ec75aa/81F3FAD8622463D530F2A1B58848D11006736823EA15737224A29D0ACEBCE1AB.7.9.26-letter-to-kennedy-center-re-facilities.pdf).
 
-*PRH | huffmanwrites.org | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

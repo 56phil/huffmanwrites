@@ -57,3 +57,5 @@ lastmod: 2025-04-18T00:00:00Z
  Next week, we tackle climate decay, radical responsibility, and what’s still worth protecting.
 
  **Monday’s feature:&nbsp;*The Rot Before the Collapse*&nbsp;was just the beginning.**
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

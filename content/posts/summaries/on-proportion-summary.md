@@ -68,6 +68,7 @@ The life that meets each moment with the response it deserves, and no more.
 
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
 Coming June 16, 2026.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

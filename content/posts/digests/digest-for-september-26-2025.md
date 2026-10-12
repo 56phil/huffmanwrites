@@ -75,3 +75,5 @@ tags:
  ## 🔮 Coming Soon
 
  **Topic**: The psychology of investing.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

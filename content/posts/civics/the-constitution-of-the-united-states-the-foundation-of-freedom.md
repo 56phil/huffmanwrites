@@ -79,3 +79,5 @@ The Constitution was never meant to run on autopilot. It demands maintenance: co
 Benjamin Franklin, leaving the Constitutional Convention, was asked what kind of government the delegates had created. "A republic," he replied, "if you can keep it."
 
 That "if" is the whole point. The Constitution is not a guarantee. It is an invitation: to participate, to resist, to improve, and to belong. The question is not whether the document is sufficient. It is whether we are.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

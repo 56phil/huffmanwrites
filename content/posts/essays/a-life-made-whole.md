@@ -92,4 +92,4 @@ The book is available on [Amazon](https://www.amazon.com/Life-Made-Whole-Strengt
 
 ---
 
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

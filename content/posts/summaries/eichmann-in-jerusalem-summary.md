@@ -56,4 +56,5 @@ That argument is not about the past. It is about now.
 *Source note: the line is genuine Arendt but not from this book. It belongs to her later essay “Thinking and Moral Considerations” (1971) and* The Life of the Mind*. It is widely attached to* Eichmann in Jerusalem *because it expresses that book's theme; the attribution was corrected rather than left to imply the summary's own text.*
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

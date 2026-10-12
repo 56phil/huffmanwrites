@@ -67,6 +67,7 @@ That is enough. That is the point.
 
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
 Buy it [on Amazon](https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4N7/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

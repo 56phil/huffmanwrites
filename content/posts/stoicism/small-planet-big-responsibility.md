@@ -61,3 +61,5 @@ Look again at that pale blue dot.
  Then step back into the day, not smaller, but steadier.
 
  Welcome to Sagan Week. 🌌
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

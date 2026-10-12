@@ -29,3 +29,5 @@ Once you see that, you can’t unsee it. And that’s why I’ll never hand “w
 So mock it if you want. Call me woke like it’s supposed to sting. Words have only the power we give them, and I give this one back its dignity. Being woke means living with my eyes open: seeing pain and promise and acting anyway. It means speaking when silence would be easier and standing when sitting down would be safer. If that’s something to ridicule, I’ll take the ridicule. I’ve been asleep to too many truths in my life to go back now. Being woke is not a cause for shame—it’s a call to conscience. And I’m proud to answer it.
 
 ---
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

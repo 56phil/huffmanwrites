@@ -54,4 +54,5 @@ Read it alongside *Meditations*. They are, at bottom, the same project: a person
 — Annie Dillard, *The Writing Life* (1989), [Annie Dillard quotations](https://en.wikiquote.org/wiki/Annie_Dillard). Not from *Pilgrim at Tinker Creek* (1974).
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

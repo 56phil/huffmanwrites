@@ -113,3 +113,5 @@ The most accurate epitaph for his career to date is this: **Stephen Miller is a 
 [^10]: Forbes, 2026.
 
 [^11]: Anderson, S. (2026, June 25). Book reveals Stephen Miller's control of U.S. immigration policy. *Forbes*. https://www.forbes.com/sites/stuartanderson/2026/06/25/book-reveals-stephen-millers-control-of-us-immigration-policy/
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

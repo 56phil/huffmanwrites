@@ -54,4 +54,5 @@ Read it as a corrective to the assumption that efficiency is the same as progres
 — Wendell Berry, [*The Unsettling of America*](https://openlibrary.org/search/inside?q=%22The+soil+is+the+great+connector+of+lives%22) (1977)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

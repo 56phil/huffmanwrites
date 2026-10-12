@@ -54,3 +54,5 @@ While the bulk of the “No Kings” protests unfolded across the United States,
  - [lemonde.fr](https://www.lemonde.fr/en/international/article/2025/10/19/joyful-and-massive-no-kings-protests-against-trump-reveal-a-sense-of-powerlessness_6746569_4.html?utm_source=chatgpt.com)
  - [vanityfair.com](https://www.vanityfair.com/news/story/second-no-kings-protest-october-donald-trump-march-demonstration?utm_source=chatgpt.com)
  - [politico.com](https://www.politico.com/news/2025/10/19/johnson-no-kings-criticism-marxism-00614921?utm_source=chatgpt.com)
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

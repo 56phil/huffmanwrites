@@ -64,3 +64,5 @@ For decades, investors had little choice but to work with&nbsp;**traditional bro
  ### The Bottom Line
 
  Traditional brokerages trade on&nbsp;**relationships and hand-holding**, while discount brokerages thrive on&nbsp;**low costs and accessibility**. For retirees who want comprehensive planning, a traditional advisor might still feel comfortable. But for most, the math is hard to ignore: every dollar not spent on fees is a dollar compounding for you instead of your broker.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

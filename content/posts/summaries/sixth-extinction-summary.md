@@ -54,4 +54,5 @@ Read it alongside Leopold. Leopold gives you the ethical framework; Kolbert give
 — Elizabeth Kolbert, *The Sixth Extinction: An Unnatural History* (2014), [quoted at Goodreads](https://www.goodreads.com/quotes/1342763-though-it-might-be-nice-to-imagine-there-once-was)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

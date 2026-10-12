@@ -94,7 +94,6 @@ The Court's only real power is the willingness of the country to obey it. That w
 
 The Court that lost its balance can find it again. The question is whether the people who are supposed to hold it accountable will do their part. The Constitution gave them the tools. The only question is whether they will use them.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Sources
 
@@ -105,3 +104,5 @@ The Court that lost its balance can find it again. The question is whether the p
 - Mother Jones. (2026, August). [*Analysis: Alito made up to $2.9 million from fossil fuel assets*](https://www.motherjones.com/politics/2026/08/samuel-alito-ethics-conflicts-interest-fossil-fuel-oil-gast-investments-supreme-court-recusal/).
 - Supreme Court of the United States. (2023, November 13). [*Code of conduct for justices of the Supreme Court of the United States*](https://www.supremecourt.gov/about/Code-of-Conduct-for-Justices_November_13_2023.pdf).
 - Whitehouse, S. (2026, July 22). [*Whitehouse, Booker, Blumenthal, Padilla reintroduce Supreme Court term limits bill to restore Americans' trust in the Court*](https://www.whitehouse.senate.gov/news/release/whitehouse-booker-blumenthal-padilla-reintroduce-supreme-court-term-limits-bill-to-restore-americans-trust-in-the-court/). U.S. Senate.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

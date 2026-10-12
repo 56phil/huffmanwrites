@@ -193,4 +193,4 @@ That question is the real comparison, and it has not yet been answered.
 - BLS. (2020, May 8). [*Employment situation, April 2020*](https://www.bls.gov/news.release/archives/empsit_05082020.htm). As first published: 14.7 percent, -20.5 million.
 - FRED. [*Total nonfarm payrolls (PAYEMS)*](https://fred.stlouisfed.org/graph/fredgraph.csv?id=PAYEMS) and [*unemployment rate (UNRATE)*](https://fred.stlouisfed.org/graph/fredgraph.csv?id=UNRATE). Federal Reserve Bank of St. Louis.
 
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

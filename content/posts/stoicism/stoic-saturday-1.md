@@ -36,3 +36,4 @@ Identify one event this week that causes you anxiety. Spend ten minutes visualiz
 
 See you next Saturday. — Phil
 
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

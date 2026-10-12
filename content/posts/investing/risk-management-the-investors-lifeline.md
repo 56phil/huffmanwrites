@@ -20,3 +20,5 @@ Risk never sleeps. Whether markets are surging or headlines are screaming “shu
  A more durable framework is simple enough. Define your goals: income, growth, or legacy. Build your core with equities and bonds that match your horizon. Add defenses like cash, TIPS, and gold. Keep a small, intentional sleeve for speculation. Review and rebalance on a regular basis. This structure doesn’t guarantee riches, but it guarantees that you stay in the arena, able to keep compounding.
 
  Risk is not the enemy. Unmanaged risk is. Build your defenses before the storm, and you’ll discover something most investors never see: opportunity hiding inside uncertainty. When others panic, you’ll have the liquidity to buy. When others sell in despair, you’ll rebalance with discipline. When headlines shout chaos, you’ll recognize the truth: risk is the price of return, and managing it is the investor’s real lifeline.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -65,3 +65,5 @@ tags:
  ## 🔮 Coming Soon
 
  **Topic**: The Contributions of Invasive Humans
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -133,3 +133,5 @@ The most accurate epitaph for his political career to date is this: **Elon Musk 
 [^15]: Garrison, J. (2025, April 11). Elon Musk lowers DOGE's projected savings from $1 trillion to $150 billion. *USA Today*. https://www.usatoday.com/story/news/politics/2025/04/11/elon-musk-doge-trump-projected-savings/83040591007/
 
 [^16]: Rego, M. (2026, July 6). DOGE, launched by Donald Trump, Elon Musk to cut spending, officially shuts down. *The Hill*. https://thehill.com/homenews/administration/5955468-doge-shuts-down-operations/
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

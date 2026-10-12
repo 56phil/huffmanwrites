@@ -74,3 +74,5 @@ lastmod: 2025-05-02T00:00:00Z
  Next week, we turn our attention to justice, a word too often twisted into something hollow or weaponized. We’ll strip it back to its roots, explore what it really means to live justly, and ask whether justice today is served, staged, or simply sold. From ancient philosophy to modern failure, we’ll seek clarity on one of civilization’s most essential and endangered ideals.
 
  #
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

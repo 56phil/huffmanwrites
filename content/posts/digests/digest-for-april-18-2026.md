@@ -48,3 +48,5 @@ Subject: The Pause
  See you next Saturday.
 
  Phil
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

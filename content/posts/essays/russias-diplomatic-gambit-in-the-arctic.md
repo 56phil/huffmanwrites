@@ -49,3 +49,5 @@ That's the accurate version of Russia's Arctic gambit, and it's a smaller story 
 [^11]: Wikipedia contributors. (n.d.). *Arktika 2007*. In Wikipedia. Retrieved August 2026. https://en.wikipedia.org/wiki/Arktika_2007
 
 [^12]: War on the Rocks. (2023, May). Russia's gains in the great Arctic race. https://warontherocks.com/2023/05/russias-gains-in-the-great-arctic-race/
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

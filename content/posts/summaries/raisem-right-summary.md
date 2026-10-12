@@ -70,6 +70,7 @@ The child who can think is the child who can survive, your absence included.
 
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
 
 Expected June 2027.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

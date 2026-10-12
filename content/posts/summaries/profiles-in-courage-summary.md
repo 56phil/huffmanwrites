@@ -99,4 +99,4 @@ If the structural question interests you, [*Democracy in America*](/posts/summar
 - Miller Center, University of Virginia. "John Quincy Adams: Life Before the Presidency," by Margaret A. Hogan: [millercenter.org](https://millercenter.org/president/jqadams/life-before-the-presidency).
 - Texas State Historical Association. "Houston, Sam," by Thomas H. Kreneck: [tshaonline.org](https://www.tshaonline.org/handbook/entries/houston-sam).
 
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

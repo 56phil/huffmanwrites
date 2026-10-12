@@ -23,3 +23,5 @@ tags:
  Critics sometimes argue that lump-sum investing produces higher returns on average, since markets generally rise over the long run. They’re right, mathematically. But this misses the bigger point. Behavior matters more than theory. Lump-sum investing requires a level of courage and discipline most investors don’t have, especially when markets feel shaky. DCA, on the other hand, works with human nature, not against it. It’s easier to stick with, and sticking with it is what ultimately matters.
 
  The market will rise, fall, and rise again. You can waste energy trying to predict those movements, or you can embrace a strategy that thrives regardless. Dollar-cost averaging is simple, automatic, and effective. In a world obsessed with timing the market, the real winners are those who just keep showing up, month after month.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

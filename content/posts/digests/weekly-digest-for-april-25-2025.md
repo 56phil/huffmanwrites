@@ -37,3 +37,5 @@ lastmod: 2025-04-25T00:00:00Z
 ---
  **Coming Next Week**
  Next week, we turn our gaze from the soil beneath our feet to the structures that loom above us. If Earth Week asked what kind of ancestors we want to be, the coming days will ask what kind of society we've allowed to grow in our name. Power shapes policy—but so does silence. It's time to ask deeper questions.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

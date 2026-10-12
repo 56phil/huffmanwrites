@@ -44,3 +44,5 @@ This is not what the Framers intended. The Seventh Amendment was meant to be a p
 Preserving the Seventh Amendment does not mean forcing every dispute to trial. Settlement is efficient and often just. But preservation does mean ensuring that the jury option remains real and accessible: that arbitration is genuinely consensual, that the costs of litigation do not price ordinary people out of court, and that corporations cannot contract away constitutional protections by default.
 
 The amendment is not a headline-grabber. But it is part of the constitutional fabric—one of the threads that keeps the legal system accountable to the people it serves. When that thread snaps, the whole garment weakens.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -109,3 +109,5 @@ The bridge between the two countries was load-bearing. We are the ones who cut i
 [^26]: Ibid. (Section 338 of the Tariff Act of 1930; 50 percent tariffs announced July 20, 2026, effective August 22.)
 
 [^27]: USA Today. (2026, September 8). Canadian tariffs on US goods take effect. Which products are impacted? https://www.usatoday.com/story/money/economy/2026/09/08/us-canada-trade-war-tariffs-products-price/91655579007/ (Canada–U.S. trade about one-third of Canada's economy, about 3 percent of the U.S. economy; Canada 72.5 percent of Canadian goods exports, 17 percent of Canadian GDP.)
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

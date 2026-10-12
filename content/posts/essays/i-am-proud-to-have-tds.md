@@ -49,4 +49,4 @@ The thermometer is in the brain, and the reading is normal. The patient is fine.
 
 - Wikipedia. (2026). [*Trump derangement syndrome*](https://en.wikipedia.org/wiki/Trump_derangement_syndrome).
 
-*PRH | huffmanwrites.org | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

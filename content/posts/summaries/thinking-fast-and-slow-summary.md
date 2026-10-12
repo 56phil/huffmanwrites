@@ -56,4 +56,5 @@ Read it alongside Sagan's baloney detection kit. Sagan tells you what questions 
 *Wording note: the page formerly read “…while you are thinking about it.” The book says “when.” A one-word drift inside quotation marks is still a misquote, so it has been corrected to the published text.*
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

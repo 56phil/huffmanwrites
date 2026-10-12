@@ -78,7 +78,6 @@ The September 15-16 FOMC meeting is a genuine coin flip. Fed funds futures put t
 
 Neither outcome changes the underlying verdict. The bond market is not pricing the September meeting; it is pricing the decade. Until the deficit is addressed, the term premium will stay elevated, the interest bill will keep growing, and every shock, an oil spike, a weak auction, a political intervention, will land on a market that is already stretched. The bond market is not fooled by promises, and it is not fooled by buybacks. It is only fooled by arithmetic, and the arithmetic is what it has been telling us all summer.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Sources
 
@@ -90,3 +89,5 @@ Neither outcome changes the underlying verdict. The bond market is not pricing t
 - Giangiulio, D. (2026, August 28). [*September Fed decision is now a coin flip as rate hike odds increase post Warsh*](https://www.cnbc.com/2026/08/28/-september-fed-decision-now-a-coin-flip-as-rate-hike-odds-increase.html). CNBC.
 - Liesman, S., & Peterson, M. (2026, August 19). [*Bessent moves to curb Treasury yields, putting new pressure on Warsh's Fed*](https://www.cnbc.com/2026/08/19/bessent-treasury-buybacks-yields-warsh-fed.html). CNBC.
 - Peterson, M. (2026, August 18). [*Bonds squeeze Main Street as Wall Street waits on Warsh*](https://www.cnbc.com/2026/08/18/bond-market-treasury-yields-warsh-main-street.html). CNBC.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

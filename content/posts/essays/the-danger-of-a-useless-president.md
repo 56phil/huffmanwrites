@@ -121,4 +121,4 @@ The republic has a remedy available, and it arrives on November 3. The midterms 
 - White House. (2025, July 18). [*Fact sheet: President Donald J. Trump signs GENIUS Act into law*](https://www.whitehouse.gov/fact-sheets/2025/07/fact-sheet-president-donald-j-trump-signs-genius-act-into-law/).
 - Wikipedia. (2026). [*No Kings protests*](https://en.wikipedia.org/wiki/No_Kings_protests).
 
-*PRH | huffmanwrites.org | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

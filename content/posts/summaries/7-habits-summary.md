@@ -54,4 +54,5 @@ Read it skeptically. Skip the anecdotes. Take the framework seriously.
 — Stephen Covey, *The 7 Habits of Highly Effective People* (1989), [Wikiquote text](https://en.wikiquote.org/wiki/Stephen_Covey)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

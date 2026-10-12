@@ -130,7 +130,6 @@ That is what makes this week's split between the forecasters and the exchanges w
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Notes
 
@@ -220,3 +219,5 @@ That is what makes this week's split between the forecasters and the exchanges w
 [^84]: Iowa PBS, ["Iowa Press Debates: U.S. Senate"](https://www.iowapbs.org/shows/iowapress/special/14524/iowa-press-debates-us-senate), October 7, 2026: Turek said, "Iowans are hurting and they're hurting uniquely," and of the war, "I certainly don't want to see Iran have a nuclear weapon, but we have to end this war"; Hinson said, "We do need to bring it to an immediate and successful end," and "I have not voted for cuts to Social Security benefits, and I will not support cuts to Social Security benefits," describing herself in closing as "a working mom."
 [^85]: Nebraska Public Media, Molly Ashford, ["New PACs pour millions into negative ads in Ricketts-Osborn race as others scale back ad buys in CD2"](https://nebraskapublicmedia.org/en/news/news-articles/new-pacs-pour-millions-into-negative-ads-in-ricketts-osborn-race-as-others-scale-back-ad-buys-in-cd2/), October 7, 2026: PAC independent expenditures in the race total more than $15 million, with $7.9 million opposing Osborn or supporting Ricketts and $7.3 million opposing Ricketts or supporting Osborn, per FEC records processed through October 1.
 [^86]: Courier Nebraska, ["Dan Osborn gets national security leaders' Senate backing"](https://couriernebraska.com/news/politics/dan-osborn-national-security/), October 6, 2026: National Security Leaders for America, a nonprofit of 1,600 retired national security professionals, endorsed Osborn at Veterans Park in Papillion; retired Air Force Brigadier General Dan Woodward said, "He was not born with a silver spoon in his mouth. He is not a billionaire," and Osborn said of the war, "The war in Iran needs to end."
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

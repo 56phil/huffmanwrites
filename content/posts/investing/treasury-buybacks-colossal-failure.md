@@ -134,3 +134,5 @@ The reckoning is coming. The question is not **if**, but **when**.
 - Securities Industry and Financial Markets Association. (2025). [*U.S. Treasury trading volume*](https://www.sifma.org/research/statistics/us-treasury-securities-statistics).
 - Stockholm International Peace Research Institute. (2025). [*Unprecedented rise in global military expenditure as European and Middle East spending surges*](https://www.sipri.org/media/press-release/2025/unprecedented-rise-global-military-expenditure-european-and-middle-east-spending-surges).
 - U.S. Treasury. (2026). [*Buyback operations*](https://www.treasurydirect.gov/auctions/announcements-data-results/buy-backs/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

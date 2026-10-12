@@ -95,4 +95,4 @@ The gavel has fallen once. The record remains, and it will outlast every appeal,
 - Trump, D. J. (2025, October 27). [*Opening appellate brief, People v. Trump*](https://www.courthousenews.com/wp-content/uploads/2025/10/trump-appeal-hush-money.pdf) (First Department Case No. 2025-00648).
 - United States Court of Appeals for the Second Circuit. (2025, November 6). [*New York v. Trump*](https://www.courthousenews.com/wp-content/uploads/2025/11/tump-second-circuit-remand-hush-money.pdf) (No. 24-2299-cv).
 
-*PRH | huffmanwrites.org | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

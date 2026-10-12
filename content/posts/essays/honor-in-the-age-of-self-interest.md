@@ -101,3 +101,5 @@ Honor was never a title. It's an account settled daily, mostly in rooms no one e
 [^12]: Rummler, O. (2025, August 21). NY appeals court voids the nearly $500 million civil fraud penalty against Trump. *CNN*. https://www.cnn.com/2025/08/21/politics/trump-civil-trial-trump-organization-appeal
 
 [^13]: Constituting America. (n.d.). December 23, 1783: George Washington resigns his military commission. https://constitutingamerica.org/december-23-1783-george-washington-resigns-his-military-commission-guest-essayist-gary-porter/
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -93,7 +93,6 @@ Election Day is November 3. Between now and then, early voting begins in Maine a
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Notes
 
@@ -132,3 +131,5 @@ Election Day is November 3. Between now and then, early voting begins in Maine a
 [^33]: Source sets for the tier-four races: Florida, Quantus poll and Ballotpedia/AP campaign finance (Moody ~$11.3M to Nixon ~$975K); Louisiana, Verite News and The Advocate; Mississippi, Clarion Ledger and WLBT, September 4, 2026; Montana, Montana Free Press and Semafor; South Carolina, The Hill and InsiderAdvantage via Political Wire.
 
 A note on the numbers: prediction market prices are point-in-time snapshots from the weekend of September 13, 2026, and they move continuously. **Correction, September 20, 2026:** an earlier version of this report said Kalshi's September 7 price of a Democratic Senate was "the first in that market's history." That was wrong, and the sourcing was thin; it rested on a single aggregator headline. Kalshi's own news desk had reported the market with Democrats ahead in the same year: 51 percent on March 14 ("Senate toss-up") and 52 percent on April 20 ("Democrats inching ahead"), with the two parties dead even at 50 percent on April 13. September 7 was therefore the first Democratic price **since April**, not the first ever. The claim has been corrected here and in the two body passages that carried it. The Senate Leadership Fund reservation in Texas was first reported at $32 million and updated to $51.3 million; this report uses the updated figure. The co/efficient and Quantus polls lean Republican in their methods, the Impact Research and Fabrizio surveys are campaign- or party-commissioned, and CNN/SSRS, MSU/YouGov, AARP, N+ Univision/YouGov, and Quinnipiac are established public pollsters. Kansas has a history of September polls showing Democrats competitive, followed by double-digit Republican wins in November, in 2014 and 2020. Inside Elections' four Senate moves this month (Alaska, Kansas, Ohio, and New Hampshire) were announced September 3 and written up by Roll Call on September 10; this report treats them as last week's changes rather than this week's, since no major forecaster altered a Senate rating between September 6 and September 13. The claim that Pappas would be the first openly gay man to serve in the Senate comes from NBC News's primary-night reporting and has not been independently re-verified here.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

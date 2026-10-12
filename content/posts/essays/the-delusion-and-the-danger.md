@@ -193,3 +193,4 @@ Theocrats are delusional. That is a statement about a closed system of proof. Th
 
 [^32]: Senator Josh Hawley (R-Mo.), remarks prepared for the National Conservatism conference, July 8, 2024: "And some will say now that I am calling America a Christian nation. And so I am. And some will say I am advocating Christian nationalism. And so I do. Is there any other kind worth having?" https://www.hawley.senate.gov/senator-hawley-delivers-national-conservatism-keynote-the-christian-nationalism-we-need/ The page labels these as speech excerpts prepared for delivery.
 
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

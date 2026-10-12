@@ -54,4 +54,5 @@ Read it slowly. The almanac sections train the kind of attention the land ethic 
 — Aldo Leopold, *A Sand County Almanac* (1949), p. 224-225, [quoted at Wikiquote](https://en.wikiquote.org/wiki/Aldo_Leopold)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

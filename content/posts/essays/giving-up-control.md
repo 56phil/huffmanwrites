@@ -43,7 +43,6 @@ Morrison's review of her first novel called it "a rarity: a sophisticated novel 
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Notes
 
@@ -70,3 +69,5 @@ Morrison's review of her first novel called it "a rarity: a sophisticated novel 
 [^11]: Seneca, *De Vita Beata* (*On the Happy Life*), ch. 20–26, where Seneca defends the wise person's wealth as something held, not possessed.
 
 [^12]: Epictetus, *Enchiridion*, ch. 1; cf. *Discourses* 1.1 and 4.1 on freedom and the things that are not ours.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

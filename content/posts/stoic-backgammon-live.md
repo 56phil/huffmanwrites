@@ -43,3 +43,5 @@ If you are exhausted by tribalism, noise, and performative certainty—this book
 This is the latest in a growing series. Each book is standalone equipment. Pick the one that fits the problem you are trying to solve.
 
 *Read. Practice. Change.*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

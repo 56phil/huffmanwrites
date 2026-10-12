@@ -54,4 +54,5 @@ That discomfort is the point. Ethics that costs nothing is not ethics.
 — Simone de Beauvoir, [*The Ethics of Ambiguity*](https://openlibrary.org/search/inside?q=%22To+will+oneself+free+is+also+to+will+others+free%22) (trans. Bernard Frechtman, 1948)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

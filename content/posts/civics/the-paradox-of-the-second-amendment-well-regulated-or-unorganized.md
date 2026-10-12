@@ -64,3 +64,5 @@ There is no clean resolution. There is only the ongoing work of honest argument,
 Those principles still matter. But they do not answer every question. They do not tell us how to prevent mass shootings in schools. They do not tell us whether bump stocks should be banned or whether red-flag laws violate due process. They establish a framework. The details must be negotiated by each generation.
 
 The Second Amendment is not a slogan. It is a responsibility: one that demands more from gun owners, more from lawmakers, and more from citizens than any single political coalition is currently offering.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

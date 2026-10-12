@@ -92,3 +92,5 @@ The republic runs on citizens who check claims. It can only afford that if the c
 [^7]: ABC News (Australia). (2005, September 9). Powell regrets UN speech on Iraq WMDs. https://www.abc.net.au/news/2005-09-09/powell-regrets-un-speech-on-iraq-wmds/2099674
 
 [^8]: Bekiempis, V. (2022, January 6). Remembering the January 6 Capitol deaths, from Brian Sicknick to Ashli Babbitt. *Newsweek*. https://www.newsweek.com/january-6-capitol-riot-victims-deaths-brian-sicknick-ashli-babbitt-police-suicide-1665815; Smith, Z. (2022, April 8). Capitol riot costs go up: Government estimates $2.73 million in property damage. *Forbes*. https://www.forbes.com/sites/zacharysmith/2022/04/08/capitol-riot-costs-go-up-government-estimates-273-million-in-property-damage/
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

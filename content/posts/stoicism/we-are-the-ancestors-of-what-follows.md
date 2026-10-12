@@ -52,3 +52,5 @@ We often think of ourselves as the end result of history’s long arc. The inher
  Act like someone’s counting on you, because they are. The window is closing. Every delay becomes a debt the next generation has to pay: with their health, their homes, their future. We can’t wait for perfect plans or political permission. We don’t need more awareness. We need action.
 
  Pick one thing. Start today. Refuse the plastic. Plant the tree. Write the letter. Speak the truth. Let it be imperfect, but let it be real. Because when the history of this moment is written, it won’t ask what we&nbsp;*hoped*&nbsp;for. It will ask what we&nbsp;*did.* Be the ancestor who answered with action.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

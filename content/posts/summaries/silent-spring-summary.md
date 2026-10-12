@@ -54,4 +54,5 @@ Read it for the science, which holds up. Read it for the civic argument, which i
 — Rachel Carson, *Silent Spring* (1962; Houghton Mifflin Harcourt ed., 2002), [quoted at Lib Quotes](https://libquotes.com/rachel-carson/quote/lbn3n1j)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -97,7 +97,6 @@ The examination is open, and it does not run on the senator's schedule. Schmitt'
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Sources
 
@@ -111,3 +110,5 @@ The examination is open, and it does not run on the senator's schedule. Schmitt'
 - [*U.S. Term Limits, Inc. v. Thornton*, 1995](https://supreme.justia.com/cases/federal/us/514/779/). *U.S. Term Limits, Inc. v. Thornton*, 514 U.S. 779 (1995).
 - [U.S. Senate, 2026](https://www.senate.gov/about/origins-foundations/senate-and-constitution/constitution.htm). "Constitution of the United States," Art. I, § 3, cl. 3 (the qualifications for Senator). United States Senate.
 - [Wikipedia contributors, 2026](https://en.wikipedia.org/wiki/Eric_Schmitt). "Eric Schmitt," Wikipedia, retrieved September 30, 2026.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

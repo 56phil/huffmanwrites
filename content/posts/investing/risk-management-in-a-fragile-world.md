@@ -28,3 +28,5 @@ Risk never sleeps. Markets can rise on Monday and unravel by Friday. Headlines a
  A more durable approach is simple enough. Define your goals: income, growth, or legacy. Build your core with equities and bonds that match your horizon. Add defenses like cash, TIPS, and gold. Keep a small, intentional sleeve for speculation. Review and rebalance on a regular basis. This structure doesn’t guarantee riches, but it guarantees that you stay in the arena, able to keep compounding.
 
  Zeihan’s maps may overstate the speed of collapse, but they serve a purpose: reminding us that fragility is real. You don’t need to know the exact date of the storm to prepare. You only need to know that storms come. Risk isn’t the enemy. Unmanaged risk is. Build your defenses before the lightning strikes, and you’ll discover something most investors never see: opportunity hidden in uncertainty.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

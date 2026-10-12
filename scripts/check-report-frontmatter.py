@@ -27,6 +27,9 @@ invisible to the build:
                           and the report is simply absent. Recorded three times.
   the attribution line    the house signature, and its absence is the only
                           cheap signal that the body was not written to spec.
+                          Now a standing rule for every published post, not only
+                          reports (Philip, 2026-10-12), swept once and watched
+                          corpus-wide by `--attribution-corpus`.
 
 It lives here rather than in a runner because the date rule needs to parse the
 frontmatter's own offset format (`-05:00`), which macOS `date -j -f` cannot
@@ -309,6 +312,27 @@ def anchor_problems(path: "Path | str") -> "list[str]":
     return problems
 
 
+def attribution_problems(path: "Path | str") -> "list[str]":
+    """Whether a published post carries the house signature line.
+
+    `ATTRIBUTION` is anchored (`^\\*PRH \\|`), so a bare-text or bracket-only
+    footer does not match it — which is the point: the line is a fixed form, and
+    the corpus drifted into five variants (bare text, three URL shapes, and one
+    `prhuffman.ghost.io` mislabel) before anyone looked. This reports the file
+    that has no line rather than pinning the exact URL, so a future re-host is a
+    one-line change here and not a corpus pass.
+    """
+    p = Path(path)
+    if not p.is_file():
+        return []
+    split = split_frontmatter(p.read_text(encoding="utf-8", errors="ignore"))
+    if split is None:
+        return []
+    if not ATTRIBUTION.search(split[1]):
+        return ["missing the closing attribution line (*PRH | …)"]
+    return []
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -322,7 +346,30 @@ def main() -> int:
     ap.add_argument("--anchors-corpus", action="store_true",
                     help="check the placeholder-anchor rule on EVERY published "
                          "post, not only series installments")
+    ap.add_argument("--attribution-corpus", action="store_true",
+                    help="check the closing-attribution rule on EVERY published "
+                         "post, not only series installments")
     args = ap.parse_args()
+
+    if args.attribution_corpus:
+        targets = published_posts()
+        bad = []
+        for path in targets:
+            for problem in attribution_problems(path):
+                bad.append((path, problem))
+        for path, problem in bad:
+            print(f"  {path.relative_to(REPO)}:", file=sys.stderr)
+            print(f"    - {problem}", file=sys.stderr)
+        if bad:
+            print(f"report frontmatter: NOT PUBLISHABLE — {len(bad)} of "
+                  f"{len(targets)} published posts omit the closing attribution",
+                  file=sys.stderr)
+            print(f"coverage: {len(targets)} posts")
+            return 1
+        print(f"attribution check: OK — all {len(targets)} published posts "
+              f"carry the closing line")
+        print(f"coverage: {len(targets)} posts")
+        return 0
 
     if args.anchors_corpus:
         targets = published_posts()

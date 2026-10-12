@@ -58,3 +58,5 @@ I hope you’ll choose the latter.
 **Sincerely,**
 
 Philip Huffman
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

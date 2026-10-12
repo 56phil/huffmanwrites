@@ -47,4 +47,4 @@ One percent. Nineteen dollars. Two thousand dollars of return on a Thursday nigh
 - Channel NewsAsia. (2026, October 10). ["Kalshi probes suspicious trades tied to Trump press secretary pick, WSJ reports"](https://www.channelnewsasia.com/business/kalshi-probes-suspicious-trades-tied-trump-press-secretary-pick-wsj-reports-6448026).
 - Peters, J. (2026, October 9). ["Kalshi is investigating trades about Trump's new press secretary pick"](https://www.theverge.com/tech/1009225/kalshi-is-investigating-trades-about-trumps-new-press-secretary-pick). The Verge.
 
-*PRH | huffmanwrites.org | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -55,4 +55,4 @@ Goldmacher, S., & Haberman, M. (2026, October 6). ["Trump does not plan to reimb
 
 USA TODAY. (2026, September 30). ["Trump uses $20 million in DHS funds to make ads promoting self"](https://www.postandcourier.com/nation-world/trump-uses-20-million-in-dhs-funds-to-make-ads-promoting-self/article_4bbfefbd-b9d5-4268-970a-518f35d88776.html). The Post and Courier.
 
-*PRH | huffmanwrites.org | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

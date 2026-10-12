@@ -56,4 +56,5 @@ Read it for the cosmic calendar. Read it for Alexandria. Read it for the last ch
 *Source note: this line is from the* Cosmos *TV series (Ep. 1, ~5m15s), and it is quoted here in its spoken form. The page previously read “The cosmos is within us… a way for **the universe** to know itself”, which dropped “also” and substituted “the universe” for “the cosmos.” Neither change is Sagan's. The book of the same name does not contain the sentence.*
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

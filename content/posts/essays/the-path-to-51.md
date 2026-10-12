@@ -96,7 +96,6 @@ The path is narrow but real. Hold the defense, flip North Carolina, win two of t
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Notes
 
@@ -121,3 +120,5 @@ The path is narrow but real. Hold the defense, flip North Carolina, win two of t
 [^19]: Author's assessment of the Democratic caucus bench.
 [^20]: Wikipedia, "2026 United States Senate elections": first cycle since 2006 without McConnell as Republican leader; Thune elected leader after 2024.
 [^21]: Wikipedia, "Party leaders of the United States Senate": powers of the majority leader.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

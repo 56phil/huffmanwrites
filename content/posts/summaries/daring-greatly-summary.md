@@ -58,4 +58,5 @@ If Brown's argument about self-imposed armor resonates, [*Unstuck*](/books/unstu
 *Source note: this line is Brown's, but it appears in* Rising Strong*, not the book summarized here. Corrected so the page does not imply it comes from* Daring Greatly*.*
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

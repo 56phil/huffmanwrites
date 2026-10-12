@@ -51,3 +51,5 @@ The Eighth Amendment also prohibits excessive bail and excessive fines. These cl
 In *Timbs v. Indiana* (2019), the Supreme Court ruled that the excessive fines clause applies to state and local governments, not just the federal government. This opened the door to challenges against fine-driven policing and asset forfeiture. But the standard for what counts as "excessive" remains vague, and enforcement is spotty.
 
 The Eighth Amendment is not a solution to mass incarceration or economic inequality. But it is a tool (a moral and legal tool) for challenging the most degrading aspects of American punishment. The question is whether we still believe in its standard enough to use it.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

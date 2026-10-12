@@ -2153,6 +2153,33 @@ class TestReportFrontmatterGate(unittest.TestCase):
         ci = (REPO / ".github" / "workflows" / "hugo.yml").read_text(encoding="utf-8")
         self.assertIn("check-report-frontmatter.py --anchors-corpus", ci)
 
+    def test_the_attribution_corpus_mode_covers_every_published_post(self):
+        # Same population as the anchor rule: every published post, not only the
+        # series. Philip, 2026-10-12 made the closing line a standing rule.
+        posts = crf.published_posts()
+        self.assertGreaterEqual(len(posts), 180, "the glob stopped matching")
+
+    def test_every_published_post_carries_the_attribution(self):
+        # The standing state after the 2026-10-12 sweep. A failure here is a new
+        # post that shipped without the signature.
+        bad = []
+        for p in crf.published_posts():
+            bad += [f"{p.name}: {m}" for m in crf.attribution_problems(p)]
+        self.assertEqual(bad, [])
+
+    def test_the_attribution_rule_catches_a_missing_line(self):
+        p = self.write(self.good().replace(
+            "*PRH | [huffmanwrites.org] | © Philip Huffman*\n", ""))
+        self.assertTrue(crf.attribution_problems(p))
+
+    def test_the_attribution_rule_accepts_the_canonical_line(self):
+        p = self.write(self.good())
+        self.assertEqual(crf.attribution_problems(p), [])
+
+    def test_ci_runs_the_attribution_mode(self):
+        ci = (REPO / ".github" / "workflows" / "hugo.yml").read_text(encoding="utf-8")
+        self.assertIn("check-report-frontmatter.py --attribution-corpus", ci)
+
     def test_drafts_are_excluded_from_the_anchor_scan(self):
         # A draft is not published; the gate must not fail on work in progress.
         for p in crf.published_posts():
@@ -5125,6 +5152,7 @@ class TestGateCoverage(unittest.TestCase):
         ("check-emdashes.py", (), 100, "files"),
         ("check-report-frontmatter.py", ("--corpus",), 5, "posts"),
         ("check-report-frontmatter.py", ("--anchors-corpus",), 100, "posts"),
+        ("check-report-frontmatter.py", ("--attribution-corpus",), 100, "posts"),
         ("check-series-posts.py", (), 5, "installments"),
         ("check-gallery-pages.py", (), 40, "items"),
         ("check-hero-paths.py", (), 100, "paths"),

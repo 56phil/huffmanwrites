@@ -135,7 +135,6 @@ You do not need to know the answers to invest well through them. You need to res
 
 Ninety days is not a long time. It is long enough to have your defenses built before the lightning strikes, and long enough to remember that the opportunity hidden in uncertainty belongs to the ones who kept their powder dry.
 
-*PRH | huffmanwrites.org | © Philip Huffman*
 
 ## Sources
 
@@ -161,3 +160,5 @@ Ninety days is not a long time. It is long enough to have your defenses built be
 - The New York Times. (1990, August 23). [Credit markets; long-term rates climb sharply](https://www.nytimes.com/1990/08/23/business/credit-markets-long-term-rates-climb-sharply.html).
 - U.S. Department of the Treasury. (2026, August 19). [Treasury announces increased sizes of nominal long-end liquidity support buybacks beginning September 9](https://home.treasury.gov/news/press-releases/sb0607).
 - U.S. Department of the Treasury via FRED. (2026). [Market yields on U.S. Treasury securities at 2-year, 10-year, and 30-year constant maturities (DGS2, DGS10, DGS30)](https://fred.stlouisfed.org/series/DGS10/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

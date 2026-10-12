@@ -37,3 +37,5 @@ I’ve never seen much value in tearing a person down for the sake of it. Savage
  
 ---
  Readers who know me will understand that my tongue was firmly in my cheek as I wrote this. The point isn’t that Trump will change—it’s that the very improvements we should expect from a president are the ones he refuses to make.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

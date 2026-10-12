@@ -131,3 +131,5 @@ If we lose that principle, we do not merely lose trust in government. We lose th
 - Pew Research Center. (2025, December 4). [*Public trust in government: 1958-2025*](https://www.pewresearch.org/politics/2025/12/04/public-trust-in-government-1958-2025/).
 - Transparency International U.S. (2026, February 10). [*Transparency International releases latest Corruption Perceptions Index*](https://us.transparency.org/news/transparency-international-release-latest-corruption-perceptions-index/).
 - World Bank. (2026). [*Worldwide Governance Indicators: Control of corruption*](https://www.worldbank.org/content/dam/sites/govindicators/doc/cc.pdf).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

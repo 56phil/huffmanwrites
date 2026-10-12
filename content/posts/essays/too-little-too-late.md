@@ -78,3 +78,5 @@ A gallon of diesel will be a little cheaper or a little more expensive next mont
 - Public Law 119-111. (2026, September 18). [*Lindsey O. Graham Sanctioning Russia and Iran Act of 2026*](https://www.govinfo.gov/content/pkg/PLAW-119publ111/pdf/PLAW-119publ111.pdf).
 - Reuters. (2026, October 10). [*Trump says Russia to supply diesel to US and global markets*](https://www.tbsnews.net/world/global-economy/trump-says-russia-supply-diesel-us-and-global-markets-1567811). The Business Standard.
 - TASS. (2026, October 9). [*Russia begins lifting diesel exports restrictions immediately — deputy PM*](https://tass.com/economy/2200087).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

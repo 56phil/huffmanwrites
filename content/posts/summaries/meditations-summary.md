@@ -56,4 +56,5 @@ For the civic application of the *Meditations* framework, see [*The Stoic Citize
 — often attributed to Marcus Aurelius; a modern paraphrase not found in any translation of the *Meditations* (the genuine dichotomy-of-control idea is Epictetus's, *Enchiridion* 1)
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

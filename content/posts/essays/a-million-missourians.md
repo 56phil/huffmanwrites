@@ -152,4 +152,4 @@ Think clearly. Live intentionally. Love deeply.
 
 [^23]: Missouri Constitution, Article III, Section 52(b): a referendum petition "prevents" a law subject to a valid petition "from taking effect until approved by a majority of the votes cast thereon." As administered and as the state supreme court described in its May 2026 opinion, the suspension operates on the secretary of state's determination that the petition is legal, sufficient, and timely. https://revisor.mo.gov/main/OneSection.aspx?section=III++++52(b)&bid=31811&constit=y
 
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

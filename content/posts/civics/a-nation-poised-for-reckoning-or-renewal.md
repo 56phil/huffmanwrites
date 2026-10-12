@@ -40,3 +40,5 @@ January 2029 will not mark the clean beginning of a new era.
  
 
  And that answer, more than any policy speech or headline, will shape the America that follows.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

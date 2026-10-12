@@ -132,7 +132,6 @@ The market has already started to argue with itself about the price of that cont
 
 The storm does not send invitations, but it does keep appointments, and this one has three of them in the second week of December. Build the defenses before the lightning strikes.
 
-*PRH | huffmanwrites.org | © Philip Huffman*
 
 ## Sources
 
@@ -179,3 +178,5 @@ The storm does not send invitations, but it does keep appointments, and this one
 - Trading Economics. (2026, September). [United States Michigan consumer sentiment](https://tradingeconomics.com/united-states/consumer-confidence).
 - A Wealth of Common Sense. (2018, December). [The forgotten bear markets](https://awealthofcommonsense.com/2018/12/the-forgotten-bear-markets/).
 - U.S. Senator Elizabeth Warren. (2026, August). [Warren, Blumenthal, Kim investigate Korean conglomerate's $2 million payment to Trump company](https://www.warren.senate.gov/newsroom/press-releases/warren-blumenthal-kim-investigate-korean-conglomerates-2-million-payment-to-trump-company-amid-questions-about-corruption-bribery/); [Warren, Blumenthal question Belgian diamond giants](https://www.warren.senate.gov/newsroom/press-releases/warren-blumenthal-question-belgian-diamond-giants-was-huge-gold-ring-gifted-to-trump-a-cartoonish-bribe-to-obtain-tariff-exemptions/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

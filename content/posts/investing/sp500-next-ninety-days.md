@@ -98,7 +98,6 @@ The S&P 500 is not priced for the world it is actually in. It is priced for a wo
 
 Ninety days from today is December 2. The market will spend those ninety days discovering what its own optimism costs, and the investor who spent them with a plan, a cushion, and a schedule of automatic buying will not care which way the discovery goes. Build the defenses before the lightning strikes. The storm does not send invitations, but it does keep appointments, and this one is dated.
 
-*PRH | huffmanwrites.org | © Philip Huffman*
 
 ## Sources
 
@@ -126,3 +125,5 @@ Ninety days from today is December 2. The market will spend those ninety days di
 - Reuters. (2026, August 11). [Trump reopens Fed battle at critical time for bond markets](https://www.reuters.com/commentary/reuters-open-interest/trump-reopens-fed-battle-critical-time-bond-markets-2026-08-11/).
 - Reuters. (n.d.). [Factbox: The previous 10 S&P 500 bear markets](https://jp.reuters.com/article/markets/factboxthe-previous-10-sp-500-bear-markets-idUSN09481600/).
 - TradingKey. (2026, July). [S&P 500 total market value is about to surpass $70 trillion](https://www.tradingkey.com/analysis/stocks/us-stocks/261950917-sp500-valuation-bubble-ai-concentration-shiller-pe-buffett-indicator-fed-hawkish-yield-market-nifty-fifty-strategy-tradingkey).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

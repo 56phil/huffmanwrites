@@ -56,4 +56,5 @@ Read it for the plants. Stay for the argument about what we owe them.
 *Attribution note: the page formerly quoted “In the grammar of Potawatomi, beings are subjects, not objects, and so the grammar reflects the reality of the living world.” That sentence does not appear in* Braiding Sweetgrass*; it was a paraphrase of the book's argument placed inside quotation marks. It has been replaced with Kimmerer's actual sentence from the essay it paraphrases.*
 
 ---
-*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

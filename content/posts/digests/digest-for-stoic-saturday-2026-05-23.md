@@ -46,3 +46,5 @@ The answer doesn't have to be perfect. But it has to be honest.
 — Phil
 
 [Read more at huffmanwrites.org](https://huffmanwrites.org)
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

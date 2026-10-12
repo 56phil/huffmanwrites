@@ -89,7 +89,6 @@ The bell still rings. It is the same bell it always was, the one that calls the 
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Sources
 
@@ -105,3 +104,5 @@ The bell still rings. It is the same bell it always was, the one that calls the 
 - [Seneca, 1900](https://en.wikisource.org/wiki/Of_Anger/Book_I). Seneca, *Of Anger* (De Ira), Book I, in *Minor Dialogs Together with the Dialog "On Clemency"*, trans. Aubrey Stewart, Bohn's Classical Library Edition (London: George Bell and Sons, 1900), via Wikisource.
 - [The Guardian, 2026](https://www.theguardian.com/us-news/ng-interactive/2026/sep/20/anger-midterm-elections). "'People are pissed off': anger at the elite and the establishment is fueling this year's midterms," *The Guardian*, September 20, 2026.
 - [Williams, 2026](https://thehill.com/opinion/5871471-voter-anger-trump-policies/). Juan Williams, "Can Republicans survive the midterms of Rage?," *The Hill*, May 11, 2026.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

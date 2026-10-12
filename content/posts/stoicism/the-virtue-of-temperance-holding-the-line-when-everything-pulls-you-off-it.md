@@ -91,3 +91,5 @@ The temperate life is not the life without appetite. It is the life in which app
 Hold the line. Not because pleasure is bad. Not because anger is forbidden. Not because wanting is shameful.
 
 Hold the line because you are more than what pulls on you.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -38,3 +38,5 @@ This week, when you feel the news pulling at you, ask one question: is this in m
 See you next Saturday. — Phil
 
 *Sourced from Democracy Now!'s coverage of the U.S.-Canada trade war, the Nepal glacier collapse, the Meta settlement, the visa ban ruling, the Tyson closures, and Gaza; Canada's Department of Finance announcements; and AP, USA Today, and The Guardian reporting on the retaliatory tariffs.*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -74,3 +74,5 @@ Robertson, D. (2022). *Stoicism for Children*. Donald J. Robertson. https://dona
 Stanford Encyclopedia of Philosophy. (n.d.). *Maria Montessori*. Retrieved July 23, 2026, from https://plato.stanford.edu/entries/montessori-maria/
 
 The Voice of Early Childhood. (n.d.). *Fostering independence in Montessori settings*. https://thevoiceofearlychildhood.com/fostering-independence-in-montessori-settings/
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

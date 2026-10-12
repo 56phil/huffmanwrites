@@ -37,3 +37,5 @@ Think of one role you occupy now that used to belong to someone else, or that gr
 See you next Saturday. — Phil
 
 *Sourced from NPR's coverage of the August 8, 2026 Senate confirmation vote and the anti-weaponization fund rescission, CNBC's reporting on Pam Bondi's April 2026 dismissal, Salon's reporting on the Senate Democrats' letter regarding Blanche's crypto holdings, Time's reporting on the IRS audit immunity settlement, Axios's reporting on Collins's and Murkowski's opposition, and Wikipedia's biographical timeline for Todd Blanche.*
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

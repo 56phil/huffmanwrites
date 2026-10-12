@@ -167,6 +167,17 @@ jobs:
       - name: Check link anchors name what they link to
         run: python3 scripts/check-report-frontmatter.py --anchors-corpus
 
+      # Fail before deploy if a published post omits the closing attribution
+      # line. Philip, 2026-10-12: the "PRH | huffmanwrites.org | © Philip
+      # Huffman" signature goes at the bottom of every essay, and the corpus was
+      # swept to add it. A standing rule with no gate drifts — the line had
+      # already fragmented into five variants (bare text, three URL shapes, one
+      # ghost.io mislabel) and 105 posts had none at all, and nothing was
+      # looking. This watches every published post, the same population the
+      # anchor gate above covers.
+      - name: Check the closing attribution line
+        run: python3 scripts/check-report-frontmatter.py --attribution-corpus
+
       # Fail before deploy if a credential has drifted between its homes. This
       # gate exists because the fal.ai key lived in three places and only one
       # worked, and nothing could see it: a stale key has the right length, the

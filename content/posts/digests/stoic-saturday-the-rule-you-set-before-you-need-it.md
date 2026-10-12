@@ -31,3 +31,5 @@ See you next Saturday. — Phil
 *Sourced from the Congressional Budget Office's 2025 and 2026 budget and economic outlooks, and my own reporting this week in "Treasury Buybacks: A Colossal Failure in the Making" and "The Debt Brake: Discipline That Doesn't Depend on Willpower."*
 
 **Editor's Note:** A word of thanks to the service members of the United States who remain deployed across the Middle East, far from home while the rest of us argue about budgets. Their service is a debt this country doesn't repay with numbers on a ledger, and they deserve better than they get. Thank you.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

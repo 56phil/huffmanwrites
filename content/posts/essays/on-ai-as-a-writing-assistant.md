@@ -43,3 +43,5 @@ I did not set out to use artificial intelligence as part of my writing process.
  The work you are reading is the result of a process that includes both human experience and machine-generated structure. The ideas, the conclusions, and the responsibility for them are mine. The tool is part of the method, not the source of the thinking.
 
  If there is value in the work, it comes from the attempt to understand something clearly and to express it honestly. The use of AI does not change that goal. It only changes the path taken to get there.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -40,3 +40,5 @@ Some constitutional scholars argue that the Third Amendment is an anachronism th
 And in an era of government surveillance, smart home devices, and data collection that reaches into private spaces without physical entry, the Third Amendment's underlying principle—government shall not intrude into the home without consent—has never been more relevant. The intrusion may now be digital rather than physical, but the violation is the same.
 
 The Third Amendment is not the Constitution's star. It is its foundation stone: quiet, solid, and load-bearing.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

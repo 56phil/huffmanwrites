@@ -33,3 +33,5 @@ I came across a quote earlier today that stopped me:
  I don’t want his life, or his path, or his poetry. I just want to stay honest on mine. I want to keep showing up, keep moving forward, and keep sharing what I’ve learned along the way.
 
  That’s how we grow: by learning from others without losing ourselves.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -129,3 +129,5 @@ None of it is guaranteed by anything more than the text, and the text is thinner
 - Trump v. Anderson, 601 U.S. 100 (2024). [*Case summary*](https://en.wikipedia.org/wiki/Trump_v._Anderson).
 - U.S. Const. art. I, §§2, 3, 4, 5; art. II, §1; amends. XII, XIV, XV, XVII, XIX, XX, XXII, XXIII, XXIV, XXVI. [*National Archives*](https://www.archives.gov/founding-docs/constitution-transcript).
 - 3 U.S.C. §1; 2 U.S.C. §§1, 7. [*Uniform election day statutes*](https://uscode.house.gov/).
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

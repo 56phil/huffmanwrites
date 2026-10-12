@@ -45,3 +45,5 @@ On Saturday afternoon, hundreds (and by some accounts thousands) of people gathe
  - [wired.com](https://www.wired.com/story/no-kings-protests-photos?utm_source=chatgpt.com)
  - [apnews.com](https://apnews.com/article/f04e7a4728c10b694f540bcef0646370?utm_source=chatgpt.com)
  - [theguardian.com](https://www.theguardian.com/us-news/2025/oct/20/no-kings-protests-trump-democrats?utm_source=chatgpt.com)
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

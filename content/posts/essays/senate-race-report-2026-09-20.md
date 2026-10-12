@@ -117,7 +117,6 @@ But the direction is no longer arguable. When a state like Kansas leads a Democr
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
 
 ## Notes
 
@@ -149,3 +148,5 @@ But the direction is no longer arguable. When a state like Kansas leads a Democr
 [^26]: News From the States, "Maine U.S. Senate candidates agree to debates, though format remains up in the air," September 2026 (four October debates: the 6th, 8th, 13th and 15th, after early voting begins October 5; six write-in candidates could trigger ranked-choice counting); The Maine Anchor on advertising and the race's intensity. Collins' survival of blue-wave polls in 2008 and 2020 is carried forward from prior reports.
 [^27]: Sources as in notes 1, 2 and 3: the forecasters' table moved twice (note 4); the models and markets moved as reported there.
 [^28]: The nightmare arithmetic is unchanged from the September 6 and September 13 reports: with 13 Democratic seats to defend and a four-seat net gain needed, one defensive loss raises the requirement to five flips.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

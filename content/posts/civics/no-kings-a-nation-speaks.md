@@ -42,3 +42,5 @@ Last Saturday, as President Trump celebrated his 79th birthday with a military p
  For all the noise surrounding the parade in D.C., history may well remember June 14, 2025, not for its tanks and spectacle, but for the quiet force of collective conscience rising in the streets.
 
  Because when the people remember they are sovereign, kings don’t last.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

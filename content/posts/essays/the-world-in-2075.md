@@ -72,4 +72,4 @@ The Stoics had a word for the discipline this requires: prohairesis, the faculty
 - Varieties of Democracy Institute. (2020). [*Democracy report 2020: Autocratization surges, resistance grows*](https://www.v-dem.net/documents/14/dr_2020_dqumD5e.pdf). University of Gothenburg.
 - Varieties of Democracy Institute. (2026). [*Democracy report 2026: Unraveling the democratic era?*](https://www.v-dem.net/documents/75/V-Dem_Institute_Democracy_Report_2026_lowres.pdf). University of Gothenburg.
 
-*PRH | huffmanwrites.org | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

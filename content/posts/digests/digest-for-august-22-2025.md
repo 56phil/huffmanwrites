@@ -93,3 +93,5 @@ tags:
 
  **Topic**: *What You Feed Grows*
  A theme around attention, habits, and emotional energy. Focus on how nurturing certain thoughts, behaviors, or relationships causes them to thrive, whether good or bad.
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

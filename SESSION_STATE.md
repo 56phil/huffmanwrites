@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 12, 2026 — Closing attribution line made a standing rule; corpus swept and gated
+
+Philip: "From now on put \"PRH | [huffmanwrites.org] | © Philip Huffman\" at the bottom of all my essays posted to the site. Additionally, amend the posts that are missing it." Scope chosen: **every authored post, all sections.**
+
+- **The line had fragmented and was unenforced.** It existed in **five variants** corpus-wide — `*PRH | [huffmanwrites.org](https://www.huffmanwrites.org/) | © Philip Huffman*` (47), the bare-domain `…/huffmanwrites.org)*` (37), bare text with no link (18), the literal `[huffmanwrites.org]` with brackets (6), and one mislabeled `[prhuffman.ghost.io](https://www.huffmanwrites.org/)` — and **105 of 214 posts had no line at all**. The report gate matched only `^\*PRH \|`, so the 18 bare-text files silently failed a rule that nothing ran against them outside the series.
+- **Canonical form** (Philip's choice): `*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*` — italic, markdown link, bare-domain URL, the form the newest reports use.
+- **Sweep:** a script rewrote all existing variants to canonical and appended the line to the 105 missing files, at the very bottom (after `## Sources`, `## Notes`, footnote blocks and the summaries' "Buy it on Amazon" CTA — verified on a summary, a civics essay, a digest, and the odd `---`/`#`-terminated files). **214/214 published posts now carry the canonical line**; `_index.md` stubs skipped.
+- **Enforced by a new corpus mode, `check-report-frontmatter.py --attribution-corpus`**, wired into CI beside `--anchors-corpus` (same population: every non-draft post under `content/posts/`), with a `TestGateCoverage` floor of 100 posts. Proved by injecting the defect into a real file (gate reports `1 of 214 … omit the closing attribution`, exit 1) and restoring (exit 0). Four new behavioral tests, including one asserting CI runs the mode.
+- **Verified by running it.** Clean `hugo --gc --minify` (0 errors); the line renders as an italic `<em>` with a working bare-domain `<a>` at the foot of the body (checked in `public/posts/…`). **392/392 gate tests** (was 387). Offline corpus gates green: content frontmatter (223), links (2,707), em-dash (255), prepositions (255), quotes, anchors (214), report frontmatter (21).
+
+---
+
 ### Maintenance — October 12, 2026 — Raise 'Em Right cover updated to the hardcover art (capped Lamy 2000)
 
 Philip: "The cover for rtr on the site is obsolete. The writing device shown is a pencil. The new cover has a capped Lamy 2000." The site's cover was the old art (a black pencil at the notebook's lower edge); the current hardcover art replaces it.

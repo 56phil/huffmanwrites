@@ -85,3 +85,5 @@ lastmod: 2025-05-23T00:00:00Z
  Avoidance might feel protective in the short term, but it undermines endurance in the long run.
 
  #
+
+*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
