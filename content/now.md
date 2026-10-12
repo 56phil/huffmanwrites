@@ -3,7 +3,7 @@ title: "Now"
 description: "What I'm working on right now."
 teaser: "The manuscript for **Raise 'Em Right** is complete — now searching for the right voice to write the foreword."
 date: 2026-07-25T00:00:00Z
-lastmod: 2026-07-25T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 ---
 
 *This is a [now page](https://nownownow.com/about), inspired by Derek Sivers. Updated July 2026.*
@@ -16,4 +16,4 @@ The first draft of my next book, *Raise 'Em Right: Raising Kids with Agency, Res
 
 **Current priority:** finding the right person to write the foreword. I'm looking for someone whose work sits at the intersection of parenting, education, and character formation — someone who can speak with authority to readers who care about raising children who think clearly before they act.
 
-Expected publication: early 2027.
+Expected publication: November 2026.

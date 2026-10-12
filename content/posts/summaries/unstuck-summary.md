@@ -62,7 +62,7 @@ The 30-day challenge shares the blind spot. It is built as a straight line, and 
 ## Bottom Line
 
  *Unstuck* is a call to action. Stop waiting. Stop negotiating. Feed the right habits.
- Momentum, not perfection, is the path to freedom.
+ Progress, not perfection, is the path to freedom.
 
  
 ---

@@ -75,7 +75,7 @@ The child who can think is the child who can survive, your absence included.
 
 ---
 
-Expected June 2027.
+Expected November 2026.
 
 Read more about the book: [*Raise 'Em Right*](/books/raisem-right/).
 

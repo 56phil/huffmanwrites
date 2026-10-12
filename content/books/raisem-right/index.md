@@ -2,7 +2,7 @@
 title: "Raise 'Em Right"
 subtitle: "Raising Kids with Agency, Resilience, and Purpose"
 weight: 9
-availability: "Expected: early 2027."
+availability: "Expected: November 2026."
 description: |
   Raise 'Em Right follows a child from birth to eighteen, one chapter for every year — because the child at eight months and the child at eight years need entirely different things from the adults raising them. Each chapter braids a Montessori principle for what the child needs from the world around them with a Stoic reflection for what steadies the parent supplying it, and closes with a short list of things to try that same week. There's no formula here, only ideas to sit with, borrow from, and argue with as your child — and your life — keep changing shape.
 
