@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 12, 2026 — Published "Too Little Too Late"
+
+Philip: "I want an essay about Trump's new deal with Russia for truck fuel. The title should be Too Little Too Late." An essay on the October 9, 2026 deal to import Russian diesel, and the arithmetic that makes it a gesture rather than a policy.
+
+- **Published** `content/posts/essays/too-little-too-late.md` — "Too Little Too Late" (essays, politics, energy, democracy, accountability), **2,155 words** whole-file, 10 source links, **1 em-dash** (in a quoted TASS headline, exempt), **0 stranded prepositions**, `draft: false`, `featuredOnHome: true`.
+- **The argument, and where each fact is grounded.** The first tranche, 300,000 metric tons, converts to about 2.25 million barrels (EIA's 7.46 barrels per metric ton) — less than a day of U.S. distillate demand of 3.65–3.8 million barrels a day. The whole 4.8-million-ton program is about 35.8 million barrels, ten days of use, shared with every other buyer. Russia's output is down nearly 30 percent after Ukrainian refinery strikes (IEA); its exports are redirected, not created, so the price stays where it is (Michael Lynch, via NPR). The deal lands nine days before the Graham act's duties deadline and three weeks after the president signed the law; OFAC General License 135 invokes the sanctions regulations but neither the Section 115 waiver nor the Section 117 certification. Six bipartisan senators called for reversal; Zelensky called it "a weak decision on the part of strong partners."
+- **Every figure and quotation read off a fetched page.** All ten cited URLs returned 200 with matching titles under `check-links.py --online --titles`. The conversion, the demand figure, the refinery-capacity details, the sanction-license terms and the statutory deadlines come from the EIA, the IEA, Reuters, NPR, BBC, CNBC, AP, the OFAC license text and the public law PDF respectively.
+- **Hero pair** generated via fal.ai FLUX.1 dev: `122-too-little-too-late_{16x9,4x5}.webp`, a cracked Parian marble basin pouring a thread of gold light into a darkness it cannot fill. 1536×1024 → 1365×768; 1024×1280 → 896×1120; WebP q92 via `cwebp`. **The first prompt produced a dial with garbled "Empty" lettering and stray numerals** — the defect the hero skill names — so it was regenerated with a basin concept that invites no lettering; both crops vision-verified (marble palette, no text). Wired `hero_desktop`/`hero_mobile`/`hero_alt`/`hero_caption`; gallery entry added (133 items, one new page stub `content/gallery/page/12.md` created by `check-gallery-pages.py --fix`).
+- Clean `hugo --gc --minify` build; page verified at `public/posts/essays/too-little-too-late/index.html` with the correct `<title>` and both hero sources present. All offline gates green (em-dash, prepositions, content frontmatter, series posts, quotes, links, secrets, plists, anchors, report frontmatter) and 387/387 gate tests pass.
+
+---
+
 ### Maintenance — October 12, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
