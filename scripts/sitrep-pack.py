@@ -51,11 +51,13 @@ import csv
 import importlib.util
 import io
 import json
+import re
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -616,6 +618,140 @@ def collect_polymarket(tags: "tuple[str, ...]") -> "list[dict]":
 
 
 # ---------------------------------------------------------------------------
+# World news. This beat HAD no collector: it was the one section the writer
+# fetched by hand, and on 2026-10-12 it missed the day's largest story — Trump
+# announced a Russia-Ukraine "energy ceasefire" that Ukraine learned about from
+# the media, the Kremlin rejected Zelensky's 60-day truce, and Trump pushed Kyiv
+# toward elections it is legally barred from holding. The world section carried
+# the Saudi/Hormuz campaign instead. A beat the writer chooses with nothing
+# behind the choice is exactly the residual risk that got the AI beat removed on
+# 2026-10-07; the fix is a collector, not a longer instruction.
+#
+# The feeds are plain RSS/Atom — **keyless on purpose**. GDELT was the first
+# candidate and answers anonymous callers with HTTP 429 (measured 2026-10-12),
+# and a keyed API (NewsAPI et al.) needs a credential this repo does not carry
+# and a launchd job cannot rotate. A public broadcaster's own feed needs
+# nothing, and its items carry the headline, the publisher, the timestamp, and
+# the article URL — which is everything the pack prints and every field a link
+# is allowed to be built from (never a constructed URL).
+WORLD_NEWS_FEEDS = (
+    ("BBC World", "https://feeds.bbci.co.uk/news/world/rss.xml"),
+    ("The Guardian — World", "https://www.theguardian.com/world/rss"),
+    ("Al Jazeera", "https://www.aljazeera.com/xml/rss/all.xml"),
+    ("NPR World", "https://feeds.npr.org/1004/rss.xml"),
+    ("Euronews", "https://www.euronews.com/rss?level=theme&name=news"),
+)
+
+# A story the writer must see, not the whole day's wire. This is the one place
+# in the collector where a judgment is baked in, so it is stated rather than
+# hidden: these terms flag the handful of items the report's world section is
+# most likely to be about. A flagged item is a pointer the writer still has to
+# fetch and cite; nothing here is asserted about it beyond its own headline.
+WORLD_KEYWORDS = (
+    "ukrain", "russia", "putin", "zelensk", "kyiv", "moscow", "kremlin",
+    "ceasefire", "cease-fire", "nato",
+)
+
+WORLD_ITEMS_PER_FEED = 6       # headlines printed per feed
+WORLD_FLAGGED_TOTAL = 10       # cap on the whole flagged list
+WORLD_ITEM_KEEP = 60           # max items read from one feed before stopping
+
+
+def _localname(tag: str) -> str:
+    """`{http://www.w3.org/2005/Atom}title` -> `title`; a bare name is its own."""
+    return tag.rsplit("}", 1)[-1].lower()
+
+
+def parse_feed(xml_bytes: bytes, source: str) -> "list[dict]":
+    """Parse RSS 2.0 or Atom into `{source, title, link, date, summary}` rows.
+
+    Tolerant by design: a malformed feed raises FetchError (the caller records a
+    gap), but a feed with one odd item skips that item rather than failing the
+    whole source. Both formats are matched structurally — the local name of each
+    element — rather than by namespace, because the same feed is served with and
+    without a namespace across the sites here.
+    """
+    try:
+        root = ET.fromstring(xml_bytes)
+    except ET.ParseError as e:
+        raise FetchError(f"{source}: unparseable XML ({e})") from e
+
+    # RSS puts items under `channel/item`; Atom under a flat `entry`.
+    nodes = [e for e in root.iter() if _localname(e.tag) in ("item", "entry")]
+    out: "list[dict]" = []
+    for node in nodes[:WORLD_ITEM_KEEP]:
+        fields: "dict[str, str]" = {}
+        for child in list(node):
+            name = _localname(child.tag)
+            if name == "link":
+                # Atom links carry the URL in `href`; RSS in the text.
+                text = (child.get("href") or child.text or "").strip()
+            else:
+                text = (child.text or "").strip()
+            if name not in fields or not fields[name]:
+                fields[name] = text
+        title = fields.get("title", "").strip()
+        link = fields.get("link", "").strip()
+        if not title or not link:
+            continue
+        out.append({
+            "source": source,
+            "title": title,
+            "link": link,
+            "date": (fields.get("pubdate") or fields.get("published")
+                     or fields.get("updated") or fields.get("dc:date") or "").strip(),
+            "summary": fields.get("description") or fields.get("summary") or "",
+        })
+    return out
+
+
+def _flag(title: str) -> bool:
+    low = title.lower()
+    return any(k in low for k in WORLD_KEYWORDS)
+
+
+def collect_world_news() -> dict:
+    """Fetch every world-news feed, independently. Returns items and flagged rows.
+
+    One feed failing does not sink the section: its name is reported in `failed`
+    and the rest are read. This is the same "a gap, not a zero" rule the source
+    attempts follow, applied one level down so a single broadcaster's outage
+    costs one source rather than the beat.
+    """
+    items: "list[dict]" = []
+    flagged: "list[dict]" = []
+    failed: "list[str]" = []
+    for source, url in WORLD_NEWS_FEEDS:
+        try:
+            body = _fetch(url, ua=SITREP_UA)
+            rows = parse_feed(body, source)
+        except FetchError:
+            failed.append(source)
+            continue
+        for row in rows:
+            row["flagged"] = _flag(row["title"])
+        items.extend(rows)
+        for row in rows:
+            if row["flagged"]:
+                flagged.append(row)
+    # Deduplicate the flagged list by title (the same story syndicated across two
+    # feeds); keep the first, which preserves feed order.
+    seen: "set[str]" = set()
+    deduped = []
+    for row in flagged:
+        key = row["title"].lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(row)
+    # If not one feed could be read, that is a gap, not an empty section: the
+    # writer must be able to tell "no world news moved" from "we could not look".
+    if not items and failed:
+        raise FetchError(f"no world-news feed could be read ({', '.join(failed)})")
+    return {"items": items, "flagged": deduped[:WORLD_FLAGGED_TOTAL], "failed": failed}
+
+
+# ---------------------------------------------------------------------------
 # Assembly
 # ---------------------------------------------------------------------------
 def _plural(n: int, singular: str, plural: "str | None" = None) -> str:
@@ -790,7 +926,22 @@ def build_pack(as_of: str, window_days: int, now_ct: datetime) -> dict:
         )
         pack[key] = {"heading": heading, "tags": list(tags), "markets": data}
 
-    # 7. What has no collector ---------------------------------------------
+    # 7. World news (collected, so the world beat is no longer writer-chosen) -
+    world = attempt(
+        "7. World news",
+        "World-news RSS (BBC, Guardian, Al Jazeera, NPR, Euronews)",
+        collect_world_news,
+        lambda v: (
+            f"OK ({len(v['items'])} item(s) from "
+            f"{len(WORLD_NEWS_FEEDS) - len(v['failed'])}/{len(WORLD_NEWS_FEEDS)} feeds; "
+            f"{len(v['flagged'])} keyword-flagged"
+            + (f"; unreachable: {', '.join(v['failed'])}" if v["failed"] else "")
+            + ")"
+        ),
+    )
+    pack["world_news"] = world
+
+    # 8. What has no collector ---------------------------------------------
     pack["not_in_pack"] = (
         "**Technology and AI is not a beat of this series.** It was removed on "
         "2026-10-07 and must not appear in the report, in any section, fetched "
@@ -801,10 +952,11 @@ def build_pack(as_of: str, window_days: int, now_ct: datetime) -> dict:
         "Congress.gov API requires a key); state and local government action; "
         "campaign finance filings (FEC bulk data is not real-time); corporate "
         "earnings and business news; international diplomacy and conflict "
-        "beyond what prediction markets price; science and health agency "
-        "actions outside the Federal Register; and sport, culture, and "
-        "obituaries. None of these is a gap in the pack to be papered over with "
-        "recalled facts — a missing beat is reported as absent or not reported."
+        "beyond what prediction markets price and what this pack's world-news "
+        "feeds carry; science and health agency actions outside the Federal "
+        "Register; and sport, culture, and obituaries. None of these is a gap "
+        "in the pack to be papered over with recalled facts — a missing beat is "
+        "reported as absent or not reported."
     )
 
     pack["_ok_sources"] = ok
@@ -1134,7 +1286,66 @@ def render(pack: dict) -> str:
         L.append("")
 
     # 7 ---------------------------------------------------------------------
-    L.append("## 7. Not in this pack")
+    L.append("## 7. World news (collected — the world beat's spine)")
+    L.append("")
+    world = pack.get("world_news")
+    if world is None:
+        reason = next(
+            (u for u in pack["unavailable"] if u.startswith("World-news RSS")),
+            "fetch failed",
+        )
+        gap("World-news RSS", reason)
+    else:
+        L.append(
+            "Headlines read from five keyless world-news feeds at the timestamp "
+            "above. This is the collector for the report's world section: the "
+            "writer picks ONE story from here (or from a flagged lead below) and "
+            "fetches and cites it. A headline is a pointer, not a fact — nothing "
+            "about a story beyond its own headline is asserted by this pack."
+        )
+        L.append("")
+        if world["failed"]:
+            L.append(
+                f"**Feeds unreachable this run:** {', '.join(world['failed'])}. "
+                "A gap, not a quiet world."
+            )
+            L.append("")
+        # The flagged list is the lead: the handful of items carrying the terms
+        # the world beat is most often about. Kept first because it is the part
+        # a writer is most likely to use.
+        L.append(f"### Likely leads ({len(world['flagged'])} keyword-flagged)")
+        L.append("")
+        if not world["flagged"]:
+            L.append(
+                "No headline matched the lead keywords this run. That is a fact "
+                "about the feeds, not proof the world was quiet."
+            )
+            L.append("")
+        for row in world["flagged"]:
+            L.append(f"- **{row['source']}** — {row['title']}"
+                     + (f" ({row['date']})" if row["date"] else ""))
+            L.append(f"  {row['link']}")
+        L.append("")
+        # The per-feed listing, so the writer can see the day beyond the keyword
+        # net and choose a story the terms missed.
+        L.append("### All headlines by feed")
+        L.append("")
+        by_source: "dict[str, list[dict]]" = {}
+        for row in world["items"]:
+            by_source.setdefault(row["source"], []).append(row)
+        for source, _url in WORLD_NEWS_FEEDS:
+            rows = by_source.get(source, [])
+            if not rows:
+                continue
+            L.append(f"**{source}**")
+            for row in rows[:WORLD_ITEMS_PER_FEED]:
+                L.append(f"- {row['title']}"
+                         + (f" ({row['date']})" if row["date"] else ""))
+                L.append(f"  {row['link']}")
+            L.append("")
+
+    # 8 ---------------------------------------------------------------------
+    L.append("## 8. Not in this pack")
     L.append("")
     L.append(pack["not_in_pack"])
     L.append("")
@@ -1144,9 +1355,9 @@ def render(pack: dict) -> str:
         "Every number and URL above was read from the Federal Register API, "
         "CourtListener's search API and the watched dockets' own Atom feeds, "
         "CNBC's quote service, the U.S. Treasury and FiscalData, the BLS public "
-        "API, and Polymarket's Gamma API by `scripts/sitrep-pack.py`. If a fact "
-        "you want is not here, fetch it and cite the page you fetched — do not "
-        "fill the gap from memory."
+        "API, Polymarket's Gamma API, and five world-news RSS feeds by "
+        "`scripts/sitrep-pack.py`. If a fact you want is not here, fetch it and "
+        "cite the page you fetched — do not fill the gap from memory."
     )
     return "\n".join(L)
 

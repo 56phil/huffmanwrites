@@ -111,16 +111,32 @@ silence from memory, and never present a partial section as a whole one.
 ## Step 2 — Get what the pack cannot give you.
 
 The pack carries the day's hard record. It is not reporting, and it does not
-cover every beat. **One** section of the report has **no collector at all** and is
-entirely yours to fetch:
+cover every beat. **One** section of the report has a collector that points but
+does not conclude:
 
 - **The world** — one story from outside the United States that actually moved.
+  The pack's `## 7. World news` section collects headlines from five keyless
+  world-news feeds (BBC, Guardian, Al Jazeera, NPR, Euronews) and flags the ones
+  carrying the terms this beat is most often about. **Pick one story from it, or
+  from a headline the keyword flag missed, then fetch and cite it.** The headline
+  is a pointer, not a fact: everything you assert about the story is held to the
+  same standard as a number in the pack — fetched, and linked.
+  - The section exists because the world beat had **no collector at all** before
+    2026-10-12, and on that day it missed the day's largest story: Trump
+    announced a Russia-Ukraine "energy ceasefire" that Ukraine learned of from
+    the media, the Kremlin rejected Zelensky's 60-day truce, and Trump pressed
+    Kyiv toward elections it is legally barred from holding. The writer, choosing
+    freely from a blank beat, wrote about the Saudi/Hormuz campaign instead. A
+    collector is the fix; a longer instruction is not.
+  - A headline you did not fetch is not a source. If you cannot open the story,
+    pick another or say the beat is unreported — never write it from the
+    headline alone.
 
-For that, and for any context the pack cannot supply, search and read what
-carries the story. Fetch the page before you cite it. A fact in that section is
-held to exactly the same standard as a number in the pack: fetched, and linked.
+For any other context the pack cannot supply, search and read what carries the
+story. Fetch the page before you cite it. A fact not in the pack is held to
+exactly the same standard as a number in it.
 
-Do not let the fetched beat swallow the piece. One story, chosen for what
+Do not let the world beat swallow the piece. One story, chosen for what
 changed, is the shape. A general-news digest is not this report.
 
 ### Do not write about technology or AI
@@ -218,7 +234,8 @@ the reasoning and the failure each one prevents.
    question text, implied probability, 24-hour volume. These are the venues'
    prices, not this site's view; attribute each figure to the venue that carries
    it, and never average a thin book into a number that reads as a forecast.
-7. **The world** — one story from outside the country, fetched and cited.
+7. **The world** — one story from outside the country, chosen from the pack's
+   `## 7. World news` headlines and then fetched and cited.
 8. **Sources** — every link you used, in the piece's citation apparatus.
 
 There is no technology or AI section. See "Do not write about technology or AI"

@@ -3250,12 +3250,15 @@ class TestSitrepBeats(unittest.TestCase):
     def test_the_pack_sections_are_numbered_without_a_hole(self):
         # A section removed from the middle leaves a reader (and the writer)
         # concluding something is missing rather than that it was dropped on
-        # purpose.
+        # purpose. The world-news collector was ADDED as section 7 on
+        # 2026-10-12, so "Not in this pack" moved from 7 to 8 — the numbering
+        # stays contiguous through the change.
         headings = [h for _, h, _ in self.pack.POLY_SECTIONS]
         self.assertEqual(headings, ["5. Elections and the midterms", "6. The world"])
         source = (SCRIPTS / "sitrep-pack.py").read_text(encoding="utf-8")
-        self.assertIn("## 7. Not in this pack", source)
-        self.assertNotIn("## 8.", source)
+        self.assertIn("## 7. World news", source)
+        self.assertIn("## 8. Not in this pack", source)
+        self.assertNotIn("## 9.", source)
 
     def test_the_skill_forbids_the_beat_in_the_report(self):
         skill = (REPO / "skills" / "daily-sitrep.md").read_text(encoding="utf-8")
@@ -3263,19 +3266,135 @@ class TestSitrepBeats(unittest.TestCase):
         self.assertNotIn("**Technology and AI** —", skill,
                          "the skill still asks for a section that was removed")
 
-    def test_the_runner_entry_does_not_name_the_removed_beat(self):
-        # The runner writes the SESSION_STATE entry, and the entry states which
-        # beats have no collector. Its line still said "the world-news and
+    def test_the_runner_entry_names_the_pack_sources_and_not_the_removed_beat(self):
+        # The runner writes the SESSION_STATE entry, and the entry states where
+        # the pack's data comes from. Its line still said "the world-news and
         # AI-news beats" on 2026-10-08 — a day after the AI beat was removed, and
         # in the one file a reader trusts for what the run did. The entry is
         # written from the real gate results precisely so it cannot assert
         # something untrue; a hardcoded beat list is the exception that undoes
         # that, so it is pinned here.
+        #
+        # On 2026-10-12 the world beat GAINED a collector (five world-news RSS
+        # feeds), so the entry's old claim that "the world-news beat has no
+        # collector" became false and was replaced. This test pins the corrected
+        # statement: the entry names the feeds among the pack's sources, and
+        # still does not name the removed AI beat.
         runner = (SCRIPTS / "daily-sitrep-runner.sh").read_text(encoding="utf-8")
-        line = [l for l in runner.splitlines() if "have no collector" in l or "has no collector" in l]
-        self.assertEqual(len(line), 1, "expected exactly one beat-collector sentence")
-        self.assertIn("The world-news beat has no collector", line[0])
+        line = [l for l in runner.splitlines() if "world-news RSS" in l]
+        self.assertEqual(len(line), 1, "expected exactly one pack-source sentence")
+        self.assertIn("world-news RSS feeds supply it", line[0])
         self.assertNotIn("AI", line[0], "the removed beat is named in the entry again")
+        # And the old, now-false claim is gone.
+        self.assertNotIn("world-news beat has no collector", runner)
+
+    def test_the_world_beat_now_has_a_collector(self):
+        # The whole point of the 2026-10-12 change: the world beat was the one
+        # section with no collector, and the writer choosing freely from a blank
+        # beat missed the day's largest story. The beat must now be fed by feeds,
+        # and those feeds must be keyless (a keyed API needs a credential this
+        # repo does not carry and a launchd job cannot rotate).
+        feeds = self.pack.WORLD_NEWS_FEEDS
+        self.assertGreaterEqual(len(feeds), 3, "too few world-news feeds to cover a day")
+        for source, url in feeds:
+            with self.subTest(source=source):
+                self.assertTrue(url.startswith("https://"), f"{source}: feed must be https")
+        # Keyless: no api key in any feed URL.
+        joined = " ".join(u for _, u in feeds).lower()
+        for keyed in ("api_key", "apikey", "token=", "&key="):
+            self.assertNotIn(keyed, joined, "a keyed feed URL crept in")
+
+    def test_the_pack_fetches_and_renders_the_world_collector(self):
+        # build_pack must call the collector and render must print its section,
+        # or the feeds exist and nothing reads them.
+        source = (SCRIPTS / "sitrep-pack.py").read_text(encoding="utf-8")
+        self.assertIn('"7. World news"', source)
+        self.assertIn("collect_world_news", source)
+        self.assertGreater(source.find("collect_world_news"),
+                           source.find("collect_polymarket"),
+                           "the world collector should sit with the other collectors")
+
+    def test_parse_feed_reads_rss_and_atom_structurally(self):
+        # The parser is the part most likely to rot against a feed-format change,
+        # and it is the part with no other guard. RSS (channel/item) and Atom
+        # (flat entry, link in href) both parse to the same shape.
+        rss = b"""<?xml version="1.0"?>
+        <rss version="2.0"><channel>
+          <item><title>Ukraine strikes deep</title>
+                <link>https://example.org/a</link>
+                <pubDate>Mon, 12 Oct 2026 10:00:00 GMT</pubDate>
+                <description>Something happened.</description></item>
+        </channel></rss>"""
+        atom = b"""<?xml version="1.0"?>
+        <feed xmlns="http://www.w3.org/2005/Atom">
+          <entry><title>Kremlin rejects truce</title>
+                 <link href="https://example.org/b"/>
+                 <updated>2026-10-12T12:00:00Z</updated>
+                 <summary>Nothing doing.</summary></entry>
+        </feed>"""
+        for label, body in (("rss", rss), ("atom", atom)):
+            with self.subTest(format=label):
+                rows = self.pack.parse_feed(body, "Fixture")
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(rows[0]["source"], "Fixture")
+                self.assertTrue(rows[0]["title"])
+                self.assertTrue(rows[0]["link"].startswith("https://"))
+                self.assertTrue(rows[0]["date"])
+
+    def test_parse_feed_rejects_unparseable_xml_as_a_gap(self):
+        with self.assertRaises(self.pack.FetchError):
+            self.pack.parse_feed(b"<not xml", "Fixture")
+
+    def test_a_single_bad_item_is_skipped_not_fatal(self):
+        # One item missing its link must not sink the feed: the whole source
+        # would become a gap over one malformed row.
+        body = b"""<rss><channel>
+          <item><title>Good</title><link>https://example.org/ok</link></item>
+          <item><title>No link here</title></item>
+        </channel></rss>"""
+        rows = self.pack.parse_feed(body, "Fixture")
+        self.assertEqual([r["title"] for r in rows], ["Good"])
+
+    def test_all_world_feeds_unreachable_is_a_gap_not_an_empty_section(self):
+        # The "a gap, not a zero" rule applies to this collector too: if every
+        # feed fails, the section must read SOURCE UNAVAILABLE rather than an
+        # empty world.
+        import unittest.mock as mock
+        with mock.patch.object(self.pack, "_fetch",
+                               side_effect=self.pack.FetchError("down")):
+            with self.assertRaises(self.pack.FetchError):
+                self.pack.collect_world_news()
+
+    def test_a_failing_feed_does_not_sink_the_others(self):
+        # Independence one level down: one broadcaster's outage costs one source,
+        # not the beat.
+        import unittest.mock as mock
+        good = b"""<rss><channel><item><title>Ukraine truce</title>
+              <link>https://example.org/x</link></item></channel></rss>"""
+
+        def fake_fetch(url, **kw):
+            if "euronews" in url:
+                raise self.pack.FetchError("down")
+            return good
+
+        with mock.patch.object(self.pack, "_fetch", side_effect=fake_fetch):
+            result = self.pack.collect_world_news()
+        self.assertIn("Euronews", result["failed"])
+        self.assertTrue(result["items"], "the reachable feeds should still return items")
+
+    def test_the_keyword_flag_matches_the_beat(self):
+        # The flag decides what the writer is shown first, so it must catch the
+        # terms the world beat is about without matching everything.
+        for title in ("Trump faces backlash over diesel from Russia",
+                      "Zelenskyy says Russia hit six energy facilities",
+                      "Kremlin rejects Ukraine truce offer",
+                      "NATO summit ends without agreement"):
+            with self.subTest(title=title):
+                self.assertTrue(self.pack._flag(title))
+        for title in ("Balkan temperatures swing as heavy rain heads for Greece",
+                      "Film festival opens in Cannes"):
+            with self.subTest(title=title):
+                self.assertFalse(self.pack._flag(title))
 
 
 class TestSitrepWatchdog(unittest.TestCase):
