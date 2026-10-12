@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Sagan, Carl - Cosmos"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - science
-  - philosophy
-  - history
   - cosmology
+  - history
+  - philosophy
+  - science
 ---
 
 # *Cosmos*

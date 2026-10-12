@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Berry, Wendell"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - ecology
-  - philosophy
   - civics
   - culture
+  - ecology
+  - philosophy
 ---
 
 # *The Unsettling of America: Culture and Agriculture*

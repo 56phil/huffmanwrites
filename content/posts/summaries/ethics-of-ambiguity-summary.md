@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Beauvoir, Simone de"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - philosophy
-  - existentialism
-  - ethics
   - classics
+  - ethics
+  - existentialism
+  - philosophy
 ---
 
 # *The Ethics of Ambiguity*

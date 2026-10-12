@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Brach, Tara"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - psychology
   - mindfulness
-  - spirituality
+  - psychology
   - self-improvement
+  - spirituality
 ---
 
 # *Radical Acceptance: Embracing Your Life with the Heart of a Buddha*

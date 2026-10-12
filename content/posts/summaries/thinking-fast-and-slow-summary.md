@@ -6,10 +6,9 @@ author: Philip Huffman
 sort_key: "Kahneman, Daniel"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - psychology
-  - philosophy
   - critical-thinking
+  - philosophy
+  - psychology
   - science
 ---
 

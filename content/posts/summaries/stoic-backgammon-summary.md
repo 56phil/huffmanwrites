@@ -4,10 +4,9 @@ description: "Executive summary of Stoic Backgammon: every roll is a small encou
 date: 2026-02-22T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - Stoic Backgammon"
-lastmod: 2026-05-10T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
-  - essays
+  - games
   - philosophy
   - stoicism
 ---
@@ -58,6 +57,12 @@ The board, played repeatedly, is one way to build the character that responds ri
 
 
 ---
+## Points I Should've Made
+
+The book insists that the board is not a metaphor, and it earns the claim. It is quieter about the one place the analogy breaks: a game has rules, a reset, and an ending, and a life has none of the three. The uncertainty of the board is bounded in a way that life's is not, and a reader who takes the practice too directly to heart may find that the character the dice teach does not transfer cleanly to a situation with no second game to correct it.
+
+There is a temperament question the book leaves open. Backgammon may cultivate patience, or it may simply reward the patience a player already had. I should have been honest that the practice might sharpen a disposition rather than create one, and that the reader without the disposition may need something the board cannot supply.
+
 ## Bottom Line
 
 *Stoic Backgammon* is a manual for playing the game you cannot control.
@@ -75,5 +80,7 @@ That is the practice.
 ---
 
 Buy it [on Amazon](https://www.amazon.com/dp/B0GXW6KRDH/).
+
+Read more about the book: [*Stoic Backgammon*](/books/stoic-backgammon/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

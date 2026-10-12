@@ -4,9 +4,8 @@ description: "Executive summary of The Stoic Citizen: virtue as a public discipl
 date: 2025-09-18T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - Stoic Citizen"
-lastmod: 2026-05-10T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
   - civics
   - philosophy
   - politics
@@ -52,6 +51,12 @@ It does not promise victory. It promises coherence: the capacity to act with int
 
 
 ---
+## Points I Should've Made
+
+The book asks the citizen to remain coherent while institutions shake, and it treats coherence as the whole of the task. It is thin on what the citizen owes when coherence is not enough, when the trouble is not their own judgment but an institution that has actually failed. Stoic endurance, practiced past the point of repair, can shade into complicity with the thing being endured. I should have said where forbearance becomes a way of protecting the failure rather than bearing it.
+
+The argument also assumes an open civic arena, where speech and participation are available to the person who would use them. For the disenfranchised, the counsel to practice virtue can become a substitute for the power the practice cannot supply. Virtue is not a ballot, and the book sometimes reads as if it were.
+
 ## Bottom Line
 
 *The Stoic Citizen* is a manual for the public man who refuses to become a performer.
@@ -68,5 +73,7 @@ Virtue is not a trophy. It is the infrastructure that holds when the institution
 ---
 
 Buy it [on Amazon](https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/).
+
+Read more about the book: [*The Stoic Citizen*](/books/stoic-citizen/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

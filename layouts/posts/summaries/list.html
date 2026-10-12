@@ -34,10 +34,46 @@
 </div>
 {{- end }}
 
+{{/*
+   Recently updated — a recency signal above the alphabetical shelf.
+
+   The hub sorts by `sort_key` (author surname), which is a stable catalog
+   order and useless as a "what's new" signal: a summary added today lands
+   wherever its author's name falls, and the card's date is the *original*
+   read date, never `lastmod`, so an expanded summary shows no change at all.
+
+   This strip reads `lastmod` directly and surfaces the three most recently
+   touched summaries above the shelf, so both jobs are served: the shelf
+   stays a catalog, and the strip answers "what changed." Reuses the home
+   page's `.latest-posts` / `.recent-post` classes (loaded globally via
+   home.css), so there is no new CSS and the two surfaces read as siblings.
+
+   Rendered on page 1 only — a pager page 2 is a continuation of the shelf,
+   not a place to repeat the recency block.
+*/}}
+{{- if eq .Paginator.PageNumber 1 }}
+{{- with first 3 (.RegularPages.ByLastmod.Reverse) }}
+<section class="latest-posts recently-updated">
+  <h2>Recently updated</h2>
+  {{- range . }}
+  <div class="recent-post">
+    <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+    <time datetime="{{ .Lastmod.Format "2006-01-02" }}">Updated {{ .Lastmod.Format "January 2, 2006" }}</time>
+    <p>{{ .Params.description | plainify | truncate 160 }}</p>
+  </div>
+  {{- end }}
+</section>
+{{- end }}
+{{- end }}
+
 {{- $pages := union .RegularPages .Sections }}
 {{- $pages = $pages.ByParam "sort_key" }}
 
 {{- $paginator := .Paginate $pages 6 }}
+
+{{- if eq .Paginator.PageNumber 1 }}
+<h2 class="summaries-shelf-heading">All summaries</h2>
+{{- end }}
 
 {{- $term := .Data.Term }}
 {{- range $index, $page := $paginator.Pages }}

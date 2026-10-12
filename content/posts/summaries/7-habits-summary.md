@@ -6,11 +6,9 @@ author: Philip Huffman
 sort_key: "Covey, Stephen"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - productivity
   - leadership
-  - self-improvement
   - philosophy
+  - self-improvement
 ---
 
 # *The 7 Habits of Highly Effective People*

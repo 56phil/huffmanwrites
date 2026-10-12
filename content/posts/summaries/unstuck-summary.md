@@ -4,13 +4,11 @@ description: "Executive summary of Unstuck: a Stoic framework for getting your l
 date: 2025-08-23T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - Unstuck"
-lastmod: 2026-04-28T18:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - ai
-  - books
-  - essays
   - parenting
   - philosophy
+  - self-improvement
 weight: -1
 ---
 
@@ -55,7 +53,13 @@ weight: -1
 
  
 ---
- ## Bottom Line
+ ## Points I Should've Made
+
+The book treats inertia as a negotiation to win, and for most readers that is exactly right. It is less honest about the case where the negotiation is not the problem. Executive dysfunction, depression, and plain material constraint are not stories a firmer attitude dissolves, and a reader whose trouble is neurochemical or structural can finish the book with the quiet sense that they simply failed to want it enough. I should have drawn the line more clearly between the excuse that is a story and the limitation that is a fact.
+
+The 30-day challenge shares the blind spot. It is built as a straight line, and it reads a broken streak as a lapse to reset rather than a signal to investigate. When the system is wrong for the person, persistence is not discipline; it is the thing holding them still. The book does not say how to tell the difference, and it should.
+
+## Bottom Line
 
  *Unstuck* is a call to action. Stop waiting. Stop negotiating. Feed the right habits.
  Momentum, not perfection, is the path to freedom.
@@ -73,5 +77,7 @@ weight: -1
 ---
 
  Buy it [on Amazon](https://a.co/d/9zZy9oI?ref=huffmanwrites.org).
+
+Read more about the book: [*Unstuck*](/books/unstuck/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

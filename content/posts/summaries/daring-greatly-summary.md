@@ -6,11 +6,9 @@ author: Philip Huffman
 sort_key: "Brown, Brene"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - psychology
   - leadership
+  - psychology
   - self-improvement
-  - connection
 ---
 
 # *Daring Greatly*

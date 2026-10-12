@@ -4,10 +4,8 @@ description: "Executive summary of On Proportion: the lost discipline of matchin
 date: 2026-06-16T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - On Proportion"
-lastmod: 2026-05-10T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
-  - essays
   - philosophy
   - stoicism
 ---
@@ -51,6 +49,12 @@ That is the discipline. That is the freedom.
 
 
 ---
+## Points I Should've Made
+
+Proportion is easier to counsel than to practice, and the book is better at the counsel. Restraint under grief and urgency depends on a nervous system that is already settled, and the book understates how much it presumes. A reader in the middle of the storm cannot always find the calm center on which the argument asks them to stand.
+
+There is also a failure mode the book leaves unguarded. Proportion can become the reason not to care, a disciplined name for looking away. The book warns against overreaction and says less about the person who has refined restraint into a way of never being moved at all. The line between the right-sized response and no response is the one I should have drawn more sharply.
+
 ## Bottom Line
 
 *On Proportion* is a manual for the right-sized life.
@@ -70,5 +74,7 @@ The life that meets each moment with the response it deserves, and no more.
 ---
 
 Coming June 16, 2026.
+
+Read more about the book: [*On Proportion*](/books/on-proportion/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Holiday, Ryan - The Obstacle Is the Way"
 lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
-  - stoicism
+  - leadership
   - philosophy
   - self-improvement
-  - leadership
+  - stoicism
 ---
 
 # *The Obstacle Is the Way*

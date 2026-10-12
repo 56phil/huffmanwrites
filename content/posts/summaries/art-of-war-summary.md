@@ -6,11 +6,9 @@ author: Philip Huffman
 sort_key: "Sun Tzu"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - strategy
-  - philosophy
-  - leadership
   - classics
+  - leadership
+  - philosophy
 ---
 
 # *The Art of War*

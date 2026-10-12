@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Nussbaum, Martha"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - education
   - civics
-  - philosophy
   - democracy
+  - education
+  - philosophy
 ---
 
 # *Not for Profit: Why Democracy Needs the Humanities*

@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Kolbert, Elizabeth"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - ecology
-  - science
   - civics
+  - ecology
   - history
+  - science
 ---
 
 # *The Sixth Extinction: An Unnatural History*

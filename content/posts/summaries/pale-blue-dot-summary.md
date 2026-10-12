@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Sagan, Carl - Pale Blue Dot"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - science
-  - philosophy
-  - cosmology
   - civics
+  - cosmology
+  - philosophy
+  - science
 ---
 
 # *Pale Blue Dot: A Vision of the Human Future in Space*

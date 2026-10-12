@@ -4,10 +4,8 @@ description: "Executive summary of Misaligned: when the map is wrong, discipline
 date: 2025-12-05T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - Misaligned"
-lastmod: 2026-05-10T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
-  - essays
   - neurodivergence
   - philosophy
   - stoicism
@@ -54,6 +52,12 @@ It is unsentimental. It does not blame the map or the mapper. It examines the co
 
 
 ---
+## Points I Should've Made
+
+The book traces one life outward and risks mistaking one map for the territory. A single late diagnosis is a case, not a template, and the reader whose mind is misaligned in a different direction will not find their experience here as much as the book sometimes suggests. I should have been explicit that the pattern is an example rather than a portrait.
+
+It is also a book about what the misaligned person owes themselves, and it says less about what the people around them owe back. Accommodation is a two-sided obligation: the insight a person builds about their own mind is not the same as the adjustment their family, workplace, and friends are asked to make. That reciprocal duty deserved more of the book than it got.
+
 ## Bottom Line
 
 *Misaligned* is not a memoir of triumph. It is an anatomy of adjustment.
@@ -72,5 +76,7 @@ The goal is not repair but agency: the capacity to choose what to preserve, what
 ---
 
 Buy it [on Amazon](https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/B0GLX9JS3V/).
+
+Read more about the book: [*Misaligned*](/books/misaligned/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

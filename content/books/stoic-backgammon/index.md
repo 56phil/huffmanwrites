@@ -17,8 +17,10 @@ hero_caption: "An obsidian board in the void, one checker balanced on its edge."
 image_caption: "Finding the still point in a game of chance."
 link: "https://www.amazon.com/dp/B0GXW6KRDH/"
 author: "Philip Huffman"
-lastmod: 2026-05-14
+lastmod: 2026-10-12
 ---
+
+Read the [summary and review of *Stoic Backgammon*](/posts/summaries/stoic-backgammon-summary/).
 
 ## **Copyright**
 

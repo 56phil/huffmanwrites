@@ -4,10 +4,8 @@ description: "Executive summary of A Life Made Whole: essays on holding yourself
 date: 2025-10-12T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - A Life Made Whole"
-lastmod: 2026-05-10T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
-  - essays
   - philosophy
   - stoicism
 ---
@@ -57,6 +55,12 @@ The writing moves between clinical precision and lived experience, treating resi
 
 
 ---
+## Points I Should've Made
+
+The book treats wholeness as an interior project, and it is honest about how much of the work happens alone. It is thinner on the other half. A person is held together by other people as much as by their own discipline, and a virtue practiced only in private can quietly become the isolation it was meant to prevent. I should have said more about the relationships that carry a person when the internal repairs will not hold.
+
+The framework also assumes a floor of stability beneath it. For a reader in acute crisis, "remain coherent" is not a practice on offer; it is a demand they cannot meet, and a book that presents it as maintenance can read, to that reader, as blame. The distinction between sustaining a life and merely surviving one deserved its own treatment.
+
 ## Bottom Line
 
 *A Life Made Whole* is a manual for the hard middle: not the crisis, not the recovery, but the long stretch between them where most of life actually happens.
@@ -73,5 +77,7 @@ Integration, not perfection, is the path.
 ---
 
 Buy it [on Amazon](https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2GLKKCQ/).
+
+Read more about the book: [*A Life Made Whole*](/books/life-made-whole/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

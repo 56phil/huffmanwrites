@@ -16,8 +16,10 @@ image_alt: "A dissonant sea of gold-leaf parchment maps shifting in a navy void,
 hero_caption: "A sea of shifting maps, one compass needle holding its direction."
 image_caption: "Navigating the gap between intention and outcome."
 link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/B0GLX9JS3V/"
-lastmod: 2026-05-13
+lastmod: 2026-10-12
 ---
+Read the [summary and review of *Misaligned*](/posts/summaries/misaligned-summary/).
+
 ## The Future Is Bright and Full of Possibilities
 
 ## The Wrong Map

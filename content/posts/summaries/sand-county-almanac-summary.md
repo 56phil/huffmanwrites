@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Leopold, Aldo"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - ecology
-  - philosophy
-  - ethics
   - classics
+  - ecology
+  - ethics
+  - philosophy
 ---
 
 # *A Sand County Almanac*

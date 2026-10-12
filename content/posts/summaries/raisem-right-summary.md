@@ -4,10 +4,8 @@ description: "Executive summary of Raise 'Em Right: cultivating judgment, not co
 date: 2026-05-10T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - Raisem Right"
-lastmod: 2026-05-10T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
-  - essays
   - parenting
   - philosophy
   - stoicism
@@ -53,6 +51,12 @@ That preparation is not a curriculum. It is a relationship, sustained over time,
 
 
 ---
+## Points I Should've Made
+
+The book generalizes from one family's texture, and the texture is a comfortable one, which the argument does not fully acknowledge. It has little to say to the parent working two jobs, to the child whose school is failing them, to the family whose obstacles are structural before they are philosophical. Good parenting is not fully portable across those conditions, and the book implies otherwise.
+
+There is a second edge to the central claim. Skepticism taught well is a form of care, but there is a line past which teaching a child to question everything hands them a burden before they have the footing to carry it. The book is light on that failure mode, the child who learns to doubt before they learn to trust. I should have said where the line sits, not only that it can be crossed.
+
 ## Bottom Line
 
 *Raise 'Em Right* is a manual for the long work of raising sovereign minds.
@@ -72,5 +76,7 @@ The child who can think is the child who can survive, your absence included.
 ---
 
 Expected June 2027.
+
+Read more about the book: [*Raise 'Em Right*](/books/raisem-right/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

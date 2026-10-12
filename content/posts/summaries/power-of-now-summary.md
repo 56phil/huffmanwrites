@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Tolle, Eckhart"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
   - mindfulness
   - philosophy
-  - spirituality
   - psychology
+  - spirituality
 ---
 
 # *The Power of Now*

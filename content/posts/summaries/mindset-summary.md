@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Dweck, Carol"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - psychology
   - education
-  - self-improvement
   - leadership
+  - psychology
+  - self-improvement
 ---
 
 # *Mindset: The New Psychology of Success*

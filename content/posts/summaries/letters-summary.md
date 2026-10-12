@@ -4,10 +4,8 @@ description: "Executive summary of Letters: truth without outcome, speech withou
 date: 2026-01-15T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - Letters"
-lastmod: 2026-05-10T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
-  - essays
   - philosophy
   - stoicism
 ---
@@ -52,6 +50,12 @@ Public speech demands performance. The letter demands honesty. The book chooses 
 
 
 ---
+## Points I Should've Made
+
+The book argues that honest speech is a practice of remaining present, and it takes that burden seriously for the speaker. It is lighter on the listener. A letter that prizes the writer's integrity can still land as harm, and honesty is not the same thing as care. I should have spent more time on what the truth owes the person who receives it, not only on what it costs the person who tells it.
+
+It also writes from a position of safety. The instruction to speak with clarity regardless of consequence assumes a speaker who can afford the consequence. For someone whose speech carries real risk, of employment or of safety, the counsel is not wrong so much as incomplete. I should have named the standing the book silently requires.
+
 ## Bottom Line
 
 *Letters* is a manual for speaking when the outcome is unknown.
@@ -69,5 +73,7 @@ That is enough. That is the point.
 ---
 
 Buy it [on Amazon](https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4N7/).
+
+Read more about the book: [*Letters*](/books/letters/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

@@ -4,9 +4,8 @@ description: "Executive summary of The Stoic CGM: using data to govern the body 
 date: 2025-11-20T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - Stoic CGM"
-lastmod: 2026-05-10T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 tags:
-  - books
   - health
   - philosophy
   - stoicism
@@ -52,6 +51,12 @@ The central claim: comprehension, sustained over time, is the beginning of genui
 
 
 ---
+## Points I Should've Made
+
+The book states plainly that data is a tool and not a master. That is easy to write and harder to live. For a mind prone to compulsion, a number that rises is not information; it is an alarm, and the practice of watching it can tighten into the very condition against which the book warns. I should have spent more time on the reader for whom measurement becomes its own disorder, not only on the one it sets free.
+
+The metaphor of the body as a republic is elegant, and it can obscure a plain fact. Some bodies are broken in ways that no comprehension governs, and no discipline in the world talks a disease out of its course. Self-governance has a ceiling, and the book would be more honest if it named where the ceiling sits.
+
 ## Bottom Line
 
 *The Stoic CGM* is a manual for governing the body with the same rigor applied to the mind and the state.
@@ -68,5 +73,7 @@ The body is not a machine to optimize. It is a system to comprehend, and that co
 ---
 
 Buy it [on Amazon](https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Yourself/dp/B0G6G12GPW/).
+
+Read more about the book: [*The Stoic CGM*](/books/stoic-cgm/).
 
 *PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*

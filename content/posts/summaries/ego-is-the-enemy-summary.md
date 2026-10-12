@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Holiday, Ryan - Ego Is the Enemy"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - stoicism
+  - leadership
   - philosophy
   - self-improvement
-  - leadership
+  - stoicism
 ---
 
 # *Ego is the Enemy*

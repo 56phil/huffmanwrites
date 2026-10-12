@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Aurelius, Marcus"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - stoicism
-  - philosophy
   - classics
   - memoir
+  - philosophy
+  - stoicism
 ---
 
 # *Meditations*

@@ -16,8 +16,10 @@ image_alt: "A classical stone-textured hand interacting with a floating holograp
 hero_caption: "A classical hand reaches toward floating data — ancient wisdom meets modern precision."
 image_caption: "Bridging ancient wisdom and futuristic precision in the pursuit of health."
 link: "https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Yourself/dp/B0G6G12GPW/"
-lastmod: 2026-05-14
+lastmod: 2026-10-12
 ---
+Read the [summary and review of *The Stoic CGM*](/posts/summaries/the-stoic-cgm-summary/).
+
 ## The Republic of Glucose
 
 ## The Discipline of Action

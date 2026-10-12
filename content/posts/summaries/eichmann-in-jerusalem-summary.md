@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Arendt, Hannah"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
   - civics
-  - philosophy
-  - history
   - ethics
+  - history
+  - philosophy
 ---
 
 # *Eichmann in Jerusalem: A Report on the Banality of Evil*

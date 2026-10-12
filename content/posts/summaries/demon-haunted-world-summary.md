@@ -6,10 +6,9 @@ author: Philip Huffman
 sort_key: "Sagan, Carl - Demon-Haunted World"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - science
-  - philosophy
   - critical-thinking
+  - philosophy
+  - science
   - skepticism
 ---
 

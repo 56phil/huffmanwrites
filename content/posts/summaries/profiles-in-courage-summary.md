@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Kennedy, John F."
 lastmod: 2026-09-21T00:00:00Z
 tags:
-  - books
   - civics
+  - democracy
   - history
   - leadership
-  - democracy
 ---
 
 # *Profiles in Courage*

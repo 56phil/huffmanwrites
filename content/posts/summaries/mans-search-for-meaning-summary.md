@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Frankl, Viktor"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
+  - memoir
   - philosophy
   - psychology
   - stoicism
-  - memoir
 ---
 
 # *Man's Search for Meaning*

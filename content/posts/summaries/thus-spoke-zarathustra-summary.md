@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Nietzsche, Friedrich"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - philosophy
-  - existentialism
   - classics
   - ethics
+  - existentialism
+  - philosophy
 ---
 
 # *Thus Spoke Zarathustra*

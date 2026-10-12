@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Tocqueville, Alexis de"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
   - civics
-  - philosophy
-  - history
   - democracy
+  - history
+  - philosophy
 ---
 
 # *Democracy in America*

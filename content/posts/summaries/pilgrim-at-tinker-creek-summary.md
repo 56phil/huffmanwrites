@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Dillard, Annie"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
   - ecology
-  - philosophy
   - memoir
-  - contemplation
+  - mindfulness
+  - philosophy
 ---
 
 # *Pilgrim at Tinker Creek*

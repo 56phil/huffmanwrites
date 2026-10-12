@@ -6,11 +6,10 @@ author: Philip Huffman
 sort_key: "Carson, Rachel"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - ecology
   - civics
-  - science
+  - ecology
   - history
+  - science
 ---
 
 # *Silent Spring*

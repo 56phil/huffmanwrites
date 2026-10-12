@@ -6,11 +6,9 @@ author: Philip Huffman
 sort_key: "Tyson, Neil deGrasse"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
-  - science
-  - astrophysics
-  - philosophy
   - cosmology
+  - philosophy
+  - science
 ---
 
 # *Astrophysics for People in a Hurry*

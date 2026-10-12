@@ -16,8 +16,10 @@ image_alt: "A solitary classical figure moving through a stark, light-filled doo
 hero_caption: "The first step out of stasis: choosing movement over negotiation."
 image_caption: "The discipline of movement after too much waiting."
 link: "https://www.amazon.com/Unstuck-Brutal-Guidance-Getting-Your-ebook/dp/B0DYL1G7HQ/"
-lastmod: 2026-05-19
+lastmod: 2026-10-12
 ---
+Read the [summary and review of *Unstuck*](/posts/summaries/unstuck-summary/).
+
 ## Stop Stalling
 
 ## Your Excuses Are BS

@@ -6,10 +6,9 @@ author: Philip Huffman
 sort_key: "Kimmerer, Robin Wall"
 lastmod: 2026-05-31T00:00:00Z
 tags:
-  - books
+  - culture
   - ecology
   - philosophy
-  - indigenous-knowledge
   - science
 ---
 
