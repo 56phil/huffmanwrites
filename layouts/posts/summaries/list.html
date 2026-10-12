@@ -34,6 +34,11 @@
 </div>
 {{- end }}
 
+{{- $pages := union .RegularPages .Sections }}
+{{- $pages = $pages.ByParam "sort_key" }}
+
+{{- $paginator := .Paginate $pages 6 }}
+
 {{/*
    Recently updated — a recency signal above the alphabetical shelf.
 
@@ -50,8 +55,14 @@
 
    Rendered on page 1 only — a pager page 2 is a continuation of the shelf,
    not a place to repeat the recency block.
+
+   The paginator is created ABOVE this block, and `.Paginate $pages 6` is the
+   first pagination call on the page. Hugo takes the page size from the first
+   pagination call it sees; an earlier implicit `.Paginator` would lock in the
+   site default (10) and silently ignore the 6 here — which is exactly what
+   happened when this strip was first added above the `$paginator` line.
 */}}
-{{- if eq .Paginator.PageNumber 1 }}
+{{- if eq $paginator.PageNumber 1 }}
 {{- with first 3 (.RegularPages.ByLastmod.Reverse) }}
 <section class="latest-posts recently-updated">
   <h2>Recently updated</h2>
@@ -66,12 +77,7 @@
 {{- end }}
 {{- end }}
 
-{{- $pages := union .RegularPages .Sections }}
-{{- $pages = $pages.ByParam "sort_key" }}
-
-{{- $paginator := .Paginate $pages 6 }}
-
-{{- if eq .Paginator.PageNumber 1 }}
+{{- if eq $paginator.PageNumber 1 }}
 <h2 class="summaries-shelf-heading">All summaries</h2>
 {{- end }}
 
