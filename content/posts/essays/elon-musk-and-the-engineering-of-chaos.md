@@ -108,7 +108,7 @@ The most accurate epitaph for his political career to date is this: **Elon Musk 
 
 [^3]: Ovide, S. (2020, May 12). Elon Musk's quarantine rebellion. *The New York Times*. https://www.nytimes.com/2020/05/12/technology/elon-musk-quarantine-rebellion.html
 
-[^4]: Sato, M., & Heath, A. (2022, November 4). Elon Musk's Twitter layoffs leave whole teams gutted. *The Verge*. https://www.theverge.com/2022/11/4/23439790/elon-musk-twitter-layoffs-trust-and-safety-teams-severance; Toh, M., & Liu, J. (2023, April 12). Elon Musk says he's cut about 80% of Twitter's staff. *CNN Business*. https://www.cnn.com/2023/04/12/tech/elon-musk-bbc-interview-twitter-intl-hnk
+[^4]: Sato, M., & Heath, A. (2022, November 4). Elon Musk's Twitter layoffs leave whole teams gutted. *The Verge*. <https://www.theverge.com/2022/11/4/23439790/elon-musk-twitter-layoffs-trust-and-safety-teams-severance>. Toh, M., & Liu, J. (2023, April 12). Elon Musk says he's cut about 80% of Twitter's staff. *CNN Business*. <https://www.cnn.com/2023/04/12/tech/elon-musk-bbc-interview-twitter-intl-hnk>
 
 [^5]: Milmo, D. (2023, April 21). Elon Musk pays for Stephen King and LeBron James to keep Twitter blue ticks. *The Guardian*. https://www.theguardian.com/technology/2023/apr/21/elon-musk-pays-stephen-king-lebron-james-keep-twitter-blue-ticks
 
