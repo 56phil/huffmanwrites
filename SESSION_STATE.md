@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 13, 2026 — Published the chiefs-weekly-report report (automated)
+
+Auto-published by `com.huffmanwrites.chiefs-weekly-report` after every gate passed.
+- **Published** `content/posts/sports/chiefs-report-2026-10-13.md` — "Chiefs Report: October 13, 2026", 2091 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The week, as the piece frames it:** **Answer:** They filled the hole with a name they already knew. Justin Watson is back on the practice squad, Tyquan Thornton is on injured reserve, and the reunion the league spent a week waiting for did not happen.
+- **Data came from `scripts/chiefs-report.py`**, the briefing pack the runner writes before the writer starts: the week's game with both teams' box scores and leaders, every scoring play, both injury reports, the standings and seed list, the season statistics by category, the next game with the feed's own odds and its matchup projection, and two weeks of Chiefs-tagged coverage with its URLs. The writer is not permitted to recall a score or a record. URLs are cited from the feed or from a page the run fetched; a constructed URL is the repo's most dangerous failure and this is the job where one would ship unreviewed.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own `<title>` to carry the article's `title` (`scripts/verify-published.py`, the rule `sitrep-watchdog.py` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence raises the shared alert and fails the run: the article is on `main` and no reader has it. The outcome is in `/Users/prh/Library/Logs/chiefs-weekly-report.out.log`.
+- **SimpleBrain mirror** runs immediately after this push: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in `/Users/prh/Library/Logs/chiefs-weekly-report.out.log`.
+
+---
+
 ### Maintenance — October 13, 2026 — Published "A Party of One: What the GOP Became, and How It Might Be Repaired"
 
 Philip: "Publish an essay about the horrible mess the GOP has become and how, if possible, it can be improved."
