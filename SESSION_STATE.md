@@ -12,6 +12,20 @@
 
 ---
 
+### Maintenance — October 12, 2026 — Four dead citations replaced (the Monday integrity sweep's DEAD set)
+
+Monday's `weekly-integrity` run (14:05) failed on its links-online half with **four DEAD links** — the first confirmed-404 hits the log kept. Each was a footnote or source-list citation in a published essay, the exact case CLAUDE.md calls dishonest: an ID that is real, a domain that is right, and a page that is gone. All four are 404 under the gate's own two-fetch confirmation, and none has a Wayback snapshot (checked via `archive.org/wayback/available`: only the Rasmussen page answered).
+
+- **`thehill.com/…4596862-massie-backs-greene-effort-oust-speaker-johnson/`** → `…4596862-massie-backs-greene-effort-to-oust-speaker-johnson/` in `mike-johnson-and-the-problem-of-bad-faith.md` (fn 3). The slug gained `to-`; the article itself is live and unchanged.
+- **`www.ai.gov/action-plan`** → `https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf` in `preventing-woke-ai.md` (source list). The `ai.gov` landing page is retired; the plan is the White House PDF. Title corrected to the report's own (**Winning the AI Race: America's AI Action Plan**), and the dangling `"Winning the AI Race."` quote dropped.
+- **Bloomberg's Musk-takeover story** → replaced in `elon-musk-and-the-engineering-of-chaos.md` (fn 4) with two live sources that between them carry the paragraph's actual claim (trust-and-safety, content-moderation and communications teams gutted; ~80% of staff cut): The Verge's layoffs report and CNN's interview account.
+- **`rasmussenreports.com/…election_2026_iowa_senate2`** → `…election_2026_iowa_senate` in `senate-race-report-2026-10-04.md` (fn 33). The trailing `2` was a duplicate-page artifact; the canonical Iowa poll page is live and still carries the quoted 47–43 line verbatim.
+- **Every replacement was fetched before it was written.** Each returns 200 under `check-links.py`'s own probe, and the cited wording was confirmed as a substring of the fetched page (normalised whitespace) — the Rasmussen line, the Hill headline and byline, the CNN 80%-of-staff figures, the Verge team list. `lastmod` bumped to 2026-10-12 on all four.
+- **Verified by running it.** `check-links.py --file <each> --online` → **0 dead** on all four (was 1 each); corpus `--online` DEAD set now empty of these. Clean `hugo --gc --minify` (461 pages); **400/400 gate tests**; offline gates green (content frontmatter 225, links 2,714, report frontmatter anchors/attribution 216 posts, prepositions, em-dashes, quotes 66, hero paths 313, series 21, gallery 133, plists, secrets). Rendered links confirmed in `public/posts/essays/…`.
+- **The SimpleBrain mirror carried two of the same dead URLs** (`ai.gov/action-plan`, `…iowa_senate2`); both fixed in `wiki/articles/`, committed and pushed with the vault. The `archive/` copies keep the dead links by design — that tree is the flat, append-only raw record and is not the live mirror.
+
+---
+
 ### Maintenance — October 12, 2026 — Added "Dune" to the book summaries (the first fiction entry)
 
 Phil: "Add 'Dune' to my summaries. It was instrumental in forming my thinking about politics and environmental science." Confirmed with him first that the section had no fiction — it did not, across all 37 summaries — so this is the section's first novel and it introduces a `fiction` tag.

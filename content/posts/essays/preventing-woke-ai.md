@@ -3,7 +3,7 @@ title: "Preventing Woke AI: The Executive Order That Defines Truth"
 description: "Executive Order 14319 requires federal agencies to procure only 'truth-seeking' and 'ideologically neutral' AI. The order defines neutrality as the absence of DEI, critical race theory, transgenderism, and systemic racism. Meanwhile, Grok praised Hitler and received a $200 million Pentagon contract, and Anthropic was blacklisted as a supply chain risk for refusing to allow mass surveillance. The procurement process has become an ideology filter."
 date: 2026-10-10T10:00:00-05:00
 author: Philip Huffman
-lastmod: 2026-10-10T10:00:00-05:00
+lastmod: 2026-10-12T00:00:00-05:00
 featuredOnHome: true
 hero_desktop: "img/articles/120-preventing-woke-ai_16x9.webp"
 hero_mobile: "img/articles/120-preventing-woke-ai_4x5.webp"
@@ -147,7 +147,7 @@ A republic that procures mirrors will eventually see only itself in them. And wh
 - The Verge. (2024, February 21). [*Google apologizes for 'missing the mark' after Gemini generated racially diverse Nazis*](https://www.theverge.com/2024/2/21/24079371/google-ai-gemini-generative-inaccurate-historical).
 - The Verge. (2025, September 10). [*The MechaHitler defense contract is raising red flags*](https://www.theverge.com/x-ai/775411/grok-xai-safety-musk-warren-hegseth-dod).
 - The White House. (2025a, July 23). [*Preventing Woke AI in the Federal Government*](https://www.whitehouse.gov/presidential-actions/2025/07/preventing-woke-ai-in-the-federal-government/). Executive Order 14319.
-- The White House. (2025b, July 23). [*America's AI Action Plan*](https://www.ai.gov/action-plan). "Winning the AI Race."
+- The White House. (2025b, July 23). [*Winning the AI Race: America's AI Action Plan*](https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf).
 - The White House. (2025c, December 11). [*Ensuring a National Policy Framework for Artificial Intelligence*](https://www.govinfo.gov/content/pkg/DCPD-202501186/pdf/DCPD-202501186.pdf). Executive Order 14365.
 - Wired. (2024, February 22). [*Google's 'woke' image generator shows the limitations of AI*](https://www.wired.com/story/google-gemini-woke-ai-image-generation/).
 

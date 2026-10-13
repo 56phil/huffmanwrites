@@ -3,7 +3,7 @@ title: "Mike Johnson and the Problem of Bad Faith"
 description: "A scholarly assessment of the 56th Speaker of the House: Is he stupid, evil, both, or something worse?"
 date: 2026-07-28T00:00:00Z
 author: Philip Huffman
-lastmod: 2026-09-24T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 draft: false
 tags:
   - politics
@@ -90,7 +90,7 @@ The most accurate epitaph for his career to date is this: **Mike Johnson is a ma
 
 [^2]: Kranish, M., & Stanley-Becker, I. (2023, November 4). How Speaker Mike Johnson's plans for a Christian law school unraveled. *The Washington Post*. <https://www.washingtonpost.com/politics/2023/11/04/mike-johnson-law-school-louisiana-college-shreveport/>; Slodysko, B. (2023, October 31). House Speaker Mike Johnson was once the dean of a Christian law school. It never opened its doors. *Associated Press*. https://apnews.com/article/mike-johnson-house-speaker-2d1a3399e8fe61bf0619d66ba29a1520
 
-[^3]: Schnell, M. (2024, April 16). First Republican publicly backs Greene effort to oust Speaker Johnson. *The Hill*. https://thehill.com/homenews/house/4596862-massie-backs-greene-effort-oust-speaker-johnson/
+[^3]: Schnell, M. (2024, April 16). First Republican publicly backs Greene effort to oust Speaker Johnson. *The Hill*. https://thehill.com/homenews/house/4596862-massie-backs-greene-effort-to-oust-speaker-johnson/
 
 [^4]: Riccardi, N. (2023, October 26). New US House speaker tried to help overturn the 2020 election, raising concerns about the next one. *Associated Press*. https://apnews.com/article/congress-house-speaker-2024-election-certification-8cd7c5a9e6ae69635bbb4624cc78e5c5
 

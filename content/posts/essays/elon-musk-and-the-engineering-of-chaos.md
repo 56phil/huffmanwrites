@@ -3,7 +3,7 @@ title: "Elon Musk and the Engineering of Chaos: A Scholarly Assessment"
 description: "An analysis of the world's richest demolitionist: Is he stupid, evil, both, or something more dangerous?"
 date: 2026-07-28T00:00:00Z
 author: Philip Huffman
-lastmod: 2026-07-28T00:00:00Z
+lastmod: 2026-10-12T00:00:00Z
 draft: false
 tags:
   - politics
@@ -108,7 +108,7 @@ The most accurate epitaph for his political career to date is this: **Elon Musk 
 
 [^3]: Ovide, S. (2020, May 12). Elon Musk's quarantine rebellion. *The New York Times*. https://www.nytimes.com/2020/05/12/technology/elon-musk-quarantine-rebellion.html
 
-[^4]: Frier, S., & Wagner, K. (2022, October 28). Elon Musk completes $44 billion Twitter takeover, firing top executives. *Bloomberg*. https://www.bloomberg.com/news/articles/2022-10-28/elon-musk-completes-twitter-takeover-fired-top-executives
+[^4]: Sato, M., & Heath, A. (2022, November 4). Elon Musk's Twitter layoffs leave whole teams gutted. *The Verge*. https://www.theverge.com/2022/11/4/23439790/elon-musk-twitter-layoffs-trust-and-safety-teams-severance; Toh, M., & Liu, J. (2023, April 12). Elon Musk says he's cut about 80% of Twitter's staff. *CNN Business*. https://www.cnn.com/2023/04/12/tech/elon-musk-bbc-interview-twitter-intl-hnk
 
 [^5]: Milmo, D. (2023, April 21). Elon Musk pays for Stephen King and LeBron James to keep Twitter blue ticks. *The Guardian*. https://www.theguardian.com/technology/2023/apr/21/elon-musk-pays-stephen-king-lebron-james-keep-twitter-blue-ticks
 
