@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 15, 2026 — Published "The Damage and the Defense"
+
+Philip: "I believe the Trump administration, while not fascist in the scholarly definition of the term, is bad for America. Publish an essay on how Trump is ruining the U.S. and how it can be opposed today."
+- **Published** `content/posts/essays/the-damage-and-the-defense.md` — **2,560 words whole-file**, `draft: false`, `featuredOnHome: true`, NN 128. Two halves: a documented account of the damage (V-Dem's "no longer a liberal democracy" finding, Bright Line Watch, Freedom House; the instruments of capture; the Minneapolis killings; the war's price at the pump), and a concrete list of what can be done now. One line: competitive authoritarianism is a contest, not a finished state, and the elections remain the mechanism.
+- **The requested "ruining" framing was written to the site's evidentiary standard, not as a slogan.** Every load-bearing claim is attributed to a fetched source, and the piece keeps the definitional discipline Philip stated in his own words: it argues that "fascist" is the wrong word for a government that has kept the forms of democracy while hollowing them, and that "competitive authoritarian" is the stronger charge because it is the more specific one.
+- **The "how it can be opposed" half is lawful and institutional** (vote and work the election, the courts and the states, Congress as a check, funding the counterweights, refusing demoralization), the register the site publishes in, rather than a call to anything outside the civic frame.
+- **Hero pair `128-damage-and-defense_{16x9,4x5}.webp`** via fal.ai FLUX.1 dev (`queue.fal.run/fal-ai/flux/dev`), keychain `huffmanwrites-fal`. Concept: a fluted Parian marble column split by a gold-lit fissure, standing in a midnight navy void — "the crack is in the stone." Both sizes clean on the first pass, no text. 1536×1024 → center-cropped 1365×768; 1024×1280 → 896×1120; WebP q92 via `magick`. `hero_alt` rewritten after a vision check to match the art actually rendered (the accepted frame carries a broken base and no visible buttress block).
+- **Five cited hosts block automated clients, and it is the documented shape.** `check-links --file --online --titles` reports **9 ok, 0 dead, 0 redirecting, 0 unverified, 5 BLOCKED** (OUP, AP, congress.gov, Reuters, and SSA all answer the checker's client with 403/401). Each was read in full through the search tool or the `read` tool, so a block is "we could not look", not fabrication.
+- **Verified by running it.** `check-emdashes --file` 0; `check-prepositions --file` 0; `check-quotes --file` OK (0 attributions; inline quotes carry named authors); `check-report-frontmatter --file` publishable; corpus `check-content-frontmatter` (235 files), `check-hero-paths` (333 paths), `check-gallery-pages` (139 items / 12 pages), `check-series-posts` (25 installments), `--anchors-corpus` (226 posts), and the em-dash/preposition ratchets all OK; **400/400 gate tests**; clean `hugo --gc --minify` (**479 pages**). Built page verified: `<title>`, both hero sources (4:5 mobile `<source>` + 16:9 desktop), `og:image`, closing attribution, 2,407 rendered words.
+
+---
+
 ### Maintenance — October 15, 2026 — Published "The Machine Is the Collateral: CoreWeave and the GPU Debt Wall"
 
 Philip: "Tell me about CoreWeave." → "Publish a standalone piece."
