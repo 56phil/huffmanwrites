@@ -12,6 +12,20 @@
 
 ---
 
+### Maintenance — October 17, 2026 — Added `com.huffmanwrites.fork-sync`, the weekly GitHub fork job
+
+Philip: "Set up a cron job that ensures my forks on GitHub are up to date and secure. Run that job every Saturday morning at 0400 CT."
+- **Four files, the `skills/scheduled-job.md` contract:** `scripts/check-forks.py` (enumerate → compare → fast-forward → enable → report), `scripts/fork-sync-runner.sh`, `scripts/com.huffmanwrites.fork-sync.plist` (Saturday 04:00 CT), and `TestForkSyncJob` in `scripts/test_gates.py`. Brief in `skills/fork-sync.md`; one row added to the CLAUDE.md job table.
+- **The two levers are `POST /repos/{owner}/{repo}/merge-upstream` and the two security switches — and the security switches are off by default on a fork.** Measured on this run: all eight forks had `dependabot_security_updates: disabled`. Two were behind (`56phil/tuts` by **1,252 commits**, `56phil/Sorting-Algorithm-Visualizer` by 1); both are now identical to their upstreams, and every fork's alerts and security updates are on. No other surface in this repo or on GitHub could see any of it.
+- **The first run surfaced 176 open Dependabot alerts** — 16 critical, 84 high, 66 medium, 10 low — all in the *upstream* projects, invisible for as long as the forks had existed: `56phil/bigpowers` 112 (`js-yaml`, `ip-address`, `fast-uri`, `hono`, `devalue`), `56phil/diagram-design` 36 (Pillow), `56phil/tuts` 28 (`golang.org/x/crypto`). Reported, and deliberately not a failure: a fork cannot fix a vulnerable dependency, and the fix arrives through the sync. Divergence and an unreadable fork are the two states that exit non-zero.
+- **Two bugs were found by the run and fixed with the test that pins them.** The compare endpoint takes `OWNER:branch`, not `owner/repo:branch`, so the first pass reported "Not Found" for all eight forks — the account appearing to have lost its repositories. And `gh api --paginate --jq length` prints one count *per page*, so reading the first line reported `56phil/bigpowers` as 100 alerts when it had 112; `count_from_pages()` sums them.
+- **`gh`'s credential home is the login keychain** (`gh:github.com`), reached through `gh` itself — no second copy, per the one-home rule. The runner refuses to start unless `gh auth status` succeeds, because a locked keychain under launchd would otherwise surface as eight unrelated read errors.
+- **Files changed:** `scripts/check-forks.py` (new), `scripts/fork-sync-runner.sh` (new), `scripts/com.huffmanwrites.fork-sync.plist` (new), `skills/fork-sync.md` (new), `scripts/test_gates.py` (`TestForkSyncJob`), `CLAUDE.md` (table row), this entry. Plist installed and bootstrapped; `launchctl print` shows `Weekday 6, Hour 4, Minute 0`. Gate suite 414 tests OK; `check-plists.py` 14 schedules OK.
+
+---
+
+
+
 ### Maintenance — October 17, 2026 — Published the Stoic Saturday digest "The Work Is the Reward" (embargoed to 6 AM CT)
 
 Scheduled Saturday's Stoic Saturday. Draft written Friday into `pending/`, sent-page created in `content/posts/digests/`, campaign scheduled through SendFox.

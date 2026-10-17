@@ -69,6 +69,7 @@ crf = load("check-report-frontmatter")
 cqn = load("check-quote-names")
 ccf = load("check-content-frontmatter")
 cvc = load("check-vault-currency")
+cfk = load("check-forks")
 
 EM = "\u2014"
 
@@ -5411,5 +5412,151 @@ class TestWeeklyIntegrityJob(unittest.TestCase):
         self.assertIn("run_corpus_gates run run_soft", text)
 
 
+# --------------------------------------------------------------------------
+# Fork hygiene: the switches are off by default, so the job has to be right.
+# --------------------------------------------------------------------------
+class TestForkSyncJob(unittest.TestCase):
+    """The GitHub fork job, asserted against its own wiring.
+
+    Nothing here is a style rule. The subject is a job that changes state on
+    GitHub — fast-forwarding branches and turning security features on — so the
+    properties worth pinning are the ones whose absence is silent: that it
+    authenticates before it touches anything, that a report-only run changes
+    nothing, that an empty fork list is an error rather than a clean run, and
+    that the only exit non-zero is a fork the job genuinely cannot fix.
+    """
+
+    def setUp(self):
+        self.runner = (SCRIPTS / "fork-sync-runner.sh").read_text(encoding="utf-8")
+        self.text = "\n".join(ln for ln in self.runner.splitlines()
+                              if not ln.lstrip().startswith("#"))
+
+    def test_the_plist_fires_saturday_at_0400(self):
+        # 04:00 CT Saturday, one dict — "once a day, every day" is the singular
+        # form, and an array here would mean the schedule was not meant.
+        import plistlib
+        p = SCRIPTS / "com.huffmanwrites.fork-sync.plist"
+        self.assertTrue(p.is_file(), "the fork-sync plist is missing")
+        d = plistlib.loads(p.read_bytes())
+        self.assertEqual(d.get("Label"), "com.huffmanwrites.fork-sync")
+        sched = d.get("StartCalendarInterval")
+        self.assertIsInstance(sched, dict, "one weekly fire is the dict form")
+        self.assertEqual((sched.get("Weekday"), sched.get("Hour"), sched.get("Minute")),
+                         (6, 4, 0), "Saturday 04:00 CT")
+        args = d.get("ProgramArguments") or []
+        self.assertTrue(any(a.endswith("fork-sync-runner.sh") for a in args),
+                        "the plist must name the runner")
+
+    def test_a_single_calendar_dict_and_no_weekday_array(self):
+        # Same rule the daily SITREP's plist is held to, stated the same way: a
+        # job that fires weekly writes one dict with a Weekday key. An array of
+        # one dict is legal in a LaunchAgent and parses, which is why it would
+        # otherwise pass unnoticed as "the schedule I meant".
+        import plistlib
+        d = plistlib.loads((SCRIPTS / "com.huffmanwrites.fork-sync.plist").read_bytes())
+        self.assertNotIsInstance(d.get("StartCalendarInterval"), list)
+        self.assertEqual(d["StartCalendarInterval"].get("Weekday"), 6)
+
+    def test_it_authenticates_before_it_touches_anything(self):
+        # Every call goes through `gh`, whose token lives in the login keychain.
+        # A LaunchAgent reaches that keychain only inside a logged-in GUI session,
+        # and a locked one would otherwise surface as eight unrelated "cannot read
+        # repository" errors and a report that reads like the account lost its
+        # forks. The check must come before the checker runs.
+        self.assertIn("gh auth status", self.text)
+        # Against the INVOCATION, not the name: `CHECKER=` is assigned near the top
+        # of the file and would satisfy a naive text search while the call itself
+        # sat below the preflight.
+        self.assertLess(self.text.find("gh auth status"),
+                        self.text.find('python3 "$CHECKER"'))
+
+    def test_it_refuses_to_run_without_gh(self):
+        self.assertIn("command -v gh", self.text)
+
+    def test_the_report_only_run_is_the_runner_s_default_off_switch(self):
+        # The checker is read-only without --apply, so the runner must pass
+        # --apply; the dry-run switch must replace it rather than accompany it.
+        self.assertIn("--apply", self.text)
+        self.assertIn("FORK_SYNC_DRY_RUN", self.text)
+        self.assertIn('APPLY=(--dry-run)', self.text)
+        self.assertEqual(self.text.count("python3 \"$CHECKER\""), 1,
+                         "exactly one invocation; a second would shadow the first")
+
+    def test_it_alerts_with_its_own_exit_code(self):
+        # Unattended: a non-zero exit used to leave nothing but a log line.
+        self.assertIn('alert-failure.sh" "fork-sync" "$RC"', self.text)
+
+    def test_the_preflight_failure_alerts_and_exits_non_zero(self):
+        i = self.text.find("gh is not authenticated, aborting")
+        self.assertGreater(i, 0)
+        self.assertIn("alert-failure.sh", self.text[i:i + 300])
+        self.assertIn("exit 1", self.text[i:i + 300])
+
+    def test_the_runner_derives_its_root_from_its_own_location(self):
+        # The global rule (TestCorpusIntegration) covers every shell script; this
+        # names it for this one, because the failure it prevents — python3 exiting
+        # 2 on a path that does not exist in a CI checkout — is the reason the rule
+        # exists at all.
+        self.assertIn("BASH_SOURCE[0]", self.text)
+
+    def test_the_four_positions_a_fork_can_be_in(self):
+        # The decision the exit code turns on. `diverged` is the only state that
+        # needs a human: merge-upstream refuses it and forcing would discard work.
+        self.assertEqual(cfk.decide(0, 0), "current")
+        self.assertEqual(cfk.decide(1, 0), "behind")
+        self.assertEqual(cfk.decide(0, 2), "ahead")
+        self.assertEqual(cfk.decide(1, 1), "diverged")
+
+    def test_only_divergence_and_an_unreadable_fork_fail_the_run(self):
+        # An open Dependabot alert must NOT fail the run: a fork cannot fix a
+        # vulnerable dependency, the fix arrives through the sync, and a job that
+        # alerts on what its reader cannot act on trains the alert into noise.
+        # Asserted on the behaviour, not the prose: the summary of a clean run over
+        # a fork carrying open alerts still counts zero failures.
+        row = {"repo": "o/f", "upstream": "u/f", "branch": "main", "behind": 0, "ahead": 0,
+               "state": "current", "notes": [], "sec_counts": {"dependabot": 14,
+                                                             "secret_scanning": 0}}
+        report = cfk.render([row], datetime.now().astimezone())
+        self.assertIn("0 needing a human", report)
+        self.assertIn("14 open security alerts", report)
+
+    def test_an_unreadable_fork_is_reported_not_crashed(self):
+        # The error row carries no `state`, no `sec_counts` and no `notes`. A
+        # renderer that reads any of them unconditionally raises inside a
+        # scheduled run, where the traceback is the only output.
+        report = cfk.render([{"repo": "o/f", "error": "gh: Not Found (HTTP 404)"}],
+                            datetime.now().astimezone())
+        self.assertIn("1 needing a human", report)
+        self.assertIn("HTTP 404", report)
+
+    def test_an_empty_fork_list_is_an_error_not_a_clean_run(self):
+        # A check that inspects nothing reports OK. An enumeration that stops
+        # matching — a renamed account, a scope change, an API shape change —
+        # would otherwise read as "every fork is healthy" over zero forks.
+        self.assertGreaterEqual(cfk.MIN_FORKS, 1)
+
+    def test_a_paginated_alert_count_is_summed_not_truncated(self):
+        # Measured 2026-10-17: `--paginate --jq length` prints one number per page,
+        # and reading the first reported 100 as the total for a fork that had 112 —
+        # then summed those caps into a summary line that was simply wrong. The
+        # capped number is the one shape a reader cannot tell from a real total.
+        self.assertEqual(cfk.count_from_pages("100\n12\n"), 112)
+        self.assertEqual(cfk.count_from_pages("0\n"), 0)
+        self.assertEqual(cfk.count_from_pages("7"), 7)
+        # Not a count, so not a number: a blank read must stay distinguishable from
+        # a repository with no alerts.
+        for blank in ("", "\n", "not a number"):
+            with self.subTest(blank=blank):
+                self.assertIsNone(cfk.count_from_pages(blank))
+
+    def test_it_uses_the_gh_credential_home_rather_than_a_second_one(self):
+        # One home per credential. `gh` owns this one (the login keychain); a
+        # repo-local token file is a mistake this repo has already made twice with
+        # fal.ai and SendFox.
+        self.assertNotIn("GITHUB_TOKEN", self.runner)
+        self.assertNotIn(".gh_token", self.runner)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])
+
