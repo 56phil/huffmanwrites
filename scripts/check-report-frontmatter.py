@@ -151,8 +151,9 @@ def validate(path: "Path | str", hero_plate: "str | None" = None,
 
     `future_ok` is the scheduling mode: it drops the "date ahead of the clock"
     rule for a file that is *deliberately* dated to an hour that has not arrived,
-    whose page the deploy publishes at the stroke of that hour (the 12:00 UTC
-    build in `.github/workflows/hugo.yml`, or a later push). The rule exists
+    whose page the deploy publishes after that hour — a scheduled build if one
+    fires near the hour (measured, the fires here run ~4 hours late), and
+    reliably the next push (`.github/workflows/hugo.yml`). The rule exists
     because a future date normally means a mistake — a `date`/`lastmod` typo, or
     a report dated tomorrow — and Hugo skips such a page silently, so the run
     reports success and the reader gets nothing. Corpus mode is the one place

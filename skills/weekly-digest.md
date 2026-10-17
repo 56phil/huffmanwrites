@@ -2,8 +2,10 @@
 
 The weekly newsletter: a Stoic epigraph, a reflection at its center, the week's
 news read through it, a practice for the reader, and a roundup of this site's
-report series. Drafted Saturday morning into `pending/`, sent through SendFox,
-then mirrored to `content/posts/digests/`.
+report series. Drafted into `pending/`, sent through SendFox, then mirrored to
+`content/posts/digests/`. **The draft is untracked** (`.gitignore` ignores
+`pending/*.md` and keeps only `TEMPLATE.md`), so writing and sending one owes no
+commit; only the page and its hero are source.
 
 Unlike the weekly reports, **this file is not published by a runner.** Philip reads and
 edits it before it sends, so nothing here commits or pushes on your behalf.
@@ -167,11 +169,14 @@ These rules are enforced, and each names its gate.
   `https://huffmanwrites.org/posts/digests/<slug>/` and require a 200 whose `<title>` carries
   the digest's title. The page is live by ~06:06 CT, not 06:00 (see *Cadence* above); sending
   first means the email's link 404s for the first readers. If the page is not up, the send is
-  early, not the page.
-- **After the send:** move the pending file to `pending/archive/` (never delete), then
-  create the Hugo page at `content/posts/digests/<slug>.md` with the frontmatter above —
-  or, when the page is prepared ahead of the send (the PR flow), it already exists and only
-  the archive move remains.
+  early, not the page. **This check only applies to a letter sent by hand.** A campaign
+  *scheduled* through the API a day ahead has no human at send time, so the check belongs at
+  scheduling time — where the page is not live yet — and cannot substitute for giving the
+  campaign an hour past ~06:06. If the send is scheduled, set it to 06:15 rather than 06:00.
+- **After the send:** move the draft to `pending/archive/` (never delete). It is untracked, so
+  this is a local move and owes no commit; then create the Hugo page at
+  `content/posts/digests/<slug>.md` with the frontmatter above — or, when the page is prepared
+  ahead of the send (the PR flow), it already exists and only the local archive move remains.
 
 ## What is not gated
 

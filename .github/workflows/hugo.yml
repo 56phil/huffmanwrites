@@ -4,16 +4,26 @@ on:
   push:
     branches: [main]
   schedule:
-    # 05:00 UTC = midnight Central Time (CDT). Publishes future-dated posts
-    # (e.g. the 9/11 anniversary essay) at the stroke of their date.
+    # These fires are a best-effort BACKSTOP, not the publisher. GitHub delays
+    # scheduled workflows, and measured on this repo (2026-10-17) they run about
+    # FOUR HOURS LATE — the fires land around 09:2x, 15:0x, 16:0x and 17:1x UTC
+    # rather than at the top of their hour, and the 0 11 * * * fire did not run
+    # at all that morning. What actually publishes an embargoed page is a PUSH:
+    # `hugo` builds with `buildFuture: false`, so a page dated to an hour that has
+    # not arrived is skipped silently, and the next push after that hour renders
+    # it. For the 06:00 CT digest that is the daily-SITREP push at ~06:04, which
+    # puts the page live at ~06:06 — six minutes after a 06:00 campaign. Never
+    # assume a cron has fired at its hour; it has not.
+    # 05:00 UTC = midnight Central Time (CDT). Intended for future-dated posts
+    # (e.g. the 9/11 anniversary essay) dated to the start of their date.
     - cron: '0 5 * * *'
-    # 11:00 UTC = 06:00 Central Time (CDT). Publishes the Saturday digest at 6 AM.
+    # 11:00 UTC = 06:00 Central Time (CDT). Intended for the Saturday digest.
     - cron: '0 11 * * *'
-    # 12:00 UTC = 07:00 Central Time (CDT). Publishes a post embargoed to 07:00 CT
-    # (the Weekly Satire, whose launchd job fires the same minute) at the stroke
-    # of its date. Without this fire a post dated 07:00 is still future at the
-    # 06:00 build and waits for the next push — the "date ahead of the clock"
-    # failure wearing different clothes.
+    # 12:00 UTC = 07:00 Central Time (CDT). Intended for a post embargoed to 07:00
+    # CT (the Weekly Satire, whose launchd job fires the same minute). Without
+    # this fire, or a push after 07:00, a post dated 07:00 is still future at the
+    # 06:00 build and waits — the "date ahead of the clock" failure wearing
+    # different clothes.
     - cron: '0 12 * * *'
     # 13:00 UTC = 07:00 Central Time (CST). The same 07:00 CT slot, after the DST
     # change on 2026-11-01: 12:00Z is then 06:00 CT, an hour early, so the 12:00Z
