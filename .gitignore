@@ -3,6 +3,14 @@ resources/
 .hugo_build.lock
 .DS_Store
 .sendfox_token
+# Digest send copies. The draft is a working file, not source: it is written to
+# pending/, sent through SendFox, and archived locally to pending/archive/. It was
+# tracked until 2026-10-17, which meant every send owed a follow-up commit to
+# remove it — a step that needed a catch-up commit five times (Sept 12 "three
+# weeks late", Sept 19 "a day late", Sept 26, Oct 3, Oct 10). The template is the
+# only source file in here.
+pending/*.md
+!pending/TEMPLATE.md
 pending/archive/
 .hermes/
 .claude/launch.json

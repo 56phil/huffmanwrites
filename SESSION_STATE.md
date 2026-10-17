@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — October 17, 2026 — Dropped the pending/ archive step and corrected the "crons publish on the hour" claim
+
+Follow-up to the digest-publish timing finding recorded below.
+- **`pending/*.md` is untracked now.** `.gitignore` ignores it and keeps only `TEMPLATE.md` (`pending/archive/` stays ignored). The post-send archive move had needed a catch-up commit **five times** — `9435823` "three weeks late" (Sept 12), `3a2fcc9` "a day late" (Sept 19), `64c5630` (Sept 26), `f0ff83e` (Oct 3), `559645c` (Oct 10) — and the destination was already gitignored, so tracking the draft bought nothing and owed a commit every week. A draft is a working file; only the page and its hero are source.
+- **The scheduled fires are a backstop, not the publisher — corrected in three places.** `.github/workflows/hugo.yml` said each cron publishes "at the stroke of their date"; measured, they run **~4 hours late** (the fires land ~09:2x, 15:0x, 16:0x and 17:1x UTC) and that morning's `0 11 * * *` did not run at all. The workflow comment, the CLAUDE.md Deployment paragraph, and the `future_ok` docstring in `scripts/check-report-frontmatter.py` now say what actually publishes an embargoed page: the next **push** after its hour. `skills/weekly-digest.md` carries the same correction from this morning.
+- **The digest skill's verify-before-send step is scoped to a hand-sent letter.** A campaign scheduled through the API a day ahead has no human at send time, so the check cannot catch that case; the skill now says so and names 06:15 as the hour to schedule rather than 06:00. The open question — schedule later, or build a send-time job that verifies the page then triggers the send — is Philip's, and unrecorded as decided.
+- **Files changed:** `.gitignore`, `.github/workflows/hugo.yml`, `CLAUDE.md`, `scripts/check-report-frontmatter.py`, `skills/weekly-digest.md`, this entry. Gate suite 414 tests OK.
+
+---
+
 ### Maintenance — October 17, 2026 — The 06:00 digest email outran its page; corrected when the digest actually publishes
 
 Philip: "I received the Stoic Saturday newsletter in my inbox, but I don't see it on the site."
