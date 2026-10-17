@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — October 17, 2026 — The 06:00 digest email outran its page; corrected when the digest actually publishes
+
+Philip: "I received the Stoic Saturday newsletter in my inbox, but I don't see it on the site."
+- **The page was live — about six minutes late.** `content/posts/digests/stoic-saturday-the-work-is-the-reward.md` returns 200 at `https://huffmanwrites.org/posts/digests/stoic-saturday-the-work-is-the-reward/` (301 → `www.`), carries its own `<title>`, and sits at the top of both the home page's Recent Posts and `/posts/digests/`. It reached production at **~06:06 CT**; the SendFox campaign fired at **06:00 CT** (`scheduled_at` 11:00Z, per the digest entry below), so the email preceded its own page by six minutes and the reader who clicked immediately met a 404.
+- **Why: the embargo hour and the deploy hour are not the same hour.** The page is dated `2026-10-17T06:00:00-05:00`, and `buildFuture: false` means it renders only in a deploy that runs *after* 06:00 CT — dating the file does not publish it. The `0 11 * * *` cron that exists for this hour **did not fire that morning**: measured across the past week, every scheduled run lands **~4 hours late** (`05:00Z`→`09:2x–09:5x`, `11:00Z`→`15:0x–15:4x`, `12:00Z`→`16:0x–16:4x`, `13:00Z`→`17:1x–17:5x`), so the digest's cron is a backstop and not the trigger. What deployed the page was the **daily SITREP push** at ~06:04 CT, whose push-triggered build completed at 11:06Z.
+- **Fixed the document, not the page.** `skills/weekly-digest.md` claimed the 11:00Z cron publishes the page "at 06:00 CT"; it now states the page is live by ~06:06 CT, names the SITREP push as the real trigger, records the ~4-hour scheduled-run latency, and adds a **verify-before-send** step (fetch the URL and require a 200 whose `<title>` carries the digest's title). A scheduled SendFox campaign cannot be recalled, so that check belongs before the send, not after it.
+- **Files changed:** `skills/weekly-digest.md`, this entry. Single commit.
+
+---
+
 ### Maintenance — October 17, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.

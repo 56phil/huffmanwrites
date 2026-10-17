@@ -10,9 +10,20 @@ edits it before it sends, so nothing here commits or pushes on your behalf.
 
 ## Cadence, section, and file naming
 
-- Written each **Saturday** to reach readers at **06:00 CT**. `.github/workflows/hugo.yml`
-  builds on a schedule at 11:00 UTC for exactly this, so a page dated at the run and
-  flagged `draft: false` goes live on that cron.
+- Written each **Saturday** to reach readers at **06:00 CT**. The page is dated
+  `<Saturday>T06:00:00-05:00`, and because Hugo builds with `buildFuture: false` it
+  appears only in a deploy that runs *after* that hour — dating the file does not by
+  itself publish it.
+- **The 06:00 CT page is live by ~06:06 CT, not at 06:00.** The `0 11 * * *` schedule in
+  `.github/workflows/hugo.yml` exists for this hour, but GitHub delays scheduled
+  workflows — measured on this repo, they run **~4 hours late** (the four crons fire
+  around 09:2x, 15:0x, 16:0x and 17:1x UTC, not at the top of their hour). What actually
+  deploys the page is the **daily SITREP push**, which lands ~06:04 CT and whose
+  push-triggered build completes ~06:06 CT. Treat the cron as a best-effort backstop, not
+  the publish trigger, and **confirm the URL resolves before sending**: an email that
+  arrives at 06:00 and links a page that is still six minutes from deploying is the
+  failure this note prevents (measured 2026-10-17 — the 06:00 newsletter reached an inbox
+  while the page was still absent, and the `0 11 * * *` fire never happened that morning).
 - Draft in `pending/` (`pending/TEMPLATE.md` is the shape); published page in
   `content/posts/digests/`. Slug `stoic-saturday-<phrase>.md`, lowercase and hyphenated,
   from the title's phrase; title `Stoic Saturday: <Phrase>`.
@@ -152,8 +163,15 @@ These rules are enforced, and each names its gate.
   `scripts/check-secrets.py` fails if either returns.
 - **Send:** the `pending/` file is the newsletter body and the page source at once; send it
   through the SendFox API, whose `form-action` the site CSP whitelists.
+- **Before you send, confirm the page resolves.** Fetch
+  `https://huffmanwrites.org/posts/digests/<slug>/` and require a 200 whose `<title>` carries
+  the digest's title. The page is live by ~06:06 CT, not 06:00 (see *Cadence* above); sending
+  first means the email's link 404s for the first readers. If the page is not up, the send is
+  early, not the page.
 - **After the send:** move the pending file to `pending/archive/` (never delete), then
-  create the Hugo page at `content/posts/digests/<slug>.md` with the frontmatter above.
+  create the Hugo page at `content/posts/digests/<slug>.md` with the frontmatter above —
+  or, when the page is prepared ahead of the send (the PR flow), it already exists and only
+  the archive move remains.
 
 ## What is not gated
 
