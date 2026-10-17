@@ -160,6 +160,7 @@ Unattended jobs run from `scripts/` via launchd, and `scripts/check-plists.py` p
 | `weekly-satire` | Mondays 07:00 | **Retired** 2026-10-10 — all four installments pre-written and embargoed to their dates; the job exits 0 before touching a file |
 | `daily-sitrep` | Every day 06:00 | **Publishes** the Global SITREP (2026-10-07, open-ended) |
 | `sitrep-watchdog` | Every day 07:00, 12:00, 18:00, 22:00, and at login | **Alerts** when today has no SITREP edition — the absence no other job can see (added 2026-10-08) |
+| `fork-sync` | Saturdays 04:00 | **Acts on GitHub**: fast-forwards every fork onto its upstream and turns on the Dependabot alerts and security updates that are off by default on a fork (added 2026-10-17) |
 
 Rules for these, learned by shipping the failures:
 
