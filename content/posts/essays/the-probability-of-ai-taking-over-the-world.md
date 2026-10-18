@@ -156,7 +156,7 @@ The question was never "what is the probability?" The question is "what are we g
 
 [^29]: Ibid. Analysis of the mainstream ML researchers' structural argument against existential risk scenarios.
 
-[^30]: The AI winters are documented in the site's own reference essay, "The History of Artificial Intelligence and AI Agents and Their Impact on Society" (2026), sections 4 and 6. https://huffmanwrites.org/posts/essays/ai/
+[^30]: The AI winters are documented in the site's own reference essay, "The History of Artificial Intelligence and AI Agents and Their Impact on Society" (2026), sections 4 and 6. https://www.huffmanwrites.org/posts/essays/ai/
 
 [^31]: Andrew Rogoyski, Surrey Institute for People-Centred AI, quoted in The Guardian, September 9, 2026: "I suspect we're heading towards 'the great disappointment' where advanced AI turns out to be too expensive and not useful enough to continue in its current form."
 
@@ -168,7 +168,7 @@ The question was never "what is the probability?" The question is "what are we g
 
 [^35]: Sam Altman, quoted in The Guardian, September 9, 2026. Altman said last year that certain aspects of AI, including what he called the "silent surrender" of human decision-making, terrified him.
 
-[^36]: See "On AI as a Writing Assistant" (2026) and "The History of Artificial Intelligence and AI Agents and Their Impact on Society" (2026) on this site. https://huffmanwrites.org/posts/essays/on-ai-as-a-writing-assistant/
+[^36]: See "On AI as a Writing Assistant" (2026) and "The History of Artificial Intelligence and AI Agents and Their Impact on Society" (2026) on this site. https://www.huffmanwrites.org/posts/essays/on-ai-as-a-writing-assistant/
 
 [^37]: The Guardian. (2026, September 3). OpenAI is pushing toward a stock market listing that could value it above $850 billion; Anthropic is targeting an IPO that could value it as high as $2 trillion.
 
@@ -176,4 +176,4 @@ The question was never "what is the probability?" The question is "what are we g
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

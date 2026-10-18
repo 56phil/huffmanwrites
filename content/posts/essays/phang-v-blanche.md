@@ -197,4 +197,4 @@ The honest summary is that this is a case about whether a clear statute means wh
 - Response to Show Cause. (2026, July 2). [*Defendant's Response to Order to Show Cause*, ECF 19](https://storage.courtlistener.com/recap/gov.uscourts.dcd.291779/gov.uscourts.dcd.291779.19.0.pdf). Phang v. Blanche, No. 26-cv-1417 (EGS) (D.D.C.).
 - Trump, D. J. (2025, November 19). [*Truth Social post on signing H.R. 4405*](https://www.presidency.ucsb.edu/documents/truth-social-posts-november-19-2025). The American Presidency Project.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -34,4 +34,4 @@ I used to believe investing was something you did while you worked. You built a 
 
  And in the end, the real return isn’t measured in percentages. It’s measured in peace of mind, and the freedom to watch my grandkids grow without worrying about the market ticker.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

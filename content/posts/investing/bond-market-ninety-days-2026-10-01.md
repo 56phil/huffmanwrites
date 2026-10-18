@@ -212,4 +212,4 @@ Ninety days is not a long time. It is long enough to have your defenses built be
 - Yahoo Finance. (2026). [CBP to expand IEEPA tariff processing in October](https://finance.yahoo.com/economy/policy/articles/cbp-expand-ieepa-tariff-processing-131200417.html).
 - St. Louis Fed (FRED). [10-Year Treasury constant maturity (DGS10)](https://fred.stlouisfed.org/series/DGS10/); [30-Year Treasury constant maturity (DGS30)](https://fred.stlouisfed.org/series/DGS30); [2-Year Treasury constant maturity (DGS2)](https://fred.stlouisfed.org/series/DGS2).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

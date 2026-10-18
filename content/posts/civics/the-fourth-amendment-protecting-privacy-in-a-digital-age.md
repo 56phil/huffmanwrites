@@ -79,4 +79,4 @@ Restoring Fourth Amendment privacy in the digital age requires more than court r
 
 The Fourth Amendment is not obsolete. It is overdue.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

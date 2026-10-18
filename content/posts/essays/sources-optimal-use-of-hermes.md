@@ -123,4 +123,4 @@ Below are formatted APA citations organized by which claim in the essay they sup
 | The Limits Remain | Shinn et al. (2023); Amershi et al. (2019); Chen et al. (2026) |
 | What This Means for Writing | Dellermann et al. (2019); Seeber et al. (2020) |
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -30,4 +30,4 @@ So mock it if you want. Call me woke like it’s supposed to sting. Words have o
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

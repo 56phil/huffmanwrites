@@ -137,4 +137,4 @@ The thing to hold on to when reading next week's version of this page: this week
 - Phang v. Blanche, No. 1:26-cv-01417 (EGS). [CourtListener docket](https://www.courtlistener.com/docket/73246595/phang-v-blanche/). Source of the filing list, the absence of any minute entry in the week, and the absence of any order on ECF 51, ECF 52 or ECF 56.
 - Phang v. Blanche, Nos. 26-5299, 26-5334 (D.C. Cir.). [CourtListener docket](https://www.courtlistener.com/docket/74696600/katie-phang-v-todd-blanche/). Source of the entry list for the appeal, of the absence of any filing after September 29, and of the absence of any ruling on the stay motion.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

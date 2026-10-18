@@ -144,4 +144,4 @@ That decision is not the president's to make. It is ours. The con works only as 
 - Trump Media & Technology Group. (2026, February 27). [*Trump Media & Technology Group reports full-year 2025 results*](https://www.nasdaq.com/press-release/trump-media-technology-group-reports-full-year-2025-results-2026-02-27). GlobeNewswire.
 - U.S. Department of Justice. (2025, January 21). [*Ulbricht pardon warrant*](https://www.justice.gov/pardon/media/1386096).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

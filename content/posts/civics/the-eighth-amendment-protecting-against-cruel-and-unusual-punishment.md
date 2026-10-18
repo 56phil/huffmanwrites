@@ -52,4 +52,4 @@ In *Timbs v. Indiana* (2019), the Supreme Court ruled that the excessive fines c
 
 The Eighth Amendment is not a solution to mass incarceration or economic inequality. But it is a tool (a moral and legal tool) for challenging the most degrading aspects of American punishment. The question is whether we still believe in its standard enough to use it.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

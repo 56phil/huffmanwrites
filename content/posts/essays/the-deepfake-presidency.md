@@ -135,4 +135,4 @@ The con works only as long as we keep buying. The deepfake works only as long as
 - The Hill. (2025, July 21). [*Trump posts fake video of Obama getting arrested*](https://thehill.com/homenews/administration/5411827-trump-ai-generated-video-obama/).
 - The White House. (2025, July 23). [*Preventing Woke AI in the Federal Government*](https://www.whitehouse.gov/presidential-actions/2025/07/preventing-woke-ai-in-the-federal-government/). Executive Order 14319.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

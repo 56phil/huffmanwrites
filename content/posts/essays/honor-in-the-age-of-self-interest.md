@@ -102,4 +102,4 @@ Honor was never a title. It's an account settled daily, mostly in rooms no one e
 
 [^13]: Constituting America. (n.d.). December 23, 1783: George Washington resigns his military commission. https://constitutingamerica.org/december-23-1783-george-washington-resigns-his-military-commission-guest-essayist-gary-porter/
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

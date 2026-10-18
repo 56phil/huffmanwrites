@@ -54,4 +54,4 @@ The RAIN practice alone is worth the read. Return to it when the inner critic is
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

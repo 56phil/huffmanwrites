@@ -82,4 +82,4 @@ So this is the last one, and it is not for him. It is for me. I am sorry I spent
 - Snopes. (2026). [*Did Trump call the Iran conflict 'small potatoes'?*](https://www.snopes.com/fact-check/trump-iran-war-small-potatoes-quote/).
 - United States Institute of Peace v. Jackson, No. 25-5368 (D.C. Cir. Sept. 17, 2026) (emergency motion). [*Emergency motion*](https://storage.courtlistener.com/recap/gov.uscourts.cadc.42076/gov.uscourts.cadc.42076.1208889241.0.pdf).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -114,4 +114,4 @@ The most accurate epitaph for his career to date is this: **Peter Thiel is a man
 
 [^11]: Farooq, U., Blaw, & McDonald, M. D. (2025, February 13). A libertarian island dream in Honduras is now an $11 billion nightmare. *Bloomberg*. Cited in Wikipedia contributors, n.d.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

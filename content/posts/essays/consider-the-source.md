@@ -217,4 +217,4 @@ I have no confidence that they will.
 
 [^42]: The 19th: "Russell Vought, one of Project 2025's key architects, heads Trump's Office of Management and Budget"; "Peter Navarro, who wrote Project 2025's section on trade, is a top trade adviser to Trump"; "Brendan Carr, who wrote a section suggesting reforms to the Federal Communications Commission, is now in charge of the agency." https://19thnews.org/2025/12/project-2025-heritage-foundation-progress/
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

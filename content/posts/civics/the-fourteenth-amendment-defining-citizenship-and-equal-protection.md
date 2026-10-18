@@ -57,4 +57,4 @@ That work is not finished. Disparities in policing, sentencing, education fundin
 
 The question is not whether the Fourteenth Amendment has been perfectly enforced. It has not. The question is whether we still believe in the promise enough to keep pressing for it. Because the alternative, accepting unequal protection as the natural order, is not pragmatism. It is abandonment of the constitutional project itself.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

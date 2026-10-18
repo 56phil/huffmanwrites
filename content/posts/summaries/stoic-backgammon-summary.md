@@ -83,4 +83,4 @@ Buy it [on Amazon](https://www.amazon.com/dp/B0GXW6KRDH/).
 
 Read more about the book: [*Stoic Backgammon*](/books/stoic-backgammon/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

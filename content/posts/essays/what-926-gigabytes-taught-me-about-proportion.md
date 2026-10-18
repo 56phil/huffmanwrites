@@ -54,4 +54,4 @@ What I saved this weekend wasn't just disk space. It was my own configuration: t
 
 Precision before power. That is the metric. Not how fast we moved, but how little we broke on the way to fixing what mattered.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

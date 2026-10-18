@@ -56,4 +56,4 @@ That argument is not about the past. It is about now.
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

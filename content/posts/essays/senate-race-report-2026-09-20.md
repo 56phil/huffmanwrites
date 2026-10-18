@@ -149,4 +149,4 @@ But the direction is no longer arguable. When a state like Kansas leads a Democr
 [^27]: Sources as in notes 1, 2 and 3: the forecasters' table moved twice (note 4); the models and markets moved as reported there.
 [^28]: The nightmare arithmetic is unchanged from the September 6 and September 13 reports: with 13 Democratic seats to defend and a four-seat net gain needed, one defensive loss raises the requirement to five flips.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

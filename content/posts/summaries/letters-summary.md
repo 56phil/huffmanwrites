@@ -76,4 +76,4 @@ Buy it [on Amazon](https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman
 
 Read more about the book: [*Letters*](/books/letters/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

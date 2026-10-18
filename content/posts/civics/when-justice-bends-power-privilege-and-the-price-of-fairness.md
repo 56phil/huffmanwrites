@@ -95,4 +95,4 @@ If the answer is no, the line has bent. And what bends too long eventually break
 
 So do not wait for justice to repair itself. Name the double standard when you see it. Defend the person without protection. Vote as if power answers only when forced to answer, because too often it does. Refuse the comfortable silence that lets unfairness become custom. A republic is not saved by people who privately disapprove of injustice; it is saved by people who stand in its path, shoulder to shoulder, until the line is straight again.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

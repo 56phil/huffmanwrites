@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /drafts/
 
-Sitemap: https://huffmanwrites.org/sitemap.xml
+Sitemap: https://www.huffmanwrites.org/sitemap.xml

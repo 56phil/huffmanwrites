@@ -154,4 +154,4 @@ None of this is prophecy. It is the compiled expectation of the people whose pro
 
 [^34]: MIM-104 Patriot. (2026). In *Wikipedia.* https://en.wikipedia.org/wiki/MIM-104_Patriot
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

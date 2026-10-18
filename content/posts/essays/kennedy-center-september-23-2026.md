@@ -59,4 +59,4 @@ The case remains what it was: a man who wants his name on a building Congress na
 - Notice of Appeal. (2026, September 15). [*Notice of appeal to the D.C. Circuit from the September 15 Memorandum Opinion and Order*, ECF 79](https://storage.courtlistener.com/recap/gov.uscourts.dcd.287972/gov.uscourts.dcd.287972.79.0.pdf). Beatty v. Trump, No. 25-cv-04480 (D.D.C.).
 - Scheduling Order. (2026, September). [*Scheduling order*, ECF 82](https://www.courtlistener.com/docket/72069932/beatty-v-trump/). Beatty v. Trump, No. 25-cv-04480 (D.D.C.).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

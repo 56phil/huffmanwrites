@@ -109,4 +109,4 @@ The record compiled here is damning. It is also incomplete, and the incompletene
 - Tapper, J. (2026, July 22). [*18 Days in Minnesota: How immigration agents killed 2 US citizens*](https://www.cnn.com/2026/07/22/politics/jake-tapper-minnesota-immigration-shootings). CNN.
 - V-Dem Institute. (2026, March). [*Democracy Report 2026: Unraveling the Democratic Era?*](https://www.v-dem.net/documents/75/V-Dem_Institute_Democracy_Report_2026_lowres.pdf). University of Gothenburg.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

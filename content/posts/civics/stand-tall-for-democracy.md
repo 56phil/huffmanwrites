@@ -36,4 +36,4 @@ We must stand tall for democracy, not because it is perfect, but because it is o
 
 America remains worth fighting for, but only if we remember that democracy doesn't protect itself. It needs us.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

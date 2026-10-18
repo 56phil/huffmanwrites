@@ -80,4 +80,4 @@ Benjamin Franklin, leaving the Constitutional Convention, was asked what kind of
 
 That "if" is the whole point. The Constitution is not a guarantee. It is an invitation: to participate, to resist, to improve, and to belong. The question is not whether the document is sufficient. It is whether we are.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

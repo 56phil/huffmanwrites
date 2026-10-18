@@ -70,9 +70,9 @@ Think clearly. Live intentionally. Love deeply.
 
 [^3]: PBS NewsHour. (2014, November 10). [*2014 Midterm Election Turnout Lowest in 70 Years*](https://www.pbs.org/newshour/politics/2014-midterm-election-turnout-lowest-in-70-years). 36.4 percent of the voting-eligible population turned out in 2014, the lowest since 1942.
 
-[^4]: Huffman, P. (2026, August 26). [*The Verdict, Nine Weeks Out: What the 2026 Midterms Will Actually Decide*](https://huffmanwrites.org/posts/essays/what-the-2026-midterms-will-decide/). Both chambers in play on November 3; the Senate fight running through Maine, Ohio, Alaska, and Michigan; the House arithmetic.
+[^4]: Huffman, P. (2026, August 26). [*The Verdict, Nine Weeks Out: What the 2026 Midterms Will Actually Decide*](https://www.huffmanwrites.org/posts/essays/what-the-2026-midterms-will-decide/). Both chambers in play on November 3; the Senate fight running through Maine, Ohio, Alaska, and Michigan; the House arithmetic.
 
-[^5]: Huffman, P. (2026, October 11). [*Five Questions on One Ballot: Missouri, November 3, 2026*](https://huffmanwrites.org/posts/essays/five-questions-on-one-ballot/).
+[^5]: Huffman, P. (2026, October 11). [*Five Questions on One Ballot: Missouri, November 3, 2026*](https://www.huffmanwrites.org/posts/essays/five-questions-on-one-ballot/).
 
 [^6]: Supreme Court of Florida, *Gore v. Harris*, No. SC00-2431 (Dec. 8, 2000). [Opinion (PDF)](https://www.democracydocket.com/wp-content/uploads/2022/07/2000-12-08-FL-SC-opinion.pdf): "The November 26, 2000, certified results showed a 537-vote margin in favor of Bush."
 
@@ -80,4 +80,4 @@ Think clearly. Live intentionally. Love deeply.
 
 [^8]: Public Citizen. (2026, September 8). [*No Kings Coalition Sets Nationwide Early Voting Day of Action for October 17*](https://www.citizen.org/news/no-kings-coalition-sets-nationwide-early-voting-day-of-action-for-october-17/). The Ezra Levin and Randi Weingarten statements are quoted verbatim from this release.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -56,4 +56,4 @@ Read it alongside Sagan's baloney detection kit. Sagan tells you what questions 
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

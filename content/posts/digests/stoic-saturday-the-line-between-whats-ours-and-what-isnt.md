@@ -39,4 +39,4 @@ See you next Saturday. — Phil
 
 *Sourced from Democracy Now!'s coverage of the U.S.-Canada trade war, the Nepal glacier collapse, the Meta settlement, the visa ban ruling, the Tyson closures, and Gaza; Canada's Department of Finance announcements; and AP, USA Today, and The Guardian reporting on the retaliatory tariffs.*
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

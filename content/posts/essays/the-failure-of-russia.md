@@ -85,4 +85,4 @@ The third obligation is the Stoic one, and it is the reason I keep returning to 
 - Transparency International. (2025b, February 11). [*2024 Corruption Perceptions Index: Authoritarianism and weakening democracy undermine action against corruption in Eastern Europe and Central Asia*](https://www.transparency.org/en/press/2024-corruption-perceptions-index-authoritarianism-and-weakening-democracy-undermine-action-against-corruption-in-eastern-europe-and-central-asia). Transparency International.
 - Yermakov, V. (2025, February). [*Fiscal Flex: Russia's oil and gas revenues in 2024*](https://www.oxfordenergy.org/wpcms/wp-content/uploads/2025/02/Comment-Fiscal-Flex.pdf). Oxford Institute for Energy Studies.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

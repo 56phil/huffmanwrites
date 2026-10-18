@@ -56,4 +56,4 @@ Speak to someone you disagree with not to win, but to understand. Refuse the hea
 
 Violence ends where responsibility begins. Not the responsibility to fix the world. The responsibility to stop making it worse, one internal choice at a time.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

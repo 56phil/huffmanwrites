@@ -228,4 +228,4 @@ Fourth, the legal status of each declaration tracks its function. Tariff emergen
 
 [^57]: Pillsbury Winthrop Shaw Pittman LLP. (2026, August). Executive order on foreign-produced bulk-power system equipment. https://www.pillsburylaw.com/en/news-and-insights/eo-foreign-produced-bulk-power-system.html
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

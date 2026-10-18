@@ -53,4 +53,4 @@ We often think of ourselves as the end result of history’s long arc. The inher
 
  Pick one thing. Start today. Refuse the plastic. Plant the tree. Write the letter. Speak the truth. Let it be imperfect, but let it be real. Because when the history of this moment is written, it won’t ask what we&nbsp;*hoped*&nbsp;for. It will ask what we&nbsp;*did.* Be the ancestor who answered with action.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -57,4 +57,4 @@ If Brown's argument about self-imposed armor resonates, [*Unstuck*](/books/unstu
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -74,4 +74,4 @@ The throne stays empty only if the ballot is filled.
 [^7]: Philip Huffman, "[The Verdict, Nine Weeks Out: What the 2026 Midterms Will Actually Decide](/posts/essays/what-the-2026-midterms-will-decide/)", August 26, 2026.
 [^8]: Indivisible, "[No Kings: Vote Early](https://indivisible.org/events/no-kings-vote-early/)": "no thrones, no crowns, no kings."
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

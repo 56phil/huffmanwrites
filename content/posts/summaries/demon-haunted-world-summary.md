@@ -64,4 +64,4 @@ Read it for the baloney detection kit. Keep it for the argument that wonder and 
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

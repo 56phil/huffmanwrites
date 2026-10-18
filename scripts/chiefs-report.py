@@ -634,7 +634,7 @@ def team_form(summary: dict, abbr: str) -> "list[dict]":
 # ---------------------------------------------------------------------------
 
 # Polymarket's Gamma API refuses a default client; a named one is answered.
-MARKET_UA = "huffmanwrites-chiefs-report/1.0 (+https://huffmanwrites.org)"
+MARKET_UA = "huffmanwrites-chiefs-report/1.0 (+https://www.huffmanwrites.org)"
 
 # A bid/ask spread this wide is a thin book, not a price. The midpoint of a
 # 0.32/0.64 book is 0.48, which reads as a real 48% forecast and is not one —

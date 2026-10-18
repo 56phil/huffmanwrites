@@ -84,4 +84,4 @@ tags:
 
  **Topic**: A followup for the No Kings protest of October 18th.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

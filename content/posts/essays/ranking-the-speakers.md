@@ -282,4 +282,4 @@ All figures in this paper are transcribed from the sources below and checked aga
 - US Political Rank. *The 15 Most Consequential Speakers of the House, Ranked by the Record* (July 2026). https://uspoliticalrank.com/rankings/speakers-of-the-house-ranked
   The only other systematic ranking of Speakers found, cited in §8 as a comparison point. Its own method note states that "No official score for Speakers exists."
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

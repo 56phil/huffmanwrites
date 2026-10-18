@@ -80,4 +80,4 @@ The 30-day challenge shares the blind spot. It is built as a straight line, and 
 
 Read more about the book: [*Unstuck*](/books/unstuck/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

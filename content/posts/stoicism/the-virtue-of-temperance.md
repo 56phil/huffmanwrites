@@ -45,4 +45,4 @@ The first time I truly understood what rage could do to a man, I wasn’t watchi
   **"No man is more unhappy than he who never faces adversity. For he is not permitted to prove himself."**
  —&nbsp;*Seneca, De Providentia (paraphrase)*
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

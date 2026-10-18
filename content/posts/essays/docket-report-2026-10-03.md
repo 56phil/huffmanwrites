@@ -134,4 +134,4 @@ The thing to hold on to when reading next week's version of this page: in all th
 - Portnoy, S. (2026, October 1). ["Internal email points to Kennedy Center's continued closure"](https://abcnews.com/Politics/internal-email-points-kennedy-centers-continued-closure/story?id=136925836). ABC News. Coverage of the October 1 email from Matt Floca, the Center's executive director and chief operating officer, to Center staff; cited here as coverage, with the record at ECF 94.
 - Time. (2026, October 1). ["What Trump Has Built"](https://time.com/article/2026/10/01/donald-trump-2026-interview/). Source of "I'm not committing to anything" and "We're going to see how it plays out in court", the President's answers when asked whether he would rule out demolishing the Kennedy Center without congressional approval. Retrieved October 3, 2026.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

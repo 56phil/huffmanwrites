@@ -76,4 +76,4 @@ Buy it [on Amazon](https://www.amazon.com/Stoic-CGM-Data-Driven-Reinventing-Your
 
 Read more about the book: [*The Stoic CGM*](/books/stoic-cgm/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

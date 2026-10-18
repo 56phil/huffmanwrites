@@ -125,4 +125,4 @@ Philip Huffman
 - UK Parliament. (1947, November 11). [*Parliament Bill*, HC Deb vol. 444](https://api.parliament.uk/historic-hansard/commons/1947/nov/11/parliament-bill). Historic Hansard.
 - V-Dem Institute. (2025). [*Democracy report 2025: 25 years of autocratization — Democracy trumped?*](https://www.v-dem.net/documents/61/v-dem-dr__2025_lowres_v2.pdf). University of Gothenburg.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

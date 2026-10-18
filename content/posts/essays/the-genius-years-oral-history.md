@@ -64,4 +64,4 @@ The Genius Years never happened, of course, no matter how good that printer soun
 
 *Think clearly. Live intentionally. Love deeply.*
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

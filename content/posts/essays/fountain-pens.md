@@ -160,4 +160,4 @@ In an era of nearly universal digitization, when most of what we communicate is 
 
 *Sources consulted include Pelikan company history and archives; Montblanc centennial documentation; LAMY brand history; Sailor Pen company history; Pilot Corporation centennial history; Platinum Pen Company archival documentation; Namiki history via Wikipedia and specialist pen literature; research on Japanese nib sizing and writing system requirements from JetPens, Goulet Pens, and Wancher Pen; and general fountain pen history sources including Goldspot Pens and Dromgoole's Fine Writing Instruments blog archives.*
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

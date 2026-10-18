@@ -114,4 +114,4 @@ That is the reason I keep three dockets open. It is not the drama. It is that a 
 - Scheduling Order. (2026, September 16). [*Scheduling Order*, ECF 82](https://storage.courtlistener.com/recap/gov.uscourts.dcd.287972/gov.uscourts.dcd.287972.82.0_1.pdf). Beatty v. Trump, No. 25-cv-4480 (CRC) (D.D.C.).
 - Status Report. (2026, September 23). [*Defendants' Status Report*, ECF 91](https://storage.courtlistener.com/recap/gov.uscourts.dcd.287972/gov.uscourts.dcd.287972.91.0_1.pdf). Beatty v. Trump, No. 25-cv-4480 (CRC) (D.D.C.).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

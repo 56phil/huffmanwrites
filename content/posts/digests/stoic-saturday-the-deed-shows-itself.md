@@ -61,4 +61,4 @@ See you next Saturday. — Phil
 - U.S. Energy Information Administration. (2026, September 29). [Weekly U.S. No 2 Diesel Retail Prices (Dollars per Gallon)](https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?f=w&n=pet&s=emd_epd2d_pte_nus_dpg).
 - Euronews. (2026, October 2). [G7 agrees 100 million-barrel emergency oil release amid US pressure over diesel](https://www.euronews.com/2026/10/02/g7-agrees-100-million-barrel-emergency-oil-release-amid-us-pressure-over-diesel).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -323,4 +323,4 @@ Never forget. And then, harder: never stop learning.
 
 [^104]: Wikipedia, "September 11 attacks" (Reflecting Absence, completed on the 10th anniversary, 2011).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

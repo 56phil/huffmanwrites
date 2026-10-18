@@ -65,4 +65,4 @@ Those principles still matter. But they do not answer every question. They do no
 
 The Second Amendment is not a slogan. It is a responsibility: one that demands more from gun owners, more from lawmakers, and more from citizens than any single political coalition is currently offering.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -79,4 +79,4 @@ A gallon of diesel will be a little cheaper or a little more expensive next mont
 - Reuters. (2026, October 10). [*Trump says Russia to supply diesel to US and global markets*](https://www.tbsnews.net/world/global-economy/trump-says-russia-supply-diesel-us-and-global-markets-1567811). The Business Standard.
 - TASS. (2026, October 9). [*Russia begins lifting diesel exports restrictions immediately — deputy PM*](https://tass.com/economy/2200087).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

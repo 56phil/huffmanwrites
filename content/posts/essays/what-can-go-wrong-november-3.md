@@ -476,4 +476,4 @@ That outcome requires nothing to be broken. It only requires enough people to st
 
 [^64]: CRS Report 98-194, *Contested Election Cases in the House of Representatives: 1933 to 2011* (Dec. 12, 2011), counting 107 House contested election cases across the 73rd through 112th Congresses. The contestant was seated in at least three; in one, *Sanders v. Kemp* (La. 6th, 1934), the House declared a vacancy rather than seat either candidate, on returns grounds rather than qualifications. The most recent cases resolved in the certified winner's favor: McIntyre v. McCloskey (Ind. 8th), where the House seated Frank McCloskey on May 1, 1985 by 236 to 190; Dornan v. Sanchez (Cal. 46th), where the House dismissed the contest 378 to 33 on Feb. 12, 1998; and Iowa 2nd, 2020 to 2021, where Mariannette Miller-Meeks was seated provisionally on Jan. 3, 2021 and Rita Hart withdrew her challenge on March 31, 2021 before any vote on the merits. https://www.everycrsreport.com/reports/98-194.html
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

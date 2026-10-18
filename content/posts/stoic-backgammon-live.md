@@ -44,4 +44,4 @@ This is the latest in a growing series. Each book is standalone equipment. Pick 
 
 *Read. Practice. Change.*
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

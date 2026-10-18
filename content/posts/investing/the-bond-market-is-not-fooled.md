@@ -90,4 +90,4 @@ Neither outcome changes the underlying verdict. The bond market is not pricing t
 - Liesman, S., & Peterson, M. (2026, August 19). [*Bessent moves to curb Treasury yields, putting new pressure on Warsh's Fed*](https://www.cnbc.com/2026/08/19/bessent-treasury-buybacks-yields-warsh-fed.html). CNBC.
 - Peterson, M. (2026, August 18). [*Bonds squeeze Main Street as Wall Street waits on Warsh*](https://www.cnbc.com/2026/08/18/bond-market-treasury-yields-warsh-main-street.html). CNBC.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

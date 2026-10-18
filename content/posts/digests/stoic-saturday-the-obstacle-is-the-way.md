@@ -38,4 +38,4 @@ See you next Saturday. — Phil
 
 *Sourced from Democracy Now!'s coverage of the UNEP 1.5-degree overshoot report, the Nepal glacier collapse, the WMO El Niño warning, the U.S. strikes on Iran, and the Missouri Supreme Court ruling; the World Food Programme's hunger estimate; and Reuters, The New York Times, and BBC reporting on the Kuhestak strike.*
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

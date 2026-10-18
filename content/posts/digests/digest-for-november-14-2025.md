@@ -126,4 +126,4 @@ tags:
 
  **Topic**: Justice and Restraint The Stoic idea of justice as harmony applied to modern governance.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

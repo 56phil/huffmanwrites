@@ -111,4 +111,4 @@ The examination is open, and it does not run on the senator's schedule. Schmitt'
 - [U.S. Senate, 2026](https://www.senate.gov/about/origins-foundations/senate-and-constitution/constitution.htm). "Constitution of the United States," Art. I, § 3, cl. 3 (the qualifications for Senator). United States Senate.
 - [Wikipedia contributors, 2026](https://en.wikipedia.org/wiki/Eric_Schmitt). "Eric Schmitt," Wikipedia, retrieved September 30, 2026.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -79,4 +79,4 @@ Expected November 2026.
 
 Read more about the book: [*Raise 'Em Right*](/books/raisem-right/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

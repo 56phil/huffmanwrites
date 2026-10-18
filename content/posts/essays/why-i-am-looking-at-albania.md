@@ -69,4 +69,4 @@ I’m not chasing a fantasy of elsewhere. I’m chasing a better use of my remai
 
  That’s why I’m looking at Albania. Because in the end, life is not about where you’ve been but about where you choose to stand, and how you choose to live, with the time you have left.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

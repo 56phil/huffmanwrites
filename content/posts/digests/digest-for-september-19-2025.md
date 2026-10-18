@@ -70,4 +70,4 @@ tags:
 
  **Topic**: Next week, we’ll shift from life’s risks to financial ones: taking a closer look at how the “big three” discount brokerages (Fidelity, Schwab, and Vanguard) compare.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

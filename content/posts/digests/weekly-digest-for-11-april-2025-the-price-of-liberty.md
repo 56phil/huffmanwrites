@@ -59,4 +59,4 @@ This week, I’ve been thinking about what we’re losing, and why. Not just in 
  Until next time,
  **Phil**
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

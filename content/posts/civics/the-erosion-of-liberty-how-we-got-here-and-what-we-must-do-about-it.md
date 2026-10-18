@@ -121,4 +121,4 @@ Not by waiting. Not by wishing. By showing up. By remembering who we are.
 
 And by deciding that our freedom is still worth the fight.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -127,4 +127,4 @@ That understanding is the only thing on the list that cannot be donated, and it 
 - Ukrinform. (2026, January 13). [*SES deploys around 730 "points of invincibility" across Ukraine*](https://www.ukrinform.net/rubric-society/4080008-ses-deploys-around-730-points-of-invincibility-across-ukraine.html).
 - United24. (2022, July 1). [*Ukraine Raises an Army of Drones*](https://u24.gov.ua/news/army_of_drones).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -126,4 +126,4 @@ Ninety days from today is December 2. The market will spend those ninety days di
 - Reuters. (n.d.). [Factbox: The previous 10 S&P 500 bear markets](https://jp.reuters.com/article/markets/factboxthe-previous-10-sp-500-bear-markets-idUSN09481600/).
 - TradingKey. (2026, July). [S&P 500 total market value is about to surpass $70 trillion](https://www.tradingkey.com/analysis/stocks/us-stocks/261950917-sp500-valuation-bubble-ai-concentration-shiller-pe-buffett-indicator-fed-hawkish-yield-market-nifty-fifty-strategy-tradingkey).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -124,4 +124,4 @@ The most accurate epitaph for his career to date is this: **Mike Johnson is a ma
 
 [^19]: Morgan, D., & Raymond, N. (2025, March 25). US House Speaker Johnson says Congress can "eliminate" district courts. *Reuters*. https://www.reuters.com/world/us/us-house-speaker-johnson-says-congress-can-eliminate-district-courts-2025-03-25/
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*
