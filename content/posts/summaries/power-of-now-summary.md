@@ -56,4 +56,4 @@ Read it for the signal. Skim through the spiritual inflation. The truth undernea
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

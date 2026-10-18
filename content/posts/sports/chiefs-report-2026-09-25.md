@@ -118,4 +118,4 @@ The honest summary of the first two weeks is that the Chiefs have fixed what the
 - [Chiefs signing ex-Seahawks RB Kenneth Walker III, MVP of Super Bowl LX, to three-year deal](https://www.nfl.com/news/chiefs-signing-ex-seahawks-rb-kenneth-walker-iii-mvp-of-super-bowl-lx), Eric Edholm, NFL.com, March 9, 2026.
 - [Andy Reid: Kenneth Walker wants the ball every play, doesn't want to be relieved](https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/andy-reid-kenneth-walker-wants-the-ball-every-play-doesnt-want-to-be-relieved), Myles Simmons, Pro Football Talk, September 22, 2026.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -37,4 +37,4 @@ Investing isn’t just a numbers game. It’s an emotional one. Charts, spreadsh
 
  **The real test of investing isn’t intelligence. It’s discipline. And the battle is fought between your ears.**
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

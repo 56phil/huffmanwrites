@@ -142,4 +142,4 @@ If you do not live in Kansas, this race is still worth your attention. It is a t
 [^19]: Hamilton victory speech, August 4, 2026, via KCUR.
 [^20]: Kansas Secretary of State, unofficial 2026 primary election results, all 4,150 precincts reporting; county-level tabulations compiled from ent.sos.ks.gov.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

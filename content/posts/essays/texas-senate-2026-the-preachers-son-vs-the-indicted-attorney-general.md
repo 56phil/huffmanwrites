@@ -152,4 +152,4 @@ Texas Republicans had a choice. They could have renominated John Cornyn, a conve
 
 [^26]: Ballotpedia, n.d.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

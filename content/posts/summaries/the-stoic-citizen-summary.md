@@ -76,4 +76,4 @@ Buy it [on Amazon](https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/
 
 Read more about the book: [*The Stoic Citizen*](/books/stoic-citizen/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

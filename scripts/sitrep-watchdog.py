@@ -70,9 +70,10 @@ STATE_FILE = Path.home() / "Library" / "Logs" / "sitrep-watchdog-state.json"
 # only be observed. Pinning both makes the test a statement about the RULES
 # rather than about the calendar.
 
-# The canonical host: hugo.toml's baseURL and static/CNAME. Not www — the site
-# answers there too, but a URL this repo writes names huffmanwrites.org.
-SITE = "https://huffmanwrites.org"
+# The canonical host: hugo.toml's baseURL, static/CNAME, and the Pages custom
+# domain all name www. The apex answers too, with a 301 — a redirect this check
+# would follow, but a URL this repo writes should be the one the site serves.
+SITE = "https://www.huffmanwrites.org"
 
 # The first edition, published by hand during installation at 19:45 on
 # 2026-10-07. Before this date the absence of an edition is not a finding.
@@ -89,7 +90,7 @@ DEADLINE = time(7, 0)
 # after a move, so the zone is named.
 TZ = ZoneInfo("America/Chicago")
 
-UA = "huffmanwrites-sitrep-watchdog/1.0 (+https://huffmanwrites.org)"
+UA = "huffmanwrites-sitrep-watchdog/1.0 (+https://www.huffmanwrites.org)"
 TITLE_RE = re.compile(r"<title[^>]*>(.*?)</title>", re.S | re.I)
 
 

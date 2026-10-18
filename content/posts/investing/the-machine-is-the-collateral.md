@@ -84,4 +84,4 @@ What the coming quarters decide is narrower than the question of whether AI is v
 - Investing.com. (2026, October 15). [*Why is CoreWeave stock sliding today?*](https://www.investing.com/news/stock-market-news/why-is-coreweave-stock-sliding-today-93CH-4950971).
 - WIRED. (2024, May 3). [*How a scrappy cryptominer transformed into the multibillion-dollar backbone of the AI boom*](https://www.wired.com/story/coreweave-scrappy-cryptominer-multibillion-dollar-ai/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -24,4 +24,4 @@ tags:
 
  The market will rise, fall, and rise again. You can waste energy trying to predict those movements, or you can embrace a strategy that thrives regardless. Dollar-cost averaging is simple, automatic, and effective. In a world obsessed with timing the market, the real winners are those who just keep showing up, month after month.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

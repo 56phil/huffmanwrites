@@ -38,6 +38,6 @@ See you next Saturday. — Phil
 
 *Based on reporting from the Crimea Platform's weekly situation updates, United24 Media, and the Council on Foreign Relations' Global Conflict Tracker, current as of mid-July 2026.*
 
-[Read more at huffmanwrites.org](https://huffmanwrites.org)
+[Read more at huffmanwrites.org](https://www.huffmanwrites.org)
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

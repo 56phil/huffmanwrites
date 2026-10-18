@@ -178,4 +178,4 @@ The storm does not send invitations, but it does keep appointments, and this one
 - Yahoo Finance. (2026). [CBP to expand IEEPA tariff processing in October](https://finance.yahoo.com/economy/policy/articles/cbp-expand-ieepa-tariff-processing-131200417.html).
 - St. Louis Fed (FRED). [S&P 500 (SP500)](https://fred.stlouisfed.org/series/SP500); [CBOE Volatility Index (VIXCLS)](https://fred.stlouisfed.org/series/VIXCLS); [10-Year Treasury (DGS10)](https://fred.stlouisfed.org/series/DGS10).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -44,4 +44,4 @@ I did not set out to use artificial intelligence as part of my writing process.
 
  If there is value in the work, it comes from the attempt to understand something clearly and to express it honestly. The use of AI does not change that goal. It only changes the path taken to get there.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

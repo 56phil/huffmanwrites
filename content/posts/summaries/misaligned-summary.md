@@ -79,4 +79,4 @@ Buy it [on Amazon](https://www.amazon.com/Misaligned-Subject-Adjective-Disastrou
 
 Read more about the book: [*Misaligned*](/books/misaligned/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

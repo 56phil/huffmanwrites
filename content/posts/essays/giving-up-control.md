@@ -70,4 +70,4 @@ Morrison's review of her first novel called it "a rarity: a sophisticated novel 
 
 [^12]: Epictetus, *Enchiridion*, ch. 1; cf. *Discourses* 1.1 and 4.1 on freedom and the things that are not ours.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

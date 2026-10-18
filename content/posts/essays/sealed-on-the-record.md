@@ -109,4 +109,4 @@ The case remains what it was: a man who wants his name on a building Congress na
 - MS NOW. (2026, September 23). [*Trump aides explore attaching president's name to Ford's Theatre*](https://www.ms.now/news/trump-fords-theatre-name-kennedy-center).
 - Scheduling Order. (2026, September). [*Scheduling order*, ECF 82](https://www.courtlistener.com/docket/72069932/beatty-v-trump/). Beatty v. Trump, No. 25-cv-4480 (D.D.C.).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

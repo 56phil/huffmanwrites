@@ -54,4 +54,4 @@ Read it alongside *Meditations*. Marcus spent twelve books of private journals t
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

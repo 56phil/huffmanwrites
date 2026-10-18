@@ -92,4 +92,4 @@ Hold the line. Not because pleasure is bad. Not because anger is forbidden. Not 
 
 Hold the line because you are more than what pulls on you.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

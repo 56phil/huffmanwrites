@@ -161,4 +161,4 @@ Ninety days is not a long time. It is long enough to have your defenses built be
 - U.S. Department of the Treasury. (2026, August 19). [Treasury announces increased sizes of nominal long-end liquidity support buybacks beginning September 9](https://home.treasury.gov/news/press-releases/sb0607).
 - U.S. Department of the Treasury via FRED. (2026). [Market yields on U.S. Treasury securities at 2-year, 10-year, and 30-year constant maturities (DGS2, DGS10, DGS30)](https://fred.stlouisfed.org/series/DGS10/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

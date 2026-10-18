@@ -80,4 +80,4 @@ None of this is effortless. It requires Congress to bind its future self, which 
 - Congressional Research Service. (n.d.). [*Sequestration as a budget enforcement process: Frequently asked questions*](https://www.congress.gov/crs-product/R42972).
 - Braun, M., & Emmer, T. (2023). [*Emmer, Braun introduce bill to rein in out-of-control government spending*](https://emmer.house.gov/media-center/press-releases/emmer-braun-introduce-bill-to-rein-in-out-of-control-government-spending) [Press release].
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

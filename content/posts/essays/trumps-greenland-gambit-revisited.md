@@ -83,4 +83,4 @@ Real strategic interests (the radar at Pituffik, the minerals under Kvanefjeld, 
 
 [^16]: Al Jazeera. (2026, January 10). 'We do not want to be Americans': Greenland parties reject Trump's threats. https://www.aljazeera.com/news/2026/1/10/we-do-not-want-to-be-americans-greenland-parties-reject-trumps-threats
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

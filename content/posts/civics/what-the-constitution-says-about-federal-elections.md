@@ -130,4 +130,4 @@ None of it is guaranteed by anything more than the text, and the text is thinner
 - U.S. Const. art. I, §§2, 3, 4, 5; art. II, §1; amends. XII, XIV, XV, XVII, XIX, XX, XXII, XXIII, XXIV, XXVI. [*National Archives*](https://www.archives.gov/founding-docs/constitution-transcript).
 - 3 U.S.C. §1; 2 U.S.C. §§1, 7. [*Uniform election day statutes*](https://uscode.house.gov/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

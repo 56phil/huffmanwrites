@@ -142,4 +142,4 @@ tags:
 
  **Topic**: Arctic Geopolitics 101 (Greenland, rare earths, and the new Great Game).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

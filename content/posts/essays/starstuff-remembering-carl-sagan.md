@@ -66,4 +66,4 @@ tags:
 
  On this birthday, the best tribute is not nostalgia but participation: to keep asking questions, testing ideas, and defending reason against the tide of unreason. Wonder, after all, is the beginning of wisdom, but evidence is its completion.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

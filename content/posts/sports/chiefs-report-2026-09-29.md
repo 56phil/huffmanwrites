@@ -141,4 +141,4 @@ The honest read of three weeks is that Kansas City has a 3-0 record, the league'
 - [Kalshi's AFC West series in its public trade API](https://api.elections.kalshi.com/trade-api/v2/events?series_ticker=KXNFLAFCWEST&status=open&limit=20&with_nested_markets=true) and [Kalshi's win-total ladder for Kansas City](https://api.elections.kalshi.com/trade-api/v2/events/KXNFLWINS-27KC?with_nested_markets=true), Kalshi, September 29, 2026.
 - [Polymarket's AFC West event](https://gamma-api.polymarket.com/events?slug=pro-football-afc-west-champion) and [playoff qualifier event](https://gamma-api.polymarket.com/events?slug=nfl-team-to-make-postseason), Polymarket, September 29, 2026.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

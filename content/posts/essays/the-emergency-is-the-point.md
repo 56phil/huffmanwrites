@@ -33,4 +33,4 @@ The abuse is the system. That is the sentence that should worry us, because it m
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

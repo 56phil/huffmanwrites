@@ -128,7 +128,7 @@ lecturing. Think *with* the reader. Structure: the epigraph; **the reflection** 
 component, no fewer than three paragraphs, immediately after the epigraph); the week's items
 with bold lead-ins; **The weekly reports**; **The Practice**; the sign-off ("See you next
 Saturday. — Phil"); the sources line; the `## Sources` list; and the closing attribution
-`*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*`.
+`*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*`.
 
 These rules are enforced, and each names its gate.
 
@@ -166,7 +166,7 @@ These rules are enforced, and each names its gate.
 - **Send:** the `pending/` file is the newsletter body and the page source at once; send it
   through the SendFox API, whose `form-action` the site CSP whitelists.
 - **Before you send, confirm the page resolves.** Fetch
-  `https://huffmanwrites.org/posts/digests/<slug>/` and require a 200 whose `<title>` carries
+  `https://www.huffmanwrites.org/posts/digests/<slug>/` and require a 200 whose `<title>` carries
   the digest's title. The page is live by ~06:06 CT, not 06:00 (see *Cadence* above); sending
   first means the email's link 404s for the first readers. If the page is not up, the send is
   early, not the page. **This check only applies to a letter sent by hand.** A campaign

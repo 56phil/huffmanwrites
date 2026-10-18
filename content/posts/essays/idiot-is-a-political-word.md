@@ -105,4 +105,4 @@ The bell still rings. It is the same bell it always was, the one that calls the 
 - [The Guardian, 2026](https://www.theguardian.com/us-news/ng-interactive/2026/sep/20/anger-midterm-elections). "'People are pissed off': anger at the elite and the establishment is fueling this year's midterms," *The Guardian*, September 20, 2026.
 - [Williams, 2026](https://thehill.com/opinion/5871471-voter-anger-trump-policies/). Juan Williams, "Can Republicans survive the midterms of Rage?," *The Hill*, May 11, 2026.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -90,4 +90,4 @@ hero_caption: "No one can save the world alone. But no one should feel alone in 
 
  Let’s rise to meet it. Together.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

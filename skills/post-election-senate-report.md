@@ -84,7 +84,7 @@ just the winners.
 - Every load-bearing claim (winners, margins, dates, control math) MUST be
   verified against a source; cite with `[^n]` footnotes and a `## Notes`
   section. Flag anything unverifiable or uncalled.
-- Closing attribution: `*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*`
+- Closing attribution: `*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*`
 - This is an ARTICLE, not a data dump: prose is the spine. One compact table
   of the competitive results (state, winner, margin, called/uncalled) is
   appropriate; do NOT include a full 35-row table.

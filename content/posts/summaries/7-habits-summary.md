@@ -53,4 +53,4 @@ Read it skeptically. Skip the anecdotes. Take the framework seriously.
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -105,4 +105,4 @@ The Court that lost its balance can find it again. The question is whether the p
 - Supreme Court of the United States. (2023, November 13). [*Code of conduct for justices of the Supreme Court of the United States*](https://www.supremecourt.gov/about/Code-of-Conduct-for-Justices_November_13_2023.pdf).
 - Whitehouse, S. (2026, July 22). [*Whitehouse, Booker, Blumenthal, Padilla reintroduce Supreme Court term limits bill to restore Americans' trust in the Court*](https://www.whitehouse.senate.gov/news/release/whitehouse-booker-blumenthal-padilla-reintroduce-supreme-court-term-limits-bill-to-restore-americans-trust-in-the-court/). U.S. Senate.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

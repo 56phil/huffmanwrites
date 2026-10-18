@@ -43,4 +43,4 @@ Last Saturday, as President Trump celebrated his 79th birthday with a military p
 
  Because when the people remember they are sovereign, kings don’t last.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

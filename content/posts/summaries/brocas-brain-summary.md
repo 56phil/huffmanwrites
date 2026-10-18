@@ -56,4 +56,4 @@ Most of all, read it for the title essay: a scientist standing in front of a jar
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

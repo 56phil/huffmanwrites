@@ -65,4 +65,4 @@ The clearest high point of 2025 was finally giving my writing the honesty it had
 
  ### From Clarity to Practice.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

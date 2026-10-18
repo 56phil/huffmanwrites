@@ -102,4 +102,4 @@ The gold in the fissure is what people mistake for the thing itself. It is only 
 - Stonecash, Jeffrey M. (2026, March 23). [*Political realignment and congressional deference to Donald Trump*](https://www.cambridge.org/core/journals/ps-political-science-and-politics/article/political-realignment-and-congressional-deference-to-donald-trump/BE19E13A5206881A279944A61B1D54DE). *PS: Political Science & Politics*.
 - Texas Tribune. (2026, May 26). [*Ken Paxton defeats John Cornyn for U.S. Senate GOP nomination*](https://www.texastribune.org/2026/05/26/texas-john-cornyn-ken-paxton-us-senate-republican-primary-runoff/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

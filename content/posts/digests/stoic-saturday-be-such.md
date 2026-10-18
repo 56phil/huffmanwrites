@@ -73,4 +73,4 @@ See you next Saturday. — Phil
 - Seat allocations for Mecklenburg-Vorpommern: [*2026 Mecklenburg-Vorpommern state election*](https://en.wikipedia.org/wiki/2026_Mecklenburg-Vorpommern_state_election) (71 seats; AfD 32, SPD 29, Left 5, Greens 5).
 - CNBC. (2026, September 25). [*Trump, Xi wrap state visit spectacle over substance*](https://www.cnbc.com/2026/09/25/trump-xi-summit-takeaways.html).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

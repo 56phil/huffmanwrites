@@ -142,4 +142,4 @@ The thing to hold on to when reading next week's version of this page: this week
 - Plaintiff's Unopposed Motion to Extend. (2026, October 8). [*Plaintiff's Unopposed Motion to Extend Plaintiff's Deadline to Respond to Defendant's Rule 12(c) Motion*, ECF 56](https://storage.courtlistener.com/recap/gov.uscourts.dcd.291779/gov.uscourts.dcd.291779.56.0_2.pdf). Phang v. Blanche, No. 1:26-cv-01417 (EGS) (D.D.C.). Source of the October 15 default response date under LCvR 7(b) and of the two alternative extensions requested.
 - The Independent. (2026, October 9). ["Judge orders to Kennedy Center to turn over financial records as DOJ fights to keep Trump's role secret"](https://www.independent.co.uk/news/world/americas/us-politics/doj-executive-privilege-trump-kennedy-center-b3064462.html). Coverage of the October 9 order and the privilege dispute, cited here as coverage, with the record at ECF 103.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

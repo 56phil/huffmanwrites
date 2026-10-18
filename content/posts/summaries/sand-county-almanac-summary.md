@@ -54,4 +54,4 @@ Read it slowly. The almanac sections train the kind of attention the land ethic 
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

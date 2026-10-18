@@ -54,4 +54,4 @@ Read it as a doorway, not a destination. Holiday says as much himself: go read t
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

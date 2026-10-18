@@ -57,4 +57,4 @@ That work is never finished. But it is always worth doing. Because the alternati
 
 The Constitution's legacy is not what it has achieved. It is what it still demands.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

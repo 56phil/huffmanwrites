@@ -34,4 +34,4 @@ I came across a quote earlier today that stopped me:
 
  That’s how we grow: by learning from others without losing ourselves.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

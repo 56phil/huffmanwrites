@@ -442,6 +442,11 @@ class TestLinkRules(unittest.TestCase):
         self.assertFalse(cl.is_blocking("https://notwashingtonpost.com/x"))
 
     def test_own_domain_is_not_fetched(self):
+        # Both hosts are this site: the canonical www the corpus links, and the
+        # apex, which Pages 301s onto it. A future exact-match change here would
+        # turn 277 internal links into "external" fetches and the check would
+        # quietly stop testing them.
+        self.assertTrue(cl.is_own("https://www.huffmanwrites.org/posts/x/"))
         self.assertTrue(cl.is_own("https://huffmanwrites.org/posts/x/"))
 
     def test_coverage_floors_are_high_enough_to_catch_a_broken_glob(self):
@@ -3917,7 +3922,7 @@ class TestPublishedPageCheck(unittest.TestCase):
     def test_the_url_comes_from_the_article_path(self):
         self.assertEqual(
             self.vp.post_url("content/posts/essays/report-a.md"),
-            "https://huffmanwrites.org/posts/essays/report-a/")
+            "https://www.huffmanwrites.org/posts/essays/report-a/")
         self.assertEqual(
             self.vp.post_url("content/posts/sports/chiefs-report-2026-09-29.md",
                              "http://127.0.0.1:8080"),

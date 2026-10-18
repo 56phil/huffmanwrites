@@ -56,4 +56,4 @@ Read it as a companion to Sagan. Together they make the case that clarity of tho
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

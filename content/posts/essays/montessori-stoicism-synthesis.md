@@ -75,4 +75,4 @@ Stanford Encyclopedia of Philosophy. (n.d.). *Maria Montessori*. Retrieved July 
 
 The Voice of Early Childhood. (n.d.). *Fostering independence in Montessori settings*. https://thevoiceofearlychildhood.com/fostering-independence-in-montessori-settings/
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

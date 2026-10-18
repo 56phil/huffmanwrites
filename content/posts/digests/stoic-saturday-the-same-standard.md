@@ -57,4 +57,4 @@ See you next Saturday. — Phil
 - Deutsche Welle. (2026, September 17). [*Germany's judges seek to prevent AfD justice abuse*](https://uk.news.yahoo.com/germanys-judges-seek-prevent-afd-151800867.html), by Ben Knight.
 - Kyiv Independent. (2026, September 18). [*Exclusive: Ukraine, Russia are done with Steve Witkoff. Trump sees no problem.*](https://kyivindependent.com/exclusive-ukraine-russia-are-done-with-steve-witkoff-trump-sees-no-problem/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

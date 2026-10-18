@@ -89,7 +89,7 @@ So my answer to the question in the title is this. The probability of AI ending 
 
 [^11]: Metaculus community forecast of ~2 percent on human extinction by 2100 (May 2026 snapshot), per Factually's verification of the Metaculus question. https://factually.co/fact-checks/science/human-extinction-probability-by-2100-april-2026-f47b01
 
-[^12]: The AI winters and the field's history of overpromising are documented in the site's reference essay, "The History of Artificial Intelligence and AI Agents and Their Impact on Society" (2026), sections 4 and 6. https://huffmanwrites.org/posts/essays/ai/
+[^12]: The AI winters and the field's history of overpromising are documented in the site's reference essay, "The History of Artificial Intelligence and AI Agents and Their Impact on Society" (2026), sections 4 and 6. https://www.huffmanwrites.org/posts/essays/ai/
 
 [^13]: Ćirković, M. M., Sandberg, A., & Bostrom, N. (2010). "Anthropic Shadow: Observation Selection Effects and Human Extinction Risks." Risk Analysis. The anthropic shadow is the observation selection effect by which we underestimate hazards that would have destroyed our species or its predecessors, because we cannot observe the worlds where they struck. https://nickbostrom.com/papers/anthropicshadow.pdf
 
@@ -117,12 +117,12 @@ So my answer to the question in the title is this. The probability of AI ending 
 
 [^25]: Office of Senator Bernie Sanders. (2026, September 3). News: Sanders, Casar to introduce legislation to ban artificial superintelligence and temporarily pause advanced AI development. The Ban Artificial Superintelligence Act would permanently prohibit development and deployment of superintelligent AI and pause advanced AI development until a federal regulator has established safety rules. https://www.sanders.senate.gov/press-releases/news-sanders-casar-introduce-legislation-to-ban-artificial-superintelligence-and-temporarily-pause-advanced-ai-development/
 
-[^26]: For the argument that the probability is a decision rather than a number, and for the full account of the survey data, the inversion, and the silent surrender, see the companion essay on this site, "The Probability of AI Taking Over the World: What the Numbers Say, What the Builders Believe, and Why the Answer Is a Decision We Make" (2026). https://huffmanwrites.org/posts/essays/the-probability-of-ai-taking-over-the-world/
+[^26]: For the argument that the probability is a decision rather than a number, and for the full account of the survey data, the inversion, and the silent surrender, see the companion essay on this site, "The Probability of AI Taking Over the World: What the Numbers Say, What the Builders Believe, and Why the Answer Is a Decision We Make" (2026). https://www.huffmanwrites.org/posts/essays/the-probability-of-ai-taking-over-the-world/
 
-[^27]: Premeditatio malorum, the deliberate daily contemplation of the worst outcomes, as practiced by the Stoics and applied on this site; see the Stoic Saturday digest "Expect the Splash" (2026), whose epigraph is Epictetus, Enchiridion 4. https://huffmanwrites.org/posts/digests/stoic-saturday-expect-the-splash/
+[^27]: Premeditatio malorum, the deliberate daily contemplation of the worst outcomes, as practiced by the Stoics and applied on this site; see the Stoic Saturday digest "Expect the Splash" (2026), whose epigraph is Epictetus, Enchiridion 4. https://www.huffmanwrites.org/posts/digests/stoic-saturday-expect-the-splash/
 
 [^28]: The point that the number is conditional on human decisions, and that both the optimistic and pessimistic camps agree it is not fixed: see [^26].
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -86,4 +86,4 @@ Hold the line, but know why you are holding it. Rebalance when your rules say to
 
 The Stoic investor does not predict the storm. He builds a house that can hear thunder without mistaking it for collapse.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

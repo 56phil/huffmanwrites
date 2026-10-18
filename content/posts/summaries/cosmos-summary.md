@@ -56,4 +56,4 @@ Read it for the cosmic calendar. Read it for Alexandria. Read it for the last ch
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

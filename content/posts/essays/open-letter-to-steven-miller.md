@@ -59,4 +59,4 @@ I hope you’ll choose the latter.
 
 Philip Huffman
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

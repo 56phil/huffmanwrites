@@ -54,4 +54,4 @@ Read it alongside Leopold. Leopold gives you the ethical framework; Kolbert give
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

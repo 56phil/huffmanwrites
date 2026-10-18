@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 18, 2026 — Made `www.huffmanwrites.org` the canonical host everywhere
+
+Philip: "What do you recommend concerning that missing www on the domain name?" Measured first: nothing was missing. The repo was simply lying about the domain.
+- **What GitHub actually serves.** The Pages custom domain is `www.huffmanwrites.org` (certificate `approved`, build type `workflow`), so the apex answers with a **301** to www; the canonical link, `sitemap.xml` and `index.xml` all already named www, because the workflow builds with `--baseURL "${{ steps.pages.outputs.base_url }}"`. Only local builds and the repo's own text disagreed: `static/CNAME` said `huffmanwrites.org` (a file Pages overwrites on every deploy, so it sets nothing), `hugo.toml` `baseURL` said apex, and **277 URLs across 230 content files** linked the apex — the closing attribution line, almost all of it.
+- **Why www and not the apex.** www resolves by **CNAME** to `56phil.github.io` and carries both A and AAAA records; the apex is pinned to four literal A records and has **no AAAA at all**, so a v6-only client cannot reach it. The apex also carries every indexable statement already. Choosing it needs no Pages setting change, no DNS edit and no certificate re-issue; flipping to the apex would have rewritten the canonical host of the whole corpus and still needed AAAA records added.
+- **What changed:** `static/CNAME` → www; `hugo.toml` `baseURL`, `[params.schema] sameAs` and the RSS social icon → www; 277 URLs in 230 content files → www; `layouts/index.html`'s hardcoded RSS link → `{{ "index.xml" | absURL }}` so it follows baseURL rather than restating it; `layouts/api/list.html` examples, `static/robots.txt` sitemap, `static/.well-known/security.txt` canonical and both `static/email/*.html` footers → www; `scripts/verify-published.py` `BASE_URL`, `scripts/sitrep-watchdog.py` `SITE` and the four UA contact strings → www, which turns each daily check's two hops into one; `CLAUDE.md`'s domain sentences and the Deployment paragraph now state the rule (write www in every URL the repo emits, because an internal link to a redirecting host is a hop nothing needs).
+- **The attribution line keeps its visible text.** The link reads `[huffmanwrites.org](https://www.huffmanwrites.org)` — the bare domain is the brand label, the URL is where the reader goes. The gate never cared: `check-report-frontmatter.py`'s `ATTRIBUTION` is `^\*PRH \|`, anchored on the prefix precisely so a re-host is a corpus pass rather than a pattern change. This supersedes the URL in the 2026-10-12 canonical-form decision below.
+- **Both hosts still count as this site.** `check-links.py`'s `is_own` matches `h == o or h.endswith("." + o)`, so www was already covered by the apex entry; a new assertion in `test_own_domain_is_not_fetched` pins that, because an exact-match change there would quietly turn 277 internal links into "external" fetches.
+- **Verified by running it:** `hugo --gc --minify` clean (483 pages); the built home page emits `canonical https://www.huffmanwrites.org/`, `sameAs` www, RSS href www, sitemap and robots www, `CNAME` www, and a post's rendered footer links www; `check-render-integrity.py` OK on 565 pages; the whole CI gate set OK (attribution 230 posts, anchors 230, content frontmatter 239, links 3171, quotes 67, plists 14 schedules); `test_gates.py` **414 tests, OK**. Deploy and live verification follow the push.
+
+---
+
 ### Maintenance — October 17, 2026 — Published the docket-weekly-report report (automated)
 
 Auto-published by `com.huffmanwrites.docket-weekly-report` after every gate passed.

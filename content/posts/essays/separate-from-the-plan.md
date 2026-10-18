@@ -125,4 +125,4 @@ The report is a good document about a bad building. What it does not do is tell 
 - Minute Order. (2026, September 17). [Order denying emergency hearing; ordering status report and thirty-day notice](https://www.courtlistener.com/docket/72069932/beatty-v-trump/). Beatty v. Trump, No. 25-cv-4480 (D.D.C.).
 - Scheduling Order. (2026, September). [*Scheduling order*, ECF 82](https://www.courtlistener.com/docket/72069932/beatty-v-trump/). Beatty v. Trump, No. 25-cv-4480 (D.D.C.).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

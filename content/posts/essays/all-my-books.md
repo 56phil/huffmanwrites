@@ -4,7 +4,7 @@ description: "A catalog of Phil's eight published books, with a ninth on the way
 date: 2026-03-14T00:00:00Z
 author: Philip Huffman
 lastmod: 2026-06-11T00:00:00Z
-canonicalURL: https://huffmanwrites.org/books/
+canonicalURL: https://www.huffmanwrites.org/books/
 tags:
   - announcement
   - books
@@ -17,4 +17,4 @@ Eight books, with another on the way. Different subjects, different tones — bu
 
 {{< book_catalog >}}
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

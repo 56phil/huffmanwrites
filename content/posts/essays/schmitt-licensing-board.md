@@ -130,4 +130,4 @@ hero_caption: "The office is earned by a thousand hours. The seat is earned by a
 9. [TMZ](https://www.tmz.com)
 10. [Senate Judiciary Committee Hearing, September 29, 2026](https://www.judiciary.senate.gov/committee-activity/hearings/oversight-of-jack-smiths-abuse-of-authority-and-the-targeting-of-republicans-and-related-matters)
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

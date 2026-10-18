@@ -79,4 +79,4 @@ lastmod: 2025-05-09T00:00:00Z
 ---
  #
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

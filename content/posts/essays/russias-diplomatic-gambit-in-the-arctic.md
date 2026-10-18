@@ -50,4 +50,4 @@ That's the accurate version of Russia's Arctic gambit, and it's a smaller story 
 
 [^12]: War on the Rocks. (2023, May). Russia's gains in the great Arctic race. https://warontherocks.com/2023/05/russias-gains-in-the-great-arctic-race/
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

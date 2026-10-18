@@ -53,4 +53,4 @@ What Sun Tzu understood, and what most people miss, is that strategy is a form o
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

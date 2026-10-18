@@ -76,13 +76,13 @@ Think clearly. Live intentionally. Love deeply.
 
 ## Notes
 
-[^1]: Huffman, P. (2026, September 15). [*A Million Missourians, a Map That Never Became Law, and the Remedy the Law Forbids*](https://huffmanwrites.org/posts/essays/a-million-missourians/). On the referendum remedy: "The fix is to take the clock out of the officer's hands. Make suspension automatic upon submission of a facially sufficient petition."
+[^1]: Huffman, P. (2026, September 15). [*A Million Missourians, a Map That Never Became Law, and the Remedy the Law Forbids*](https://www.huffmanwrites.org/posts/essays/a-million-missourians/). On the referendum remedy: "The fix is to take the clock out of the officer's hands. Make suspension automatic upon submission of a facially sufficient petition."
 
 [^2]: Missouri Secretary of State. (2026). [*2026 Ballot Measures*](https://www.sos.mo.gov/petitions/2026BallotMeasures). Source of the official ballot titles and fair ballot language for Amendment 3, Amendment 7, Amendment 8, and Proposition A quoted in this essay.
 
 [^3]: Ballotpedia. (2026). [*Missouri Amendment 3, Prohibit Abortion and Gender Transition Procedures for Minors Amendment (2026)*](https://ballotpedia.org/Missouri_Amendment_3,_Prohibit_Abortion_and_Gender_Transition_Procedures_for_Minors_Amendment_(2026)). Missouri voters approved the 2024 reproductive-rights amendment with 51.6 percent in favor.
 
-[^4]: Huffman, P. (n.d.). [*The Fourteenth Amendment: Defining Citizenship and Equal Protection*](https://huffmanwrites.org/posts/civics/the-fourteenth-amendment-defining-citizenship-and-equal-protection/). On substantive due process: "some freedoms are too basic to be voted away."
+[^4]: Huffman, P. (n.d.). [*The Fourteenth Amendment: Defining Citizenship and Equal Protection*](https://www.huffmanwrites.org/posts/civics/the-fourteenth-amendment-defining-citizenship-and-equal-protection/). On substantive due process: "some freedoms are too basic to be voted away."
 
 [^5]: Ballotpedia. (2026). [*Missouri Amendment 6, Initiative and Referendum Powers and Legislative Change Requirements Amendment (2026)*](https://ballotpedia.org/Missouri_Amendment_6,_Initiative_and_Referendum_Powers_and_Legislative_Change_Requirements_Amendment_(2026)). Source of the measure's provisions and the 2015 Missouri Supreme Court holding that the legislature could not "preclude the people by initiative from adopting a law in conflict with the statute."
 
@@ -90,7 +90,7 @@ Think clearly. Live intentionally. Love deeply.
 
 [^7]: Missouri Office of Administration. (2026, July 6). [*State releases June 2026 general revenue report*](https://oa.mo.gov/commissioners-office/news/state-releases-june-2026-general-revenue-report). Net general revenue collections for fiscal year 2026 were $13.05 billion, down 2.8 percent from the prior year.
 
-[^8]: Huffman, P. (2026, August 21). [*The Debt Brake: Discipline That Doesn't Depend on Willpower*](https://huffmanwrites.org/posts/investing/the-debt-brake-a-real-alternative/).
+[^8]: Huffman, P. (2026, August 21). [*The Debt Brake: Discipline That Doesn't Depend on Willpower*](https://www.huffmanwrites.org/posts/investing/the-debt-brake-a-real-alternative/).
 
 [^9]: Missouri Secretary of State. (2026). [*2026 Ballot Measures*](https://www.sos.mo.gov/petitions/2026BallotMeasures); official ballot title and fair ballot language for Amendment 8.
 
@@ -98,4 +98,4 @@ Think clearly. Live intentionally. Love deeply.
 
 [^11]: Missouri Supreme Court. (2026, September 3). [*Von Glahn v. Hoskins*, SC101805](https://electionlawblog.org/wp-content/uploads/Opinion_SC101805.pdf). The court ordered the map barred "unless and until HB 1 is approved by the voters at the November 2026 general election and takes effect 30 days thereafter. Mo. Const. art. XII, sec. 2(b)."
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

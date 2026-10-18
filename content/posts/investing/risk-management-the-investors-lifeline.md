@@ -21,4 +21,4 @@ Risk never sleeps. Whether markets are surging or headlines are screaming “shu
 
  Risk is not the enemy. Unmanaged risk is. Build your defenses before the storm, and you’ll discover something most investors never see: opportunity hiding inside uncertainty. When others panic, you’ll have the liquidity to buy. When others sell in despair, you’ll rebalance with discipline. When headlines shout chaos, you’ll recognize the truth: risk is the price of return, and managing it is the investor’s real lifeline.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

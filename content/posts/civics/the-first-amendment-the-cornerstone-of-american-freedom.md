@@ -100,4 +100,4 @@ The question for us is whether we are still that kind of people. Not the kind wh
 
 The First Amendment does not enforce itself. It is a piece of paper. Its power has always been the power of the people who refuse to let it become merely decorative. That refusal is the work of citizenship. And it has never been more necessary than it is right now.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

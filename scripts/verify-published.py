@@ -52,11 +52,12 @@ from pathlib import Path, PurePosixPath
 
 REPO = Path(__file__).resolve().parent.parent
 
-# The canonical host: hugo.toml's baseURL and static/CNAME. Not www — the site
-# answers there too, but a URL this repo writes names huffmanwrites.org.
-BASE_URL = "https://huffmanwrites.org"
+# The canonical host: hugo.toml's baseURL, static/CNAME, and the Pages custom
+# domain all name www. The apex answers too, with a 301 — a redirect this check
+# would follow, but a URL this repo writes should be the one the site serves.
+BASE_URL = "https://www.huffmanwrites.org"
 
-UA = "huffmanwrites-verify-published/1.0 (+https://huffmanwrites.org)"
+UA = "huffmanwrites-verify-published/1.0 (+https://www.huffmanwrites.org)"
 TITLE_RE = re.compile(r"<title[^>]*>(.*?)</title>", re.S | re.I)
 
 # 24 checks 15 seconds apart: a deploy is normally live about a minute after the

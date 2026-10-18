@@ -131,4 +131,4 @@ Ninety days is not a long time. It is long enough, though, to have your defenses
 - U.S. Department of the Treasury via FRED. (2026). [Market yields on U.S. Treasury securities at 10-year and 30-year constant maturities (DGS10, DGS30)](https://fred.stlouisfed.org/series/DGS10/).
 - U.S. Department of the Treasury. (2026, August 19). [Treasury announces increased sizes of nominal long-end liquidity support operations](https://home.treasury.gov/news/press-releases/sb0607).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

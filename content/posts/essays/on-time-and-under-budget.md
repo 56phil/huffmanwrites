@@ -138,4 +138,4 @@ A country that cannot state how many of its contracts arrived on time is not kee
 - [EO 14372](https://www.whitehouse.gov/presidential-actions/2026/01/prioritizing-the-warfighter-in-defense-contracting/). "Prioritizing the Warfighter in Defense Contracting," Executive Order 14372, January 7, 2026. Source of "until such time as they are able to produce a superior product, on time and on budget."
 - [EO 14402](https://www.whitehouse.gov/presidential-actions/2026/04/promoting-efficiency-accountability-and-performance-in-federal-contracting/). "Promoting Efficiency, Accountability, and Performance in Federal Contracting," Executive Order 14402, April 30, 2026. Source of "approximately $120 billion obligated on cost-reimbursement consulting contracts alone," the fixed-price default, and the semiannual reporting requirement.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

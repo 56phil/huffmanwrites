@@ -55,4 +55,4 @@ What stays with you: the fixed mindset person is not weak. They are protecting s
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

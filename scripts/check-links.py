@@ -558,7 +558,7 @@ def observe(url: str, timeout: float) -> "tuple[int, str, bytes, str]":
         "User-Agent": UA,
         "Accept": "text/html,application/xhtml+xml,*/*",
         "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://huffmanwrites.org/",
+        "Referer": "https://www.huffmanwrites.org/",
     }
     code, final, body, err = probe_once(url, timeout, headers)
     if is_waf_challenge(body):

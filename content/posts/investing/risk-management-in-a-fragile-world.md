@@ -29,4 +29,4 @@ Risk never sleeps. Markets can rise on Monday and unravel by Friday. Headlines a
 
  Zeihan’s maps may overstate the speed of collapse, but they serve a purpose: reminding us that fragility is real. You don’t need to know the exact date of the storm to prepare. You only need to know that storms come. Risk isn’t the enemy. Unmanaged risk is. Build your defenses before the lightning strikes, and you’ll discover something most investors never see: opportunity hidden in uncertainty.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

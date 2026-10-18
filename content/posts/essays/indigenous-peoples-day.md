@@ -40,4 +40,4 @@ What I keep coming back to is how ordinary the original mistake was, and how ord
 
 [^5]: Bureau of Indian Affairs. (2024, January 8). Indian entities recognized by and eligible to receive services from the United States Bureau of Indian Affairs. *Federal Register*. https://www.federalregister.gov/documents/2024/01/08/2024-00109/indian-entities-recognized-by-and-eligible-to-receive-services-from-the-united-states-bureau-of
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

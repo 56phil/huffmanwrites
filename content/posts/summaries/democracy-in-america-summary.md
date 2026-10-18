@@ -56,4 +56,4 @@ Read it as a companion to [*The Stoic Citizen*](/books/stoic-citizen/). Tocquevi
 
 ---
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -45,4 +45,4 @@ Preserving the Seventh Amendment does not mean forcing every dispute to trial. S
 
 The amendment is not a headline-grabber. But it is part of the constitutional fabric—one of the threads that keeps the legal system accountable to the people it serves. When that thread snaps, the whole garment weakens.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -183,4 +183,4 @@ Not at all. He is not the kind of man that building was built to remember, and t
 - U.S. Senate Historical Office. (2026c). "The Famous Five" (the 1959 committee chaired by Senator Kennedy): [senate.gov](https://www.senate.gov/about/historic-buildings-spaces/rooms/reception-room-famous-five.htm).
 - Taft, Robert A. "Equal Justice Under Law," Kenyon College, October 5, 1946. Quotation and context: [Wikipedia, *Robert A. Taft*](https://en.wikipedia.org/wiki/Robert_A._Taft).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

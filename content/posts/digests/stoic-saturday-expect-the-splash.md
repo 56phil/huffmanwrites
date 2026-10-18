@@ -48,4 +48,4 @@ See you next Saturday. — Phil
 - Just Security. (2026, September 8). [*Early Edition: September 8, 2026*](https://www.justsecurity.org/156556/early-edition-september-8-2026/), carrying the New York Times' reporting on 9/11 air quality disclosures.
 - The Hill. (2026, September 6). [*Witkoff touts progress after Russia, Ukraine visits*](https://thehill.com/policy/international/6075212-witkoff-progress-russia-ukraine-talks/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

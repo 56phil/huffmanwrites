@@ -136,4 +136,4 @@ The tide comes in on its own schedule. A president stands at the gate and claims
 - National Bureau of Economic Research. (2023). [*US Business Cycle Expansions and Contractions*](https://www.nber.org/research/data/us-business-cycle-expansions-and-contractions). Business Cycle Dating Committee.
 - Su, Q., Xu, X., Yu, Y., Fu, T., Chen, G., & Liu, W. (2026). [*The democratic growth advantage revisited: disentangling global trends from domestic political effects in the United States economy*](https://www.frontiersin.org/journals/political-science/articles/10.3389/fpos.2026.1856151/full). *Frontiers in Political Science, 8*. https://doi.org/10.3389/fpos.2026.1856151
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

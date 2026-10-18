@@ -44,4 +44,4 @@ What does it say about a man who loves both? That he is not confused; he is comp
 
 The only real risk is the man who loves only one. The Lamy-only man thinks clearly but forgets to honor what he thinks. The Carène-only man performs the ceremony but has nothing underneath it. Both pens, loved honestly, mean he is doing the actual work: showing up, paying attention, and knowing which of those he is doing at any given moment. The pens are just the evidence.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

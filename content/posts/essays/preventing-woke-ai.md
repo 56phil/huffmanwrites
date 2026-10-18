@@ -151,4 +151,4 @@ A republic that procures mirrors will eventually see only itself in them. And wh
 - The White House. (2025c, December 11). [*Ensuring a National Policy Framework for Artificial Intelligence*](https://www.govinfo.gov/content/pkg/DCPD-202501186/pdf/DCPD-202501186.pdf). Executive Order 14365.
 - Wired. (2024, February 22). [*Google's 'woke' image generator shows the limitations of AI*](https://www.wired.com/story/google-gemini-woke-ai-image-generation/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -77,4 +77,4 @@ He would say we do not have the luxury of despair, because despair is a form of 
 - Sagan, C. (1996). [*Talk of the Nation*](https://en.wikiquote.org/wiki/Carl_Sagan). NPR.
 - Wikipedia. (2026). [*Ozone depletion*](https://en.wikipedia.org/wiki/Ozone_depletion). Wikipedia.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -1,4 +1,4 @@
-baseURL = 'https://huffmanwrites.org'
+baseURL = 'https://www.huffmanwrites.org'
 defaultContentLanguage = 'en'
 locale = 'en-us'
 title = 'Huffman Writes'
@@ -27,7 +27,7 @@ disableHugoGeneratorInject = true
 
   [params.schema]
     publisherType = 'Person'
-    sameAs = ['https://huffmanwrites.org', 'https://bsky.app/profile/huffmanwrites.bsky.social']
+    sameAs = ['https://www.huffmanwrites.org', 'https://bsky.app/profile/huffmanwrites.bsky.social']
 
   [params.homeInfoParams]
     Title = "Huffman Writes"
@@ -46,7 +46,7 @@ disableHugoGeneratorInject = true
 
   [[params.socialIcons]]
     name = 'rss'
-    url = 'https://huffmanwrites.org/index.xml'
+    url = 'https://www.huffmanwrites.org/index.xml'
   [[params.socialIcons]]
     name = 'goodreads'
     url = 'https://www.goodreads.com/author/show/54971710.Philip_Huffman'

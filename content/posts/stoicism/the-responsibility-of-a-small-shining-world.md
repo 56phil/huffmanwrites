@@ -129,4 +129,4 @@ I always knew the universe was enormous. At least in the abstract.
  We only get one world.
  Let’s act like it.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

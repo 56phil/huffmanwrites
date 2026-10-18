@@ -80,4 +80,4 @@ Buy it [on Amazon](https://www.amazon.com/Life-Made-Whole-Strength-Resilience-eb
 
 Read more about the book: [*A Life Made Whole*](/books/life-made-whole/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

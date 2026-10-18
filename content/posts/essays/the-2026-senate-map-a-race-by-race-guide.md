@@ -194,4 +194,4 @@ This guide draws on race ratings and reporting from [Cook Political Report](http
 
 [^2]: NBC News. (2026, July 12). Sen. Lindsey Graham dies at 71 after "brief and sudden illness." https://www.nbcnews.com/politics/politics-news/sen-lindsey-graham-dies-71-brief-sudden-illness-rcna552722
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

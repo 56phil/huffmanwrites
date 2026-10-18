@@ -77,4 +77,4 @@ Coming June 16, 2026.
 
 Read more about the book: [*On Proportion*](/books/on-proportion/).
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

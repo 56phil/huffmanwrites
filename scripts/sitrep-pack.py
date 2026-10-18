@@ -79,7 +79,7 @@ WINDOW_DEFAULT = 2
 # default client and answer a named one; CNBC's quote service refuses a default
 # client and answers a browser one. The Federal Register, Treasury, and BLS
 # endpoints answer either, so they get the named one.
-SITREP_UA = "huffmanwrites-sitrep/1.0 (+https://huffmanwrites.org)"
+SITREP_UA = "huffmanwrites-sitrep/1.0 (+https://www.huffmanwrites.org)"
 BROWSER_UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"

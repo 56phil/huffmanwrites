@@ -62,4 +62,4 @@ The Office
 - Milliken, L. (2026, October 9). ["Policy primer: DHS proposes implementing extremely high fees to participate in OPT"](https://www.aip.org/news-and-analysis/policy/opt-fees-primer). American Institute of Physics.
 - Mitropoulos, A. A., & Gerrol, J. (2026, October 8). ["DHS proposes $70,000 fee for F-1 Optional Practical Training"](https://www.nixonpeabody.com/insights/alerts/2026/10/08/dhs-proposes-70000-fee-for-f1-optional-practical-training). Nixon Peabody LLP.
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

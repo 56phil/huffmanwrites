@@ -32,4 +32,4 @@ See you next Saturday. — Phil
 
 *Sourced from NPR's reporting on the East Wing demolition and the D.C. Circuit's August 7, 2026 ruling, PBS's reporting on the ballroom's cost estimates, CBS News's coverage of the National Trust for Historic Preservation's lawsuit, Spectrum News's coverage of Judge Richard Leon's March 31, 2026 injunction, CNBC's reporting on the Supreme Court appeal and current cost estimate, and ABC News's reporting on the administration's emergency stay request.*
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -58,4 +58,4 @@ lastmod: 2025-04-18T00:00:00Z
 
  **Monday’s feature:&nbsp;*The Rot Before the Collapse*&nbsp;was just the beginning.**
 
-*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*
+*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

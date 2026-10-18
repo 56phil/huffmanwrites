@@ -65,7 +65,7 @@ State Journal, Lawrence KS Times, Wichita Eagle, AP, local TV debate coverage.
   em-dash there is a typo). Count with `python3 scripts/check-emdashes.py --file <path>`.
 - **Footnotes:** numbered, named sources (publication + date), matching the
   Sept 6 report's style. Every load-bearing claim gets one.
-- **Attribution line:** `*PRH | [huffmanwrites.org](https://huffmanwrites.org) | © Philip Huffman*`
+- **Attribution line:** `*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*`
 - **Date guard:** publish date is September 13, 2026. Do NOT pre-date the
   file; Hugo's `buildFuture: false` silently skips future-dated content.
 - **Copyedit + fact check before commit:** spelling, grammar, punctuation,
