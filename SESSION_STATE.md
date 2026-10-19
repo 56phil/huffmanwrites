@@ -23,6 +23,16 @@ Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
 
 ---
 
+### Maintenance — October 19, 2026 — Featured *By What Standard?* on the Now page
+
+Philip: "Update the Now page so that bws is featured. Both pic and rtr are coming soon, probably late November."
+- **`content/now.md` rewritten around the book being written.** The page led with *Raise 'Em Right*'s finished manuscript and the foreword search; it now leads with *By What Standard?: The Office and the Record*, whose repo was scaffolded the same day (`~/Developer/LaTeX/AllMyBooks/bws`, private `56phil/bws` — front matter builds, no manuscript). The page states the argument as institutional rather than electoral and names the evidence it will use (court filings, executive orders, the Federal Register, the docket), which keeps it from claiming progress the manuscript does not have.
+- **A new "Coming in late November" section** names the two titles in production: *Profiles in Compliance: The Standard, and Who Pays for It* (`AllMyBooks/pic`, 16 chapters; it applies Kennedy's courage-or-compliance distinction to the people who choose compliance) and *Raise 'Em Right* (`AllMyBooks/rtr`, 18 chapters). Both are written as "expected", not scheduled, because Philip said "probably late November".
+- **The home page's Right Now card follows the teaser.** `layouts/index.html` renders `.Params.teaser` inside `.now-card`, so the two sentences were rewritten there too and the built home page was inspected rather than assumed.
+- **Verified:** `hugo --gc --minify` clean (486 pages); `public/now/index.html` carries the title, both sections and the "Updated October 2026" line; `public/index.html`'s now-card carries the new teaser; `check-emdashes.py --file content/now.md` 2 counted (limit 3), `check-prepositions.py --file` 0, `check-content-frontmatter.py --file` OK.
+
+---
+
 ### Maintenance — October 18, 2026 — Published the senate-report report (automated)
 
 Auto-published by `com.huffmanwrites.senate-report` after every gate passed.
