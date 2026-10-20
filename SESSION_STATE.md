@@ -12,6 +12,23 @@
 
 ---
 
+### Maintenance — October 20, 2026 — Repaired the two dead ABC citations that kept `weekly-integrity` red
+
+`weekly-integrity` had failed three runs running (October 12, 16, 19) with `links (online) exit 1`, and every other gate in those runs exited 0. Measured off `/Users/prh/Library/Logs/weekly-integrity.out.log`: the whole failure was **two DEAD links**, the same two in all three runs, both ABC News wire pages.
+
+| File | URL | Verdict at check |
+|---|---|---|
+| `content/posts/digests/stoic-saturday-the-deed-shows-itself.md` | `abcnews.com/International/wireStory/iran-received-official-us-response-…-136882729` | 404, confirmed on two fetches |
+| `content/posts/essays/senate-race-report-2026-10-04.md` (n. 44) | `abcnews.com/Politics/wireStory/trump-rallies-ohio-boost-jon-husted-…-136977581` | 404, confirmed on two fetches |
+
+- **The dead shape is `/wireStory/`, not the host.** The same log shows 45 redirects where `abcnews.go.com/…/story?id=…` still resolves onto `abcnews.com`, so ABC's older `/story` URLs are alive; the two `/wireStory` permalinks are gone, and `abcnews.go.com/wireStory/…` 404s as well. That is why these were the only two failures in 1,873 links.
+- **Neither claim was dropped; both citations were re-pointed at a copy that contains the cited wording.** A live syndication of each story exists (Arab News carries the Iran wire, Spectrum/PBS/Dayton Daily News carry the Ohio rally), but each is a *version*: the Ohio wire was updated during the day and the later copies no longer contain Trump's "They threw him out of the Senate once before. He's horrible," which is one of the three quotations the footnote is cited for. The archived snapshots were chosen instead because they preserve the outlet, the byline, the headline the link text names, and the full text as published.
+- **Verified by fetching, not by the archive's index.** `web.archive.org` served a rate-limit 429 on its availability API, so the snapshots came from the CDX API and were then fetched and searched: `20261001082330` for the Iran story (`presented the U.S. response to President Masoud Pezeshkian at a Cabinet meeting`), and `20261004005453` for the Ohio rally — the earlier two snapshots of the same URL lack the Trump quotation, which is the fixture-rotation hazard in miniature. Both reader-facing URLs return **200** with the ABC `<title>`. Both entries say in line that the live ABC page 404s, following the existing convention (`the-standard-and-the-man.md`: "Live Boston.com URL returns 404; archived copy cited").
+- **Verified after the edits.** `check-links.py --online --titles --file` on each: digest 19 links, 0 dead; report 68 links, 0 dead (its 5 TITLE MISMATCH lines are pre-existing heuristic notes, none on the repaired link). `check-quotes --file` OK on both (the report scans as 0 attributions, as it always has — a report footnote is not the `"quote" — Author` shape), `check-quote-names --online` OK (2 details), `check-report-frontmatter --file` OK, em-dash and preposition gates OK, and `hugo --gc --minify` builds clean. Both built pages carry the archived `href`.
+- **Observation, not acted on:** the local toolchain is `hugo v0.168.0+extended` while `.github/workflows/hugo.yml` pins `HUGO_VERSION` 0.167.0. The build is clean on both sides of that gap today, but CLAUDE.md's rule is that the two move together, so the pin is owed an update or the Homebrew formula a downgrade.
+
+---
+
 ### Maintenance — October 20, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.

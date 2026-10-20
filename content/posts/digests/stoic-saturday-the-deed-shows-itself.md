@@ -43,7 +43,7 @@ See you next Saturday. — Phil
 ## Sources
 
 - BBC News. (2026, September 26). [Trump rejects Iran deal to reopen Strait of Hormuz in seven days](https://www.bbc.com/news/articles/cqgmrr9ekr7ko).
-- ABC News. (2026, September 30). [Iran indicates it's received an official US response to its latest offer on ending the war](https://abcnews.com/International/wireStory/iran-received-official-us-response-latest-offer-ending-136882729).
+- ABC News. (2026, September 30). [Iran indicates it's received an official US response to its latest offer on ending the war](https://web.archive.org/web/20261001082330/https://abcnews.com/International/wireStory/iran-received-official-us-response-latest-offer-ending-136882729). Live ABC News URL returns 404 as of October 20, 2026; archived copy cited.
 - CGTN. (2026, October 1). [Iran receives US response to latest proposal as Gulf shipping recovers](https://news.cgtn.com/news/2026-10-01/Iran-receives-US-response-to-latest-proposal-as-Gulf-shipping-recovers-1QSH7AOWa4g/p.html).
 - The New York Times. (2026, October 2). [Oil flows are up, but Iran is still menacing the Strait of Hormuz](https://www.inquirer.com/news/nation-world/iran-strait-of-hormuz-oil-20261002.html).
 - UK Maritime Trade Operations. (2026, October 1). [Warning 147-26: tanker struck by unknown projectile in the Strait of Hormuz](https://www.ukmto.org/-/media/ukmto/products/2026101-ukmto_warning-147-26.pdf?rev=9623c601bb7642b494ea87bbbdb435d8).
