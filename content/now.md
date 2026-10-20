@@ -3,7 +3,7 @@ title: "Now"
 description: "What I'm working on right now."
 teaser: "**By What Standard?** is the book I'm writing now. *Profiles in Compliance* and *Raise 'Em Right* are expected in late November."
 date: 2026-07-25T00:00:00Z
-lastmod: 2026-10-19T00:00:00Z
+lastmod: 2026-10-20T00:00:00Z
 ---
 
 *This is a [now page](https://nownownow.com/about), inspired by Derek Sivers. Updated October 2026.*
@@ -16,7 +16,7 @@ My next book is *By What Standard?: The Office and the Record*. It asks a questi
 
 The argument is institutional, not electoral. The tools of the presidency have changed little across administrations. What changed is whether a standard exists that an office-holder can be held to, and whether it is stated out loud. The evidence is the primary record: court filings, executive orders, the Federal Register, the docket. I keep those documents close, because a claim about what a government did should be checkable against what the government wrote.
 
-The manuscript is at the beginning. I will post progress here as it goes.
+The first draft is complete. I will post progress here as revision goes.
 
 ## Coming in late November
 
