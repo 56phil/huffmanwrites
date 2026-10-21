@@ -12,6 +12,19 @@
 
 ---
 
+### Maintenance — October 21, 2026 — Published "The Ball in the Hand"
+
+Philip: "How is a vote like a ping pong ball?" then, of the four reasons given, "Publish an essay using the first reason" — neither counts until it is in play.
+- **Published** `content/posts/essays/the-ball-in-the-hand.md` — 1,774 words whole-file, `draft: false`, `featuredOnHome: true`, NN 132. The argument in one line: an opinion held is not a vote, a vote is a serve, and the serve rule (the palm, the height, the end line, the visibility) is what decides whether an intention becomes a point.
+- **The ping pong material is the sport's own law, quoted from the 2026 ITTF Statutes**: 2.6.1 (ball resting freely on the open palm of the stationary free hand), 2.6.2 (near vertical, at least 16cm, no spin), 2.6.4 (above the playing surface, behind the end line, not hidden), 2.6.6 (the server's responsibility to serve so the umpire can be satisfied of compliance), and 2.11.1 (11 points, win by two). **2.6.6 is the spine of the piece**: the burden of making the act legible sits with the person serving, which is the civic claim the essay argues.
+- **Civic evidence, each read off the fetched page.** The EAC's 2022 EAVS report: 112 million ballots counted, 46.8% of CVAP, about 170,000 mail ballots cured, 41 states permitting a cure. Ballotpedia's EAVS analysis: 1.5% of returned mail ballots rejected (about 550,000), Delaware at 13.2%, Idaho near zero. NPR on Virginia's 94th District in 2017: tied at 11,607 after a recount, settled by lot when a film canister came out of a bowl. The Florida Supreme Court's *Gore v. Harris* opinion for the 537-vote certified margin.
+- **No quotation has a translator problem, and none needed one.** All five quotations are the ITTF's own English text, linked to the Statutes PDF that contains them; the piece quotes no classical source.
+- **Two gate catches, both fixed.** `check-report-frontmatter --file` refused the draft before the hero pair existed (the intended order of operations). The first 16:9 crop cut the table's base off the frame; the crop was retaken from the bottom edge, keeping the base and discarding dark space at the top.
+- **Hero pair `132-the-ball-in-the-hand_{16x9,4x5}.webp`** via fal.ai FLUX.1 dev sync endpoint (`fal.run`), keychain `huffmanwrites-fal`. Concept: a table-tennis table carved from Parian marble in midnight-navy darkness, the net glowing amber-gold, one pale ball resting on the near half. Both frames text-free, no people, no paddles; 16:9 1536×1024 → 1365×768 (bottom-weighted crop), 4:5 1024×1280 → 896×1120, WebP q92. `hero_alt` rewritten after a vision check to describe the rendered art (the net reads as a lit mesh rather than a single line).
+- **Verified by running it.** `check-emdashes --file` 0; `check-prepositions --file` 0; `check-quotes --file` OK (0 attributions); `check-report-frontmatter --file` publishable; `check-links --file --online --titles` 5 ok, 0 dead, 0 blocked, 0 unverified, no title mismatch; corpus `check-content-frontmatter` (250 files), `--anchors-corpus` (241 posts), `check-hero-paths` (359), `check-gallery-pages` (143 items / 12 pages), `check-series-posts` (34 installments), `check-links --check` (3,388 links), both dash ratchets, `check-render-integrity` (583 pages) all OK; **414/414 gate tests**; clean `hugo --gc --minify` (**497 pages**). Served the built site and fetched the page (200), `_16x9.webp` (200, `image/webp`), `_4x5.webp` (200, `image/webp`); the built page carries the `<picture>` swap at 767px, `loading=eager fetchpriority=high`, the caption, six `<h2>` sections, and the closing attribution.
+
+---
+
 ### Maintenance — October 21, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
