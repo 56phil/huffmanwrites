@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — October 21, 2026 — Published a summary of *The Courage to Be Happy*
+
+Philip: "Publish a book summary for 'The Courage to be Happy' by Ichiro Kishimi."
+- **Published** `content/posts/summaries/the-courage-to-be-happy-summary.md`, 1377 words whole-file, `sort_key: "Kishimi, Ichiro - The Courage to Be Happy"`. No hero: summaries carry none, and the list template renders them without one.
+- **Grounded before writing, not recalled.** The Japanese original is 『幸せになる勇気』 (Diamond, February 2016), and Diamond's own page carries the full five-part table of contents that the summary's structure follows, including the chapters on self-reliance as the goal of education, the refusal of both praise and rebuke, the purpose of problem behavior, the three tasks, and love as a decision. The English edition is Atria, December 24, 2019, 304 pages, confirmed on the publisher's page; the US paperback ASIN was fetched and its `<title>` read before the buy link was written.
+- **No direct quotation, deliberately.** The book is a translation and the publisher's page credits no translator; the house rule requires a quotation from a translated work to name its translation and year, and a guessed name is the fabrication the rule exists to prevent. Every idea is therefore attributed in prose, and the piece ends without an epigraph rather than with an unverifiable one.
+- **Verified before the commit.** `check-content-frontmatter.py --file` OK; `check-emdashes.py --file` 0 counted (1 in the title's frontmatter, which the limit does not cover); `check-prepositions.py --file` 0; `check-quotes.py --file` 0 attributions; `check-links.py --file` 3 links, then `--online --titles` 2 OK and the Simon & Schuster page 403 to automated clients (verified by fetch in-session through the search path, and already linked across the corpus); `check-report-frontmatter.py --attribution-corpus` OK (236 posts) and `--anchors-corpus` OK (236 posts). `hugo --gc --minify` clean at 490 pages.
+- **Rendered page inspected, not assumed:** `public/posts/summaries/the-courage-to-be-happy-summary/index.html` carries the title, the description meta, the six section headings, the Amazon href and the closing attribution; the summary hub lists it first under "Recently updated".
+
+---
+
 ### Maintenance — October 20, 2026 — Published the chiefs-weekly-report report (automated)
 
 Auto-published by `com.huffmanwrites.chiefs-weekly-report` after every gate passed.
