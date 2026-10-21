@@ -23,6 +23,18 @@ Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
 
 ---
 
+### Maintenance — October 21, 2026 — Published a summary of *The Courage to Be Disliked*
+
+Philip: "Publish a book summary for 'The Courage to be Disliked' by Ichiro Kishimi, the predecessor to the previous book."
+- **Published** `content/posts/summaries/the-courage-to-be-disliked-summary.md`, 1398 words whole-file, `sort_key: "Kishimi, Ichiro - The Courage to Be Disliked"` (shelves immediately before the sequel's entry on page 5). It cross-links `/posts/summaries/the-courage-to-be-happy-summary/`, which names this book as its predecessor, so the pair now points both ways.
+- **Structure came from the publisher's contents, not from memory.** Diamond's page for 『嫌われる勇気』 (December 2013, 296 pages) carries the five-night table of contents, and the summary's five core arguments follow those nights: deny trauma, all problems are interpersonal, discard other people's tasks, where the center of the world is, live earnestly in the here and now. The English edition is Atria, May 8, 2018, 288 pages, confirmed on the publisher's page; Stanford's catalogue record confirms the Japanese original it translates.
+- **Again no direct quotation.** The publisher's reading-group guide supplied several exact renderings, but no source consulted credits the English translator, and a quotation from a translated work must name its translation. Ideas are attributed in prose and the piece carries no epigraph.
+- **The buy link is the publisher, not Amazon.** Amazon answered 500 to every fetch of `/dp/1501197277` and `/dp/1982100397` across three attempts, so there was no product page to verify against; a constructed buy URL is the failure the URL rule exists to prevent. `simonandschuster.com/books/The-Courage-to-Be-Disliked/Ichiro-Kishimi/9781501197277` was read through the search path and carries the title, subtitle, ISBN, publication date and page count, so it is both the citation and the purchase link.
+- **Verified before the commit.** `check-content-frontmatter.py --file` OK; `check-emdashes.py --file` 0 counted (1 in the title's frontmatter); `check-prepositions.py --file` 0; `check-quotes.py --file` 0 attributions; `check-links.py --file --online --titles` 1 OK (Diamond), 1 BLOCKED (Simon & Schuster refuses automated clients, 403), 0 dead; `hugo --gc --minify` clean at 491 pages.
+- **Rendered page inspected:** title, description meta, all five section headings, the buy link, the closing attribution and the cross-link to the sequel are present in `public/posts/summaries/the-courage-to-be-disliked-summary/index.html`; the hub's recently-updated strip now leads with the two Kishimi titles.
+
+---
+
 ### Maintenance — October 21, 2026 — Published a summary of *The Courage to Be Happy*
 
 Philip: "Publish a book summary for 'The Courage to be Happy' by Ichiro Kishimi."
