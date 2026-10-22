@@ -130,7 +130,7 @@ A 4-0 start has bought Kansas City two things: a two-week rest at the moment its
 - [Chiefs WR Thornton has dislocated ankle, sources say](https://www.espn.com/nfl/story/_/id/50104571/chiefs-rule-rashee-rice-doubtful-return-injury), ESPN, October 5, 2026.
 - [Why a Tyreek Hill-Chiefs reunion makes so much sense](https://www.espn.com/nfl/story/_/id/50110299/tyreek-hill-chiefs-reunion-help), Nate Taylor, ESPN, October 5, 2026.
 - [Tyreek Hill could sign with new team soon, agent says](https://www.espn.com/nfl/story/_/id/50109680/tyreek-hill-expected-sign-team-soon-agent-says), ESPN, October 5, 2026.
-- [Chiefs' early bye timely after Rashee Rice and Tyquan Thornton hurt. Could Tyreek Hill be an answer?](https://abcnews.com/Politics/wireStory/chiefs-early-bye-timely-after-rashee-rice-tyquan-137008310), Dave Skretta, the Associated Press, October 5, 2026.
+- [Chiefs' early bye timely after Rashee Rice and Tyquan Thornton hurt. Could Tyreek Hill be an answer?](https://web.archive.org/web/20261012164907/https://abcnews.com/Politics/wireStory/chiefs-early-bye-timely-after-rashee-rice-tyquan-137008310), Dave Skretta, the Associated Press, October 5, 2026 (the live ABC News URL returns 404 as of October 22, 2026; archived copy cited).
 - [Silver: Rice (hammy) could be out several weeks](https://www.nbcsports.com/fantasy/football/player-news/2026-10-04/silver-rice-hammy-could-be-out-several-weeks), Nic Bodiford, NBC Sports, October 4, 2026.
 - [2026 NFL Power Rankings: How all 32 teams stack up for Week 5](https://www.espn.com/nfl/story/_/id/50109845/nfl-power-rankings-week-5-teams-first-month-recap), ESPN, October 6, 2026.
 - [Chargers vs. Chiefs (Oct 18, 2026)](https://www.espn.com/nfl/game/_/gameId/401873006/chargers-chiefs), ESPN, October 2026.

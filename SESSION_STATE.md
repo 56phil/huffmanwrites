@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 22, 2026 — Repaired a third dead ABC `/wireStory` citation, in the Chiefs report
+
+The October 20 repair closed the two links `weekly-integrity` had been failing on. It did not close the shape: `content/posts/sports/chiefs-report-2026-10-06.md` cited a third `abcnews.com/Politics/wireStory/…` permalink, for Dave Skretta's AP story on the Chiefs' Week 5 bye.
+
+- **Found by sweeping the shape, not by a failing gate.** `grep` over `content/` for `abcnews\.com/(International|Politics)/wireStory` returned three hits — the two already repaired (inside `web.archive.org` URLs, so they no longer resolve to ABC) and this one, still pointing at the live host. The October 19 `weekly-integrity` run never named it: its log contains no occurrence of `137008310`, and the two DEAD entries it did report were the two that were repaired the next day. So this link was healthy on October 19 and 404'd between then and now — fresh rot in a five-day window, not a gate that missed it. `/wireStory/` remains the dead shape; ABC's older `/story?id=…` permalinks still resolve.
+- **Confirmed dead before touching it.** `curl -L` on the live URL returns **404**; `check-links.py --file` on a one-line probe file classified it `DEAD — HTTP 404 (confirmed on two fetches)`, which is the checker's own verdict rather than a guess.
+- **Re-pointed at an archived copy, after reading the copy.** The Wayback availability API returned one snapshot, `20261012164907`; the fetch of that snapshot returns **200** and its `<title>` reads "Chiefs' early bye timely after Rashee Rice and Tyquan Thornton hurt. Could Tyreek Hill be an answer? - ABC News", matching the citation's link text. The entry keeps the headline, the byline and the date, links the archive, and says in line that the live ABC URL 404s as of today — the convention the other two repairs set.
+- **Verified after the edit.** `check-links.py --file --online --titles` on the report: **23 ok, 0 dead, 0 blocked, 0 unverified**, no title mismatch. `check-quotes --file` OK (2 attributions), `check-prepositions --file` 0, `check-emdashes --file` 1 (the pre-existing one at L56), `check-hero-paths` OK, `hugo --gc --minify` clean.
+- **`weekly-integrity` should be green on its next run** (Friday 21:00): the October 19 failure was these link verdicts alone — quotes, quote-names, secrets (drift and liveness) and vault currency all exited 0 in that run.
+
+---
+
 ### Maintenance — October 21, 2026 — Published "The Ball in the Hand"
 
 Philip: "How is a vote like a ping pong ball?" then, of the four reasons given, "Publish an essay using the first reason" — neither counts until it is in play.
