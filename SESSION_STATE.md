@@ -12,6 +12,21 @@
 
 ---
 
+### Maintenance — October 23, 2026 — Published a review of *The Grand Design*
+
+Philip: "Yes, do a review of The Grand Design." (Follows the *A Brief History of Time* summary the same day; he asked for the sequel after reading that one.)
+- **Published** `content/posts/summaries/the-grand-design-summary.md` — 2,699 words. `sort_key: "Hawking, Stephen - The Grand Design"`, which shelves it directly after *A Brief History of Time* on the hub: page 2 now ends with the 1988 book and page 3 begins with this one. The body links the two pieces to each other, so the pair reads as a sequence.
+- **The argument:** the book converts why-questions into how-answers and then reports the why-questions as answered. Chapter 1 poses three questions that no measurement can settle; chapter 2 defines a good model as one that agrees with observation and makes falsifiable predictions; chapter 8 announces the questions are answered, with a mechanism. The review's spine is that the book published its own test and declined to take it, since M-theory fails criterion four by the authors' own description ("a whole family of different theories").
+- **The second find is the missing clause.** The sentence every newspaper printed is "Because there is a law **such as** gravity, the universe can and will create itself from nothing." The book reads "a law **like** gravity … in the manner described in Chapter 6." The trailing clause is what locates the claim in quantum cosmology instead of metaphysics, and every popular reproduction drops it, including Wikipedia's. Quote the book, not the extract.
+- **Model-dependent realism is treated as the book's real contribution and as philosophy**, with Callender's *New Scientist* line doing the work: the authors "unwittingly develop a theory familiar to philosophers since the 1980s, namely 'perspectivalism'." The review concedes the idea is genuinely useful and still shows it undermining the conclusion, because under the book's own decision rule ("pointless to ask whether a model is real") an untestable model is not yet knowledge.
+- **Two facts that correct the common telling:** this was not Hawking's first co-authored book (*A Briefer History of Time*, 2005, with the same Mlodinow, and the *George* books with Lucy Hawking precede it); and the 2010 "10 million copies" figure that circulates belongs to *A Brief History of Time*. No fetchable sales figure for this book exists, so none is printed.
+- **My own false lead, recorded so it is not repeated:** I believed David Albert had reviewed *The Grand Design* in the *New York Times* in September 2010. He did not. "On the Origin of Everything" is his 2012 review of Krauss's *A Universe From Nothing*. The NYT's 2010 review was Dwight Garner's, which is paywalled at the canonical URL and could not be read at source, so Garner is not quoted; the review leans on Woit, Callender, Norris, McHenry, and the *Physics World* blog instead. **Nature's Turner review could not be fetched on the day (the DOI serves a landing page, not the body), so its excellent lines are not used.**
+- **Also dropped rather than softened:** Roger Penrose's *Financial Times* review ("no observational support whatever") is paywalled and could not be tested against the FT text; the *Economist* review was available only as a third-party PDF capture; the Telegraph page returns HTTP 402. A quotation whose wording cannot be linked does not appear.
+- **Gates:** `check-content-frontmatter.py` (258 files), `check-prepositions.py` (1 rewritten), `check-emdashes.py` (1 counted of 3 allowed), `check-quotes.py`, `check-links.py --check` and `--online --titles --file` (9 links, 0 dead; two title-mismatch warnings on the CNN transcript and the PW list page, both of which have no usable `<title>` but were verified by content), clean `hugo --gc --minify`, `test_gates.py` (414 tests, OK).
+- **Rendered and looked at:** the 8-row chapter table fits the content column at 1280 px; the three why-questions were first written as consecutive `>` lines and rendered as one paragraph, contradicting the surrounding sentence, so they were split with blank quote lines and re-checked in Chromium as three separate lines.
+
+---
+
 ### Maintenance — October 23, 2026 — Published a summary of *A Brief History of Time*
 
 Philip: "Do a book summary for A Brief History of Time by Hawking."
