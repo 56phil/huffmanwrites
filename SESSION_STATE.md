@@ -2890,3 +2890,18 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 2026-05-27 (Added Goodreads + LinkedIn social icons)
 2026-05-26 (High-contrast / neurodivergent theme toggle)
 2026-05-23 (Sent newsletter: What We Owe the Fallen)
+
+### Maintenance — October 23, 2026 — Prepared and published Stoic Saturday "The Deed Unannounced"
+
+- **Prepared and published** `content/posts/digests/stoic-saturday-the-deed-unannounced.md` at 16:00 CT on 2026-10-23, ahead of the 2026-10-24 06:00 CT send. The frontmatter date is `2026-10-24T06:00:00-05:00`, so Hugo's `buildFuture: false` holds the page until its hour and the ~06:04 SITREP push releases it, the same six-minute gap after the campaign that every 06:00 digest has carried.
+- **The step the draft left for its send morning was performed a day early**, because the item it needed existed: Friday's `sitrep-2026-10-23` published at 06:03 and the letter now carries it as *Friday, three kinds of act* (the third-term claim, the OCC's GENIUS Act final rule effective January 18, 2027, and the Justice and Education notice withdrawing reliance on seven joint guidance documents), with its own `## Sources` line and the two closing ranges corrected from *through 22* to *through 23*. The footer comment that named the step was removed; a published post ends with the attribution line.
+- **Hero pair 134-deed-unannounced in both homes** (`assets/img/articles/` and `static/img/articles/`), generated 2026-10-22 and committed with the page.
+- **Gates, run by `scripts/digest-prep.sh` and recorded from their exit codes:**
+  - `emdashes`: ok
+  - `prepositions`: ok
+  - `quotes`: ok
+  - `links`: ok
+  - `heropaths`: ok
+  - `build-prod`: ok
+  - `build-future`: ok
+- **The SendFox campaign was deliberately not created.** The send is the step a human reviews. Per `skills/weekly-digest.md`, a campaign *scheduled* through the API has no human at send time, so it is set to **06:15 CT (11:15:00 UTC)** rather than 06:00, an hour past the ~06:06 the page goes live, and the page-resolves check cannot substitute for that margin at scheduling time. Remaining after review: create the campaign for `2026-10-24 11:15:00` UTC, then after it fires archive `pending/stoic-saturday-the-deed-unannounced.md` to `pending/archive/2026-10-24-Stoic-Saturday.md` and mirror the published page to SimpleBrain.
