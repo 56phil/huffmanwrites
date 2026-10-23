@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 23, 2026 — Published "The Life and Times of Epictetus"
+
+Philip: "Publish a biographical essay about Epictitus" — biographical, in the same shape as the Seneca piece two days earlier, with the body and the legal status kept in view: a slave, a lame man, an exile, and a man who owned nothing but a clay lamp.
+- **Published** `content/posts/essays/the-life-and-times-of-epictetus.md` — 2,732 words whole-file, `draft: false`, `featuredOnHome: true`, hero pair `135-epictetus` generated with fal.ai FLUX.1 dev and wired into `data/gallery.yml`. `draft: false` plus the four hero fields is what `check-report-frontmatter.py` requires of a publish; the pair also exists byte-identical under `assets/img/articles/` and `static/img/articles/`.
+- **Eight quotations, every one verified as a substring of the page it links**, by a direct fetch-and-normalize sweep after `check-quotes.py --online` reported `0 attributions` — the documented blind spot: that gate audits epigraphs (`"quote" — Author`) and blockquote-with-attribution is not that shape, so it reads this article as zero quotations and verifies nothing. Six are W. A. Oldfather's Loeb (*Manual* §1, §8, §9, §43; *Discourses* 1.1, 4.1), one is Arrian's preface in Higginson's 1890 revision, one is Lucian's *Ignorant Book-Collector* §13 in Harmon's 1921 Loeb (the three thousand drachmas paid for Epictetus's earthenware lamp). The inline quotations from the Stanford Encyclopedia were checked the same way.
+- **The disagreement between the sources is stated, not smoothed.** SEP puts the birth in the 50s and the death around 135, IEP says about 55, World History Encyclopedia says 130; SEP dates the expulsion from Rome to 89 under Domitian's edict (marking the inference) where the common chronology says 93. The essay gives both where both exist.
+- **The broken-leg story is sourced properly.** It is not a late legend: Celsus, quoted by Origen (*Contra Celsum* 7.53), reports the master twisting the leg, and George Long in 1877 repeats it while preferring Simplicius's testimony that the lameness was early. SEP's own line is that the limp is "attributed variously to arthritis or to physical abuse during his time of slavery."
+- **The essay's argument is the sources' own, not an addition:** the *Manual* is an abridgment, and SEP is severe about it ("of little independent value for the understanding of Epictetus's thought"), so the piece tells the reader to start with the *Discourses*. Marcus Aurelius was never his pupil and considered himself a follower.
+- **Gates:** `check-content-frontmatter.py`, `check-hero-paths.py`, `check-emdashes.py` (1 counted), `check-prepositions.py` (3 stranded prepositions found and rewritten), `check-links.py --online --titles --file` (10 links, 0 dead, 0 title mismatches after the Arrian anchor was widened to carry the letter's own title), and `check-gallery-pages.py`.
+
+---
+
 ### Maintenance — October 23, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
