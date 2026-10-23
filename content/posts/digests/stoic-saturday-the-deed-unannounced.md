@@ -65,6 +65,10 @@ So the question this week leaves is not what to say about the country. It is wha
 
 **Friday, three kinds of act.** [SITREP: October 23](https://www.huffmanwrites.org/posts/sitrep/sitrep-2026-10-23/) reports the President telling a rally in Sioux City that he has the right to seek a third term, a claim the two-term limit does not allow and one no market prices. It reports the other kind of act the same morning: the Comptroller of the Currency's final rule implementing the GENIUS Act, effective January 18, 2027, which begins on a date because a signed document says so. And it reports a notice from the Justice and Education departments withdrawing reliance on seven joint guidance documents, which ends an obligation by declaration.
 
+**The lamp and the shackle.** [The Life and Times of Epictetus](https://www.huffmanwrites.org/posts/essays/the-life-and-times-of-epictetus/), published Friday morning, is the third of these lives and the one for which the least evidence survives, because he wrote nothing at all. Everything we have of him comes through Arrian, a student at Nicopolis who took notes during the lectures and said he set them down "in the very same words," and what those notes record is a slave of Nero's household, lame for life, expelled from Rome with the other philosophers, insisting that "he is free who lives as he wills." That sentence costs nothing to say in a lecture hall and everything to say while limping, which is the part of the piece that stays with me.
+
+**The lecture that was cancelled.** [The Life and Times of Ryan Holiday](https://www.huffmanwrites.org/posts/essays/the-life-and-times-of-ryan-holiday/), published an hour later, is the fourth and the only one still in progress. It opens at the Naval Academy in April 2025, where he was asked to cut one passage from a talk on courage because the passage mentioned 381 books the academy had pulled from its library shelves; he declined, the lecture was cancelled, and he delivered it to a camera instead. The rest of the essay is the part that answers for the refusal: seven years transcribing interviews for Robert Greene, a marketing career built on tricks he then described in print, and a book that sold three thousand copies in its first week before a locker room picked it up.
+
 **The weekly reports**
 
 The **Senate Race Report** published its October 18 edition on Sunday, and its central number is money. The third-quarter filings showed Democratic candidates raising $253 million to the Republicans' $56 million across the fifteen races NBC News rates competitive, and winning that race in fourteen of them; Sabato's Crystal Ball now has 49 seats at least leaning Democratic, 46 at least leaning Republican, and five toss-ups in Kansas, Iowa, Maine, Ohio and Texas, where Republicans need four and Democrats need two. The next edition comes at 07:00 Sunday, the second-to-last of the season.
@@ -85,10 +89,12 @@ Pick one thing this week that needs doing, and do it where nobody can see. Verif
 
 See you next Saturday. — Phil
 
-*Sourced from this site's own reporting this week: the essays "The Life and Times of Marcus Aurelius," "The Life and Times of Seneca," "Feeling Behind," and "The Ball in the Hand"; the summaries of "The Courage to Be Disliked" and "The Courage to Be Happy"; "A Fee of Seventy Thousand Dollars"; the Docket Report of October 17, the Senate Race Report of October 18, the Chiefs Report of October 20, and the SITREP editions of October 18 through 23; with AIPAC's language drawn from the Jewish Telegraphic Agency.*
+*Sourced from this site's own reporting this week: the essays "The Life and Times of Marcus Aurelius," "The Life and Times of Seneca," "The Life and Times of Epictetus," "The Life and Times of Ryan Holiday," "Feeling Behind," and "The Ball in the Hand"; the summaries of "The Courage to Be Disliked" and "The Courage to Be Happy"; "A Fee of Seventy Thousand Dollars"; the Docket Report of October 17, the Senate Race Report of October 18, the Chiefs Report of October 20, and the SITREP editions of October 18 through 23; with AIPAC's language drawn from the Jewish Telegraphic Agency.*
 
 ## Sources
 
+- Huffman, Philip. (2026, October 23). [*The Life and Times of Ryan Holiday*](https://www.huffmanwrites.org/posts/essays/the-life-and-times-of-ryan-holiday/).
+- Huffman, Philip. (2026, October 23). [*The Life and Times of Epictetus*](https://www.huffmanwrites.org/posts/essays/the-life-and-times-of-epictetus/).
 - Huffman, Philip. (2026, October 22). [*The Life and Times of Seneca*](https://www.huffmanwrites.org/posts/essays/the-life-and-times-of-seneca/).
 - Huffman, Philip. (2026, October 21). [*The Life and Times of Marcus Aurelius*](https://www.huffmanwrites.org/posts/essays/the-life-and-times-of-marcus-aurelius/).
 - Huffman, Philip. (2026, October 21). [*The Ball in the Hand*](https://www.huffmanwrites.org/posts/essays/the-ball-in-the-hand/).
