@@ -70,6 +70,7 @@ cqn = load("check-quote-names")
 ccf = load("check-content-frontmatter")
 cvc = load("check-vault-currency")
 cfk = load("check-forks")
+de = load("digest-email")
 
 EM = "\u2014"
 
@@ -5579,6 +5580,35 @@ class TestForkSyncJob(unittest.TestCase):
         # fal.ai and SendFox.
         self.assertNotIn("GITHUB_TOKEN", self.runner)
         self.assertNotIn(".gh_token", self.runner)
+
+
+# --------------------------------------------------------------------------
+# Email renderer: the masthead every letter carries from 2026-10-31.
+# --------------------------------------------------------------------------
+class TestDigestEmail(unittest.TestCase):
+    def test_the_date_is_read_off_the_draft_not_the_clock(self):
+        # A draft is prepared a day early and embargoed; stamping "today" would
+        # put the wrong date under the masthead of every scheduled letter.
+        self.assertEqual(de.send_date({"date": "2026-10-31T06:00:00-05:00"}),
+                         "October 31, 2026")
+
+    def test_the_masthead_names_the_series_and_carries_the_monogram(self):
+        head = de.masthead("October 31, 2026")
+        self.assertIn("prh-monogram.png", head)
+        self.assertIn("Stoic Saturday", head)
+        self.assertIn("October 31, 2026", head)
+        # The apex answers 301. An email client renders the <img> from the URL
+        # it is given and an image behind a redirect can fail to load, so the
+        # monogram has to be addressed at the host that serves it.
+        self.assertIn("https://www.huffmanwrites.org/", head)
+        self.assertNotIn("https://huffmanwrites.org/", head)
+
+    def test_frontmatter_is_split_from_a_body_that_may_contain_rules(self):
+        text = ('---\ntitle: "Stoic Saturday: X"\ndate: 2026-10-31T06:00:00-05:00\n---\n'
+                "Body line.\n\n---\n\nAfter a horizontal rule.\n")
+        fields, body = de.frontmatter(text)
+        self.assertEqual(fields["title"], "Stoic Saturday: X")
+        self.assertIn("After a horizontal rule.", body)
 
 
 if __name__ == "__main__":

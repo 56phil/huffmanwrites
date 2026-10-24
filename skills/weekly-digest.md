@@ -165,6 +165,17 @@ These rules are enforced, and each names its gate.
   `scripts/check-secrets.py` fails if either returns.
 - **Send:** the `pending/` file is the newsletter body and the page source at once; send it
   through the SendFox API, whose `form-action` the site CSP whitelists.
+- **The email body is rendered by `scripts/digest-email.py`, not by hand.** It converts the
+  draft with Pandoc and prepends the masthead: the PRH monogram
+  (`static/img/prh-monogram.png`, source `prh-monogram.svg` beside it), the words
+  **Stoic Saturday** letterspaced, and the send date read off the draft's own `date`
+  field. Then the body, then the site/unsubscribe footer.
+  `python3 scripts/digest-email.py pending/<draft>.md --out /tmp/letter.html`.
+  The monogram is served from `www.` because an email client will not follow the apex 301,
+  so the image has to be deployed before a campaign is created from it.
+  Nothing else is styled: the letter is edited in the draft, not in a template. The masthead
+  was added 2026-10-24 at Philip's request, as an increment of one — a later typographic pass
+  is a separate change, not something to fold into this one.
 - **Before you send, confirm the page resolves.** Fetch
   `https://www.huffmanwrites.org/posts/digests/<slug>/` and require a 200 whose `<title>` carries
   the digest's title. The page is live by ~06:06 CT, not 06:00 (see *Cadence* above); sending
