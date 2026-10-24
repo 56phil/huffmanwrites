@@ -257,7 +257,7 @@ ENTRY="$REPO/SESSION_STATE.md"
   echo ""
   echo "### Maintenance — October 23, 2026 — Prepared and published Stoic Saturday \"$TITLE\""
   echo ""
-  echo "- **Prepared and published** \`content/posts/digests/$SLUG.md\` at 16:00 CT on 2026-10-23, ahead of the 2026-10-24 06:00 CT send. The frontmatter date is \`2026-10-24T06:00:00-05:00\`, so Hugo's \`buildFuture: false\` holds the page until its hour and the ~06:04 SITREP push releases it, the same six-minute gap after the campaign that every 06:00 digest has carried."
+  echo "- **Prepared and published** \`content/posts/digests/$SLUG.md\` at 16:00 CT on 2026-10-23, ahead of the 2026-10-24 06:15 CT send. The frontmatter date is \`2026-10-24T06:00:00-05:00\`, so Hugo's \`buildFuture: false\` holds the page until its hour and the ~06:04 SITREP push releases it; the campaign fires at 06:15, past the ~06:06 at which the page is served."
   echo "- **The step the draft left for its send morning was performed a day early**, because the item it needed existed: Friday's \`sitrep-2026-10-23\` published at 06:03 and the letter now carries it as *Friday, three kinds of act* (the third-term claim, the OCC's GENIUS Act final rule effective January 18, 2027, and the Justice and Education notice withdrawing reliance on seven joint guidance documents), with its own \`## Sources\` line and the two closing ranges corrected from *through 22* to *through 23*. The footer comment that named the step was removed; a published post ends with the attribution line."
   echo "- **Hero pair ${PLATE_PREFIX:-NN-none} in both homes** (\`assets/img/articles/\` and \`static/img/articles/\`), generated 2026-10-22 and committed with the page."
   echo "- **Gates, run by \`scripts/digest-prep.sh\` and recorded from their exit codes:**"
@@ -289,6 +289,6 @@ log "push verified — origin/main is $LOCAL_SHA"
 # Delivery is not this run's check: the page is future-dated and is served only
 # after its hour. The publishing tail's verify step does not apply here; what
 # applies is the note above, which the SESSION_STATE entry carries.
-log "--- digest-prep done. Remaining: create the SendFox campaign for 2026-10-24 11:00:00 UTC after review."
+log "--- digest-prep done. Remaining: create the SendFox campaign for 2026-10-24 11:15:00 UTC after review."
 remove_job
 exit 0

@@ -211,6 +211,25 @@ class TestQuoteRules(unittest.TestCase):
         # difference is a false accusation of fabrication.
         self.assertEqual(cq.fold("enemy\u2019s"), cq.fold("enemy's"))
 
+    def test_a_word_broken_at_a_line_break_is_rejoined(self):
+        # A print PDF hyphenates across lines. Ryan Holiday's profile preview
+        # sets "everything" as "every‑ thing" (U+2011 plus a space) and
+        # "step-by-step" with soft hyphens; the citation is verbatim either way.
+        self.assertEqual(cq.fold("happiness and every\u2011 thing worthwhile"),
+                         cq.fold("happiness and everything worthwhile"))
+        self.assertEqual(cq.fold("through hacks or short\u00adcuts"),
+                         cq.fold("through hacks or shortcuts"))
+        self.assertEqual(cq.fold("simple step\u2011\u00adby\u2011\u00adstep formulas"),
+                         cq.fold("simple step-by-step formulas"))
+
+    def test_a_space_beside_a_dash_is_not_a_word_difference(self):
+        # The Hawking citation reads "reason—for"; the archive text sets
+        # "reason —for". Space on one side of the dash is typesetting.
+        self.assertEqual(cq.fold("triumph of human reason —for then"),
+                         cq.fold("triumph of human reason—for then"))
+        self.assertEqual(cq.fold("the years 1903 \u2013 1977"),
+                         cq.fold("the years 1903\u20131977"))
+
     def test_sentence_after_a_dash_is_not_an_attribution(self):
         # Regression: this exact shape is ordinary prose, and a gate that
         # audits it fails builds for writing correctly.

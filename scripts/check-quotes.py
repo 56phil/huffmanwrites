@@ -112,8 +112,30 @@ def normalize(text: str) -> str:
     Zero-width characters (U+200B &c.) are stripped for the same reason: MediaWiki
     emits `&#8203;` as a layout crutch, and a zero-width codepoint sitting inside
     a quotation splits it for a substring test while being invisible on screen.
+
+    Two further shapes are the same class — typography, not wording — and each
+    shipped as a false accusation before being healed here:
+      - **hyphenation at a line break.** A print PDF breaks `everything` across
+        lines as `every‑ thing` (U+2011 plus a space) or `every\xadthing` (a soft
+        hyphen). Neither is a difference in the words, and the Holiday quotation
+        in `the-stoic-virtues-summary.md` is verbatim in its cited profile PDF
+        while failing the substring test on exactly this;
+      - **spacing beside a dash.** Some sources set `reason —for` where the site
+        sets `reason—for`. A space on one side of an em or en dash is typesetting
+        and not wording; the Hawking quotation in
+        `a-brief-history-of-time-summary.md` is verbatim in its cited text and
+        failed on it.
     """
-    return re.sub(r"[\u200b-\u200f\ufeff]", "", re.sub(r"\s+", " ", text)).strip()
+    text = (text.replace("\u00ad", "")                      # soft hyphen
+                .replace("\u2010", "-").replace("\u2011", "-"))  # hyphen variants
+    text = re.sub(r"[\u200b-\u200f\ufeff]", "", text)
+    text = re.sub(r"\s+", " ", text)
+    # Rejoin a word broken at a line break. The lookbehind/lookahead keep this
+    # from touching a dash that is not hyphenation ("—" is handled below).
+    text = re.sub(r"(?<=[A-Za-z])-\s+(?=[A-Za-z])", "", text)
+    # Drop whitespace on either side of an em or en dash.
+    text = re.sub(r"\s*([\u2014\u2013])\s*", r"\1", text)
+    return text.strip()
 
 
 # Tags that end a block. Replacing these with a SPACE (rather than with nothing)
