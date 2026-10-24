@@ -4,9 +4,11 @@
 #
 # Philip, 2026-09-19: "I must keep an eye on this story." (Kennedy Center.)
 # Philip, 2026-09-24: "I want to start following the docket ... regarding the
-# Epstein files." Both dockets — Beatty v. Trump (No. 1:25-cv-04480) and
-# Phang v. Blanche (No. 1:26-cv-01417) — move in day-scale bursts and the
-# coverage of each is unreliable, so watch the dockets directly, not the news.
+# Epstein files." The watched dockets — Beatty v. Trump (No. 1:25-cv-04480),
+# Phang v. Blanche (No. 1:26-cv-01417) and MSW Media v. DOJ (No. 1:25-cv-02518,
+# added 2026-10-24 for Gill's training-video FOIA suit), plus the Phang appeal
+# in the D.C. Circuit — move in day-scale bursts and the coverage of each is
+# unreliable, so watch the dockets directly, not the news.
 # The checker owns the case registry; this runner stays case-agnostic.
 #
 # Runs twice a day because filings cluster in the late afternoon and early

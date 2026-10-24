@@ -882,15 +882,33 @@ class TestDocketRules(unittest.TestCase):
                     self.assertTrue(what.strip())
 
     def test_the_registry_covers_the_cases_the_site_follows(self):
-        # The two district dockets, plus the D.C. Circuit appeal. The circuit
+        # Three district dockets, plus the D.C. Circuit appeal. The circuit
         # docket is the one that was missing: the stay ruling on the
         # foreign-language obligation — the nearest-term event that can change
         # the case — issues from the circuit, and the feed URLs show why it
         # belongs in the same registry (the circuit feed also titles its
         # entries "Entry #<id>", so it parses without touching the parser).
-        self.assertEqual(set(cd.CASES), {"beatty", "phang", "cadc"})
+        # MSW Media is the second Epstein-files case, added on Philip's request
+        # of 2026-10-24; its caption is Gill's company against DOJ, because the
+        # name a person gives in conversation is not the name on the docket.
+        self.assertEqual(set(cd.CASES), {"beatty", "phang", "msw", "cadc"})
         self.assertEqual(cd.CASES["phang"]["docket_id"], "73246595")
+        self.assertEqual(cd.CASES["msw"]["docket_id"], "70999320")
         self.assertEqual(cd.CASES["cadc"]["docket_id"], "74696600")
+
+    def test_the_msw_case_is_the_training_video_suit_not_a_neighbouring_one(self):
+        # CourtListener holds half a dozen MSW Media suits. The wrong docket
+        # would read as a live watch and report filings from a different case,
+        # so pin the number, the judge and the subject, and pin that the FOIA
+        # merits motion is IN the known map: a report that prints a bare
+        # document number for the filing this watch exists to follow says
+        # nothing a reader can use.
+        msw = cd.CASES["msw"]
+        self.assertIn("1:25-cv-02518", msw["case"])
+        self.assertEqual(msw["docket_id"], "70999320")
+        self.assertTrue(any("training video" in v.lower() or "SUMMARY JUDGMENT" in v
+                            for v in msw["known"].values()))
+        self.assertTrue(any("Howell" in v for v in msw["known"].values()))
 
     def test_the_circuit_case_watches_the_consolidated_lead_appeal(self):
         # 26-5334 was consolidated into 26-5299, so the clerk's order routed

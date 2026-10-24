@@ -6,13 +6,23 @@ Philip, 2026-09-24: "I want to start following the docket for Katie Fang's
 suite against AG Tod Blanch regarding the Epstein files." — the names as given
 were wrong; the case is *Phang v. Blanche*, No. 1:26-cv-01417 (EGS).
 
-Two cases are watched, from the same primitive and the same report:
+Philip, 2026-10-24: "Alison Gill has a suite against the FBI seeking information
+about their handling of the Epstein files. I want you add it to your docket
+watch." — as with Phang, the name as given is not the caption. The plaintiff is
+*MSW Media, Inc.*, Gill's company, not Gill; the defendant is the Department of
+Justice, and the FBI is the component that holds the records. *MSW Media, Inc. v.
+Department of Justice*, No. 1:25-cv-02518 (BAH), D.D.C., Judge Beryl A. Howell.
+
+Four dockets are watched, from the same primitive and the same report:
 
   beatty  — Beatty v. Trump, No. 1:25-cv-04480 (CRC), D.D.C. (Kennedy Center)
   phang   — Phang v. Blanche, No. 1:26-cv-01417 (EGS), D.D.C. (Epstein Files
             Transparency Act)
+  msw     — MSW Media, Inc. v. Department of Justice, No. 1:25-cv-02518 (BAH),
+            D.D.C. (Epstein review training videos, FOIA)
+  cadc    — Phang v. Blanche, D.C. Cir. No. 26-5299 (Epstein files appeal)
 
-Each case moves in day-scale bursts, and the coverage of both is unreliable —
+Each case moves in day-scale bursts, and the coverage of all of them is unreliable —
 outlets conflate the Kennedy Center's two-year renovation closure with the
 seven-day safety closure, and the Epstein-files coverage reports deadlines
 Sullivan set by minute order that never appear in a news story. What can be
@@ -193,6 +203,54 @@ CASES: "dict[str, dict]" = {
             ("2026-10-13", "DISCHARGED — Defendant's reply in support of ECF 51 filed as ECF 58."),
             ("2026-10-15", "PASSED with the record unproduced — no entry records production of the Administrative Record, and the motion that would excuse it (ECF 51) is still undecided. Also the default date for Plaintiff's response to the Rule 12(c) motion under LCvR 7(b), which ECF 56 asks the Court to move; no ruling appears on that either."),
             ("2026-10-16", "DISCHARGED — Defendant's Notice of Compliance filed as ECF 59; the redacted notes were hand-delivered to chambers at 10:55 a.m., ahead of the noon deadline."),
+        ],
+    },
+    "msw": {
+        # Philip asked on 2026-10-24 to follow "Alison Gill's suite against the
+        # FBI". The caption is her company against the Department of Justice;
+        # the FBI is the component the request and the search belong to. Read
+        # against the RECAP copies at ECF 15, 18, 19 and 21, not against press
+        # coverage, which describes a different procedural posture.
+        #
+        # Two dates in this case cannot be read off the feed. CourtListener
+        # truncates a docket entry's short description at 500 characters, and
+        # the August 24 and September 4 scheduling orders were both served as
+        # minute entries whose text is cut off mid-order. The dates below are
+        # the ones ECF 19 quotes from the August 24 order, with the one-week
+        # extension ECF 19 asked for noted where it applies. Do not present an
+        # inferred date as an order of the court.
+        "case": "MSW MEDIA, INC. v. DEPARTMENT OF JUSTICE, 1:25-cv-02518",
+        "docket_id": "70999320",
+        "slug": "msw-media-inc-v-department-of-justice",
+        "label": "Epstein files (MSW Media v. DOJ)",
+        "known": {
+            1: "Complaint (Aug 2, 2025) — FOIA suit on two requests: a July 17, 2025 request to DOJ's Office of Information Policy for all grand jury testimony in the Epstein and Maxwell criminal cases, and a July 22, 2025 request to the FBI for every video created or used to train personnel how to review Epstein records, on unclassified SharePoint or on classified SharePoint or BuTube (ECF 19 ¶ 1).",
+            7: "Amended complaint (Sept 4, 2025) — withdraws the OIP grand jury request and maintains and expands the claims against the FBI, as the Second through Fifth Causes of Action (ECF 19 ¶ 2).",
+            8: "Plaintiff's unopposed motion for expedited consideration and a joint proposed briefing schedule, granted by the Sept 16, 2025 minute order, which set plaintiff's summary judgment motion for Sept 17, 2025 and extended the answer to 14 days after that motion is decided.",
+            9: "Plaintiff's motion for partial summary judgment — the expedited-processing motion. Denied at ECF 15.",
+            10: "Notice of appearance — Jason Altabet for the Department of Justice.",
+            11: "Memorandum in opposition to ECF 9, with an exhibit, a statement of facts and a proposed order (Dec 9, 2025).",
+            12: "Plaintiff's reply in support of ECF 9 (filed Dec 30, 2025, entered Dec 31).",
+            13: "Notice of appearance — James D. Todd, Jr. for all defendants.",
+            14: "Notice of withdrawal of appearance — Jason Altabet terminated.",
+            15: "MEMORANDUM AND ORDER (Judge Howell, July 1, 2026) DENYING plaintiff's motion for partial summary judgment on expedited processing, and directing defendant to answer the amended complaint and the parties to file a joint status report. The expedited-processing ruling, not a merits ruling: whether the nine videos are properly withheld is still open.",
+            16: "Unopposed motion to extend the answer and joint status report nunc pro tunc (Aug 6, 2026). The answer had been due July 15 and the status report July 29, and an Aug 4 order had directed plaintiff to show cause why the case should not be dismissed; the Aug 6 minute order vacated that show-cause order and granted this motion.",
+            17: "ANSWER to the amended complaint (Aug 7, 2026), filed on the deadline the Aug 6 minute order set.",
+            18: "JOINT STATUS REPORT (Aug 21, 2026) — each side's position on the scope of the request and on a briefing schedule for cross motions for summary judgment. This is the filing the Aug 24 scheduling order was issued upon.",
+            19: "DEFENDANT'S CONSENT MOTION TO EXTEND BRIEFING DEADLINES by one week (Sept 3, 2026), so counsel could prepare the summary judgment motion around previously scheduled annual leave. Quotes the Aug 24 schedule: defendant's motion due Sept 25, plaintiff's combined opposition and cross-motion Oct 26, defendant's combined reply and opposition Nov 9, plaintiff's reply Nov 16. Granted by the Sept 4 minute order.",
+            20: "Notice of appearance — Isaac C. Belfer for the Department of Justice.",
+            21: "DEFENDANT'S MOTION FOR SUMMARY JUDGMENT (Oct 2, 2026) — with a memorandum, a statement of material facts, a proposed order, the Declaration of Shannon R. Hammer and Hammer declaration exhibits A through G, and four further exhibits. Asks the court to uphold the search and the categorical withholding of the responsive training videos.",
+            22: "Notice of appearance — Steven Chasin for the Department of Justice.",
+        },
+        "calendar": [
+            ("2026-06-30", "The FBI completed its search and gave a categorical denial, withholding the responsive records in full under FOIA Exemptions 5, 6, 7(C) and 7(E) (ECF 19 ¶ 3). The merits now turn on whether those exemptions hold, which is what ECF 21 argues."),
+            ("2026-07-01", "DISCHARGED — ECF 15: Howell denied the partial summary judgment motion on expedited processing, and ordered the answer and a joint status report."),
+            ("2026-08-21", "DISCHARGED — the parties filed their joint status report as ECF 18."),
+            ("2026-09-25", "PASSED with nothing filed — defendant's summary judgment motion was due this date under the Aug 24 scheduling order. ECF 19 moved it a week, and the motion was filed Oct 2 as ECF 21."),
+            ("2026-10-26", "Plaintiff's combined opposition and cross motion for summary judgment under the Aug 24 order. ECF 19 asked for a one-week extension of the briefing deadlines and the Sept 4 minute order granted it, which would move this to Nov 2; the amended order's text is truncated at 500 characters on the feed, so read the order before treating either date as certain."),
+            ("2026-11-02", "The same plaintiff filing, if the Sept 4 amended order moved the Aug 24 date by the week ECF 19 requested. This is the date to watch: a cross motion here is where the merits of the withholding come back before Howell."),
+            ("2026-11-09", "Defendant's combined reply and opposition to plaintiff's cross motion under the Aug 24 order (Nov 16 if moved by a week)."),
+            ("2026-11-16", "Plaintiff's reply under the Aug 24 order (Nov 23 if moved by a week). After this the case is fully briefed for a ruling on the cross motions."),
         ],
     },
     "cadc": {
