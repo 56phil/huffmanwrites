@@ -100,6 +100,77 @@ def pages() -> "list[Path]":
     return sorted(PUBLIC.rglob("*.html"))
 
 
+# --- Further Reading ranking ------------------------------------------------
+#
+# The related-posts block has failed silently once, and the failure was
+# invisible to every other check: the build passed, the page returned 200, and
+# the four links were all real. It selected on raw tag intersection plus
+# recency, so a post sharing only the ubiquitous "civics" tag outranked one
+# sharing "physics", and the block filled with the daily SITREP. What makes
+# that checkable from the build output alone is a single invariant: the list is
+# ordered by how many tags each recommendation shares with the post, and never
+# increases down the list. A section fallback (zero shared tags) is legitimate
+# only at the end.
+
+TAG_HREF = re.compile(r"https://www\.huffmanwrites\.org/tags/([^/>]+)/")
+POST_TAGS = re.compile(r"post-tags>(.*?)</ul>", re.S)
+RELATED_ITEM = re.compile(r"related-item><h4><a href=([^ >]+)>")
+RELATED_START = re.compile(r"class=related-posts>")
+
+
+def extract_tags(text: str) -> "set[str]":
+    """The post's own tags, read off the rendered post-tags list."""
+    m = POST_TAGS.search(text)
+    return set(TAG_HREF.findall(m.group(1))) if m else set()
+
+
+def extract_block(text: str) -> "list[str]":
+    """Recommendation URLs in render order, or [] when there is no block."""
+    start = RELATED_START.search(text)
+    if not start:
+        return []
+    window = text[start.end():start.end() + 8000]
+    return [u.removeprefix("https://www.huffmanwrites.org") if u.startswith("http")
+            else u for u in RELATED_ITEM.findall(window)]
+
+
+def ranking_violations(tags: "set[str]", rec_tags: "list[set[str]]") -> "list[tuple[int, int]]":
+    """(i, j) pairs where a later recommendation shares strictly more tags."""
+    counts = [len(t & tags) for t in rec_tags]
+    return [(i, i + 1) for i in range(len(counts) - 1) if counts[i] < counts[i + 1]]
+
+
+def related_report(root: Path) -> "tuple[int, list[str]]":
+    """Inspect every post's Further Reading block; return coverage and complaints."""
+    posts = [p for p in sorted(root.glob("posts/**/index.html"))]
+    tags_of: "dict[str, set[str]]" = {}
+    text_of: "dict[str, str]" = {}
+    for p in posts:
+        url = "/" + p.parent.relative_to(root).as_posix() + "/"
+        try:
+            text = p.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        text_of[url] = text
+        tags_of[url] = extract_tags(text)
+
+    inspected = 0
+    complaints: "list[str]" = []
+    for url, text in text_of.items():
+        recs = extract_block(text)
+        if not recs:
+            continue
+        inspected += 1
+        if url in recs:
+            complaints.append(f"{url} recommends itself")
+        known = [r for r in recs if r in tags_of]
+        for i, j in ranking_violations(tags_of[url], [tags_of[r] for r in known]):
+            complaints.append(
+                f"{url}: item {i + 1} shares fewer tags than item {j + 1} "
+                f"({known[i]} -> {known[j]})")
+    return inspected, complaints
+
+
 def scan(quiet: bool) -> int:
     if not PUBLIC.is_dir():
         die("no public/ directory — run `hugo` first")
@@ -151,6 +222,8 @@ def scan(quiet: bool) -> int:
     for rel, u, why in broken_hits:
         dedup[(rel, u)] = dedup.get((rel, u), 0) + 1
 
+    blocks, related_hits = related_report(PUBLIC)
+
     if sentinel_hits:
         print(f"render: FAIL — {len(sentinel_hits)} page(s) contain a template "
               f"sentinel:", file=sys.stderr)
@@ -163,7 +236,13 @@ def scan(quiet: bool) -> int:
         for (rel, u) in sorted(dedup)[:25]:
             print(f"  {rel}\n      {u}", file=sys.stderr)
 
-    if sentinel_hits or dedup:
+    if related_hits:
+        print(f"render: FAIL — {len(related_hits)} Further Reading ordering "
+              f"problem(s):", file=sys.stderr)
+        for c in related_hits[:25]:
+            print(f"  {c}", file=sys.stderr)
+
+    if sentinel_hits or dedup or related_hits:
         print(
             "\n  A rendered page can be broken while the build succeeds, the\n"
             "  source is valid, and the URL returns 200. Check URL attributes\n"
@@ -171,12 +250,14 @@ def scan(quiet: bool) -> int:
             file=sys.stderr,
         )
         print(f"coverage: {len(built)} pages")
+        print(f"related: {blocks} blocks inspected")
         return 1
 
     if not quiet:
         print(f"render: OK — {len(pages())} pages, no sentinels, "
-              f"all local refs resolve")
+              f"all local refs resolve, {blocks} related blocks ranked")
     print(f"coverage: {len(built)} pages")
+    print(f"related: {blocks} blocks inspected")
     return 0
 
 

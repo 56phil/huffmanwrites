@@ -102,14 +102,63 @@
     </p>
   </div>
 
+  {{- /*
+    Ranking, not recency. Three defects in the previous version, each visible on
+    a rendered page: (1) raw tag intersection let a post matching "civics" (118
+    posts) outrank one matching "physics" (2 posts), so the four newest posts
+    sharing the commonest word won; (2) ".Section" is the top-level section
+    ("posts") for every post here, so the fallback tier matched the entire
+    corpus and filled the block with whatever published most recently, which is
+    the daily SITREP; (3) "index $finalRelated 0" fails the build when nothing
+    matches. Shared tags are now weighted by rarity (one divided by how many
+    posts carry the tag), the fallback uses the immediate section, and a page
+    with no shared tag never displaces a page that has one.
+  */ -}}
   {{- $related := where (where site.RegularPages "Type" "posts") "Permalink" "!=" .Permalink -}}
-  {{- $tagRelated := where $related "Params.tags" "intersect" .Params.tags -}}
-  {{- $sectionRelated := where $related "Section" .Section -}}
-  
-  {{- $finalRelated := $tagRelated -}}
+  {{- /* Tags are compared the way the taxonomy stores them: URLized and
+         lowercased. Comparing ".Params.tags" verbatim made "Civics" and
+         "civics" different tags, so a post written with capitalised tags
+         matched nothing and fell back to the section list. */ -}}
+  {{- $mine := slice -}}
+  {{- range .Params.tags -}}
+    {{- $mine = $mine | append (lower (urlize .)) -}}
+  {{- end -}}
+  {{- $df := dict -}}
+  {{- range $name, $terms := site.Taxonomies.tags -}}
+    {{- $df = merge $df (dict (lower $name) (len $terms)) -}}
+  {{- end -}}
+  {{- $here := .CurrentSection.RelPermalink -}}
+  {{- $scored := slice -}}
+  {{- range $related -}}
+    {{- $theirs := slice -}}
+    {{- range .Params.tags -}}
+      {{- $theirs = $theirs | append (lower (urlize .)) -}}
+    {{- end -}}
+    {{- $shared := intersect $theirs $mine -}}
+    {{- $score := mul (float (len $shared)) 10.0 -}} {{/* count dominates; rarity orders within it */}}
+    {{- range $shared -}}
+      {{- $score = add $score (div 1.0 (float (index $df (lower .) | default 1))) -}}
+    {{- end -}}
+    {{- if eq .CurrentSection.RelPermalink $here -}}
+      {{- $score = add $score 0.15 -}}
+    {{- end -}}
+    {{- $score = add $score (div (float .Date.Unix) 10000000000000.0) -}}
+    {{- $scored = $scored | append (dict "page" . "score" $score "shared" (len $shared)) -}}
+  {{- end -}}
+  {{- $scored = sort $scored "score" "desc" -}}
+
+  {{- $finalRelated := slice -}}
+  {{- range $scored -}}
+    {{- if and (lt (len $finalRelated) 4) (gt .shared 0) -}}
+      {{- $finalRelated = $finalRelated | append .page -}}
+    {{- end -}}
+  {{- end -}}
   {{- if lt (len $finalRelated) 4 -}}
-    {{- $sectionRelated = where $sectionRelated "Permalink" "!=" (index $finalRelated 0).Permalink -}} {{/* Avoid duplicating the first tag match */}}
-    {{- $finalRelated = union $finalRelated $sectionRelated -}}
+    {{- range $scored -}}
+      {{- if and (lt (len $finalRelated) 4) (eq .shared 0) (eq .page.CurrentSection.RelPermalink $here) -}}
+        {{- $finalRelated = $finalRelated | append .page -}}
+      {{- end -}}
+    {{- end -}}
   {{- end -}}
 
   {{- with first 4 $finalRelated }}

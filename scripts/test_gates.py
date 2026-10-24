@@ -26,6 +26,7 @@ import inspect
 import json
 import re
 import sys
+import tempfile
 import unittest
 from datetime import date, datetime
 from pathlib import Path
@@ -496,6 +497,87 @@ class TestRenderRules(unittest.TestCase):
         self.assertFalse(cr.is_local("https://example.org/x"))
         self.assertFalse(cr.is_local("#anchor"))
         self.assertFalse(cr.is_local("mailto:a@b.c"))
+
+
+# --------------------------------------------------------------------------
+# Further Reading ranking: the block that shipped four recent, unrelated posts.
+# --------------------------------------------------------------------------
+class TestRelatedRanking(unittest.TestCase):
+    """The invariant is ORDER, not membership.
+
+    A recommendation may share no tags with the post, because the section
+    fallback is deliberate when fewer than four tag matches exist. What it may
+    never do is outrank one that shares more. The shipped defect was exactly
+    that: every SITREP carries `markets`, so raw intersection put the four
+    newest dailies ahead of an essay on the same subject, and no gate could see
+    it because all four links were real and the page returned 200.
+    """
+
+    RANK = "class=related-posts>"
+
+    @classmethod
+    def _page(cls, tags: "list[str]", recs: "list[str]") -> str:
+        tag_links = "".join(
+            f"<a href=https://www.huffmanwrites.org/tags/{t}/>{t}</a>" for t in tags)
+        items = "".join(
+            "<div class=related-item><h4><a href=https://www.huffmanwrites.org"
+            f"{u}>{u}</a></h4></div>" for u in recs)
+        return (f"<ul class=post-tags>{tag_links}</ul>"
+                f"<div {cls.RANK}<h3>Further Reading</h3>{items}</div>")
+
+    def test_a_rare_tag_match_must_outrank_a_common_one(self):
+        self.assertEqual(cr.ranking_violations({"markets"}, [set(), {"markets"}]),
+                         [(0, 1)])
+
+    def test_non_increasing_shares_pass(self):
+        self.assertEqual(
+            cr.ranking_violations({"a", "b"}, [{"a", "b"}, {"a"}, set()]), [])
+
+    def test_tags_are_read_from_the_post_tag_list_only(self):
+        page = self._page(["ai", "markets"], ["/posts/x/"])
+        page += "<a href=https://www.huffmanwrites.org/tags/stray/>"
+        self.assertEqual(cr.extract_tags(page), {"ai", "markets"})
+
+    def test_block_urls_come_back_in_render_order(self):
+        page = self._page(["ai"], ["/posts/a/", "/posts/b/"])
+        self.assertEqual(cr.extract_block(page), ["/posts/a/", "/posts/b/"])
+
+    def test_a_page_without_a_block_is_not_counted(self):
+        self.assertEqual(cr.extract_block("<div class=post-single></div>"), [])
+
+    def test_report_names_the_inversion_and_the_fallback_at_the_end_is_allowed(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            bad = {"x": (["ai"], ["/posts/z/", "/posts/y/"]),
+                   "y": (["ai"], ["/posts/x/"]),
+                   "z": (["markets"], ["/posts/x/"])}
+            for slug, (tags, recs) in bad.items():
+                p = root / "posts" / slug
+                p.mkdir(parents=True)
+                (p / "index.html").write_text(self._page(tags, recs))
+            blocks, complaints = cr.related_report(root)
+            self.assertEqual(blocks, 3)
+            self.assertTrue(any("/posts/x/" in c for c in complaints), complaints)
+
+            # Same pages, correct order: the 1-tag match first, the 0-tag
+            # section fallback last, which is legitimate and must not complain.
+            good = {"x": (["ai"], ["/posts/y/", "/posts/z/"]),
+                    "y": (["ai"], ["/posts/x/"]),
+                    "z": (["markets"], ["/posts/x/"])}
+            for slug, (tags, recs) in good.items():
+                (root / "posts" / slug / "index.html").write_text(self._page(tags, recs))
+            blocks, complaints = cr.related_report(root)
+            self.assertEqual(blocks, 3)
+            self.assertEqual(complaints, [])
+
+    def test_a_block_that_recommends_its_own_page_is_a_finding(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            p = root / "posts" / "x"
+            p.mkdir(parents=True)
+            (p / "index.html").write_text(self._page(["ai"], ["/posts/x/"]))
+            _, complaints = cr.related_report(root)
+            self.assertTrue(any("recommends itself" in c for c in complaints), complaints)
 
 
 # --------------------------------------------------------------------------

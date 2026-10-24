@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 24, 2026 — Fixed the "Further Reading" block: four recent posts, not four related ones
+
+Philip, after reading the new essay: "it appears to be just recently published pieces that have little to do with the piece itself." It was exactly that, and three separate defects produced it.
+- **`.Section` is the top-level section.** For every post here `.Section` is `posts`, so `where $related "Section" .Section` matched the entire corpus. The "tag match first, then section match" contract was therefore a tag match plus a newest-first dump of everything, which is why the block on `the-2027-wall` listed three SITREPs. The immediate parent is `.CurrentSection`.
+- **Raw tag intersection ignored tag rarity.** `markets`, `civics`, `essays` and `politics` are carried by 30 to 118 posts; `physics` by two. Counting a shared `civics` the same as a shared `physics` meant the four newest posts sharing the commonest word won every time. Candidates are now scored by shared-tag count first, tag rarity (one over the document frequency) second, an immediate-section nudge third, and recency last, which is a total order.
+- **Tags were compared case-sensitively.** `content/posts/digests/stoic-saturday-rule-of-law.md` writes `tags: ["Stoicism", "Civics", ...]`, and the taxonomy stores `stoicism` and `civics`. The verbatim comparison matched nothing, so that post fell to the section list. Both sides are now `lower (urlize .)`, the form the taxonomy uses.
+- **Latent build break removed.** `index $finalRelated 0` in the old dedupe line panics when a post matches no tag; nothing shipped with zero matches until now, so it never fired.
+- **The block is gated, not trusted.** `check-render-integrity.py` reads the built pages, resolves each page's own tags from its rendered `post-tags` list, and fails when a recommendation shares fewer tags than the item after it, or recommends its own page. It caught a real inversion during this fix (the case-sensitivity bug), which is why the ordering is stated as an invariant rather than a hope. Coverage is reported as `related: N blocks inspected` (252 on the current build), separate from the page count because this gate is excluded from `TestGateCoverage` for needing `public/`.
+- **Measured after the fix, not asserted.** Blocks whose four recommendations share 3 tags with the post: 43 before, 55 after; sharing 4: 32 before, 39 after. `the-2027-wall` now lists the two AI-finance essays and the two ninety-day installments; `the-grand-design-summary` lists Hawking, Tyson, and two Sagan books; `the-life-and-times-of-seneca` leads with Epictetus and Marcus Aurelius. Zero inversions across 252 blocks; **426/426 gate tests**; clean `hugo --gc --minify` (604 pages, including paginated stubs).
+
+---
+
 ### Maintenance — October 24, 2026 — Published "The 2027 Wall: When the AI Buildout Meets Its Arithmetic"
 
 Philip, after the week of GTC Berlin: "Yes, but broaden the scope to the AI industry. I'm expecting an AI crash as early as Q2 of 2027."
