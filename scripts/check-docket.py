@@ -154,7 +154,11 @@ CASES: "dict[str, dict]" = {
             ("2026-10-19", "DISCHARGED — Plaintiff's sealed opposition to the sealing motion at ECF 65 was filed as ECF 108 on this deadline. No public copy. The same day, per ECF 110, Defendants produced the August 20, 2026 JLL report in discovery."),
             ("2026-10-21", "DISCHARGED — Plaintiff's reply in support of the motion to compel filed as ECF 110, with Exhibit A, the same day Defendants filed their Notice of Errata at ECF 109 withdrawing the phased-renovation comparison and the $41 million figure from ECF 88-1 & 89-1."),
             ("2026-10-23", "PASSED — discovery closed, as extended by ECF 103. Productions are not docketed, so the docket cannot show what was produced on the final day."),
-            ("2026-10-27", "SUPERSEDED by the Oct. 14 Revised Scheduling Order. Was: Plaintiff's reply on summary judgment."),
+            # 2026-10-27 (plaintiff's summary judgment reply) was superseded by
+            # the Oct. 14 Revised Scheduling Order and is deleted rather than
+            # kept as a record: this list is what raises the deadline alert, and
+            # a superseded date still in it fires a banner on a day the docket
+            # has nothing due. The Oct. 14 entry above records the replacement.
             ("2026-10-30", "Plaintiff's opposition to the motion to dissolve or vacate the preliminary injunction due (Oct. 14 Revised Scheduling Order). Three weeks later than the date Defendants asked the Court to keep."),
             ("2026-11-06", "Defendants' reply in support of the motion to dissolve or vacate the preliminary injunction due (Oct. 14 Revised Scheduling Order). After this the Court can rule on whether the injunction stands."),
         ],
