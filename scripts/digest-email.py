@@ -9,9 +9,10 @@ draft, not in a template.
 
     python3 scripts/digest-email.py pending/<draft>.md --out /tmp/letter.html
 
-The monogram is `static/img/prh-monogram.png`, served from `www.` because the
-apex 301s and an email client will not follow it. Its source is the SVG beside
-it; regenerate with `rsvg-convert -w 192 -h 192`.
+The monogram is `static/img/prh-logo.png` — the same artwork the books carry on
+their title pages, copied from `~/texmf/tex/latex/miscImages/prh-logo.png` and
+resized to 288 px — served from `www.` because the apex 301s and an email client
+will not follow it.
 """
 
 import argparse
@@ -24,7 +25,7 @@ import pathlib
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 SITE = "https://www.huffmanwrites.org"
-MONOGRAM = f"{SITE}/img/prh-monogram.png"
+MONOGRAM = f"{SITE}/img/prh-logo.png"
 
 
 def frontmatter(text: str) -> "tuple[dict, str]":
@@ -50,7 +51,7 @@ def masthead(date_line: str) -> str:
     return (
         '<div style="text-align:center;padding:4px 0 16px;'
         'border-bottom:1px solid #D4820A;margin-bottom:26px;">'
-        f'<img src="{MONOGRAM}" width="64" height="64" alt="PRH" '
+        f'<img src="{MONOGRAM}" width="120" height="120" alt="PRH" '
         'style="display:block;margin:0 auto 12px;border:0;outline:none;text-decoration:none;">'
         '<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:15px;'
         'letter-spacing:4px;text-transform:uppercase;color:#131E39;">Stoic Saturday</div>'

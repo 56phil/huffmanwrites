@@ -5594,7 +5594,7 @@ class TestDigestEmail(unittest.TestCase):
 
     def test_the_masthead_names_the_series_and_carries_the_monogram(self):
         head = de.masthead("October 31, 2026")
-        self.assertIn("prh-monogram.png", head)
+        self.assertIn("prh-logo.png", head)
         self.assertIn("Stoic Saturday", head)
         self.assertIn("October 31, 2026", head)
         # The apex answers 301. An email client renders the <img> from the URL
