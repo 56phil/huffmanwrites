@@ -891,9 +891,12 @@ class TestDocketRules(unittest.TestCase):
         # MSW Media is the second Epstein-files case, added on Philip's request
         # of 2026-10-24; its caption is Gill's company against DOJ, because the
         # name a person gives in conversation is not the name on the docket.
-        self.assertEqual(set(cd.CASES), {"beatty", "phang", "msw", "cadc"})
+        # The golf case was added the same day, asked for as "the golf course
+        # case" and captioned D.C. Preservation League v. Interior.
+        self.assertEqual(set(cd.CASES), {"beatty", "phang", "msw", "golf", "cadc"})
         self.assertEqual(cd.CASES["phang"]["docket_id"], "73246595")
         self.assertEqual(cd.CASES["msw"]["docket_id"], "70999320")
+        self.assertEqual(cd.CASES["golf"]["docket_id"], "72278895")
         self.assertEqual(cd.CASES["cadc"]["docket_id"], "74696600")
 
     def test_the_msw_case_is_the_training_video_suit_not_a_neighbouring_one(self):
@@ -909,6 +912,21 @@ class TestDocketRules(unittest.TestCase):
         self.assertTrue(any("training video" in v.lower() or "SUMMARY JUDGMENT" in v
                             for v in msw["known"].values()))
         self.assertTrue(any("Howell" in v for v in msw["known"].values()))
+
+    def test_the_golf_case_is_the_east_potomac_suit(self):
+        # "The golf course case" names no party. The docket is pinned to the
+        # East Potomac challenge, and the register of what it decides rests on
+        # the final-agency-action question, so a report can say what a filing
+        # is about instead of printing a bare document number. Also pinned: the
+        # TRO end date is carried in the CALENDAR, because ECF 79 has no RECAP
+        # copy and the only thing that makes the date watchable is this entry.
+        golf = cd.CASES["golf"]
+        self.assertIn("1:26-cv-00477", golf["case"])
+        self.assertEqual(golf["docket_id"], "72278895")
+        self.assertTrue(any("Reyes" in v for v in golf["known"].values()))
+        self.assertTrue(any("final agency action" in v.lower()
+                            for v in golf["known"].values()))
+        self.assertIn("2026-10-26", [d for d, _ in golf["calendar"]])
 
     def test_the_circuit_case_watches_the_consolidated_lead_appeal(self):
         # 26-5334 was consolidated into 26-5299, so the clerk's order routed

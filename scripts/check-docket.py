@@ -13,13 +13,21 @@ watch." — as with Phang, the name as given is not the caption. The plaintiff i
 Justice, and the FBI is the component that holds the records. *MSW Media, Inc. v.
 Department of Justice*, No. 1:25-cv-02518 (BAH), D.D.C., Judge Beryl A. Howell.
 
-Four dockets are watched, from the same primitive and the same report:
+Philip, 2026-10-24: "What about the golf course case?" — *D.C. Preservation
+League v. Department of the Interior*, No. 1:26-cv-00477 (ACR), D.D.C., Judge
+Ana C. Reyes: the challenge to the East Potomac Golf Links redevelopment. It is
+the same beat as Beatty (the administration remaking a Washington landmark, and
+the court deciding on what record), which is why the registry carries it.
+
+Five dockets are watched, from the same primitive and the same report:
 
   beatty  — Beatty v. Trump, No. 1:25-cv-04480 (CRC), D.D.C. (Kennedy Center)
   phang   — Phang v. Blanche, No. 1:26-cv-01417 (EGS), D.D.C. (Epstein Files
             Transparency Act)
   msw     — MSW Media, Inc. v. Department of Justice, No. 1:25-cv-02518 (BAH),
             D.D.C. (Epstein review training videos, FOIA)
+  golf    — D.C. Preservation League v. Department of the Interior, No.
+            1:26-cv-00477 (ACR), D.D.C. (East Potomac Golf Links)
   cadc    — Phang v. Blanche, D.C. Cir. No. 26-5299 (Epstein files appeal)
 
 Each case moves in day-scale bursts, and the coverage of all of them is unreliable —
@@ -251,6 +259,53 @@ CASES: "dict[str, dict]" = {
             ("2026-11-02", "The same plaintiff filing, if the Sept 4 amended order moved the Aug 24 date by the week ECF 19 requested. This is the date to watch: a cross motion here is where the merits of the withholding come back before Howell."),
             ("2026-11-09", "Defendant's combined reply and opposition to plaintiff's cross motion under the Aug 24 order (Nov 16 if moved by a week)."),
             ("2026-11-16", "Plaintiff's reply under the Aug 24 order (Nov 23 if moved by a week). After this the case is fully briefed for a ruling on the cross motions."),
+        ],
+    },
+    "golf": {
+        # Philip, 2026-10-24: "What about the golf course case?" He means the
+        # East Potomac one, which is the only case here whose caption nobody
+        # says out loud: the press calls it the golf course case and the
+        # Lawfare liveblog filed it under that name.
+        #
+        # Read against the RECAP copies at ECF 8, 75, 76, 94 and 98 and the
+        # minute orders, not against coverage. ECF 79 (the TRO opinion) and
+        # ECF 95 (the recusal denial) have NO RECAP copy, so this registry has
+        # not read either one; where the record below rests on what the court
+        # said in them, it says so.
+        "case": "DC PRESERVATION LEAGUE v. DEPARTMENT OF INTERIOR, 1:26-cv-00477",
+        "docket_id": "72278895",
+        "slug": "dc-preservation-league-v-department-of-interior",
+        "label": "East Potomac golf course",
+        "known": {
+            1: "COMPLAINT (Feb 13, 2026) — D.C. Preservation League and two rec golfers, Dave Roberts and Alex Dickson, against Interior, Secretary Burgum, the National Park Service and Jessica Bowron (styled 'Comptroller Exercising the Delegated Authority of the Director' of NPS). Challenges the East Potomac redevelopment under NEPA, the National Historic Preservation Act and the NPS Organic Act, through the APA. Judge Ana C. Reyes.",
+            8: "PLAINTIFFS' MOTION FOR A STAY UNDER 5 U.S.C. § 705 OR, IN THE ALTERNATIVE, A PRELIMINARY INJUNCTION (Feb 23, 2026) — alleges 30,000 cubic yards of fill and debris had been dumped on the course, containing solid waste and 'presumably contaminated with asbestos', some of it from the White House East Wing demolition. Seeks to halt work and to have the material removed.",
+            34: "MOTION TO DISMISS for lack of jurisdiction and for failure to state a claim (Apr 10, 2026). The jurisdictional theory is the one the case turns on: no final agency action, so nothing for the court to review.",
+            51: "Plaintiffs' motion for expedited discovery (May 14, 2026) — the vehicle by which the plaintiffs tried to get behind the government's assurances before relief was decided.",
+            72: "MOTION FOR LEAVE TO FILE AN AMENDED COMPLAINT (Sept 18, 2026, Rule 15). Briefed at ECF 78 (defendants' opposition) and ECF 81 (plaintiffs' reply), and still undecided as of Oct 23.",
+            74: "NOTICE OF ACTIVITY (Oct 9, 2026) — the Friday-evening notice that NPS would begin removing up to 529 trees the next morning, attached to the declaration of Kevin Griess, Superintendent of National Mall and Memorial Parks. The three days' notice the Court had been promised, compressed into twelve hours before a holiday weekend.",
+            75: "DEFENDANTS' MOTION FOR SUMMARY JUDGMENT and response in opposition to plaintiffs' Rule 15 motion (Oct 9, 2026). Its proposed order (75-2) shows the shape of the case: counts 1-6 challenge the course rehabilitation, counts 7-11 challenge the decision to temporarily stockpile soil at the park, and it asks for judgment on standing, final agency action, ripeness or the merits.",
+            76: "PLAINTIFFS' EMERGENCY MOTION FOR A TEMPORARY RESTRAINING ORDER or, alternatively, a 14-day stay under 5 U.S.C. § 705 (Oct 11, 2026) — filed after 529 trees came down in one day. Argues NEPA segmentation: the government breaking one project into pieces and calling each piece independent, citing Delaware Riverkeeper Network v. FERC, 753 F.3d 1304 (D.C. Cir. 2014). Also asks for three business days' written notice before any irreparable modification to the park.",
+            78: "Defendants' memorandum in opposition to the Rule 15 motion, filed Oct 9, 2026.",
+            79: "MEMORANDUM OPINION (Oct 13, 2026) granting the emergency TRO. No RECAP copy in the feed, so this registry has not read it; the docket says only that it granted ECF 76. The TRO barred further tree removal and required notice, and it ran to Oct 26 — that end date comes from the October reporting, not from a document this registry has read.",
+            80: "MOTION FOR PRELIMINARY INJUNCTION (Oct 14, 2026), which is the motion that survived the TRO. Briefed at ECF 84 (opposition, Oct 16) and ECF 88 (reply, Oct 17); heard and TAKEN UNDER ADVISEMENT at the Oct 19 evidentiary hearing.",
+            81: "Plaintiffs' reply in support of the Rule 15 motion, filed Oct 14, 2026.",
+            83: "MOTION for leave to file an amicus brief by Hains Point Runners and Cherry Blossom, Inc. (Oct 15, 2026), granted at ECF 97.",
+            84: "Defendants' memorandum in opposition to the preliminary injunction motion (Oct 16, 2026).",
+            86: "DEFENDANTS' MOTION TO DISQUALIFY JUDGE AND RELEASE AUDIO (Oct 16, 2026) — the Associate Attorney General's office, having added four lawyers in two days, asked Reyes to recuse on grounds of bias. Denied at ECF 95.",
+            88: "Plaintiffs' reply in support of the preliminary injunction motion (Oct 17, 2026).",
+            90: "Plaintiffs' response to the motion to disqualify (Oct 18, 2026).",
+            91: "NOTICE OF FACTUAL DEVELOPMENT REGARDING RELEASE OF GOLF COURSE DESIGN (Oct 18, 2026) — the President's two Truth Social posts announcing a Tom Fazio championship design and a Nov 15 closure for about 15 months. Filed by the plaintiffs and taken judicial notice of by the Court the same day.",
+            94: "DEFENDANTS' RESPONSE TO THE COURT'S ORDER ON FINAL AGENCY ACTION (Oct 18, 2026), signed by Associate Attorney General Woodward. Maintains there is no final agency action: the plan is not final, and redesigning a golf course is not 'rule, order, license, sanction, [or] relief' under 5 U.S.C. § 551(13). Says a decision to redesign the art exhibits in a Smithsonian museum would not be agency action either, and that the Court's order mischaracterized the government's position.",
+            95: "MEMORANDUM OPINION AND ORDER (Oct 18, 2026) DENYING the motion to disqualify. No RECAP copy in the feed, so this registry has not read it; the docket records that the main document was replaced on Oct 19.",
+            96: "NOTICE OF FACTUAL DEVELOPMENT REGARDING ANOTHER SOCIAL MEDIA POST BY THE PRESIDENT (Oct 19, 2026) — filed the morning of the hearing, after the President posted that work would begin 'IMMEDIATELY'.",
+            97: "AMICUS BRIEF of Hains Point Runners and Cherry Blossom, Inc. (entered Oct 15, 2026).",
+            98: "AMENDED AND SUPPLEMENTAL COMPLAINT (filed Oct 15, entered Oct 21, 2026) — eleven counts, the first six on the rehabilitation and counts 7-11 on the soil stockpiling. Filed without leave having been granted and while ECF 72 was still pending, so the docket holds both the motion and the pleading.",
+            99: "PLAINTIFFS' MOTION TO EXTEND THE TRO AND RESUME THE TESTIMONY OF GREGORY WISCHER, or alternatively to order production of text messages (Oct 22, 2026). DENIED the same day by minute order, without prejudice to renewing the testimony request before a permanent injunction hearing — but the Court ordered the Government to ensure Wischer preserved his personal phone and expanded the preservation order to any material on the East Potomac course and this litigation. That preservation order is the part that outlived the motion.",
+            100: "MOTION for leave to file an amicus brief by the Washington Area Bicyclist Association (Oct 23, 2026). The most recent entry.",
+        },
+        "calendar": [
+            ("2026-10-26", "The temporary restraining order runs out. The preliminary injunction motion (ECF 80) was taken under advisement at the Oct 19 hearing and there is no ruling on the docket, so what happens on this date is the next thing to look for: a PI, an extension, or nothing, after which further tree removal is unconstrained by this order."),
+            ("2026-11-15", "The date the President's Oct 18 Truth Social post gives for closing the course to play, for a renovation it says will last about 15 months. Recorded in the docket at ECF 91 and 96 and judicially noticed by the Court; it is a statement by the defendant's principal, not an order, and the government told the Court there was no plan to close the course."),
         ],
     },
     "cadc": {

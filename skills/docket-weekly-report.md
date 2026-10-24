@@ -1,6 +1,6 @@
 # Skill: Weekly Docket Report
 
-A Saturday summary of the four federal dockets this site follows, produced every
+A Saturday summary of the five federal dockets this site follows, produced every
 Saturday at 0800 CT beginning **October 3, 2026**.
 
 ## When this runs
@@ -31,7 +31,7 @@ Saturday at 0800 CT beginning **October 3, 2026**.
 
 ## Mission
 
-Produce a fact-checked, house-style SUMMARY of the week in the four dockets.
+Produce a fact-checked, house-style SUMMARY of the week in the five dockets.
 The report is **published** on the run: the runner commits and pushes what you
 write and the site deploys on that push (Philip, 2026-09-27: "publish weekly
 reports that have an exit code of 0 after passing all gates"). So write to the
@@ -39,13 +39,14 @@ publishing standard — every load-bearing claim checked, every quotation carryi
 a live link that contains its wording, no placeholder left in the prose. Do not
 commit, push, or copy anything yourself; the runner does that after the gates pass.
 
-## The four dockets
+## The five dockets
 
 | Key | Case | Where | What it decides |
 |---|---|---|---|
 | `beatty` | *Beatty v. Trump*, No. 1:25-cv-04480 (CRC) | D.D.C. (Judge Cooper) | Kennedy Center: whether a board can undo by vote what a statute established, and whether the Board's closure decisions stand |
 | `phang` | *Phang v. Blanche*, No. 1:26-cv-01417 (EGS) | D.D.C. (Judge Sullivan) | Epstein Files Transparency Act: whether a disclosure law binds the department it names |
 | `msw` | *MSW Media, Inc. v. Department of Justice*, No. 1:25-cv-02518 (BAH) | D.D.C. (Judge Howell) | The FBI's Epstein review training videos: whether a FOIA exemption covers records that were made to instruct agents how to handle the files, and on summary judgment as of Oct. 2, 2026 |
+| `golf` | *D.C. Preservation League v. Department of the Interior*, No. 1:26-cv-00477 (ACR) | D.D.C. (Judge Reyes) | The East Potomac Golf Links redevelopment: whether remodeling a federal park into a championship course is reviewable agency action at all, and how much work may happen before a court can look |
 | `cadc` | *Phang v. Blanche*, D.C. Cir. No. 26-5299 (consol. 26-5334) | D.C. Circuit | Where both questions get answered on appeal; the stay ruling issues here |
 
 ## Step 1 — Get the week's filings from the script. Do not fetch the dockets by hand.
@@ -163,7 +164,7 @@ report may say so.
 ## Report structure
 
 1. **The lede** — a bold **Question:** / **Answer:** pair naming the week's most
-   consequential development across the four dockets.
+   consequential development across the five dockets.
 2. **The week's filings** — a short prose pass over what was filed, in order of
    significance, with the ECF number and date for each. Then the complete filing
    list for the week, one line per filing. A week with few filings says so; a
