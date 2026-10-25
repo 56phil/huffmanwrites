@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 25, 2026 — Published the senate-report report (automated)
+
+Auto-published by `com.huffmanwrites.senate-report` after every gate passed.
+- **Published** `content/posts/essays/senate-race-report-2026-10-25.md` — "Senate Race Report: October 25, 2026", 7761 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The week, as the piece frames it:** nine days out, Republicans are spending $26 million to hold Kansas, suing to keep Alaska from certifying a Senate seat, and retreating from North Carolina, while the market sits at 68 percent for Democratic control. Cook moved South Carolina, Mississippi and Minnesota on October 20; Silver Bulletin moved Iowa to lean Democratic on October 21, the only model now favoring Turek.
+- **Manual recovery publish.** The 07:00 run wrote this article and every gate passed except two. `check-quote-names --online` flagged the Alaska's News Source anchor, whose link text read "from the ballot as Alaskans are already voting" against a headline that reads "from the ballot Alaskans are already voting on" — a paraphrase inside quotation marks, corrected to the page's own title — and an NBC footnote quoting a nested quotation with straight marks where the source uses curly ones, rewritten so both quoted fragments are verbatim. `check-prepositions --file` flagged three sentence-final prepositions (the `description`, the Alaska paragraph, and the lede of The Close), each rewritten. The whole gate set was re-run green in this session before the commit, on the 2026-10-11 and 2026-10-04 precedent.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own `<title>` to carry the article's `title` (`scripts/verify-published.py`, the rule `sitrep-watchdog.py` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence raises the shared alert and fails the run: the article is on `main` and no reader has it. The outcome is in `/Users/prh/Library/Logs/senate-report.out.log`.
+- **SimpleBrain mirror** runs immediately after this push: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in `/Users/prh/Library/Logs/senate-report.out.log`.
+
+---
+
 ### Maintenance — October 25, 2026 — every AllMyBooks edition rebuilt against its manuscript
 
 Philip, 2026-10-25: "Go through all manuscripts in AllMyBooks/ and ensure that the hc, pb, and kendle builds are current."
