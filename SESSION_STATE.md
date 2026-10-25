@@ -12,6 +12,15 @@
 
 ---
 
+### Maintenance — October 25, 2026 — Unstuck has a new cover
+
+Philip, 2026-10-25: "I've changed the cover for 'Unstuck.' Freshen up the image on the site." The renders in `LaTeX/AllMyBooks/unstuck/cover/` were rebuilt at 06:27 (HC) and 06:35 (PB) that morning; the front art is the same door-and-figure plate, redrawn with the title inside the doorway.
+- **The site cover was replaced, not added.** `assets/img/books/unstuck.jpg` is now the PB front panel at 1762×2643 (exact 2:3), JPEG q90, 672 KB, down from the old 1919×2771 HC export at 1.2 MB. Frontmatter is unchanged: every surface reads this one path — the book page (`img.html`, 800 px webp), the `/books/` hub card, the home Library grid, the `all-my-books` catalog, and both `og:image` and the Book schema, which now report 1762×2643.
+- **The generator's own front-cover export was not used as-is.** `pb-unstuck.jpg` is 1800×2700 and carries a 75 px gold spine strip on its left edge; `hc-unstuck.jpg` carries a wider one. The card CSS is `object-fit: contain`, so either file would have shown the spine as a gold band down the cover. The published file is cropped from the 300 dpi wrap (`pb-unstuck.png`, 3728×2775) at the spine seam, measured at x=1966 on every sampled row, and trimmed 66 px top and bottom to the 2:3 trim — no gold, no letterbox.
+- **Verified:** `hugo --gc --minify` builds 515 pages; the rendered cover was checked on the book page, the hub, home, and the catalog in a browser, not by file-existence alone. `check-hero-paths.py` (coverage: 379 paths) and `check-content-frontmatter.py` (263 files) both OK. The article hero (`Unstuck-16x9.webp` / `Unstuck-4x5.webp`) is separate art — the Marcus bust — and was left alone; `image_alt` still describes the plate.
+
+---
+
 ### Maintenance — October 25, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
