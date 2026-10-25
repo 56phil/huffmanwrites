@@ -2816,7 +2816,7 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 
 ## Pending / Next Actions
 
-- **Letters paperback is in publication limbo (raised 2026-10-25, reminder set for Monday 2026-10-26 at 14:00 CT).** The spine band was narrowed from 0.500 in to 0.4033 in so it matches the hardcover's 8.07% proportion, which means the KDP paperback edition still carries the older wrapper. Upload `cover/pb-letters-cover.pdf` from `github.com/56phil/letters` at `d1df948` to the paperback edition. The hardcover did not move (its band is still 150 px) and needs nothing. A Reminders.app item "Re-upload the Letters paperback wrapper to KDP" carries the same text, due Monday 14:00.
+- **Letters paperback re-uploaded to KDP 2026-10-25** — Philip: "I did that a few moments ago." The 0.4033 in / 8.07% band is live on Amazon, so the paperback and hardcover now carry the same proportion. The Reminders item set for Monday 2026-10-26 at 14:00 is marked complete. Nothing about this title is waiting on anyone.
 - (open items appear here; the Ollama reachability decision recorded 2026-09-28 was closed 2026-10-07 — see the entry at the top of this file)
 
 ## Architecture Notes
