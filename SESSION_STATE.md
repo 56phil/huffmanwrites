@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 25, 2026 — Added the two missing books to /books/
+
+Philip: "Add pages for pic & bws."
+- **`content/books/profiles-in-compliance/index.md`** (*Profiles in Compliance: The Standard, and Who Pays for It*, weight 10) and **`content/books/by-what-standard/index.md`** (*By What Standard?: The Office and the Record*, weight 11), both `availability: "Expected: late November 2026."` and no `link`, which is the documented unreleased shape the frontmatter gate already allows (it exempts `link` when `availability` is present).
+- **Why they were missing.** `/books/` called itself the authoritative list while `content/now.md` announced both titles; neither had a page, cover, or hero. The catalogue now carries all eleven titles and the Now page's promises resolve to pages.
+- **Descriptions are condensed from Philip's own copy, not written fresh:** the KDP description for *Profiles in Compliance* (`~/Developer/LaTeX/AllMyBooks/pic/kdp-description.txt`) and the preface plus cover blurb for *By What Standard?* (`bws/content/FrontMatter/Preface.tex`, `bws/cover/cover.md`). No claim appears that those files do not make.
+- **Covers are the projects' own front-cover crops** (`pic-kindle.jpg`, `bws-kindle.jpg` → `assets/img/books/{profiles-in-compliance,by-what-standard}.jpg`), so the site shows the jacket the print file actually carries. **`bws`'s jacket is still a typographic scaffold** (cream field, green spine band, ruled paper, display-face title, no art), unlike every other cover in the grid; it will need replacing when the jacket art is commissioned.
+- **Hero plates generated this session** via fal `flux-pro/v1.1-ultra` on the locked aesthetic, `static/`+`assets/img/articles/` as `pic-*` and `bws-*` at the existing book geometry (1672×941 and 1122×1402). Two prompt lessons worth keeping: a "gold bar that ends mid-stone" rendered as a glowing horizon line twice, and a "measuring rod with fine notches" rendered as a **printed ruler with numerals**; describing the prohibition in the STYLE block and switching to two solid objects on a slab fixed both. The `pic` 4:5 plate is cropped from the 16:9 frame at native resolution because two generation passes dropped the row of impressions that carries the concept.
+- **Verified:** `check-content-frontmatter.py` OK (266 files), `check-hero-paths.py` OK (387 paths), `check-emdashes` and `check-prepositions` clean on both files, `check-render-integrity` OK (609 pages), `check-gallery-pages` OK, `check-series-posts` OK, `check-links --check` OK; `hugo --gc --minify` clean at 518 pages, and the built pages were read rather than assumed: hero `<picture>` (both ratios), cover at 800×1280, `book-availability`, blurb, and prev/next ordering (Unstuck ← Profiles in Compliance → By What Standard? → Unstuck).
+
+---
+
 ### Maintenance — October 25, 2026 — Published the senate-report report (automated)
 
 Auto-published by `com.huffmanwrites.senate-report` after every gate passed.
