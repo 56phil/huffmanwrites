@@ -12,6 +12,14 @@
 
 ---
 
+### Maintenance — October 25, 2026 — Letters wears its oxblood spine
+
+Philip, 2026-10-25: "I recently changed the cover of letters so that the spine/back are dark red. The site needs to be made current."
+- **What he changed in the project** (`LaTeX/AllMyBooks/letters`, his working tree — I did not touch it): `spine_color` `#0F0F0F` → `#6C1715`, `spine_color_extension_inches` 0.4 → 0.5, `color_title` → `#6C1715`, `binding_type` `pb` → `hc`, page count 206 → 180, and the HC blurb and author bio filled in. His `hc-letters.jpg/.png/.pdf` renders are from 07:26 that morning and are still untracked in that repo.
+- **The site cover was re-exported, not hand-made.** `CoverStudio render . --out-front` on the project, then the 0.591 in fore-edge wrap cropped off the right so the card shows the front face and the band rather than the flat sheet: 2036×2771 → 1859×2771 (0.671), 764 KB, down from 1,125,398 B. Frontmatter untouched — `image: "img/books/letters.jpg"`, and this title has no `.webp` twin, so one file is the whole story. Site commit `5d71e71`.
+- **`trim_size` is inert on a hardcover, and this project shows it.** `cover.md` says `trim_size: fiveX8`, but `computeGeometry` takes hardcover dimensions from `template_*` (`14.174` full width, `6.197 × 9.236` front cover), not from the preset. Verified by running `5x8`, `fiveX8` and `6x9` through a temp copy: `inspect` reports 6.197×9.236 for all three. So the render — and the site — is 6×9, as it always was. Flagged to Philip rather than "corrected": the template numbers are what KDP prints, and only he can say which trim the book is.
+- **Verified:** `hugo --gc --minify` builds; `check-hero-paths.py` 381 paths and `check-content-frontmatter.py` 264 files both OK; the new cover checked in a browser on the book page and the hub locally and again on `www.huffmanwrites.org` after the deploy, where the served bytes hash to the build's `429aa678…`.
+
 ### Maintenance — October 25, 2026 — Unstuck has a new cover
 
 Philip, 2026-10-25: "I've changed the cover for 'Unstuck.' Freshen up the image on the site." The renders in `LaTeX/AllMyBooks/unstuck/cover/` were rebuilt at 06:27 (HC) and 06:35 (PB) that morning; the front art is the same door-and-figure plate, redrawn with the title inside the doorway.
