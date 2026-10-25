@@ -15,4 +15,6 @@ Every book here is an argument for the same proposition — that clarity, discip
 {{< book ref="/books/stoic-backgammon/" >}}
 {{< book ref="/books/on-proportion/" >}}
 {{< book ref="/books/raisem-right/" >}}
+{{< book ref="/books/profiles-in-compliance/" >}}
+{{< book ref="/books/by-what-standard/" >}}
 
