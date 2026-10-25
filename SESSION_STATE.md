@@ -12,6 +12,15 @@
 
 ---
 
+### Maintenance — October 25, 2026 — the spine band scales with the cover
+
+Philip, 2026-10-25: "I would prefer the bands scale" — said after the Letters paperback (5×8) and hardcover (6×9) turned out to carry the same 0.5 in band, which is 10% of the small face and 8.07% of the large one.
+- **`spine_color_extension_inches` is a fixed reach, so it cannot express a proportion.** The same number draws a heavier band every time the trim shrinks, which is exactly what the two-edition split makes visible. CoverStudio now has **`spine_color_extension_percent`**, a percentage of the front cover's width, which wins over the inch value whenever it is above zero: `Renderer.drawSpine` asks `resolvedSpineColorExtensionInches(frontWidthInches:)` instead of reading the inch field. Exposed in the Spine tab, documented in the README, pinned by three tests (fallback to inches, scaling across widths, save/load round-trip). CoverStudio PR #2, merged as `96c6980`. A `cover.md` with no percentage renders exactly as before.
+- **Letters is converted at 8.07%**, anchored on the hardcover so the published book does not move: PB 0.4033 in (121 px of the 1537 px front panel), HC 0.500 in (150 px, unchanged bar a sub-pixel edge). Letters PR #2, merged as `d1df948`. **The paperback wrapper needs a re-upload** for the narrower band; the hardcover does not.
+- **The site cover did not change and was not re-cut.** The hardcover face is what the card shows, and a fresh crop of the new render differs from the published `letters.jpg` by a mean of 0.7 levels per channel — JPEG re-encode noise, not art. Do not spend a deploy on it.
+- **Anchoring is a real choice, not a detail.** 8.07% keeps the 6×9 hardcover exactly as printed and narrows the paperback; a paperback-anchored 10% would have widened the hardcover to 0.62 in, changing the face the site and KDP already show. Anchor on the edition that is already published.
+- **The other books stay on inches until they are next rendered.** Converting a published cover changes its art, so the field is available for new work and for the next time a title is re-rendered: `percent = 100 × inches ÷ front_width`, where the width is 5.0 for a 5×8 paperback, 6.197 for a 6×9 hardcover front (`inspect --bind pb|hc` prints it).
+
 ### Maintenance — October 25, 2026 — Letters wears its oxblood spine
 
 Philip, 2026-10-25: "I recently changed the cover of letters so that the spine/back are dark red. The site needs to be made current."
