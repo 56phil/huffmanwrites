@@ -114,13 +114,13 @@ Fourth, the legal status of each declaration tracks its function. Tariff emergen
 
 ## Notes
 
-[^1]: National Emergencies Act, 50 U.S.C. §§ 1601–1651 (1976). https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title50-chapter34&edition=prelim
+[^1]: National Emergencies Act, 50 U.S.C. §§ 1601–1651 (1976). https://www.govinfo.gov/content/pkg/USCODE-2023-title50/html/USCODE-2023-title50-chap34.htm
 
 [^2]: Mesa, J. (2025, October 27). Full list of national emergencies signed by Trump and in effect. *Newsweek*. https://www.newsweek.com/donald-trump-national-emergencies-how-many-10946698
 
 [^3]: Wikipedia contributors. (n.d.). List of national emergencies in the United States. In *Wikipedia*. Retrieved August 2026. https://en.wikipedia.org/wiki/List_of_national_emergencies_in_the_United_States
 
-[^4]: International Emergency Economic Powers Act, 50 U.S.C. §§ 1701–1706 (1977). https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title50-chapter35&edition=prelim
+[^4]: International Emergency Economic Powers Act, 50 U.S.C. §§ 1701–1706 (1977). https://www.govinfo.gov/content/pkg/USCODE-2023-title50/html/USCODE-2023-title50-chap35.htm
 
 [^5]: Wikipedia contributors. (n.d.). National Emergency Concerning the Southern Border of the United States. In *Wikipedia*. Retrieved August 2026. https://en.wikipedia.org/wiki/National_Emergency_Concerning_the_Southern_Border_of_the_United_States
 
