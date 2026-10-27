@@ -3158,61 +3158,93 @@ class TestChiefsRunnerContract(unittest.TestCase):
             self.assertNotIn("'", m.group(1), m.group(0)[:120])
 
 
-class TestWeeklySatireRetirement(unittest.TestCase):
-    """The Weekly Satire runner is retired, and the retirement must hold.
+class TestWeeklySatireSchedule(unittest.TestCase):
+    """The Weekly Satire runs indefinitely, from a start date and no end date.
 
-    All four installments are pre-written and reviewed. The job fires every
-    Monday, and the one behavior that must never happen is a firing that reaches
-    `publish_preflight`: it deletes whatever sits at `$ARTICLE`
-    (`weekly-satire-$TODAY.md`), which on 2026-10-19, 10-26 and 11-02 is that
-    week's reviewed piece. So the guard is asserted to exit 0 AND to precede the
-    preflight — the second half is the load-bearing half, and moving the guard
-    below the preflight would pass a test that only checked for `exit 0`.
+    The series published four pre-written installments, the last embargoed to
+    2026-11-02, and Philip's 2026-10-27 instruction ended the end date: "Continue
+    the weekly satire indefinitely. Don't terminate on 02NOV26." Two things must
+    therefore hold at once.
+
+    First, no firing may reach `publish_preflight` before live generation starts:
+    the preflight deletes whatever sits at `$ARTICLE` (`weekly-satire-$TODAY.md`),
+    which on 2026-10-19, 10-26 and 11-02 is that week's reviewed piece. So the
+    guard is asserted to exit 0 AND to precede the preflight — the second half is
+    the load-bearing half, and a guard moved below the preflight would pass a test
+    that only checked for `exit 0`.
+
+    Second, nothing may stop the job again. An end-date comparison reappearing is
+    the exact regression this class exists to catch, which is why it is asserted
+    as an absence and not merely as "the guard for 2026-11-02 is gone".
     """
 
     def setUp(self):
         self.runner = (SCRIPTS / "weekly-satire-runner.sh").read_text(encoding="utf-8")
 
-    def test_the_retirement_guard_exits_zero(self):
-        # Match the guard's own log line, not the word "complete" — the header
-        # comment also says "the series is complete", and matching there would
-        # pass while the executable guard was deleted.
-        i = self.runner.find("all four installments are pre-written, exiting")
-        self.assertGreater(i, 0, "the retirement guard is gone")
+    def test_the_start_date_guard_exits_zero(self):
+        # Match the guard's own log line, not the word "start" — the header
+        # comment also mentions it, and matching there would pass while the
+        # executable guard was deleted.
+        i = self.runner.find("the pre-written run covers through 2026-11-02, exiting")
+        self.assertGreater(i, 0, "the start-date guard is gone")
         self.assertIn("exit 0", self.runner[i:i + 160])
 
     def test_the_guard_precedes_the_preflight(self):
         # The defect this pins: the preflight deletes the reviewed installment
         # at this run's path, so a guard placed after it is no guard at all.
-        guard = self.runner.find("all four installments are pre-written, exiting")
+        guard = self.runner.find("the pre-written run covers through 2026-11-02, exiting")
         preflight = self.runner.find('publish_preflight "$ARTICLE"')
         self.assertGreater(preflight, 0)
         self.assertLess(guard, preflight,
-                        "the retirement guard must run before publish_preflight, "
+                        "the start-date guard must run before publish_preflight, "
                         "which deletes the file at this run's article path")
 
-    def test_the_plist_stays_valid_and_installed(self):
-        # Retirement in place, not deletion: a plist with no schedule key fails
-        # check-plists.py, and the runner keeps every contract the other tests
-        # read (JOB bound, ollama probe, run_report_gates).
+    def test_the_guard_admits_every_date_after_the_prewritten_run(self):
+        # The comparison must be a lower bound. `< 2026-11-03` passes 11-03 and
+        # everything after it; `> 2026-11-02` would be the old self-disable and
+        # would terminate the series on the very next Monday.
+        self.assertRegex(self.runner,
+                         r'\[\[ "\$TODAY" < "2026-11-03" \]\]')
+
+    def test_no_end_date_guard_reappears(self):
+        # Philip, 2026-10-27: "Don't terminate on 02NOV26." Any upper-bound
+        # comparison on TODAY is that termination coming back, however it is
+        # spelled, so it is asserted as an absence over the whole file.
+        self.assertNotRegex(self.runner, r'\[\[\s*"\$TODAY"\s*>\s*"',
+                            "an end-date guard reappeared; the series must not "
+                            "terminate (Philip, 2026-10-27)")
+        # Exactly one date comparison, so a second one cannot hide behind this.
+        self.assertEqual(len(re.findall(r'"\$TODAY"\s*[<>]', self.runner)), 1)
+
+    def test_the_guard_is_skippable_only_by_the_documented_variable(self):
+        # The pipeline must stay exercisable before 2026-11-09 without publishing,
+        # and the scheduled run must not reach the writer by accident.
+        self.assertIn('WEEKLY_SATIRE_IGNORE_GUARDS:-0', self.runner)
+        self.assertIn("WEEKLY_SATIRE_TODAY", self.runner)
+
+    def test_the_plist_is_installed_with_an_unbounded_schedule(self):
+        # A plist with no schedule key fails check-plists.py, and a schedule with
+        # an end date would not be one — the job is Monday 07:00, every week.
         plist = (SCRIPTS / "com.huffmanwrites.weekly-satire.plist").read_text(encoding="utf-8")
         self.assertIn("StartCalendarInterval", plist)
+        self.assertIn("<integer>1</integer>", plist)  # Weekday 1 = Monday
         for needle in ("JOB=\"weekly-satire\"", "scripts/ollama-probe.sh",
                        "run_report_gates"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, self.runner)
 
-    def test_the_series_is_four_pieces(self):
-        # "We need four articles for this project" — the four dates that make
-        # the retirement correct. If a date is added or removed, this fails.
-        stems = sorted(p.name for p in
-                       (REPO / "content" / "posts" / "essays").glob("weekly-satire-*.md"))
-        self.assertEqual(stems, [
-            "weekly-satire-2026-10-12.md",
-            "weekly-satire-2026-10-19.md",
-            "weekly-satire-2026-10-26.md",
-            "weekly-satire-2026-11-02.md",
-        ])
+    def test_the_prewritten_installments_are_still_there(self):
+        # These four are the reason the start-date guard exists and the reason it
+        # must precede the preflight. The glob is deliberately a subset check, not
+        # an exact list: live generation adds one file per Monday from 2026-11-09,
+        # and a test that pinned the exact set would go red on the first real run —
+        # the fixture-rot class CLAUDE.md records.
+        present = {p.name for p in
+                   (REPO / "content" / "posts" / "essays").glob("weekly-satire-*.md")}
+        for stem in ("weekly-satire-2026-10-12.md", "weekly-satire-2026-10-19.md",
+                     "weekly-satire-2026-10-26.md", "weekly-satire-2026-11-02.md"):
+            with self.subTest(stem=stem):
+                self.assertIn(stem, present)
 
 
 class TestDailySitrep(unittest.TestCase):

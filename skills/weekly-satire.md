@@ -1,22 +1,27 @@
 # Skill: Weekly Satire
 
 The writer's brief for the **Weekly Satire** series — one piece every Monday,
-07:00 CT. **The series is complete as of 2026-10-10 and the runner is retired.**
-All four installments (`content/posts/essays/weekly-satire-2026-10-12.md`,
-`-10-19`, `-10-26`, `-11-02`) were written and reviewed before their dates and
-are embargoed to them; the Monday job exits 0 without writing. Nothing below
-runs on a schedule any longer. It is kept because reviving the series means
-replacing the runner's retirement guard with a start date and reading this brief
-again first.
+07:00 CT, **continuing indefinitely.** Philip, 2026-10-27: *"Continue the weekly
+satire indefinitely. Don't terminate on 02NOV26."* That supersedes the end date
+in his original instruction, so there is no final installment and no week the
+series stops.
+
+Four installments are already in the tree and embargoed to their dates
+(`content/posts/essays/weekly-satire-2026-10-12.md`, `-10-19`, `-10-26`,
+`-11-02`). They are not yours to write or touch: the runner exits 0 before
+2026-11-03 so they ship as reviewed. **Live generation begins Monday
+2026-11-09**, and from then on the Monday job writes and publishes each week's
+piece from this brief.
 
 **This job publishes without human review.** The runner writes the file, runs
 both builds and every gate, and pushes to production in one run. A gate failure
 aborts the push. That means the rules below are not style advice; they are the
 only thing standing between this piece and a reader.
 
-Philip's instruction, 2026-10-07: *"Set up a weekly task to publish a piece
-mocking Trump start next Monday. End the task 03NOV26."* Asked what form each
-piece should take, he chose: **randomly select the choice each week.**
+Philip's original instruction, 2026-10-07: *"Set up a weekly task to publish a
+piece mocking Trump start next Monday. End the task 03NOV26."* Asked what form
+each piece should take, he chose: **randomly select the choice each week.** The
+end date is the part he later removed; the random form stands.
 
 ---
 
@@ -79,12 +84,12 @@ said, which is documented; leave the rest alone.
 
 ## Form — select one at random each week
 
-> **The series is closed.** The four published installments used all four forms, one each:
-> The Receipt ("Paid for by the U.S. Government", 10-12), The Mock Institution (the
-> international-office fee notice, 10-19), The Weekly Apology ("An Apology to the
-> Seventy Million", 10-26), and The Absurdist Set Piece (the betting slip, 11-02).
-> A revival starts a new series; if it keeps this masthead, do not repeat a form a
-> recent installment used, and read the retirement note at the top of the runner.
+> **All four forms are in circulation again.** Draw one at random each week, and
+> if the draw is the form the most recent installment used, draw again — read the
+> newest `content/posts/essays/weekly-satire-*.md` to see which that was. The four
+> pre-written installments used one form each, so no form is used up: The Receipt
+> (10-12), The Mock Institution (10-19), The Weekly Apology (10-26), The Absurdist
+> Set Piece (11-02).
 
 All four are built on documented facts; the form changes the frame, never the licence to
 invent.
@@ -110,9 +115,9 @@ invent.
 ---
 title: "Weekly Satire: <Subject>, <Month D, YYYY>"
 description: "<One sentence. No stranded preposition.>"
-date: <today>T07:00:00-05:00
+date: <today>T07:00:00<CT offset>
 author: Philip Huffman
-lastmod: <today>T07:00:00-05:00
+lastmod: <today>T07:00:00<CT offset>
 featuredOnHome: true
 hero_desktop: "img/articles/114-weekly-satire_16x9.webp"
 hero_mobile: "img/articles/114-weekly-satire_4x5.webp"
@@ -134,6 +139,12 @@ Rules the frontmatter gate enforces, each of which has shipped as a defect:
 - `featuredOnHome: true` — the home feed shows only flagged posts, and more than
   five are already flagged, so an unflagged post is published and unseen.
 - `date` **not ahead of the clock** (Hugo silently skips future-dated content).
+  `<CT offset>` is Central Time's offset **today**, which is `-05:00` under CDT
+  and `-06:00` under CST; read it from `date '+%:z'` rather than hardcoding it.
+  A `-05:00` stamp on a winter run names 12:00Z, which is 06:00 CST, not 07:00:
+  the page then becomes eligible an hour before the slot the series publishes in,
+  and the `0 12 * * *` deploy fire puts it live early. The first live piece
+  (2026-11-09) is already in CST, so its offset is `-06:00`.
 - The four hero fields, **verbatim** as above. This series uses one fixed plate;
   do not generate or vary it.
 - The closing attribution line `*PRH | huffmanwrites.org | © Philip Huffman*`.

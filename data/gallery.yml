@@ -507,12 +507,13 @@
 - image: /img/articles/114-weekly-satire_16x9.webp
   title: Weekly Satire
   caption: The face is empty. The frame was paid for in full.
-  # The series is complete: four installments, 2026-10-12 through 11-02, all
-  # pre-written, reviewed, and embargoed to their Monday 07:00 CT dates. The
-  # `latest` glob resolves to whichever has been released, and the `link`
-  # fallback (the essay that established the series register) covers the gap
-  # before the first landing — after 2026-10-12 it is inert, since a match always
-  # exists. The Monday runner is retired and writes nothing.
+  # The series runs indefinitely (Philip, 2026-10-27: "Continue the weekly satire
+  # indefinitely"). Four installments, 2026-10-12 through 11-02, were pre-written,
+  # reviewed, and embargoed to their Monday 07:00 CT dates; live generation begins
+  # 2026-11-09. The `latest` glob handles both halves unchanged — it resolves to
+  # whichever installment has been released — and the `link` fallback (the essay
+  # that established the series register) covers the gap before the first landing;
+  # after 2026-10-12 it is inert, since a match always exists.
   link: /posts/essays/my-apologies/
   latest: /posts/essays/weekly-satire-*
 - image: /img/articles/115-sitrep_16x9.webp
