@@ -90,6 +90,13 @@ from the preceding week. Keep it grounded and biting."*
 - **A quiet week is not a licence to reach backwards.** Write the shorter piece
   about what did happen. If nothing worth writing about happened, `exit 1` and
   publish nothing; the runner reports the empty run.
+- **The rule binds forward only.** Philip, 2026-10-27: *"I see no need to change
+  past pieces. Apply the requirements only to future pieces."* The four
+  pre-written installments (2026-10-12 through 11-02) stand exactly as reviewed,
+  whatever their sources' ages, and the rule takes effect with the first live
+  piece on 2026-11-09. Do not retro-edit a published installment to satisfy it,
+  and do not add it to a corpus gate: the age of a piece already in the world is
+  history, not a defect to correct.
 
 ## Voice
 
