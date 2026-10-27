@@ -2935,6 +2935,11 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 - Session continuity = this file + compacted summary
 - Primary local checkout: `/Users/prh/Developer/huffmanwrites/`
 - Codex may work from detached worktrees under `/Users/prh/.codex/worktrees/...`; push with `git push origin HEAD:main` when appropriate.
+- **Every volume whose name ends in `BU` belongs to Carbon Copy Cloner** — Philip, 2026-10-27: "all volumes ending with 'BU' are CCC involved." Seen mounted on this machine: `BU`, `MacBU`, `MediaBU`, `MediaSSDBU`, `EmergencyRestartBU`. **A `BU` volume is never an orphan, and never a candidate for deletion or repurposing**, no matter how stale its contents look: CCC keeps its own cadence. Its tasks are invisible to `launchd`, `~/bin` and this repo — the task list lives behind the app's CLI, which is what to read before judging any volume maintained or not:
+  - `"/Applications/Carbon Copy Cloner.app/Contents/MacOS/ccc" -p` — schedules and next run time
+  - `"/Applications/Carbon Copy Cloner.app/Contents/MacOS/ccc" -h [-c]` — run history, result, bytes and file counts
+
+  Tasks as of 2026-10-27: `CCC Backup Task` (daily 02:30), `emergencyrestart2EmergencyRestartBU` (daily 01:37), `Mac2MacBak` (hourly), `mac2macBU` (hourly), `media2mediassdBU` (hourly, every 6 h). This rule exists because it was violated the same day it was needed: the assistant called `EmergencyRestartBU` a stale orphan after searching only `~/bin`, `~/Library/LaunchAgents` and the repo.
 
 ---
 
