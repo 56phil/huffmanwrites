@@ -62,6 +62,35 @@ writing about — **write the shorter piece or abort** (`exit 1` from your own
 judgment is fine, and leaves the file unwritten so the run publishes nothing).
 A thin honest piece is good. A padded invented one is the failure.
 
+## Subject — the week's news
+
+**The piece is about a news item from the seven days before it publishes.**
+Philip, 2026-10-27: *"I want the subject of the satire piece to be a news item
+from the preceding week. Keep it grounded and biting."*
+
+- **The window** is the seven days before the Monday run: the previous Monday
+  through the day of publication.
+- **Find the item by reading the week's reporting**, not by recalling a story
+  and dating it afterwards. Recalled-then-supported is how a piece ends up about
+  something that happened three weeks ago and reads as though it were current.
+  (Measured on the four pre-written installments: three of them were about news
+  ten to twenty-five days old on their own publication date.)
+- **One item is the subject.** Earlier material is allowed as context — the
+  precedent, the prior firing, the earlier investigation — provided it is marked
+  as background and the piece is not *about* it.
+- **Every `## Sources` line carries the item's publication date** in the house
+  shape: `Habeshian, S., & Debusmann, B. (2026, November 9). ["Headline"](url).
+  BBC News.` A source whose date you cannot read is one you cannot show to be
+  this week's.
+- **The runner checks the dates and aborts the push** when fewer than two source
+  lines fall inside the window (`scripts/check-satire-recency.py`). Two is a
+  floor, not a target: one fresh citation under a piece about old news passes
+  nothing but the arithmetic, and the subject rule is what the gate exists to
+  remind you of.
+- **A quiet week is not a licence to reach backwards.** Write the shorter piece
+  about what did happen. If nothing worth writing about happened, `exit 1` and
+  publish nothing; the runner reports the empty run.
+
 ## Voice
 
 Personal stakes, historical context, contemporary urgency. Not yelling, not
@@ -81,6 +110,27 @@ Two calibrations from the pieces already on the site, use them as the range:
 Never cruel for its own sake. The target is the conduct and the record, not the
 man's appearance, his family, or anything he cannot choose. Mock what he did and
 said, which is documented; leave the rest alone.
+
+**Biting, not loud.** Philip, 2026-10-27: "Keep it grounded and biting." The two
+words pull in the same direction: what makes a sentence bite is a fact that
+cannot be answered, delivered without adjectives that a reader could dispute.
+Concretely:
+
+- **Name the act in the plainest verb there is**, then stop the sentence. "The
+  department billed the students" bites; "the department shamelessly gouged the
+  students" argues.
+
+- **Cut every hedge that softens the subject's conduct.** "To be fair" belongs in
+  a piece that might be wrong. This one is documented; fairness to the reader is
+  the sources list, and fairness to the record is the record.
+
+- **End on the sharpest documented fact, not on a hope.** No "we can only wait
+  and see", no call to vote in the last line. The reader should close the page
+  with the fact still in the room, not with the writer's feelings about it.
+
+- **The joke must survive the fact's removal, inverted:** take the joke out and
+  the paragraph must still be true. If it only works because of the joke, the
+  joke is doing the work of evidence.
 
 ## Form — select one at random each week
 
@@ -171,10 +221,15 @@ The stem matches the gallery `latest` glob, which is how the series card and
 ## Citation apparatus
 
 End the piece with a `## Sources` list in the site's APA-ish house style: a
-linked line for each cited source. Every **quotation** in the piece must have a
-URL-bearing line in this list, and the link must **contain the quoted wording** —
-point at the specific page, never a landing page or an encyclopedia article
-about the work.
+linked line for each cited source, carrying **the item's publication date**.
+Every **quotation** in the piece must have a URL-bearing line in this list, and
+the link must **contain the quoted wording** — point at the specific page, never a
+landing page or an encyclopedia article about the work.
+
+The dates are not decoration: the recency gate reads them, so a Sources list
+without dates reads as a piece about no particular week. Write the year first
+(`(2026, November 9)`), which is the shape the gate parses and the shape the rest
+of the site uses.
 
 You may run `python3 scripts/check-links.py --file <your file> --online --titles`
 if you want early feedback, but you do not need to: the runner runs the full gate

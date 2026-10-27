@@ -66,7 +66,7 @@ export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 
 # Override for manual test runs: WEEKLY_SATIRE_PROMPT="Reply with exactly: SMOKE-OK"
 # Note: no apostrophes inside the ${VAR:-...} default; bash 3.2 mis-parses them.
-PROMPT="${WEEKLY_SATIRE_PROMPT:-Read $SKILL and follow it exactly. Write the Weekly Satire piece for this week. It will be published on this run if every gate passes.}"
+PROMPT="${WEEKLY_SATIRE_PROMPT:-Read $SKILL and follow it exactly. Write the Weekly Satire piece for this week, about a news item from the seven days before today, with every source dated. It will be published on this run if every gate passes.}"
 
 # ---------------------------------------------------------------------------
 # Start-date guard: live generation begins Monday 2026-11-09.
@@ -196,6 +196,15 @@ fi
 # gates are the only thing between an unreviewed draft and production.
 run_report_gates "$ARTICLE" --plate 114-weekly-satire
 
+# Series-specific, and deliberately outside the shared list: the subject must be
+# news from the seven days before publication (Philip, 2026-10-27: "I want the
+# subject of the satire piece to be a news item from the preceding week"). It is
+# not in `run_report_gates` because the four pre-written installments predate the
+# rule and would fail it — three of them are about news ten to twenty-five days
+# old on their own date — and a corpus entry would turn CI red on published,
+# reviewed pages. Here it runs on exactly the piece this run wrote.
+run_gate "check-satire-recency" "$REPO/scripts/check-satire-recency.py" --file "$ARTICLE"
+
 if report_gates_failed; then
   echo "$(stamp): a gate FAILED; NOT PUBLISHING. The article is left in place for review." >> "$OUT_LOG"
   "$REPO/scripts/alert-failure.sh" "$JOB" 1 "a gate failed; see $OUT_LOG" || true
@@ -211,7 +220,7 @@ publish_dry_run_stop "$ARTICLE" && exit 0
 
 DETAIL="$(mktemp "${TMPDIR:-/tmp}/satire-detail-XXXXXX")"
 {
-  echo "- **The form, and the week's subject:** written to the brief in \`skills/weekly-satire.md\`; the form is chosen at random from the four the skill lists, and every factual claim is sourced from a page the writer fetched."
+  echo "- **The form, and the week's subject:** written to the brief in \`skills/weekly-satire.md\`; the form is chosen at random from the four the skill lists, the subject is a news item from the seven days before publication, and every factual claim is sourced from a page the writer fetched. The recency gate reads the \`## Sources\` dates and aborts the push when fewer than two fall inside that window."
   echo "- **Every quotation is verbatim from its fetched source**, and the runner aborts the push on a dead link, a placeholder anchor, or a quoted name detail that appears on none of the pages the citing line links. This is the one writing job whose material is selected rather than collected by a script, so the skill's fetch-before-cite rules are the primary control."
 } > "$DETAIL"
 TITLE_LINE="$(grep -m1 '^title: ' "$ARTICLE" | sed 's/^title: *//' | tr -d '"')"

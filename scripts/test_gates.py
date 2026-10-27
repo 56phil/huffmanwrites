@@ -21,14 +21,16 @@ Run:  python3 scripts/test_gates.py
 from __future__ import annotations
 
 import argparse
+import contextlib
 import importlib.util
 import inspect
+import io
 import json
 import re
 import sys
 import tempfile
 import unittest
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -3245,6 +3247,152 @@ class TestWeeklySatireSchedule(unittest.TestCase):
                      "weekly-satire-2026-10-26.md", "weekly-satire-2026-11-02.md"):
             with self.subTest(stem=stem):
                 self.assertIn(stem, present)
+
+
+class TestSatireRecency(unittest.TestCase):
+    """The subject must be news from the seven days before publication.
+
+    Philip, 2026-10-27: "I want the subject of the satire piece to be a news
+    item from the preceding week." Nothing about the prose can be gated, but the
+    sources carry dates, and dated sources are what make "this week's news"
+    checkable rather than asserted. These tests pin the window's two edges, the
+    date shapes the Sources list actually uses, and the failure that matters: a
+    piece about old news, which three of the four pre-written installments were
+    (10, 17 and 23 days old on their own publication date).
+
+    Every fixture is a `tempfile` file and every date is passed in, so nothing
+    here reads the clock or the real content tree.
+    """
+
+    # The publish date and every fixture date derive from this one object, so no
+    # date-only literal sits near today in a test that hands a date to a script —
+    # the pattern TestNoTestAssertsAboutToday exists for. A `date` object cannot be
+    # overtaken by the calendar either, which is the property that matters.
+    BASE = date(2026, 11, 9)
+
+    def setUp(self):
+        self.mod = load("check-satire-recency")
+
+    def day(self, back: int) -> str:
+        return (self.BASE - timedelta(days=back)).isoformat()
+
+    def article(self, sources: str, stamp: str | None = None) -> Path:
+        d = Path(tempfile.mkdtemp(prefix="satire-recency-"))
+        p = d / "weekly-satire-2026-11-09.md"
+        head = "---\n"
+        head += f"date: {self.day(0) if stamp is None else stamp}T07:00:00-06:00\n"
+        head += "draft: false\n---\n\nBody text.\n\n## Sources\n\n"
+        p.write_text(head + sources + "\n\n*PRH | huffmanwrites.org | © Philip Huffman*\n",
+                     encoding="utf-8")
+        return p
+
+    def run_gate(self, path: Path, *args: str) -> int:
+        argv = ["check-satire-recency", "--file", str(path), *args]
+        old = sys.argv
+        sys.argv = argv
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as buf:
+                rc = self.mod.main()
+        finally:
+            sys.argv = old
+        self.output = buf.getvalue()
+        return rc
+
+    def src(self, back: int, label: str = "Headline") -> str:
+        return (f"- A. One. ({self.day(back)}). [\"{label}\"](https://example.org/s{back}).\n")
+
+    # --- the window's two edges ------------------------------------------------
+
+    def test_two_sources_inside_the_window_pass(self):
+        p = self.article(self.src(1, "Headline one") + self.src(5, "Headline two"))
+        self.assertEqual(self.run_gate(p), 0, self.output)
+        self.assertIn("2 of 2 source(s) dated within 7 days", self.output)
+
+    def test_exactly_seven_days_old_counts_as_the_preceding_week(self):
+        p = self.article(self.src(7) + self.src(0))
+        self.assertEqual(self.run_gate(p), 0, self.output)
+
+    def test_eight_days_old_is_outside_the_window(self):
+        # The boundary is the point: "the preceding week" is seven days, and a
+        # gate that accepted eight would accept twenty-three.
+        p = self.article(self.src(8) + self.src(9))
+        self.assertEqual(self.run_gate(p), 1, self.output)
+        self.assertIn(f"outside the window: {self.day(8)} (8d old)", self.output)
+
+    def test_a_piece_about_old_news_fails_and_names_the_dates(self):
+        # The measured defect: the 2026-11-02 installment cited sources 23 days
+        # old on the day it published. A fresh-looking headline is not evidence
+        # of a fresh subject, and the age is what the gate reports.
+        p = self.article(self.src(6) + self.src(30, "Old news") + self.src(31, "Older news"))
+        self.assertEqual(self.run_gate(p), 1, self.output)
+        self.assertIn(f"only 1 source(s) dated inside {self.day(7)}..{self.day(0)}", self.output)
+        self.assertIn(f"{self.day(30)} (30d old)", self.output)
+
+    # --- shapes and structure -------------------------------------------------
+
+    def test_every_house_date_shape_is_read(self):
+        # The house shape is APA ("(2026, November 8)"); the rest are the forms a
+        # writer reaches for, and a gate blind to them would fail correct pieces.
+        shapes = [
+            "(2026, November 8)",
+            "November 8, 2026",
+            "8 November 2026",
+            "Nov. 8, 2026",
+            self.day(1),
+        ]
+        for shape in shapes:
+            with self.subTest(shape=shape):
+                p = self.article(
+                    f"- A. One. {shape}. [\"Headline\"](https://example.org/a).\n"
+                    f"- B. Two. ({self.day(2)}). [\"Headline\"](https://example.org/b).\n")
+                self.assertEqual(self.run_gate(p), 0, self.output)
+
+    def test_a_sources_list_without_dates_fails(self):
+        p = self.article(
+            "- A. One. [\"Headline\"](https://example.org/a).\n"
+            "- B. Two. [\"Headline\"](https://example.org/b).\n")
+        self.assertEqual(self.run_gate(p), 1, self.output)
+        self.assertIn("no source line carries a readable date", self.output)
+
+    def test_a_piece_with_no_sources_section_fails(self):
+        d = Path(tempfile.mkdtemp(prefix="satire-recency-"))
+        p = d / "weekly-satire-2026-11-09.md"
+        p.write_text(f"---\ndate: {self.day(0)}T07:00:00-06:00\n---\n\nNo sources at all.\n",
+                     encoding="utf-8")
+        self.assertEqual(self.run_gate(p), 1, self.output)
+        self.assertIn("no `## Sources` section", self.output)
+
+    def test_the_publish_date_comes_from_frontmatter_unless_overridden(self):
+        p = self.article(self.src(1) + self.src(3))
+        self.assertEqual(self.run_gate(p), 0, self.output)
+        # Same file, a publish date a fortnight later: the news is now old.
+        later = (self.BASE + timedelta(days=14)).isoformat()
+        self.assertEqual(self.run_gate(p, "--date", later), 1, self.output)
+
+    def test_it_reports_coverage_even_when_everything_passes(self):
+        # A gate that inspects nothing reports OK; the count is how a collapsing
+        # selector becomes visible.
+        p = self.article(self.src(1) + self.src(2))
+        self.run_gate(p)
+        self.assertRegex(self.output, r"coverage: 2 sources")
+
+    # --- wiring ---------------------------------------------------------------
+
+    def test_the_satire_runner_runs_it_on_the_piece_it_wrote(self):
+        runner = (SCRIPTS / "weekly-satire-runner.sh").read_text(encoding="utf-8")
+        self.assertIn("check-satire-recency.py", runner)
+        self.assertIn('run_gate "check-satire-recency"', runner)
+        self.assertIn('--file "$ARTICLE"', runner)
+
+    def test_it_is_deliberately_not_a_corpus_gate(self):
+        # The four pre-written installments predate the rule and three of them
+        # are about news 10 to 25 days old on their own date. A corpus entry
+        # would turn CI red on published, reviewed pages; the scope belongs to
+        # the run that writes the piece.
+        for name in ("publish-report.sh", "corpus-gates.sh"):
+            text = (SCRIPTS / name).read_text(encoding="utf-8")
+            with self.subTest(script=name):
+                self.assertNotIn("check-satire-recency", text)
 
 
 class TestDailySitrep(unittest.TestCase):
