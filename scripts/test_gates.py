@@ -1593,6 +1593,85 @@ class TestChiefsReport(unittest.TestCase):
         ]}]}
         self.assertIsNone(ck.describe_game(event, "KC"))
 
+    # --- kickoff times -----------------------------------------------------
+    # Shipped defect, 2026-10-27. The pack printed the kickoff as one UTC stamp
+    # (`2026-11-01T21:25Z`) and the writer converted it with the offset in force
+    # on the run date, -05:00: "Kansas City plays at Denver on Sunday at 4:25
+    # p.m. Central". The game is on Nov 1, after the change to standard time, so
+    # 21:25Z is 3:25 p.m. Central and 2:25 p.m. in Denver — one hour off, on a
+    # page every gate passed, in a report nobody reviews before it publishes.
+    # The conversion therefore happens here, at the instant, and the pack prints
+    # the result for the writer to copy.
+
+    def test_a_kickoff_is_converted_at_the_game_instant_not_the_run_days_offset(self):
+        ko = ck.kickoff("2026-11-01T21:25Z", "DEN")
+        self.assertEqual(ko["ct"], "3:25 p.m. Central (CST)")
+        self.assertEqual(ko["venue"], "2:25 p.m. Mountain (MST)")
+        self.assertEqual(ko["day"], "Sunday, November 1")
+
+    def test_a_kickoff_before_the_change_is_not_shifted_by_it(self):
+        # Oct 4 is on daylight time (CDT, UTC-5), so 20:25Z is 3:25 p.m. Central
+        # too. Reading the zone correctly and reading one fixed offset both
+        # reproduce this case; only the November case separates them, and both
+        # directions have to be right.
+        ko = ck.kickoff("2026-10-04T20:25Z", "KC")
+        self.assertEqual(ko["ct"], "3:25 p.m. Central (CDT)")
+        self.assertNotIn("venue", ko, "a game in the Central zone has no second clock")
+
+    def test_an_away_kickoff_uses_the_home_clubs_zone(self):
+        # The venue's clock is the HOME team's, which on an away game is not the
+        # Chiefs'. Asking the Chiefs' zone would print Kansas City's time twice.
+        event = {
+            "id": "1", "date": "2026-11-01T21:25Z", "name": "KC at DEN",
+            "shortName": "KC @ DEN", "week": {"number": 8},
+            "competitions": [{
+                "status": {"type": {"completed": False, "state": "pre",
+                                    "description": "Scheduled",
+                                    "detail": "Sun, November 1st at 4:25 PM EST"}},
+                "venue": {"fullName": "Empower Field at Mile High"},
+                "broadcasts": [{"media": {"shortName": "CBS"}}],
+                "competitors": [
+                    {"homeAway": "home", "team": {"abbreviation": "DEN", "displayName": "Denver Broncos"}},
+                    {"homeAway": "away", "team": {"abbreviation": "KC", "displayName": "Kansas City Chiefs"}},
+                ],
+            }],
+        }
+        got = ck.describe_game(event, "KC")["kickoff"]
+        self.assertIn("Mountain", got["venue"])
+
+    def test_every_club_has_a_resolvable_venue_zone(self):
+        self.assertEqual(len(ck.TEAM_TZ), 32, "an NFL season is 32 clubs")
+        for abbr in ck.TEAM_TZ:
+            self.assertIsNotNone(ck.venue_zone(abbr), f"{abbr} names a zone tzdata cannot load")
+        self.assertIsNone(ck.venue_zone("XYZ"), "an unknown club gets no invented zone")
+        self.assertIsNone(ck.venue_zone(None))
+
+    def test_the_pack_prints_the_converted_kickoff_and_warns_off_the_feeds_label(self):
+        # The feed's own label is Eastern ("4:25 PM EST") and was the string the
+        # writer read; the pack must hand it a Central time and say plainly that
+        # the feed's reading is not one to copy.
+        out = ck.render({
+            "today": "2026-10-27", "generated": "x",
+            "team": {"name": "KC", "abbreviation": "KC"},
+            "season": {"phase": "Regular Season", "period": "Week 8",
+                       "period_detail": "", "starts": "a", "ends": "b"},
+            "games_played": 7, "news": [],
+            "next_game": {
+                "opponent": "DEN", "opponent_name": "Denver Broncos", "week": 8,
+                "date": "2026-11-01T21:25Z", "home": False, "venue": "Empower Field at Mile High",
+                "broadcasts": ["CBS"], "links": [], "detail": "Sun, November 1st at 4:25 PM EST",
+                "opponent_record": "5-2 (3-0 home)",
+                "kickoff": ck.kickoff("2026-11-01T21:25Z", "DEN"),
+            },
+            "next_summary": {},
+            "markets": {"kalshi": [], "polymarket": [], "kalshi_win_total": [],
+                        "failures": []},
+        })
+        self.assertIn("**Kickoff:** Sunday, November 1, 3:25 p.m. Central (CST)", out)
+        self.assertIn("2:25 p.m. Mountain (MST) at the venue", out)
+        self.assertIn("Eastern time", out)
+        self.assertNotIn("4:25 p.m. Central", out)
+
     def test_the_predictor_resolves_names_only_from_observed_ids(self):
         # The projection identifies teams by numeric id, and printing the raw id
         # leaves the writer guessing which side is which. Guessing a NAME is

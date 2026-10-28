@@ -12,6 +12,19 @@
 
 ---
 
+### Maintenance — October 27, 2026 — The Chiefs kickoff is converted at the game's instant
+
+Philip: "the starting time of 1625 not quite right. It's 1525 in KC and 1425 in Denver."
+
+- **The defect.** The 2026-10-27 report read "Kansas City plays at Denver on Sunday at 4:25 p.m. Central". The game is `2026-11-01T21:25Z`, which is 3:25 p.m. Central and 2:25 p.m. in Denver: **Nov 1 is on the far side of the change to standard time**, so the UTC stamp converts at −06:00, not the −05:00 in force on the Tuesday the report was written. The writer converted a UTC stamp with today's offset. One hour wide, and invisible to every gate: the date, the opponent, the venue and the link were all right, and the page rendered.
+- **Two sources conspired.** The pack printed the kickoff only as the raw stamp (`2026-11-01T21:25Z`), leaving the conversion to the writer, and ESPN's own status line reads "Sun, November 1st at 4:25 PM **EST**" — Eastern, which is 4:25 at the venue's zone offset and 3:25 in Central. Reading that clock as Central reproduces the same hour, so both roads led to 4:25.
+- **The fix is structural, not a corrected number.** `scripts/chiefs-report.py` now resolves the kickoff with `ZoneInfo` **at the instant** (`kickoff()`, `_zoned()`) and prints, for the next game, the Central line, the venue's own line when it differs (a `TEAM_TZ` table of the 32 clubs' home zones), the UTC stamp with a warning not to convert it with today's offset, and the feed's `status.detail` labelled as **Eastern** and explicitly not to be copied or relabelled. `describe_game` carries the block, so every consumer gets it. A missing tz database suppresses the local lines rather than falling back to a fixed offset — the fallback `CT` is exactly the bug, so it no longer prints a time.
+- **`skills/chiefs-weekly-report.md`** now says the kickoff time is copied from the pack's `Kickoff:` line verbatim, and names ESPN's Eastern labelling as the trap.
+- **The published page is corrected in place**: "Sunday at 3:25 p.m. Central (2:25 p.m. in Denver)". The other five installments were audited and are right — every earlier kickoff (12:00, 3:25, 3:25, 3:25, 7:20 Central) was already on the near side of a change or correctly converted.
+- **Verified:** `check-kickoff` is not a gate; the conversion was exercised against the live feed (`kickoff: 3:25 p.m. Central (CST) / 2:25 p.m. Mountain (MST)`, feed detail `Sun, November 1st at 4:25 PM EST`), and `TestChiefsReport` gained five tests: the November instant, the October instant (so a fixed offset cannot pass both), an away game taking the HOME club's zone, all 32 zones resolving, and the rendered pack printing the Central line and warning off the feed's label.
+
+---
+
 ### Maintenance — October 27, 2026 — Published the chiefs-weekly-report report (automated)
 
 Auto-published by `com.huffmanwrites.chiefs-weekly-report` after every gate passed.

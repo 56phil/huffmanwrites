@@ -73,7 +73,7 @@ ESPN dropped Kansas City to fourth in its [Week 8 power rankings](https://www.es
 
 ## The next game
 
-Kansas City plays at Denver on Sunday at 4:25 p.m. Central, at Empower Field at Mile High, on CBS.
+Kansas City plays at Denver on Sunday at 3:25 p.m. Central (2:25 p.m. in Denver), at Empower Field at Mile High, on CBS.
 
 The Broncos are 5-2, 3-0 at home, and have won three straight: 23-17 at the Chargers, 17-14 in overtime over Seattle, and 30-16 at Arizona. Their losses were 31-10 to Kansas City in the opener at Arrowhead and 24-14 at San Francisco. Bo Nix is the quarterback. They have scored 144 points and allowed 141, which is a good defense rather than a great one.
 

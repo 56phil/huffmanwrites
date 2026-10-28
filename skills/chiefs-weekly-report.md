@@ -252,6 +252,14 @@ themselves. Search for the week's coverage and read what carries the story:
    often skipped.
 5. **The next game** — opponent, venue, kickoff, how to watch, the opponent's
    recent form, the line (attributed), and what to watch for.
+   - **The kickoff time is copied from the pack's `Kickoff:` line, verbatim.**
+     Never convert a UTC stamp yourself, and never take the time out of ESPN's
+     own status line: the feed labels every game in **Eastern** time
+     (`Sun, November 1st at 4:25 PM EST`), so reading that clock as Central —
+     or doing the arithmetic from today's offset instead of the game's — is
+     wrong by exactly one hour, which is what shipped on 2026-10-27
+     ("4:25 p.m. Central" for a game that kicked at 3:25). The pack prints the
+     time already resolved in both the site's clock and the venue's; use it.
 6. **What to watch beyond Sunday** — the standings math, the next few weeks,
    the trade deadline, a looming decision. Where the season is heading.
    **The season-long prediction markets belong here** when they carry a story:

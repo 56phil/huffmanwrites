@@ -66,7 +66,33 @@ try:
 
     CT = ZoneInfo("America/Chicago")
 except Exception:  # noqa: BLE001 - a missing tz database must not break the run
+    ZoneInfo = None
     CT = timezone(timedelta(hours=-5))
+
+# Each team's home venue time zone, so a kickoff can be printed both in the
+# site's clock and in the clock of the stadium it is played in. Keyed by the
+# abbreviation the feed itself uses, and every NFL club plays in the city its
+# name carries, so the mapping is a property of the league rather than a guess
+# about a particular game. `venue_zone` returns None for an abbreviation it does
+# not know, and the pack then prints the Central line alone instead of inventing
+# a second zone.
+TEAM_TZ = {
+    "ARI": "America/Phoenix", "ATL": "America/New_York", "BAL": "America/New_York",
+    "BUF": "America/New_York", "CAR": "America/New_York", "CHI": "America/Chicago",
+    "CIN": "America/New_York", "CLE": "America/New_York", "DAL": "America/Chicago",
+    "DEN": "America/Denver", "DET": "America/Detroit", "GB": "America/Chicago",
+    "HOU": "America/Chicago", "IND": "America/Indiana/Indianapolis",
+    "JAX": "America/New_York", "KC": "America/Chicago", "LA": "America/Los_Angeles",
+    "LAC": "America/Los_Angeles", "LV": "America/Los_Angeles", "MIA": "America/New_York",
+    "MIN": "America/Chicago", "NE": "America/New_York", "NO": "America/Chicago",
+    "NYG": "America/New_York", "NYJ": "America/New_York", "PHI": "America/New_York",
+    "PIT": "America/New_York", "SEA": "America/Los_Angeles", "SF": "America/Los_Angeles",
+    "TB": "America/New_York", "TEN": "America/Chicago", "WAS": "America/New_York",
+}
+
+# tzdata's abbreviation -> the name an American reader says out loud.
+_TZ_LABEL = {"CST": "Central", "CDT": "Central", "MST": "Mountain", "MDT": "Mountain",
+             "PST": "Pacific", "PDT": "Pacific", "EST": "Eastern", "EDT": "Eastern"}
 
 # News older than this is not this week's news. Two weeks, not one, because a
 # bye week or a quiet stretch should still yield a report rather than an empty
@@ -185,6 +211,75 @@ def parse_date(value: str) -> date:
     if not m:
         raise ValueError(f"unparseable date: {value!r}")
     return date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+
+
+def venue_zone(abbr: "str | None"):
+    """The home venue's IANA zone, or None when the club is not in TEAM_TZ."""
+    name = TEAM_TZ.get((abbr or "").upper())
+    if not name or ZoneInfo is None:
+        return None
+    try:
+        return ZoneInfo(name)
+    except Exception:  # noqa: BLE001 - no tz database means no venue line, not a crash
+        return None
+
+
+def _clock(dt: datetime) -> str:
+    """'3:25 p.m.' — the site's register, not '15:25' and not '03:25 PM'."""
+    hour = dt.hour % 12 or 12
+    return f"{hour}:{dt.minute:02d} {'a.m.' if dt.hour < 12 else 'p.m.'}"
+
+
+def _zoned(dt: datetime, zone) -> str:
+    """'3:25 p.m. Central (CST)' for one instant in one zone.
+
+    The abbreviation comes from tzdata via `tzname()`, so the daylight-saving
+    half is whatever the zone is actually doing at that instant — which is the
+    whole point of converting here rather than in the writer's head.
+    """
+    local = dt.astimezone(zone)
+    ab = local.tzname() or ""
+    return f"{_clock(local)} {_TZ_LABEL.get(ab, ab)} ({ab})"
+
+
+def kickoff(when: "str | None", home_abbr: "str | None") -> dict:
+    """One UTC stamp -> the kickoff in Central and at the venue. Never in offsets.
+
+    This exists because of a shipped defect, 2026-10-27. The pack printed the
+    kickoff as the feed's raw UTC stamp (`2026-11-01T21:25Z`) and the writer
+    converted it with the offset in force on the run date — -05:00 on Oct 27 —
+    producing "4:25 p.m. Central" for a game played on **Nov 1**, when Central
+    is on standard time and the same instant is 3:25 p.m. The error is one hour
+    wide, entirely plausible, and invisible to every gate: the date was right,
+    the opponent was right, and the page rendered. Only a reader in Kansas City
+    could see it. `ZoneInfo` resolves the offset at the INSTANT, so a game on
+    the far side of a daylight-saving change converts correctly here or not at
+    all.
+
+    The feed's own `status.detail` cannot be reused for this: ESPN labels every
+    game in Eastern time ("Sun, November 1st at 4:25 PM EST"), so its clock
+    reading is not Central and copying it — or relabelling it — is the same
+    hour-wide error in the opposite direction.
+    """
+    if not when:
+        return {}
+    try:
+        dt = datetime.fromisoformat(str(when).replace("Z", "+00:00"))
+    except ValueError:
+        return {}
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    ct = dt.astimezone(CT)
+    out = {"utc": when, "day": ct.strftime("%A, %B ") + str(ct.day)}
+    # Without a real tz database the fallback `CT` is a fixed offset and would
+    # reintroduce exactly the bug above in silence, so it prints no local time.
+    if getattr(CT, "key", None):
+        out["ct"] = _zoned(dt, CT)
+    tz = venue_zone(home_abbr)
+    if tz is not None and getattr(tz, "key", "") != getattr(CT, "key", ""):
+        out["venue"] = _zoned(dt, tz)
+        out["venue_city"] = (home_abbr or "").upper()
+    return out
 
 
 def league_calendar(payload: dict) -> "list[dict]":
@@ -342,9 +437,12 @@ def describe_game(event: dict, abbr: str) -> "dict | None":
     me, them = side["me"], side["them"]
     mine, theirs = _score(me), _score(them)
     home = (me.get("homeAway") or "") == "home"
+    home_side = me if home else (them or {})
+    home_abbr = (home_side.get("team") or {}).get("abbreviation")
     return {
         "id": event.get("id"),
         "date": event.get("date"),
+        "kickoff": kickoff(event.get("date"), home_abbr),
         "week": (event.get("week") or {}).get("number"),
         "name": event.get("name"),
         "short_name": event.get("shortName"),
@@ -1562,6 +1660,20 @@ def render(pack: dict) -> str:
         ha = "vs" if ng["home"] else "at"
         L.append(f"- **{pack['team']['abbreviation']} {ha} {ng['opponent']}** "
                  f"({ng['opponent_name']}), week {ng['week']}, {ng['date']}")
+        ko = ng.get("kickoff") or {}
+        if ko.get("ct"):
+            venue = ""
+            if ko.get("venue"):
+                venue = f" — {ko['venue']} at the venue"
+            L.append(f"- **Kickoff:** {ko['day']}, {ko['ct']}{venue}")
+        if ko.get("utc"):
+            L.append(f"- **The UTC stamp above is not a time to publish:** convert "
+                     f"it from the Kickoff line, never with today's offset, which "
+                     f"is the wrong one on the far side of a daylight-saving change")
+        if ng.get("detail"):
+            L.append(f"- **The feed's own status label:** \"{ng['detail']}\" — ESPN "
+                     f"labels every game in Eastern time, so this reading is not "
+                     f"Central and must not be relabelled as Central or copied as one")
         L.append(f"- **Venue:** {ng['venue']}")
         if ng["broadcasts"]:
             L.append(f"- **Broadcast:** {', '.join(ng['broadcasts'])}")
