@@ -27,6 +27,7 @@ import inspect
 import io
 import json
 import re
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -3798,6 +3799,67 @@ class TestSitrepBeats(unittest.TestCase):
                       "Film festival opens in Cannes"):
             with self.subTest(title=title):
                 self.assertFalse(self.pack._flag(title))
+
+
+class TestSitrepEditionNote(unittest.TestCase):
+    """Copy that belongs to ONE edition, injected on its own date and no other.
+
+    The mechanism exists because the skill is read on every run of an
+    open-ended daily series: a verse written into `skills/daily-sitrep.md` would
+    be requested again every morning, forever. The note therefore lives behind a
+    dated case in `scripts/sitrep-edition-note.sh`, and this class pins both
+    halves — the copy it emits, and the fact that it stops emitting it.
+    """
+
+    HELP = REPO / "scripts" / "sitrep-edition-note.sh"
+    RUNNER = REPO / "scripts" / "daily-sitrep-runner.sh"
+
+    @staticmethod
+    def note(day: str) -> str:
+        out = subprocess.run(["bash", str(TestSitrepEditionNote.HELP), day],
+                             capture_output=True, text=True, check=True)
+        return out.stdout
+
+    def test_the_verse_it_carries_is_the_one_philip_asked_for(self):
+        # Philip, 2026-10-28: "I want a haiku about changing back to standard
+        # time" and then "Put it in the 01NOV26 SITREP". The three lines are the
+        # poem; a writer that reassembled them into prose would destroy it, so
+        # the block is asserted contiguous and verbatim.
+        self.assertIn("The clock steps backward —\ndark arrives before dinner,\n"
+                      "light waits for morning.", self.note("2026-11-01"))
+
+    def test_it_says_how_to_keep_the_line_breaks(self):
+        # Markdown collapses a bare newline, so the 5-7-5 survives only if the
+        # writer knows to hard-break or fence it. This is the one instruction the
+        # note cannot omit: it is the difference between a poem and a sentence.
+        text = self.note("2026-11-01")
+        self.assertIn("two spaces", text)
+        self.assertIn("5-7-5", text)
+
+    def test_it_does_not_outlive_its_date(self):
+        # A dated case, not a flag: the day before and the day after are silent,
+        # and so is the same date a year later.
+        for day in ("2026-10-31", "2026-11-02", "2027-11-01", "1984-11-01", ""):
+            with self.subTest(day=day):
+                self.assertEqual(self.note(day).strip(), "")
+
+    def test_the_runner_appends_it_to_the_prompt_before_the_writer_runs(self):
+        runner = self.RUNNER.read_text(encoding="utf-8")
+        self.assertIn("sitrep-edition-note.sh", runner)
+        inject = runner.find("EDITION_NOTE=")
+        prompt = runner.find('PROMPT="', inject)
+        writer = runner.find("claude -p \"$PROMPT\"")
+        self.assertGreater(inject, 0, "the runner must ask for the note")
+        self.assertGreater(prompt, inject, "the note must reach PROMPT")
+        self.assertGreater(writer, prompt, "and PROMPT must be what the writer runs")
+
+    def test_the_smoke_override_is_not_polluted_by_it(self):
+        # SITREP_PROMPT is the documented way to prove the writer is reachable;
+        # a note appended to it would make the probe answer a different question.
+        runner = self.RUNNER.read_text(encoding="utf-8")
+        i = runner.find("EDITION_NOTE=")
+        guard = runner[i:i + 400]
+        self.assertIn('${SITREP_PROMPT:-}', guard)
 
 
 class TestSitrepWatchdog(unittest.TestCase):

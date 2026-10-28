@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — October 28, 2026 — The 01NOV26 SITREP will carry a haiku
+
+Philip: "I want a haiku about changing back to standard time" → "Put it in the 01NOV26 SITREP."
+
+- **The poem.** "The clock steps backward — / dark arrives before dinner, / light waits for morning." Set against the day the clocks go back; 2026-11-01 is the first edition written on standard time.
+- **It is injected, not pre-written, and that is deliberate.** The 06:00 run on Nov 1 writes that edition from `scripts/sitrep-pack.py`'s numbers, so a file written today would be an edition carrying today's data under Sunday's date — and `publish_preflight` deletes whatever sits at the day's path before the writer runs, so it would not survive anyway. Instead the runner appends the note to the writer's prompt on that date only.
+- **New `scripts/sitrep-edition-note.sh`.** `sitrep_edition_note <date>` prints copy for exactly one edition; the runner appends its output to `PROMPT` and logs that it did. The note says print the haiku verbatim after the lede, keep the three lines (two trailing spaces or a fenced block — a bare newline collapses and the 5-7-5 disappears), no title, no quotation marks, no attribution, no explanation. **The dated case lives there rather than in `skills/daily-sitrep.md` because the skill is read on every run**: a verse written into it would be requested again every morning for as long as the series runs. The `SITREP_PROMPT` smoke override is untouched by it, so the reachability probe still asks its own question.
+- **Verified by exercising the shipped lines, not by reading them.** The runner's prompt-assembly block was lifted out of the real file and run with `TODAY=2026-11-01`: the haiku reached `$PROMPT` intact; with `2026-10-28` the prompt was unchanged; with `SITREP_PROMPT` set it stayed exactly "Reply with exactly: SMOKE-OK". `bash -n` clean on both scripts. `TestSitrepEditionNote` (5 tests) pins the copy verbatim as one contiguous block, the hard-break instruction, silence on 2026-10-31 / 2026-11-02 / 2027-11-01 / 1984-11-01, the ordering (note → PROMPT → the `claude -p "$PROMPT"` call), and the override guard. Full suite: 452 tests, OK. **The runner was not executed end to end** — a real run today writes today's edition, and the runner takes its date from the clock, so it cannot be pointed at Nov 1 without one.
+- **If Nov 1 looks wrong:** `~/Library/Logs/daily-sitrep.out.log` should carry `this edition carries a dated note from scripts/sitrep-edition-note.sh` before the writer starts, and the published page should show the three lines as three lines.
+
+---
+
 ### Maintenance — October 27, 2026 — The Chiefs kickoff is converted at the game's instant
 
 Philip: "the starting time of 1625 not quite right. It's 1525 in KC and 1425 in Denver."

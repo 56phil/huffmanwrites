@@ -80,6 +80,22 @@ PACK="/tmp/sitrep-pack-$TODAY.md"
 # and reports the damage as a syntax error far later in the file.
 PROMPT="${SITREP_PROMPT:-Read $SKILL and follow it exactly. The briefing pack is at $PACK. Write the Global SITREP for today. It will be published on this run if every gate passes.}"
 
+# One edition can carry copy of its own — a verse Philip asked for, say. The
+# dated case lives in scripts/sitrep-edition-note.sh rather than in the skill,
+# which is read on every run and would therefore ask for the same verse every
+# morning for the rest of the series. No note on the date means no change to the
+# prompt at all, which is the normal case.
+EDITION_NOTE="$(bash "$REPO/scripts/sitrep-edition-note.sh" "$TODAY")"
+# The documented smoke override (SITREP_PROMPT) stays exactly as given: it is
+# used to prove the writer is reachable, and a note tacked onto it would make the
+# probe answer a different question than the one it was written for.
+if [ -n "$EDITION_NOTE" ] && [ -z "${SITREP_PROMPT:-}" ]; then
+  PROMPT="$PROMPT
+
+$EDITION_NOTE"
+  echo "$(stamp): this edition carries a dated note from scripts/sitrep-edition-note.sh" >> "$OUT_LOG"
+fi
+
 cd "$REPO"
 
 # The article path is bound before anything uses it: the preflight guard, the
