@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — October 28, 2026 — Published the daily-sitrep report (automated)
+
+Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
+- **Published** `content/posts/sitrep/sitrep-2026-10-28.md` — "SITREP: October 28, 2026", 2169 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The pack behind it:** 440 lines from `scripts/sitrep-pack.py`, 4 source(s) unavailable on this run. The Federal Register, the CourtListener search API, the U.S. Treasury daily yield curve, FiscalData, CNBC's quote service, the BLS public API, Polymarket's Gamma API, and five world-news RSS feeds supply it; the writer may not recall a figure, so every number in the piece is one the collector fetched. The world beat's headlines are collected; the story the writer picks from them is still fetched and cited by the writer.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own `<title>` to carry the article's `title` (`scripts/verify-published.py`, the rule `sitrep-watchdog.py` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence raises the shared alert and fails the run: the article is on `main` and no reader has it. The outcome is in `/Users/prh/Library/Logs/daily-sitrep.out.log`.
+- **SimpleBrain mirror** runs immediately after this push: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in `/Users/prh/Library/Logs/daily-sitrep.out.log`.
+
+---
+
 ### Maintenance — October 28, 2026 — The 01NOV26 SITREP will carry a haiku
 
 Philip: "I want a haiku about changing back to standard time" → "Put it in the 01NOV26 SITREP."
