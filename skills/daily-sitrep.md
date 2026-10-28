@@ -310,6 +310,13 @@ must be an ISO 8601 timestamp the gate can parse. Hugo's default
 the page is simply absent, which is the failure that hides. At a 0600 CT run,
 stamp the run time; do not round it forward.
 
+**The offset is Central Time's offset today, not the one every earlier edition
+carries.** Read it from `date '+%:z'`: `-05:00` under CDT, `-06:00` under CST.
+Every edition through 2026-10-28 reads `-05:00` because those runs were in CDT,
+and copying the previous file's suffix is the way a winter edition gets stamped
+an hour wrong. The 2026-11-01 edition is the first in CST, so it takes
+`-06:00`.
+
 - No newsletter/sendfox fields.
 
 ## Step 4 — Report back, in this shape
