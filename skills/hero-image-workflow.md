@@ -87,6 +87,42 @@ that does not exist fails, and a glob matching nothing yet is a note — reporte
 differently depending on whether a `link` fallback is present, because that is
 what decides whether the card is still useful.
 
+## The ground is graded, not prompted
+
+FLUX reads "deep midnight navy" as near-black. Measured on NN 139 on 2026-10-29:
+the prompt asked for a midnight-navy void and the darkest 8% of pixels came back at
+mean RGB **(4, 4, 5)** where the house ground is `#131E39` = (19, 30, 57). A ground
+that dark is a *near-black* page, not this site's navy, and the difference is
+visible the moment the hero sits under the header.
+
+The prompt does not fix this and more adjectives do not either. Grade it:
+
+```bash
+python3 scripts/grade-hero-navy.py /tmp/raw-16x9.png static/img/articles/NN-slug_16x9.webp
+```
+
+Two moves, both additive so the model's own grain and falloff survive:
+
+1. **Shadow lift.** Measure the mean RGB of the darkest `--floor-pct` (8%) and add
+   the vector `navy - measured` to every pixel, weighted 1 at black and falling to 0
+   at `--threshold` luminance (45). An additive offset preserves detail inside the
+   shadows; a per-channel multiplier crushes it.
+2. **Amber lift.** Above `--amber-from` luminance (120), add `(+6, +2, -6)` so a lit
+   marble surface reads gold rather than cream.
+
+Nothing above the threshold is touched, which is why the stone keeps the light the
+model gave it. The script prints the shadow mean before and after, so the result is
+a measurement rather than an impression: `(4.0, 3.9, 4.6)` before, `(17.7, 27.7,
+52.4)` after, against a target of `(19, 30, 57)`. Re-running it on the same source
+reproduced the shipped NN 139 file with a mean absolute pixel difference of **0.0**,
+so the grade is deterministic and a future session can regenerate a sibling frame
+that matches.
+
+**Do not grade a series plate that carries a different ground.** The Chiefs plate is
+team red by design (`#E31837`), so the navy target does not apply; the same lesson
+does, which is that a brand color is graded onto its hex rather than described in the
+prompt.
+
 ## Generation Requirements
 Every post requires a pair of images:
 1. **Desktop Version**: 16:9 aspect ratio.
