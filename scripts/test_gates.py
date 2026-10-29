@@ -3786,6 +3786,72 @@ class TestSitrepBeats(unittest.TestCase):
         self.assertIn("Euronews", result["failed"])
         self.assertTrue(result["items"], "the reachable feeds should still return items")
 
+    def test_a_courtlistener_query_without_a_token_names_the_missing_home(self):
+        # 2026-10-28: the v4 search endpoint stopped answering anonymous
+        # requests. A pack that reported a bare "HTTP 401" made the courts beat
+        # look like a passing hiccup; the failure has to name the credential and
+        # the reason, or nobody installs it.
+        import unittest.mock as mock
+        with mock.patch.object(self.pack, "courtlistener_token", return_value=None):
+            with self.assertRaises(self.pack.FetchError) as ctx:
+                self.pack.cl_search(type="o", court="scotus")
+        msg = str(ctx.exception)
+        self.assertIn("huffmanwrites-courtlistener", msg)
+        self.assertIn("COURTLISTENER_API_TOKEN", msg)
+
+    def test_a_courtlistener_query_sends_the_token_header(self):
+        import unittest.mock as mock
+        seen = {}
+
+        def fake_json(url, **kw):
+            seen["url"] = url
+            seen["headers"] = kw.get("headers") or {}
+            return {"count": 0, "results": []}
+
+        with mock.patch.object(self.pack, "courtlistener_token", return_value="abc123"), \
+             mock.patch.object(self.pack, "fetch_json", side_effect=fake_json):
+            # A zero interval skips the pace sleep; the rule it enforces is
+            # pinned by the constant, not by this test.
+            with mock.patch.object(self.pack, "CL_MIN_INTERVAL", 0):
+                self.pack.cl_search(type="o", court="scotus")
+        self.assertTrue(seen["url"].startswith(self.pack.CL_SEARCH))
+        self.assertEqual(seen["headers"].get("Authorization"), "Token abc123")
+
+    def test_a_refused_courtlistener_token_is_reported_as_stale(self):
+        # A 401 with a token installed is a different finding from a 401 with
+        # none: the key exists and does not work, so the remedy is reissuing it.
+        import unittest.mock as mock
+
+        def fake_json(url, **kw):
+            raise self.pack.FetchError(f"HTTP 401 for {url}")
+
+        with mock.patch.object(self.pack, "courtlistener_token", return_value="dead"), \
+             mock.patch.object(self.pack, "fetch_json", side_effect=fake_json):
+            with mock.patch.object(self.pack, "CL_MIN_INTERVAL", 0):
+                with self.assertRaises(self.pack.FetchError) as ctx:
+                    self.pack.cl_search(type="o", court="scotus")
+        self.assertIn("stale", str(ctx.exception))
+
+    def test_a_failed_source_reports_the_recorded_reason(self):
+        # The 2026-10-28/29 defect exactly: the status table said `HTTP 401 for
+        # <url>` and every section body said only "fetch failed", so three days
+        # of CourtListener 401s read like a passing hiccup in the one file the
+        # writer is told to trust. The gap line now carries the recorded detail.
+        pack = {"unavailable": [
+            "CourtListener — Supreme Court opinions: UNAVAILABLE — HTTP 401 for https://x",
+        ]}
+        self.assertEqual(
+            self.pack._gap_reason(pack, "CourtListener — Supreme Court opinions"),
+            "HTTP 401 for https://x",
+        )
+        # A source that recorded nothing, and one that recorded no detail, both
+        # still say something rather than rendering an empty line.
+        self.assertEqual(self.pack._gap_reason({"unavailable": []}, "X"), "fetch failed")
+        self.assertEqual(
+            self.pack._gap_reason({"unavailable": ["X: UNAVAILABLE — "]}, "X"),
+            "fetch failed",
+        )
+
     def test_the_keyword_flag_matches_the_beat(self):
         # The flag decides what the writer is shown first, so it must catch the
         # terms the world beat is about without matching everything.
@@ -5460,12 +5526,14 @@ class TestSecretDrift(unittest.TestCase):
         self.assertTrue(any("repo-local copy exists" in p for p in problems))
 
     def test_credentials_without_a_probe_are_not_probed(self):
-        # Two providers have a cheap, free liveness probe: fal.ai and SendFox.
-        # A key with no probe must not be sent anywhere — asserting the
-        # registry shape keeps a later edit from inventing one by accident.
+        # Three providers have a cheap, free liveness probe: fal.ai, SendFox and
+        # CourtListener. A key with no probe must not be sent anywhere —
+        # asserting the registry shape keeps a later edit from inventing one by
+        # accident.
         for cred in cs.CREDENTIALS:
             with self.subTest(cred=cred["name"]):
-                self.assertIn(cred.get("probe"), (None, "fal", "sendfox"))
+                self.assertIn(cred.get("probe"),
+                              (None, "fal", "sendfox", "courtlistener"))
 
     def test_a_server_error_is_not_read_as_auth_success(self):
         # A 5xx means the provider is broken, not that the key works. Reading
@@ -5547,6 +5615,73 @@ class TestSecretDrift(unittest.TestCase):
             "http://x", 503, "Service Unavailable", {}, _io.BytesIO(b""))
         with mock.patch("urllib.request.urlopen", side_effect=err):
             verdict, _ = cs.probe_sendfox("any-token")
+        self.assertEqual(verdict, "unverified")
+
+    def test_courtlistener_is_registered_against_the_keychain_home(self):
+        # Registered 2026-10-28, the day CourtListener closed anonymous access to
+        # the v4 search endpoint and every SITREP pack began opening its courts
+        # section with HTTP 401. The probe is the half that matters: an anonymous
+        # request answers the same 401 a stale token does, so without it the gate
+        # cannot tell "no key installed" from "the key is dead".
+        cl = [c for c in cs.CREDENTIALS if c["name"] == "COURTLISTENER_API_TOKEN"][0]
+        self.assertEqual(cl["keychain"], "huffmanwrites-courtlistener")
+        self.assertEqual(cl["secrets_var"], "COURTLISTENER_API_TOKEN")
+        self.assertEqual(cl["probe"], "courtlistener")
+        self.assertEqual(cl["legacy_repo_files"], [])
+        # Optional because the pipeline falls back to keyless court feeds when no
+        # token exists; a stale installed token is still a failure.
+        self.assertTrue(cl.get("optional"))
+
+    def test_an_optional_credential_may_be_absent_but_not_half_installed(self):
+        # The only thing `optional` may drop is "no value in any home". A key in
+        # one home and not the other leaves the documented fallback dead, and two
+        # homes that disagree mean one is stale — both stay failures, or the flag
+        # would become a way to install nothing and hear nothing.
+        self.assertEqual(
+            cs.compare_homes("K", {"keychain:k": None, "~/.secrets:K": None},
+                             optional=True),
+            [],
+        )
+        half = cs.compare_homes("K", {"keychain:k": "v", "~/.secrets:K": None},
+                                optional=True)
+        self.assertEqual(len(half), 1)
+        self.assertIn("missing from ~/.secrets:K", half[0])
+        disagree = cs.compare_homes("K", {"keychain:k": "a", "~/.secrets:K": "b"},
+                                    optional=True)
+        self.assertEqual(len(disagree), 1)
+        self.assertIn("DISAGREE", disagree[0])
+
+    def test_courtlistener_a_200_is_a_live_token(self):
+        import unittest.mock as mock
+        resp = mock.MagicMock()
+        resp.status = 200
+        resp.__enter__ = lambda s: s
+        resp.__exit__ = mock.MagicMock(return_value=False)
+        with mock.patch("urllib.request.urlopen", return_value=resp):
+            verdict, detail = cs.probe_courtlistener("any-token")
+        self.assertEqual(verdict, "ok")
+        self.assertIn("200", detail)
+
+    def test_courtlistener_a_401_is_a_stale_token(self):
+        import io as _io
+        import urllib.error
+        import unittest.mock as mock
+        err = urllib.error.HTTPError(
+            "http://x", 401, "Unauthorized", {},
+            _io.BytesIO(b'{"detail":"Authentication credentials were not provided."}'))
+        with mock.patch("urllib.request.urlopen", side_effect=err):
+            verdict, detail = cs.probe_courtlistener("any-token")
+        self.assertEqual(verdict, "auth-failed")
+        self.assertIn("401", detail)
+
+    def test_courtlistener_a_throttle_is_not_a_verdict(self):
+        # A 429 says the request was counted and not answered. Reading it as a
+        # dead key would send a working token to be reissued.
+        import urllib.error
+        import unittest.mock as mock
+        err = urllib.error.HTTPError("http://x", 429, "Too Many Requests", {}, None)
+        with mock.patch("urllib.request.urlopen", side_effect=err):
+            verdict, _ = cs.probe_courtlistener("any-token")
         self.assertEqual(verdict, "unverified")
 
     def test_sendfox_a_stale_key_is_reported_even_when_homes_agree(self):

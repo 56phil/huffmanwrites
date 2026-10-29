@@ -219,7 +219,7 @@ publish_dry_run_stop "$ARTICLE" && exit 0
 
 DETAIL="$(mktemp "${TMPDIR:-/tmp}/sitrep-detail-XXXXXX")"
 {
-  echo "- **The pack behind it:** $PACK_LINES lines from \`scripts/sitrep-pack.py\`, $PACK_MISSING source(s) unavailable on this run. The Federal Register, the CourtListener search API, the U.S. Treasury daily yield curve, FiscalData, CNBC's quote service, the BLS public API, Polymarket's Gamma API, and five world-news RSS feeds supply it; the writer may not recall a figure, so every number in the piece is one the collector fetched. The world beat's headlines are collected; the story the writer picks from them is still fetched and cited by the writer."
+  echo "- **The pack behind it:** $PACK_LINES lines from \`scripts/sitrep-pack.py\`, $PACK_MISSING source(s) unavailable on this run. The Federal Register, CourtListener's per-court feeds and search API, the U.S. Treasury daily yield curve, FiscalData, CNBC's quote service, the BLS public API, Polymarket's Gamma API, and five world-news RSS feeds supply it; the writer may not recall a figure, so every number in the piece is one the collector fetched. The world beat's headlines are collected; the story the writer picks from them is still fetched and cited by the writer."
 } > "$DETAIL"
 TITLE_LINE="$(grep -m1 '^title: ' "$ARTICLE" | sed 's/^title: *//' | tr -d '"')"
 publish_article "$ARTICLE" "$TITLE_LINE" "$DETAIL"

@@ -108,6 +108,20 @@ gap in it is still a report. Your piece does the same: say in one sentence that
 the source was unreachable, work around the gap, and move on. Never fill the
 silence from memory, and never present a partial section as a whole one.
 
+**The CourtListener search API needs a key since 2026-10-28, and the pack works
+without one.** That endpoint was the one part of the API that answered
+anonymously; it now returns `401 Authentication credentials were not provided`.
+So the two opinion queries read the per-court opinion Atom feeds instead (still
+keyless) and the pack says which route it took — `Read from the court's opinion
+feed (keyless; no search token installed)`. Only the **D.D.C. new complaints**
+query has no keyless equivalent, so it alone opens with `SOURCE UNAVAILABLE`,
+and the reason names the remedy: a free CourtListener account issues a token at
+`/profile/api/` at no cost, stored in the login keychain
+(`huffmanwrites-courtlistener`) with `~/.secrets` (`COURTLISTENER_API_TOKEN`) as
+the fallback, and probed by `scripts/check-secrets.py --online`. When that gap
+appears, say in one sentence that new district complaints could not be read —
+the opinion feeds and the watched dockets were.
+
 ## Step 2 — Get what the pack cannot give you.
 
 The pack carries the day's hard record. It is not reporting, and it does not

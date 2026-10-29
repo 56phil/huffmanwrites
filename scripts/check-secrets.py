@@ -102,6 +102,26 @@ CREDENTIALS: "list[dict]" = [
         "legacy_repo_files": [],
         "probe": None,
     },
+    {
+        # Added 2026-10-28, the day CourtListener closed anonymous access to the
+        # v4 search endpoint: every SITREP pack since has opened its courts
+        # section with HTTP 401. The token is free and the job makes three
+        # searches a day against a 125/day allowance.
+        #
+        # **Optional, and that is not a loophole.** The token is $0 but needs an
+        # account, and without one the beat is not dark: `sitrep-pack.py` reads
+        # the per-court opinion Atom feeds, which still answer anonymously, and
+        # only the D.D.C. RECAP query loses coverage. So an absent token is a
+        # documented configuration rather than a defect — while a token that IS
+        # installed and does not authenticate is still a failure, which is the
+        # half this gate exists for.
+        "name": "COURTLISTENER_API_TOKEN",
+        "keychain": "huffmanwrites-courtlistener",
+        "secrets_var": "COURTLISTENER_API_TOKEN",
+        "legacy_repo_files": [],
+        "probe": "courtlistener",
+        "optional": True,
+    },
 ]
 
 
@@ -166,17 +186,27 @@ def resolve_homes(cred: dict) -> "dict[str, str | None]":
     }
 
 
-def compare_homes(name: str, homes: "dict[str, str | None]") -> "list[str]":
+def compare_homes(name: str, homes: "dict[str, str | None]",
+                  optional: bool = False) -> "list[str]":
     """The rule, as a pure function so it can be tested without a keychain.
 
     Given one credential's homes and their resolved values, return the problems
     with them. Two homes that are both present must agree; a home that is
     missing leaves the documented fallback dead.
+
+    `optional` covers a credential whose absence is a documented configuration
+    rather than a defect — the CourtListener token, where the pipeline falls
+    back to keyless court feeds. It drops **only** the "no value in any home"
+    finding: a half-installed key (one home but not the other) and two homes
+    that disagree are still problems, because those are the states that make the
+    fallback dead or one copy stale.
     """
     problems = []
     present = {k: v for k, v in homes.items() if v}
 
     if not present:
+        if optional:
+            return problems
         problems.append(
             f"{name}: no value in any home "
             f"(checked {', '.join(homes)}). If this key is retired, remove its "
@@ -208,7 +238,8 @@ def check_drift(cred: dict) -> "list[str]":
     stale, and which one is stale cannot be told from here — so both are
     reported with their fingerprints, and the fix is to reconcile them.
     """
-    problems = compare_homes(cred["name"], resolve_homes(cred))
+    problems = compare_homes(cred["name"], resolve_homes(cred),
+                             optional=bool(cred.get("optional")))
 
     for rel in cred.get("legacy_repo_files", []):
         path = REPO / rel
@@ -309,6 +340,48 @@ def probe_sendfox(key: str, timeout: float = 20.0) -> "tuple[str, str]":
         return "unverified", f"could not reach sendfox.com ({e})"
 
 
+def probe_courtlistener(key: str, timeout: float = 20.0) -> "tuple[str, str]":
+    """Ask CourtListener whether this token authenticates, reading nothing.
+
+    One search request for a term that exists in any corpus: a live token
+    answers 200, a stale or reset one answers `401 {"detail":"Authentication
+    credentials were not provided."}`. Since 2026-10-28 an *anonymous* request
+    answers that same 401, so this probe is the only way to tell "no key
+    installed" from "the key is dead" — which is why the SITREP's courts beat
+    needs this entry to exist at all.
+
+    Spend: one request against a free account's 5/min and 125/day, with
+    `page_size` deliberately absent — search ignores it, and asking for it
+    spends the same request for nothing.
+
+    Returns (verdict, detail) where verdict is ok / auth-failed / unverified.
+    """
+    url = ("https://www.courtlistener.com/api/rest/v4/search/"
+           "?q=courtlistener&type=o")
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Authorization": f"Token {key}",
+            "User-Agent": "huffmanwrites-secrets-check/1.0 (+https://www.huffmanwrites.org)",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return "ok", f"HTTP {resp.status}"
+    except urllib.error.HTTPError as e:
+        if e.code == 401:
+            return "auth-failed", "HTTP 401 Authentication credentials were not provided"
+        if e.code == 429:
+            # Throttled: the token was accepted far enough to be counted, but
+            # the request was not answered. Not a verdict either way.
+            return "unverified", "HTTP 429 (throttled, key not judged)"
+        if e.code >= 500:
+            return "unverified", f"HTTP {e.code} (provider error, key not judged)"
+        return "unverified", f"HTTP {e.code}"
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        return "unverified", f"could not reach courtlistener.com ({e})"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -337,9 +410,13 @@ def main() -> int:
             key = (keychain_lookup(cred["keychain"])
                    or secrets_lookup(cred["secrets_var"]))
             if not key:
-                problems.append(f"{cred['name']}: nothing to probe (no value in any home)")
+                if not cred.get("optional"):
+                    problems.append(
+                        f"{cred['name']}: nothing to probe (no value in any home)"
+                    )
                 continue
-            prober = {"fal": probe_fal, "sendfox": probe_sendfox}[cred["probe"]]
+            prober = {"fal": probe_fal, "sendfox": probe_sendfox,
+                      "courtlistener": probe_courtlistener}[cred["probe"]]
             verdict, detail = prober(key)
             if verdict == "auth-failed":
                 problems.append(

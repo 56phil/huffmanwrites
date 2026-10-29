@@ -186,6 +186,7 @@ def _fetch(
     ua: str = "",
     data: "bytes | None" = None,
     content_type: "str | None" = None,
+    headers: "dict[str, str] | None" = None,
     timeout: float = TIMEOUT,
     tries: int = TRIES,
 ) -> bytes:
@@ -197,14 +198,14 @@ def _fetch(
     try — and the whole point of this file is that one host hiccup must not cost
     the day's report.
     """
-    headers = {}
+    sent = dict(headers or {})
     if ua:
-        headers["User-Agent"] = ua
+        sent["User-Agent"] = ua
     if content_type:
-        headers["Content-Type"] = content_type
+        sent["Content-Type"] = content_type
     last: "Exception | None" = None
     for attempt in range(tries):
-        req = urllib.request.Request(url, headers=headers, data=data)
+        req = urllib.request.Request(url, headers=sent, data=data)
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return r.read()
@@ -298,17 +299,68 @@ def fr_document(result: dict) -> dict:
 # makes three calls back-to-back and the D.D.C. one was refused with HTTP 429 on
 # a run that followed another by seconds (2026-10-07). Spacing the calls is the
 # fix that costs nothing when the limit is not near.
+#
+# **But since 2026-10-28 there is no anonymous search at all.** The v4 `/search/`
+# endpoint — the one endpoint that used to answer without a key, which is why
+# this file needed only pacing — now returns
+# `401 {"detail":"Authentication credentials were not provided."}` for opinions,
+# RECAP and every other `type`. Measured on 2026-10-28 (the first run to report
+# it) and again on 2026-10-29 on a bare curl, with and without a User-Agent. The
+# watched-docket Atom feeds and the site's HTML pages are unaffected; the three
+# search queries are the part that went dark, and they stay dark until a token
+# is installed. A free account gets 5 requests a minute and 125 a day, which is
+# two orders of magnitude above this job's three.
 CL_MIN_INTERVAL = 1.5
 _CL_LAST = [0.0]
 
+# The token's two homes, in the order `check-secrets.py` resolves them. Written
+# down in one place — that script — and loaded from there, because a second
+# parser here would drift from the rule the gate enforces.
+CL_TOKEN_KEYCHAIN = "huffmanwrites-courtlistener"
+CL_TOKEN_VAR = "COURTLISTENER_API_TOKEN"
+
+
+def courtlistener_token() -> "str | None":
+    """The CourtListener API token: login keychain first, `~/.secrets` second."""
+    path = REPO / "scripts" / "check-secrets.py"
+    spec = importlib.util.spec_from_file_location("_sitrep_check_secrets", path)
+    if spec is None or spec.loader is None:
+        raise FetchError(f"could not load the credential helper at {path}")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.keychain_lookup(CL_TOKEN_KEYCHAIN) or mod.secrets_lookup(CL_TOKEN_VAR)
+
 
 def cl_search(**params) -> dict:
+    token = courtlistener_token()
+    if not token:
+        # Name the remedy, not just the status: without this line the courts
+        # section reads "HTTP 401", which looks like a passing hiccup.
+        raise FetchError(
+            "no CourtListener API token in either home "
+            f"(keychain `{CL_TOKEN_KEYCHAIN}` or ~/.secrets `{CL_TOKEN_VAR}`); "
+            "anonymous search was closed on 2026-10-28 and now answers HTTP 401. "
+            "A free CourtListener account issues a token at /profile/api/ at no "
+            "cost (5 requests a minute, 50 an hour, 125 a day); membership only "
+            "raises those limits"
+        )
     gap = CL_MIN_INTERVAL - (time.monotonic() - _CL_LAST[0])
     if gap > 0:
         time.sleep(gap)
     try:
         url = CL_SEARCH + "?" + urllib.parse.urlencode(params)
-        payload = fetch_json(url, ua=SITREP_UA)
+        try:
+            payload = fetch_json(
+                url, ua=SITREP_UA, headers={"Authorization": f"Token {token}"}
+            )
+        except FetchError as e:
+            if "HTTP 401" in str(e):
+                raise FetchError(
+                    "the CourtListener API token was refused (HTTP 401) — it is "
+                    "stale or was reset; reissue it at /profile/api/ and update "
+                    f"`{CL_TOKEN_KEYCHAIN}`"
+                ) from e
+            raise
     finally:
         _CL_LAST[0] = time.monotonic()
     if not isinstance(payload, dict):
@@ -367,14 +419,63 @@ def cl_result(payload: dict, start: str, end: str, opinion: bool) -> dict:
     }
 
 
+# The per-court opinion Atom feeds answer `200` to this job's own User-Agent
+# with no credential — measured 2026-10-29, after anonymous search was closed.
+# They are the keyless path for the opinion half of the courts beat, and they
+# carry the twenty newest opinions rather than a query window.
+CL_COURT_FEEDS = {
+    "scotus": "https://www.courtlistener.com/feed/court/scotus/",
+    "cadc": "https://www.courtlistener.com/feed/court/cadc/",
+}
+
+
+def cl_court_feed(court: str, start: str, end: str) -> dict:
+    """Read one court's opinion feed and filter it to the window.
+
+    `api_count` is deliberately None: a feed states no total, so the renderer
+    must not print "showing N of M" for it.
+    """
+    url = CL_COURT_FEEDS[court]
+    rows = parse_feed(_fetch(url, ua=SITREP_UA), f"CourtListener court feed ({court})")
+    out = []
+    for r in rows:
+        day = (r["date"] or "")[:10]
+        if not _in_window(day, start, end):
+            continue
+        out.append({
+            "date": day,
+            "case": r["title"] or "(unnamed)",
+            "docket": "",
+            "court": "",
+            "url": r["link"],
+        })
+    return {"rows": out, "api_count": None, "returned": len(rows)}
+
+
 def cl_opinions(court: str, start: str, end: str) -> dict:
-    payload = cl_search(
-        type="o",
-        court=court,
-        filed_after=start,
-        order_by="dateFiled desc",
-        page_size=20,
-    )
+    """Opinions in the window: the search API when a token exists, the feed otherwise.
+
+    The feed is the fallback rather than the default because search filters by
+    court and window server-side and the feed does not; but the feed needs no
+    credential, so the beat survives a missing or stale token instead of going
+    dark. `via` travels into the pack so the writer can say which one it read.
+    """
+    if not courtlistener_token():
+        result = cl_court_feed(court, start, end)
+        result["via"] = "the court's opinion feed (keyless; no search token installed)"
+        return result
+    try:
+        payload = cl_search(
+            type="o",
+            court=court,
+            filed_after=start,
+            order_by="dateFiled desc",
+            page_size=20,
+        )
+    except FetchError as e:
+        result = cl_court_feed(court, start, end)
+        result["via"] = f"the court's opinion feed (the search API refused: {e})"
+        return result
     return cl_result(payload, start, end, opinion=True)
 
 
@@ -966,6 +1067,25 @@ def build_pack(as_of: str, window_days: int, now_ct: datetime) -> dict:
 # ---------------------------------------------------------------------------
 # Rendering
 # ---------------------------------------------------------------------------
+def _gap_reason(pack: dict, source: str) -> str:
+    """The recorded reason a source failed, as the status table wrote it.
+
+    `attempt()` and `note()` record `"<source>: UNAVAILABLE — <detail>"`. The
+    section bodies used to print a bare "fetch failed" (or, worse, re-print the
+    source name in front of the detail), so the pack said HTTP 401 in the table
+    and nothing at all in the section a reader actually reads. Every gap line
+    goes through here now.
+    """
+    recorded = next(
+        (u for u in pack.get("unavailable") or [] if u.startswith(f"{source}: ")),
+        "",
+    )
+    if not recorded:
+        return "fetch failed"
+    detail = recorded[len(source) + 2:].removeprefix("UNAVAILABLE — ").strip()
+    return detail or "fetch failed"
+
+
 def render(pack: dict) -> str:
     """The briefing pack the writer reads. Every line above traces to a payload."""
     L: "list[str]" = []
@@ -1003,11 +1123,7 @@ def render(pack: dict) -> str:
     L.append("")
     adm = pack.get("administration")
     if adm is None:
-        reason = next(
-            (u for u in pack["unavailable"] if u.startswith("Federal Register API")),
-            "fetch failed",
-        )
-        gap("Federal Register API", reason)
+        gap("Federal Register API", _gap_reason(pack, "Federal Register API"))
     else:
         L.append(
             f"Federal Register documents published {win['start']} through "
@@ -1053,9 +1169,14 @@ def render(pack: dict) -> str:
     def court_block(title: str, data, source: str) -> None:
         L.append(f"### {title}")
         if data is None:
-            gap(source, "fetch failed")
+            gap(source, _gap_reason(pack, source))
             return
         rows = data["rows"]
+        if data.get("via"):
+            # Which route produced these rows. The pack must not leave a reader
+            # guessing whether it saw the search API or the keyless feed.
+            L.append(f"Read from {data['via']}.")
+            L.append("")
         if data.get("returned") and data.get("api_count") and (
             data["returned"] < data["api_count"]
         ):
@@ -1103,7 +1224,8 @@ def render(pack: dict) -> str:
     L.append("### The watched dockets")
     watched = courts.get("watched")
     if watched is None:
-        gap("check-docket registry (watched dockets)", "fetch failed")
+        gap("check-docket registry (watched dockets)",
+            _gap_reason(pack, "check-docket registry (watched dockets)"))
     else:
         L.append(
             "From the same registry `scripts/check-docket.py` watches; the feed "
@@ -1139,11 +1261,7 @@ def render(pack: dict) -> str:
         L.append("")
     quotes = mk.get("quotes") or []
     if not quotes:
-        reason = next(
-            (u for u in pack["unavailable"] if u.startswith("CNBC quote service")),
-            "fetch failed",
-        )
-        gap("CNBC quote service", reason)
+        gap("CNBC quote service", _gap_reason(pack, "CNBC quote service"))
     else:
         L.append("| Symbol | Index | Last | Change | As of |")
         L.append("|---|---|---|---|---|")
@@ -1157,11 +1275,8 @@ def render(pack: dict) -> str:
     L.append("### Treasury yield curve (U.S. Treasury daily rates)")
     L.append("")
     if not yields:
-        reason = next(
-            (u for u in pack["unavailable"] if u.startswith("U.S. Treasury daily")),
-            "fetch failed",
-        )
-        gap("U.S. Treasury daily yield curve", reason)
+        gap("U.S. Treasury daily yield curve",
+            _gap_reason(pack, "U.S. Treasury daily yield curve"))
     else:
         L.append("| Date | 2Y | 10Y | 30Y | 2s10s |")
         L.append("|---|---|---|---|---|")
@@ -1180,11 +1295,8 @@ def render(pack: dict) -> str:
     L.append("")
     debt = mk.get("debt") or []
     if not debt:
-        reason = next(
-            (u for u in pack["unavailable"] if u.startswith("FiscalData")),
-            "fetch failed",
-        )
-        gap("FiscalData debt to the penny", reason)
+        gap("FiscalData debt to the penny",
+            _gap_reason(pack, "FiscalData debt to the penny"))
     else:
         latest = debt[0]
         prior = debt[1] if len(debt) > 1 else None
@@ -1210,11 +1322,7 @@ def render(pack: dict) -> str:
     L.append("")
     economy = pack.get("economy")
     if not economy:
-        reason = next(
-            (u for u in pack["unavailable"] if u.startswith("BLS public API")),
-            "fetch failed",
-        )
-        gap("BLS public API", reason)
+        gap("BLS public API", _gap_reason(pack, "BLS public API"))
     else:
         L.append(
             "Monthly series, newest first; the month named is the reference "
@@ -1240,10 +1348,7 @@ def render(pack: dict) -> str:
         markets = section.get("markets")
         source = f"Polymarket Gamma — {', '.join(tags)}"
         if markets is None:
-            reason = next(
-                (u for u in pack["unavailable"] if u.startswith(source)), "fetch failed"
-            )
-            gap(source, reason)
+            gap(source, _gap_reason(pack, source))
             continue
         if not markets:
             L.append(
@@ -1290,11 +1395,7 @@ def render(pack: dict) -> str:
     L.append("")
     world = pack.get("world_news")
     if world is None:
-        reason = next(
-            (u for u in pack["unavailable"] if u.startswith("World-news RSS")),
-            "fetch failed",
-        )
-        gap("World-news RSS", reason)
+        gap("World-news RSS", _gap_reason(pack, "World-news RSS"))
     else:
         L.append(
             "Headlines read from five keyless world-news feeds at the timestamp "
