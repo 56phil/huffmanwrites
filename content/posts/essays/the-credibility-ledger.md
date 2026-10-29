@@ -7,8 +7,8 @@ lastmod: 2026-10-29T08:35:00-05:00
 featuredOnHome: true
 hero_desktop: "img/articles/140-the-credibility-ledger_16x9.webp"
 hero_mobile: "img/articles/140-the-credibility-ledger_4x5.webp"
-hero_alt: "A tall slab of pale Parian marble scored with close horizontal rulings like a ledger page, split from top to bottom by a seam of glowing amber light, with a plainer slab standing dim behind it in a deep midnight navy void."
-hero_caption: "A record is not a memory. It is what survives being checked."
+hero_alt: "A massive felled oak trunk lying diagonally across a manicured putting green at dusk, its pale sawn end facing the camera with the growth rings exposed, sawdust and wood chips scattered over the mown turf, a white flagstick still standing behind the trunk, dark navy sky and one amber light laying gold along the bark."
+hero_caption: "The rings are the record. The saw is what the record left out."
 tags:
   - civics
   - politics
