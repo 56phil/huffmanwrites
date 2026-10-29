@@ -7,8 +7,8 @@ lastmod: 2026-10-29T08:35:00-05:00
 featuredOnHome: true
 hero_desktop: "img/articles/140-the-credibility-ledger_16x9.webp"
 hero_mobile: "img/articles/140-the-credibility-ledger_4x5.webp"
-hero_alt: "A waist-high sawn oak stump standing at the centre of a manicured putting green at night, its pale cut face ringed with growth rings, the white flagstick driven down into the middle of the cut wood and standing upright out of it, a broad open hole cut out of the turf beside the stump and ringed with sawdust, a felled trunk lying in the dark behind, midnight navy sky and one hard amber light raking across the stump."
-hero_caption: "The flag still stands. It is standing in a stump."
+hero_alt: "An American flag flown upside down from a golf flagstick that is driven into a sawn oak stump at the centre of a putting green at night, the blue star field hanging at the bottom of the cloth with the red and white stripes above it, the turf cut open beside the stump in a broad hole ringed with sawdust, a felled trunk out of focus behind, midnight navy sky and warm light on the cloth."
+hero_caption: "An inverted flag is a distress signal. This one is flying from a stump."
 tags:
   - civics
   - politics
