@@ -12,6 +12,19 @@
 
 ---
 
+### Maintenance — October 29, 2026 — CourtListener closed anonymous search; the courts beat runs on feeds
+
+Philip: "What's going on with those 401s we're getting on the court listener?" → "I can't figure out how get a token without paying money. We'll have to find a free soultion."
+
+- **The 401s are a provider-side change, not a local regression.** The 2026-10-28 and 2026-10-29 SITREP packs each opened with `401 on all three queries` for the courts beat. Reproduced on a bare `curl` today, with and without a User-Agent: `https://www.courtlistener.com/api/rest/v4/search/` answers `401 {"detail":"Authentication credentials were not provided."}` with `www-authenticate: Bearer realm="api"`. That endpoint was the one part of CourtListener's API that needed no key, which is why `scripts/sitrep-pack.py` was built on it and why nothing local changed.
+- **The free solution is the per-court opinion feeds, and they still answer with no credential.** `/feed/court/scotus/` and `/feed/court/cadc/` return `200` to this job's own User-Agent (measured today), and `parse_feed()` already reads Atom. `cl_opinions()` now uses the search API when a token resolves and the court's feed when none does, and the pack prints which route it took. The D.C. Circuit feed produced the window's opinion (Katie Phang v. Todd Blanche, filed 2026-10-28) on the first run.
+- **One query has no keyless equivalent: D.D.C. new complaints.** RECAP search is the only free mirror of new federal filings, so that block alone reports `SOURCE UNAVAILABLE`, and its reason now says what to do. **A token costs nothing** — a free account issues one at `/profile/api/` (5 requests a minute, 50 an hour, 125 a day); the $10/month membership raises only the limits. Philip had read the token as paid, so this correction is the part worth keeping in the skill and in CLAUDE.md.
+- **Nothing could see the 401 in the pack itself, and that was the second defect.** `attempt()` recorded `HTTP 401 for <url>` in the status table, but `court_block()` printed a bare `fetch failed` in the section body, so the file the writer is told to trust said nothing about why. Every gap line now goes through one `_gap_reason()` helper, which also removes the duplicated `Source: Source: status` prefix the other sections printed.
+- **The token is wired and optional, not required.** `cl_search()` resolves `huffmanwrites-courtlistener` (keychain) with `COURTLISTENER_API_TOKEN` (`~/.secrets`) as the fallback through `check-secrets.py`'s own resolvers — loaded the way the docket registry already is, so the rule has one copy — and sends `Authorization: Token …`; a refused token says "stale", not a bare 401. `check-secrets.py` gained the `courtlistener` probe (one search request: `200` live, `401` stale, `429` not judged) and the registry entry, which is the **first with `optional: True`**: that drops only the "no value in any home" finding, because absence is a documented configuration here and a stale or half-installed token is still a failure (pinned by `test_an_optional_credential_may_be_absent_but_not_half_installed`).
+- **Verified by running it.** Pack end to end (`--date 2026-10-29`, rc 0, ~40 s): SCOTUS feed read and quiet, D.C. Circuit feed produced one opinion, the RECAP block carries the token remedy, and the watched dockets are unchanged (5 dockets, 2 with filings). `check-secrets.py --online` → `secrets: OK — 5 credential(s) checked, homes agree, keys authenticate`. Full suite: 461 tests, OK.
+
+---
+
 ### Maintenance — October 29, 2026 — Published "Two Things Called Seneca"
 
 Philip: "Publish a brief non-negative disambiguation piece about the organization" — after asking what The Seneca Project was and learning it is a women-led federal super PAC of that name, not the Roman.
