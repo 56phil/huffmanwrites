@@ -12,6 +12,19 @@
 
 ---
 
+### Maintenance — October 29, 2026 — Published "Two Things Called Seneca"
+
+Philip: "Publish a brief non-negative disambiguation piece about the organization" — after asking what The Seneca Project was and learning it is a women-led federal super PAC of that name, not the Roman.
+
+- **Published** `content/posts/essays/two-things-called-seneca.md` — "Two Things Called Seneca", 1219 words whole-file, `draft: false`, `featuredOnHome: true`, NN 139 (`139-seneca-project_*`, a pair of identical blank marble plaques on plinths, one lit and one in shadow; graded onto the house navy `#131E39` because FLUX returned a near-black ground).
+- **The piece is a disambiguation, not an argument.** It states what the committee is (legal name, FEC `C00877027` registered 2024-04-23, quarterly independent-expenditure-only super PAC, unauthorized, Washington DC, Setmayer and Kinney), where the name comes from (Seneca Falls 1848, in Setmayer's own words), what it produces, and what its filings show. The politics is reported in the committee's own voice and not evaluated; the ledger is described without a verdict, which is what "non-negative" required here.
+- **The money read is the one figure that matters.** 2025-01-01 through 2026-10-14: receipts $505,452.14, disbursements $514,527.78, of which $511,158.34 operating, **independent expenditures $0.00**, cash on hand $5,015.68. That is a production and distribution operation rather than a campaign treasury, and the piece says so on the columns rather than on inference.
+- **Two aggregator traps were avoided.** OpenSecrets profiles the committee at a URL slugged `democracy-defense-fund`, so the piece cites the FEC page by committee ID and never the aggregator; and the committee's own site still carries 2024 copy (a Kamala Harris meta description, a 2025 copyright), so the 2024 self-description is quoted from the dated press statement rather than from the home page.
+- **Every quotation was tested as a substring of the page it links**, because `check-quotes.py` reads this shape as *zero attributions* (its blind spot: blockquote plus attribution line is not `"quote" — Author`) and therefore verified nothing. Four quotations across marytrump.org, thebulwark.com, tarasetmayer.substack.com and senecaproject.us, each matched after whitespace and apostrophe normalisation; one candidate quotation (the home page's `meta-description`) was **dropped** rather than cited, since a meta tag is not prose a reader can see and the fetch confirmed it lived only there.
+- **Verified by running it.** `check-emdashes --file` 0 counted; `check-prepositions --file` 0; `check-hero-paths` 401 paths; `check-gallery-pages` 150 items / 13 pages; `check-content-frontmatter` 273 files; `check-links --check` 3918 links; `check-report-frontmatter --anchors-corpus` 262 posts; `check-links --online --titles --file` 8/8 ok; `hugo --gc --minify` 528 pages; `check-render-integrity` 623 pages, 262 related blocks. The rendered page was read in a browser: title, description, NN 139 hero at `/img/articles/139-seneca-project_16x9.webp`, caption, table and both blockquotes.
+
+---
+
 ### Maintenance — October 29, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
