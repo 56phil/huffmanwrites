@@ -5,8 +5,8 @@ date: 2026-10-29T08:35:00-05:00
 author: Philip Huffman
 lastmod: 2026-10-29T08:35:00-05:00
 featuredOnHome: true
-hero_desktop: "img/articles/140-the-credibility-ledger_16x9.webp"
-hero_mobile: "img/articles/140-the-credibility-ledger_4x5.webp"
+hero_desktop: "img/articles/140-the-credibility-ledger-flag_16x9.webp"
+hero_mobile: "img/articles/140-the-credibility-ledger-flag_4x5.webp"
 hero_alt: "An American flag flown upside down from a golf flagstick that is driven into a sawn oak stump at the centre of a putting green at night, the blue star field hanging at the bottom of the cloth with the red and white stripes above it, the turf cut open beside the stump in a broad hole ringed with sawdust, a felled trunk out of focus behind, midnight navy sky and warm light on the cloth."
 hero_caption: "An inverted flag is a distress signal. This one is flying from a stump."
 tags:
