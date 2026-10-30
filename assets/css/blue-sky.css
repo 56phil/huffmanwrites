@@ -100,7 +100,7 @@
 
 .endpoints-grid {
   display: grid;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .endpoint-card {
@@ -113,7 +113,7 @@
 .endpoint-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-bottom: 1rem;
 }
 
@@ -165,7 +165,7 @@
 .sdks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .sdk-card {
@@ -229,7 +229,7 @@
 .usage-tabs {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
 }
@@ -403,7 +403,7 @@
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .feature-card {
@@ -451,7 +451,7 @@
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .testimonial-card {
@@ -472,7 +472,7 @@
 .testimonial-author {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .author-avatar img {
@@ -518,7 +518,7 @@
 
 .cta-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -576,7 +576,7 @@
 .podcast-intro {
   display: grid;
   grid-template-columns: 300px 1fr;
-  gap: 3rem;
+  gap: 4.5rem;
   margin-bottom: 3rem;
   align-items: start;
 }
@@ -608,14 +608,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .subscribe-button {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   background: var(--entry);
   padding: 0.6rem 1.2rem;
   border-radius: 4px;
@@ -648,7 +648,7 @@
 .episode-card {
   display: grid;
   grid-template-columns: 120px 1fr;
-  gap: 1.5rem;
+  gap: 2.25rem;
   margin-bottom: 2rem;
   background: var(--entry);
   border-radius: 8px;
@@ -664,7 +664,7 @@
 .episode-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -685,7 +685,7 @@
 
 .episode-meta {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-bottom: 1rem;
   color: var(--secondary);
   font-size: 0.9rem;
@@ -699,7 +699,7 @@
 
 .episode-actions {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .play-button, .transcript-button {
@@ -762,7 +762,7 @@
 .challenge-weeks {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 3rem;
   margin: 3rem 0;
 }
 
@@ -840,7 +840,7 @@
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .gallery-item {

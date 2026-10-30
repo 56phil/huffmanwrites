@@ -34,7 +34,7 @@
 .book-card-link {
     display: flex !important;
     align-items: flex-start !important;
-    gap: 20px !important;
+    gap: 30px !important;
     text-decoration: none !important;
     color: inherit !important;
     width: 100% !important;

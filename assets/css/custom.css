@@ -206,7 +206,7 @@ main, .post-content, .entry-content {
 
 .share-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -332,7 +332,7 @@ main, .post-content, .entry-content {
 
 .not-found-actions {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
 }
 

@@ -30,7 +30,7 @@
 
 .phbooks-desc.phbooks-with-cover {
   display: flex !important;
-  gap: 1rem !important;
+  gap: 1.5rem !important;
 }
 
 .phbooks-cover {
