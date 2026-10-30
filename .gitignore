@@ -31,8 +31,3 @@ scripts/docket-watch-state.json
 # establishes the baseline and --changes reports nothing until a forecaster
 # actually moves a race.
 scripts/senate-ratings-state.json
-
-# Audiobook build scratch — chunk text, rendered speech, assembly intermediates.
-# Regenerated from the manuscript by scripts/book-to-audio.py; never source,
-# and large enough (gigabytes at full length) that it must never be committed.
-work/
