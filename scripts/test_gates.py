@@ -6189,19 +6189,26 @@ class TestDigestEmail(unittest.TestCase):
         # client that finds no charset in the HTML may read it as Latin-1 and
         # render "BolsonarÃ£o". A browser honours a pragma only inside the first
         # 1024 bytes, so it has to precede the masthead, not follow it.
+        #
+        # Pandoc is not installed in CI and cannot be, so the conversion is
+        # stubbed and what is asserted is the assembly order in main(), which is
+        # the part that decides whether the pragma arrives first.
         import unittest.mock as mock
         with tempfile.TemporaryDirectory() as tmp:
             draft = Path(tmp) / "stoic-saturday-x.md"
             draft.write_text('---\ntitle: "Stoic Saturday: X"\n'
                              "date: 2026-10-31T06:00:00-05:00\n---\n\nFlávio said no.\n")
             out = Path(tmp) / "letter.html"
-            with mock.patch.object(sys, "argv",
-                                   ["digest-email.py", str(draft), "--out", str(out)]):
-                self.assertEqual(de.main(), 0)
+            with mock.patch.object(de, "body_html", return_value="<p>Flávio said no.</p>\n"):
+                with mock.patch.object(sys, "argv",
+                                       ["digest-email.py", str(draft), "--out", str(out)]):
+                    self.assertEqual(de.main(), 0)
             page = out.read_text()
         self.assertTrue(page.lower().startswith('<meta charset="utf-8">'))
         self.assertIn("Flávio", page)
-        self.assertLess(page.index("utf-8"), min(page.index("<img"), 1024))
+        # before the masthead, and inside the window a sniffer will read
+        self.assertLess(page.index("charset"), page.index("prh-logo.png"))
+        self.assertLess(page.index("charset"), 1024)
 
 
 if __name__ == "__main__":
