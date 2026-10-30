@@ -12,14 +12,23 @@ edits it before it sends, so nothing here commits or pushes on your behalf.
 
 ## Cadence, section, and file naming
 
-- Written each **Saturday** to reach readers at **06:00 CT**. The page is dated
-  `<Saturday>T06:00:00-05:00`, and because Hugo builds with `buildFuture: false` it
-  appears only in a deploy that runs *after* that hour — dating the file does not by
-  itself publish it.
-- **The page is released by its own job, at 06:05 CT, and not by another article's
-  push.** `com.huffmanwrites.digest-release` (Saturdays 06:05) dispatches
+- Written each **Saturday** to reach readers at **06:00 CT**. The embargo lifts at
+  **05:53 CT**, the page is dated `<Saturday>T05:53:00-05:00>`, and because Hugo builds
+  with `buildFuture: false` it appears only in a deploy that runs *after* that minute —
+  dating the file does not by itself publish it.
+- **05:53 is derived, not chosen.** Measured on this repo: a `workflow_dispatch` reaches
+  "deploy complete" in **64–86 s**, and Pages then serves the artifact a few seconds to
+  a minute later, so the page is live ~2–3 minutes after the trigger and the verifier
+  has a further few minutes of retries. Three minutes of that is the arithmetic; the
+  rest is margin. **A letter stamped 06:00 cannot be live at 06:00** — the build that
+  would contain it cannot start before 06:00, so a 06:00 stamp under this plist
+  releases nothing until the next push, and `digest-release.py` prints a note saying so.
+  The two hours are one decision: move the lift and the send together, or the page and
+  the email separate again.
+- **The page is released by its own job, at 05:53 CT, and not by another article's
+  push.** `com.huffmanwrites.digest-release` (Saturdays 05:53) dispatches
   `.github/workflows/hugo.yml` and then requires the page to answer with its own
-  title, which is what puts it live at ~06:07. Until 2026-10-31 the release came from
+  title, which is what puts it live at ~05:56. Until 2026-10-31 the release came from
   whatever push happened next, and the only push that lands between midnight and a
   06:00 send is the daily SITREP — so the letter's URL depended on a different
   article's job, and a SITREP abort left the letter 404 while its campaign was
@@ -30,13 +39,14 @@ edits it before it sends, so nothing here commits or pushes on your behalf.
   delays scheduled workflows — measured on this repo, they run **~4 hours late** (the
   four crons fire around 09:2x, 15:0x, 16:0x and 17:1x UTC, not at the top of their
   hour), and on 2026-10-17 the 11:00Z fire did not run at all. A cron cannot serve a
-  06:15 send, which is why the release is a dispatch from a launchd job where the
+  06:00 send, which is why the release is a dispatch from a launchd job where the
   clock is knowable.
-- **The page is live by ~06:07 CT, so a hand send still confirms the URL first.** An
-  email that arrives at 06:00 and links a page that is still deploying is the failure
-  this note prevents (measured 2026-10-17 — the newsletter reached an inbox while the
-  page was absent). A scheduled campaign has no human at send time, which is why it is
-  set to 06:15 rather than 06:00.
+- **The page is live by ~05:56 CT, and the campaign is scheduled for 06:00.** The
+  send is four minutes behind the embargo, which is the whole of the margin: an email
+  that arrives at 06:00 and links a page that is still deploying is the failure this
+  note prevents (measured 2026-10-17 — the newsletter reached an inbox while the page
+  was absent). A hand send still confirms the URL first, because the verifier's retries
+  can run past 06:00 on a slow deploy, and then the send is early, not the page.
 - Draft in `pending/` (`pending/TEMPLATE.md` is the shape); published page in
   `content/posts/digests/`. Slug `stoic-saturday-<phrase>.md`, lowercase and hyphenated,
   from the title's phrase; title `Stoic Saturday: <Phrase>`.
@@ -45,7 +55,9 @@ edits it before it sends, so nothing here commits or pushes on your behalf.
 
 `com.huffmanwrites.digest-release` — plist in `scripts/`, installed to
 `~/Library/LaunchAgents/`, invoked through `scripts/digest-release-runner.sh`,
-which calls `scripts/digest-release.py`. Fires **Saturdays 06:05 CT**; wiring pinned
+which calls `scripts/digest-release.py`. Fires **Saturdays 05:53 CT**, the embargo
+hour held in the module as `LIFT` and in the plist as `Hour`/`Minute` — one fact in two
+files, and `TestDigestRelease` fails when they disagree; wiring pinned
 by `TestDigestRelease` in `scripts/test_gates.py`, and the log is
 `~/Library/Logs/digest-release.out.log`.
 
@@ -57,6 +69,10 @@ time, and:
   something no reader can act on.
 - **a letter whose hour has not arrived** → exit 0. Firing early would dispatch a
   build that cannot contain the page and then fail its own check.
+- **a letter stamped later than `LIFT`** → still released at its own hour, with a note
+  in the log saying the embargo lifts at 05:53 and the send is at 06:00. The letter's
+  stamp is the contract, so the run does not override it; the note exists because a
+  06:00 stamp under a 05:53 plist cannot land the page before the campaign.
 - **the URL already answers 200** → exit 0, no dispatch. launchd fires a missed job
   on wake, so a second run around the same morning is normal and must not deploy
   twice.
@@ -65,7 +81,7 @@ time, and:
   page never answers; fire-and-forget would read a broken deploy as a released page.
 
 Exercise it without touching anything:
-`python3 scripts/digest-release.py --date 2026-10-31 --now 2026-10-31T06:05:00 --dry-run`.
+`python3 scripts/digest-release.py --date 2026-10-31 --now 2026-10-31T05:53:30 --dry-run`.
 `--section` points it at a fixture directory, which is how the tests run it.
 
 **`scripts/digest-prep.sh` was retired on 2026-10-31.** It was written for one letter
@@ -82,7 +98,7 @@ commit, and the release left to the job above.
 ---
 title: "Stoic Saturday: <Phrase>"
 description: "One or two sentences naming the week's developments and the Stoic line that sorts them."
-date: <Saturday 06:00 CT, ISO 8601>
+date: <Saturday 05:53 CT, ISO 8601>
 lastmod: <when the draft was finished; may precede date>
 author: Philip Huffman
 sendfox_subject: "Stoic Saturday: <Phrase>"
@@ -227,12 +243,13 @@ These rules are enforced, and each names its gate.
   is a separate change, not something to fold into this one.
 - **Before you send, confirm the page resolves.** Fetch
   `https://www.huffmanwrites.org/posts/digests/<slug>/` and require a 200 whose `<title>` carries
-  the digest's title. The page is live by ~06:06 CT, not 06:00 (see *Cadence* above); sending
-  first means the email's link 404s for the first readers. If the page is not up, the send is
-  early, not the page. **This check only applies to a letter sent by hand.** A campaign
-  *scheduled* through the API a day ahead has no human at send time, so the check belongs at
-  scheduling time — where the page is not live yet — and cannot substitute for giving the
-  campaign an hour past ~06:06. If the send is scheduled, set it to 06:15 rather than 06:00.
+  the digest's title. The page is live by ~05:56 CT (see *Cadence* above); sending first means
+  the email's link 404s for the first readers. If the page is not up, the send is early, not
+  the page. **This check only applies to a letter sent by hand.** A campaign *scheduled*
+  through the API the day before has no human at send time, so the check belongs at scheduling
+  time — where the page is not live yet — and cannot substitute for the margin. Schedule the
+  campaign for **06:00 CT**, and if the deploy is slow that morning, cancel or move the
+  campaign rather than let it link a page that has not landed.
 - **After the send:** move the draft to `pending/archive/` (never delete). It is untracked, so
   this is a local move and owes no commit; then create the Hugo page at
   `content/posts/digests/<slug>.md` with the frontmatter above — or, when the page is prepared

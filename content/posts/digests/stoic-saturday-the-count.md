@@ -1,7 +1,7 @@
 ---
 title: "Stoic Saturday: The Count"
 description: "Brazil's runoff ended with the loser asking for the count to be annulled, Israel's count stopped at 53 seats and 48, and a federal judge refused to let the government set aside 20,000 California ballots six days before an election. Marcus Aurelius has the line that sorts it: what is not good for the swarm is not good for the bee."
-date: 2026-10-31T06:00:00-05:00
+date: 2026-10-31T05:53:00-05:00
 lastmod: 2026-10-30T17:00:00-05:00
 author: Philip Huffman
 sendfox_subject: "Stoic Saturday: The Count"

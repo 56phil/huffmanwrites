@@ -6227,7 +6227,7 @@ class TestDigestRelease(unittest.TestCase):
         self.section = Path(self.tmp.name)
         self.addCleanup(self.tmp.cleanup)
 
-    def letter(self, name="stoic-saturday-x.md", when="2026-10-31T06:00:00-05:00",
+    def letter(self, name="stoic-saturday-x.md", when="2026-10-31T05:53:00-05:00",
                draft=False, title="Stoic Saturday: X"):
         path = self.section / name
         path.write_text(f'---\ntitle: "{title}"\ndate: {when}\ndraft: {str(draft).lower()}\n---\n\nBody.\n')
@@ -6271,7 +6271,7 @@ class TestDigestRelease(unittest.TestCase):
         # Fire and forget is the defect this replaces: the run has to fail when
         # the page does not answer, or a broken deploy reads as a released page.
         self.letter()
-        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"])
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"])
         self.assertEqual(rc, 0)
         self.assertEqual(calls["dispatch"], 1)
         self.assertEqual(calls["verify"], 1)
@@ -6279,14 +6279,14 @@ class TestDigestRelease(unittest.TestCase):
 
     def test_a_page_that_never_answers_fails_the_run(self):
         self.letter()
-        rc, calls, _ = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"],
+        rc, calls, _ = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"],
                                      verify_rc=1)
         self.assertEqual(rc, 1)
         self.assertEqual(calls["dispatch"], 1)
 
     def test_a_failed_dispatch_is_not_verified_and_fails(self):
         self.letter()
-        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"],
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"],
                                        dispatch_rc=1)
         self.assertEqual(rc, 1)
         self.assertEqual(calls["verify"], 0)
@@ -6296,7 +6296,7 @@ class TestDigestRelease(unittest.TestCase):
         # launchd fires a missed job on wake, so the second run around a wake is
         # normal; it must not dispatch a second build.
         self.letter()
-        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"],
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"],
                                        served=True)
         self.assertEqual(rc, 0)
         self.assertEqual(calls["dispatch"], 0)
@@ -6306,10 +6306,29 @@ class TestDigestRelease(unittest.TestCase):
         # A letter left `draft: true` is one the site will not build at all, so
         # releasing it would dispatch a deploy and then fail its own check.
         self.letter(draft=True)
-        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"])
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"])
         self.assertEqual(rc, 0)
         self.assertEqual(calls["dispatch"], 0)
         self.assertIn("nothing to release", out)
+
+    def test_a_letter_stamped_after_the_lift_says_so(self):
+        # A 06:00 stamp under a 05:53 plist is released at 06:00, which is after
+        # a 06:00 send: the page would link a 404 for its first minutes. The run
+        # still releases it (the letter's own stamp is the contract) but says so
+        # in the log, because there is no other warning before the campaign.
+        self.letter(when="2026-10-31T06:00:00-05:00")
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["dispatch"], 0)
+        self.assertIn("nothing to release", out)
+        self.assertIn("the embargo lifts at 05:53", out)
+
+    def test_a_letter_stamped_at_the_lift_is_released_and_says_nothing(self):
+        self.letter()
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["dispatch"], 1)
+        self.assertNotIn("the embargo lifts at", out)
 
     def test_the_date_is_read_in_central_time(self):
         # A letter stamped 23:30 -05:00 belongs to that CT day; read as UTC it
@@ -6319,12 +6338,16 @@ class TestDigestRelease(unittest.TestCase):
         self.assertEqual(rc, 0)
         self.assertEqual(calls["dispatch"], 1)
 
-    def test_the_plist_fires_on_saturday_at_0605(self):
+    def test_the_plist_fires_on_saturday_at_the_embargo_hour(self):
+        # The plist's hour and the module's LIFT are one fact in two files, and
+        # the send is three minutes later than either can control: a letter
+        # stamped 06:00 under a 05:53 plist releases nothing before the campaign
+        # fires, so the two must not drift apart.
         import plistlib
         plist = plistlib.loads((SCRIPTS / "com.huffmanwrites.digest-release.plist").read_bytes())
         self.assertEqual(plist["Label"], "com.huffmanwrites.digest-release")
         self.assertEqual(plist["StartCalendarInterval"],
-                         {"Weekday": 6, "Hour": 6, "Minute": 5})
+                         {"Weekday": 6, "Hour": drel.LIFT.hour, "Minute": drel.LIFT.minute})
         self.assertTrue(plist["ProgramArguments"][1].endswith("scripts/digest-release-runner.sh"))
         self.assertIn("digest-release.out.log", plist["StandardOutPath"])
 

@@ -16,7 +16,11 @@ it dispatches the Pages workflow and then requires the page to answer.
 
 Exit 0 when there is nothing to release (no letter dated today, or its hour has
 not arrived), when the page is already served, and when the release verified.
-Exit 1 when the dispatch fails or the page never answers. Silence about a
+Exit 1 when the dispatch fails or the page never answers.
+
+A letter stamped later than `LIFT` is released at its own hour, and the run says
+so: at that point the page cannot be live before a 06:00 send, and the note is
+the only warning before the campaign fires. Silence about a
 missing page would be the same failure the job exists to prevent, so the run is
 verification, not a fire-and-forget trigger.
 """
@@ -37,6 +41,11 @@ REPO = Path(__file__).resolve().parent.parent
 SITE = "https://www.huffmanwrites.org"
 SECTION = REPO / "content" / "posts" / "digests"
 CT = ZoneInfo("America/Chicago")
+# The embargo lifts here and the plist fires here; the campaign is scheduled for
+# 06:00 CT. The page cannot exist before this minute (Hugo skips a page dated to
+# an hour the build has not reached), and it goes live ~2-3 minutes after the
+# dispatch, so the lead over the send is what this hour buys.
+LIFT = dt.time(5, 53)
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0 Safari/537.36")
 
@@ -141,6 +150,13 @@ def main(argv: "list[str] | None" = None) -> int:
         print(f"digest-release: no letter dated {day} in {section}; nothing to release")
         return 0
     path, when, fields = letter
+
+    stamped = when.astimezone(CT)
+    if (stamped.hour, stamped.minute) != (LIFT.hour, LIFT.minute):
+        print(f"digest-release: note: {path.name} is stamped "
+              f"{stamped.strftime('%H:%M')} CT but the embargo lifts at "
+              f"{LIFT.strftime('%H:%M')} and the send is at 06:00; a later stamp "
+              f"leaves the page no time to land first")
 
     if when > now:
         print(f"digest-release: {path.name} is dated {when.isoformat()}, which is after "
