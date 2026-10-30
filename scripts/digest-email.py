@@ -27,6 +27,13 @@ REPO = pathlib.Path(__file__).resolve().parent.parent
 SITE = "https://www.huffmanwrites.org"
 MONOGRAM = f"{SITE}/img/prh-logo.png"
 
+# The body arrives from Pandoc as UTF-8 — curly quotes, em dashes, and every
+# accented name in the letter. SendFox takes one HTML string, and a client that
+# finds no charset declaration in it may fall back to Latin-1 and render
+# Bolsonaro as BolsonarÃ£o. A pragma in the first bytes settles it for the
+# clients that sniff, and is ignored by the ones that read a Content-Type.
+CHARSET = '<meta charset="utf-8">\n'
+
 
 def frontmatter(text: str) -> "tuple[dict, str]":
     if not text.startswith("---\n"):
@@ -94,7 +101,7 @@ def main() -> int:
         raise SystemExit(f"digest-email: no such draft: {path}")
     fields, body = frontmatter(path.read_text())
     slug = args.slug or path.stem
-    page = masthead(send_date(fields)) + body_html(body) + footer(slug)
+    page = CHARSET + masthead(send_date(fields)) + body_html(body) + footer(slug)
     if args.out:
         pathlib.Path(args.out).write_text(page)
     else:

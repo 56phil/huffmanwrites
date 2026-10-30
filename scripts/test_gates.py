@@ -6184,6 +6184,25 @@ class TestDigestEmail(unittest.TestCase):
         self.assertEqual(fields["title"], "Stoic Saturday: X")
         self.assertIn("After a horizontal rule.", body)
 
+    def test_the_email_declares_utf8_before_any_text(self):
+        # The body is UTF-8 from Pandoc: curly quotes, em dashes, Flávio. A
+        # client that finds no charset in the HTML may read it as Latin-1 and
+        # render "BolsonarÃ£o". A browser honours a pragma only inside the first
+        # 1024 bytes, so it has to precede the masthead, not follow it.
+        import unittest.mock as mock
+        with tempfile.TemporaryDirectory() as tmp:
+            draft = Path(tmp) / "stoic-saturday-x.md"
+            draft.write_text('---\ntitle: "Stoic Saturday: X"\n'
+                             "date: 2026-10-31T06:00:00-05:00\n---\n\nFlávio said no.\n")
+            out = Path(tmp) / "letter.html"
+            with mock.patch.object(sys, "argv",
+                                   ["digest-email.py", str(draft), "--out", str(out)]):
+                self.assertEqual(de.main(), 0)
+            page = out.read_text()
+        self.assertTrue(page.lower().startswith('<meta charset="utf-8">'))
+        self.assertIn("Flávio", page)
+        self.assertLess(page.index("utf-8"), min(page.index("<img"), 1024))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])
