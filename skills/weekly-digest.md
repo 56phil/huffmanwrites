@@ -16,19 +16,65 @@ edits it before it sends, so nothing here commits or pushes on your behalf.
   `<Saturday>T06:00:00-05:00`, and because Hugo builds with `buildFuture: false` it
   appears only in a deploy that runs *after* that hour — dating the file does not by
   itself publish it.
-- **The 06:00 CT page is live by ~06:06 CT, not at 06:00.** The `0 11 * * *` schedule in
-  `.github/workflows/hugo.yml` exists for this hour, but GitHub delays scheduled
-  workflows — measured on this repo, they run **~4 hours late** (the four crons fire
-  around 09:2x, 15:0x, 16:0x and 17:1x UTC, not at the top of their hour). What actually
-  deploys the page is the **daily SITREP push**, which lands ~06:04 CT and whose
-  push-triggered build completes ~06:06 CT. Treat the cron as a best-effort backstop, not
-  the publish trigger, and **confirm the URL resolves before sending**: an email that
-  arrives at 06:00 and links a page that is still six minutes from deploying is the
-  failure this note prevents (measured 2026-10-17 — the 06:00 newsletter reached an inbox
-  while the page was still absent, and the `0 11 * * *` fire never happened that morning).
+- **The page is released by its own job, at 06:05 CT, and not by another article's
+  push.** `com.huffmanwrites.digest-release` (Saturdays 06:05) dispatches
+  `.github/workflows/hugo.yml` and then requires the page to answer with its own
+  title, which is what puts it live at ~06:07. Until 2026-10-31 the release came from
+  whatever push happened next, and the only push that lands between midnight and a
+  06:00 send is the daily SITREP — so the letter's URL depended on a different
+  article's job, and a SITREP abort left the letter 404 while its campaign was
+  already scheduled. The two publications are independent now: the SITREP's push
+  still releases the page as a side effect when it runs, and the job covers the case
+  where it does not.
+- **The `0 11 * * *` cron is not the trigger.** It exists for this hour, but GitHub
+  delays scheduled workflows — measured on this repo, they run **~4 hours late** (the
+  four crons fire around 09:2x, 15:0x, 16:0x and 17:1x UTC, not at the top of their
+  hour), and on 2026-10-17 the 11:00Z fire did not run at all. A cron cannot serve a
+  06:15 send, which is why the release is a dispatch from a launchd job where the
+  clock is knowable.
+- **The page is live by ~06:07 CT, so a hand send still confirms the URL first.** An
+  email that arrives at 06:00 and links a page that is still deploying is the failure
+  this note prevents (measured 2026-10-17 — the newsletter reached an inbox while the
+  page was absent). A scheduled campaign has no human at send time, which is why it is
+  set to 06:15 rather than 06:00.
 - Draft in `pending/` (`pending/TEMPLATE.md` is the shape); published page in
   `content/posts/digests/`. Slug `stoic-saturday-<phrase>.md`, lowercase and hyphenated,
   from the title's phrase; title `Stoic Saturday: <Phrase>`.
+
+## The release job
+
+`com.huffmanwrites.digest-release` — plist in `scripts/`, installed to
+`~/Library/LaunchAgents/`, invoked through `scripts/digest-release-runner.sh`,
+which calls `scripts/digest-release.py`. Fires **Saturdays 06:05 CT**; wiring pinned
+by `TestDigestRelease` in `scripts/test_gates.py`, and the log is
+`~/Library/Logs/digest-release.out.log`.
+
+It reads `content/posts/digests/` for a letter whose date falls on today in Central
+time, and:
+
+- **no letter today** → exit 0, one log line. Weekly and conditional, so an absent
+  letter is not a failure; a non-zero exit there would alert every Saturday about
+  something no reader can act on.
+- **a letter whose hour has not arrived** → exit 0. Firing early would dispatch a
+  build that cannot contain the page and then fail its own check.
+- **the URL already answers 200** → exit 0, no dispatch. launchd fires a missed job
+  on wake, so a second run around the same morning is normal and must not deploy
+  twice.
+- **otherwise** → dispatch `hugo.yml`, then run `scripts/verify-published.py`, which
+  requires the page's own `<title>` to carry the letter's title. The run fails if the
+  page never answers; fire-and-forget would read a broken deploy as a released page.
+
+Exercise it without touching anything:
+`python3 scripts/digest-release.py --date 2026-10-31 --now 2026-10-31T06:05:00 --dry-run`.
+`--section` points it at a fixture directory, which is how the tests run it.
+
+**`scripts/digest-prep.sh` was retired on 2026-10-31.** It was written for one letter
+(the 2026-10-24 issue), carried that letter's title and dates in its prose, and
+installed a one-shot launchd job that was supposed to remove itself; the installed
+copy survived its run and failed every Friday afterwards, alerting on a draft that had
+since been archived. Preparing a letter is now the steps in this file, run by hand or
+by an agent: the Friday SITREP item, the gates, two builds, the page and hero in one
+commit, and the release left to the job above.
 
 ## Frontmatter
 

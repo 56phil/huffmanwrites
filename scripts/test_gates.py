@@ -75,6 +75,7 @@ ccf = load("check-content-frontmatter")
 cvc = load("check-vault-currency")
 cfk = load("check-forks")
 de = load("digest-email")
+drel = load("digest-release")
 
 EM = "\u2014"
 
@@ -6209,6 +6210,136 @@ class TestDigestEmail(unittest.TestCase):
         # before the masthead, and inside the window a sniffer will read
         self.assertLess(page.index("charset"), page.index("prh-logo.png"))
         self.assertLess(page.index("charset"), 1024)
+
+
+# --------------------------------------------------------------------------
+# The digest release job: the letter's page has its own trigger.
+# --------------------------------------------------------------------------
+class TestDigestRelease(unittest.TestCase):
+    """The failure this job exists for is a page that is committed, embargoed,
+    and 404 when its campaign fires. Until 2026-10-31 that release came from the
+    daily SITREP's push, so a SITREP abort took the newsletter's URL with it;
+    these tests hold the letter to its own trigger, and hold the trigger to
+    checking its work rather than firing blind."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.section = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+
+    def letter(self, name="stoic-saturday-x.md", when="2026-10-31T06:00:00-05:00",
+               draft=False, title="Stoic Saturday: X"):
+        path = self.section / name
+        path.write_text(f'---\ntitle: "{title}"\ndate: {when}\ndraft: {str(draft).lower()}\n---\n\nBody.\n')
+        return path
+
+    def run_main(self, argv, served=False, verify_rc=0, dispatch_rc=0):
+        import unittest.mock as mock
+        calls = {"dispatch": 0, "verify": 0}
+        def fake_served(url, timeout=20):
+            return served
+        def fake_dispatch(branch="main"):
+            calls["dispatch"] += 1
+            return dispatch_rc, "" if dispatch_rc == 0 else "boom"
+        def fake_verify(article):
+            calls["verify"] += 1
+            return verify_rc
+        with mock.patch.multiple(drel, served=fake_served, dispatch=fake_dispatch,
+                                 verify=fake_verify):
+            with contextlib.redirect_stdout(io.StringIO()) as out:
+                rc = drel.main(argv + ["--section", str(self.section)])
+        return rc, calls, out.getvalue()
+
+    def test_nothing_to_release_is_success(self):
+        # The letter is weekly and a given date may have none. Non-zero here
+        # would alert every Saturday about a condition no reader can act on.
+        rc, calls, out = self.run_main(["--date", "2026-10-31"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["dispatch"], 0)
+        self.assertIn("nothing to release", out)
+
+    def test_a_letter_whose_hour_has_not_arrived_is_not_released(self):
+        # Firing early would dispatch a build that cannot contain the page, and
+        # the verification would then fail on a job that did nothing wrong.
+        self.letter()
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:00:00"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["dispatch"], 0)
+        self.assertIn("nothing to release", out)
+
+    def test_the_page_is_dispatched_and_then_verified(self):
+        # Fire and forget is the defect this replaces: the run has to fail when
+        # the page does not answer, or a broken deploy reads as a released page.
+        self.letter()
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["dispatch"], 1)
+        self.assertEqual(calls["verify"], 1)
+        self.assertIn("released", out)
+
+    def test_a_page_that_never_answers_fails_the_run(self):
+        self.letter()
+        rc, calls, _ = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"],
+                                     verify_rc=1)
+        self.assertEqual(rc, 1)
+        self.assertEqual(calls["dispatch"], 1)
+
+    def test_a_failed_dispatch_is_not_verified_and_fails(self):
+        self.letter()
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"],
+                                       dispatch_rc=1)
+        self.assertEqual(rc, 1)
+        self.assertEqual(calls["verify"], 0)
+        self.assertIn("dispatching the deploy failed", out)
+
+    def test_an_already_served_page_is_left_alone(self):
+        # launchd fires a missed job on wake, so the second run around a wake is
+        # normal; it must not dispatch a second build.
+        self.letter()
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"],
+                                       served=True)
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["dispatch"], 0)
+        self.assertIn("already answers", out)
+
+    def test_a_draft_is_not_released(self):
+        # A letter left `draft: true` is one the site will not build at all, so
+        # releasing it would dispatch a deploy and then fail its own check.
+        self.letter(draft=True)
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T06:05:00"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["dispatch"], 0)
+        self.assertIn("nothing to release", out)
+
+    def test_the_date_is_read_in_central_time(self):
+        # A letter stamped 23:30 -05:00 belongs to that CT day; read as UTC it
+        # would slip into the next morning and be released a day late.
+        self.letter(when="2026-10-31T23:30:00-05:00")
+        rc, calls, _ = self.run_main(["--date", "2026-10-31", "--now", "2026-11-01T00:10:00"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["dispatch"], 1)
+
+    def test_the_plist_fires_on_saturday_at_0605(self):
+        import plistlib
+        plist = plistlib.loads((SCRIPTS / "com.huffmanwrites.digest-release.plist").read_bytes())
+        self.assertEqual(plist["Label"], "com.huffmanwrites.digest-release")
+        self.assertEqual(plist["StartCalendarInterval"],
+                         {"Weekday": 6, "Hour": 6, "Minute": 5})
+        self.assertTrue(plist["ProgramArguments"][1].endswith("scripts/digest-release-runner.sh"))
+        self.assertIn("digest-release.out.log", plist["StandardOutPath"])
+
+    def test_the_runner_alerts_on_failure_and_keeps_the_exit_code(self):
+        raw = (SCRIPTS / "digest-release-runner.sh").read_text()
+        text = "\n".join(l for l in raw.splitlines() if not l.lstrip().startswith("#"))
+        self.assertIn("alert-failure.sh", text)
+        self.assertIn('"$JOB" "$RC"', text)
+        self.assertIn('exit "$RC"', text)
+        # A locked keychain must be named, not surfaced as a dispatch failure.
+        self.assertIn("gh auth status", text)
+        self.assertLess(text.index("gh auth status"), text.index("digest-release.py"))
+        # This job must never run the model or a build of its own.
+        self.assertNotIn("claude ", text)
+        self.assertNotIn("hugo ", text)
 
 
 if __name__ == "__main__":
