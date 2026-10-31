@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — October 31, 2026 — Summary titles are the book and its author, nothing else
+
+- **Six titles carried something other than the book's name, and Philip spotted the pattern.** Five summaries appended `: Summary & Review` to the title — *The 7 Habits of Highly Effective People*, *Man's Search for Meaning*, *Meditations*, *Mindset*, *Thinking, Fast and Slow*. That was deliberate once: the 2026-06-16 "Discoverability Phase 3" pass added the phrase to those five for search intent, per the entry in `SESSION_STATE_ARCHIVE.md`. It is reversed here. The other **39** summaries already read `Title — Author`, and each of these five carries its own clean `# *Title*` / `### Author, Year` heading in the body, so the frontmatter was contradicting the page it titled.
+- **The sixth was worse and was found by looking.** `art-of-war-summary` had a whole citation in its `title:` — `The Art of War — Sun Tzu, [*Art of War* III §2](https://www.gutenberg.org/cache/epub/132/pg132.txt) (trans. Lionel Giles, 1910)` — so Markdown was printed literally in both `<title>` and `<h1>`, URL and asterisks included, on a page that already cites Giles against the closing quotation where a citation belongs. Now `The Art of War — Sun Tzu`.
+- **Descriptions were left alone on purpose.** They read "a summary and critical review of …", which is prose describing what the page does; the complaint was about the title, which is a name. A description that says what the page is for and a title that says what the book is called are different jobs, and only the second was wrong.
+- **`lastmod` on the six is 2026-10-31**, which also puts them at the top of the "Recently updated" strip on `/posts/summaries/` — the strip's whole purpose, and the reason a `sort_key` shelf could never announce this change.
+- **Verified by reading the build, not the diff.** `hugo --gc --minify` clean; the six rendered `<title>` and `<h1>` read back as `The 7 Habits of Highly Effective People — Covey`, `Man's Search for Meaning — Frankl`, `Meditations — Marcus Aurelius`, `Mindset — Dweck`, `Thinking, Fast and Slow — Kahneman`, `The Art of War — Sun Tzu`; a scan of every `.html` under `public/` finds the phrase `Summary & Review` on **no page**; `check-content-frontmatter` 278 files, `check-emdashes` 311, `check-prepositions` 311, `check-render-integrity` 631 pages, `check-gallery-pages` 152 items, `test_gates.py` **474 tests OK**.
+
+---
+
 ### Maintenance — October 31, 2026 — All eleven book covers re-exported and republished
 
 - **Every cover in `assets/img/books/` was replaced with a fresh front-cover crop** after the 2026-10-31 relayout of the LaTeX projects (fonts, title scales, offsets and page counts all moved; `git status` in all eleven book repos showed `M cover/cover.md` plus re-exported `pb-*/hc-*` artifacts). The crops came from **CoverStudio 0.1.13**, built from `~/Developer/Swift/CoverStudio` (`swift build -c release`), rendered headless: `CoverStudio render <book> --bind pb --out-front <file>`. The rendered bytes equal each project's own `cover/pb-<slug>.jpg`, so the CLI and the app agree.
