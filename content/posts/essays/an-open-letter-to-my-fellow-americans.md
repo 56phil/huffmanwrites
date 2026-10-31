@@ -40,7 +40,7 @@ Low turnout does not merely hand the election to whoever shows up. It thins the 
 
 ## What it costs
 
-I am not going to pretend the hour is free. It is a real hour. In some places it is four of them, in a line, in whatever weather the first week of November has arranged. It is a shift given up, a ride arranged, a child handed to a neighbour. The cost falls unevenly, and the people who pay the most often have the least to spare, which is one of the quieter scandals of how this country runs its elections.
+I am not going to pretend the hour is free. It is a real hour. In some places it is four of them, in a line, in whatever weather the first week of November has arranged. It is a shift given up, a ride arranged, a child handed to a neighbor. The cost falls unevenly, and the people who pay the most often have the least to spare, which is one of the quieter scandals of how this country runs its elections.
 
 What is also true, and said less often, is that most of the obstacles people fear are smaller than the fear. Most states offer early in-person voting, mail ballots, or both, and most states let you register online ([vote.gov](https://vote.gov/register)). In some states you may register as late as Election Day itself; in others the door closes thirty days out, and that deadline, rather than any obstacle at the polling place, is the thing that most often defeats people who fully intended to vote.
 
@@ -56,11 +56,11 @@ Four things, and none of them requires you to agree with me about anything.
 
 **Take one person with you.** Think of the name now. Not a category of person. A name. The one who says every year that it does not matter, or who has moved twice since the last election and is not sure the registration followed.
 
-**Vote for whomever you believe, and then accept the count.** I mean this literally, including the part that costs more than the other three combined. If your side wins, accept it without pretending the other half of the country is illegitimate. If your side loses, accept it without pretending the count was stolen. That acceptance is not a favour you do your opponents. It is the thing you are asking them to do in return, four years from now or two, and it is the only reason any of us can afford to keep losing.
+**Vote for whomever you believe, and then accept the count.** I mean this literally, including the part that costs more than the other three combined. If your side wins, accept it without pretending the other half of the country is illegitimate. If your side loses, accept it without pretending the count was stolen. That acceptance is not a favor you do your opponents. It is the thing you are asking them to do in return, four years from now or two, and it is the only reason any of us can afford to keep losing.
 
 I have written a great deal this year about what is being done to the machinery. I have written less about the fact that the machinery is not self-operating. It runs on the participation of people who could stay home, who have reasons to stay home, and who come anyway. That is the whole of it. A republic is not kept by the people who win. It is kept by the people who lose and come back.
 
-To my fellow Americans, then, and not to my fellow partisans: we are not enemies. We are neighbours who disagree, in a country built on the bet that disagreement can be survived if the counting is shared. On November 3, share it. Bring someone. Then let the count decide, and let the country go on being worth an argument.
+To my fellow Americans, then, and not to my fellow partisans: we are not enemies. We are neighbors who disagree, in a country built on the bet that disagreement can be survived if the counting is shared. On November 3, share it. Bring someone. Then let the count decide, and let the country go on being worth an argument.
 
 Philip
 
