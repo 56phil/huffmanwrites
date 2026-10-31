@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — October 31, 2026 — Published the daily-sitrep report (automated)
+
+Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
+- **Published** `content/posts/sitrep/sitrep-2026-10-31.md` — "SITREP: October 31, 2026", 2079 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The pack behind it:** 396 lines from `scripts/sitrep-pack.py`, 0 source(s) unavailable on this run. The Federal Register, CourtListener's per-court feeds and search API, the U.S. Treasury daily yield curve, FiscalData, CNBC's quote service, the BLS public API, Polymarket's Gamma API, and five world-news RSS feeds supply it; the writer may not recall a figure, so every number in the piece is one the collector fetched. The world beat's headlines are collected; the story the writer picks from them is still fetched and cited by the writer.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own `<title>` to carry the article's `title` (`scripts/verify-published.py`, the rule `sitrep-watchdog.py` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence raises the shared alert and fails the run: the article is on `main` and no reader has it. The outcome is in `/Users/prh/Library/Logs/daily-sitrep.out.log`.
+- **SimpleBrain mirror** runs immediately after this push: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in `/Users/prh/Library/Logs/daily-sitrep.out.log`.
+
+---
+
 ### Maintenance — October 30, 2026 — Prepared Stoic Saturday "The Count" for the 2026-10-31 send
 
 - **Prepared and published** `content/posts/digests/stoic-saturday-the-count.md` at 16:20 CT on 2026-10-30, ahead of the 2026-10-31 06:00 CT send. The frontmatter date is `2026-10-31T06:00:00-05:00`, so `buildFuture: false` holds the page until its hour and the ~06:04 SITREP push releases it. 2,402 words whole-file, one `h2` (`## Sources`).
