@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — October 31, 2026 — All eleven book covers re-exported and republished
+
+- **Every cover in `assets/img/books/` was replaced with a fresh front-cover crop** after the 2026-10-31 relayout of the LaTeX projects (fonts, title scales, offsets and page counts all moved; `git status` in all eleven book repos showed `M cover/cover.md` plus re-exported `pb-*/hc-*` artifacts). The crops came from **CoverStudio 0.1.13**, built from `~/Developer/Swift/CoverStudio` (`swift build -c release`), rendered headless: `CoverStudio render <book> --bind pb --out-front <file>`. The rendered bytes equal each project's own `cover/pb-<slug>.jpg`, so the CLI and the app agree.
+- **No content was touched.** Every `image:` value in `content/books/*/index.md` still names the same file, so the swap is purely the binary. `stoic-citizen.jpg` and `tsc.jpg` are the same cover twice (the frontmatter names the first, `cover-cache.sh` reads the second) and both were written from one crop, as was `stoic-backgammon.webp` beside its `.jpg`.
+- **Two paperback crops are defective in the projects, and the site takes the hardcover crop for those two instead.** The renderer fits the title to the front panel and *then* applies `front_title_offset_x_inches`, so any offset above the safe margin pushes a fitted title past the trim. Measured on the 2026-10-31 exports: `bws` (offset 0.333 in) leaves the "?" 13 px from the trim edge and hides the first glyph under the 0.33 in spine-colour band; `proportion` (offset 0.5 in) runs the last letter off the edge entirely — its ink bounding box reached the final pixel column. Both hardcover crops are clean (291 px and 305 px of margin), so `by-what-standard.jpg` and `proportion.jpg` are hc renders until the paperback offsets are reduced (`pb_front_title_offset_x_inches` 0.333 → ~0.2 and 0.5 → ~0.2). The other nine are paperback crops.
+- **`AllMyBooks/miscellaneous/covers` was regenerated, not edited:** `shared/cover-cache.sh ../miscellaneous/covers` renders the eleven 400 px also-by thumbnails from this repo's canonical art (and re-rendered `bws.jpg` again after its swap). Nothing is checked in there; it is a build cache.
+- **Verified by running it.** `hugo --gc --minify` clean; `check-hero-paths` 411 paths, `check-content-frontmatter` 278 files, `check-render-integrity` 631 pages / 267 related blocks, `check-gallery-pages` 152 items — all OK. The four surfaces that show a cover were read in a browser against `hugo server`: `/books/` cards (`object-fit: contain`), the home library grid (contain), `/posts/essays/all-my-books/` (`.phbooks-cover img` forces 2:3 + `cover-fit`, so a crop of the On Proportion thumbnail was simulated — 7 px a side, title intact), and `/books/<slug>/` at 800 px. Nothing is cropped in a way that touches type.
+- **Seen while doing this, not fixed:** the local toolchain is Hugo **0.169.0** while `.github/workflows/hugo.yml` pins **0.168.0**, the drift both files warn about; and the `bws`/`pic` hardcover `template_*` numbers are 6×9 values on 5×8 books, which is why their hc crops render 2037×2771 rather than a 5×8 panel.
+
+---
+
 ### Maintenance — October 31, 2026 — Published the docket-weekly-report report (automated)
 
 Auto-published by `com.huffmanwrites.docket-weekly-report` after every gate passed.
