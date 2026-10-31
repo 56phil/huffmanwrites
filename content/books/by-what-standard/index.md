@@ -16,9 +16,11 @@ image_mobile: "img/articles/bws-4x5.webp"
 image_alt: "A cream book jacket with a deep green spine band and faint horizontal rules, the title set in a dark display face above the subtitle and the author's name."
 hero_caption: "The standard is present. The socket beside it is empty."
 image_caption: "Paper, rule, and record."
-lastmod: 2026-10-25
+lastmod: 2026-10-31
 ---
 
 # By What Standard?
 
 **Expected late November 2026.**
+
+Read the [summary and review of *By What Standard?*](/posts/summaries/by-what-standard-summary/).
