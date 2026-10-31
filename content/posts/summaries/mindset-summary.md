@@ -1,10 +1,10 @@
 ---
-title: "Mindset: Summary & Review — Dweck"
+title: "Mindset — Dweck"
 description: "Carol Dweck's Mindset — a summary and critical review of her fixed versus growth mindset research, what the underlying science actually supports, and where the popularization has distorted it."
 date: 2026-05-31T00:00:00Z
 author: Philip Huffman
 sort_key: "Dweck, Carol"
-lastmod: 2026-05-31T00:00:00Z
+lastmod: 2026-10-31
 tags:
   - education
   - leadership
