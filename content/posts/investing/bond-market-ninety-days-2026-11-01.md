@@ -13,7 +13,7 @@ tags:
   - markets
   - politics
   - risk
-draft: true
+draft: false
 ---
 
 ## Ninety Days From Today
@@ -94,7 +94,7 @@ That does not make the program worthless, and the dealers who have to intermedia
 
 Fourteen percent. That is the honest number, and it is why this section is now in its fourth installment. A program that retires one bond in seven cannot set the price of the other six, and a market that has just demonstrated it will rally thirty-five basis points on an equity selloff was never waiting for the department to show up.
 
-Watch **November 4** for three things, in order of importance. Whether the **10s-20s and 20s-30s caps are extended** beyond the current expiry, whether **20-year and 30-year auction sizes come down**, and whether the statement's forward guidance loses the phrase "at least" from its description of how long coupons will stay steady. The third is the one that matters most and it is the easiest to miss. JPMorgan warned in July that removing "at least" risks "pushing the curve steeper as market participants demand higher term premium, similar to August 2023" ([Bloomberg via Yahoo Finance](https://finance.yahoo.com/economy/policy/articles/jpmorgan-sees-treasury-avoiding-bond-125356546.html)). The midterms are the day before the announcement, so the base case is no change at all. A change in any of the three would be a bigger signal than anything the Fed says in December.
+Watch **November 4** for three things, in order of importance. Whether the **10s-20s and 20s-30s caps are extended** beyond the current expiry, whether **20-year and 30-year auction sizes come down**, and whether the statement's forward guidance loses the phrase "at least" from its description of how long coupons will stay steady. The third is the one that matters most and it is the easiest to miss. JPMorgan warned in July that removing "at least" "risks pushing the curve steeper as market participants demand higher term premium, similar to what occurred in August 2023, to digest an expected increase in duration supply" ([Bloomberg](https://www.bloomberg.com/news/articles/2026-07-29/jpmorgan-sees-treasury-avoiding-bond-sales-tweak-due-to-midterms)). The midterms are the day before the announcement, so the base case is no change at all. A change in any of the three would be a bigger signal than anything the Fed says in December.
 
 ## The Governance Question
 
@@ -161,7 +161,7 @@ Storms do not send invitations, but they do leave clues. The clue this month is 
 - ArentFox Schiff. (2026, October 26). [The customs and trade world turns: October 2026](https://www.afslaw.com/perspectives/customs-import-compliance-blog/the-customs-and-trade-world-turns-october-2026).
 - Associated Press. (2026, October 22). [Sharp drops for AI stocks overwhelm markets worldwide as oil prices jump](https://apnews.com/article/stocks-markets-rates-earnings-oil-33767691a4a0730b96d6f0c5100ea9b2).
 - Associated Press. (2026, October 30). [Israeli election results confirm Netanyahu lost his majority](https://apnews.com/article/israel-elections-netanyahu-eisenkot-arab-results-9a0620a1314fdc127245ba1a7f0aa762).
-- Bloomberg via Yahoo Finance. (2026, July). [JPMorgan sees Treasury avoiding bond sales tweak due to midterms](https://finance.yahoo.com/economy/policy/articles/jpmorgan-sees-treasury-avoiding-bond-125356546.html).
+- Bloomberg. (2026, July 29). [JPMorgan Sees Treasury Avoiding Bond Sales Tweak Due to Midterms](https://www.bloomberg.com/news/articles/2026-07-29/jpmorgan-sees-treasury-avoiding-bond-sales-tweak-due-to-midterms).
 - CiVL News. (2026, October). [Treasury releases questionnaire to primary dealers ahead of November announcement](https://civl.com/news/story/treasury-releases-questionnaire-to-primary-dealers-ahead-of-november-announcemen-9ce27615).
 - CNBC. (2026, September 15). [10-year Treasury yield hits highest level since 2007 as traders bet a Fed rate hike is coming](https://www.cnbc.com/2026/09/15/10-year-treasury-yield-rises-to-highest-since-2007.html).
 - CNBC. (2026, October 2). [Jobs report September 2026](https://www.cnbc.com/2026/10/02/jobs-report-september-2026.html).
