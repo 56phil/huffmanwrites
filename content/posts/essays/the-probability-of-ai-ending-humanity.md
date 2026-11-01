@@ -83,7 +83,7 @@ So my answer to the question in the title is this. The probability of AI ending 
 
 [^8]: Grace, K., et al. (2022). 2022 Expert Survey on Progress in AI, AI Impacts. Survey of 738 authors of papers at NeurIPS/ICML 2021. Median 5 percent on AI advances causing extinction or permanent disempowerment; median 10 percent on human inability to control AI causing it; 56 percent of respondents at 10 percent or higher. https://wiki.aiimpacts.org/uncategorized/ai_risk_surveys
 
-[^9]: Calcuja Research. (2026, June). P(doom) Survey 2026: What Do AI Researchers Think the Probability of Extinction Is? Median ~20 percent, mean ~25 percent, range near 0 to >90 percent, across 50+ publicly stated estimates, 2020-2026. https://calcuja.com/research/ai-risk-survey-2026/
+[^9]: Calcuja Research. (2026, June). P(doom) Survey 2026: What Do AI Researchers Think the Probability of Extinction Is? Median ~20 percent, mean ~25 percent, range near 0 to >90 percent, across 50+ publicly stated estimates, 2020-2026. https://web.archive.org/web/20260618175542/https://calcuja.com/research/ai-risk-survey-2026/ (archived June 18, 2026; the publisher has since revised the live page, which now reports 25 estimates and a different aggregate, so the archive is the version these figures come from.)
 
 [^10]: Ord, T. (2020). The Precipice: Existential Risk and the Future of Humanity. Ord estimates a 1 in 6 risk of existential catastrophe in the next century, with unaligned artificial general intelligence at 1 in 10, "higher than all other sources of existential risk combined," and notes humanity spends less than 0.001% of gross world product on targeted existential risk reduction. https://en.wikipedia.org/wiki/The_Precipice:_Existential_Risk_and_the_Future_of_Humanity
 
@@ -103,7 +103,7 @@ So my answer to the question in the title is this. The probability of AI ending 
 
 [^18]: The instrumental convergence argument, in which goal-directed agents predictably acquire the same instrumental subgoals (self-preservation, resource acquisition, goal integrity) regardless of their final goals. Bostrom, N. (2014). Superintelligence: Paths, Dangers, Strategies; discussed in Wikipedia's "Technological singularity" article, section on the dangers of a recursively self-improving algorithm. https://en.wikipedia.org/wiki/Technological_singularity
 
-[^19]: Calcuja Research. (2026). Yann LeCun ~0 percent; Andrew Ng "very low," on structural grounds: current systems are statistical pattern matchers without goals or self-preservation instincts. https://calcuja.com/research/ai-risk-survey-2026/
+[^19]: Calcuja Research. (2026). Yann LeCun ~0 percent; Andrew Ng "very low," on structural grounds: current systems are statistical pattern matchers without goals or self-preservation instincts. https://web.archive.org/web/20260618175542/https://calcuja.com/research/ai-risk-survey-2026/
 
 [^20]: Metaculus community forecast, ~2 percent on human extinction by 2100; the calibrated forecasters with public, scored track records sit at the low end of the distribution. See [^11].
 

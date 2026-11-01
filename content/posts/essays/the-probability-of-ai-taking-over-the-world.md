@@ -110,7 +110,7 @@ The question was never "what is the probability?" The question is "what are we g
 
 [^6]: Zhang, B., et al. (2019). Forecasting AI Progress: Evidence from a Survey of Machine Learning Researchers. Median 2 percent on "extremely bad (e.g., human extinction)." https://arxiv.org/pdf/2206.04132.pdf
 
-[^7]: Calcuja Research. (2026, June). P(doom) Survey 2026: What Do AI Researchers Think the Probability of Extinction Is? Median ~20 percent, mean ~25 percent, range near 0 to >90 percent, across 50+ publicly stated estimates, 2020-2026. https://calcuja.com/research/ai-risk-survey-2026/
+[^7]: Calcuja Research. (2026, June). P(doom) Survey 2026: What Do AI Researchers Think the Probability of Extinction Is? Median ~20 percent, mean ~25 percent, range near 0 to >90 percent, across 50+ publicly stated estimates, 2020-2026. https://web.archive.org/web/20260618175542/https://calcuja.com/research/ai-risk-survey-2026/ (archived June 18, 2026; the publisher has since revised the live page, which now reports 25 estimates and a different aggregate, so the archive is the version these figures come from.)
 
 [^8]: Ibid. Named estimates: Yudkowsky ~99 percent (2023); Christiano ~50 percent (2023); Hinton 10-50 percent (2023); Amodei 10-25 percent (2024); Bengio ~20 percent (2024); Altman "low but non-zero" (2023); LeCun ~0 percent (2023); Ng "very low" (2023).
 
@@ -118,9 +118,9 @@ The question was never "what is the probability?" The question is "what are we g
 
 [^10]: Metaculus. (2026, February). AI forecasting in 2026. Median for first general AI system moved from July 2031 to November 2033 over 2025; 25 percent on AGI by 2029, 50 percent by 2033. https://www.metaculus.com/notebooks/43363/ai-forecasting-in-2026/
 
-[^11]: AI Impacts surveys: 2016 median 5 percent "extremely bad"; 2019 median 2 percent extinction; 2022 median 5 percent extinction / 10 percent control; Calcuja 2026 aggregation median ~20 percent. https://wiki.aiimpacts.org/uncategorized/ai_risk_surveys; https://calcuja.com/research/ai-risk-survey-2026/
+[^11]: AI Impacts surveys: 2016 median 5 percent "extremely bad"; 2019 median 2 percent extinction; 2022 median 5 percent extinction / 10 percent control; Calcuja 2026 aggregation median ~20 percent. https://wiki.aiimpacts.org/uncategorized/ai_risk_surveys; https://web.archive.org/web/20260618175542/https://calcuja.com/research/ai-risk-survey-2026/
 
-[^12]: Calcuja Research. (2026). AI safety researchers: median ~30 percent, range 10-99 percent. https://calcuja.com/research/ai-risk-survey-2026/
+[^12]: Calcuja Research. (2026). AI safety researchers: median ~30 percent, range 10-99 percent. https://web.archive.org/web/20260618175542/https://calcuja.com/research/ai-risk-survey-2026/
 
 [^13]: Ibid. Mainstream ML researchers: median ~5 percent, range 0-20 percent.
 
