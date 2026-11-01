@@ -3409,6 +3409,75 @@ class TestNinetyDaysSchedule(unittest.TestCase):
         self.assertIn("NINETY_DAYS_TODAY", self.runner)
 
 
+class TestRepairPlanSchedule(unittest.TestCase):
+    """The repair plan runs once a quarter, and the schedule has to be true.
+
+    This class exists because it was not. The plist encoded "quarterly" as
+    `Month => [1,4,7,10]` inside a single dictionary, on the theory that launchd
+    ORs the values within a key. `man launchd.plist` types StartCalendarInterval
+    as "dictionary of integers or array of dictionaries of integers" — an array
+    of dictionaries, never an array as a value — and the job fired on
+    2026-11-01, a month that is not in the list. The descriptor in
+    `launchctl print` showed the array faithfully, so nothing looked wrong from
+    the outside; only a fire in the wrong month revealed it.
+
+    So the rule is asserted as a shape, repo-wide: no schedule dictionary may
+    carry an array as the value of one of its keys. That is the defect, and a
+    single reintroduction anywhere would be silent for a whole year.
+    """
+
+    def setUp(self):
+        self.runner = (SCRIPTS / "repair-plan-runner.sh").read_text(encoding="utf-8")
+        self.plist_path = SCRIPTS / "com.huffmanwrites.repair-plan.plist"
+
+    def test_the_schedule_is_four_dictionaries(self):
+        import plistlib
+        with open(self.plist_path, "rb") as fh:
+            sched = plistlib.load(fh)["StartCalendarInterval"]
+        self.assertIsInstance(sched, list, "the documented form is an array of dictionaries")
+        self.assertEqual(len(sched), 4)
+        self.assertEqual(sorted(d["Month"] for d in sched), [1, 4, 7, 10])
+        for d in sched:
+            self.assertEqual(d["Day"], 1)
+            self.assertEqual(d["Hour"], 7)
+            self.assertEqual(d["Minute"], 30)
+
+    def test_no_schedule_carries_an_array_as_a_key_value(self):
+        # The defect that fired in November, asserted as an absence over every
+        # plist in the repo, so it cannot come back in this job or any other.
+        import plistlib
+        for path in sorted(SCRIPTS.glob("com.huffmanwrites.*.plist")):
+            with open(path, "rb") as fh:
+                sched = plistlib.load(fh).get("StartCalendarInterval")
+            dicts = sched if isinstance(sched, list) else [sched]
+            for d in dicts:
+                if not isinstance(d, dict):
+                    continue
+                for key, value in d.items():
+                    with self.subTest(plist=path.name, key=key):
+                        self.assertNotIsInstance(
+                            value, list,
+                            f"{path.name}: {key} carries an array value; launchd "
+                            "does not honour one (measured 2026-11-01)")
+
+    def test_the_runner_refuses_a_month_that_is_not_a_quarter(self):
+        m = re.search(r'case "\$PLAN_MONTH" in(.*?)esac', self.runner, re.S)
+        self.assertIsNotNone(m, "the quarter-month guard is gone")
+        block = m.group(1)
+        self.assertIn("1|4|7|10", block)
+        self.assertIn("exit 0", block)
+
+    def test_the_guard_precedes_the_probe_and_the_writer(self):
+        guard = self.runner.find('case "$PLAN_MONTH" in')
+        probe = self.runner.find("ollama_require")
+        writer = self.runner.find("claude -p")
+        self.assertGreater(guard, 0)
+        self.assertGreater(probe, guard,
+                           "a non-quarter month must cost nothing and cannot raise "
+                           "a server alert")
+        self.assertGreater(writer, guard)
+
+
 class TestSatireRecency(unittest.TestCase):
     """The subject must be news from the seven days before publication.
 

@@ -32,6 +32,20 @@ ERR_LOG="$LOG_DIR/repair-plan.err.log"
 # every line with the run's start time, hiding how long the research took.
 stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 
+# Month guard: the LaunchAgent is scheduled for the 1st of January, April, July
+# and October, and until 2026-11-01 that schedule was written in a form launchd
+# does not honour, so the job fired in November and would have fired every month.
+# A plist is a claim about the future and nothing checks it; this is the second,
+# executable copy of the same rule. Any other month costs one process, writes one
+# log line and exits 0, so it can neither spend a model run nor raise an alert.
+# REPAIR_PLAN_MONTH pins the month for a test or a manual exercise.
+PLAN_MONTH="${REPAIR_PLAN_MONTH:-$(date +%-m)}"
+case "$PLAN_MONTH" in
+  1|4|7|10) : ;;
+  *) echo "$(stamp): month $PLAN_MONTH is not a quarter month; nothing to do" >> "$OUT_LOG"
+     exit 0 ;;
+esac
+
 # Provider routing: Claude Code appends /v1/messages to ANTHROPIC_BASE_URL,
 # so the base URL must NOT carry a /v1 suffix (Ollama serves Anthropic-format
 # requests at /v1/messages). Model id must match `ollama list` exactly.

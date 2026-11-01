@@ -11,13 +11,21 @@
   </array>
   <!-- Quarterly, on the first day of January, April, July and October at 07:30 CT.
 
-       launchd's StartCalendarInterval takes a SINGLE dict, not an array of
-       dicts: an array of schedules is a LaunchDaemon-only form and is silently
-       ignored for a LaunchAgent, so the job would parse cleanly and never fire.
-       Four dicts inside the one dict means four keys (Day, Month, Hour,
-       Minute), and launchd ANDs keys within a dict but ORs values within a
-       key. So Month as a four-value array fires on the 1st of each of those
-       four months, which is what "quarterly" means here.
+       Four dictionaries, one per month, because that is the documented form:
+       `man launchd.plist` types StartCalendarInterval as "dictionary of integers
+       or array of dictionaries of integers", and three LaunchAgents here already
+       run an array of dictionaries (docket-watch, sitrep-watchdog,
+       weekly-integrity). An array of schedules is NOT LaunchDaemon-only.
+
+       What is not supported is an array as the VALUE of a key. This file used
+       Month => [1,4,7,10] inside one dictionary until 2026-11-01, on the theory
+       that launchd ORs the values within a key. Measured: it fires on the 1st of
+       every month. The job ran 2026-11-01 07:30, a month that is not in the list,
+       and `runs = 1` in `launchctl print` confirms today was its only firing
+       since the plist was installed on 2026-10-01 at 07:43. The descriptor shows
+       the array faithfully, so nothing looked wrong from the outside. The
+       runner now also refuses any month outside the four, which bounds the cost
+       of this class of mistake to a no-op run.
 
        07:30 CT, thirty minutes after the ninety-days job, not 07:00 with it.
        Both land on the 1st of the month and both must finish before Philip's
@@ -28,21 +36,48 @@
        cluster (site audit 13:00, wiki check 13:30, weekly integrity 14:00)
        even when the 1st is a Monday. -->
   <key>StartCalendarInterval</key>
-  <dict>
-    <key>Month</key>
-    <array>
+  <array>
+    <dict>
+      <key>Month</key>
       <integer>1</integer>
-      <integer>4</integer>
+      <key>Day</key>
+      <integer>1</integer>
+      <key>Hour</key>
       <integer>7</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+    <dict>
+      <key>Month</key>
+      <integer>4</integer>
+      <key>Day</key>
+      <integer>1</integer>
+      <key>Hour</key>
+      <integer>7</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+    <dict>
+      <key>Month</key>
+      <integer>7</integer>
+      <key>Day</key>
+      <integer>1</integer>
+      <key>Hour</key>
+      <integer>7</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+    <dict>
+      <key>Month</key>
       <integer>10</integer>
-    </array>
-    <key>Day</key>
-    <integer>1</integer>
-    <key>Hour</key>
-    <integer>7</integer>
-    <key>Minute</key>
-    <integer>30</integer>
-  </dict>
+      <key>Day</key>
+      <integer>1</integer>
+      <key>Hour</key>
+      <integer>7</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+  </array>
   <key>WorkingDirectory</key>
   <string>/Users/prh/Developer/huffmanwrites</string>
   <!-- Keep the exported PATH used by the other huffmanwrites jobs so hugo,
