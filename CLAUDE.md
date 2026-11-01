@@ -110,7 +110,7 @@ Credentials have exactly one home: the **login keychain** (a `huffmanwrites-*` g
 - **Every Stoic Saturday digest carries a brief summary of the most recent weekly reports, each linked to its full report.** Added 2026-10-03 as a standing structural element: the reader gets the week's reports in the letter, not a bare schedule of them. For each publishing series, summarize the **most recent published installment** in a sentence or two and link it. The series and the URL shapes they resolve to:
   - **Senate Race Report** — `content/posts/essays/senate-race-report-<DATE>.md` → `/posts/essays/senate-race-report-<DATE>/` (Sundays 07:00 CT, through 2026-11-01).
   - **Docket Report** — `content/posts/essays/docket-report-<DATE>.md` → `/posts/essays/docket-report-<DATE>/` (Saturdays 08:00 CT, from 2026-10-03).
-  - **Ninety-Days Report** — two monthly installments, `content/posts/investing/bond-market-ninety-days-<DATE>.md` and `content/posts/investing/sp500-next-ninety-days-<DATE>.md` (the 1st of each month).
+  - **Ninety-Days Report** — two monthly installments, `content/posts/investing/bond-market-ninety-days-<DATE>.md` and `content/posts/investing/sp500-next-ninety-days-<DATE>.md` (the last Tuesday of each month).
   - **Chiefs Report** — `content/posts/sports/chiefs-report-<DATE>.md` → `/posts/sports/chiefs-report-<DATE>/` (Tuesdays 18:30 CT, in season).
   - **Global SITREP** — `content/posts/sitrep/sitrep-<DATE>.md` → `/posts/sitrep/sitrep-<DATE>/` (every morning, from 2026-10-07). The most recent edition is what the letter names; a daily series needs no cadence line, and the section index at `/posts/sitrep/` is where the rest of the week lives.
   - The **Repair Plan** is a quarterly working document for a future administration, not a reader-facing report, and is not included.
@@ -153,7 +153,7 @@ Unattended jobs run from `scripts/` via launchd, and `scripts/check-plists.py` p
 | `docket-watch` | 07:30, 18:30 daily | Alerts on any new filing in the three watched dockets |
 | `docket-weekly-report` | Saturdays 08:00 | **Publishes** the weekly docket report (first run 2026-10-03) |
 | `senate-report` | Sundays 07:00 | **Publishes** the weekly Senate race report (self-disables after 2026-11-02) |
-| `ninety-days-report` | 1st of each month | Drafts the bond and S&P ninety-day installments |
+| `ninety-days-report` | Last Tuesday of each month, 07:00 | Drafts the bond and S&P ninety-day installments |
 | `repair-plan` | Quarterly (Jan/Apr/Jul/Oct 1) | Revises the long-horizon repair plan |
 | `site-audit` | Mondays 13:00 | Builds and crawls the live site for broken links and CSP drift |
 | `wiki-check` | Mondays 13:30 | Audits and fixes the SimpleBrain wiki |

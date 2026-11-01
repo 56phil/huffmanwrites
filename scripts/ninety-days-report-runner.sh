@@ -1,6 +1,9 @@
 #!/bin/bash
 # Monthly Ninety-Days Report runner (bond market + S&P 500).
-# Invoked by launchd (com.huffmanwrites.ninety-days-report) on the 1st of every month at 07:00 CT.
+# Invoked by launchd (com.huffmanwrites.ninety-days-report) every Tuesday at 07:00
+# CT; the cadence guard below admits only the LAST Tuesday of the month, which is
+# the publication date. launchd cannot express "last Tuesday", so the schedule
+# fires weekly and the calendar decides.
 # Runs indefinitely; remove ~/Library/LaunchAgents/com.huffmanwrites.ninety-days-report.plist to retire.
 set -euo pipefail
 
@@ -21,6 +24,41 @@ ERR_LOG="$LOG_DIR/ninety-days-report.err.log"
 # every line with the run's start time, so the log could not show how long the
 # two drafts, the hero generations, or the builds took.
 stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
+
+# Cadence guard: the report is monthly, dated the LAST Tuesday of the month, but
+# a LaunchAgent can only say "every Tuesday" (StartCalendarInterval has no
+# last-of-month form). So the plist fires weekly and this decides which fire is
+# the real one.
+#
+# It sits above the Ollama probe on purpose: a Tuesday that is not the last one
+# must cost nothing and must not be able to raise a server alert. Exit 3 is the
+# ordinary "not today" and gets a log line; any other non-zero is a broken guard
+# and fails the run, because a guard that silently stops admitting dates looks
+# exactly like a job that never fired, and nothing else watches this series for
+# an absence.
+#
+# NINETY_DAYS_TODAY pins the date for a pipeline exercise (with
+# NINETY_DAYS_IGNORE_GUARD=1 to skip the calendar entirely); neither is used by
+# the scheduled run.
+if [ "${NINETY_DAYS_IGNORE_GUARD:-0}" != "1" ]; then
+  set +e
+  if [ -n "${NINETY_DAYS_TODAY:-}" ]; then
+    python3 "$REPO/scripts/is-last-weekday.py" --weekday Tuesday \
+      --now "$NINETY_DAYS_TODAY" >> "$OUT_LOG" 2>&1
+  else
+    python3 "$REPO/scripts/is-last-weekday.py" --weekday Tuesday \
+      >> "$OUT_LOG" 2>&1
+  fi
+  GUARD_RC=$?
+  set -e
+  case "$GUARD_RC" in
+    0) : ;;
+    3) echo "$(stamp): not the last Tuesday of the month; nothing to do" >> "$OUT_LOG"
+       exit 0 ;;
+    *) echo "$(stamp): cadence guard failed (exit $GUARD_RC)" >> "$OUT_LOG"
+       exit 1 ;;
+  esac
+fi
 
 # Provider routing: Claude Code appends /v1/messages to ANTHROPIC_BASE_URL,
 # so the base URL must NOT carry a /v1 suffix (Ollama serves Anthropic-format

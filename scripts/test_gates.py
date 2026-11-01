@@ -76,6 +76,7 @@ cvc = load("check-vault-currency")
 cfk = load("check-forks")
 de = load("digest-email")
 drel = load("digest-release")
+ilw = load("is-last-weekday")
 
 EM = "\u2014"
 
@@ -3328,6 +3329,84 @@ class TestWeeklySatireSchedule(unittest.TestCase):
                      "weekly-satire-2026-10-26.md", "weekly-satire-2026-11-02.md"):
             with self.subTest(stem=stem):
                 self.assertIn(stem, present)
+
+
+class TestNinetyDaysSchedule(unittest.TestCase):
+    """The ninety-days report runs on the LAST Tuesday of each month.
+
+    Changed 2026-11-01 at Philip's instruction. Two things make this more than a
+    plist edit. First, `StartCalendarInterval` has no last-of-month form, so the
+    agent fires every Tuesday and the calendar is consulted in the runner: the
+    test that matters is the arithmetic, not the schedule line. Second, the guard
+    must be three-valued. Exit 0 admits the run and exit 3 is an ordinary skip,
+    but any other failure has to come back as a failure; a guard whose crash read
+    as "not today" would stop the series and leave nothing but a quiet log, which
+    is the absence class the SITREP watchdog exists to catch for the daily one.
+    """
+
+    def setUp(self):
+        self.runner = (SCRIPTS / "ninety-days-report-runner.sh").read_text(encoding="utf-8")
+        self.plist = (SCRIPTS / "com.huffmanwrites.ninety-days-report.plist").read_text(
+            encoding="utf-8")
+
+    def guard(self, day):
+        with contextlib.redirect_stdout(io.StringIO()):
+            return ilw.main(["--weekday", "Tuesday", "--now", day])
+
+    def test_the_plist_fires_every_tuesday_and_names_no_day(self):
+        # launchd Weekday is 0=Sunday, so 2 is Tuesday. A `Day` key left behind
+        # would AND with Tuesday and silently shrink the schedule.
+        self.assertIn("<key>Weekday</key>", self.plist)
+        self.assertIn("<integer>2</integer>", self.plist)
+        self.assertNotIn("<key>Day</key>", self.plist)
+        self.assertRegex(self.plist, r"<key>Hour</key>\s*<integer>7</integer>")
+        self.assertRegex(self.plist, r"<key>Minute</key>\s*<integer>0</integer>")
+
+    def test_the_last_tuesday_of_a_month_is_the_one_admitted(self):
+        # Precomputed with `calendar`, not recomputed here: a test that reruns the
+        # implementation's own arithmetic would pass while both were wrong.
+        # February 2027 is the case that breaks a naive "day > 21" shortcut, and
+        # March 2026 is a month that ends on the weekday itself.
+        for day, expected in [("2026-11-24", 0), ("2026-12-29", 0),
+                              ("2027-02-23", 0), ("2026-03-31", 0),
+                              ("2027-01-26", 0)]:
+            with self.subTest(day=day):
+                self.assertEqual(self.guard(day), expected)
+                d = date.fromisoformat(day)
+                self.assertEqual(ilw.last_weekday(d.year, d.month, 1), d)
+
+    def test_an_earlier_tuesday_in_the_same_month_is_refused_with_three(self):
+        # 2026-11-17 is a Tuesday, and a week early. The code must be 3 and not 1,
+        # so the runner can tell "not today" from "the guard is broken".
+        self.assertEqual(self.guard("2026-11-17"), 3)
+
+    def test_a_wednesday_is_never_admitted(self):
+        self.assertEqual(self.guard("2026-11-25"), 3)
+
+    def test_the_guard_runs_before_the_probe_and_the_writer(self):
+        guard = self.runner.find("is-last-weekday.py")
+        probe = self.runner.find("ollama_require")
+        writer = self.runner.find("claude -p")
+        self.assertGreater(guard, 0, "the cadence guard is gone")
+        self.assertGreater(probe, guard,
+                           "the guard must precede the Ollama probe: a Tuesday "
+                           "that is not the last one must cost nothing")
+        self.assertGreater(writer, guard)
+
+    def test_the_skip_exits_zero_and_a_broken_guard_does_not(self):
+        # The case block is the whole contract, so it is read as text rather than
+        # inferred: `3)` must exit 0, `*` must exit 1.
+        m = re.search(r'case "\$GUARD_RC" in(.*?)\n  esac', self.runner, re.S)
+        self.assertIsNotNone(m, "the GUARD_RC case block is gone")
+        block = m.group(1)
+        skip = re.search(r'3\)(.*?)exit 0', block, re.S)
+        fail = re.search(r'\*\)(.*?)exit 1', block, re.S)
+        self.assertIsNotNone(skip, "exit 3 no longer exits 0")
+        self.assertIsNotNone(fail, "an unknown guard failure no longer exits 1")
+
+    def test_the_guard_is_pinnable_for_a_pipeline_exercise(self):
+        self.assertIn("NINETY_DAYS_IGNORE_GUARD", self.runner)
+        self.assertIn("NINETY_DAYS_TODAY", self.runner)
 
 
 class TestSatireRecency(unittest.TestCase):

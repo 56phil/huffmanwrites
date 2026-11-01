@@ -1,11 +1,11 @@
 # Skill: Ninety-Days Report
 
-Monthly companion reports on the bond market and the S&P 500, projecting the next ninety days under the assumption that the Iran situation does not improve. Produced on the first of every month at 0700 CT. The September 2026 installments are the canonical models: `content/posts/investing/bond-market-ninety-days.md` (bonds) and `content/posts/investing/sp500-next-ninety-days.md` (equities).
+Monthly companion reports on the bond market and the S&P 500, projecting the next ninety days under the assumption that the Iran situation does not improve. Produced on the last Tuesday of every month at 07:00 CT. The September 2026 installments are the canonical models: `content/posts/investing/bond-market-ninety-days.md` (bonds) and `content/posts/investing/sp500-next-ninety-days.md` (equities).
 
 ## When this runs
 
 - Scheduled by launchd: `com.huffmanwrites.ninety-days-report` (plist source: `scripts/com.huffmanwrites.ninety-days-report.plist`; runner: `scripts/ninety-days-report-runner.sh`).
-- The runner invokes Claude Code headless in this repo with this skill. Runs: the 1st of every month at 07:00 CT, indefinitely (no self-disable date).
+- The runner invokes Claude Code headless in this repo with this skill. Runs: the last Tuesday of every month at 07:00 CT, indefinitely (no self-disable date). The LaunchAgent fires every Tuesday and `scripts/is-last-weekday.py` admits only the last one, because launchd cannot express last-of-month; the other Tuesdays exit 0 with a line in the log.
 - If drafts for today's date already exist, update them in place (same-day re-run).
 
 ## Mission
