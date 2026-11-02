@@ -6161,6 +6161,40 @@ class TestWeeklyIntegrityJob(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+class TestHugoVersionPin(unittest.TestCase):
+    """The CI pin and the two prose copies of it agree.
+
+    `CLAUDE.md` states the rule — "Keep these two in step" — and it has been
+    broken three times running, each time silently and each time for days: the
+    prose said 0.166.0 for ten days after the local toolchain moved on
+    2026-09-28, 0.167.0 for seven days after 2026-10-13, and 0.168.0 for six
+    days after 2026-10-27. Nothing reads a rule written only in prose, which is
+    why it is a test and not another sentence.
+    """
+
+    WORKFLOW = REPO / ".github" / "workflows" / "hugo.yml"
+    CLAUDE = REPO / "CLAUDE.md"
+
+    def copies(self):
+        workflow = re.search(r"HUGO_VERSION:\s*([\d.]+)",
+                             self.WORKFLOW.read_text(encoding="utf-8"))
+        text = self.CLAUDE.read_text(encoding="utf-8")
+        installed = re.search(r"Hugo v(\d+\.\d+\.\d+)\+extended is installed", text)
+        deployed = re.search(r"workflow installs Hugo (\d+\.\d+\.\d+) extended", text)
+        return workflow, installed, deployed
+
+    def test_the_pin_matches_both_prose_copies(self):
+        workflow, installed, deployed = self.copies()
+        self.assertIsNotNone(workflow, "HUGO_VERSION is missing from the workflow")
+        self.assertIsNotNone(installed, "the Commands paragraph names no installed version")
+        self.assertIsNotNone(deployed, "the Deployment section names no deployed version")
+        self.assertEqual(workflow.group(1), installed.group(1),
+                         "the Commands paragraph and the CI pin disagree")
+        self.assertEqual(workflow.group(1), deployed.group(1),
+                         "the Deployment section and the CI pin disagree")
+
+
+# --------------------------------------------------------------------------
 # Fork hygiene: the switches are off by default, so the job has to be right.
 # --------------------------------------------------------------------------
 class TestForkSyncJob(unittest.TestCase):

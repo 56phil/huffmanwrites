@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — November 2, 2026 — The Hugo pin was six days behind the local toolchain, and a test now holds it
+
+- **Philip, 2026-11-02:** "Bump CI to 0.169.0" — production is moved onto the toolchain every launchd job already builds with, rather than the local binary being downgraded to the pin. Revert is one line if the next deploy misbehaves.
+- **The drift, measured rather than remembered:** `hugo version` reports `v0.169.0+extended+withdeploy`, installed by Homebrew on 2026-10-27; `.github/workflows/hugo.yml` still pinned `HUGO_VERSION: 0.168.0`, and `CLAUDE.md` named 0.168.0 in its Commands paragraph and again in the Deployment section. Every deploy since 2026-10-27 built a version behind the one the writers' local builds validate against — the exact condition the "Keep these two in step" rule exists to prevent.
+- **The SITREP writer reported it on its own.** Today's run carried the risk in its summary: "local Hugo is 0.169.0 while CI pins 0.168.0, so the local build passing does not by itself prove the deploy's build will." That is the third time this drift has existed and the first time the assistant inside the pipeline noticed it rather than a human.
+- **Changed:** `.github/workflows/hugo.yml` (`HUGO_VERSION`), `CLAUDE.md` (the Commands paragraph's installed version, a third datapoint in its own drift history — 0.168.0 stood for six days after 2026-10-27 — and the Deployment sentence that names what the workflow installs). Nothing else in the repo named a version; `0.168.0` now survives only in this file's history.
+- **A test, because the rule lives in prose and prose is what drifted three times.** `TestHugoVersionPin` reads the workflow env and the two `CLAUDE.md` sentences and fails when any pair disagrees. Measured both directions: green at 0.169.0, and red with the workflow put back to 0.168.0 (`the Commands paragraph and the CI pin disagree`), then green again once restored.
+- **Verified:** `hugo --gc --minify` clean at 0.169.0 (435 static files, 67 images); `python3 scripts/test_gates.py` **486 tests, OK**; the deploy of this commit is the first production build on 0.169.0.
+
+---
+
 ### Maintenance — November 2, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
