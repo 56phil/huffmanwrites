@@ -1044,6 +1044,45 @@ class TestDocketRules(unittest.TestCase):
         self.assertNotIn("save_state", src)
         self.assertNotIn("load_state", src)
 
+    def test_the_fetch_retries_a_stall_before_giving_up(self):
+        # 2026-11-02 18:30: the Phang feed answered nothing for 30 s, curl
+        # exited 28, and that case's watermark was skipped — ECF 62 and 63 went
+        # undelivered until 07:30 the next morning. The feeds answer in 0.27–1.03 s
+        # (measured), so the budget was not the problem; the absence of a second
+        # attempt was. Asserted against the argv curl is actually given, because
+        # a flag in a comment retries nothing.
+        import unittest.mock as mock
+        done = mock.Mock(returncode=0, stdout=b"<feed><entry/></feed>")
+        with mock.patch.object(cd.subprocess, "run", return_value=done) as run:
+            cd.fetch_feed("https://example.invalid/feed/")
+        argv = run.call_args[0][0]
+        self.assertEqual(argv[0], "curl")
+        self.assertIn("--retry", argv)
+        self.assertGreaterEqual(int(argv[argv.index("--retry") + 1]), 2,
+                                "one retry leaves a single stall still fatal")
+        self.assertIn("--retry-delay", argv)
+        self.assertIn("--max-time", argv)
+        # The ceiling stays: a hang must still be reported, not waited out.
+        self.assertLessEqual(int(argv[argv.index("--max-time") + 1]), 60)
+
+    def test_a_feed_that_is_really_down_still_alerts_and_keeps_the_watermark(self):
+        # The retry must not soften the exit-code contract. After every attempt
+        # fails, the case returns 2 (which routes to alert-failure.sh) and its
+        # watermark is untouched, so the next run reports what this one missed
+        # rather than silently consuming it.
+        import unittest.mock as mock
+        state = {"dockets": {"phang": {"last_entry": 61, "last_minute": 480810275}}}
+        args = argparse.Namespace(dry_run=False, no_update=False, quiet=True,
+                                  status=False, report=False)
+        timed_out = mock.Mock(returncode=28, stdout=b"")
+        with mock.patch.object(cd.subprocess, "run", return_value=timed_out), \
+                mock.patch("sys.stderr"):
+            rc, changed, out = cd.watch("phang", cd.CASES["phang"], state, args)
+        self.assertEqual(rc, 2)
+        self.assertFalse(changed)
+        self.assertEqual(out["dockets"]["phang"],
+                         {"last_entry": 61, "last_minute": 480810275})
+
 
 # --------------------------------------------------------------------------
 # Never end a sentence with a preposition (house rule, 2026-09-25).

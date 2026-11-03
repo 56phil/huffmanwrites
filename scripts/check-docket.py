@@ -388,8 +388,21 @@ def fetch_feed(url: str) -> str:
     # this read mojibake, the "<entry" test below would fail, and a live docket
     # would be reported as unreadable — the false-negative that makes a watch
     # job useless.
+    #
+    # --retry: a stall is the failure this fetcher actually has, and one stall
+    # used to cost that case up to 13 hours. On 2026-11-02 at 18:30 the Phang
+    # feed returned curl exit 28 (operation timeout) after 30 s, which skipped
+    # that case's watermark and left ECF 62 and 63 undelivered until the 07:30
+    # run the next morning. The budget is not tight — the five feeds answer in
+    # 0.27–1.03 s — so the fix is not a longer timeout but a second and third
+    # attempt: curl retries timeouts and refused connections under --retry, so
+    # a transient stall costs two seconds, and a feed that is genuinely down
+    # still exits 28 and still raises the alert. The retry does not weaken that
+    # contract; it separates "one slow response" from "the docket is
+    # unreachable", which is the distinction a watch job has to get right.
     r = subprocess.run(
-        ["curl", "-sL", "--compressed", "--max-time", "30", "-A", USER_AGENT, url],
+        ["curl", "-sL", "--compressed", "--retry", "2", "--retry-delay", "2",
+         "--max-time", "30", "-A", USER_AGENT, url],
         capture_output=True,
     )
     if r.returncode != 0:

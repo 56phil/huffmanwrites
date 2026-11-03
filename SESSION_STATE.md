@@ -23,6 +23,15 @@ Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
 
 ---
 
+### Maintenance — November 3, 2026 — The docket fetch retries a stall, and still alerts when it is really down
+
+- **The failure:** 2026-11-02 18:30, the Phang feed returned nothing for 30 s, `curl` exited **28**, `watch()` returned 2, and that case's watermark was left alone. The alert fired, the other four cases delivered normally, and the two filings behind the watermark (ECF 62 and 63) reached the 07:30 run thirteen hours later.
+- **The budget was not the problem.** The five watched feeds answer in **0.27–1.03 s** (measured through `fetch_feed` itself, not through a hand-built URL — the feed path is `docket/<id>/feed/`, so a probe that appends a slug 404s and proves nothing). Two failures in 96 runs: ~0.4 % of fetches. What the run lacked was a second attempt.
+- **The fix is one flag set in `fetch_feed`:** `--retry 2 --retry-delay 2`, beside the unchanged `--max-time 30`. **Measured, because the semantics had to be verified rather than assumed:** against an unroutable address at `--max-time 2`, no retry returns `28` after **2.03 s**, and the new flags return `28` after **10.07 s** — three attempts plus two 2 s delays. So a stall costs seconds and a feed that is genuinely down still exits 28 and still raises the alert; the retry separates "one slow response" from "the docket is unreachable", which is the distinction a watch job cannot blur.
+- **Two tests, both behavioural:** `test_the_fetch_retries_a_stall_before_giving_up` asserts the argv `curl` is actually given (a flag in a comment retries nothing) and that the ceiling stays; `test_a_feed_that_is_really_down_still_alerts_and_keeps_the_watermark` drives `watch()` with a mock `rc=28` and asserts it returns 2 and leaves the watermark at ECF 61, so the next run reports what this one missed. Suite: **498 tests OK**. Live smoke: `--case phang --dry-run` in 0.67 s, watermark ECF 63.
+
+---
+
 ### Maintenance — November 3, 2026 — The Senate job comes out of launchd
 
 - **Philip, 2026-11-03: "Uninstall it."** `com.huffmanwrites.senate-report` was booted out of `gui/501` and its installed plist deleted (`launchctl print` now answers "Could not find service"), and the repo copy `scripts/com.huffmanwrites.senate-report.plist` was removed in the same change. `check-plists.py`: **14 schedule(s) checked, OK**.
