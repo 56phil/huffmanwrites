@@ -126,7 +126,7 @@ set +e
 claude -p "$PROMPT" \
   -n "senate-report-$(date '+%Y-%m-%d')" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(python3 scripts/fetch-senate-ratings.py*)" \
+  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(python3 scripts/fetch-senate-ratings.py*),Bash(python3 scripts/check-emdashes.py*),Bash(python3 scripts/check-prepositions.py*)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e

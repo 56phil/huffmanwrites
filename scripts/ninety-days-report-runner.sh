@@ -117,7 +117,7 @@ set +e
 claude -p "$PROMPT" \
   -n "ninety-days-report-$(date '+%Y-%m-%d')" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(curl *),Bash(magick *),Bash(cwebp *),Bash(jq *),Bash(base64 *),Bash(cp *),Bash(sed *)" \
+  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(curl *),Bash(magick *),Bash(cwebp *),Bash(jq *),Bash(base64 *),Bash(cp *),Bash(sed *),Bash(python3 scripts/check-emdashes.py*),Bash(python3 scripts/check-prepositions.py*)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e

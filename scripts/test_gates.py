@@ -3778,6 +3778,86 @@ class TestDailySitrep(unittest.TestCase):
         self.assertIn("/img/articles/115-sitrep_16x9.webp", g)
 
 
+class TestProseCheckersAreGranted(unittest.TestCase):
+    """Every runner grants the prose checkers its own skill tells the writer to run.
+
+    A permission denial is silent to the writer, so an allow-list that omits a
+    checker the skill names makes the instruction unenforceable and leaves the
+    gate as the only reader of the rule. That cost three aborted publishes and
+    three manual recoveries before it was seen: the Senate report twice and the
+    Chiefs report once, every one of them a stranded preposition the writer had
+    been told to check and could not run. The two checkers are read-only, print
+    to stdout, and change nothing, which is why they are the gates a writer may
+    run; the runner's own gate set and its log stay the authority.
+
+    Derived from the runner and its SKILL, not from a list here, so a new
+    publishing job inherits the rule and a skill that starts naming a checker
+    makes the omission fail.
+    """
+
+    def pairs(self):
+        for runner in sorted(SCRIPTS.glob("*-runner.sh")):
+            text = runner.read_text(encoding="utf-8")
+            m = re.search(r'^SKILL="\$REPO/(skills/[^"]+)"', text, re.M)
+            if not m or "--allowedTools" not in text:
+                continue
+            skill = REPO / m.group(1)
+            if not skill.is_file():
+                continue
+            yield runner.name, text, skill.read_text(encoding="utf-8")
+
+    def test_the_scan_finds_the_publishing_runners(self):
+        # A glob that stopped matching would make every assertion below vacuous.
+        names = {name for name, _, _ in self.pairs()}
+        for expected in ("chiefs-weekly-report-runner.sh",
+                         "docket-weekly-report-runner.sh",
+                         "weekly-satire-runner.sh",
+                         "daily-sitrep-runner.sh"):
+            with self.subTest(runner=expected):
+                self.assertIn(expected, names)
+
+    def test_every_checker_a_skill_names_is_in_the_grant(self):
+        checked = 0
+        for name, runner, skill in self.pairs():
+            named = set(re.findall(r"python3 (scripts/check-[A-Za-z0-9_.-]+\.py)", skill))
+            if not named:
+                continue
+            i = runner.find("--allowedTools")
+            grant = runner[i:runner.find("\n", runner.find('>> "$OUT_LOG"', i))]
+            if "Bash(python3 scripts/*)" in grant:
+                # The drafting jobs grant the whole scripts directory, which
+                # subsumes every checker; testing for exact prefixes against a
+                # wildcard would report a denial that does not exist.
+                continue
+            for script in sorted(named):
+                with self.subTest(runner=name, script=script):
+                    self.assertIn(f"Bash(python3 {script}*)", grant,
+                                  f"{name}'s skill tells the writer to run {script}, "
+                                  f"which its allow-list denies")
+                    checked += 1
+        self.assertGreaterEqual(checked, 6, "the scan matched almost nothing")
+
+    def test_the_verification_gates_are_never_granted(self):
+        # The other half matters as much as the grant: a writer that could run
+        # the publication gates could report a result the runner never produced,
+        # and those are the checks that decide whether an unreviewed draft ships.
+        # `check-links.py` is deliberately not on this list — the Weekly Satire
+        # has no collector, so verifying its own links is how that job works —
+        # and `check-docket.py` is the docket report's own reader.
+        forbidden = ("check-report-frontmatter.py", "check-content-frontmatter.py",
+                     "check-quotes.py", "check-quote-names.py", "check-hero-paths.py",
+                     "check-render-integrity.py", "check-series-posts.py",
+                     "check-gallery-pages.py", "check-secrets.py",
+                     "check-vault-currency.py", "check-plists.py")
+        for name, runner, _ in self.pairs():
+            i = runner.find("--allowedTools")
+            grant = runner[i:runner.find("\n", runner.find('>> "$OUT_LOG"', i))]
+            for script in forbidden:
+                with self.subTest(runner=name, script=script):
+                    self.assertNotIn(script, grant,
+                                     f"{name} grants a publication gate the writer must not run")
+
+
 class TestSitrepBeats(unittest.TestCase):
     """The SITREP's beat list, which is a decision and not a default.
 

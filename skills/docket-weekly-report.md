@@ -155,7 +155,8 @@ report may say so.
   `python3 scripts/check-emdashes.py --file <path>`.
 - **Never end a sentence with a preposition** (house rule, 2026-09-25). Applies
   to body prose and to the frontmatter display fields (`title`, `description`,
-  `hero_caption`).
+  `hero_caption`). Check with
+  `python3 scripts/check-prepositions.py --file <path>`.
 - A quotation from a translated work names the translator, the translation, and
   the year. Every direct quotation carries a resolvable link that contains the
   quoted wording.

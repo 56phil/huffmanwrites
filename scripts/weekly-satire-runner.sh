@@ -152,7 +152,7 @@ set +e
 claude -p "$PROMPT" \
   -n "weekly-satire-$TODAY" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(python3 scripts/check-links.py*)" \
+  --allowedTools "Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(python3 scripts/check-links.py*),Bash(python3 scripts/check-emdashes.py*),Bash(python3 scripts/check-prepositions.py*)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e

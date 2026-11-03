@@ -296,9 +296,10 @@ publish_preflight() {
 # and verify the push landed.
 #
 # The entry is written HERE, from the real gate results, and never by the agent.
-# The agent cannot run the gates (they are deliberately outside its allow-list),
-# so an entry it authored could only assert a result it did not produce. Every
-# claim in the entry below is a line from this log.
+# The agent is granted only the two read-only prose checkers (em-dashes,
+# prepositions) so it can fix its own draft before finishing; every other gate is
+# outside its allow-list, so an entry it authored could only assert a result it
+# did not produce. Every claim in the entry below is a line from this log.
 #
 # **Except the SimpleBrain line, and the exception is deliberate.** The mirror
 # runs AFTER this function, because it is the last thing the runner does, so at

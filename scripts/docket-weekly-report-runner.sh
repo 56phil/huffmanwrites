@@ -15,9 +15,9 @@
 # job filed a `draft: true` page and left it uncommitted.
 #
 # The deterministic verification (builds and gates) is done by THIS script rather
-# than claimed by the agent, for the same reason: the agent cannot run the gates
-# — they are not in its allow-list — so a gate result in its summary would be
-# unverifiable. Running them here puts the real exit codes in the log.
+# than claimed by the agent, for the same reason: the agent is granted only the
+# two read-only prose checkers, so a result from any other gate in its summary
+# would be unverifiable. Running them here puts the real exit codes in the log.
 set -euo pipefail
 
 # launchd does not source the shell, so PATH misses ~/.local/bin (claude) and
@@ -124,7 +124,7 @@ set +e
 claude -p "$PROMPT" \
   -n "docket-report-$(date '+%Y-%m-%d')" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(pdftotext *),Bash(python3 scripts/check-docket.py*)" \
+  --allowedTools "Read,Edit,Write,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(pdftotext *),Bash(python3 scripts/check-docket.py*),Bash(python3 scripts/check-emdashes.py*),Bash(python3 scripts/check-prepositions.py*)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e

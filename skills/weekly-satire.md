@@ -216,10 +216,12 @@ The stem matches the gallery `latest` glob, which is how the series card and
 
 - **Em-dashes: no more than 3 in your prose.** Prefer commas, colons,
   semicolons, or two sentences. Dashes inside a quotation, and in a date or
-  numeric range, do not count.
+  numeric range, do not count. Count with
+  `python3 scripts/check-emdashes.py --file <path>`.
 - **Never end a sentence with a preposition.** "To whom did you give it?", not
   "Who did you give it to?" The rule covers `title`, `description`, and
-  `hero_caption` too, since those are displayed.
+  `hero_caption` too, since those are displayed. Check with
+  `python3 scripts/check-prepositions.py --file <path>`.
 - **No placeholder anchors.** Write `["His exact words,"](url)`, never
   `([text](url))` or `([here](url))`. A placeholder anchor tells the reader
   nothing and blinds the wrong-page check.

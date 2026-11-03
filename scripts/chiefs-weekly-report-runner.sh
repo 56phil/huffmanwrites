@@ -24,10 +24,12 @@
 #   1. The gates are the last thing between an unreviewed draft and production,
 #      so a gate failure must ABORT the push rather than be logged alongside it.
 #   2. The runner writes SESSION_STATE.md itself, from the real gate results,
-#      instead of letting the agent describe them. The agent cannot run the
-#      gates (they are deliberately outside its allow-list), so its summary
-#      could only ever assert a result it did not produce. Writing the entry
-#      here means the numbers in it are the ones in this log.
+#      instead of letting the agent describe them. The agent is granted only
+#      the two read-only prose checkers (em-dashes, prepositions) so it can fix
+#      its own draft before finishing; every other gate — links, quotations,
+#      frontmatter, hero paths, render, series — stays outside its allow-list,
+#      so its summary could only ever assert a result it did not produce.
+#      Writing the entry here means the numbers in it are the ones in this log.
 #   3. It verifies the push landed. `git push` exit 0 after a race with another
 #      push does not mean the commit is on the remote, and a report that was
 #      written, committed, and never delivered is the failure that looks like
@@ -164,7 +166,7 @@ set +e
 claude -p "$PROMPT" \
   -n "chiefs-report-$TODAY" \
   --permission-mode acceptEdits \
-  --allowedTools "Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(python3 scripts/chiefs-report.py*)" \
+  --allowedTools "Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Bash(date *),Bash(mkdir *),Bash(python3 scripts/chiefs-report.py*),Bash(python3 scripts/check-emdashes.py*),Bash(python3 scripts/check-prepositions.py*)" \
   >> "$OUT_LOG" 2>> "$ERR_LOG"
 RC=$?
 set -e

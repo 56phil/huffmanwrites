@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — November 3, 2026 — The silent denial behind three aborted publishes
+
+- **The defect, found by counting rather than reading:** every publishing runner failed a content gate three times — the Senate report twice (`2026-10-11`, `2026-10-25`) and the Chiefs report once (`2026-10-27`) — and every one of the three was `check-prepositions --file` flagging a stranded preposition in prose the writer had just composed. Each abort left the article in place and needed a manual recovery run.
+- **The cause was an instruction that could not execute.** All four writing skills tell the writer to run the checker ("Check with `python3 scripts/check-prepositions.py --file <path>`"), and the allow-list denied it. A permission denial in headless `claude -p` is silent to the model, so the writer never learned the check existed and the gate became the only reader of a rule the writer was told to apply. The daily SITREP runner already granted both checkers, so the rule was not new — it had simply never been applied to the three older jobs.
+- **Grants added** to `chiefs-weekly-report-runner.sh`, `docket-weekly-report-runner.sh`, `weekly-satire-runner.sh`, `senate-report-runner.sh` (retired, its fires exit 0) and `ninety-days-report-runner.sh`: `Bash(python3 scripts/check-emdashes.py*)` and `Bash(python3 scripts/check-prepositions.py*)`. Both are read-only counters that print to stdout and change nothing.
+- **Verified end to end, not by inspection:** a headless `claude -p` with the new grant string ran the checker and returned `content/posts/sitrep/sitrep-2026-11-02.md: 0 sentence-final preposition(s) — OK`; under the old grant the call is denied.
+- **`TestProseCheckersAreGranted` derives the rule from the runner and its `SKILL=` path** rather than a list in the test, so a new writing job inherits it and a skill that starts naming a checker makes the omission fail. It skips a runner whose grant is the `Bash(python3 scripts/*)` wildcard (the drafting jobs) because a prefix test against a wildcard reports a denial that does not exist, and it asserts the complement too: no publication gate (`check-report-frontmatter`, `check-quotes`, `check-quote-names`, `check-hero-paths`, `check-render-integrity`, `check-series-posts`, `check-gallery-pages`, `check-secrets`, `check-vault-currency`, `check-plists`) is ever granted. `check-links.py` and `check-docket.py` stay granted — the Satire has no collector, so its own link check is how that job works.
+- **The CLAUDE.md rule was wrong and is corrected:** it said every gate is "deliberately absent from its allow-list", which the SITREP runner had contradicted since 2026-10-07. It now states which two are granted, why, and that the runner's log remains the only authoritative record. The same stale claim in three runner comments and in `publish-report.sh` was corrected with it. Suite: **496 tests OK**.
+
+---
+
 ### Maintenance — November 2, 2026 — The install path, because the safe way was the inconvenient one
 
 - **Philip rotated the FEC key and wrote it into `~/.secrets` himself, at his own shell.** The keychain was stale for a while — the gate reported `homes DISAGREE` with the keychain copy answering `403 API_KEY_INVALID` — and was resynced from the file without the value ever being printed. Current state: `secrets: OK — 6 credential(s) checked, homes agree, keys authenticate`.
