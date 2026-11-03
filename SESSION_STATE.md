@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — November 2, 2026 — `by-what-standard-summary.md` had no vault counterpart; `weekly-integrity` was red on it
+
+- **The failure, measured:** the 14:00 `weekly-integrity` run exited 1 on `vault (currency)` — `content/posts/summaries/by-what-standard-summary.md: no file in the vault has stem 'by-what-standard-summary'`, `coverage: 274 posts`. Every other section of the run was green: `links (offline)` 4294 links, `links (online)` 2264 links exit 0, `links (titles)` exit 0, `quotes (online)` 73 attributions exit 0, `quote-names` 43 details exit 0, `secrets (drift)` and `(liveness)` 5 credentials exit 0. So the one red is a mirror that never ran, not rot.
+- **Why it was missed:** the summary was published 2026-10-31 by hand, not by a publishing runner, so no `publish-report.sh` tail mirrored it. A publishing job cannot leave this gap — its mirror step is part of the same tail — and a hand publish can, which is the case the gate exists for.
+- **Repaired to the vault's own convention for a summary**, which differs from an article's: the raw copy goes to `archive/<stem>.md` verbatim (`cmp` clean), and the translation goes to `wiki/books/<stem>.md`, not `wiki/articles/`. The entry is the post with frontmatter stripped, its site-relative `/books/by-what-standard/` link made absolute, and the `Source: huffmanwrites.org/posts/summaries/by-what-standard-summary/` footer.
+- **Verified:** `python3 scripts/check-vault-currency.py` now reports `OK — every examined post has a vault counterpart (274 post(s))`, exit 0. SimpleBrain commit `3815a5b`, pushed; `main` equals `origin/main`.
+- **Not mirrored: nothing else.** The whole-corpus run reports 274 posts covered, so the SITREPs, the November ninety-days pair, the 2026-11-01 Senate report and the 2026-10-31 digest are all present.
+
+---
+
 ### Maintenance — November 2, 2026 — The Hugo pin was six days behind the local toolchain, and a test now holds it
 
 - **Philip, 2026-11-02:** "Bump CI to 0.169.0" — production is moved onto the toolchain every launchd job already builds with, rather than the local binary being downgraded to the pin. Revert is one line if the next deploy misbehaves.
