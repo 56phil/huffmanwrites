@@ -26,7 +26,9 @@ import importlib.util
 import inspect
 import io
 import json
+import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -5877,6 +5879,124 @@ class TestSecretDrift(unittest.TestCase):
         r = subprocess.run([sys.executable, "scripts/check-secrets.py", "--online"],
                            cwd=REPO, capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
+
+# --------------------------------------------------------------------------
+# The install path, which is the half of the rule the homes comparison cannot
+# see: a key that is installed correctly and was handed over in a chat window
+# authenticates perfectly.
+# --------------------------------------------------------------------------
+class TestInstallSecret(unittest.TestCase):
+    """`scripts/install-secret.sh` — the safe way in.
+
+    Why this class exists. On 2026-11-02 an API key was pasted into the
+    conversation that asked for a collector to be built. Every gate passed: the
+    keychain agreed with `~/.secrets`, the probe answered 200, the collector ran.
+    The exposure was invisible to all of them because it does not change what
+    the key *is*, only who has read it — and the session was being served by a
+    cloud model, so it left the machine. The installer exists so the next key is
+    typed once at a prompt no agent sees. These tests pin the properties that
+    make it worth using rather than a shorter command.
+    """
+
+    def setUp(self):
+        self.dir = Path(tempfile.mkdtemp(prefix="install-secret-"))
+        self.secrets = self.dir / ".secrets"
+        self.addCleanup(__import__("shutil").rmtree, self.dir, True)
+
+    def _run(self, value=None, args=(), path=None, keychain=False):
+        # `--no-keychain` unless a test supplies a stub `security`. This is not
+        # tidiness: the first version of these tests omitted it, and the real
+        # `security` on PATH wrote the TEST VALUE over the login keychain item
+        # for `huffmanwrites-fec`. The gate caught it on the next run — homes
+        # disagreed and the keychain copy answered 403 — but the lesson is that
+        # a test which runs a script with a live side effect is the defect, not
+        # the script. Anything that reaches the keychain under test must reach a
+        # stub.
+        opts = list(args) + ["--no-verify"]
+        if not keychain:
+            opts.append("--no-keychain")
+        env = dict(os.environ, INSTALL_SECRET_SECRETS=str(self.secrets))
+        if path:
+            env["PATH"] = path + os.pathsep + env.get("PATH", "")
+        return subprocess.run(
+            [str(SCRIPTS / "install-secret.sh"), *opts],
+            input=(value.encode() if value is not None else b""),
+            capture_output=True, env=env, cwd=REPO,
+        )
+
+    def test_an_install_replaces_a_line_instead_of_appending(self):
+        # The failure this prevents is a second `FEC_API_KEY=` line in
+        # `~/.secrets`. The last line wins for a reader that scans, the first
+        # wins for one that stops, and the two homes then disagree about which
+        # key is installed — an ambiguity no probe can resolve.
+        self.secrets.write_text("FAL_KEY=old-fal\n# a comment\n")
+        self.secrets.chmod(0o644)
+        self.assertEqual(self._run("value-one", ["FEC_API_KEY"]).returncode, 0)
+        self.assertEqual(self._run("value-two", ["FEC_API_KEY"]).returncode, 0)
+        text = self.secrets.read_text()
+        self.assertEqual(text.count("FEC_API_KEY="), 1)
+        self.assertIn("FEC_API_KEY=value-two", text)
+        self.assertIn("FAL_KEY=old-fal", text)      # other credentials untouched
+        self.assertIn("# a comment", text)          # comments survive
+        self.assertEqual(self.secrets.stat().st_mode & 0o777, 0o600)
+
+    def test_the_value_is_never_printed(self):
+        # A secret that is echoed into a log has been published. Only the
+        # fingerprint may be reported, and the gate run at the end prints that.
+        r = self._run("s3cr3t-value-xyz", ["FEC_API_KEY"])
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn(b"s3cr3t-value-xyz", r.stdout + r.stderr)
+
+    def test_an_empty_or_padded_value_writes_nothing(self):
+        # Trimming a stray space silently would produce a key that fails at the
+        # provider and reads exactly like a revoked one. Refusing is the honest
+        # answer, and it must leave the previous value in place.
+        self.secrets.write_text("FEC_API_KEY=prior\n")
+        self.assertEqual(self._run("", ["FEC_API_KEY"]).returncode, 3)
+        self.assertEqual(self._run("has space", ["FEC_API_KEY"]).returncode, 3)
+        self.assertEqual(self.secrets.read_text(), "FEC_API_KEY=prior\n")
+
+    def test_an_unknown_name_writes_no_variable(self):
+        # The registry is the only place a credential is declared, so a typo
+        # must fail here rather than add a variable nothing reads.
+        r = self._run("v", ["NOT_A_CREDENTIAL"])
+        self.assertEqual(r.returncode, 4)
+        self.assertFalse(self.secrets.exists())
+
+    def test_the_keychain_write_uses_the_registry_service_and_stdin(self):
+        # `security add-generic-password -w <value>` would put the secret in the
+        # process argument list, where `ps` can read it. The value goes on stdin
+        # twice instead, and the service name comes from the registry so it
+        # cannot drift from what `check-secrets.py` looks up.
+        stub_dir = self.dir / "bin"
+        stub_dir.mkdir()
+        record = self.dir / "invocation.txt"
+        stub = stub_dir / "security"
+        stub.write_text(
+            "#!/bin/bash\n"
+            f'{{ echo "$@"; cat; }} > {record}\n'
+        )
+        stub.chmod(0o755)
+        r = self._run("value-for-keychain", ["FEC_API_KEY"], path=str(stub_dir),
+                      keychain=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        text = record.read_text()
+        argv, _, stdin = text.partition("\n")
+        self.assertIn("-s huffmanwrites-fec", argv)
+        self.assertIn("-U", argv)                  # updates, never duplicates
+        self.assertNotIn("value-for-keychain", argv)
+        self.assertEqual(stdin.count("value-for-keychain"), 2)  # password + confirm
+
+    def test_the_list_names_every_registry_credential(self):
+        # The list is how a caller finds the exact spelling; a credential that
+        # is in the registry but not here is one nobody can install.
+        r = subprocess.run([str(SCRIPTS / "install-secret.sh"), "--list"],
+                           capture_output=True, text=True, cwd=REPO)
+        self.assertEqual(r.returncode, 0)
+        for cred in cs.CREDENTIALS:
+            self.assertIn(cred["name"], r.stdout)
+            self.assertIn(cred["keychain"], r.stdout)
 
 
 # --------------------------------------------------------------------------

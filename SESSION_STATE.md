@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — November 2, 2026 — The install path, because the safe way was the inconvenient one
+
+- **Philip rotated the FEC key and wrote it into `~/.secrets` himself, at his own shell.** The keychain was stale for a while — the gate reported `homes DISAGREE` with the keychain copy answering `403 API_KEY_INVALID` — and was resynced from the file without the value ever being printed. Current state: `secrets: OK — 6 credential(s) checked, homes agree, keys authenticate`.
+- **`scripts/install-secret.sh NAME` is now the documented way in.** The complaint it answers: the convenient path to giving an agent a key was pasting it into the conversation, and that path is invisible to every gate — the key works, the homes agree, the probe answers 200, and the only thing wrong is that a cloud model has read it. The script prompts with `read -rs`, takes a piped value too, reads the keychain service out of `check-secrets.py`'s registry so the two cannot drift, **replaces** the variable's line in `~/.secrets` instead of appending a second one, sets `0600`, writes the keychain item with the value on **stdin** (argv is readable by `ps`), and finishes by running the online gate. `--list` prints the six installable credentials; `--no-keychain` writes only the file.
+- **Measured, not assumed, twice while building it:** `security add-generic-password -w` with no argument prompts for the password *and* a confirmation, so two lines on stdin is the only mode that keeps the value out of argv; and `security add-generic-password` has **no `-k` option** (`security: illegal option -- k`), so a test cannot point it at a throwaway keychain file and must stub `security` on `PATH` instead.
+- **The first version of `TestInstallSecret` wrote the test value over the live `huffmanwrites-fec` keychain item**, because `_run` did not pass `--no-keychain` and the real `security` was on `PATH`. `check-secrets.py` caught it on the next run — homes disagreed, keychain copy `403` — and the item was resynced from `~/.secrets`, which held the good value. The tests now default to `--no-keychain` and only the stub test opts in; the suite was re-run afterwards to prove it leaves the keychain alone. **A test that runs a script with a live side effect is the defect, not the script.** Six tests: replace-not-append, value never printed, empty and padded values refused, unknown name writes nothing, keychain argv/stdin contract via a stub, and `--list` covering the registry. Suite: **493 tests OK**.
+- Recorded in `CLAUDE.md` beside the credentials paragraph, so the next session finds the install path where it looks for the rule.
+
+---
+
 ### Maintenance — November 2, 2026 — FEC key installed, collector built, and the corpus's $158 million needs a re-check
 
 - **Philip, 2026-11-02:** supplied an OpenFEC key. Installed in both documented homes — login keychain `huffmanwrites-fec` and `~/.secrets` (`FEC_API_KEY`) — and registered in `scripts/check-secrets.py` as the sixth credential with a live/stale probe. `check-secrets.py --online`: `FEC_API_KEY: authenticates (HTTP 200)`, `secrets: OK — 6 credential(s) checked, homes agree`.
