@@ -164,12 +164,48 @@ just the winners.
 3. Move the raw file to `~/SimpleBrain/raw/archive/` (never delete).
 4. Commit in the SimpleBrain repo, push.
 
+## When the count is not finished on the morning of November 4
+
+This is the expected case, not the exception: Alaska's ranked-choice
+tabulation runs days, Louisiana's runoff is December 5, and Georgia's is in
+December. The piece publishes on schedule anyway. It is a report on the count
+as it stands, not a results announcement.
+
+- **The Answer line states the count, not a winner.** Write it as what is
+  known: how many seats are called for each party, how many are uncalled, and
+  which mechanism settles each. "Forty-nine are called, two are not, and
+  neither will be settled this week" is a true answer to "who won the Senate";
+  "Democrats won" is not, and the second is the fabrication the repo's rules
+  exist to prevent.
+- **A count board replaces the results table.** One compact table of the
+  unresolved races only: state, what remains to count (absentee, provisional,
+  ranked-choice round, runoff), the mechanism and its statutory date, and
+  whether either campaign has signalled a recount request. Do not project a
+  winner from a partial count. Do not state a margin that is still moving.
+- **Control is stated as conditional, with the arithmetic shown.** "If X holds
+  Y and Z takes W, the chamber is tied at 50 and belongs to Vance" is
+  checkable and honest. Anything that presumes the outcome of an uncalled race
+  is not.
+- **Name the gap.** One sentence saying plainly that the piece cannot answer
+  the question its own lede asks, and saying when the answer is expected. A
+  reader who is told what is missing trusts the rest of the piece more, not
+  less.
+- **Never silently rewrite it later.** When an uncalled race is called, the
+  capstone is not edited to add a winner. A material change (a race called,
+  control decided, a recount certified) gets its own dated follow-up piece
+  that links back to the capstone, so the record shows what was known when.
+  Corrections to the capstone itself follow the ordinary corpus rule: a dated
+  `**Correction, <date>:**` note in the file, never a quiet edit.
+- **The follow-up is a fresh run of this skill's research phase**, scoped to
+  the races that resolved, with the capstone as its baseline. Philip triggers
+  it; it is not on a timer, for the same reason the capstone is not.
+
 ## Fallbacks
 
-- **Results incomplete (ranked-choice/runoff/recount):** do not declare a
-  winner. State what is called, what is pending, and the scenarios. The
-  report is still publishable — the pending races are part of the story.
 - **Election contested or delayed:** pause, tell Philip, and offer a
-  preview/explainer instead. Do not publish a fabricated result.
+  preview/explainer instead. Do not publish a fabricated result. A contested
+  count is not the same case as an unfinished one: an unfinished count is
+  reported above; a contested one (litigation over certification, a challenge
+  to ballots already counted) is Philip's call before anything is written.
 - **FAL key fails:** stop and flag it; do not retry auth errors. Philip
   supplies a new key.

@@ -12,6 +12,16 @@
 
 ---
 
+### Maintenance — November 2, 2026 — Two decisions for the days after the election
+
+- **Philip, 2026-11-02:** "I suppose some races won't be decided by Wednesday morning. What shall we do if that turns out?" and, separately, a piece on Musk's midterm spending once the dust settles.
+- **The capstone now has a rule for an unfinished count, not a note to improvise one.** `skills/post-election-senate-report.md` gained a section that decides the case in advance: the piece publishes on schedule as a report on the count rather than a results announcement; the Answer line states how many seats are called and by what mechanism the rest resolve; a count board replaces the results table; control is stated conditionally with the arithmetic shown; one sentence names the gap and when it closes. **And a material change gets its own dated follow-up rather than a silent edit of the capstone**, so the record stays a record of what was known when. A contested count is deliberately a different case from an unfinished one, and stays Philip's call.
+- **This was the expected case, not the exception.** Alaska's ranked-choice tabulation runs days, Louisiana's runoff is December 5, Georgia's is in December, and the skill's own complications list said so since September. What was missing was the writing rule, and the risk it prevents is the one this corpus treats as fatal: declaring a winner to satisfy a lede.
+- **The Musk piece is recorded with its date and its blocker.** Brief at `future-pieces/musk-midterm-spending.md`; the load-bearing fact is that the FEC's Post-General reports cover 10/15–11/23 and are **due 12/03/2026** (read off the FEC's own deadlines page today), so the cycle total does not exist before then and a piece written earlier would rest on press tallies that get superseded within the week. Window: 12/04 to about 12/12.
+- **The blocker is a credential, not an idea.** `check-secrets.py` carries five credentials and no FEC key; `api.open.fec.gov` requires one, free from api.data.gov, registered to an email address. The brief names the whole path: keychain `huffmanwrites-fec`, `FEC_API_KEY`, an entry in `check-secrets.py` with a live/stale probe, then `scripts/fec-spending-pack.py` printing committee identity, Schedule A receipts, Schedule B disbursements (where the Senate Leadership Fund's $158 million transfer to Texas PAC appears), and Schedule E independent expenditures. Nothing about the piece is written from memory; the corpus already cites the AP's $158 million figure in `senate-race-report-2026-10-18.md`, and the new piece's job is the total and the verdict, not the discovery.
+
+---
+
 ### Maintenance — November 2, 2026 — `by-what-standard-summary.md` had no vault counterpart; `weekly-integrity` was red on it
 
 - **The failure, measured:** the 14:00 `weekly-integrity` run exited 1 on `vault (currency)` — `content/posts/summaries/by-what-standard-summary.md: no file in the vault has stem 'by-what-standard-summary'`, `coverage: 274 posts`. Every other section of the run was green: `links (offline)` 4294 links, `links (online)` 2264 links exit 0, `links (titles)` exit 0, `quotes (online)` 73 attributions exit 0, `quote-names` 43 details exit 0, `secrets (drift)` and `(liveness)` 5 credentials exit 0. So the one red is a mirror that never ran, not rot.
@@ -3222,6 +3232,8 @@ Primary content: books (Stoicism/civics), standalone articles, weekly newsletter
 ## Pending / Next Actions
 
 - **Letters paperback re-uploaded to KDP 2026-10-25** — Philip: "I did that a few moments ago." The 0.4033 in / 8.07% band is live on Amazon, so the paperback and hardcover now carry the same proportion. The Reminders item set for Monday 2026-10-26 at 14:00 is marked complete. Nothing about this title is waiting on anyone.
+- **Post-election capstone — Philip's word, morning of 2026-11-04.** Manual run of `skills/post-election-senate-report.md`; the senate runner self-disabled after 2026-11-02 and must not be repurposed. The skill now carries the rule for an unfinished count (2026-11-02): publish on schedule, state the count rather than a winner, a count board for the uncalled races, control stated conditionally, and a dated follow-up piece when a race resolves instead of a silent rewrite of the capstone.
+- **Musk midterm-spending piece — window 2026-12-04 to ~12-12.** Brief at `future-pieces/musk-midterm-spending.md`. The cycle total does not exist until the FEC's Post-General reports are due **2026-12-03** (period 10/15–11/23), verified at the FEC's deadlines page on 2026-11-02. **Blocker: no FEC API credential** — Philip registers a free key at api.data.gov, then it becomes keychain `huffmanwrites-fec` / `FEC_API_KEY`, joins `check-secrets.py` with a live/stale probe, and `scripts/fec-spending-pack.py` gets written. Until then the piece cannot be sourced to the corpus's standard.
 - (open items appear here; the Ollama reachability decision recorded 2026-09-28 was closed 2026-10-07 — see the entry at the top of this file)
 
 ## Architecture Notes
