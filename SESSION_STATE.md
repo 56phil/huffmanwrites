@@ -12,6 +12,15 @@
 
 ---
 
+### Maintenance — November 3, 2026 — The Senate job comes out of launchd
+
+- **Philip, 2026-11-03: "Uninstall it."** `com.huffmanwrites.senate-report` was booted out of `gui/501` and its installed plist deleted (`launchctl print` now answers "Could not find service"), and the repo copy `scripts/com.huffmanwrites.senate-report.plist` was removed in the same change. `check-plists.py`: **14 schedule(s) checked, OK**.
+- **Why it was still there:** the runner's own `> 2026-11-02` guard made it exit 0 with one log line every Sunday forever. A scheduled no-op is invisible to every gate — the plist parses, the installed copy matches the repo copy, the job "succeeds" — and its only cost is that it keeps a row in the table and an agent's attention. `skills/scheduled-job.md` now records the lesson in the guard section: **a start-date guard is a bridge, not a retirement plan.**
+- **What stays, and why:** `scripts/senate-report-runner.sh` and `skills/senate-race-report.md` are kept as the record of how the series ran — and the runner is the home of the long measured note on the `[claude-code:unrecognized_model]` telemetry line that four other runners cite rather than duplicate. The runner's header now says RETIRED and names the date, so nothing reads as a live job.
+- **Docs that would otherwise lie, corrected:** the CLAUDE.md schedule table lost the row and gained a sentence naming the date and the instruction; the model-calling jobs are now **seven**, not eight, in both places that counted them; the "weekly reports publish" rule marks the Senate series as ended; the skills index no longer calls `senate-race-report.md` a scheduled brief. Suite: **496 tests OK**, `bash -n` clean.
+
+---
+
 ### Maintenance — November 3, 2026 — The silent denial behind three aborted publishes
 
 - **The defect, found by counting rather than reading:** every publishing runner failed a content gate three times — the Senate report twice (`2026-10-11`, `2026-10-25`) and the Chiefs report once (`2026-10-27`) — and every one of the three was `check-prepositions --file` flagging a stranded preposition in prose the writer had just composed. Each abort left the article in place and needed a manual recovery run.

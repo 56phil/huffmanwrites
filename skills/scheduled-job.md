@@ -47,10 +47,13 @@ the cause; a comma is normally the fix.
 ## 4. A start-date guard must exit 0 and log why
 
 A job installed before its first due date, or one with a last-run date, must exit
-0 with a line explaining the skip (`senate-report-runner.sh` after 2026-11-02; the
-Chiefs season guard off season). A non-zero exit raises the alert every week for
-months, which teaches the reader to ignore it. `test_gates.py`
-(TestChiefsRunnerContract) asserts the season guard exits zero.
+0 with a line explaining the skip (the Chiefs season guard off season; before its
+plist was uninstalled on 2026-11-03, `senate-report-runner.sh` past 2026-11-02).
+A non-zero exit raises the alert every week for months, which teaches the reader
+to ignore it. `test_gates.py` (TestChiefsRunnerContract) asserts the season guard
+exits zero. **A guard is a bridge, not a retirement plan:** the Senate job's guard
+held for two days and then the plist came out, because a scheduled no-op still
+logs a line a week and still occupies a row in the table.
 
 ## 5. A model-calling job probes Ollama before its writer runs
 

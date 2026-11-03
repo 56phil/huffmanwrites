@@ -4,8 +4,7 @@ Weekly report on all 35 U.S. Senate races in the 2026 cycle (33 regular Class 2 
 
 ## When this runs
 
-- Scheduled by launchd: `com.huffmanwrites.senate-report` (plist source: `scripts/com.huffmanwrites.senate-report.plist`; runner: `scripts/senate-report-runner.sh`).
-- The runner invokes Claude Code headless in this repo with this skill. Runs: Sundays September 6 through November 1, 2026 (9 runs). The runner self-disables after November 2, 2026.
+- The runner is `scripts/senate-report-runner.sh`. It was invoked by launchd as `com.huffmanwrites.senate-report` (plist source: `scripts/com.huffmanwrites.senate-report.plist`) every Sunday at 07:00 CT from September 6 through November 1, 2026 — nine runs. **The plist was uninstalled on November 3, 2026 and the job no longer fires;** this file, the runner and the runner's past-date guard are kept as the record of how the series ran.
 - If a report for today's date already exists, update it in place (same-day re-run).
 
 ## Provider policy (Philip, 2026-09-06)

@@ -1,7 +1,11 @@
 #!/bin/bash
 # Weekly Senate Race Report runner.
-# Invoked by launchd (com.huffmanwrites.senate-report) every Sunday at 07:00 CT.
-# Self-disables after 2026-11-02 (Election Day: 2026-11-03).
+# RETIRED 2026-11-03. It was invoked by launchd (com.huffmanwrites.senate-report)
+# every Sunday at 07:00 CT from 2026-09-06 through 2026-11-01; the plist was
+# uninstalled at Philip's instruction and the job no longer fires. The runner,
+# this header and the past-date guard below are kept as the record of how the
+# series ran — and as the home of the long note on the
+# [claude-code:unrecognized_model] line that the other runners cite.
 #
 # PUBLISHES. Philip, 2026-09-27: "publish weekly reports that have an exit code of
 # 0 after passing all gates." The report this job writes goes to production in the
