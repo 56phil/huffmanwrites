@@ -5675,14 +5675,36 @@ class TestSecretDrift(unittest.TestCase):
         self.assertTrue(any("repo-local copy exists" in p for p in problems))
 
     def test_credentials_without_a_probe_are_not_probed(self):
-        # Three providers have a cheap, free liveness probe: fal.ai, SendFox and
-        # CourtListener. A key with no probe must not be sent anywhere —
-        # asserting the registry shape keeps a later edit from inventing one by
-        # accident.
+        # Four providers have a cheap, free liveness probe: fal.ai, SendFox,
+        # CourtListener and the FEC's OpenFEC API. A key with no probe must not
+        # be sent anywhere — asserting the registry shape keeps a later edit
+        # from inventing one by accident.
         for cred in cs.CREDENTIALS:
             with self.subTest(cred=cred["name"]):
                 self.assertIn(cred.get("probe"),
-                              (None, "fal", "sendfox", "courtlistener"))
+                              (None, "fal", "sendfox", "courtlistener", "fec"))
+
+    def test_the_fec_probe_tells_a_dead_key_from_a_live_one(self):
+        # Both failure directions are HTTP 403 and are separated only by the
+        # body's error code — measured 2026-11-02. A status-code-only probe
+        # would call a revoked key and a missing one the same thing.
+        import io
+        import urllib.error
+        import unittest.mock as mock
+
+        def fake(code, body):
+            return urllib.error.HTTPError("http://x", code, "err", {},
+                                          io.BytesIO(body.encode()))
+
+        with mock.patch("urllib.request.urlopen",
+                        side_effect=fake(403, '{"error":{"code":"API_KEY_INVALID"}}')):
+            self.assertEqual(cs.probe_fec("stale")[0], "auth-failed")
+        with mock.patch("urllib.request.urlopen",
+                        side_effect=fake(403, '{"error":{"code":"API_KEY_MISSING"}}')):
+            self.assertEqual(cs.probe_fec("")[0], "auth-failed")
+        with mock.patch("urllib.request.urlopen",
+                        side_effect=fake(429, "{}")):
+            self.assertEqual(cs.probe_fec("throttled")[0], "unverified")
 
     def test_a_server_error_is_not_read_as_auth_success(self):
         # A 5xx means the provider is broken, not that the key works. Reading

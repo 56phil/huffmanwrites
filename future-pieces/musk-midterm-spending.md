@@ -71,40 +71,79 @@ entered a committee and left it the same size, for one state.
 
 ---
 
-## The collector this needs (prerequisite)
+## The collector
 
 The repo's rule for a data-driven piece is a collector, not a writer's memory:
 `scripts/sitrep-pack.py` and `scripts/chiefs-report.py` exist for exactly this
 reason, and a November 2026 SITREP already ran with a number the writer could
 not have recalled.
 
-Proposed: `scripts/fec-spending-pack.py`, printing, for a named committee:
+Shipped as **`scripts/fec-spending-pack.py`**. Per committee it prints:
 
-1. Committee identity and registration from the FEC's committee endpoint.
-2. Schedule A itemized receipts over a threshold, with contributor name and
-   date, so the $158 million is a filing line and not a press sentence.
-3. Schedule B disbursements, which is where the Senate Leadership Fund's
-   transfer to Texas PAC appears.
-4. Schedule E independent expenditures by race and by support/oppose.
-5. Coverage count, per the repo's gate rule: a pack that inspected nothing must
-   say so.
+1. Committee identity from the FEC's committee endpoint, with a NOTE when the
+   registered name does not match the label the piece would use.
+2. Form 3X summary filings with `total_receipts` and `total_disbursements` —
+   the layer the Post-General report lands in on 2026-12-03.
+3. Schedule A itemized receipts filtered strictly to Elon Musk's own names.
+4. Schedule E independent expenditures by candidate and support/oppose.
+5. A coverage count, per the repo's gate rule: a pack that inspected nothing
+   must say so.
 
-**Blocker: there is no FEC credential.** `scripts/check-secrets.py` carries five
-(fal, SendFox, Ollama, Firecrawl, CourtListener) and no FEC key. `api.open.fec.gov`
-requires one, free, from api.data.gov, registered to an email address. This is
-Philip's signup, not something a session can do. When it exists:
+**Blocker: resolved 2026-11-02.** Philip supplied the key; it lives in the login
+keychain (`huffmanwrites-fec`) and `~/.secrets` (`FEC_API_KEY`), is registered in
+`scripts/check-secrets.py` with a live/stale probe (both failure directions are
+HTTP 403, separated only by the body's `API_KEY_INVALID` / `API_KEY_MISSING`
+code), and `check-secrets.py --online` reports `FEC_API_KEY: authenticates
+(HTTP 200)` among six credentials.
 
-- store it as keychain `huffmanwrites-fec`, variable `FEC_API_KEY`, with
-  `~/.secrets` as the fallback home;
-- add it to `check-secrets.py`'s list, with a probe that distinguishes live from
-  stale (the FEC API answers `403` with `API_KEY_MISSING`/`API_KEY_INVALID` for
-  a bad key and `200` for a good one, so the probe is cheap and definitive);
-- then the pack, then the piece.
+The collector is written and runs: **`scripts/fec-spending-pack.py`**. It prints
+identity, Form 3X summary filings, Musk's itemized Schedule A receipts and
+Schedule E totals per committee, with `SOURCE UNAVAILABLE` for a failed source
+and a coverage line. Twelve requests, 508 rows, exit 0.
 
-Until that key exists, the piece cannot be written to the corpus's standard, and
-the honest fallback is to cite the AP/PBS reporting already in the corpus and
-say the total is not yet knowable. Do not aggregate from press tallies and
-present the sum as a filing figure.
+## What the filings already say, read on 2026-11-02
+
+Committee ids below were reached by query and verified against the committee's
+own record. None of them is recalled.
+
+| Committee | Id | Registered name | Q3 2026 receipts |
+|---|---|---|---|
+| America PAC | C00879510 | AMERICA PAC, Austin TX | $88,866,369 |
+| Senate Leadership Fund | C00571703 | **SLF PAC**, Washington DC | $272,944,767 |
+| Texas PAC | C00960211 | TEXAS PAC, Austin TX | **$158,000,000** |
+
+- **The $158 million is on a filing**, as Texas PAC's Q3 Form 3X `total_receipts`,
+  filed 2026-10-15. Its summary disbursements were $131,751,387.
+- **The payer is not itemized yet.** Texas PAC's Schedule A returns **zero rows**
+  in the API while its summary reports $158 million, so the piece can say the
+  filing reports the receipt but cannot yet name who sent it.
+- **The corpus's AP-sourced sentence does not check out itemized today.**
+  `senate-race-report-2026-10-18.md` says Musk gave $158 million to the Senate
+  Leadership Fund; SLF PAC's Schedule A holds **two** Musk receipts totalling
+  **$10,000,000**, dated June 27 and December 15, 2025. A $158 million receipt
+  could sit inside its $272,944,767 Q3 summary with the itemization lagging, but
+  that is a hypothesis, not a finding. **Re-check this before the piece leans on
+  it**, and correct the earlier report under the corpus correction rule if the
+  filing shows something else.
+- **America PAC's Musk money is older than the campaign.** $50,326,939 across 23
+  itemized rows, the last dated 2026-06-30. Its independent expenditures are the
+  live part: 4,063 Schedule E rows this cycle, with the 10/26–10/30 window alone
+  carrying $12.6 million against Talarico.
+- **Texas PAC's independent expenditures total $181,850,225** across 56 rows
+  (9/11–10/26): $112,153,742 against Talarico, $69,696,483 for Paxton.
+
+**One error this pack caught in its own first draft, worth keeping in the
+record.** The Senate Leadership Fund does not appear in the FEC's committee name
+index; a Schedule A row naming it as a contributor returned `C00694323`, and that
+committee is **WINRED**, the conduit, not the fund. The real id came from the
+same rows' `contributor_id` field. The pack now prints a NOTE when a committee's
+registered name does not contain the label expected, which is what surfaced the
+mistake.
+
+**And a filter that would have inflated the number.** The API's
+`contributor_name` filter is a substring match: `MUSK` returns MUSKAR, MUSKE,
+MUSKER and MUSKETT. On SLF PAC, 166 rows matched and 2 were Elon Musk. The pack
+filters locally and prints the server's count beside the strict one.
 
 ---
 

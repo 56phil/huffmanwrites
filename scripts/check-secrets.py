@@ -59,6 +59,7 @@ import os
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -121,6 +122,25 @@ CREDENTIALS: "list[dict]" = [
         "legacy_repo_files": [],
         "probe": "courtlistener",
         "optional": True,
+    },
+    {
+        # Added 2026-11-02, for the Musk spending piece recorded in
+        # `future-pieces/musk-midterm-spending.md`. The cycle total does not
+        # exist until the Post-General reports are due 2026-12-03, and the
+        # collector that will read it needs more requests than `DEMO_KEY`
+        # allows — measured that day: DEMO_KEY answers `X-Ratelimit-Limit: 10`,
+        # a registered key answers 200 with a limit an order of magnitude
+        # larger. Three DEMO_KEY calls could not resolve two committee ids.
+        #
+        # Not optional: unlike the CourtListener token there is no keyless
+        # fallback that produces a filing figure, and a piece sourced from
+        # press tallies instead of Schedule A is the fabrication path this
+        # repo treats as fatal.
+        "name": "FEC_API_KEY",
+        "keychain": "huffmanwrites-fec",
+        "secrets_var": "FEC_API_KEY",
+        "legacy_repo_files": [],
+        "probe": "fec",
     },
 ]
 
@@ -382,6 +402,53 @@ def probe_courtlistener(key: str, timeout: float = 20.0) -> "tuple[str, str]":
         return "unverified", f"could not reach courtlistener.com ({e})"
 
 
+def probe_fec(key: str, timeout: float = 20.0) -> "tuple[str, str]":
+    """Ask the FEC's API whether this key authenticates, reading one row.
+
+    One committee list request asking for a single result is the cheapest auth
+    check the API offers: it reads no filing, spends one call against a
+    registered key's hourly allowance, and answers 200 for a live key.
+
+    **Both failure directions are HTTP 403, and are told apart by the body's
+    error code, measured 2026-11-02:**
+
+    - a stale or revoked key returns `403 {"error":{"code":"API_KEY_INVALID"}}`
+    - no key returns `403 {"error":{"code":"API_KEY_MISSING"}}`
+
+    A status-code-only probe would call a dead key and a missing one the same
+    thing, which is the distinction this gate exists to draw. Throttling is
+    `429` and is not a verdict either way.
+
+    Returns (verdict, detail) where verdict is ok / auth-failed / unverified.
+    """
+    url = ("https://api.open.fec.gov/v1/committees/"
+           f"?api_key={urllib.parse.quote(key)}&per_page=1")
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "huffmanwrites-secrets-check/1.0 (+https://www.huffmanwrites.org)"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return "ok", f"HTTP {resp.status}"
+    except urllib.error.HTTPError as e:
+        body = ""
+        try:
+            body = e.read().decode("utf-8", "replace")
+        except Exception:
+            pass
+        if e.code == 403 and "API_KEY_INVALID" in body:
+            return "auth-failed", "HTTP 403 API_KEY_INVALID"
+        if e.code == 403 and "API_KEY_MISSING" in body:
+            return "auth-failed", "HTTP 403 API_KEY_MISSING (the request carried no key)"
+        if e.code == 429:
+            return "unverified", "HTTP 429 (throttled, key not judged)"
+        if e.code >= 500:
+            return "unverified", f"HTTP {e.code} (provider error, key not judged)"
+        return "unverified", f"HTTP {e.code}"
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        return "unverified", f"could not reach api.open.fec.gov ({e})"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -416,7 +483,8 @@ def main() -> int:
                     )
                 continue
             prober = {"fal": probe_fal, "sendfox": probe_sendfox,
-                      "courtlistener": probe_courtlistener}[cred["probe"]]
+                      "courtlistener": probe_courtlistener,
+                      "fec": probe_fec}[cred["probe"]]
             verdict, detail = prober(key)
             if verdict == "auth-failed":
                 problems.append(
