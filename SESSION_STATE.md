@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — November 4, 2026 — The Tally: Scott Lucas, and the discipline of counting days
+
+- **Published** `content/posts/essays/the-tally.md` — "The Tally", 1656 words whole-file. `draft: false`, `featuredOnHome: true`, new hero pair `146-scott-lucas-tally` (carved tally marks, graded to the house navy, in both `static/` and `assets/`).
+- **Philip asked for it after agreeing with Lucas's Trump commentary**, so the piece is a portrait of method rather than an endorsement: the day counts (Ukraine Day 1,714 and Iran Day 251 on the same morning) as the argument, the mechanism-first habit (interceptors, munitions, petrol prices, a Saudi "no"), and the volume problem those counts conceal.
+- **The counterweight is his own worst sentence, quoted and dated.** CNN International, 15 July 2018: "That may be because he has been compromised by the Russians." Hedged, but aired in the same register as the interceptor counts, and the piece says so plainly — the same error class as the Sachs piece published the same morning, in a smaller dose.
+- **Facts checked at source, not recalled.** Affiliations and the November 2008 founding from the site's own author biography; the Alabama start, Leeds 1981, the wrestling essay and "five or six broadcast interviews a day" from the University Observer profile of 4 December 2025; the 2,751-page author archive by reading its pagination; the Iran war's 28 February start from Lucas's own Day 249 entry. Every quotation verified as a substring of the page that carries it (9 of 9), and `check-links.py --file --online --titles` reported 7 links, 0 dead, 0 redirecting, 0 title mismatches.
+- **Two factual corrections before the build:** "brief but intensive" is the officials' "brief but intense", and the Zaporizhzhia strike was a bombing of a school used as an aid centre, not a glide-bomb attack on a distribution point. Both were caught by reading the cited pages again rather than by remembering them.
+- **`date` moved twice**, as it did on the Sachs piece: written at 08:25 while the clock read 08:16, so `buildFuture: false` dropped the page from a build that reported success. Now 08:05.
+- **Gates:** emdashes 0; prepositions 0 after three fixes; quotes and quote-names OK; frontmatter 291 files OK; hero paths 435 OK; gallery 158 items OK; `hugo --gc --minify` builds the page with the hero pair and the closing attribution, verified in a browser.
+
+---
+
 ### Maintenance — November 4, 2026 — A watcher for the two events that would change the Sachs piece
 
 - **New job `com.huffmanwrites.nord-stream-watch`**, daily at 09:15, installed and loaded (`launchctl print` shows it; a kickstart ran it end to end and it exited 0 with "nothing new"). It exists because *The Bet He Called a Fact* promises its reader that a verdict changes what the piece may say and that a reply from Sachs belongs in the record, and neither event has a date.
