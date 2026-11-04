@@ -79,6 +79,7 @@ cfk = load("check-forks")
 de = load("digest-email")
 drel = load("digest-release")
 ilw = load("is-last-weekday")
+nsw = load("nord-stream-watch")
 
 EM = "\u2014"
 
@@ -6806,6 +6807,134 @@ class TestDigestRelease(unittest.TestCase):
         # This job must never run the model or a build of its own.
         self.assertNotIn("claude ", text)
         self.assertNotIn("hugo ", text)
+
+
+# --------------------------------------------------------------------------
+class TestNordStreamWatch(unittest.TestCase):
+    """The watcher for the two events that would change a published essay.
+
+    "The Bet He Called a Fact" tells its reader that a verdict would change what
+    the piece may say and that a reply from Sachs belongs in the record. Neither
+    has a date, and nothing in this repo reads a site it does not publish to, so
+    the promise is only keepable if something looks. What is worth asserting is
+    that the looking happens (schedule), that it stops when its question stops
+    being live (end date), and that it cannot confuse a finding with a failure
+    (alert wording) — not that the two pages still have the shape they had the
+    day this was written.
+    """
+
+    PLIST = SCRIPTS / "com.huffmanwrites.nord-stream-watch.plist"
+    RUNNER = SCRIPTS / "nord-stream-watch-runner.sh"
+
+    def setUp(self):
+        import plistlib
+        self.plist = plistlib.loads(self.PLIST.read_bytes())
+
+    def test_the_schedule_is_one_dict_a_day_and_names_a_real_file(self):
+        # A single dict means "once a day"; an array means more than one fire.
+        # The distinction is written down in skills/scheduled-job.md rule 2, and
+        # the sitrep-watchdog's four fires are the deliberate array.
+        self.assertEqual(self.plist["Label"], "com.huffmanwrites.nord-stream-watch")
+        sched = self.plist["StartCalendarInterval"]
+        self.assertIsInstance(sched, dict)
+        self.assertNotIn("Weekday", sched)
+        self.assertEqual((sched["Hour"], sched["Minute"]), (9, 15))
+        program = self.plist["ProgramArguments"][-1]
+        self.assertTrue(Path(program).exists(), program)
+
+    def test_the_runner_has_an_end_date_guard_that_exits_zero(self):
+        # A watcher whose question closes in February 2027 must stop on its own:
+        # a scheduled no-op logs a line a day forever and trains the alert into
+        # noise (skills/scheduled-job.md rule 4).
+        text = self.RUNNER.read_text()
+        self.assertIn("20270430", text)
+        guard = text[text.index("20270430"):]
+        self.assertRegex(guard[:400], r"exit 0")
+
+    def test_the_runner_marks_a_finding_as_something_other_than_a_failure(self):
+        # Exit 1 here means "read this", not "the site broke". The shared banner
+        # says "job failed", so the detail line has to carry the correction.
+        text = self.RUNNER.read_text()
+        self.assertIn("FINDING (not a failure)", text)
+        self.assertIn("alert-failure.sh", text)
+
+    def test_the_runner_derives_its_paths_instead_of_baking_them_in(self):
+        text = self.RUNNER.read_text()
+        self.assertIn("BASH_SOURCE", text)
+        self.assertNotIn("/Users/prh/Developer/huffmanwrites/scripts", text)
+
+    def test_the_checker_seeds_silently_and_then_reports_a_new_item(self):
+        import contextlib
+        import io
+        import tempfile
+
+        def feed(*titles):
+            items = "".join(
+                f"<item><title>{t}</title><link>https://youtu.be/{i}</link>"
+                f"<guid>g{i}</guid><description><![CDATA["
+                f'<p><a href="https://www.jeffsachs.org/interviewsandmedia/p{i}">Permalink</a>'
+                f"</p>]]></description></item>"
+                for i, t in enumerate(titles)
+            )
+            return f"<rss><channel>{items}</channel></rss>"
+
+        pages = {}
+        state = {}
+
+        def fake_fetch(url, timeout=30.0):
+            if "format=rss" in url:
+                return feed(*state["titles"])
+            if "alle-pressemitteilungen" in url:
+                return "<h3>Kartellsenat</h3><a href=\"/gerichte/oberlandesgericht/gerichtspressestelle/x-1\">Weiterlesen</a>"
+            return pages.get(url, "<p>nothing</p>")
+
+        state["titles"] = ["On NATO", "On Minsk"]
+        with tempfile.TemporaryDirectory() as d:
+            path = str(Path(d) / "state.json")
+            original = nsw.fetch
+            nsw.fetch = fake_fetch
+            try:
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    rc = nsw.main(["--state", path])
+                self.assertEqual(rc, 0)
+                self.assertIn("seeded", out.getvalue())
+                self.assertTrue(Path(path).exists())
+
+                # Nothing changed: still quiet.
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    self.assertEqual(nsw.main(["--state", path]), 0)
+                self.assertIn("nothing new", out.getvalue())
+
+                # A new item whose page names the pipeline is the finding.
+                state["titles"] = ["On NATO", "On Minsk", "What I said about Nord Stream"]
+                pages["https://www.jeffsachs.org/interviewsandmedia/p2"] = (
+                    "<p>I have been asked about Nord Stream again.</p>"
+                )
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    self.assertEqual(nsw.main(["--state", path]), 1)
+                self.assertIn("FINDING", out.getvalue())
+            finally:
+                nsw.fetch = original
+
+    def test_the_permalink_is_preferred_over_a_youtube_link(self):
+        # The <link> is usually YouTube, whose page carries no text to search;
+        # the item's own Squarespace page sits in the description's first anchor.
+        xml = (
+            "<item><title>T</title><link>https://youtu.be/abc</link><guid>g</guid>"
+            '<description><![CDATA[<p><a href="https://www.jeffsachs.org/x">Permalink</a></p>]]>'
+            "</description></item>"
+        )
+        key, title, page, blurb = nsw.sachs_items(xml)[0]
+        self.assertEqual(key, "g")
+        self.assertEqual(page, "https://www.jeffsachs.org/x")
+
+    def test_both_hyphen_forms_of_the_pipeline_name_match(self):
+        self.assertTrue(nsw.matches("Anklage wegen der Sprengung der Nord-Stream-Gaspipelines"))
+        self.assertTrue(nsw.matches("the Nord Stream pipelines"))
+        self.assertFalse(nsw.matches("Kartellsenat am Hanseatischen Oberlandesgericht"))
 
 
 if __name__ == "__main__":

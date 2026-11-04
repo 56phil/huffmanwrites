@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — November 4, 2026 — A watcher for the two events that would change the Sachs piece
+
+- **New job `com.huffmanwrites.nord-stream-watch`**, daily at 09:15, installed and loaded (`launchctl print` shows it; a kickstart ran it end to end and it exited 0 with "nothing new"). It exists because *The Bet He Called a Fact* promises its reader that a verdict changes what the piece may say and that a reply from Sachs belongs in the record, and neither event has a date.
+- **Two sources, both fetched and confirmed before being written in.** `jeffsachs.org/interviewsandmedia?format=rss` (the feed's own items, keyed on `<guid>`, with the Squarespace permalink preferred over the YouTube `<link>` because only the permalink carries searchable text) and the Hanseatisches Oberlandesgericht press archive (keyed on the numeric id at the end of each release slug). The Bundesanwaltschaft's press index 404s at the documented path, so it is not a source; the court announces a charging decision first anyway.
+- **Exit 1 is a finding, exit 3 is a failure.** Both go through `scripts/alert-failure.sh`, and the finding path prefixes the detail with `FINDING (not a failure)` because the shared banner reads "job failed" and a verdict is not a failure. Proven without spending the banner: `NORD_STREAM_WATCH_DRY=1` with a state file missing one release id printed the exact alert line the live path would raise.
+- **The first run seeds and says so.** Seeded state: 20 feed items, 40 court releases. A watcher that alerts on four years of existing news on the day it is installed is a watcher whose reader learns to ignore it.
+- **End-date guard, not a permanent fixture:** `nord-stream-watch-runner.sh` exits 0 after 2027-04-30 with a log line, because the trial's hearing calendar ends in February and a scheduled no-op logs a line a day forever.
+- **`TestNordStreamWatch`** (7 tests) asserts the schedule shape, the end-date guard, the finding-versus-failure wording, the path derivation, the permalink preference, both hyphen forms of the pipeline name, and the seed-then-report behaviour against a fixture feed — never the live site. Full suite: 505 tests, OK. `check-plists.py`: 15 schedules, all parsing and matching the installed copies.
+- **CLAUDE.md** gained the table row and a rule bullet; `skills/nord-stream-watch.md` is the skill, including what to do when it fires (edit the article, move `lastmod`; do not publish a second one).
+
+---
+
 ### Maintenance — November 4, 2026 — Sachs, and the bet he called a fact
 
 - **Published** `content/posts/essays/the-bet-he-called-a-fact.md` — "The Bet He Called a Fact", 1757 words whole-file. `draft: false`, `featuredOnHome: true`, new hero pair `145-sachs-nord-stream` (16:9 and 4:5, generated with FLUX, graded to the house navy, copied into both `static/` and `assets/`).
