@@ -6985,6 +6985,21 @@ class TestEssayWatch(unittest.TestCase):
         ):
             self.assertTrue(self._is_call(title), title)
 
+    def test_a_certification_is_a_call_and_a_recount_mention_does_not_veto_it(self):
+        # Mississippi has no recount to wait for: the count ends, the state
+        # certifies, and that certification IS the call — so a headline about it
+        # has to fire, or the watcher waits forever for a word no outlet will
+        # print. Added 2026-11-04, when Philip asked whether Mississippi would
+        # recount and the answer turned out to be that state law provides none.
+        for title in (
+            "Mississippi certifies Hyde-Smith after recount-free finish",
+            "State board certifies Hyde-Smith victory in Mississippi Senate race",
+            "Hyde-Smith certified winner as Colom weighs a challenge",
+        ):
+            self.assertTrue(self._is_call(title), title)
+        # A challenge is news; it is not a reason to withhold the call.
+        self.assertTrue(self._is_call("Hyde-Smith certified as Colom files a lawsuit"))
+
     def _is_call(self, title):
         return bool(ew.DECISIVE.search(title)) and not ew.NOT_YET.search(title)
 
