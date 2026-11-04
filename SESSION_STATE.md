@@ -12,6 +12,20 @@
 
 ---
 
+### Maintenance — November 4, 2026 — Sachs, and the bet he called a fact
+
+- **Published** `content/posts/essays/the-bet-he-called-a-fact.md` — "The Bet He Called a Fact", 1757 words whole-file. `draft: false`, `featuredOnHome: true`, new hero pair `145-sachs-nord-stream` (16:9 and 4:5, generated with FLUX, graded to the house navy, copied into both `static/` and `assets/`).
+- **Philip asked for it after a conversation about an NDTV interview**: "Publish a piece on Sachs… Focus on his 'jumping to conclusions' on Nord Stream." The piece is therefore built around the epistemic failure rather than around the war, and it concedes what holds: the 1990 assurances, Bucharest, the unclosed Swedish and Danish files, his suspicion that states conceal what they do.
+- **The spine is a three-date progression of his own words.** October 2022 on Bloomberg, a bet, which he called speculation; 15 February 2023 on UnHerd, the United States as "basically the only country with the motive, the means", with the Ukrainian hypothesis called "absurd"; and 13 October 2026, on his own site, "the plan by America and Ukraine to blow up Nord Stream" asserted as settled fact, thirteen days before the Hamburg trial opened.
+- **Every quotation was verified against the page that carries it before the commit**, not just fetched: `check-links.py --file --online --titles` (8 links, 0 dead, 0 redirecting, 0 title mismatches after two anchors were rewritten to share words with the page's own title) plus a substring check of each quoted phrase against the normalized page text. The German prosecutor's two press releases, the Swedish and Danish closures, the BBC's trial report and the Kyiv Post analysis are the record; none of it is recalled.
+- **The German case is reported as a prosecution, not a verdict.** The indictment of 30 June 2026 alleges the operation was conceived "acting by order of Ukrainian state agencies"; the defence says there is no DNA and no fingerprints; the Federal Court of Justice has already ruled the pipelines civilian objects. The piece says all three and does not resolve them.
+- **New hero plate `145`** — a broken marble conduit on a seabed, gold light in the break. Graded with `grade-hero-navy.py`: shadow mean `(3.2, 12.1, 15.2)` → `(15.3, 25.9, 47.3)` on 16:9. The 4:5 call returned 1024×768 on the first attempt (`image_size` as a bare `portrait_4_5` string was rejected 422, and top-level `width`/`height` were ignored); it was regenerated with `image_size: {width: 896, height: 1120}` to match the 896×1120 of every other mobile plate.
+- **Gates, all before the commit:** emdashes 0 counted; prepositions 0 after one fix ("concludes from" → "where an investigation ends"); quotes 0 attributions, OK; quote-names OK; frontmatter 290 files OK; hero paths 433 paths OK; gallery pages OK after `--fix` created `content/gallery/page/14.md`; `hugo --gc --minify` 547 pages, page present in `public/` with the hero pair and the closing attribution.
+- **`date` had to move.** It was first written as 08:55 CST, an hour ahead of the clock, and `buildFuture: false` dropped the page silently: the build succeeded and `public/posts/essays/the-bet-he-called-a-fact/` did not exist. Now 07:40.
+- **Gallery card added** and it lands on the index, not on a later page, because the layout reverses the data file.
+
+---
+
 ### Maintenance — November 4, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
