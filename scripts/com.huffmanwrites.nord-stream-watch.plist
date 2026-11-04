@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.nord-stream-watch</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/nord-stream-watch-runner.sh</string>
+  </array>
+  <!-- Watches for the two events that would change what "The Bet He Called a
+       Fact" may say: a public reply from Jeffrey Sachs, and a verdict or new
+       ruling in the Hamburg Nord Stream trial. Neither has a date, so nothing
+       else in the pipeline can see either one.
+
+       One fire a day at 09:15 CT, deliberately after the morning cluster: the
+       daily SITREP publishes at 06:00 with its 07:00 watchdog, and this job
+       competes with neither. It is a network read of two pages, so the exact
+       minute does not matter; what matters is that it happens on a day nobody
+       is looking.
+
+       No RunAtLoad. A login is not a reason to check a news feed, and the
+       checker writes nothing on a healthy run, so a load-time fire would only
+       add noise to a log. The end date is the runner's guard, not the plist's:
+       launchd cannot express one. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>15</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/nord-stream-watch.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/nord-stream-watch.err.log</string>
+</dict>
+</plist>
