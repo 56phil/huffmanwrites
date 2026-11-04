@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — November 4, 2026 — The capstone: seven seats, and the facts left to talk
+
+- **Published** `content/posts/essays/seven-seats-the-2026-verdict.md` — "Seven Seats: What the Voters Did on November 3, 2026", 3495 words whole-file. `draft: false`, `featuredOnHome: true`, and the Senate series plate `105-senate-race-report` rather than a new image: the capstone closes that series, and the plate is the series' own.
+- **Philip asked for it at 08:00 and said proceed with "only the facts."** The piece is built from the AP and nothing else for the calls: the AP declared Senate control, then the House "in addition to the U.S. Senate", and a Democratic majority of governors' offices "for the first time since 2010". Call times come from AP's own file — Ohio 11:10 p.m., Kansas 11:24 (10:24 Central), Iowa 11:35, Minnesota 12:07 a.m., Maine 1:02 a.m., Michigan 2:27 a.m. Kansas and Maine local coverage (KCUR, Kansas City Star, Reuters) supplies the voter texture and the concession quotes.
+- **No margin column, deliberately.** AP had called the races but certified none, and the percentages were still moving at 5 a.m.; the table carries winner, call time and seat status, and the piece says why. A share published at that hour is the number that is wrong by noon.
+- **The arithmetic in the Answer line is 54** — the 47 seats held going in plus seven flips, no Democratic seat lost. Alaska is named as uncalled, with the AP's own note that the bulk of its mail does not arrive before Nov. 18. Louisiana is omitted because AP had not called it when the piece was written.
+- **Gates, run before the commit:** emdashes 0 counted (1 exempt inside a quotation); prepositions 0 after four fixes; quotes 0 attributions but OK; `check-links --online --titles --file` 0 dead, 0 redirecting, 1 blocked host (AP's live page refuses bots) and 2 unverified (KC Star times out for automated clients); hero paths OK over 429 paths; `check-series-posts --file` OK; `check-report-frontmatter --file --hero-plate 105-senate-race-report` OK; `hugo --gc --minify` 553 pages, 0 errors, page present in `public/` with 41 footnote calls rendered.
+- **No gallery card.** `data/gallery.yml`'s Senate card resolves through the `senate-race-report-*` glob, which this slug does not match, and a second card on the same image would duplicate it. `featuredOnHome: true` puts it in Recent Posts regardless.
+- **One correction made to the draft before publish:** an early sentence claimed Kansas was "the fifth seat called". The call order is verifiable and the ordinal was not, so it became the call time plus what was already true at that minute.
+
+---
+
 ### Maintenance — November 3, 2026 — Published the chiefs-weekly-report report (automated)
 
 Auto-published by `com.huffmanwrites.chiefs-weekly-report` after every gate passed.
