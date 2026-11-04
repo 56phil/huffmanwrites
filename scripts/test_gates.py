@@ -6840,7 +6840,12 @@ class TestNordStreamWatch(unittest.TestCase):
         self.assertNotIn("Weekday", sched)
         self.assertEqual((sched["Hour"], sched["Minute"]), (9, 15))
         program = self.plist["ProgramArguments"][-1]
-        self.assertTrue(Path(program).exists(), program)
+        # The plist names an absolute path, which exists only on the machine
+        # that runs the job; CI checks out elsewhere. Rebase it onto this
+        # checkout before asserting, the way check-plists.py does — otherwise
+        # the test fails on the runner for being correct here.
+        relative = program.split("/huffmanwrites/", 1)[-1]
+        self.assertTrue((REPO / relative).exists(), program)
 
     def test_the_runner_has_an_end_date_guard_that_exits_zero(self):
         # A watcher whose question closes in February 2027 must stop on its own:
