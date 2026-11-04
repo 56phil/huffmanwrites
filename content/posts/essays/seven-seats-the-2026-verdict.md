@@ -1,9 +1,9 @@
 ---
 title: "Seven Seats: What the Voters Did on November 3, 2026"
-description: "Democrats won the Senate with fifty-four seats, took the House, and won a majority of governorships for the first time since 2010. Seven Republican-held Senate seats fell, Kansas for the first time since 1932. The count is in, the certifications are not, and the citizen's question is what changes on Monday morning."
+description: "Democrats won the Senate with fifty-four seats, took the House, and won a majority of governorships for the first time since 2010. Seven Republican-held Senate seats fell, Kansas for the first time since 1932. The count is in, the certifications are not, and the citizen's question is what changes at noon on January 3."
 date: 2026-11-04T05:12:00-06:00
 author: Philip Huffman
-lastmod: 2026-11-04T05:12:00-06:00
+lastmod: 2026-11-04T05:34:00-06:00
 draft: false
 featuredOnHome: true
 hero_desktop: "img/articles/105-senate-race-report_16x9.webp"
@@ -17,9 +17,9 @@ tags:
   - civics
 ---
 
-**Question:** Who won the Senate, by how many seats, and what changes on Monday morning for a family that voted because groceries cost more than they did two years ago?
+**Question:** Who won the Senate, by how many seats, and what changes on January 3 for a family that voted because groceries cost more than they did two years ago?
 
-**Answer:** The Democrats won it, with fifty-four seats, having entered the night with forty-seven and lost none. Seven Republican-held seats fell: North Carolina, South Carolina, Texas, Ohio, Kansas, Iowa and Maine. They also won the House and a majority of governorships, the first time since 2010 that they have held more statehouses than the Republicans. One Senate race, Alaska, has not been called, and it no longer decides anything.[^1] What changes on Monday is smaller than the numbers suggest and more concrete than the commentary will admit: subpoenas that a committee chairman signs and a minority cannot block, nominations that a floor majority can confirm, and a veto that can now be sustained or overridden depending on which chamber the fight runs through. The prices do not change on Monday. The power to investigate why they are high does.
+**Answer:** The Democrats won it, with fifty-four seats, having entered the night with forty-seven and lost none. Seven Republican-held seats fell: North Carolina, South Carolina, Texas, Ohio, Kansas, Iowa and Maine. They also won the House and a majority of governorships, the first time since 2010 that they have held more statehouses than the Republicans. One Senate race, Alaska, has not been called, and it no longer decides anything.[^1] What changes on January 3 is smaller than the numbers suggest and more concrete than the commentary will admit: subpoenas that a committee chairman signs and a minority cannot block, nominations that a floor majority can confirm, and a veto that can now be sustained or overridden depending on which chamber the fight runs through. The prices do not change on January 3. The power to investigate why they are high does.
 
 ---
 
@@ -95,9 +95,9 @@ What the voters said, in the AP's own polling, is less complicated than either s
 
 The new majority has two years and a narrow margin. It can hold hearings, block appointments it dislikes, and force votes that the Senate has avoided for a decade. It cannot pass a budget without the president's signature and cannot override a veto without sixty-seven votes in a Senate where it holds fifty-four. The likeliest outcome is not legislation. It is a two-year argument conducted with subpoenas, in which the administration defends and the Congress investigates, and the country watches to see whether either side can make groceries cheaper.
 
-For the reader who voted because of the price of groceries, there is one honest thing to say. The election changed who can ask why they cost what they cost, and who must answer. It did not change the price. That work is slower, it is less satisfying than a wave, and it starts on January 3 with a gavel and a calendar.
+For the reader who voted because of the price of groceries, there is one honest thing to say. The election changed who can ask why they cost what they cost, and who must answer. It did not change the price. That work is slower, it is less satisfying than a wave, and it starts with a gavel and a calendar.
 
-Kansas waited ninety-four years for a senator who was not a Republican, and then elected a pastor who told the crowd that the real work starts after the history. That is the right order. The history is the easy part. What the voters did on Tuesday was open a door. What happens Monday is whether anyone walks through it.
+The date is not rhetorical. Under the Twentieth Amendment, ratified in 1933, the terms of the sitting members end at noon on January 3, and the Congress must assemble at that hour unless it sets another day by law; the new terms begin at the same minute, which this time lands at noon on a Sunday, sixty-one days after these votes.[^7] That is where authority actually changes hands: the committee gavels, the subpoena power, the calendar that decides what reaches a vote. Kansas waited ninety-four years for a senator who was not a Republican, and then elected a pastor who told the crowd that the real work starts after the history. He was describing a date as much as a campaign. Tuesday opened a door. Noon on January 3 is whether anyone walks through it.
 
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*
 
@@ -116,3 +116,5 @@ Kansas waited ninety-four years for a senator who was not a Republican, and then
 [^5]: [The Senate Race Report: November 1, 2026](/posts/essays/senate-race-report-2026-11-01/), where the closing ratings and market prices are sourced in full: Cook's "slight favorites" and expected gain of "two to six seats," Inside Elections' nine moves on October 29, Kalshi's Kansas market at 82.8 percent for Marshall on September 5 and 51 percent for Hamilton on October 30, Graham at 75 percent in South Carolina on October 28, and Collins at 36 percent in Maine on October 29.
 
 [^6]: Reuters, [Democrat Troy Jackson ousts Republican Senator Susan Collins in Maine](https://www.reuters.com/3fec1b0a85a0/world/us/democrat-troy-jackson-ousts-republican-senator-susan-collins-maine-2026-11-04/), November 4, 2026: "First elected in 1996, Collins had repeatedly survived as a moderate Republican"; the Iran war "pushed up fuel and home heating oil prices — an especially salient issue in a largely rural state known for harsh winters," and "Trump's trade war with Canada weighed on tourism, lobstering, logging and other pillars of Maine's economy." Collins conceded to Jackson on Tuesday night.
+
+[^7]: The National Archives, [Amendments 11–27](https://www.archives.gov/founding-docs/amendments-11-27). Amendment XX, passed by Congress on March 2, 1932, and ratified January 23, 1933, Section 2: "The Congress shall assemble at least once in every year, and such meeting shall begin at noon on the 3d day of January, unless they shall by law appoint a different day." Section 1 fixes the end of the terms of Senators and Representatives at noon on "the 3d day of January," the same minute at which the terms of their successors begin. January 3, 2027, is a Sunday.
