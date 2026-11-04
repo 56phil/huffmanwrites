@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.essay-watch</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/essay-watch-runner.sh</string>
+  </array>
+  <!-- Keeps two published essays current without being asked. "The Year the
+       Floor Moved" opens on a Mississippi margin a call will replace and states
+       a Senate balance two calls will change; "The Tally" rests on two day-count
+       series that can stop. Philip, 2026-11-04: "Keep those essays current
+       without any prompting from me."
+
+       One fire a day at 09:30 CT, fifteen minutes after nord-stream-watch and
+       well clear of the 06:00 SITREP and its 07:00 watchdog. Both jobs read
+       network feeds; neither publishes on a healthy day, so the two slots are
+       cheap and ordering them apart keeps two pushes from racing.
+
+       No RunAtLoad: a login is not a reason to re-check a race that has not been
+       called. There is no end date here because the question has none — the
+       essays carry claims that expire on their own schedule, and the runner
+       exits 0 the moment nothing is stale. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/essay-watch.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/essay-watch.err.log</string>
+</dict>
+</plist>

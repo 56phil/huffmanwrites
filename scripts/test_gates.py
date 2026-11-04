@@ -80,6 +80,7 @@ de = load("digest-email")
 drel = load("digest-release")
 ilw = load("is-last-weekday")
 nsw = load("nord-stream-watch")
+ew = load("essay-watch")
 
 EM = "\u2014"
 
@@ -6941,7 +6942,161 @@ class TestNordStreamWatch(unittest.TestCase):
         self.assertTrue(nsw.matches("the Nord Stream pipelines"))
         self.assertFalse(nsw.matches("Kartellsenat am Hanseatischen Oberlandesgericht"))
 
+# --------------------------------------------------------------------------
+class TestEssayWatch(unittest.TestCase):
+    """The job that keeps two published essays current without being asked.
+
+    Philip, 2026-11-04: "Keep those essays current without any prompting from
+    me." The design decision the tests pin is that the amendment is a dated note
+    quoting a headline, never a rewrite of the verified prose — which is why
+    there is no model in the loop and no gate has to judge new argument.
+    """
+
+    def _fresh(self, key):
+        """Reload the checker so it re-reads ESSAY_WATCH_REPO.
+
+        The repo root is resolved at import time, which is what makes a test's
+        throwaway tree possible at all; `load()` caches the module, so a fresh
+        spec is the only way to point a second copy somewhere else.
+        """
+        spec = importlib.util.spec_from_file_location(key, SCRIPTS / "essay-watch.py")
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules[key] = mod
+        spec.loader.exec_module(mod)
+        return mod
+
+    def test_a_count_story_is_not_a_call(self):
+        # The defect this checker must not have: "43 votes separate Hyde-Smith
+        # and Colom" is a headline about the count, and it was the headline on
+        # the morning the essay was written.
+        for title in (
+            "43 votes separate Hyde-Smith and Colom after Election Day",
+            "Hyde-Smith leads Colom as counties resume counting",
+            "Sullivan, Peltola await results in Alaska Senate race",
+            "Alaska's US Senate race a tossup, with many absentee votes to count",
+        ):
+            self.assertFalse(self._is_call(title), title)
+
+    def test_a_call_headline_is_detected(self):
+        for title in (
+            "Hyde-Smith wins Mississippi Senate seat",
+            "Colom defeats Hyde-Smith in Mississippi",
+            "Peltola wins Alaska Senate race after ranked-choice tabulation",
+        ):
+            self.assertTrue(self._is_call(title), title)
+
+    def _is_call(self, title):
+        return bool(ew.DECISIVE.search(title)) and not ew.NOT_YET.search(title)
+
+    def test_a_daily_series_gets_a_week_before_it_counts_as_stopped(self):
+        # A long weekend is not a stop. A note saying the series ended would be
+        # false in a way no gate can see, so the bar is deliberately high.
+        self.assertEqual(ew.STALE_AFTER.days, 7)
+
+    def test_the_note_lands_above_the_attribution_and_keeps_it_last(self):
+        import tempfile, shutil, datetime as dt
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            (tmp / "content/posts/essays").mkdir(parents=True)
+            essay = tmp / "content/posts/essays/the-year-the-floor-moved.md"
+            essay.write_text(
+                "Body paragraph.\n\n"
+                "*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*\n"
+            )
+            old = os.environ.get("ESSAY_WATCH_REPO")
+            os.environ["ESSAY_WATCH_REPO"] = str(tmp)
+            try:
+                mod = self._fresh("essay_watch_tmp")
+                rc = mod.apply_finding({
+                    "id": "floor-ms",
+                    "race": "Mississippi Senate",
+                    "headline": "Hyde-Smith wins Mississippi Senate seat",
+                    "url": "https://www.wdam.com/2026/11/05/x/",
+                    "date": dt.datetime(2026, 11, 5, 12, tzinfo=dt.timezone.utc),
+                })
+            finally:
+                if old is None:
+                    os.environ.pop("ESSAY_WATCH_REPO", None)
+                else:
+                    os.environ["ESSAY_WATCH_REPO"] = old
+            text = essay.read_text()
+            self.assertEqual(rc, 0)
+            self.assertTrue(text.strip().endswith("© Philip Huffman*"))
+            self.assertLess(text.index("Update,"), text.index("*PRH |"))
+            # The claim is a quotation, so the online link check can confirm it.
+            self.assertIn("\"Hyde-Smith wins Mississippi Senate seat\"", text)
+            self.assertIn("([WDAM,", text)
+        finally:
+            shutil.rmtree(tmp)
+
+    def test_applying_twice_changes_nothing(self):
+        import tempfile, shutil, datetime as dt
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            (tmp / "content/posts/essays").mkdir(parents=True)
+            essay = tmp / "content/posts/essays/the-year-the-floor-moved.md"
+            essay.write_text(
+                "Body.\n\n*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*\n"
+            )
+            finding = {
+                "id": "floor-ms",
+                "race": "Mississippi Senate",
+                "headline": "Hyde-Smith wins Mississippi Senate seat",
+                "url": "https://www.wdam.com/2026/11/05/x/",
+                "date": dt.datetime(2026, 11, 5, 12, tzinfo=dt.timezone.utc),
+            }
+            old = os.environ.get("ESSAY_WATCH_REPO")
+            os.environ["ESSAY_WATCH_REPO"] = str(tmp)
+            try:
+                mod = self._fresh("essay_watch_tmp2")
+                mod.apply_finding(finding)
+                first = essay.read_text()
+                mod.apply_finding(finding)
+                self.assertEqual(essay.read_text(), first)
+                self.assertEqual(first.count("essay-watch:floor-ms"), 1)
+            finally:
+                if old is None:
+                    os.environ.pop("ESSAY_WATCH_REPO", None)
+                else:
+                    os.environ["ESSAY_WATCH_REPO"] = old
+        finally:
+            shutil.rmtree(tmp)
+
+    def test_every_watch_names_an_essay_that_exists_and_has_an_attribution(self):
+        # A watch pointed at a renamed essay would never fire and nothing would
+        # say so, which is the failure mode "a gate that inspects nothing reports
+        # OK" describes.
+        for watch in ew.WATCHES:
+            path = REPO / watch["essay"]
+            self.assertTrue(path.exists(), watch["id"])
+            self.assertRegex(
+                path.read_text(), r"(?m)^\*PRH \| ",
+                f"{watch['id']} has no attribution line",
+            )
+
+    def test_the_runner_runs_the_online_link_gate_and_aborts_on_failure(self):
+        runner = (SCRIPTS / "essay-watch-runner.sh").read_text()
+        self.assertIn("check-links.py", runner)
+        self.assertIn("--online", runner)
+        self.assertIn("--titles", runner)
+        # A failed gate must not leave a half-amended essay in the tree, and must
+        # not be published.
+        self.assertIn("git checkout --", runner)
+        self.assertIn("alert-failure.sh", runner)
+
+    def test_the_amendment_uses_no_model(self):
+        # The note is rendered from the headline and the link. There is no writer
+        # to gate and no permission surface to keep in step with a skill.
+        runner = (SCRIPTS / "essay-watch-runner.sh").read_text()
+        for banned in ("claude", "ANTHROPIC", "ollama"):
+            self.assertNotIn(banned.lower(), runner.lower())
+
+    def test_every_watch_reads_https_feeds(self):
+        for watch in ew.WATCHES:
+            self.assertTrue(watch["feeds"], watch["id"])
+            for url in watch["feeds"]:
+                self.assertTrue(url.startswith("https://"), url)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])
-

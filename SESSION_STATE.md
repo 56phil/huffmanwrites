@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — November 4, 2026 — A watcher that amends the essays instead of nagging about them
+
+- **`com.huffmanwrites.essay-watch`** — daily 09:30 CT, installed and loaded. Philip: "Keep those essays current without any prompting from me." An alert would have made the prompting his job again, so the job applies the amendment itself.
+- **The amendment is an appended, dated note** above the closing attribution: it quotes the headline that carries the news, names the outlet, dates it, and links to it. Nothing above it is edited, so the fact-checked prose stays as verified and the note's own claim is a string `check-links.py --online --titles` can confirm.
+- **Four watches, two kinds.** `floor-ms` and `floor-ak` fire on a decisive call headline in the state outlets that carry it (WDAM, Mississippi Today, Alaska Beacon) — never on a margin, because a margin is an order in the count and a call is a decision someone made; the headline the job must not fire on, "43 votes separate Hyde-Smith and Colom," sits in the tests as the negative case. `tally-iran` and `tally-ukraine` fire when a day-count series has published nothing for seven days, which is a stop rather than a long weekend.
+- **No model in the loop.** The note is rendered from the finding's own fields, so there is no writer to gate and no allow-list to keep in step; the runner is a detector, a renderer, the gate set, both builds, and the shared publish and delivery checks. A gate failure reverts the edit and aborts the push.
+- **Proved rather than assumed.** `ESSAY_WATCH_DRY=1` with `ESSAY_WATCH_FIXTURE` applied a note to "The Year the Floor Moved", ran every gate (links 6 ok, 1 blocked AP, 0 dead) and both builds, then stopped before the commit; the note landed above the attribution and a second apply was a no-op. Every fixture edit was reverted, and the live run reports `[]` and exits 0. Tests: `TestEssayWatch`, 9 assertions including the classifier's two directions.
+- **AP is deliberately not a source.** Its pages answer 403 to an automated client, so an AP call is learned from the state outlets that carry it — recorded in `skills/essay-watch.md` so the next session does not "fix" it by adding the obvious feed.
+
+---
+
 ### Maintenance — November 4, 2026 — The Year the Floor Moved: the midterms as structure, not margin
 
 - **Published** `content/posts/essays/the-year-the-floor-moved.md` — 1,223 words, `draft: false`, `featuredOnHome: true`, hero pair `147-floor-moved` (a displaced row of marble tiles, graded to the house navy, in both `static/` and `assets/`).
