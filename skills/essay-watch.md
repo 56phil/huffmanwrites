@@ -24,7 +24,7 @@ is not.
 
 | Kind | Fires when | Watches today |
 |---|---|---|
-| `call` | a feed carries a headline naming one of the watched candidates **and** a decisive verb (`wins`, `defeats`, `prevails`, `wins reelection`) **and** none of the not-yet words (`leads`, `separated`, `tossup`, `too close`, `uncalled`, `count`) | Mississippi Senate (`floor-ms`), Alaska Senate (`floor-ak`) |
+| `call` | a feed carries a headline naming one of the watched candidates **and** a decisive verb (`wins`, `defeats`, `prevails`, `wins reelection`, `certifies`, `declared the winner`) **and** none of the not-yet words (`leads`, `separated`, `tossup`, `too close`, `uncalled`, `count`) | Mississippi Senate (`floor-ms`), Alaska Senate (`floor-ak`) |
 | `series` | a day-count series has published nothing for **seven days**, or a headline naming the conflict says it ended | `US War on Iran` and `Ukraine War` day counts (`tally-iran`, `tally-ukraine`) |
 
 The `call` classifier is deliberately two patterns rather than one clever regex,
@@ -34,6 +34,14 @@ Colom."* A margin is an order in the count. A call is a decision someone made.
 
 Seven days is not four: a daily column that pauses over a long weekend has not
 stopped, and a note saying it stopped would be false in a way no gate can see.
+
+**`certifies` is in that verb list for a reason specific to Mississippi.**
+Mississippi provides no recount, automatic or requested, and the election code's
+Article 29 — "Election Contests" — reaches county offices and legislative seats
+but not a U.S. Senate race, so the only forum left is the Senate under Article I,
+Section 5. The count therefore ends in a certification, and a watcher that waited
+for the word "recount" would wait forever. A headline about a challenge does not
+veto the call: the challenge is news, the certification is the result.
 
 ## There is no model in this loop
 

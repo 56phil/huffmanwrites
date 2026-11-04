@@ -12,6 +12,14 @@
 
 ---
 
+### Maintenance — November 4, 2026 — Mississippi has no recount, and the watcher now knows it
+
+- Philip asked whether Mississippi would recount. It will not: the election code carries no recount provision at all, and Article 29 — "Election Contests" — reaches county offices by a twenty-day circuit-court petition (§ 23-15-951) and legislative seats (§ 23-15-955), so a U.S. Senate race has no state contest mechanism either; the forum is the Senate under Article I, Section 5.
+- **The essay already said this** and was verified rather than trusted: the Election Law Blog post it cites was re-read through the site's API (its HTML truncates at the gate's 4 KB read budget), and its author id resolves to Derek Muller, which is the attribution the essay makes. The post says exactly what the essay says.
+- **One gap, now closed:** `DECISIVE` in `scripts/essay-watch.py` matched `wins`/`defeats`/`prevails` and not `certifies`, so a state canvassing board certifying the result — the actual last event in a state with no recount — would have been read as silence. Added `certif(y|ies|ied)`, `victory`/`victories`, and `declared the winner`; a headline about a challenge does not veto the call, because the challenge is news and the certification is the result. `TestEssayWatch` gained the certification case and `skills/essay-watch.md` records why the word is in the list.
+
+---
+
 ### Maintenance — November 4, 2026 — A watcher that amends the essays instead of nagging about them
 
 - **`com.huffmanwrites.essay-watch`** — daily 09:30 CT, installed and loaded. Philip: "Keep those essays current without any prompting from me." An alert would have made the prompting his job again, so the job applies the amendment itself.

@@ -102,8 +102,9 @@ WATCHES = [
 
 # A headline that says someone won. Anything else is an order in the count.
 DECISIVE = re.compile(
-    r"\b(wins?|won|victorious|defeats?|defeated|prevails?|is elected|"
-    r"projected (?:the )?winner|wins? reelection)\b",
+    r"\b(wins?|won|victorious|victor(?:y|ies)|defeats?|defeated|prevails?|"
+    r"is elected|projected (?:the )?winner|wins? reelection|"
+    r"certif(?:y|ies|ied)|declared (?:the )?winner)\b",
     re.I,
 )
 # A headline that says the count is not finished. Checked first: an outlet writes
