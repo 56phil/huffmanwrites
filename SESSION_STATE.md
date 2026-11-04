@@ -12,6 +12,18 @@
 
 ---
 
+### Maintenance — November 4, 2026 — The Year the Floor Moved: the midterms as structure, not margin
+
+- **Published** `content/posts/essays/the-year-the-floor-moved.md` — 1,223 words, `draft: false`, `featuredOnHome: true`, hero pair `147-floor-moved` (a displaced row of marble tiles, graded to the house navy, in both `static/` and `assets/`).
+- **The argument, from Philip's own line about the year** ("in a less dramatic year, that wouldn't be a contest"): the wave was not close, and the two seats still counting were never the point. Senate 54-44 with Alaska and Mississippi outstanding; Talarico over Paxton 58-40 with 77 percent counted, Husted losing Ohio's special to Brown 49-46, Jackson unseating Collins 52-48, Cooper 59-39 in North Carolina, and the rest of the called map from the same tracker.
+- **Nebraska is the control group and the reason the piece is not a mood piece.** Ricketts beat Osborn 50.4-43.7 at 99 percent reporting, which is the evidence that voters punished a party rather than officeholders as such. That distinction, mood against realignment, is the spine of the closing section.
+- **Mississippi carries the opening.** 43 votes at 7:33 a.m. (462,821 to 462,778), an estimated 44,000 ballots out, no automatic recount and no requested recount under state law, and, per Derek Muller, no state mechanism even for a contested Senate election — the forum would be the Senate itself under Article I, Section 5.
+- **Alaska carries the mechanics.** Overseas ballots postmarked by Election Day are accepted for fifteen days, putting final receipt at 18 November with ranked-choice tabulation after; both candidates finished below 50 percent of first choices; a third candidate, Daniel J. Sullivan Jr. on the ballot, took 2.5 percent in the August primary, and a dismissed Justice Department suit is on appeal beside a confirmed criminal investigation.
+- **Sourcing discipline, because this one was written under time pressure on results day.** Three claims were rebuilt after the first draft: the Mississippi margin moved from "fewer than fifty" to WDAM's 43 at 7:33, the governor tally dropped from five flips to the three Ballotpedia verifies by name (Texas, Ohio, Iowa), and the House line became the NBC and New York Times projection rather than a snapshot. TEGNA's roundup was the first source for three of those figures and it refuses automated clients, so it came out — every citation left in the piece returns 200 except AP, which is behind a bot wall but was read in full.
+- **Gates:** emdashes 0, prepositions 0, links 6 ok and 1 blocked (AP), frontmatter 292 files OK, hero paths 437 OK, gallery 159 items OK. Build verified in a browser at 1280 wide: hero, caption, inline links and the closing attribution all render.
+
+---
+
 ### Maintenance — November 4, 2026 — The Tally: Scott Lucas, and the discipline of counting days
 
 - **Published** `content/posts/essays/the-tally.md` — "The Tally", 1656 words whole-file. `draft: false`, `featuredOnHome: true`, new hero pair `146-scott-lucas-tally` (carved tally marks, graded to the house navy, in both `static/` and `assets/`).
