@@ -12,6 +12,18 @@ edits it before it sends, so nothing here commits or pushes on your behalf.
 
 ## Cadence, section, and file naming
 
+- **Written on Friday afternoon; sent on Saturday at 06:00 CT.** Philip,
+  2026-11-05: "Preparation of the newsletter shall be done Friday afternoons."
+  Friday afternoon is when the letter is written: the epigraph chosen and verified,
+  the reflection supplied, the week's items assembled, the reports roundup
+  summarized and linked, the Practice placed, and the draft left in `pending/`.
+  Saturday owns only the release and the send. **A Friday that ends without a
+  draft in `pending/` is the failure this bullet exists to name**, because nothing
+  else notices it: no job writes this letter, and `digest-release` at 05:53
+  releases whichever page happens to exist. (The slot is not new: the retired
+  `digest-prep` job held Friday 16:00 for the 2026-10-24 issue. What changed on
+  2026-11-05 is that the window is the process, run by hand or by an agent, rather
+  than a one-shot script.)
 - Written each **Saturday** to reach readers at **06:00 CT**. The embargo lifts at
   **05:53 CT**, the page is dated `<Saturday>T05:53:00-05:00>`, and because Hugo builds
   with `buildFuture: false` it appears only in a deploy that runs *after* that minute —
@@ -90,7 +102,10 @@ installed a one-shot launchd job that was supposed to remove itself; the install
 copy survived its run and failed every Friday afterwards, alerting on a draft that had
 since been archived. Preparing a letter is now the steps in this file, run by hand or
 by an agent: the Friday SITREP item, the gates, two builds, the page and hero in one
-commit, and the release left to the job above.
+commit, and the release left to the job above. Its `~/Library/Logs/digest-prep.*`
+files were removed on 2026-11-05, because a session reading the log directory for
+live jobs found a Friday 16:00 stamp from a script that no longer exists and
+reported a scheduled job that was not there.
 
 ## Frontmatter
 
