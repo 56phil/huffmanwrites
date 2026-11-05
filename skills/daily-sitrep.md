@@ -246,66 +246,38 @@ the reasoning and the failure each one prevents.
    each with its month, and what the three readings taken together say.
 6. **Elections and the midterms**: the calls first, then the markets.
    - **The Associated Press is the authority for every call, margin and
-     called/uncalled count in this section.** AP's calls are what the American
-     press cites, and its counts move through the morning, so a second caller is
-     a second clock. Name the page you read AP's numbers from: `apnews.com`
-     refuses an automated client and renders its results projects in
-     JavaScript, so AP's counts are read through a publisher that carries them
-     verbatim (the BBC's results tracker embeds AP's results; AP's own
-     uncalled-races story is widely syndicated), and the sentence names that
-     publisher.
-   - **A comparison across editions must compare the same authority.** "Twenty
-     more races called than yesterday" is a fact only if yesterday's number came
-     from AP too. On 2026-11-05 it did not: the 4 November edition carried UPI's
-     tally, which ran nine seats behind AP's the same morning, so the delta
-     compared two clocks. When the previous edition used another source, state
-     today's number and say nothing about the change.
-   - **An uncalled race gets the numbers that show why it is uncalled, and the
-     next dated step**: the margin, the share counted, the ballots still out and
-     the deadline that decides them. Mississippi on 2026-11-05 read Colom +1,138
+     called/uncalled count here.** Its counts move through the morning, so a
+     second caller is a second clock: name the page you read AP's numbers from
+     (`apnews.com` refuses an automated client, so it is usually a publisher
+     carrying AP's results verbatim, as the BBC's tracker does), and set one
+     edition's count against another's only when both used AP.
+   - **An uncalled race gets the numbers that show why, and the next dated
+     step**: the margin, the share counted, the ballots still out and the
+     deadline that decides them. Mississippi on 2026-11-05 read Colom +1,138
      with 96 percent counted, some 3,600 absentee ballots outstanding, affidavit
-     identification due November 10, counties certifying by November 13, and no
-     automatic recount; Alaska read Peltola +637 with about 74 percent counted,
-     ranked-choice tabulation on November 18. Without them a reader cannot tell
-     a recount from a rout, and a market percentage is not a count.
-   - **A call is a decision a person made, never a margin you read.** Do not
-     treat a race as decided because the lead looks safe, and do not call one
-     because a model does. Report the call AP has made, or say the race is
-     uncalled.
-   - **The markets**: the Polymarket questions with real volume, meaning
-     question text, implied probability, 24-hour volume. These are the venues'
-     prices, not this site's view; attribute each figure to the venue that
-     carries it, and never average a thin book into a number that reads as a
-     forecast.
-   - **Keep the price and the count apart.** The market paragraph says what
-     traders expect; the call paragraph says what has been counted. Neither is
-     offered as the other, and a contract at 97 percent is not a result.
-   - **This section expires, and it expires when the counting does.** Once
-     Mississippi certifies its result and Alaska runs its ranked-choice
-     tabulation, the section drops to the markets alone, with one sentence
-     saying the count is final. A daily report that keeps announcing "both
-     chambers are decided" and quoting prices on settled contracts for races
-     decided weeks earlier is padding, and a settled contract is not a market.
+     identification due November 10, certification November 13, and no
+     automatic recount.
+   - **A call is a decision a person made, never a margin you read.** Report the
+     call AP has made, or say the race is uncalled.
+   - **The markets**: the Polymarket questions with real volume, each figure
+     attributed to the venue that carries it. Never average a thin book into
+     something that reads as a forecast, and never offer a price as a result:
+     what traders expect is not what has been counted.
+   - **The section expires when the counting does.** Once Mississippi certifies
+     and Alaska runs its ranked-choice tabulation on November 18, it drops to
+     the markets alone with one sentence saying the count is final.
 7. **The world** — one story from outside the country, chosen from the pack's
    `## 7. World news` headlines and then fetched and cited.
 8. **Sources** — every link you used, in the piece's citation apparatus.
 
-**The elections section has no collector, and nothing gates it.** The briefing
-pack's elections block is Polymarket prices; it carries no vote count. The AP
-Elections API would supply exactly the counts, margins and calls this section
-needs and it requires a key from AP (`developer.ap.org/ap-elections-api`, which
-is licensed, not free); `apnews.com` refuses an automated client and renders its
-results projects in JavaScript; and when the obvious alternatives were probed on
-2026-11-05, `politics.api.cnn.io` answered 403, `sos.ms.gov` answered 403, and
-Alaska's Division of Elections refused the connection outright. So the calls in
-section 6 are the writer's own fetch, held to the rules above exactly as the
-world beat is. The remedy for a bad number there is a collector, not a longer
-list of rules: an AP key would be the whole of it, and `scripts/sitrep-pack.py`
-should carry the section the day one exists. Until then `check-links.py --online
---titles` is the only mechanical check on the section. It proves a link resolves
-and that its title is the one cited. It cannot tell whether the number copied
-from the page is the caller's or a stranger's, which is why the authority is
-named in the rule and in the sentence.
+**What this section has already got wrong.** On 2026-11-05 it carried AP's 48
+uncalled House races and called that "twenty more than yesterday", when
+yesterday's 68 was UPI's tally, nine seats behind AP's the same morning. The pack
+carries no vote count and cannot: the AP Elections API would supply these
+numbers and needs a key from AP, and with one this section would join the
+collectors; `## 8. Not in this pack` records what else was tried. So the calls
+here are the writer's own fetch, and `check-links.py --online --titles` proves
+only that a link resolves and that its title is the one cited.
 
 There is no technology or AI section. See "Do not write about technology or AI"
 in Step 2 for why, and for what that rules out.

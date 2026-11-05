@@ -3942,16 +3942,17 @@ class TestSitrepBeats(unittest.TestCase):
 
     def test_the_skill_names_one_authority_for_race_calls(self):
         # 2026-11-05: two editions carried two callers' tallies and the second
-        # compared its count to the first's as one series. The rule that stops
-        # it is the authority plus the like-for-like delta, so both are pinned;
-        # a bare mention of AP would leave the comparison rule free to vanish.
+        # compared its count to the first's as one series. The rules that stop
+        # it are the authority, the like-for-like comparison, the contents of an
+        # uncalled race, and the beat's expiry, so all four are pinned; a bare
+        # mention of AP would leave the rest free to vanish in a later trim.
         skill = (REPO / "skills" / "daily-sitrep.md").read_text(encoding="utf-8")
         i = skill.find("6. **Elections and the midterms**")
         self.assertGreater(i, 0)
         block = skill[i:skill.find("7. **The world**", i)]
-        self.assertIn("Associated Press", block)
-        self.assertIn("same authority", block)
-        self.assertIn("uncalled", block)
+        for required in ("Associated Press", "both used AP", "uncalled", "expires"):
+            with self.subTest(required=required):
+                self.assertIn(required, block)
 
     def test_the_pack_sections_are_numbered_without_a_hole(self):
         # A section removed from the middle leaves a reader (and the writer)
