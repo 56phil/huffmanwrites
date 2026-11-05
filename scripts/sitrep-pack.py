@@ -172,6 +172,39 @@ POLY_SECTIONS = (
     ("world", "6. The world", ("geopolitics", "world")),
 )
 
+# Section 8 of the pack, and the one place a reader is told what this collector
+# deliberately does not carry. A module constant rather than an inline string so
+# the tests can assert on the text without running a collector against the live
+# internet (see TestSitrepBeats).
+NOT_IN_PACK = (
+    "**Technology and AI is not a beat of this series.** It was removed on "
+    "2026-10-07 and must not appear in the report, in any section, fetched "
+    "or otherwise. If the day's news is dominated by it, the report still "
+    "does not carry it; say nothing rather than fill it.\n\n"
+    "**Election vote counts are not in this pack and cannot be.** The AP "
+    "Elections API carries exactly the counts, margins and race calls the "
+    "elections section needs, and it requires a key from AP "
+    "(developer.ap.org/ap-elections-api; licensed, not free). `apnews.com` "
+    "refuses an automated client and renders its results projects in "
+    "JavaScript, so there is no page to read either. Probing the alternatives "
+    "on 2026-11-05: `politics.api.cnn.io` 403, `sos.ms.gov` 403, and the "
+    "Alaska Division of Elections refused the connection. So the calls in that "
+    "section are the writer's own fetch under the rules in "
+    "`skills/daily-sitrep.md` section 6: the Associated Press is the authority, "
+    "counts are read through a publisher that carries them verbatim and that "
+    "publisher is named, and a call is never inferred from a margin.\n\n"
+    "Beats with no collector that the writer MAY fetch and cite if the "
+    "report needs them: congressional legislation and votes (the "
+    "Congress.gov API requires a key); state and local government action; "
+    "campaign finance filings (FEC bulk data is not real-time); corporate "
+    "earnings and business news; international diplomacy and conflict "
+    "beyond what prediction markets price and what this pack's world-news "
+    "feeds carry; science and health agency actions outside the Federal "
+    "Register; and sport, culture, and obituaries. None of these is a gap "
+    "in the pack to be papered over with recalled facts — a missing beat is "
+    "reported as absent or not reported."
+)
+
 
 class FetchError(RuntimeError):
     """A source could not be read. Never conflated with 'nothing to report'."""
@@ -1043,22 +1076,7 @@ def build_pack(as_of: str, window_days: int, now_ct: datetime) -> dict:
     pack["world_news"] = world
 
     # 8. What has no collector ---------------------------------------------
-    pack["not_in_pack"] = (
-        "**Technology and AI is not a beat of this series.** It was removed on "
-        "2026-10-07 and must not appear in the report, in any section, fetched "
-        "or otherwise. If the day's news is dominated by it, the report still "
-        "does not carry it; say nothing rather than fill it.\n\n"
-        "Beats with no collector that the writer MAY fetch and cite if the "
-        "report needs them: congressional legislation and votes (the "
-        "Congress.gov API requires a key); state and local government action; "
-        "campaign finance filings (FEC bulk data is not real-time); corporate "
-        "earnings and business news; international diplomacy and conflict "
-        "beyond what prediction markets price and what this pack's world-news "
-        "feeds carry; science and health agency actions outside the Federal "
-        "Register; and sport, culture, and obituaries. None of these is a gap "
-        "in the pack to be papered over with recalled facts — a missing beat is "
-        "reported as absent or not reported."
-    )
+    pack["not_in_pack"] = NOT_IN_PACK
 
     pack["_ok_sources"] = ok
     return pack

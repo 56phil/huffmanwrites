@@ -244,13 +244,40 @@ the reasoning and the failure each one prevents.
    Keep each figure with its "as of" stamp.
 5. **The economy** — the BLS series in the pack (cpi, unemployment, payrolls),
    each with its month, and what the three readings taken together say.
-6. **Elections and the midterms** — the Polymarket markets with real volume:
-   question text, implied probability, 24-hour volume. These are the venues'
-   prices, not this site's view; attribute each figure to the venue that carries
-   it, and never average a thin book into a number that reads as a forecast.
+6. **Elections and the midterms**: the calls first, then the markets.
+   - **The Associated Press is the authority for every call, margin and
+     called/uncalled count here.** Its counts move through the morning, so a
+     second caller is a second clock: name the page you read AP's numbers from
+     (`apnews.com` refuses an automated client, so it is usually a publisher
+     carrying AP's results verbatim, as the BBC's tracker does), and set one
+     edition's count against another's only when both used AP.
+   - **An uncalled race gets the numbers that show why, and the next dated
+     step**: the margin, the share counted, the ballots still out and the
+     deadline that decides them. Mississippi on 2026-11-05 read Colom +1,138
+     with 96 percent counted, some 3,600 absentee ballots outstanding, affidavit
+     identification due November 10, certification November 13, and no
+     automatic recount.
+   - **A call is a decision a person made, never a margin you read.** Report the
+     call AP has made, or say the race is uncalled.
+   - **The markets**: the Polymarket questions with real volume, each figure
+     attributed to the venue that carries it. Never average a thin book into
+     something that reads as a forecast, and never offer a price as a result:
+     what traders expect is not what has been counted.
+   - **The section expires when the counting does.** Once Mississippi certifies
+     and Alaska runs its ranked-choice tabulation on November 18, it drops to
+     the markets alone with one sentence saying the count is final.
 7. **The world** — one story from outside the country, chosen from the pack's
    `## 7. World news` headlines and then fetched and cited.
 8. **Sources** — every link you used, in the piece's citation apparatus.
+
+**What this section has already got wrong.** On 2026-11-05 it carried AP's 48
+uncalled House races and called that "twenty more than yesterday", when
+yesterday's 68 was UPI's tally, nine seats behind AP's the same morning. The pack
+carries no vote count and cannot: the AP Elections API would supply these
+numbers and needs a key from AP, and with one this section would join the
+collectors; `## 8. Not in this pack` records what else was tried. So the calls
+here are the writer's own fetch, and `check-links.py --online --titles` proves
+only that a link resolves and that its title is the one cited.
 
 There is no technology or AI section. See "Do not write about technology or AI"
 in Step 2 for why, and for what that rules out.
