@@ -6513,6 +6513,57 @@ class TestHugoVersionPin(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+# A pull request is checked before it merges, and never deploys.
+# --------------------------------------------------------------------------
+class TestPullRequestsAreChecked(unittest.TestCase):
+    """The workflow builds and gates a PR, and stops short of publishing it.
+
+    2026-11-05: three pull requests (the elections beat, the push guard, the
+    digest housekeeping) merged with "no checks reported" on every one, because
+    this workflow triggered only on a push to main and on its schedule. The first
+    time CI saw that code was after it had landed, in a repo whose rules live in
+    this file.
+
+    Two halves that only work together: the trigger that puts a check on the PR,
+    and the guards that keep the PR's own build from publishing itself over the
+    live site. A trigger without the guards is worse than neither.
+    """
+
+    WORKFLOW = REPO / ".github" / "workflows" / "hugo.yml"
+
+    def setUp(self):
+        self.text = self.WORKFLOW.read_text(encoding="utf-8")
+
+    def test_a_pull_request_against_main_is_built_and_gated(self):
+        self.assertRegex(self.text, r"\n  pull_request:\s*\n\s+branches:\s*\[main\]",
+                         "a PR against main gets no build and no gates")
+
+    def test_a_pull_request_never_uploads_an_artifact_or_deploys(self):
+        # The artifact upload and the deploy are the two steps that publish. A PR
+        # run that reached either one would overwrite the live site with its own
+        # build, which is the single thing a check must never do.
+        split = self.text.find("\n  deploy:")
+        self.assertGreater(split, 0, "the deploy job is gone")
+        build, deploy = self.text[:split], self.text[split:]
+        self.assertIn("if: github.event_name != 'pull_request'", deploy)
+        i = build.find("- name: Upload artifact")
+        self.assertGreater(i, 0, "the artifact step is gone")
+        self.assertIn("if: github.event_name != 'pull_request'", build[i:i + 200],
+                      "a PR run would upload a Pages artifact")
+
+    def test_a_pull_request_cannot_cancel_a_live_deploy(self):
+        # One shared `pages` group with cancel-in-progress means a PR push can
+        # cancel the deploy that a scheduled publish just started. The group has
+        # to separate the PR lanes from the lane that publishes.
+        i = self.text.find("concurrency:")
+        self.assertGreater(i, 0)
+        block = self.text[i:i + 600]
+        self.assertIn("github.event.pull_request.number", block,
+                      "every run shares one group, so a PR push can cancel a live deploy")
+        self.assertIn("cancel-in-progress: true", block)
+
+
+# --------------------------------------------------------------------------
 # Fork hygiene: the switches are off by default, so the job has to be right.
 # --------------------------------------------------------------------------
 class TestForkSyncJob(unittest.TestCase):

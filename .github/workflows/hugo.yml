@@ -3,6 +3,15 @@ name: Deploy Hugo site to Pages
 on:
   push:
     branches: [main]
+  # A pull request against main is built and run through every gate before it
+  # merges, and never deploys (see the `deploy` job's `if:` and the artifact
+  # step's). Added 2026-11-05, after three PRs — the elections beat, the push
+  # guard, the digest housekeeping — merged with "no checks reported": the first
+  # time CI saw that code was after it landed, in a repo whose rules live in this
+  # file. The concurrency group below keeps a PR run from cancelling a live
+  # deploy, which is what the single "pages" group would have done.
+  pull_request:
+    branches: [main]
   schedule:
     # These fires are a best-effort BACKSTOP, not the publisher. GitHub delays
     # scheduled workflows, and measured on this repo (2026-10-17) they run about
@@ -41,7 +50,11 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  # One group per pull request, one group for everything that publishes. A single
+  # "pages" group with cancel-in-progress made every PR push a candidate to
+  # cancel a deploy that was already running on main; the PR number is absent on
+  # push and schedule events, so those keep the shared "pages-live" lane.
+  group: "pages-${{ github.event.pull_request.number || 'live' }}"
   cancel-in-progress: true
 
 defaults:
@@ -235,11 +248,16 @@ jobs:
         run: python3 scripts/check-render-integrity.py
 
       - name: Upload artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:
           path: ./public
 
   deploy:
+    # A pull request is built and gated, and stops there. Without this the PR
+    # run would publish its own artifact over the live site, which is the one
+    # thing a check must never do.
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
