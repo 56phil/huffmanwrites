@@ -260,7 +260,31 @@ report_build() {
 # ---------------------------------------------------------------------------
 publish_preflight() {
   local article="$1"
-  local pre_status
+  local pre_status branch
+
+  # Off `main` is a refusal, and it is checked first because the damage is
+  # invisible everywhere else: `publish_article` pushes with a bare `git push`,
+  # which pushes the CHECKED-OUT branch's upstream. A run started on a feature
+  # branch therefore commits the report there, the push succeeds, no reader ever
+  # sees the piece, and no alert fires — with every gate above reporting OK.
+  #
+  # Nearly shipped 2026-11-05: a session finished by moving its own commit onto
+  # a branch for review, and left the repository checked out there. The next
+  # scheduled publish would have gone to that branch.
+  #
+  # A detached HEAD is allowed on purpose. The documented Codex path
+  # (`git push origin HEAD:main`) deploys from a detached worktree, and there a
+  # bare `git push` fails for want of an upstream, which raises the existing
+  # push-failure alert. That case is loud; this guard is for the quiet one.
+  branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo unknown)"
+  if [ "$branch" != "main" ] && [ "$branch" != "HEAD" ]; then
+    echo "$(stamp): REFUSING TO RUN — the checkout is on branch '$branch', not main." >> "$OUT_LOG"
+    echo "$(stamp): this tail pushes the checked-out branch, so the report would reach no reader" >> "$OUT_LOG"
+    "$REPO/scripts/alert-failure.sh" "$JOB" 1 \
+      "the checkout is on branch '$branch', not main; see $OUT_LOG" || true
+    exit 1
+  fi
+
   pre_status="$(git status --porcelain)"
   if [ -n "$pre_status" ]; then
     echo "$(stamp): NOTE — the working tree was not clean before the run:" >> "$OUT_LOG"

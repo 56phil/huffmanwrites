@@ -4926,6 +4926,30 @@ class TestPublishLibrary(unittest.TestCase):
         self.assertIn("git commit failed", code)
         self.assertLess(code.find("git add failed"), code.find("git push"))
 
+    def test_the_preflight_refuses_to_run_off_main(self):
+        # `publish_article` pushes with a bare `git push`, which pushes the
+        # CHECKED-OUT branch's upstream. A run started on a feature branch
+        # therefore commits the report to that branch, pushes successfully,
+        # reaches no reader, and raises no alert, with every gate above reporting
+        # OK. Nearly shipped on 2026-11-05, when a session moved its own commit
+        # onto a branch for review and left the repository checked out there.
+        code = "\n".join(ln for ln in self.lib.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        i = code.find("publish_preflight()")
+        self.assertGreater(i, 0, "the preflight is gone")
+        body = code[i:code.find("\npublish_article()", i)]
+        self.assertIn("rev-parse --abbrev-ref HEAD", body)
+        self.assertIn("REFUSING TO RUN", body)
+        self.assertIn("alert-failure.sh", body, "an off-main run must alert, not just refuse")
+        # A detached HEAD stays allowed: the documented Codex path deploys from a
+        # detached worktree, where a bare `git push` fails loudly for want of an
+        # upstream and the existing push-failure alert fires.
+        self.assertIn('"HEAD"', body)
+        # And it must run before the writer, which is why it sits in the
+        # preflight at all, and before the stale-file cleanup below it.
+        self.assertLess(body.find("rev-parse --abbrev-ref HEAD"),
+                        body.find("git status --porcelain -- SESSION_STATE.md"))
+
     def test_the_push_is_verified_rather_than_assumed(self):
         # `git push` exit 0 after racing another push does not mean the commit
         # landed, and a published report that never reached the remote looks
