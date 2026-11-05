@@ -244,13 +244,58 @@ the reasoning and the failure each one prevents.
    Keep each figure with its "as of" stamp.
 5. **The economy** — the BLS series in the pack (cpi, unemployment, payrolls),
    each with its month, and what the three readings taken together say.
-6. **Elections and the midterms** — the Polymarket markets with real volume:
-   question text, implied probability, 24-hour volume. These are the venues'
-   prices, not this site's view; attribute each figure to the venue that carries
-   it, and never average a thin book into a number that reads as a forecast.
+6. **Elections and the midterms**: the calls first, then the markets.
+   - **The Associated Press is the authority for every call, margin and
+     called/uncalled count in this section.** AP's calls are what the American
+     press cites, and its counts move through the morning, so a second caller is
+     a second clock. Name the page you read AP's numbers from: `apnews.com`
+     refuses an automated client and renders its results projects in
+     JavaScript, so AP's counts are read through a publisher that carries them
+     verbatim (the BBC's results tracker embeds AP's results; AP's own
+     uncalled-races story is widely syndicated), and the sentence names that
+     publisher.
+   - **A comparison across editions must compare the same authority.** "Twenty
+     more races called than yesterday" is a fact only if yesterday's number came
+     from AP too. On 2026-11-05 it did not: the 4 November edition carried UPI's
+     tally, which ran nine seats behind AP's the same morning, so the delta
+     compared two clocks. When the previous edition used another source, state
+     today's number and say nothing about the change.
+   - **An uncalled race gets the numbers that show why it is uncalled, and the
+     next dated step**: the margin, the share counted, the ballots still out and
+     the deadline that decides them. Mississippi on 2026-11-05 read Colom +1,138
+     with 96 percent counted, some 3,600 absentee ballots outstanding, affidavit
+     identification due November 10, counties certifying by November 13, and no
+     automatic recount; Alaska read Peltola +637 with about 74 percent counted,
+     ranked-choice tabulation on November 18. Without them a reader cannot tell
+     a recount from a rout, and a market percentage is not a count.
+   - **A call is a decision a person made, never a margin you read.** Do not
+     treat a race as decided because the lead looks safe, and do not call one
+     because a model does. Report the call AP has made, or say the race is
+     uncalled.
+   - **The markets**: the Polymarket questions with real volume, meaning
+     question text, implied probability, 24-hour volume. These are the venues'
+     prices, not this site's view; attribute each figure to the venue that
+     carries it, and never average a thin book into a number that reads as a
+     forecast.
+   - **Keep the price and the count apart.** The market paragraph says what
+     traders expect; the call paragraph says what has been counted. Neither is
+     offered as the other, and a contract at 97 percent is not a result.
 7. **The world** — one story from outside the country, chosen from the pack's
    `## 7. World news` headlines and then fetched and cited.
 8. **Sources** — every link you used, in the piece's citation apparatus.
+
+**The elections section has no collector, and nothing gates it.** The briefing
+pack's elections block is Polymarket prices; it carries no vote count, because AP
+publishes none in a form a collector can read (no keyless API, a refused
+automated client, JavaScript-rendered project pages). So the calls in section 6
+are the writer's own fetch, held to the rules above exactly as the world beat is.
+The remedy for a bad number there is a collector, not a longer list of rules: if
+AP ever exposes a machine-readable feed, `scripts/sitrep-pack.py` should carry it
+and those bullets become a note. Until then `check-links.py --online --titles` is
+the only mechanical check on the section. It proves a link resolves and that its
+title is the one cited. It cannot tell whether the number copied from the page is
+the caller's or a stranger's, which is why the authority is named in the rule and
+in the sentence.
 
 There is no technology or AI section. See "Do not write about technology or AI"
 in Step 2 for why, and for what that rules out.
