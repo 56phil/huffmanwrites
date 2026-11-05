@@ -51,6 +51,61 @@ language model to put a claim into a published essay at 09:30 without a reader.
 If a future amendment needs prose judgement, that is a different job with a
 writer, a skill, and the usual gates.
 
+## No ad-hominem, including in the headlines it quotes
+
+**The rule: nothing this job writes, and nothing an amendment of any kind writes into
+a published essay, argues that a person is bad. It argues that a claim is wrong.**
+
+Philip, 2026-11-05, after reading the Musk essay: that piece made its case from
+filings and incentives and left the man's character out entirely, and he named that
+restraint as the piece's virtue. The reason it works is not delicacy. Character is
+the exit a reader takes for free: name the drug use, the vanity, the posting, and a
+reader who disagrees never has to answer the expenditure table, because they get to
+say the piece is a grudge and keep the opinion with which they arrived. It is a *true*
+exit, which is what makes it so valuable to whoever is arguing the other side. The subject's
+worst conduct is usually public, verifiable, and irrelevant to the claim; that is
+exactly when it is tempting.
+
+What replaces it: the incentive that makes the conduct profitable, the filing that
+records it, the consequence a reader can check. "He has never needed to win to get
+what he pays for" is an argument. "He is a vain man who cannot help himself" is a
+feeling with a byline. **A person may appear in a note as the actor in an event;
+never as the object of a verdict.** No adjectives about anyone's mind, motives, body,
+or habits, and no moral summary of a named individual, including one the reader is
+expected to dislike.
+
+**This rule reaches the quoted headline too.** A note reproduces an outlet's headline
+verbatim, so a headline that attacks a person's character rather than reporting the
+event would put the attack into a published essay with a link behind it, and the job
+would be the one that carried it there. The test is what the sentence is *about*: a headline whose subject is a decision or a
+result (`Mississippi certifies Hyde-Smith's win`) states the call; a headline whose
+subject is a person's worth or conduct states a judgment. The preferred fix is the
+one the classifier already uses for a margin: **wait.** The certification is the
+result, and a state outlet reports it flatly within the day; a note that arrives a
+day late is correct where a note that arrives early is a weapon.
+
+**The classifier cannot make that distinction, and the runner currently applies every
+finding it returns**, so the honest statement of the limit is this: `DECISIVE` asks
+whether a headline carries a decisive verb, not what the sentence is about, and a
+judgmental headline that also carries `wins` or `certifies` would be quoted. Two
+things follow. Read the finding log before the day it matters. A note that has
+quoted a verdict is visible in `~/Library/Logs/essay-watch.out.log` and in the
+SESSION_STATE entry the runner writes, and it can be corrected the same morning. And
+the durable fix, if this ever bites, is a **hold**: a narrow pattern for a character
+verdict that suppresses the automatic apply and raises the shared alert, so the cost
+of a false positive is a day's delay and a banner rather than a sneer on a published
+page. The error is asymmetric enough that a narrow list earns its keep *as a hold*.
+It does not earn its keep as a filter: do not add a keyword list to `essay-watch.py`
+and call the rule enforced, because a list of insults flags a quotation and passes a
+sneer, and the one thing worse than an unenforced rule is a rule that reports OK.
+
+**Where the rule is fully binding.** In the note's own sentence, the alert copy, the
+session-state entry, and the prose of any future writer added here (the case
+`## There is no model in this loop` describes, which would bring a writer, a skill
+and the usual gates). There is no ambiguity to resolve in those places: the prose
+states the event and names the person as its actor, or it does not ship.
+
+
 ## Wiring
 
 - `scripts/essay-watch.py` — the registry, the classifier, the note renderer.
