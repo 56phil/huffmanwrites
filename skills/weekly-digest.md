@@ -90,7 +90,10 @@ installed a one-shot launchd job that was supposed to remove itself; the install
 copy survived its run and failed every Friday afterwards, alerting on a draft that had
 since been archived. Preparing a letter is now the steps in this file, run by hand or
 by an agent: the Friday SITREP item, the gates, two builds, the page and hero in one
-commit, and the release left to the job above.
+commit, and the release left to the job above. Its `~/Library/Logs/digest-prep.*`
+files were removed on 2026-11-05, because a session reading the log directory for
+live jobs found a Friday 16:00 stamp from a script that no longer exists and
+reported a scheduled job that was not there.
 
 ## Frontmatter
 
