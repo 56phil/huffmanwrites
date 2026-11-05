@@ -12,6 +12,17 @@
 
 ---
 
+### Maintenance — November 5, 2026 — No ad-hominem, written into the essay-watch brief
+
+- **Philip asked for the essay-watch skill to ban ad-hominem attacks**, after reading "A Loss Is Not a Refund" and naming as its virtue that it kept Musk's personal flaws out. `skills/essay-watch.md` gains a section, **"No ad-hominem, including in the headlines it quotes"**, between "There is no model in this loop" and "Wiring".
+- **The rule as written:** nothing the job writes, and nothing any amendment writes into a published essay, argues that a person is bad; it argues that a claim is wrong. A person may appear as the actor in an event, never as the object of a verdict. The rationale recorded is the one that makes the rule operational rather than polite: character is the exit a reader takes for free, and it is a *true* exit, which is why it is so useful to whoever is arguing the other side. What replaces it is the incentive, the filing, and the consequence.
+- **The honest limit is recorded rather than papered over.** `DECISIVE` in `scripts/essay-watch.py` asks whether a headline carries a decisive verb, not what the sentence is about, and the runner applies every finding it returns — so a judgmental headline carrying `wins` or `certifies` would be quoted. The skill says so, names the finding log as where that is visible, and names the durable fix as a **hold** (narrow pattern, suppresses auto-apply, raises the shared alert) rather than a filter. It explicitly forbids adding a keyword list and calling the rule enforced: a list of insults flags a quotation and passes a sneer, and a rule that reports OK is worse than one that admits it is unenforced.
+- **Where the rule is fully binding:** the note's own sentence, the alert copy, the SESSION_STATE entry, and any future writer added to this job. No gate can check it, and none was invented to pretend otherwise.
+- **Not added to `CLAUDE.md`.** The rule lives in the skill Philip named. If it should govern every writing skill (digest, satire, SITREP, Chiefs, docket), it needs a Conventions entry and a cross-reference in each brief, which is a wider change than the one asked for.
+- Gates on the edited file: emdashes 0 added (the file's 8 pre-existing list-separator dashes are in no scanned corpus, `check-emdashes.py --check` scans 331 files and none carries one), prepositions 0, quotations 0 attributions / OK.
+
+---
+
 ### Maintenance — November 5, 2026 — A Loss Is Not a Refund: failure is not an alibi
 
 - **Published** `content/posts/civics/a-loss-is-not-a-refund.md` — "A Loss Is Not a Refund", 2,272 words whole-file. `draft: false`, `featuredOnHome: true`, hero pair `151-a-loss-is-not-a-refund` (a marble balance broken in two, gold coins and dust spilling from the fracture, graded to the house navy: shadow mean (5.2, 5.8, 7.9) → (17.2, 26.9, 50.6)), copied into `static/` and `assets/`, gallery card, Election Reform index entry.
