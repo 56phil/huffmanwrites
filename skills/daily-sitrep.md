@@ -280,22 +280,32 @@ the reasoning and the failure each one prevents.
    - **Keep the price and the count apart.** The market paragraph says what
      traders expect; the call paragraph says what has been counted. Neither is
      offered as the other, and a contract at 97 percent is not a result.
+   - **This section expires, and it expires when the counting does.** Once
+     Mississippi certifies its result and Alaska runs its ranked-choice
+     tabulation, the section drops to the markets alone, with one sentence
+     saying the count is final. A daily report that keeps announcing "both
+     chambers are decided" and quoting prices on settled contracts for races
+     decided weeks earlier is padding, and a settled contract is not a market.
 7. **The world** — one story from outside the country, chosen from the pack's
    `## 7. World news` headlines and then fetched and cited.
 8. **Sources** — every link you used, in the piece's citation apparatus.
 
 **The elections section has no collector, and nothing gates it.** The briefing
-pack's elections block is Polymarket prices; it carries no vote count, because AP
-publishes none in a form a collector can read (no keyless API, a refused
-automated client, JavaScript-rendered project pages). So the calls in section 6
-are the writer's own fetch, held to the rules above exactly as the world beat is.
-The remedy for a bad number there is a collector, not a longer list of rules: if
-AP ever exposes a machine-readable feed, `scripts/sitrep-pack.py` should carry it
-and those bullets become a note. Until then `check-links.py --online --titles` is
-the only mechanical check on the section. It proves a link resolves and that its
-title is the one cited. It cannot tell whether the number copied from the page is
-the caller's or a stranger's, which is why the authority is named in the rule and
-in the sentence.
+pack's elections block is Polymarket prices; it carries no vote count. The AP
+Elections API would supply exactly the counts, margins and calls this section
+needs and it requires a key from AP (`developer.ap.org/ap-elections-api`, which
+is licensed, not free); `apnews.com` refuses an automated client and renders its
+results projects in JavaScript; and when the obvious alternatives were probed on
+2026-11-05, `politics.api.cnn.io` answered 403, `sos.ms.gov` answered 403, and
+Alaska's Division of Elections refused the connection outright. So the calls in
+section 6 are the writer's own fetch, held to the rules above exactly as the
+world beat is. The remedy for a bad number there is a collector, not a longer
+list of rules: an AP key would be the whole of it, and `scripts/sitrep-pack.py`
+should carry the section the day one exists. Until then `check-links.py --online
+--titles` is the only mechanical check on the section. It proves a link resolves
+and that its title is the one cited. It cannot tell whether the number copied
+from the page is the caller's or a stranger's, which is why the authority is
+named in the rule and in the sentence.
 
 There is no technology or AI section. See "Do not write about technology or AI"
 in Step 2 for why, and for what that rules out.

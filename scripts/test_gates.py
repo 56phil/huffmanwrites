@@ -3923,6 +3923,36 @@ class TestSitrepBeats(unittest.TestCase):
         self.assertIn("midterms", tags)
         self.assertIn("world", tags)
 
+    def test_the_pack_names_the_election_count_gap_and_its_remedy(self):
+        # The elections section's counts are the writer's own fetch because no
+        # collector can reach them. Writing the probe down is the point: AP's
+        # Elections API is real and keyed, AP's own results pages refuse an
+        # automated client, and the alternatives answered 403 on 2026-11-05, so
+        # the next session should not spend an evening rediscovering it. The
+        # remedy is named so the gap reads as a debt rather than a design.
+        text = self.pack.NOT_IN_PACK
+        self.assertIn("Election vote counts are not in this pack", text)
+        self.assertIn("developer.ap.org/ap-elections-api", text)
+        self.assertIn("requires a key", text)
+        self.assertIn("skills/daily-sitrep.md", text)
+        # And the rendering prints the constant, or the writer never learns it.
+        source = (SCRIPTS / "sitrep-pack.py").read_text(encoding="utf-8")
+        self.assertIn('pack["not_in_pack"] = NOT_IN_PACK', source)
+        self.assertIn('pack["not_in_pack"]', source.split("def render")[-1])
+
+    def test_the_skill_names_one_authority_for_race_calls(self):
+        # 2026-11-05: two editions carried two callers' tallies and the second
+        # compared its count to the first's as one series. The rule that stops
+        # it is the authority plus the like-for-like delta, so both are pinned;
+        # a bare mention of AP would leave the comparison rule free to vanish.
+        skill = (REPO / "skills" / "daily-sitrep.md").read_text(encoding="utf-8")
+        i = skill.find("6. **Elections and the midterms**")
+        self.assertGreater(i, 0)
+        block = skill[i:skill.find("7. **The world**", i)]
+        self.assertIn("Associated Press", block)
+        self.assertIn("same authority", block)
+        self.assertIn("uncalled", block)
+
     def test_the_pack_sections_are_numbered_without_a_hole(self):
         # A section removed from the middle leaves a reader (and the writer)
         # concluding something is missing rather than that it was dropped on
