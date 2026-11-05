@@ -35,6 +35,7 @@ Analysis of how these laws translate into lived reality and the erosion of civil
 
 What actually changes who decides, in a system where most seats are settled before November.
 
+- [A Fix the Court Cannot Undo: Citizens United, the Amendment, and the Routes Around It](/posts/civics/a-fix-the-court-cannot-undo/)
 - [Who Chooses the Choices: Campaign Finance, Ranked Choice, and Open Primaries](/posts/civics/who-chooses-the-choices/)
 - [What the Constitution Says About Federal Elections](/posts/civics/what-the-constitution-says-about-federal-elections/)
 
