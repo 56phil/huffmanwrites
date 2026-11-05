@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.musk-money-report</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/musk-money-report-runner.sh</string>
+  </array>
+  <!-- ONE OFF. Sunday 2026-12-06 at 10:00 CT, once.
+
+       Philip, 2026-11-05: "Add the job. Schedule it for 1000 06DEC." The date is
+       not arbitrary: the Post-General FEC report covers 10/15 through 11/23 and
+       is due 2026-12-03, so December 3 is the first day a cycle total for any
+       committee exists. Before it, a piece about how much was spent rests on
+       press tallies that are superseded within the week. The window the brief in
+       future-pieces/musk-midterm-spending.md recommends is December 4 through 12,
+       and December 6 is the Sunday inside it, clear of the Saturday digest.
+
+       launchd has no Year key, so this dict fires on December 6 in every year,
+       not only 2026. The runner's date guard is what makes it one-off: it
+       compares today against 2026-12-06 and exits 0 on any other day. Exit 0 and
+       not an error, because a job that raises an alert every December 6 forever
+       trains its reader to ignore the alert.
+
+       Month and Day are scalars. An array as the VALUE of a schedule key is not
+       honoured by launchd, which is how the repair plan fired on 2026-11-01: it
+       is the array-of-dictionaries form that means several times, never an array
+       inside one dictionary.
+
+       After the run, uninstall it: launchctl bootout gui/$UID
+       ~/Library/LaunchAgents/com.huffmanwrites.musk-money-report.plist, then
+       delete this file. A scheduled no-op still occupies a row in the table. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Month</key>
+    <integer>12</integer>
+    <key>Day</key>
+    <integer>6</integer>
+    <key>Hour</key>
+    <integer>10</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <!-- Keep the exported PATH used by the other huffmanwrites jobs so claude,
+       hugo, python3 and the keychain-backed helpers resolve the same way. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/prh/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/prh</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/musk-money-report.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/musk-money-report.err.log</string>
+</dict>
+</plist>
