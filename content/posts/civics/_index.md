@@ -31,6 +31,13 @@ Analysis of how these laws translate into lived reality and the erosion of civil
 - [The Price of Silence in a Corrupt Nation](/posts/civics/the-price-of-silence-in-a-corrupt-nation/)
 - [Corruption at the Summit: When Public Power Serves Private Gain](/posts/civics/corruption-at-the-summit/)
 
+## 🗳️ Election Reform
+
+What actually changes who decides, in a system where most seats are settled before November.
+
+- [Who Chooses the Choices: Campaign Finance, Ranked Choice, and Open Primaries](/posts/civics/who-chooses-the-choices/)
+- [What the Constitution Says About Federal Elections](/posts/civics/what-the-constitution-says-about-federal-elections/)
+
 ## 📢 Current Events & Democracy
 Reflections on the current state of the union and the fight for a renewed democratic spirit.
 
