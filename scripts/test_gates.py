@@ -7219,5 +7219,153 @@ class TestEssayWatch(unittest.TestCase):
                 self.assertTrue(url.startswith("https://"), url)
 
 
+class TestMuskMoneyReport(unittest.TestCase):
+    """The one-off money piece: Sunday 2026-12-06, once.
+
+    Philip, 2026-11-05: "Add the job. Schedule it for 1000 06DEC." The date is
+    the first Sunday after the Post-General FEC report is due, which is the first
+    day a cycle total for any committee exists.
+
+    What is asserted here is the wiring, because the wiring is what this repo has
+    shipped wrong three times: an unbound JOB that died on the first real
+    publish, a gate missing from one runner's list, and an entry that claimed a
+    mirror it had not seen. A job that publishes unreviewed gets one attempt at
+    its date and no rehearsal, so the things that can be checked before December
+    are checked now.
+    """
+
+    def setUp(self):
+        self.runner = (SCRIPTS / "musk-money-report-runner.sh").read_text(encoding="utf-8")
+        self.plist_path = SCRIPTS / "com.huffmanwrites.musk-money-report.plist"
+        self.skill = (REPO / "skills" / "musk-money-report.md").read_text(encoding="utf-8")
+
+    def test_the_schedule_is_one_off_and_singular(self):
+        import plistlib
+        with open(self.plist_path, "rb") as fh:
+            sched = plistlib.load(fh)["StartCalendarInterval"]
+        self.assertIsInstance(sched, dict, "a one-off is a single dictionary")
+        self.assertEqual(sched, {"Month": 12, "Day": 6, "Hour": 10, "Minute": 0})
+        # No Year key exists in launchd, so the dict fires every December 6. The
+        # runner's date guard is the only thing making the job one-off, which is
+        # why the guard is asserted next.
+        self.assertNotIn("Year", sched)
+
+    def test_the_date_guard_is_exact_and_exits_zero(self):
+        m = re.search(r'REPORT_DATE="(\d{4}-\d{2}-\d{2})"', self.runner)
+        self.assertIsNotNone(m, "the one-off date is gone")
+        self.assertEqual(m.group(1), "2026-12-06")
+        # Equality, not a window: a range would let the job run on the 5th, before
+        # a total exists, or on the 12th, when the numbers have been re-reported.
+        guard = self.runner[self.runner.find('REPORT_DATE='):]
+        self.assertIn('[ "$TODAY" != "$REPORT_DATE" ]', guard)
+        self.assertIn("exit 0", guard.split("fi")[0])
+
+    def test_the_guard_costs_nothing_before_the_probe_the_pack_and_the_writer(self):
+        guard = self.runner.find('TODAY="$(date')
+        probe = self.runner.find("ollama_require")
+        pack = self.runner.find('python3 "$REPO/scripts/fec-spending-pack.py"')
+        writer = self.runner.find("claude -p")
+        self.assertGreater(guard, 0)
+        self.assertGreater(probe, guard, "an off-date run must not reach the server")
+        self.assertGreater(pack, guard, "an off-date run must not spend FEC requests")
+        self.assertGreater(writer, guard)
+
+    def test_the_collector_runs_before_the_writer(self):
+        pack = self.runner.find('python3 "$REPO/scripts/fec-spending-pack.py"')
+        writer = self.runner.find("claude -p")
+        self.assertGreater(pack, 0)
+        self.assertGreater(writer, pack, "the pack must exist before the writer reads it")
+        # The writer must not be granted the collector: its figures come from the
+        # pack the runner already wrote, and a second collection is a second set
+        # of numbers in the same article.
+        allow = re.search(r"--allowedTools \"([^\"]+)\"", self.runner).group(1)
+        self.assertNotIn("fec-spending-pack", allow)
+
+    def test_a_missing_post_general_filing_aborts_with_a_failure(self):
+        # The whole premise is the 30G report, due 2026-12-03. Without it there is
+        # no cycle total, and the piece would fall back on press tallies. That is
+        # a failure the reader must see, so exit 3 rather than exit 0.
+        self.assertIn("30G", self.runner)
+        m = re.search(r"if ! grep -Eq[^\n]*30G[^\n]*\"\$PACK\"[^\n]*; then(.*?)\nfi", self.runner, re.S)
+        self.assertIsNotNone(m, "the Post-General guard is gone")
+        self.assertIn("exit 3", m.group(1))
+        self.assertIn("alert-failure.sh", m.group(1))
+
+    def test_the_post_general_pattern_matches_only_a_report_type(self):
+        # The guard greps the pack for the report type `30G`. Its edges are what
+        # make it a guard rather than a substring test: the pack prints
+        # `F3X  Q3` and `F3X  30G` in the same column, so a pattern that matched
+        # "30G" anywhere would fire on a committee name containing it and miss
+        # nothing that matters. Extracted from the runner, not retyped.
+        m = re.search(r"grep -Eq '([^']+)' \"\$PACK\"", self.runner)
+        self.assertIsNotNone(m, "the Post-General pattern is gone")
+        # grep -E is POSIX ERE: translate the only class it uses, so the
+        # pattern under test is the runner's own text and not a retyped copy.
+        pat = re.compile(m.group(1).replace("[[:space:]]", "\\s"))
+        self.assertTrue(pat.search("     2026-12-01  F3X  30G   receipts   $1,000,000"))
+        self.assertTrue(pat.search("30G"))
+        self.assertFalse(pat.search("     2026-10-15  F3X  Q3    receipts   $158,000,000"))
+        self.assertFalse(pat.search("30GG"))
+        self.assertFalse(pat.search("REPORT-30GX"))
+
+    def test_the_article_and_the_job_label_are_bound_before_use(self):
+        self.assertIn('ARTICLE="content/posts/civics/the-musk-money.md"', self.runner)
+        article = self.runner.find('ARTICLE="content/posts/civics/the-musk-money.md"')
+        preflight = self.runner.find("publish_preflight")
+        self.assertGreater(preflight, article)
+        # JOB before the source, or the first real publish dies at the
+        # SESSION_STATE line under `set -u` (docket and Senate, 2026-10-03).
+        job = self.runner.find('JOB="musk-money-report"')
+        source = self.runner.find('. "$REPO/scripts/publish-report.sh"')
+        self.assertGreater(job, 0)
+        self.assertGreater(source, job)
+
+    def test_the_allow_list_is_the_narrow_one(self):
+        allow = re.search(r"--allowedTools \"([^\"]+)\"", self.runner).group(1)
+        for banned in ("git", "hugo", "SESSION_STATE"):
+            self.assertNotIn(banned, allow)
+        # The two read-only prose checkers ARE granted: the skill tells the writer
+        # to run them, a denial is silent, and three publishing runs aborted on a
+        # stranded preposition before that rule.
+        for checker in ("check-emdashes.py", "check-prepositions.py"):
+            self.assertIn(checker, allow)
+            self.assertIn(checker, self.skill)
+
+    def test_the_runner_runs_the_verification_itself(self):
+        self.assertIn("report_build", self.runner)
+        self.assertIn("run_report_gates", self.runner)
+        self.assertIn("--plate 152-musk-money", self.runner)
+        # A publishing job must run the online link sweep with titles: it is the
+        # only check that catches a URL returning 200 for the wrong page, and the
+        # gate set lives once in publish-report.sh.
+        lib = (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8")
+        self.assertIn('--file "$article" --online --titles', lib)
+        self.assertIn("publish_dry_run_stop", self.runner)
+        self.assertIn("publish_article", self.runner)
+        self.assertIn("publish_simplebrain", self.runner)
+
+    def test_the_plate_exists_in_both_homes(self):
+        # The layouts resolve one copy through resources.Get (assets/) and the
+        # challenge and podcast layouts emit the path verbatim (static/), which is
+        # why both homes are deliberate and why a missing one renders an empty box
+        # on a page that still returns 200.
+        for suffix in ("16x9", "4x5"):
+            name = f"152-musk-money_{suffix}.webp"
+            for home in ("static", "assets"):
+                path = REPO / home / "img" / "articles" / name
+                self.assertTrue(path.exists(), f"{home}/{name} is missing")
+        self.assertIn("152-musk-money_16x9.webp", self.skill)
+        self.assertIn("152-musk-money_4x5.webp", self.skill)
+
+    def test_the_skill_forbids_a_recalled_figure(self):
+        lowered = self.skill.lower()
+        self.assertIn("may not recall a number", lowered)
+        self.assertIn("never construct a url", lowered)
+        # The discrepancy that the Post-General filing may resolve, and the rule
+        # that the writer does not fix the older report in this run.
+        self.assertIn("senate-race-report-2026-10-18.md", self.skill)
+        self.assertIn("do not edit", lowered)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])
