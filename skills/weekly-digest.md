@@ -12,6 +12,18 @@ edits it before it sends, so nothing here commits or pushes on your behalf.
 
 ## Cadence, section, and file naming
 
+- **Written on Friday afternoon; sent on Saturday at 06:00 CT.** Philip,
+  2026-11-05: "Preparation of the newsletter shall be done Friday afternoons."
+  Friday afternoon is when the letter is written: the epigraph chosen and verified,
+  the reflection supplied, the week's items assembled, the reports roundup
+  summarized and linked, the Practice placed, and the draft left in `pending/`.
+  Saturday owns only the release and the send. **A Friday that ends without a
+  draft in `pending/` is the failure this bullet exists to name**, because nothing
+  else notices it: no job writes this letter, and `digest-release` at 05:53
+  releases whichever page happens to exist. (The slot is not new: the retired
+  `digest-prep` job held Friday 16:00 for the 2026-10-24 issue. What changed on
+  2026-11-05 is that the window is the process, run by hand or by an agent, rather
+  than a one-shot script.)
 - Written each **Saturday** to reach readers at **06:00 CT**. The embargo lifts at
   **05:53 CT**, the page is dated `<Saturday>T05:53:00-05:00>`, and because Hugo builds
   with `buildFuture: false` it appears only in a deploy that runs *after* that minute —
