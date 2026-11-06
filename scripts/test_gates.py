@@ -1317,6 +1317,23 @@ class TestQuoteNameRules(unittest.TestCase):
                 '(https://example.org/a), 2026.\n')
         self.assertEqual(cqn.extract_candidates(text), [])
 
+    def test_a_quoted_anchor_text_is_not_a_candidate(self):
+        # `["Title"](url)` is the same exemption from the other side: the quoted
+        # span IS the link text, so it is an anchor for check-links.py --titles,
+        # not a quotation. Corpus run 2026-11-06 flagged the FEC statement's own
+        # title in who-chooses-the-choices.md for its middle initial.
+        text = ('- Shana M. Broussard, FEC Chair, ["Statement of Chair Shana M. '
+                'Broussard on the Loss of a Quorum"](https://example.org/a.pdf), '
+                'April 30, 2026.\n')
+        self.assertEqual(cqn.extract_candidates(text), [])
+        # The exemption is positional, not a licence: the same name in prose is
+        # still a candidate.
+        prose = ('- The statement says "Chair Shana M. Broussard" was absent '
+                 '[^1].\n[^1]: [Statement](https://example.org/a.pdf).\n')
+        got = cqn.extract_candidates(prose)
+        self.assertEqual([c["fragment"] for c in got],
+                         ["Chair Shana M. Broussard"])
+
     def test_the_corrected_report_passes_online(self):
         # End-to-end on the real citation: the corrected file's quoted names
         # ("Dan S. Sullivan", "Daniel J. Sullivan") are confirmed against the
