@@ -182,10 +182,19 @@ def extract_candidates(text: str) -> "list[dict]":
             urls.extend(u.rstrip(".,;") for u in _URL.findall(raw))
         # De-duplicate while keeping order.
         urls = list(dict.fromkeys(urls))
-        for frag in _QUOTED.findall(raw):
+        for m in _QUOTED.finditer(raw):
+            frag = m.group(1)
             # A fragment that IS a markdown link (or contains one) is an anchor,
             # not a quotation of prose.
             if "](" in frag:
+                continue
+            # The same holds the other way round: `["Title"](url)` quotes the
+            # whole anchor text, so the span is a link title and not a claim
+            # about the page's prose. Found 2026-11-06 on the FEC statement
+            # cited in who-chooses-the-choices.md, where the only "missing"
+            # detail was the middle initial inside a link's own text.
+            if (m.start() > 0 and raw[m.start() - 1] == "["
+                    and raw[m.end():m.end() + 2] == "]("):
                 continue
             if has_name_detail(frag):
                 out.append({"line": i + 1, "fragment": frag.strip(), "urls": urls})
