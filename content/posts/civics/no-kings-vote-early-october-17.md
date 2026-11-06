@@ -3,7 +3,7 @@ title: "No Kings: Vote Early — What October 17 Asks of Us"
 description: "After three of the largest single-day demonstrations in American history, the No Kings movement is turning from the streets to the ballot box. On Saturday, October 17, the fourth chapter of a 250-year argument begins."
 date: 2026-09-09T07:22:00-05:00
 author: Philip Huffman
-lastmod: 2026-09-09T07:22:00-05:00
+lastmod: 2026-11-06T07:25:00-06:00
 hero_desktop: "img/articles/73-no-kings-vote-early_16x9.webp"
 hero_mobile: "img/articles/73-no-kings-vote-early_4x5.webp"
 hero_alt: "An empty Parian marble throne with a single glowing golden ballot card standing upright on its seat, gold light pooling on the carved armrests and rising into a deep midnight navy void, gold dust motes suspended in the air."
@@ -72,6 +72,6 @@ The throne stays empty only if the ballot is filled.
 [^5]: USA Today Network (Democrat and Chronicle), "[No Kings plans voting day of action across NY](https://www.usatoday.com/story/news/2026/09/08/no-kings-october-17-early-voting-new-york/91655761007/)", September 8, 2026: roughly 160 cities across 38 states; New York early-voting calendar.
 [^6]: 50501, "[No Kings: Vote Early](https://nokings.fiftyfifty.one/)": nonpartisan, no candidate or party support, Vote.gov, no-weapons event policy.
 [^7]: Philip Huffman, "[The Verdict, Nine Weeks Out: What the 2026 Midterms Will Actually Decide](/posts/essays/what-the-2026-midterms-will-decide/)", August 26, 2026.
-[^8]: Indivisible, "[No Kings: Vote Early](https://indivisible.org/events/no-kings-vote-early/)": "no thrones, no crowns, no kings."
+[^8]: Indivisible's statement, quoted by ABC News, ["Progressives holding 'No Kings Day' protests across the US to counter Trump and military parade"](https://abcnews.com/Politics/progressives-holding-kings-day-protests-us-counter-trump/story?id=122698173), June 10, 2025: "No Thrones. No Crowns. No Kings."
 
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

@@ -3,7 +3,7 @@ title: "The Year the Floor Moved"
 description: "Mississippi is separable by 43 votes and Alaska will not finish counting until November 18, but the wave was never close: the seats that should have been safe were not, and Nebraska shows why it was partisan rather than anti-incumbent."
 date: 2026-11-04T08:35:00-06:00
 author: Philip Huffman
-lastmod: 2026-11-04T08:35:00-06:00
+lastmod: 2026-11-06T07:25:00-06:00
 draft: false
 featuredOnHome: true
 hero_desktop: "img/articles/147-floor-moved_16x9.webp"
@@ -15,7 +15,7 @@ tags:
   - politics
 ---
 
-At 7:33 on Wednesday morning, the Mississippi count had Scott Colom ahead of Cindy Hyde-Smith by 43 votes: 462,821 to 462,778, both at 48.9 percent, with an estimated 44,000 ballots still outstanding ([WDAM, 4 November 2026](https://www.wdam.com/2026/11/04/43-votes-separate-hyde-smith-colom-after-election-day/)). Counties would resume counting that morning, and Mississippi gives five business days for absentee and affidavit ballots to arrive or to be cured.
+Shortly before 4 a.m. Eastern on Wednesday, the Mississippi count had Scott Colom ahead of Cindy Hyde-Smith by 43 votes: 462,821 to 462,778, each at 48.9 percent, with about 96 percent of the expected vote counted ([HuffPost, 4 November 2026](https://www.huffpost.com/entry/mississippi-senate-race-too-close-to-call-with-most-votes-counted_n_6aead58de4b0dcee62e15d2e); [Dark Horse Press, 4 November 2026](https://darkhorsepressnow.com/news/2026-11-04/mississippi-senate-race-too-close-to-call-jackson-voters-reject-tourism-tax/)). Counties would resume counting that morning, and Mississippi gives five business days for absentee and affidavit ballots to arrive or to be cured.
 
 There is nothing to ask for after that. Mississippi provides no automatic recount and no requested recount; both answers are no, in the state's own law ([Ballotpedia, recount laws in Mississippi](https://ballotpedia.org/Recount_laws_in_Mississippi)). More striking, as Derek Muller pointed out within hours of the count closing, state law supplies no mechanism even for a contested Senate election. The election code addresses county-wide contests and legislative races, and for a Senate seat the forum it leaves is the Senate itself, which under Article I, Section 5 judges the elections of its own members ([Election Law Blog, 4 November 2026](https://electionlawblog.org/2026/the-complicated-path-to-resolving-a-u-s-senate-election-dispute-in-mississippi/)). Muller expects the remaining ballots to moot the question by Friday. They may well. But the shape of the thing is visible either way: a 43-vote margin in a state that has deliberately written no recount into its law, deciding whether a majority reaches 55.
 

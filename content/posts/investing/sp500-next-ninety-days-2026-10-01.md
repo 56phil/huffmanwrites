@@ -3,7 +3,7 @@ title: "The S&P 500's Next Ninety Days: December 30, and the Column That Holds t
 description: "Ninety days from this morning is December 30. The quarter closed with the index two percent below its record and one sector carrying it, the strategists have started raising targets again, and the date that decides the year is not the election but November 17."
 date: 2026-10-01T07:00:00-05:00
 author: Philip Huffman
-lastmod: 2026-10-01T07:00:00-05:00
+lastmod: 2026-11-06T07:25:00-06:00
 hero_desktop: "img/articles/110-sp500-ninety-days_16x9.webp"
 hero_mobile: "img/articles/110-sp500-ninety-days_4x5.webp"
 hero_alt: "A single tall fluted Parian marble column with a Corinthian capital stands alone in a dark void under one shaft of pale light, with the broken marble drums of its fallen companions scattered around its base on a dark reflecting floor."
@@ -81,7 +81,7 @@ And because oil and yields are **0.96 correlated**, every escalation in the Gulf
 
 Which brings the calendar back. The Fed's projections show **16 of 18 participants** expecting at least one more increase this year, with a median year-end rate of **4.1%** ([Federal Reserve SEP](https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20260916.pdf)). The market has taken the hint and moved the next hike from October to December. That makes **December 9** the decision that matters, and it lands the morning after a November inflation report and two days before the funding deadline. A hike into a market that has just been handed a hot inflation print and a shutdown standoff is the configuration this window is built to contain.
 
-But the date to circle is not December 9. It is **November 17**, when Nvidia reports its third fiscal quarter, against guidance of **$108 billion** in revenue and a gross margin of about 74% ([Nvidia investor relations via Belanger Trading](https://belangertrading.com/articles/nvidia-earnings); [Nvidia Q2 FY2027 release](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm)). The company's last quarter grew revenue 106% year over year. If that sequence continues, the wall holds and the melt-up case below becomes the base case. If it breaks, the market will discover what else in the building counts, and the answer will be nothing.
+But the date to circle is not December 9. It is **November 17**, when Nvidia reports its third fiscal quarter, against guidance of **$108 billion** in revenue and a gross margin of about 74% ([Nvidia investor relations](https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Sets-Conference-Call-for-Third-Quarter-Financial-Results/default.aspx); [Nvidia, second-quarter fiscal 2027 results](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)). The company's last quarter grew revenue 106% year over year. If that sequence continues, the wall holds and the melt-up case below becomes the base case. If it breaks, the market will discover what else in the building counts, and the answer will be nothing.
 
 ## The Corruption Premium
 
@@ -141,7 +141,8 @@ The storm does not send invitations, but it does keep appointments, and this one
 ## Sources
 
 - A Wealth of Common Sense. (2018, December). [The forgotten bear markets](https://awealthofcommonsense.com/2018/12/the-forgotten-bear-markets/).
-- Belanger Trading. (2026). [Nvidia (NVDA) earnings date: Next report and history](https://belangertrading.com/articles/nvidia-earnings).
+- Nvidia. (2026, October 28). [NVIDIA sets conference call for third-quarter financial results](https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Sets-Conference-Call-for-Third-Quarter-Financial-Results/default.aspx).
+- Nvidia. (2026, August 26). [NVIDIA announces financial results for second quarter fiscal 2027](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027).
 - CNBC. (2026, September 15). [10-year Treasury yield hits highest level since 2007 as traders bet a Fed rate hike is coming](https://www.cnbc.com/2026/09/15/10-year-treasury-yield-rises-to-highest-since-2007.html).
 - CNBC. (2026, September 17). [Stock market today: Live updates](https://www.cnbc.com/2026/09/17/stock-market-today-live-updates.html).
 - CNN Business. (2026, September 17). [Kevin Warsh just defied Donald Trump. Now what?](https://www.cnn.com/2026/09/17/economy/fed-trump-rate-hike-warsh).
