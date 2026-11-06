@@ -269,13 +269,68 @@ def check_online(candidate: dict) -> "str":
     return "missing" if read_any else "unverified"
 
 
+_TITLE = re.compile(r"<title[^>]*>(.*?)</title>", re.S | re.I)
+
+
+def page_title(url: str) -> str:
+    """The `<title>` a URL serves now, or "" if it cannot be read.
+
+    Fetched separately from `fetch_text`, which strips tags: the body is what
+    the NAME test needs, and the headline is what a reader needs when the test
+    says the name is not there. Called only to explain a `missing` verdict, so
+    the second request happens on a failure and not on a passing corpus.
+    """
+    try:
+        proc = subprocess.run(
+            ["curl", "-sL", "--compressed", "-A", "Mozilla/5.0", "--max-time", "25",
+             url],
+            capture_output=True,
+        )
+    except Exception:
+        return ""
+    m = _TITLE.search(proc.stdout.decode("utf-8", "ignore"))
+    return normalize(html.unescape(m.group(1)))[:160] if m else ""
+
+
+def explain_missing(candidate: dict) -> "list[str]":
+    """Lines that say WHY a `missing` verdict was reached, for a human to act on.
+
+    The 2026-11-06 deploy failure was a correct accusation whose cause took
+    several fetches to see: Fox News had repurposed a cited slug to a different
+    article, so the gate was right about the words and silent about the reason.
+    A 200 that serves a different headline is the fabrication signature no
+    status code can see, and the headline is the one piece of evidence a reader
+    can check in a second. The remedy line names the two honest fixes and the
+    one dishonest fix, because "delete the quotation" is what a red gate
+    pressures a writer toward.
+    """
+    lines, titled = [], False
+    for url in candidate["urls"]:
+        lines.append(f"    {url}")
+        served = page_title(url)
+        if served:
+            titled = True
+            lines.append(f'    now serves: "{served}"')
+    if titled:
+        lines.append(
+            "    a cited page that now serves a different article is a citation "
+            "to amend: cite the archived copy that holds the wording, and do not "
+            "delete the quotation to turn this green.")
+    return lines
+
+
 def audit(path: pathlib.Path, online: bool, quiet: bool) -> "tuple[int, int]":
     """Return (checked, problems) for one file."""
     text = path.read_text(encoding="utf-8", errors="replace")
     candidates = extract_candidates(text)
     if not candidates:
         return 0, 0
-    rel = path if not path.is_absolute() else path.relative_to(REPO)
+    rel = path
+    if path.is_absolute():
+        try:
+            rel = path.relative_to(REPO)
+        except ValueError:          # a draft outside the repo, e.g. in /tmp
+            pass
     problems = 0
     for c in candidates:
         if not online:
@@ -288,8 +343,8 @@ def audit(path: pathlib.Path, online: bool, quiet: bool) -> "tuple[int, int]":
             problems += 1
             print(f"{rel}:{c['line']}: quoted name detail {c['fragment']!r} does "
                   f"not appear on any page this line cites:", file=sys.stderr)
-            for u in c["urls"]:
-                print(f"    {u}", file=sys.stderr)
+            for line in explain_missing(c):
+                print(line, file=sys.stderr)
         elif verdict == "unverified" and not quiet:
             print(f"{rel}:{c['line']}: unverified — could not read a cited page "
                   f"for {c['fragment']!r}")

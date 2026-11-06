@@ -1334,6 +1334,32 @@ class TestQuoteNameRules(unittest.TestCase):
         self.assertEqual([c["fragment"] for c in got],
                          ["Chair Shana M. Broussard"])
 
+    def test_a_missing_verdict_names_what_the_page_serves_now(self):
+        # The 2026-11-06 red deploy took several fetches to diagnose because
+        # the gate named the URL and the missing words but not the reason: the
+        # cited slug had been repurposed to a different article.
+        cand = {"line": 172, "fragment": "Dan S. Sullivan",
+                "urls": ["https://example.org/a"]}
+        orig = cqn.page_title
+        try:
+            cqn.page_title = lambda url: "Decoy Dan threat in Alaska Senate race"
+            lines = cqn.explain_missing(cand)
+        finally:
+            cqn.page_title = orig
+        self.assertEqual(lines[0], "    https://example.org/a")
+        self.assertIn('now serves: "Decoy Dan threat in Alaska Senate race"', lines[1])
+        self.assertIn("archived copy", lines[2])
+        self.assertIn("do not delete the quotation", lines[2])
+
+        # A page that could not be read claims nothing about what it serves,
+        # and does not borrow the remedy line.
+        try:
+            cqn.page_title = lambda url: ""
+            silent = cqn.explain_missing(cand)
+        finally:
+            cqn.page_title = orig
+        self.assertEqual(silent, ["    https://example.org/a"])
+
     def test_the_corrected_report_passes_online(self):
         # End-to-end on the real citation: the corrected file's quoted names
         # ("Dan S. Sullivan", "Daniel J. Sullivan") are confirmed against the
