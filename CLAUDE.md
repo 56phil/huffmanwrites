@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Prime directive
+
+**Truth and accuracy trump everything else on this site.** Philip, 2026-11-06. They outrank voice, cadence, series continuity, a green build, and a deadline: a missing edition is an honest gap a reader can see, and a wrong claim is a debt the reader pays.
+
+What that means operationally, because "be accurate" is not an instruction anyone can follow:
+
+- **Nothing is asserted that was not read.** Every date, name, figure, quotation, and attribution in a piece is copied from a page that was fetched, or from a collector's pack; never recalled, reconstructed, or inferred from the shape of a URL. Where a job writes unreviewed (SITREP, Chiefs, Weekly Satire), the pack or the fetch is the only licence to assert, and a pack failure is a hard stop.
+- **A claim that cannot be verified is dropped, replaced, or stated as a gap.** It is never softened into a hedge that hides the absence, and a quotation whose wording cannot be linked does not appear as a quotation. "The court's feed recorded nothing" is accurate; "the court declined to comment" is not.
+- **The record is part of the standard.** SESSION_STATE, commit messages, alert copy, and gate output state what was measured and by what, and a figure later found wrong is corrected in place with a note, never quietly re-stated. A mechanism that reports OK while inspecting nothing is a lie by omission, which is why every gate prints a `coverage:` count and `TestGateCoverage` enforces a floor.
+- **Gates are the enforcement, not the sentiment.** A gate that turns red because a published claim stopped being true has done its job; the artifact is what gets fixed (see Conventions, "A gate is kept and improved when it turns red"). Where a gate must stay silent — a page a bot cannot read, a publisher that 403s — the verdict says "unverified", which is a claim about the checker, never about the source.
+
 ## Project Overview
 
 Hugo static site (`huffmanwrites`) using the [PaperMod](https://github.com/adityatelange/hugo-PaperMod) theme. Domain: `www.huffmanwrites.org` — the Pages custom domain and the canonical host; the apex `huffmanwrites.org` 301s onto it. `static/CNAME` names the same host, though Pages writes the deployed copy from the repository setting, so the file is a record of that setting rather than the thing that sets it. Deployed to GitHub Pages via `.github/workflows/hugo.yml` on push to `main`.
