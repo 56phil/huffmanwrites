@@ -7410,5 +7410,137 @@ class TestMuskMoneyReport(unittest.TestCase):
         self.assertIn("do not edit", lowered)
 
 
+class TestDigestCampaign(unittest.TestCase):
+    """The send needs an owner, because on 2026-11-07 it had none.
+
+    The page was released on time at 05:53 CT and the letter was reviewed, and
+    no email arrived: no campaign had ever been created, and no job owns that
+    step. These pin the two directions the guard exists for — a letter with
+    nothing scheduled fails loudly with the remedy printed, and a campaign that
+    is scheduled or sent passes — plus the one arithmetic that can silently
+    send an hour late.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.mod = load("digest-campaign")
+
+    def letter(self, directory, stamp="2026-11-14", subject="Stoic Saturday: Fixture"):
+        path = Path(directory) / "stoic-saturday-fixture.md"
+        path.write_text(
+            f'---\ntitle: "{subject}"\nsendfox_subject: "{subject}"\n'
+            f'date: {stamp}T05:53:00-06:00\n---\n\nbody\n', encoding="utf-8")
+        return path
+
+    def run_check(self, tmp, rows, stamp="2026-11-14"):
+        import unittest.mock as mock
+        out = io.StringIO()
+        with mock.patch.object(self.mod, "campaigns", return_value=rows), \
+                contextlib.redirect_stdout(out):
+            code = self.mod.check(stamp, Path(tmp), token="not-a-real-key")
+        return code, out.getvalue()
+
+    def test_the_schedule_moment_follows_the_letters_own_offset(self):
+        # 06:00 CT is 12:00 UTC in CST and 11:00 UTC in CDT. A hardcoded
+        # -05:00 in November names 07:00 CT, which is an hour late.
+        self.assertEqual(self.mod.schedule_moment("2026-11-07T05:53:00-06:00"),
+                         "2026-11-07 12:00:00")
+        self.assertEqual(self.mod.schedule_moment("2026-10-31T05:53:00-05:00"),
+                         "2026-10-31 11:00:00")
+
+    def test_a_scheduled_campaign_passes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.letter(tmp)
+            code, out = self.run_check(tmp, [
+                {"id": 7, "subject": "Stoic Saturday: Fixture",
+                 "scheduled_at": "2026-11-14 12:00:00"}])
+        self.assertEqual(code, 0, out)
+        self.assertIn("scheduled for 2026-11-14 12:00:00", out)
+
+    def test_a_sent_campaign_passes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.letter(tmp)
+            code, _ = self.run_check(tmp, [
+                {"id": 7, "subject": "Stoic Saturday: Fixture",
+                 "sent_at": "2026-11-14T12:00:03.000000Z"}])
+        self.assertEqual(code, 0)
+
+    def test_a_letter_with_no_campaign_fails_and_names_the_remedy(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.letter(tmp)
+            code, out = self.run_check(tmp, [])
+        self.assertEqual(code, 3)
+        self.assertIn("NOTHING WILL SEND", out)
+        self.assertIn("--schedule", out)
+
+    def test_a_cancelled_campaign_is_not_a_send(self):
+        # cancelled_at is what a cancelled campaign carries; scheduled_at alone
+        # would otherwise read as "it will go".
+        with tempfile.TemporaryDirectory() as tmp:
+            self.letter(tmp)
+            code, _ = self.run_check(tmp, [
+                {"id": 7, "subject": "Stoic Saturday: Fixture",
+                 "scheduled_at": "2026-11-14 12:00:00",
+                 "cancelled_at": "2026-11-14T11:00:00.000000Z"}])
+        self.assertEqual(code, 3)
+
+    def test_a_near_match_is_not_a_scheduled_letter(self):
+        # Last week's campaign must not satisfy this week's check.
+        with tempfile.TemporaryDirectory() as tmp:
+            self.letter(tmp)
+            code, _ = self.run_check(tmp, [
+                {"id": 7, "subject": "Stoic Saturday: Fixture 2",
+                 "scheduled_at": "2026-11-14 12:00:00"}])
+        self.assertEqual(code, 3)
+
+    def test_no_letter_for_the_date_is_not_a_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                code = self.mod.check("2026-12-25", Path(tmp), token="x")
+        self.assertEqual(code, 2)
+        self.assertIn("no letter dated 2026-12-25", out.getvalue())
+
+    def test_scheduling_an_already_scheduled_letter_creates_nothing(self):
+        import unittest.mock as mock
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self.letter(tmp)
+            rows = [{"id": 7, "subject": "Stoic Saturday: Fixture",
+                     "scheduled_at": "2026-11-14 12:00:00"}]
+            calls = []
+            with mock.patch.object(self.mod, "campaigns", return_value=rows), \
+                    mock.patch.object(self.mod, "api", side_effect=calls.append):
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    code = self.mod.schedule(path, "stoic-saturday-fixture", token="k")
+        self.assertEqual(code, 0)
+        self.assertEqual(calls, [])
+        self.assertIn("already", out.getvalue())
+
+    def test_the_token_is_never_printed(self):
+        import unittest.mock as mock
+        with tempfile.TemporaryDirectory() as tmp:
+            self.letter(tmp)
+            secret = "tok-SENTINEL-do-not-print"
+            out = io.StringIO()
+            with mock.patch.object(self.mod, "campaigns", return_value=[]), \
+                    mock.patch.object(self.mod, "resolve_token", return_value=secret), \
+                    contextlib.redirect_stdout(out):
+                self.mod.check("2026-11-14", Path(tmp))
+        self.assertNotIn(secret, out.getvalue())
+
+    def test_the_requests_clear_cloudflares_urllib_wall(self):
+        # SendFox answers a plain urllib client with 403 error 1010 before the
+        # request reaches the API, which reads as an auth failure.
+        self.assertTrue(self.mod.UA.startswith("Mozilla/5.0"))
+        self.assertNotIn("Python-urllib", self.mod.UA)
+
+    def test_the_key_comes_from_the_one_registry(self):
+        source = (SCRIPTS / "digest-campaign.py").read_text(encoding="utf-8")
+        self.assertIn("check-secrets.py", source)
+        self.assertIn("SENDFOX_CLIENT_SECRET", source)
+        self.assertIn("resolve_homes", source)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])

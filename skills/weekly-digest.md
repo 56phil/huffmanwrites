@@ -240,13 +240,30 @@ These rules are enforced, and each names its gate.
   `~/.secrets` (`SENDFOX_CLIENT_SECRET`) as the fallback. **Never a repo-local
   `.sendfox_token`;** both it and `.fal_token` were that mistake, and
   `scripts/check-secrets.py` fails if either returns.
-- **Send:** the `pending/` file is the newsletter body and the page source at once; send it
-  through the SendFox API, whose `form-action` the site CSP whitelists.
+- **The campaign is created and scheduled on Friday, with the letter, and
+  `scripts/digest-campaign.py` is what does it.** `--schedule --file <draft> --slug <slug>`
+  renders the email body through `digest-email.py`, posts the campaign, and sets
+  `scheduled_at` to 06:00 CT read off the letter's own offset (12:00 UTC in CST, 11:00 in
+  CDT), so SendFox's scheduler sends it whether or not anyone is at the machine. It is
+  idempotent: a campaign that already exists for that subject is reported, not duplicated.
+  `--check --date <Saturday>` then answers the question from the outside — exit 0 when a
+  campaign for that day's letter is scheduled or sent, 2 when there is no letter for that
+  date, and 3 when a letter exists and nothing will send it.
+  **This exists because the send had no owner.** On 2026-11-07 the page released on time at
+  05:53 CT, the letter had been reviewed the evening before, and no email arrived: the
+  campaign had never been created, because the previous day's session treated the send as
+  something Philip would do on Saturday morning. Nothing schedules a campaign by itself, and
+  no job could see the absence, since every alert in this repo is raised from inside a run.
+  The rule is that a letter is not finished until `--check` exits 0 for its date.
+- **Send:** the `pending/` file is the newsletter body and the page source at once; it goes
+  out through the SendFox API, whose `form-action` the site CSP whitelists.
 - **The email body is rendered by `scripts/digest-email.py`, not by hand.** It converts the
   draft with Pandoc and prepends the masthead: the PRH logo, the words **Stoic Saturday**
   letterspaced, and the send date read off the draft's own `date` field. Then the body, then
   the site/unsubscribe footer.
-  `python3 scripts/digest-email.py pending/<draft>.md --out /tmp/letter.html`.
+  `python3 scripts/digest-email.py pending/<draft>.md --slug <slug> --out /tmp/letter.html`.
+  **`--slug` is not optional:** render without it and the footer's read-on-the-site link
+  points at `/posts/digests/<draft filename>/`, a 404 inside every email.
   **The logo is the books' logo**, `static/img/prh-logo.png` — the horse-in-ring with the
   Chancery PRH wordmark, the same artwork every title page in `~/Developer/LaTeX/AllMyBooks`
   carries via `~/texmf/tex/latex/miscImages/prh-logo.png`, copied here at 288 px so the
