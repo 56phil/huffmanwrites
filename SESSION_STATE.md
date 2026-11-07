@@ -12,6 +12,26 @@
 
 ---
 
+
+### Maintenance — November 7, 2026 — Amended a published essay (automated)
+
+Written by `com.huffmanwrites.essay-watch` after every gate passed.
+- **Amended:** content/posts/essays/the-tally.md 
+- **Triggers:** tally-iran
+[
+  {
+    "id": "tally-iran",
+    "race": "the Iran day count",
+    "headline": "EA on Pakistan TV: After US Elections, A Chance to End War on Iran?",
+    "url": "https://eaworldview.com/2026/11/iran-war-after-us-elections/",
+    "date": "2026-11-07 10:19:07+00:00",
+    "reason": "ended"
+  }
+]
+- The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+
+---
+
 ### Maintenance — November 7, 2026 — Published the docket-weekly-report report (automated)
 
 Auto-published by `com.huffmanwrites.docket-weekly-report` after every gate passed.
