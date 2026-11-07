@@ -13,6 +13,19 @@
 ---
 
 
+### Content — November 7, 2026 — *By What Standard?* released: the book page, the Now page, and the summary purchase line
+
+- **The book is on sale, so the page stopped saying it was not.** `content/books/by-what-standard/index.md` had `availability: "Expected: late November 2026."` and a body line to match; both are gone, and the body now reads "Available in hardcover, paperback, and Kindle." The frontmatter gate makes the two inseparable: `availability` is the marker for an unreleased title and exempts `link`, so a page carrying both is a contradiction the gate reports.
+- **`link: "https://www.amazon.com/dp/B0HPY41BVJ"` — the Kindle ASIN.** Philip pasted the hardcover URL (`B0HPXFR67H?th=1`) and chose the Kindle edition for the site when asked, so every book page now links a plain `/dp/<ASIN>` with no query string. The other two editions exist: paperback `B0HPYQVZP6`, hardcover `B0HPXFR67H`.
+- **`content/now.md` rewritten (2,264 bytes)** around the release rather than edited. New `teaser` and `lastmod: 2026-11-07`. Sections: **Out now: *By What Standard?***, **Beginning in January** (*The Long Look*, which Philip starts writing in the second week of January 2027), and **Waiting on forewords** (PIC in proofreading, RTR outstanding). Verified in `public/now/index.html` and in the `.now-card` on the home page.
+- **`content/books/raisem-right/index.md`: `availability: "Expected: November 2026."` → `"Coming soon."`** Unrequested but stale, and it contradicted the Now page's "no firm date." Philip approved. **PIC's November date was left alone at his instruction** — a foreword in proofreading can still make the month.
+- **`content/posts/summaries/by-what-standard-summary.md` gained the purchase line** the other summaries carry: `Buy it [on Amazon](https://www.amazon.com/dp/B0HPY41BVJ?ref=huffmanwrites.org).` above the existing `Read more about the book:` line; `lastmod` moved to `2026-11-07`.
+- **`shared/also-by.tex` needed no change and got none.** Its BWS entry was already `\alsocbyentry` with a real product page (`/dp/B0HPXFR67H`, hardcover), written in before the site caught up, so the catalogue in every printed and reflowable book already treats the title as purchasable. PIC and RTR remain `\alsocbyforthcoming`, correctly. It is the only hardcover link among eleven entries — every other one is a Kindle or ebook edition — and Philip chose to leave it so (2026-11-07).
+- **A defect found in the neighbouring project and fixed:** `tll/tex/preamble.tex` had `bws`'s `\hypersetup` block copied into it whole. `\title` was correct (`The Long Look: The Discipline of Looking`) while `pdftitle` still read "By What Standard?: The Office and the Record", so every PDF the empty repository built carried the wrong document title. Corrected from the file's own `\title`; `pdfkeywords` and `pdfsubject` also carried BWS's wording and are now `TBD` at Philip's instruction, awaiting his phrasing. Proven in the artifact: `make hc` builds and `pdfinfo` reads Title `The Long Look: The Discipline of Looking`, Subject `TBD`, Keywords `TBD`.
+- **Gates, run rather than assumed:** `check-content-frontmatter.py` OK corpus-wide, `check-hero-paths.py` OK (455 paths), `check-links.py --check` OK (4,649 links), `check-emdashes.py --file` 1 counted on the summary, `hugo --gc --minify --quiet` clean. The book page renders two "Buy on Amazon" buttons at the Kindle URL and the summary renders the purchase anchor.
+
+---
+
 ### Maintenance — November 7, 2026 — Amended a published essay (automated)
 
 Written by `com.huffmanwrites.essay-watch` after every gate passed.

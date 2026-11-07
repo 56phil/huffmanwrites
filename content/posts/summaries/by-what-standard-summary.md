@@ -4,7 +4,7 @@ description: "Executive summary of By What Standard?: the standard an office-hol
 date: 2026-10-31T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - By What Standard"
-lastmod: 2026-10-31T00:00:00Z
+lastmod: 2026-11-07T00:00:00Z
 tags:
   - civics
   - democracy
@@ -87,6 +87,8 @@ The book also puts the weight of the standard on the officer at the desk and the
 > — Marcus Aurelius, [*Meditations* 12.17](https://en.wikisource.org/wiki/The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_XII) (trans. George Long, 1862)
 
 ---
+
+Buy it [on Amazon](https://www.amazon.com/dp/B0HPY41BVJ?ref=huffmanwrites.org).
 
 Read more about the book: [*By What Standard?*](/books/by-what-standard/).
 
