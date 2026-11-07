@@ -6342,6 +6342,89 @@ class TestContentFrontmatterGate(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+# The model benchmark: its scorers, not its script.
+# --------------------------------------------------------------------------
+class TestModelBenchScorers(unittest.TestCase):
+    """The rules `scripts/bench-models.py` applies to a model's output.
+
+    Why this exists. The tool decides which local model may sit in the seat the
+    scheduled jobs call, and its first version got two of the three scorers
+    wrong in ways that inverted the answer. It flagged "spent three hours
+    before shelving it." as a stranded preposition, because `it` was on the
+    list of closers without the exception for a direct object; run against
+    every model, that made the ternary 2-bit model look as clean on house style
+    as the 4-bit one it was being compared against. It also scored a declined
+    answer as a fabricated quotation, because the refusal quoted the words
+    "Global SITREP" back. Both are the failure this file's docstring names:
+    a check that fails correct output is worse than none. The scorers are
+    pinned here so the tool cannot quietly re-earn either defect.
+
+    The fixture test is the third: the probe sentences are deliberately
+    ungrammatical, and the prose gates now run on `scripts/` too, so the
+    temptation to "fix" two sentences that end on a preposition is real. Doing
+    that leaves a probe that measures nothing, which no other check would see.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.bm = load("bench-models")
+
+    def test_a_pronoun_object_is_not_a_stranded_preposition(self):
+        # The measured false positive. "it" is what `shelving` takes.
+        text = ("4. The report, which nobody had read, was the thing on which the "
+                "committee spent three hours before shelving it.")
+        self.assertEqual(self.bm.stranded_prepositions(text), [])
+
+    def test_both_stranded_shapes_are_caught(self):
+        for sentence in (
+            "The man I was talking about wrote the piece that we argued over.",
+            "Who did you give the letter to?",
+            "The audit depended on the file, and on the clerk who kept it in order on.",
+            "I handed the letter to him.",
+        ):
+            with self.subTest(sentence=sentence):
+                self.assertEqual(len(self.bm.stranded_prepositions(sentence)), 1)
+
+    def test_a_rule_obeying_sentence_is_not_flagged(self):
+        text = ("The man about whom I was talking wrote the piece over which we "
+                "argued. To whom did you give the letter? The colleague she was "
+                "standing next to had the audit file.")
+        self.assertEqual(self.bm.stranded_prepositions(text), [])
+
+    def test_two_em_dashes_in_one_sentence_count_as_packed(self):
+        packed = "The report \u2014 unread \u2014 was shelved."
+        single = "The clerk shelved the report \u2014 unread by everyone."
+        self.assertEqual(len(self.bm.packed_emdashes(packed)), 1)
+        self.assertEqual(self.bm.packed_emdashes(single), [])
+
+    def test_fact_scoring_separates_knowledge_from_confabulation(self):
+        # One right answer per line, in order: the shape the scorer accepts,
+        # which is why each line is matched positionally rather than by
+        # searching the whole answer for the pattern.
+        rows = ["1951", "First", "391", "1758", "George Long", "1854", "9",
+                "1989", "Epictetus", "1806"]
+        text = "\n".join(f"{i}. {a}" for i, a in enumerate(rows, 1))
+        hits, misses = self.bm.score_facts(text)
+        self.assertEqual((hits, misses), (10, []))
+
+        # The measured defect: a fluent, specific, invented translator.
+        wrong = text.replace("George Long", "John E. Geare")
+        hits, misses = self.bm.score_facts(wrong)
+        self.assertEqual(hits, 9)
+        self.assertEqual(len(misses), 1)
+        self.assertIn("John E. Geare", misses[0][1])
+
+    def test_the_prose_probe_still_states_defects_to_repair(self):
+        # If these sentences are made grammatical, the probe measures nothing
+        # and every model scores clean. Three end on a preposition, one packs
+        # two em dashes into a single sentence, and one is already correct.
+        prompt = self.bm.PROSE_PROMPT
+        self.assertEqual(len(self.bm.stranded_prepositions(prompt)), 3)
+        self.assertEqual(len(self.bm.packed_emdashes(prompt)), 1)
+        self.assertIn("Who did you give the letter to?", prompt)
+
+
+# --------------------------------------------------------------------------
 # Coverage: what a gate inspected, so a blind gate cannot report OK.
 # --------------------------------------------------------------------------
 class TestGateCoverage(unittest.TestCase):
