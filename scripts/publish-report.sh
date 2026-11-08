@@ -366,7 +366,7 @@ publish_article() {
       cat "$detail_file"
     fi
     echo "- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (\`--gc --minify\` for what deploys, and \`--gc --minify --buildDrafts --destination <tmp>\` for the file just written — the production build excludes \`draft: true\` and so cannot see it); every gate OK, including the online link sweep (\`check-links.py --online --titles\`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires \`draft: false\` and \`featuredOnHome: true\`. A failure in any of those aborts the push rather than publishing anyway."
-    echo "- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own \`<title>\` to carry the article's \`title\` (\`scripts/verify-published.py\`, the rule \`sitrep-watchdog.py\` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence raises the shared alert and fails the run: the article is on \`main\` and no reader has it. The outcome is in \`$OUT_LOG\`."
+    echo "- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own \`<title>\` to carry the article's \`title\` (\`scripts/verify-published.py\`, the rule \`sitrep-watchdog.py\` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence then asks GitHub for a fresh build of the same commit (\`scripts/republish-pages.sh\`), because a waiting window cannot rescue a run that has stopped — on 08NOV26 one sat in its first step for nine and a half minutes — and looks again. A second settled absence, or a build that already failed, raises the shared alert and fails the run: the article is on \`main\` and no reader has it. The outcome is in \`$OUT_LOG\`."
     echo "- **SimpleBrain mirror** runs immediately after this push: raw copy, \`wiki/articles/\` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in \`$OUT_LOG\`."
     echo ""
     echo "---"
@@ -454,13 +454,35 @@ from those results." >> "$OUT_LOG" 2>> "$ERR_LOG"; then
   # reader has it, which is not a log line; the mirror is skipped the way it
   # would be for any other abort in the tail. `exit "$live_rc"` keeps the
   # checker's vocabulary (1 absent, 3 unconfirmed) in the runner's exit code.
+  #
+  # ONE RE-DISPATCH BEFORE THE ALERT, added 08NOV26. Six minutes covers a deploy
+  # that is queued; it cannot cover a run that has stopped, and that morning the
+  # build sat inside its first step for nine and a half minutes while the
+  # edition was 404. So a settled absence asks GitHub for a fresh build of this
+  # commit and looks again — the workflow's concurrency group cancels the
+  # stalled run and starts another. `scripts/republish-pages.sh` refuses to
+  # retry a build that FAILED, because the same commit fails the same way and
+  # naming the failure is the more useful answer; that case alerts at once.
   local live_out live_rc=0
   live_out="$(python3 "$REPO/scripts/verify-published.py" --article "$article" 2>>"$ERR_LOG")" || live_rc=$?
   printf '%s\n' "$live_out" >> "$OUT_LOG"
   if [ "$live_rc" -ne 0 ]; then
-    echo "$(stamp): live verification FAILED (exit $live_rc)" >> "$OUT_LOG"
+    echo "$(stamp): live verification FAILED (exit $live_rc) after the first window" >> "$OUT_LOG"
+    local retry_out retry_rc=0
+    retry_out="$(bash "$REPO/scripts/republish-pages.sh" "$local_sha" 2>>"$ERR_LOG")" || retry_rc=$?
+    echo "$(stamp): re-dispatch — $retry_out" >> "$OUT_LOG"
+    if [ "$retry_rc" -eq 0 ]; then
+      live_rc=0
+      live_out="$(python3 "$REPO/scripts/verify-published.py" --article "$article" 2>>"$ERR_LOG")" || live_rc=$?
+      printf '%s\n' "$live_out" >> "$OUT_LOG"
+      if [ "$live_rc" -eq 0 ]; then
+        echo "$(stamp): live verification OK after a re-dispatched build — the site carries the article" >> "$OUT_LOG"
+        return 0
+      fi
+      echo "$(stamp): live verification FAILED again (exit $live_rc) after the re-dispatch" >> "$OUT_LOG"
+    fi
     "$REPO/scripts/alert-failure.sh" "$JOB" "$live_rc" \
-      "published to main but not served: ${live_out#verify-published: }" || true
+      "published to main but not served: ${live_out#verify-published: } — $retry_out" || true
     exit "$live_rc"
   fi
   echo "$(stamp): live verification OK — the site serves the article" >> "$OUT_LOG"

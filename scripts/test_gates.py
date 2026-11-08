@@ -5074,8 +5074,9 @@ class TestPublishLibrary(unittest.TestCase):
         # The INVOCATION, counted as the command that runs it: the entry's
         # bullet names the file too, and that is prose rather than a call site.
         call = 'python3 "$REPO/scripts/verify-published.py"'
-        self.assertEqual(code.count(call), 1,
-                         "the delivery check belongs in the shared tail, once")
+        self.assertEqual(code.count(call), 2,
+                         "the delivery check runs one window, and one more after the "
+                         "re-dispatch; a third call site is a third copy of the rule")
         self.assertLess(code.find("git rev-parse origin/main"),
                         code.find(call),
                         "delivery is checked after the push is confirmed, not before")
@@ -5307,6 +5308,173 @@ class TestPublishLibrary(unittest.TestCase):
                       "publish_simplebrain never resolves model auth")
         self.assertLess(body.find("report_model_env"), body.find("claude -p"),
                         "the mirror resolves auth after starting the session")
+
+
+# --------------------------------------------------------------------------
+class TestRepublishPages(unittest.TestCase):
+    """Asking GitHub for one more build when the deploy has stopped.
+
+    Why this exists. The delivery check waits six minutes for the Pages workflow
+    the push triggered. That covers a deploy that is queued and cannot cover one
+    that has stopped, and on 08NOV26 the build sat inside its first step for nine
+    and a half minutes while the edition was 404: the copy was on `main`, every
+    gate had passed, and a human re-dispatched the workflow by hand at 06:13.
+    `scripts/republish-pages.sh` is the automated version of that hand.
+
+    What is pinned here is the judgement rather than the plumbing: a stalled run
+    is worth one fresh build, a FAILED run is not (the same commit fails the same
+    way — 06NOV26 proved it for eighteen hours), and a state that cannot be read
+    is never read as "no deploy". Every test stubs `gh` on PATH; none of them
+    reaches GitHub, and a test that dispatched a real build would be the defect.
+    """
+
+    SCRIPT = SCRIPTS / "republish-pages.sh"
+    SHA = "654287acb418c1cb8f4e8114eca128ad9bf9a4f2"
+
+    def gh_stub(self, tmp: Path, runs_json: str, exit_code: int = 0) -> tuple:
+        """A fake `gh` that answers `run list` from a fixture and logs a dispatch."""
+        bindir = tmp / "bin"
+        bindir.mkdir()
+        log = tmp / "dispatched.log"
+        gh = bindir / "gh"
+        gh.write_text(
+            "#!/bin/bash\n"
+            'case "$1 $2" in\n'
+            "  \"run list\") printf '%s' \"$GH_RUNS\"; exit \"$GH_RUNS_RC\";;\n"
+            "  \"workflow run\") echo \"$*\" >> \"$GH_LOG\"; exit 0;;\n"
+            "esac\n"
+            "exit 1\n", encoding="utf-8")
+        gh.chmod(0o755)
+        env = dict(os.environ)
+        env["PATH"] = f"{bindir}:/usr/bin:/bin"
+        env["GH_RUNS"] = runs_json
+        env["GH_RUNS_RC"] = str(exit_code)
+        env["GH_LOG"] = str(log)
+        return env, log
+
+    def run_script(self, env, sha=None):
+        return subprocess.run(["bash", str(self.SCRIPT), sha or self.SHA],
+                              capture_output=True, text=True, env=env)
+
+    def test_a_stalled_run_gets_one_fresh_build(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            env, log = self.gh_stub(Path(d), '[{"status":"in_progress","conclusion":null}]')
+            out = self.run_script(env)
+            self.assertEqual(out.returncode, 0, out.stderr)
+            self.assertTrue(log.exists(), "a stalled run must be re-dispatched")
+            self.assertIn("workflow run hugo.yml", log.read_text())
+            self.assertIn("still in_progress", out.stdout)
+
+    def test_a_failed_build_is_not_retried_and_says_why(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            env, log = self.gh_stub(Path(d), '[{"status":"completed","conclusion":"failure"}]')
+            out = self.run_script(env)
+            self.assertEqual(out.returncode, 4, out.stdout)
+            self.assertFalse(log.exists(), "a failed build must not be dispatched again")
+            self.assertIn("would fail the same way", out.stdout)
+
+    def test_a_commit_with_no_run_is_dispatched(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            env, log = self.gh_stub(Path(d), "[]")
+            out = self.run_script(env)
+            self.assertEqual(out.returncode, 0, out.stdout)
+            self.assertTrue(log.exists())
+            self.assertIn("dispatched a fresh Pages build", out.stdout)
+
+    def test_only_the_newest_run_is_judged(self):
+        # A commit accumulates runs as an incident is worked, and on 08NOV26 the
+        # same commit carries a cancelled run and a successful one. Reading "any
+        # failure in the list" would mark that commit broken forever; the list is
+        # newest-first, so the first entry is the state that counts.
+        import tempfile
+        newest_success = ('[{"status":"completed","conclusion":"success"},'
+                          '{"status":"completed","conclusion":"failure"}]')
+        with tempfile.TemporaryDirectory() as d:
+            env, log = self.gh_stub(Path(d), newest_success)
+            out = self.run_script(env)
+            self.assertEqual(out.returncode, 0, out.stdout)
+            self.assertTrue(log.exists())
+
+    def test_a_cancelled_run_is_rebuilt_rather_than_reported_as_failed(self):
+        # A cancelled run is not evidence that the commit is unbuildable: it is
+        # the state the concurrency group leaves behind when a dispatch replaces
+        # a stalled build, which is the recovery path this script exists for.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            env, log = self.gh_stub(Path(d), '[{"status":"completed","conclusion":"cancelled"}]')
+            out = self.run_script(env)
+            self.assertEqual(out.returncode, 0, out.stdout)
+            self.assertTrue(log.exists())
+            self.assertIn("concluded cancelled", out.stdout)
+
+    def test_an_unreadable_state_is_not_read_as_no_deploy(self):
+        # The distinction the whole repo keeps re-learning: "we could not look"
+        # is not "there is nothing". A gh that fails exits 3, and the caller
+        # alerts with the checker's own sentence instead of claiming a recovery.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            env, log = self.gh_stub(Path(d), "", exit_code=1)
+            out = self.run_script(env)
+            self.assertEqual(out.returncode, 3, out.stdout)
+            self.assertFalse(log.exists())
+
+    def test_an_abbreviated_sha_is_refused_rather_than_dispatched(self):
+        # `gh run list --commit` matches the exact value and answers nothing for
+        # an abbreviation; the script would read that as "no run exists" and
+        # spend a real dispatch. Measured on 08NOV26 while smoke-testing: the
+        # short form dispatched a build for the current head and reported nothing
+        # about the commit asked for.
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            env, log = self.gh_stub(Path(d), "[]")
+            out = self.run_script(env, sha="16125f3")
+            self.assertEqual(out.returncode, 2, out.stdout)
+            self.assertFalse(log.exists(), "a short sha must never reach gh")
+
+    def test_gh_missing_is_three_not_success(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            env = dict(os.environ)
+            env["PATH"] = f"{d}:/usr/bin:/bin"
+            env.pop("GH_LOG", None)
+            out = self.run_script(env)
+            self.assertEqual(out.returncode, 3)
+            self.assertIn("gh is not on PATH", out.stdout)
+
+    def test_the_script_is_valid_bash(self):
+        out = subprocess.run(["bash", "-n", str(self.SCRIPT)], capture_output=True, text=True)
+        self.assertEqual(out.returncode, 0, out.stderr)
+
+    # ---- the tail's use of it ------------------------------------------------
+    def test_the_tail_redispatches_before_it_alerts(self):
+        lib = (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8")
+        code = "\n".join(ln for ln in lib.splitlines() if not ln.lstrip().startswith("#"))
+        verify = 'python3 "$REPO/scripts/verify-published.py"'
+        dispatch = 'bash "$REPO/scripts/republish-pages.sh"'
+        alert = "alert-failure.sh"
+        first_fail = code.find("live verification FAILED (exit $live_rc) after the first window")
+        self.assertGreater(first_fail, 0, "the tail no longer distinguishes the first window")
+        self.assertGreater(code.find(dispatch), first_fail,
+                           "the re-dispatch must follow a settled absence, not precede it")
+        self.assertGreater(code.find(alert, code.find(dispatch)), code.find(dispatch),
+                           "the alert must be reachable AFTER the re-dispatch, not instead of it")
+        self.assertEqual(code.count(verify), 2,
+                         "the second window is what makes the re-dispatch an attempt")
+        self.assertGreater(code.rfind(verify), code.find(dispatch),
+                           "the second window must follow the dispatch")
+
+    def test_the_entry_says_the_recovery_is_attempted_not_promised(self):
+        # The entry is committed before the delivery check runs, so it may say a
+        # re-dispatch is attempted and may not claim the page was recovered.
+        lib = (SCRIPTS / "publish-report.sh").read_text(encoding="utf-8")
+        code = "\n".join(ln for ln in lib.splitlines() if not ln.lstrip().startswith("#"))
+        m = re.search(r'\{\n(.*?)\n  \} > "\$entry_file"', code, re.S)
+        self.assertIsNotNone(m)
+        self.assertIn("republish-pages.sh", m.group(1))
+        self.assertIn("A second settled absence", m.group(1))
 
 
 # --------------------------------------------------------------------------
