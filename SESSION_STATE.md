@@ -26,6 +26,16 @@
 
 ---
 
+### Maintenance — November 7, 2026 — A dated note for tomorrow's SITREP: the Mississippi count, two snapshots of one evening
+
+- **What was asked:** the November 7 edition put AP's count at 5:30 p.m. ET on November 6 at a 2,498-vote lead on 953,222 votes counted. AP's own last update for the race is timestamped 5:02 p.m. and reads 2,574 on 953,314 (Colom 467,930, Hyde-Smith 465,356, Pinkins 20,028, 97 percent of the expected vote in), and every outlet carrying it since — MS NOW 12:54 p.m. ET, ABC's live page, WAPT 9:33 a.m., WLBT Friday evening — quotes that second snapshot. Philip asked for the discrepancy to reach the next edition as a line.
+- **Where it went:** `scripts/sitrep-edition-note.sh`, the dated-case mechanism added for the DST haiku, not `skills/daily-sitrep.md`. The skill is read on every run of an open-ended daily series, so a correction written into it would be re-requested every morning; a case for `2026-11-08` cannot outlive its date. `bash scripts/sitrep-edition-note.sh 2026-11-08` prints it; `2026-11-07` and `2026-11-09` print nothing.
+- **What the note says, and what it refuses to do:** it carries both snapshots and instructs the writer to read the count off the fetched page rather than off the note, to print the snapshot's own timestamp instead of the hour it happened to look, to say plainly when no batch has posted ("no votes have been posted since Friday evening"), and to name both snapshots if it reports a change. A note that supplies a number is a note a writer can assert from, which is why the script's own contract comment was rewritten: a note may name a figure when the figure is the thing to **check**; the fetched page remains the only licence to assert.
+- **Why the two figures can both be honest:** a tracker's batch and AP's update timestamp are not the same clock, so 953,222 and 953,314 are plausibly the same evening seen at two moments. That is exactly why the timestamp, not the margin, is the correction.
+- **Tests:** three added to `TestSitrepEditionNote` (both snapshots and the 5:02 p.m. timestamp present; "never off this note" and "what to CHECK" present, so the note cannot become a source; November 10, November 13 and "no recount law" retained), and `test_it_does_not_outlive_its_date` extended to 2026-11-07, 2026-11-09 and 2027-11-08. `TestNoTestAssertsAboutToday` passes — the date reaches a shell script through the `note()` helper, whose body carries no literal. Run: 8 tests, OK.
+
+---
+
 ### Maintenance — November 7, 2026 — Amended a published essay (automated)
 
 Written by `com.huffmanwrites.essay-watch` after every gate passed.

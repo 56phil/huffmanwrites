@@ -4248,10 +4248,40 @@ class TestSitrepEditionNote(unittest.TestCase):
         self.assertIn("two spaces", text)
         self.assertIn("5-7-5", text)
 
+    def test_the_mississippi_note_carries_both_snapshots_of_one_evening(self):
+        # The November 7 edition put AP's count at 5:30 p.m. ET on a 2,498-vote
+        # lead on 953,222 counted; every outlet's snapshot since — MS NOW, ABC,
+        # WAPT, WLBT, all reading AP — is 2,574 on 953,314 from an update
+        # timestamped 5:02 p.m. Two numbers for one evening is either a
+        # correction or a restatement, and the timestamp is the only thing that
+        # separates them, so the note carries both and the instruction to say
+        # which is which.
+        text = self.note("2026-11-08")
+        self.assertIn("2,498", text)
+        self.assertIn("2,574", text)
+        self.assertIn("5:02 p.m.", text)
+        self.assertIn("953,314", text)
+
+    def test_the_mississippi_note_forbids_copying_its_own_figures(self):
+        # A note that supplies numbers is a note a writer can assert from, which
+        # is the fabrication this repo's prime directive is written against. The
+        # figures are here to be CHECKED against the fetched page, and the note
+        # has to say so or it becomes a source.
+        text = self.note("2026-11-08")
+        self.assertIn("never off this note", text)
+        self.assertIn("what to CHECK", text)
+
+    def test_the_mississippi_note_keeps_the_calendar_and_the_absent_recount(self):
+        text = self.note("2026-11-08")
+        self.assertIn("November 10", text)
+        self.assertIn("November 13", text)
+        self.assertIn("no recount law", text)
+
     def test_it_does_not_outlive_its_date(self):
         # A dated case, not a flag: the day before and the day after are silent,
         # and so is the same date a year later.
-        for day in ("2026-10-31", "2026-11-02", "2027-11-01", "1984-11-01", ""):
+        for day in ("2026-10-31", "2026-11-02", "2026-11-07", "2026-11-09",
+                    "2027-11-01", "2027-11-08", "1984-11-01", ""):
             with self.subTest(day=day):
                 self.assertEqual(self.note(day).strip(), "")
 
