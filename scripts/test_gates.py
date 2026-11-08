@@ -4628,7 +4628,15 @@ class TestNoTestAssertsAboutToday(unittest.TestCase):
     # hour does not pin what the date is looked up in. What must be present is
     # the thing that redirects the read — `--section` (the watchdog), `--as-of`
     # (the splitter), or a mocked module.
-    PIN = re.compile(r"--section|--as-of|mock\.patch")
+    #
+    # A runner whose clock is replaced by an environment variable counts too,
+    # and that pattern was added on 08NOV26 rather than the flag form. The
+    # one-off `sagan-release` job reads `SAGAN_RELEASE_TODAY` because a launchd
+    # runner cannot take an argument, so its test injects the date and the guard
+    # called it unpinned — a false accusation, and the fix belongs at the gate
+    # (`test_an_injected_clock_counts_as_pinning` pins both directions). The rule
+    # is unchanged: what must be present is the thing that fixes the date.
+    PIN = re.compile(r"--section|--as-of|mock\.patch|[A-Z][A-Z0-9]*_TODAY[\"']?\s*[:=]")
     # A subprocess invocation — evidence the date is an argument to a script.
     RUNS = re.compile(r"subprocess\.run|run_runner\(|run_split\(|run_checker\(|"
                       r"run_gate\(|/bin/bash")
@@ -4786,6 +4794,28 @@ class TestNoTestAssertsAboutToday(unittest.TestCase):
                                '"--section", str(self.empty_section(tmp)), "--no-fetch"')
         self.assertTrue(self.PIN.search(fixed),
                         "adding --section must read as pinning the input")
+
+    def test_an_injected_clock_counts_as_pinning(self):
+        # Both directions, because this added a way to satisfy the guard and a
+        # widening with no guard test is how a gate stops catching anything. A
+        # runner whose clock comes from the environment is pinned; a test that
+        # merely sets some other variable — or a log path — is not.
+        pinned = ('env = dict(os.environ, HOME=str(home), SAGAN_RELEASE_TODAY=today)\n'
+                  'subprocess.run(["/bin/bash", str(self.RUNNER)], env=env)\n')
+        self.assertTrue(self.RUNS.search(pinned))
+        self.assertTrue(self.PIN.search(pinned),
+                        "an injected clock is the fixture; the guard must see it")
+        unpinned = ('env = dict(os.environ, HOME=str(home))\n'
+                    'subprocess.run(["/bin/bash", str(self.RUNNER)], env=env)\n')
+        self.assertFalse(self.PIN.search(unpinned),
+                         "a temp HOME fixes where the log goes, not what the "
+                         "script compares the date against")
+        dict_form = 'rc, log = self.run_runner({"SAGAN_RELEASE_TODAY": "2026-11-10"})\n'
+        self.assertTrue(self.PIN.search(dict_form),
+                        "the quoted dict key is the same pin as the keyword form")
+        flagless = ('done = subprocess.run(["/bin/bash", str(self.RUNNER)], text=True)\n')
+        self.assertFalse(self.PIN.search(flagless),
+                         "a bare invocation pins nothing")
 
     def test_a_date_inside_a_filename_is_not_a_fixture(self):
         # The exclusion that keeps this gate usable. `senate-race-report-
@@ -7246,6 +7276,83 @@ class TestDigestRelease(unittest.TestCase):
         # This job must never run the model or a build of its own.
         self.assertNotIn("claude ", text)
         self.assertNotIn("hugo ", text)
+
+
+# --------------------------------------------------------------------------
+class TestSaganRelease(unittest.TestCase):
+    """The one-off midnight release for the Carl Sagan birthday reflection.
+
+    A page dated to the start of its date is not published by the push that
+    carries it, and this repo's scheduled workflow fires land about four hours
+    late (measured 2026-10-17), so "release at midnight" is a claim only a job
+    that runs at the minute can keep. What is worth asserting is the schedule,
+    the date guard that keeps a Nov-9-forever fire from becoming a yearly
+    dispatch that no longer has anything to release, and that the run verifies
+    the page instead of firing blind.
+    """
+
+    RUNNER = SCRIPTS / "sagan-release-runner.sh"
+    PLIST = SCRIPTS / "com.huffmanwrites.sagan-release.plist"
+    ARTICLE = REPO / "content/posts/essays/the-candle-and-the-dark.md"
+
+    def test_the_plist_fires_two_minutes_past_midnight_on_nine_november(self):
+        import plistlib
+        plist = plistlib.loads(self.PLIST.read_bytes())
+        self.assertEqual(plist["Label"], "com.huffmanwrites.sagan-release")
+        self.assertEqual(plist["StartCalendarInterval"],
+                         {"Month": 11, "Day": 9, "Hour": 0, "Minute": 2})
+        self.assertTrue(plist["ProgramArguments"][1].endswith("scripts/sagan-release-runner.sh"))
+        self.assertIn("sagan-release.out.log", plist["StandardOutPath"])
+
+    def test_the_piece_it_releases_is_dated_to_midnight_and_published(self):
+        text = self.ARTICLE.read_text()
+        self.assertIn("date: 2026-11-09T00:00:00-06:00", text)
+        self.assertIn("draft: false", text)
+        self.assertIn("featuredOnHome: true", text)
+
+    def run_runner(self, clock):
+        home = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, home, True)
+        env = {k: v for k, v in os.environ.items() if k != "PATH"}
+        env.update(HOME=str(home), **clock)
+        done = subprocess.run(["/bin/bash", str(self.RUNNER)], env=env,
+                              capture_output=True, text=True, timeout=120)
+        log = home / "Library" / "Logs" / "sagan-release.out.log"
+        return done.returncode, (log.read_text() if log.exists() else "")
+
+    def test_a_day_it_does_not_own_exits_zero_and_says_so(self):
+        # A job that alerts about a date it will never release trains its
+        # reader to ignore the alert, which is the failure the guard prevents.
+        rc, log = self.run_runner({"SAGAN_RELEASE_TODAY": "2026-11-10"})
+        self.assertEqual(rc, 0)
+        self.assertIn("nothing to release", log)
+
+    def test_the_guard_names_one_date_because_launchd_has_no_year(self):
+        # `Month 11 / Day 9` fires every 9 November forever; without the guard
+        # the 2027 fire would dispatch a build for a piece already published.
+        self.assertIn('DUE="2026-11-09"', self.RUNNER.read_text())
+        rc, log = self.run_runner({"SAGAN_RELEASE_TODAY": "2027-11-09"})
+        self.assertEqual(rc, 0)
+        self.assertIn("nothing to release", log)
+
+    def test_it_dispatches_and_then_verifies_rather_than_firing_blind(self):
+        text = "\n".join(l for l in self.RUNNER.read_text().splitlines()
+                         if not l.lstrip().startswith("#"))
+        self.assertIn("republish-pages.sh", text)
+        self.assertIn("verify-published.py", text)
+        # Check first, dispatch second: a wake-up re-run must not spend a
+        # dispatch on a page that is already served.
+        self.assertLess(text.index("verify-published.py"), text.index("republish-pages.sh"))
+        # The commit is the head the page rode in on, never a short sha.
+        self.assertIn("git rev-parse HEAD", text)
+        self.assertNotIn("claude ", text)
+        self.assertNotIn("hugo ", text)
+
+    def test_it_alerts_on_failure_and_keeps_the_exit_code(self):
+        text = "\n".join(l for l in self.RUNNER.read_text().splitlines()
+                         if not l.lstrip().startswith("#"))
+        self.assertIn("alert-failure.sh", text)
+        self.assertIn('exit "$RC"', text)
 
 
 # --------------------------------------------------------------------------

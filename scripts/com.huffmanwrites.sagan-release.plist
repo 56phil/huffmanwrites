@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.sagan-release</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/sagan-release-runner.sh</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Month</key>
+    <integer>11</integer>
+    <key>Day</key>
+    <integer>9</integer>
+    <key>Hour</key>
+    <integer>0</integer>
+    <key>Minute</key>
+    <integer>2</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/sagan-release.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/sagan-release.err.log</string>
+</dict>
+</plist>

@@ -26,6 +26,14 @@ on:
     # 05:00 UTC = midnight Central Time (CDT). Intended for future-dated posts
     # (e.g. the 9/11 anniversary essay) dated to the start of their date.
     - cron: '0 5 * * *'
+    # 06:00 UTC = midnight Central Time (CST). The other half of the 00:00 slot,
+    # the mirror of the 05:00Z/06:00Z pair the 07:00 hour already carries: after
+    # the 2026-11-01 DST change, 05:00Z is 23:00 CT, an hour EARLY, so a page
+    # dated to the start of its date waits for the next push — and the only push
+    # between midnight and 06:00 belongs to another article's job. Added
+    # 08NOV26 for the Carl Sagan birthday reflection dated 2026-11-09T00:00.
+    # Harmless in CDT: 06:00Z is then 01:00 CT and finds the page already built.
+    - cron: '0 6 * * *'
     # 11:00 UTC = 06:00 Central Time (CDT). Intended for the Saturday digest.
     - cron: '0 11 * * *'
     # 12:00 UTC = 07:00 Central Time (CDT). Intended for a post embargoed to 07:00
