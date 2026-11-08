@@ -37,6 +37,16 @@ Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
 
 ---
 
+### Content — 08NOV26 — The *Letters* cover re-rendered: a bigger title, a fitted image, and the offsets moved right
+
+- **What Philip changed, in the book's own repo.** `/Users/prh/Developer/LaTeX/AllMyBooks/letters/cover/cover.md` moved: `front_title_scale` 1.0 → 1.15, `front_cover_image_centered` false → true and `front_image_fit` `stretch` → `fit`, and every front-matter offset off centre (`front_author_offset_x_inches`, `hc_front_author/subtitle/title_offset_x_inches`, `pb_front_author_offset_x_inches`) 0 → 0.25 in. `cover/Assets/base-fitted.png` was regenerated to match. So the art is unchanged — cream laid paper, a drift of envelopes, an oxblood wax seal stamped **H**, chancery title in red — and what moved is the typography and the crop.
+- **The site's cover is that render and nothing else.** `assets/img/books/letters.jpg` was **byte-identical to `cover/pb-cover.jpg` at the letters repo's HEAD** (`4e0330e…`, 1,500×2,400, 849,203 B), so the update is a copy of the new `pb-cover.jpg` (`d1249d7…`, same dimensions, 829,050 B) to the same path. One file is the whole story for this title: there is no `.webp` twin, no copy under `static/`, and nothing else in the corpus references it — the gallery cards and the summary page carry article heroes, not covers.
+- **`lastmod` 2026-10-12 → 2026-11-08.** The page changed, so the date it claims to have changed is now true.
+- **`image_alt` was left alone and that is the correct call.** It reads "An ascending spiral of floating ancient papyrus scrolls…", which is not this cover — it is the **hero**, `img/articles/letters-16x9.webp`, verified by opening both images: the hero is the gold-lit scroll spiral and `hero_caption` already describes it. `hero_caption` (hero) and `image_caption` (cover) remain distinct, as the frontmatter gate requires.
+- **Verified in the build, not assumed:** `hugo --gc --minify` clean; the page renders `letters_hu_40d71e371bfcc358.webp` at 800×1280, opened and confirmed to carry the larger title and the fitted crop; `check-hero-paths` OK (457 paths), `check-content-frontmatter` OK (302 files), `check-render-integrity` OK (676 pages). The raw copy the `og:image` names, `/img/books/letters.jpg`, is published from the same asset and hashes to the new file.
+
+---
+
 ### Maintenance — 08NOV26 — The SITREP published and the site served 404: a stalled build, and the re-dispatch that answers it
 
 - **What happened.** The 08NOV26 edition was filed at 06:03:57 CT and every gate passed; the push landed (`654287a`, `origin/main` verified). The delivery check then fetched `https://www.huffmanwrites.org/posts/sitrep/sitrep-2026-11-08/` twenty-four times over 360s and got 404 each time, and `alert-failure.sh` recorded the failure at 06:09:55. **The build was not slow, it was stopped:** run 42478502979 spent nine and a half minutes inside its *first* step, the `wget` of the Hugo `.deb`, with every step after it still `pending`. No timeout, no red gate — a workflow that had not failed and was not progressing, which is the state a waiting window cannot distinguish from a queued deploy.
