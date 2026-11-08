@@ -5353,7 +5353,10 @@ class TestRepublishPages(unittest.TestCase):
         return env, log
 
     def run_script(self, env, sha=None):
-        return subprocess.run(["bash", str(self.SCRIPT), sha or self.SHA],
+        # The interpreter is named absolutely because the gh-missing test empties
+        # PATH on purpose, and `subprocess.run(["bash", ...])` would then fail to
+        # find the shell before the script ever ran.
+        return subprocess.run(["/bin/bash", str(self.SCRIPT), sha or self.SHA],
                               capture_output=True, text=True, env=env)
 
     def test_a_stalled_run_gets_one_fresh_build(self):
@@ -5435,13 +5438,18 @@ class TestRepublishPages(unittest.TestCase):
             self.assertFalse(log.exists(), "a short sha must never reach gh")
 
     def test_gh_missing_is_three_not_success(self):
+        # An empty PATH is the only portable way into this branch: on macOS `gh`
+        # lives in /opt/homebrew/bin and a PATH of /usr/bin:/bin makes it absent,
+        # but GitHub's runner ships `gh` in /usr/bin, so that PATH found the real
+        # CLI and the test asserted the wrong sentence — caught by CI on 08NOV26,
+        # which is the failure the runner exists to catch.
         import tempfile
         with tempfile.TemporaryDirectory() as d:
             env = dict(os.environ)
-            env["PATH"] = f"{d}:/usr/bin:/bin"
+            env["PATH"] = d
             env.pop("GH_LOG", None)
             out = self.run_script(env)
-            self.assertEqual(out.returncode, 3)
+            self.assertEqual(out.returncode, 3, out.stdout)
             self.assertIn("gh is not on PATH", out.stdout)
 
     def test_the_script_is_valid_bash(self):
