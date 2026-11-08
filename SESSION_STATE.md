@@ -37,6 +37,16 @@ Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
 
 ---
 
+### Content — 08NOV26 10:15 — *Letters* cover re-rendered again: the art now fills the trim
+
+- **Philip re-rendered the cover a second time on 08NOV26**, about two hours after the first refresh above, so the entry above records a state that lasted a morning. The change since it: `front_image_fit` `fit` → **`cover`**, which scales the envelope photograph until it covers the 5×8 trim and crops the overflow. The visible effect is the one worth naming — the envelopes are larger and the wax seal is clipped by the right edge, where the fitted render had shown it whole with a margin. `front_title_scale` was already 1.15 and stays there; the offsets stay 0.25 in.
+- **The rest of the diff is the hardcover**, and the site does not use it: `binding_type` `pb` → `hc`; `hc_front_title_scale` 1.5 → 1.6; the three `hc_front_*_center_x` flags true → false with `hc_front_*_offset_x_inches` now 0.25 in, so the case front is left-aligned off centre like the paperback front; `hc_back_quote_offset_y_inches` 0.333 → 0.25. `Assets/base-fitted.png` was regenerated (5.63 MB → 8.36 MB) and all five exports rebuilt.
+- **The site still takes `pb-cover.jpg`, and the choice is now a decision rather than a copy of the obvious file.** `hc-cover.jpg` is the full case **wrap** — 2,036×2,771, back panel and spine included — so it is not a cover image and cannot be displayed as one. `kindle-cover.jpg` (1,600×2,400) and `pb-cover.jpg` (1,500×2,400) are both single faces; `pb-cover.jpg` is the one the site has always carried, at the dimensions it has always carried, so it stays. Installed `cfc4ca9…`, 832,100 B, 1,500×2,400.
+- **`lastmod` needed no change this time** — it moved to `2026-11-08` for the first refresh and is still today. The frontmatter gate is satisfied by the file, not by an edit.
+- **Verified in the build, not assumed:** `hugo --gc --minify` clean; the page renders `letters_hu_a2ccf4930adc4080.webp` at 800×1280, opened and confirmed against the new render (larger envelopes, seal clipped); `check-hero-paths` OK (457 paths), `check-content-frontmatter` OK (302 files), `check-render-integrity` OK (676 pages); the raw `/img/books/letters.jpg` the `og:image` names is published from the same asset and hashes to `cfc4ca9…`.
+
+---
+
 ### Content — 08NOV26 — The *Letters* cover re-rendered: a bigger title, a fitted image, and the offsets moved right
 
 - **What Philip changed, in the book's own repo.** `/Users/prh/Developer/LaTeX/AllMyBooks/letters/cover/cover.md` moved: `front_title_scale` 1.0 → 1.15, `front_cover_image_centered` false → true and `front_image_fit` `stretch` → `fit`, and every front-matter offset off centre (`front_author_offset_x_inches`, `hc_front_author/subtitle/title_offset_x_inches`, `pb_front_author_offset_x_inches`) 0 → 0.25 in. `cover/Assets/base-fitted.png` was regenerated to match. So the art is unchanged — cream laid paper, a drift of envelopes, an oxblood wax seal stamped **H**, chancery title in red — and what moved is the typography and the crop.
