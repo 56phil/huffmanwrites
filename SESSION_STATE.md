@@ -42,6 +42,18 @@
 
 ---
 
+### Maintenance — November 9, 2026 — Published the weekly-satire report (automated)
+
+Auto-published by `com.huffmanwrites.weekly-satire` after every gate passed.
+- **Published** `content/posts/essays/weekly-satire-2026-11-09.md` — "Weekly Satire: The Arch That Is Not on View, November 9, 2026", 860 words whole-file. `draft: false`, `featuredOnHome: true`, the series hero plate.
+- **The form, and the week's subject:** written to the brief in `skills/weekly-satire.md`; the form is chosen at random from the four the skill lists, the subject is a news item from the seven days before publication, and every factual claim is sourced from a page the writer fetched. The recency gate reads the `## Sources` dates and aborts the push when fewer than two fall inside that window.
+- **Every quotation is verbatim from its fetched source**, and the runner aborts the push on a dead link, a placeholder anchor, or a quoted name detail that appears on none of the pages the citing line links. This is the one writing job whose material is selected rather than collected by a script, so the skill's fetch-before-cite rules are the primary control.
+- **Verified by the runner before the push, not claimed by the writer.** Two builds OK (`--gc --minify` for what deploys, and `--gc --minify --buildDrafts --destination <tmp>` for the file just written — the production build excludes `draft: true` and so cannot see it); every gate OK, including the online link sweep (`check-links.py --online --titles`, which fetches each cited URL and compares the page title against the citation's own link text) and the frontmatter gate that requires `draft: false` and `featuredOnHome: true`. A failure in any of those aborts the push rather than publishing anyway.
+- **Delivery is verified, not assumed.** After the push is confirmed the runner fetches the piece at its own URL and requires the page's own `<title>` to carry the article's `title` (`scripts/verify-published.py`, the rule `sitrep-watchdog.py` applies from the outside), retrying for a bounded window because a 404 is expected until the deploy lands. A settled absence then asks GitHub for a fresh build of the same commit (`scripts/republish-pages.sh`), because a waiting window cannot rescue a run that has stopped — on 08NOV26 one sat in its first step for nine and a half minutes — and looks again. A second settled absence, or a build that already failed, raises the shared alert and fails the run: the article is on `main` and no reader has it. The outcome is in `/Users/prh/Library/Logs/weekly-satire.out.log`.
+- **SimpleBrain mirror** runs immediately after this push: raw copy, `wiki/articles/` entry, Recent Highlights line, archive move, committed and pushed. The runner verifies all five and alerts if any did not happen; the outcome is in `/Users/prh/Library/Logs/weekly-satire.out.log`.
+
+---
+
 ### Maintenance — November 9, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
