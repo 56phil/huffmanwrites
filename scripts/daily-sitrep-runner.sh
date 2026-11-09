@@ -224,7 +224,7 @@ DETAIL="$(mktemp "${TMPDIR:-/tmp}/sitrep-detail-XXXXXX")"
 TITLE_LINE="$(grep -m1 '^title: ' "$ARTICLE" | sed 's/^title: *//' | tr -d '"')"
 publish_article "$ARTICLE" "$TITLE_LINE" "$DETAIL"
 rm -f "$DETAIL"
-publish_simplebrain "$ARTICLE" "/Users/prh/Developer/SimpleBrain" "sitrep"
+# The SimpleBrain mirror runs inside publish_article, before the delivery check.
 
 echo "$(stamp): run finished (exit 0)" >> "$OUT_LOG"
 exit 0

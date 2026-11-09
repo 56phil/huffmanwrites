@@ -101,8 +101,8 @@ page, invisible to a status code because the URL returns 200. Scope it with
 ## 8. The publish tail lives once, in `scripts/publish-report.sh`
 
 Five publishing runners share it: preflight guard, SESSION_STATE entry, commit,
-push, push verification, delivery verification, and the SimpleBrain mirror. A
-runner supplies only what is specific to its series. Three things a new runner
+push, push verification, the SimpleBrain mirror, and delivery verification. A
+runner supplies only what is specific to its series. Four things a new runner
 must get right:
 
 - **Bind `JOB` before sourcing** (the library expands it under `set -u`). The
@@ -111,6 +111,15 @@ must get right:
 - **`REPORT_DRY_RUN=1` exercises everything but the commit;
   `REPORT_SKIP_SIMPLEBRAIN=1` skips only the mirror.** The Chiefs job's historical
   `CHIEFS_DRY_RUN` and `CHIEFS_SKIP_SIMPLEBRAIN` names still work.
+- **Do not call the mirror from the runner.** `publish_article` calls
+  `publish_simplebrain` itself, immediately after the push is verified and before
+  the delivery check, and derives the content section from the article path — so
+  there is no third argument to pass and no second call to add. Until 09NOV26 the
+  runners called it last, which meant a settled delivery failure skipped the vault
+  copy: three times in four days (one mirrored by hand, one unmirrored for ~33
+  hours until the Monday gate, one hand-published essay that never entered the
+  tail). A piece published by hand gets `scripts/mirror-post.sh <path>` instead,
+  which runs the same function and exits nonzero if the vault did not get it.
 - **The push landing is not the same as the piece being served.** After the push
   is confirmed, the tail fetches the article at its own URL
   (`scripts/verify-published.py`) and requires the page's own `<title>` to carry

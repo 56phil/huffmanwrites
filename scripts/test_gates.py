@@ -5315,6 +5315,54 @@ class TestPublishLibrary(unittest.TestCase):
                                 text.find("claude -p"),
                                 f"{name} probes Ollama after the writer starts")
 
+    def test_the_mirror_runs_before_the_delivery_check(self):
+        # The ordering is the fix, so the ordering is what is asserted. The
+        # delivery check `exit`s on a settled absence; while the mirror lived
+        # after publish_article returned, that exit skipped it. Measured three
+        # times: 06NOV26 (mirrored by hand six minutes later), 08NOV26 (unmirrored
+        # for ~33 hours until the Monday gate), 09NOV26 (a hand-published essay
+        # never entered the tail at all).
+        body = self.lib[self.lib.find("publish_article() {"):]
+        body = body[:body.find("\npublish_simplebrain() {")]
+        self.assertIn('publish_simplebrain "$article"', body,
+                      "publish_article no longer calls the mirror")
+        self.assertLess(body.find('publish_simplebrain "$article"'),
+                        body.find('"$REPO/scripts/verify-published.py" --article'),
+                        "the mirror runs after the delivery check again, so a "
+                        "slow deploy can skip the vault copy")
+        # A mirror failure must not become a publish failure: the article is live
+        # and correct, and the mirror alerts on its own.
+        self.assertIn('publish_simplebrain "$article" "${SIMPLEBRAIN_ROOT:-$HOME/SimpleBrain}" || true',
+                      body)
+        # And the verdict is still returned, for the hand-run command.
+        tail = self.lib[self.lib.find("publish_simplebrain() {"):]
+        self.assertIn('return "$sb_fail"', tail,
+                      "the mirror swallows its verdict; mirror-post.sh would then "
+                      "report success on a vault that never got the piece")
+
+    def test_the_mirror_derives_the_section_instead_of_taking_it(self):
+        # Threading a third argument through six callers is how the subdir comes to
+        # disagree with the path the caller already states. Derived, it cannot.
+        tail = self.lib[self.lib.find("publish_simplebrain() {"):]
+        self.assertIn('subdir="$(basename "$(dirname "$article")")"', tail)
+        self.assertIn('content/posts/*/*.md)', tail,
+                      "an article outside content/posts/<section>/ is refused, "
+                      "not mirrored into an invented folder")
+        publishers = (
+            "chiefs-weekly-report-runner.sh",
+            "daily-sitrep-runner.sh",
+            "docket-weekly-report-runner.sh",
+            "musk-money-report-runner.sh",
+            "senate-report-runner.sh",
+            "weekly-satire-runner.sh",
+        )
+        for name in publishers:
+            text = (SCRIPTS / name).read_text(encoding="utf-8")
+            with self.subTest(runner=name):
+                self.assertNotIn("publish_simplebrain", text,
+                                 f"{name} calls the mirror itself as well, so the "
+                                 f"vault is mirrored twice per publish")
+
     def test_the_mirror_session_resolves_its_own_model_auth(self):
         # The mirror's `claude` call needs ANTHROPIC_API_KEY; without it the
         # session falls back to a dead OAuth token and prints "Failed to
@@ -5338,6 +5386,72 @@ class TestPublishLibrary(unittest.TestCase):
                       "publish_simplebrain never resolves model auth")
         self.assertLess(body.find("report_model_env"), body.find("claude -p"),
                         "the mirror resolves auth after starting the session")
+
+
+# --------------------------------------------------------------------------
+class TestMirrorPost(unittest.TestCase):
+    """`scripts/mirror-post.sh` — the hand-run mirror for a piece no runner wrote.
+
+    Exists because the manual flow (raw copy, wiki entry, highlights line, archive
+    move, commit, push) is a five-step memory, and on 09NOV26 it was the step that
+    did not happen: the Sagan reflection published at midnight and the vault did
+    not have it until the Monday vault-currency gate named the file. The command
+    must therefore run the SAME function the tail runs — a second implementation
+    would drift from the tail the way the gate lists drifted before they were
+    consolidated.
+    """
+
+    def setUp(self):
+        self.path = SCRIPTS / "mirror-post.sh"
+        self.text = self.path.read_text(encoding="utf-8")
+        self.code = "\n".join(ln for ln in self.text.splitlines()
+                             if not ln.lstrip().startswith("#"))
+
+    def test_it_runs_the_shared_mirror_rather_than_its_own(self):
+        self.assertIn('publish_simplebrain "$article"', self.code)
+        self.assertIn('scripts/publish-report.sh', self.code)
+        self.assertNotIn("cp ", self.code,
+                         "mirror-post.sh copies the raw file itself instead of "
+                         "calling the verified mirror")
+        self.assertNotIn("wiki/articles", self.code,
+                         "mirror-post.sh writes the wiki entry itself")
+
+    def test_the_repo_path_is_derived_from_the_script_location(self):
+        # In a worktree or in CI the checkout is not where this script was written.
+        self.assertIn('REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"',
+                      self.code)
+        self.assertNotIn("/Users/", self.code)
+
+    def test_it_refuses_to_mirror_what_the_site_does_not_serve(self):
+        # The vault records what a reader can open. An article on `main` that is
+        # still a 404 (a stalled deploy) must not be mirrored as though published,
+        # and an uncommitted edit would put text in the vault the site never served.
+        self.assertIn("verify-published.py", self.code)
+        self.assertLess(self.code.find("verify-published.py"),
+                        self.code.find('publish_simplebrain "$article"'),
+                        "the page is not checked before the mirror runs")
+        self.assertIn("ls-files --error-unmatch", self.code)
+        self.assertIn("status --porcelain --", self.code)
+        self.assertIn('content/posts/*/*.md)', self.code,
+                      "an article outside content/posts/<section>/ must be refused")
+
+    def test_its_exit_code_is_the_mirrors_verdict(self):
+        # The tail discards the verdict with `|| true`; a hand run must not. An
+        # exit 0 on a vault that never received the piece is the silent failure
+        # this whole change exists to remove.
+        self.assertIn('publish_simplebrain "$article" '
+                      '"${SIMPLEBRAIN_ROOT:-$HOME/SimpleBrain}" || sb_rc=$?',
+                      self.code)
+        self.assertIn('exit "$sb_rc"', self.code)
+
+    def test_the_job_label_is_bound_before_the_library_loads(self):
+        # The library refuses to load without JOB under `set -u`; binding it after
+        # the source is the unbound-variable death the docket and senate runners
+        # produced on their first real publish.
+        self.assertLess(self.code.find('JOB="mirror-post"'),
+                        self.code.find("publish-report.sh"),
+                        "JOB is bound after the library is sourced")
+        self.assertIn("set -euo pipefail", self.code)
 
 
 # --------------------------------------------------------------------------
@@ -7781,7 +7895,9 @@ class TestMuskMoneyReport(unittest.TestCase):
         self.assertIn('--file "$article" --online --titles', lib)
         self.assertIn("publish_dry_run_stop", self.runner)
         self.assertIn("publish_article", self.runner)
-        self.assertIn("publish_simplebrain", self.runner)
+        # The mirror is publish_article's job now, not the runner's: calling it in
+        # both places mirrors the same piece twice (09NOV26).
+        self.assertNotIn("publish_simplebrain", self.runner)
 
     def test_the_plate_exists_in_both_homes(self):
         # The layouts resolve one copy through resources.Get (assets/) and the

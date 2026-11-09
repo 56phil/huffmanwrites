@@ -47,7 +47,6 @@ export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/us
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL="$REPO/skills/chiefs-weekly-report.md"
 COLLECTOR="$REPO/scripts/chiefs-report.py"
-SB="/Users/prh/Developer/SimpleBrain"
 LOG_DIR="$HOME/Library/Logs"
 OUT_LOG="$LOG_DIR/chiefs-weekly-report.out.log"
 ERR_LOG="$LOG_DIR/chiefs-weekly-report.err.log"
@@ -290,12 +289,11 @@ publish_article "$ARTICLE" "$TITLE_LINE" "$CHIEFS_DETAIL"
 rm -f "$CHIEFS_DETAIL"
 
 # ---------------------------------------------------------------------------
-# SimpleBrain, per the post-commit flow in CLAUDE.md, run and verified by the
-# shared tail. A SimpleBrain failure does NOT fail the site publish: the article
-# is already live, and this is the secondary mirror. It is alerted so it is
-# visible rather than silent.
+# SimpleBrain, per the post-commit flow in CLAUDE.md. The mirror now runs INSIDE
+# publish_article, immediately after the push is verified and before the delivery
+# check, so a slow deploy cannot skip it (09NOV26; see the comment there). A
+# SimpleBrain failure still does not fail the site publish.
 # ---------------------------------------------------------------------------
-publish_simplebrain "$ARTICLE" "$SB" "sports"
 
 echo "$(stamp): run finished (exit 0)" >> "$OUT_LOG"
 exit 0

@@ -326,22 +326,34 @@ publish_preflight() {
 # did not produce. Every claim in the entry below is a line from this log.
 #
 # **Except the SimpleBrain line, and the exception is deliberate.** The mirror
-# runs AFTER this function, because it is the last thing the runner does, so at
-# the moment the entry is written the runner has not yet observed whether it
-# worked. The first version of this line asserted "SimpleBrain synced … committed
-# and pushed" unconditionally, which made the entry predict rather than report —
-# a claim of exactly the kind this function exists to prevent, in the one place
-# the reader is told to trust. It was caught on 2026-10-07 by the SimpleBrain
-# agent itself, which read the entry and noted that the step it described had not
-# yet run. Ordering the mirror first would let the entry report it, but that path
-# cannot be exercised by a dry run and changing it would be first tested in
-# production. So the line states what the runner does, names where the outcome
-# is, and asserts nothing it has not seen.
+# runs after the entry has been written and committed, so at the moment the entry
+# is written the runner has not yet observed whether it worked. The first version
+# of this line asserted "SimpleBrain synced … committed and pushed"
+# unconditionally, which made the entry predict rather than report — a claim of
+# exactly the kind this function exists to prevent, in the one place the reader is
+# told to trust. It was caught on 2026-10-07 by the SimpleBrain agent itself,
+# which read the entry and noted that the step it described had not yet run. So
+# the line states what the runner does, names where the outcome is, and asserts
+# nothing it has not seen. The entry's wording therefore does not depend on where
+# in the tail the mirror sits, which is what let its position change on 09NOV26
+# (below) without touching a word of it.
 #
-# The delivery check (`scripts/verify-published.py`, added 2026-10-08) runs after
-# this entry has been committed, for the same structural reason, and is written
-# in the same shape: it states what the runner does and names the log, so the
-# entry never has to be corrected to match an outcome it could not have seen.
+# **The mirror moved ahead of the delivery check on 2026-11-09, and the reason is
+# measured.** It used to be the runners' last step, after `publish_article`
+# returned, which meant a settled delivery failure — `exit "$live_rc"` inside
+# this function — skipped it. A vault copy does not depend on the deploy: it is
+# made from a local file. Three instances in four days: on 06NOV26 the SITREP run
+# failed delivery at 06:14 and the entry was mirrored by hand at 06:19; on 08NOV26
+# the same failure left the edition unmirrored until the Monday vault-currency
+# gate named it ~33 hours later; on 09NOV26 a hand-published essay skipped the
+# manual flow entirely. So the mirror now runs immediately after the push is
+# verified and before the delivery check, which is also where the entry's own
+# sentence ("runs immediately after this push") already claimed it was.
+#
+# The delivery check (`scripts/verify-published.py`, added 2026-10-08) therefore
+# runs last, and it is written in the same shape: it states what the runner does
+# and names the log, so the entry never has to be corrected to match an outcome it
+# could not have seen.
 #
 # `$3` is a file of extra `- **…**` bullet lines specific to the series; the
 # standard frame is written once here rather than three times.
@@ -441,6 +453,20 @@ from those results." >> "$OUT_LOG" 2>> "$ERR_LOG"; then
   fi
   echo "$(stamp): push verified — origin/main is $local_sha" >> "$OUT_LOG"
 
+  # The mirror runs HERE, before the delivery check, and on 2026-11-09 that
+  # ordering became load-bearing. A vault copy is made from a local file and does
+  # not depend on the deploy, so a slow or stalled Pages build must not be able to
+  # cost it. It could before: the delivery check `exit`s on a settled absence, and
+  # the mirror used to be the runner's last step, after this function returned. On
+  # 06NOV26 the entry was mirrored by hand six minutes after that exit; on 08NOV26
+  # nothing mirrored it for ~33 hours until the Monday vault-currency gate named
+  # the file. The mirror alerts and returns its own verdict, and `|| true` keeps
+  # that verdict out of this function's exit status: the delivery check below is
+  # what fails a publish, and a vault that missed a piece must never turn a live,
+  # correct article into a failed one. A hand run wants the opposite, which is why
+  # `scripts/mirror-post.sh` reads the exit code this line discards.
+  publish_simplebrain "$article" "${SIMPLEBRAIN_ROOT:-$HOME/SimpleBrain}" || true
+
   # The push landed; that is not the same as delivered. `git push` reaching
   # origin says the commit is on `main` and says nothing about whether the Pages
   # workflow built it, and on 2026-10-08 three consecutive runs reached `main`
@@ -497,17 +523,33 @@ from those results." >> "$OUT_LOG" 2>> "$ERR_LOG"; then
 # remote.
 #
 # $1 article (path relative to REPO) · $2 SimpleBrain root
-# $3 content subdir under the section root (e.g. essays, sports)
+#
+# The content subdirectory is DERIVED from the article path rather than passed,
+# on 2026-11-09 and for one reason: the mirror is now called from
+# `publish_article`, so a third argument would have had to be threaded through
+# every caller and kept in step with a path they already state. Every series here
+# publishes to `content/posts/<section>/<name>.md`, so the second-to-last path
+# component is the section the raw copy belongs under. A path of any other shape
+# is refused with a sentence rather than being mirrored somewhere invented.
 #
 # A SimpleBrain failure does NOT fail the site publish: the article is already
 # live and correct, and this is the secondary mirror. It is alerted so it is
 # visible rather than silent.
 # ---------------------------------------------------------------------------
 publish_simplebrain() {
-  local article="$1" sb="$2" subdir="$3"
-  local slug sb_rc sb_fail=0
+  local article="$1" sb="$2"
+  local subdir slug sb_rc sb_fail=0
 
   slug="$(basename "$article" .md)"
+  case "$article" in
+    content/posts/*/*.md) subdir="$(basename "$(dirname "$article")")" ;;
+    *)
+      echo "$(stamp): SimpleBrain FAILED — '$article' is not content/posts/<section>/<name>.md, so the mirror cannot say where the raw copy belongs" >> "$OUT_LOG"
+      "$REPO/scripts/alert-failure.sh" "$JOB" 1 \
+        "SimpleBrain sync skipped: '$article' is not content/posts/<section>/<name>.md. The site publish stands." || true
+      return 1
+      ;;
+  esac
 
   if report_skip_simplebrain; then
     echo "$(stamp): SimpleBrain sync skipped (REPORT_SKIP_SIMPLEBRAIN=1)" >> "$OUT_LOG"
@@ -562,7 +604,11 @@ publish_simplebrain() {
     "$REPO/scripts/alert-failure.sh" "$JOB" 1 \
       "SimpleBrain sync incomplete; the site publish succeeded. See $OUT_LOG" || true
   fi
-  return 0
+  # The verdict is RETURNED, not swallowed. The publishing tail calls this with
+  # `|| true` because the site publish stands either way, while a hand-run
+  # `scripts/mirror-post.sh` needs a nonzero exit or it reports success on a vault
+  # that never received the piece. Both callers, one meaning.
+  return "$sb_fail"
 }
 
 # ---------------------------------------------------------------------------
