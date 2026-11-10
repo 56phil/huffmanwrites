@@ -7512,6 +7512,93 @@ class TestSaganRelease(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+class TestVeteransRelease(unittest.TestCase):
+    """The one-off 1100Z release for the Veterans Day reflection.
+
+    The piece is dated 2026-11-11T05:00:00-06:00, which is 1100Z. Hugo builds with
+    `buildFuture: false`, and no cron in the workflow covers that minute: the next
+    fire after it is `0 11 * * *`, which IS 1100Z but lands hours late when it
+    runs, and the next push is the SITREP about an hour after. So the release is a
+    job that runs at the minute, and what is worth asserting is the schedule, the
+    date guard (launchd has no Year key), and that the run proves the page rather
+    than firing blind. It is also the first release of its kind to hand the piece
+    to `mirror-post.sh`, because a hand-published piece never enters
+    `publish_article`, which is where the vault mirror lives.
+    """
+
+    RUNNER = SCRIPTS / "veterans-release-runner.sh"
+    PLIST = SCRIPTS / "com.huffmanwrites.veterans-release.plist"
+    ARTICLE = REPO / "content/posts/essays/the-eleventh-hour.md"
+
+    def test_the_plist_fires_at_the_release_minute(self):
+        import plistlib
+        plist = plistlib.loads(self.PLIST.read_bytes())
+        self.assertEqual(plist["Label"], "com.huffmanwrites.veterans-release")
+        self.assertEqual(plist["StartCalendarInterval"],
+                         {"Month": 11, "Day": 11, "Hour": 5, "Minute": 2})
+        self.assertTrue(plist["ProgramArguments"][1].endswith(
+            "scripts/veterans-release-runner.sh"))
+        self.assertIn("veterans-release.out.log", plist["StandardOutPath"])
+
+    def test_the_piece_is_dated_to_1100z_on_the_eleventh(self):
+        # 1100Z in November is 05:00 CST. A -05:00 offset here would name 06:00
+        # and make the page eligible an hour after the release it is asked for.
+        text = self.ARTICLE.read_text()
+        self.assertIn("date: 2026-11-11T05:00:00-06:00", text)
+        self.assertIn("lastmod: 2026-11-11T05:00:00-06:00", text)
+        self.assertIn("draft: false", text)
+        self.assertIn("featuredOnHome: true", text)
+
+    def run_runner(self, clock):
+        home = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, home, True)
+        env = {k: v for k, v in os.environ.items() if k != "PATH"}
+        env.update(HOME=str(home), **clock)
+        done = subprocess.run(["/bin/bash", str(self.RUNNER)], env=env,
+                              capture_output=True, text=True, timeout=120)
+        log = home / "Library" / "Logs" / "veterans-release.out.log"
+        return done.returncode, (log.read_text() if log.exists() else "")
+
+    def test_a_day_it_does_not_own_exits_zero_and_says_so(self):
+        rc, log = self.run_runner({"VETERANS_RELEASE_TODAY": "2026-11-12"})
+        self.assertEqual(rc, 0)
+        self.assertIn("nothing to release", log)
+
+    def test_the_guard_names_one_date_because_launchd_has_no_year(self):
+        # `Month 11 / Day 11` fires every 11 November forever; without the guard
+        # the 2027 fire would dispatch a build for a piece long since published.
+        self.assertIn('DUE="2026-11-11"', self.RUNNER.read_text())
+        rc, log = self.run_runner({"VETERANS_RELEASE_TODAY": "2027-11-11"})
+        self.assertEqual(rc, 0)
+        self.assertIn("nothing to release", log)
+
+    def test_it_verifies_then_dispatches_then_verifies(self):
+        text = "\n".join(l for l in self.RUNNER.read_text().splitlines()
+                         if not l.lstrip().startswith("#"))
+        self.assertIn("republish-pages.sh", text)
+        self.assertIn("verify-published.py", text)
+        # A wake-up re-run must not spend a dispatch on a page already served.
+        self.assertLess(text.index("verify-published.py"),
+                        text.index("republish-pages.sh"))
+        # The commit is the head the page rode in on, never a short sha.
+        self.assertIn("git rev-parse HEAD", text)
+        self.assertNotIn("claude ", text)
+        self.assertNotIn("hugo ", text)
+
+    def test_it_hands_the_piece_to_the_vault_mirror(self):
+        # A hand-published piece never enters publish_article, so nothing mirrors
+        # it. That is what left the Sagan reflection unmirrored on 2026-11-09.
+        text = "\n".join(l for l in self.RUNNER.read_text().splitlines()
+                         if not l.lstrip().startswith("#"))
+        self.assertIn('mirror-post.sh" "$ARTICLE"', text)
+        self.assertGreater(text.index("mirror-post.sh"), text.index("republish-pages.sh"),
+                           "the mirror must run after the page is dispatched")
+        # And a mirror failure must not turn a live page into a failed release.
+        self.assertIn("MIRROR_RC", text)
+        self.assertIn('log "--- veterans-release done (exit 0)"', text)
+
+
+# --------------------------------------------------------------------------
 class TestNordStreamWatch(unittest.TestCase):
     """The watcher for the two events that would change a published essay.
 
