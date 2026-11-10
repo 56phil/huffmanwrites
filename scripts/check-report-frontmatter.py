@@ -94,6 +94,55 @@ TEXT_ANCHOR = re.compile(
 # citation never names the same work twice in a row.
 DOUBLED_WORK_TITLE = re.compile(r"\*([^*\[\]]+?)\[\*\1")
 
+# A date inside a report's own title: "SITREP: November 10, 2026", "Weekly Satire:
+# The Arch That Is Not on View, November 9, 2026". The shape is the house one —
+# month name, day, four-digit year — because every series titles its installments
+# that way and a numeric form would not survive a title's own punctuation.
+TITLE_DATE = re.compile(
+    r"\b(January|February|March|April|May|June|July|August|September|October|"
+    r"November|December)\s+(\d{1,2}),\s*(\d{4})\b"
+)
+
+
+def title_date_problems(title: str, stamp: "datetime") -> "list[str]":
+    """A title that names a date must be dated to that date.
+
+    Why this exists, measured on 2026-09-06 and found on 2026-11-10. The Senate
+    Race Report for that date was written on 2 September, titled for the 6th, and
+    then re-dated to the day it was written — `84df0a7`, whose message reads "date
+    Senate Race Report to publish day so Hugo renders it" while the diff sets
+    `2026-09-02T00:00Z`. The page went live on the 2nd under a title claiming the
+    6th, with a week count ("nine weeks out") belonging to the 2nd, and it served
+    that way for four days until the scheduled run rewrote the file. Every gate
+    passed: the date was not ahead of the clock, which is the only date rule there
+    was, and nothing compared the title to the date.
+
+    The rule fires only when the title carries a date, so a report titled without
+    one is unaffected; it is applied to series installments, where the house title
+    shape makes the comparison meaningful.
+    """
+    hit = TITLE_DATE.search(title or "")
+    if not hit:
+        return []
+    month, day, year = hit.group(1), int(hit.group(2)), int(hit.group(3))
+    try:
+        named = datetime.strptime(f"{month} {day} {year}", "%B %d %Y").date()
+    except ValueError:
+        return []
+    dated: "datetime" = stamp
+    if dated.tzinfo is None:
+        dated = dated.replace(tzinfo=CT)
+    actual = dated.astimezone(CT).date()
+    if named == actual:
+        return []
+    return [
+        f"the title names {named.strftime('%B')} {named.day}, {named.year} but "
+        f"`date:` is {actual.isoformat()} in Central time — the title and the "
+        f"`date:` must name the same day, which is how the September 6, 2026 "
+        f"Senate report went live four days early under a title for the 6th with "
+        f"a week count belonging to the day it was written"
+    ]
+
 
 def malformed_citation_problems(body: str) -> "list[str]":
     """Citations a rewrite mangled, independent of frontmatter validity."""
@@ -139,7 +188,7 @@ def field(front: str, name: str) -> "str | None":
 
 def validate(path: "Path | str", hero_plate: "str | None" = None,
              now: "datetime | None" = None, slack_seconds: int = 300,
-             future_ok: bool = False) -> "list[str]":
+             future_ok: bool = False, title_date: bool = False) -> "list[str]":
     """Every reason this file must not be published. Empty list means publish.
 
     `hero_plate` pins the series plate when a series uses one fixed pair of
@@ -148,6 +197,11 @@ def validate(path: "Path | str", hero_plate: "str | None" = None,
     verbatim; this is what makes "verbatim" checkable rather than trusted, and a
     series that quietly drifts to a different plate loses the visual identity
     the plate exists to hold.
+
+    `title_date` applies the title-versus-date rule: a report whose title names a
+    date must be dated to that date in Central time. It is passed by `--file` and
+    `--corpus`, both of which cover series installments, whose house title shape
+    is what makes the comparison meaningful — see `title_date_problems()`.
 
     `future_ok` is the scheduling mode: it drops the "date ahead of the clock"
     rule for a file that is *deliberately* dated to an hour that has not arrived,
@@ -240,6 +294,11 @@ def validate(path: "Path | str", hero_plate: "str | None" = None,
                     f"({reference.isoformat(timespec='seconds')}); buildFuture "
                     f"would silently skip the page"
                 )
+            # A deliberately future date is legitimate in corpus mode; a title
+            # naming a DIFFERENT day never is, in either mode.
+            if title_date:
+                problems.extend(
+                    title_date_problems(field(front, "title") or "", stamp))
     return problems
 
 
@@ -401,7 +460,7 @@ def main() -> int:
             # 07:00 embargo). The date rule stays live in --file mode and in the
             # runners, where "today" is the only date a just-written report may
             # carry. See validate()'s `future_ok` note.
-            problems = validate(path, future_ok=True)
+            problems = validate(path, future_ok=True, title_date=True)
             if problems:
                 failures += 1
                 print(f"  {path.relative_to(REPO)}:", file=sys.stderr)
@@ -420,7 +479,7 @@ def main() -> int:
     if not args.file:
         ap.error("one of --file or --corpus is required")
 
-    problems = validate(args.file, hero_plate=args.hero_plate)
+    problems = validate(args.file, hero_plate=args.hero_plate, title_date=True)
     if problems:
         print(f"report frontmatter: NOT PUBLISHABLE — {len(problems)} problem(s) "
               f"in {args.file}", file=sys.stderr)

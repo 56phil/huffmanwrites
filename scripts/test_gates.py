@@ -2244,6 +2244,48 @@ class TestReportFrontmatterGate(unittest.TestCase):
         p2 = self.write(self.good(hero_mobile='"img/articles/also-missing_4x5.webp"'))
         self.assertTrue(any("does not exist" in m for m in crf.validate(p2, now=self.now)))
 
+    def test_a_title_naming_another_day_is_caught(self):
+        # The defect, exactly as it shipped on 2026-09-02 in `84df0a7`: a report
+        # titled for September 6, dated to the day it was written. Every rule that
+        # existed passed it — the date was not ahead of the clock — and the page
+        # served under a title for a different day until the scheduled run rewrote
+        # it four days later. The gate takes `title_date=True` from both `--file`
+        # and `--corpus`; without the flag the fixture is clean, which is what the
+        # rule adds.
+        p = self.write(self.good(
+            title='"Senate Race Report: September 6, 2026"',
+            date="2026-09-02T00:00:00Z",
+            lastmod="2026-09-02T00:00:00Z"))
+        problems = crf.validate(p, now=self.now, title_date=True)
+        self.assertTrue(any("title names September 6, 2026" in m for m in problems),
+                        problems)
+        # 00:00Z on the 2nd is the 1st in Central time, and the message says so.
+        self.assertTrue(any("2026-09-01 in Central time" in m for m in problems),
+                        problems)
+        self.assertEqual(crf.validate(p, now=self.now, title_date=False), [],
+                         "the fixture is valid on every other rule, so the flag "
+                         "is the only difference between passing and failing")
+
+    def test_a_title_that_matches_its_date_passes_and_an_undated_one_is_silent(self):
+        # The corpus shape, and the shape a report without a dated title takes.
+        # Only a title that carries a date can mismatch; a rule that invented a
+        # requirement for one would fail every report that does not use the house
+        # title form.
+        p = self.write(self.good())
+        self.assertEqual(crf.validate(p, now=self.now, title_date=True), [])
+        p2 = self.write(self.good(title='"The Tally"'))
+        self.assertEqual(crf.validate(p2, now=self.now, title_date=True), [])
+
+    def test_the_published_corpus_has_no_title_date_mismatch(self):
+        # The rule ships strict, with no baseline file, because the corpus already
+        # satisfies it: 62 installments and 0 mismatches measured on 2026-11-10.
+        # If this ever fails, the answer is the artifact, not a baseline.
+        for path in crf.series_installments():
+            with self.subTest(installment=path.name):
+                self.assertEqual(
+                    [p for p in crf.validate(path, future_ok=True, title_date=True)
+                     if "title names" in p], [])
+
     def test_the_series_plate_actually_resolves_against_the_repo(self):
         # Guards against the fixture drifting away from the real files: if the
         # plate is renamed, the skill and this contract must be updated with it.
