@@ -13,6 +13,15 @@
 ---
 
 
+### Content — 11NOV26 — A summary of The Gap and the Gain, and the baseline the book never sets
+
+- **Added** `content/posts/summaries/the-gap-and-the-gain-summary.md` — *The Gap and the Gain* (Hay House Business, 19 October 2021) by Dan Sullivan with Benjamin Hardy, 1,717 words as rendered, `sort_key: "Sullivan, Dan"`, tags self-improvement, psychology, business. Live at `/posts/summaries/the-gap-and-the-gain-summary/`, mirrored to the vault.
+- **The corpus had Dan Sullivan already, and the wrong one.** Every prior hit for the name in `content/posts/essays/` and `content/posts/sitrep/` is Senator Dan Sullivan of Alaska, in the Senate race series; nothing in the corpus mentions this book or Hardy. The two must not be conflated in a search of the vault.
+- **The structure is the library's, not a guess.** The chapter list and the three part titles come from the Wake County catalogue's contents note (MARC 505), which also collates the book as xxxiv plus 217 pages against the publisher's 264 and 272 page listings of the same edition; the summary reports both rather than choosing.
+- **Two citations answer 403 to automated clients, and the summary says so in its own Sources note.** `strategiccoach.com` is behind Cloudflare for both the goal-measurement article and the passage it publishes as a book excerpt, so `check-links --online` reports them BLOCKED while a browser renders them; the wording was confirmed by a second fetch of the same page. Five other links verified 200.
+- **Two claims were fixed during drafting, not shipped.** A buy link at `dp/1401964368` returns 404 (that ISBN's ASIN is `1401964368`, not the ASIN) and now points at `dp/1401964362`, which answers 200; and a mis-transcribed "Specificallys must be measured against specifics" became the page's actual "specifics must be measured against specifics."
+- **Verified by running it.** Em-dashes 1 counted (1 exempt inside a quotation); prepositions 0; `check-quotes` OK, 1 attribution; frontmatter OK; links 5 ok, 0 dead, 2 blocked; `hugo --gc --minify` clean.
+
 ### Content — 11NOV26 — A summary of Atomic Habits, and the arithmetic in its first chapter
 
 - **Added** `content/posts/summaries/atomic-habits-summary.md` — *Atomic Habits* (Avery, 16 October 2018, 320 pages), 1,813 words as rendered, `sort_key: "Clear, James"`, tags self-improvement, psychology, productivity. Live at `/posts/summaries/atomic-habits-summary/`, mirrored to the vault. No summary of this book and no mention of Clear existed in the corpus before it.
