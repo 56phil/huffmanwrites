@@ -3,7 +3,7 @@ title: "The Gap and the Gain — Sullivan & Hardy"
 description: "Executive summary of The Gap and the Gain: the ideal is not a ruler, progress measured backward produces confidence, and the failure is the measurement rather than the person."
 date: 2026-11-11T00:00:00Z
 author: Philip Huffman
-sort_key: "Sullivan, Dan"
+sort_key: "Sullivan, Dan - The Gap and the Gain"
 lastmod: 2026-11-11T00:00:00Z
 tags:
   - self-improvement

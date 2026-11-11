@@ -13,6 +13,15 @@
 ---
 
 
+### Content — 11NOV26 — A summary of Nonviolent Communication, built on the publisher's own chapter sample
+
+- **Added** `content/posts/summaries/nonviolent-communication-summary.md` — *Nonviolent Communication: A Language of Life*, third edition (PuddleDancer Press, 2015), 1,614 words as rendered, `sort_key: "Rosenberg, Marshall B."`, tags psychology, self-improvement, philosophy. No prior mention of Rosenberg or of the book existed in the corpus.
+- **This is the first summary in the corpus that quotes a chapter of the book from the publisher, rather than from an author page.** PuddleDancer publishes a ten-page sample of chapter two (**Communication That Blocks Compassion**, pages 15 to 24) at its product page, and every quotation of Rosenberg's prose comes from that PDF: the "tragic expressions of our own values and needs" sentence, the "at the root of much, if not all, violence" passage, "we can never make people do anything," the grades exchange, the Eichmann *Amtssprache* material, and the epigraph. The rest of the book is reported from the chapter titles and from the Center for Nonviolent Communication's description of the process, and the file says which is which.
+- **The quotation I corrected before publishing was mine, not the source's.** The CNVC statement of purpose reads "We believe that all our actions — anything anyone ever does — are attempts to meet needs," and an earlier draft had flattened both dashes into commas inside the quotation marks; and an empathy line was joined with an ellipsis that changed "Empathy, however, calls upon" into "it calls upon." Both are now verbatim, which is what the em-dash exemption inside quotations exists to permit.
+- **The disagreement is the method's auditability.** A speaker can produce all four components without the consciousness behind them, and the book's defense (consciousness first, language second) is unenforceable because the speaker is the only auditor. The summary also takes the protective-force chapter seriously as the place the framework's unilateral-judgment problem returns, and treats the universal-needs claim as carrying more weight than the correlation study the book cites can bear.
+- **Verified by running it.** Em-dashes 1 counted and 4 exempt inside quotations; prepositions 0; `check-quotes` OK; frontmatter OK; links 6/6 ok online with `--titles`; `hugo --gc --minify` clean.
+- **`sort_key` on the Gap summary changed** to `"Sullivan, Dan - The Gap and the Gain"`, so two books by one author sort together under the author, the same shape as `"Hamdani, Sasha - <title>"`. The new 10x summary uses `"Sullivan, Dan - 10x Is Easier Than 2x"`, which places it before the Gap in the hub because the digits sort ahead.
+
 ### Content — 11NOV26 — A summary of 10x Is Easier Than 2x, and why "easier" is doing two jobs
 
 - **Added** `content/posts/summaries/10x-is-easier-than-2x-summary.md` — *10x Is Easier Than 2x* (Hay House Business, 9 May 2023) by Dan Sullivan with Benjamin Hardy, 1,466 words as rendered, `sort_key: "Sullivan, Dan - 10x Is Easier Than 2x"`, tags self-improvement, business, psychology.
