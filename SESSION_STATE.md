@@ -13,6 +13,16 @@
 ---
 
 
+### Content — 11NOV26 — Summaries of Bird by Bird and Tiny Experiments, and the sources each one had to settle for
+
+- **Added** `content/posts/summaries/bird-by-bird-summary.md` — *Bird by Bird* (Pantheon, 1994; the 25th-anniversary Anchor text), 1,458 words as rendered, `sort_key: "Lamott, Anne"`, tags self-improvement and writing. Live at `/posts/summaries/bird-by-bird-summary/`.
+- **Added** `content/posts/summaries/tiny-experiments-summary.md` — *Tiny Experiments* (Avery, 4 March 2025), 1,535 words as rendered, `sort_key: "Le Cunff, Anne-Laure"`, tags self-improvement, psychology, productivity. Live at `/posts/summaries/tiny-experiments-summary/`.
+- **One title in the request was misspelled twice and both books are filed under the authors' real names.** "Lamontt" is Anne Lamott and "Le Canff" is Anne-Laure Le Cunff; a future search of the vault on either misspelling will find nothing, which is correct.
+- **The Lamott quotations come from a course-site reprint of chapter three, and the file says so plainly.** Pantheon's page for the 1994 book is gone, the Macmillan anthology page that once carried "Shitty First Drafts" no longer resolves (`getaddrinfo ENOTFOUND`), and the gavilan.edu course copy answers 504. What survives is a full-text reprint at a teacher's site, checked against a second copy of the same passage before use; the summary names it as an anthology copy rather than a publisher's page, which is a weaker citation than the NVC summary got from PuddleDancer's own PDF and is labelled accordingly.
+- **Le Cunff's method is quoted from her own site, not paraphrased from the book.** The four stages (PACT, ACT, REACT, IMPACT), the pact's wording ("I will [action] for [duration]"), and the habit-versus-experiment distinction are all published at nesslabs.com, and the book's chapter page starts are from its Google Books contents. The summary states that it has not read the interior beyond that.
+- **Both disagreements argue against the book's own strongest claim.** For Lamott, the permission to write badly is a corrective for writers who cannot begin and becomes an excuse for writers who will not revise, and the publishing half of a 1994 book has expired. For Le Cunff, "you cannot fail" removes failure by definition, which also removes success, and the pact is a goal with better epistemics rather than the end of goals.
+- **Verified by running it.** Em-dashes 1 counted each, prepositions 0 each, `check-quotes` OK, frontmatter OK; links 6/6 and 5/5 ok online with `--titles`; `check-report-frontmatter.py --anchors-corpus` OK at 307 posts; `hugo --gc --minify` clean.
+
 ### Content — 11NOV26 — A summary of Nonviolent Communication, built on the publisher's own chapter sample
 
 - **Added** `content/posts/summaries/nonviolent-communication-summary.md` — *Nonviolent Communication: A Language of Life*, third edition (PuddleDancer Press, 2015), 1,614 words as rendered, `sort_key: "Rosenberg, Marshall B."`, tags psychology, self-improvement, philosophy. No prior mention of Rosenberg or of the book existed in the corpus.
