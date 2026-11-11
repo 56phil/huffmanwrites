@@ -13,6 +13,13 @@
 ---
 
 
+### Content — 11NOV26 — A summary of Atomic Habits, and the arithmetic in its first chapter
+
+- **Added** `content/posts/summaries/atomic-habits-summary.md` — *Atomic Habits* (Avery, 16 October 2018, 320 pages), 1,813 words as rendered, `sort_key: "Clear, James"`, tags self-improvement, psychology, productivity. Live at `/posts/summaries/atomic-habits-summary/`, mirrored to the vault. No summary of this book and no mention of Clear existed in the corpus before it.
+- **The quotations come from three pages that carry them**, since I have not read the interior and the file says so: the publisher's retail record publishes the introduction verbatim ("Habits are the compound interest of self-improvement", "Your outcomes are a lagging measure of your habits"), the author's own summary carries page-cited excerpts (page 38 for the votes sentence, page 27 for goals against systems, page 22 for the seeds), and his quotation archive carries "Missing once is an accident. Missing twice is the start of a new habit." The six-part, twenty-chapter architecture comes from two published chapter guides that agree on every title; that is stated in Sources as the secondary thing it is.
+- **The one percent arithmetic is checked and then argued with.** $1.01^{365} = 37.78$ and $0.99^{365} = 0.0255$, so the book's stated figures are right. The disagreement section says the calculation demonstrates exponentiation and does not forecast a person, because capacities saturate; it also names the tension between chapter 18's advice to choose a field that suits your traits and the book's own slogan that you fall to the level of your systems.
+- **Verified by running it.** Em-dashes 1 counted; prepositions 0 after three rewrites ("from the outside inward", "where the argument belongs"); `check-quotes` OK; frontmatter OK; `check-links --online --titles` 8/8 ok; `hugo --gc --minify` clean, and the hub lists the page on page 2, where `sort_key` puts it between *Silent Spring* and *The 7 Habits of Highly Effective People*.
+
 ### Content — 11NOV26 — A summary of The Bullet Journal Method, grounded in the author's own rules
 
 - **Added** `content/posts/summaries/the-bullet-journal-method-summary.md` — *The Bullet Journal Method* (Portfolio, 23 October 2018), 1,725 words whole-file, `sort_key: "Carroll, Ryder"`, tags self-improvement and mindfulness. Live at `/posts/summaries/the-bullet-journal-method-summary/`, mirrored to the vault.
