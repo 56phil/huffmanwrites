@@ -13,6 +13,15 @@
 ---
 
 
+### Ops — 11NOV26 — The bond-market report's Goldman citation was a 410, so it is now cited in prose
+
+- **Amended** `content/posts/investing/bond-market-ninety-days-2026-11-01.md`: the 4Q26 refunding sentence now attributes the forecast to Goldman Sachs Research in prose, naming the October 26 preview, and the two links to `finvaulta.com/research/goldman-sachs/4q26-treasury-refunding-preview-2026-10-26` are gone.
+- **The aggregator removed its Goldman section in full, and the finding came from the Monday sweep rather than from reading.** `check-links.py --online` reported `HTTP 410 (confirmed on two fetches)` for that URL on 09NOV26 while reporting the host itself `200`; fetched, the page answers `<title>Page removed | Finvaulta` and the series index `/research/goldman-sachs/series/global-rates-notes` answers 410 as well, so this is a site-wide takedown of the Goldman pages, not one dead slug. That is the failure mode a status code alone cannot distinguish, which is why the remedy was checked rather than assumed.
+- **The substance of the claim survives, and only the link was withdrawn.** A search of the site's own index text carries the same forecast — 10-to-30-year auction sizes steady, coupon increases delayed to May 2027 and concentrated in 2-to-7 years — so the sentence stands as written and the citation becomes a prose attribution dated October 26. Goldman's primary note is institutional research behind a login and was never publicly linkable; the aggregator copy was the only public carrier, and it is gone.
+- **No collector was involved and none needs repair.** `grep finvaulta scripts/` returns nothing, so the ninety-days job does not read that host and the next run on the last Tuesday of December is unaffected.
+- **Verified by running it.** `check-links --online --titles --file` on the amended post: **30 ok, 0 dead, 0 redirecting, 7 blocked, 1 unverified**; `check-emdashes` 0 counted, `check-prepositions` 0, `check-quotes` OK, `--attribution-corpus` OK at 308 posts, offline `check-links --file` 38 links.
+
+
 ### Content — 11NOV26 — An open letter to Steve Bannon, and the difference between being ignored and being obeyed
 
 - **Added** `content/posts/essays/an-open-letter-to-steve-bannon.md` — 2,113 words whole-file, `draft: false`, `featuredOnHome: true`, NN 156. Live at `/posts/essays/an-open-letter-to-steve-bannon/`. Tags essays, politics, media, democracy.
