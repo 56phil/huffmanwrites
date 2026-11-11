@@ -131,6 +131,25 @@
 
 ---
 
+
+### Maintenance — November 11, 2026 — Amended a published essay (automated)
+
+Written by `com.huffmanwrites.essay-watch` after every gate passed.
+- **Amended:** content/posts/essays/the-year-the-floor-moved.md 
+- **Triggers:** floor-ak
+[
+  {
+    "id": "floor-ak",
+    "race": "Alaska Senate",
+    "headline": "With 25,000 more votes counted, Peltola, JKT and Begich near victory in Alaska election",
+    "url": "https://alaskabeacon.com/2026/11/11/with-25000-more-votes-counted-peltola-jkt-and-begich-near-victory-in-alaska-election/",
+    "date": "2026-11-11 14:00:55+00:00"
+  }
+]
+- The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+
+---
+
 ### Maintenance — November 11, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.

@@ -57,4 +57,7 @@ The test is not 2026. The test is whether the same seats are competitive in 2028
 
 Until then the correct posture is the one the count itself recommends: patience, and an insistence on counting every ballot from every far-flung community, because the two seats still outstanding are exactly the ones where the mechanics matter more than the message.
 
+> **Update, 11 November 2026.** The Alaska Senate count above was the figure at the time of writing, not a result. The outlet that carried the call reported it this way: "With 25,000 more votes counted, Peltola, JKT and Begich near victory in Alaska election" ([Alaska Beacon, 11 November 2026](https://alaskabeacon.com/2026/11/11/with-25000-more-votes-counted-peltola-jkt-and-begich-near-victory-in-alaska-election/)).
+<!-- essay-watch:floor-ak -->
+
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*
