@@ -13,6 +13,14 @@
 ---
 
 
+### Content — 11NOV26 — A summary of 10x Is Easier Than 2x, and why "easier" is doing two jobs
+
+- **Added** `content/posts/summaries/10x-is-easier-than-2x-summary.md` — *10x Is Easier Than 2x* (Hay House Business, 9 May 2023) by Dan Sullivan with Benjamin Hardy, 1,466 words as rendered, `sort_key: "Sullivan, Dan - 10x Is Easier Than 2x"`, tags self-improvement, business, psychology.
+- **The disagreement is the word "easier."** A tenfold goal is easier to *decide* about, because it eliminates alternatives, and it is not easier to execute. The summary says both and keeps the part that survives: subtraction is easier to see from a big goal than from a small one, and that insight needs no multiplier. It also names the gap between the book's ordering and its preconditions: 150 free days and a self-managing company are filed as applications, and a reader with no team cannot begin at either.
+- **The table of contents is the argument, and it is cited with page numbers.** Google Books gives the chapter starts (1, 63, 97, 175, 199, 241) and the two part openers at 27 and 135; the summary reads the order as evidence that the method is subtraction rather than scheduling, and says when it is doing that.
+- **Sullivan's own words carry the exercise, not my reconstruction of it.** The five-jump demonstration (find when revenue was a tenth of today's, then name five jumps) and "things are only logical looking backwards" come from the Strategic Coach podcast transcript for the book, which answers an automated client with 403 and renders in a browser; the Sources note says so.
+- **Verified by running it.** Em-dashes 1 counted; prepositions 0 after a rewrite ("the figures a reader can check"); `check-quotes` OK; frontmatter OK; links 5 ok, 0 dead, 1 blocked; `hugo --gc --minify` clean.
+
 ### Content — 11NOV26 — A summary of The Gap and the Gain, and the baseline the book never sets
 
 - **Added** `content/posts/summaries/the-gap-and-the-gain-summary.md` — *The Gap and the Gain* (Hay House Business, 19 October 2021) by Dan Sullivan with Benjamin Hardy, 1,717 words as rendered, `sort_key: "Sullivan, Dan"`, tags self-improvement, psychology, business. Live at `/posts/summaries/the-gap-and-the-gain-summary/`, mirrored to the vault.
