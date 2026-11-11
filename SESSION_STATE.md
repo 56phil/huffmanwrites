@@ -13,6 +13,15 @@
 ---
 
 
+### Content — 11NOV26 — A summary of The Bullet Journal Method, grounded in the author's own rules
+
+- **Added** `content/posts/summaries/the-bullet-journal-method-summary.md` — *The Bullet Journal Method* (Portfolio, 23 October 2018), 1,725 words whole-file, `sort_key: "Carroll, Ryder"`, tags self-improvement and mindfulness. Live at `/posts/summaries/the-bullet-journal-method-summary/`, mirrored to the vault.
+- **The rules are quoted from bulletjournal.com, not from the book's interior, and the file says so in its own Sources note.** Carroll's site states the method he codified in the book in his own words: the definition ("a mindfulness practice that works like a productivity system"), the three content types and five task states, the four core collections, and migration as curation. Those four passages are the summary's evidence base, and the epigraph is the migration line from the same page. The book contributes the architecture: five parts, thirteen Practice chapters, and page ranges, from the [Tiny Ray of Sunshine book-club TOC](https://www.tinyrayofsunshine.com/the-bullet-journal-method-book-club) corroborated by a library contents note.
+- **Three claims were cut or rewritten before the gate ran.** "Twenty pages of theory" in Part II became the seven pages the page ranges actually show (51 to 57); a claim about what the Community chapter argues was removed, since nothing fetched says what it argues; and a reviewer's "cut by 50 to 75 percent" estimate was misattributed to the Fountain Pen Love review — that line belongs to a different page — so the point is now made in my own voice about a 320-page book teaching a method its author documents on one. A "community adapted it for PTSD and OCD" clause came from a content-farm summary and went, because no page I fetched says it.
+- **Verified by running it.** Em-dashes 1 counted; prepositions 0 after two fixes ("a place from which to look back", "names what you actually value"); `check-quotes` OK; frontmatter OK; `check-links --online --titles` 8/8 ok, after one citation swap — the OpenLibrary record now redirects to a human-verification wall, so the corroborating contents note points at the U.S. Department of Commerce library record instead. `hugo --gc --minify` clean and the hub lists the page.
+
+
+
 ### Content — 11NOV26 — Two summaries for Sasha Hamdani, and the three claims that did not survive checking
 
 - **Added** `content/posts/summaries/self-care-for-people-with-adhd-summary.md` — *Self-Care for People with ADHD* (Adams Media, 3 January 2023), 1,068 words whole-file — and `too-sensitive-summary.md` — *Too Sensitive* (Flatiron, 25 August 2026), 1,570 words whole-file. Neither author had ever appeared in the corpus (`grep -i hamdani` over `content/`, `SESSION_STATE.md` and `skills/` returned nothing). `sort_key` is `"Hamdani, Sasha - <title>"` on both, so the two books sort together under the author the way `"Huffman, Philip - Misaligned"` does. Both render on the hub (absolute URLs, "Updated November 11, 2026"), `hugo --gc --minify` clean.
