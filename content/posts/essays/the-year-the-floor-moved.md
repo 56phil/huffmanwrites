@@ -60,4 +60,7 @@ Until then the correct posture is the one the count itself recommends: patience,
 > **Update, 11 November 2026.** The Alaska Senate count above was the figure at the time of writing, not a result. The outlet that carried the call reported it this way: "With 25,000 more votes counted, Peltola, JKT and Begich near victory in Alaska election" ([Alaska Beacon, 11 November 2026](https://alaskabeacon.com/2026/11/11/with-25000-more-votes-counted-peltola-jkt-and-begich-near-victory-in-alaska-election/)).
 <!-- essay-watch:floor-ak -->
 
+> **Update, 12 November 2026.** The Mississippi Senate count above was the figure at the time of writing, not a result. The outlet that carried the call reported it this way: "For Black trailblazers in Mississippi, Colom’s Senate win is personal" ([Mississippi Today, 12 November 2026](https://mississippitoday.org/2026/11/12/for-black-trailblazers-in-mississippi-coloms-senate-win-is-personal/?utm_medium=rss)).
+<!-- essay-watch:floor-ms -->
+
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*
