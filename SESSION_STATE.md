@@ -13,6 +13,13 @@
 ---
 
 
+### Ops — 11NOV26 — The Veterans Day release ran, the job is gone, and the record stays
+
+- **`com.huffmanwrites.veterans-release` fired at 05:02:05 CST and exited 0 at 05:04:03.** Its log (`~/Library/Logs/veterans-release.out.log`) records the sequence: the reflection's URL was 404, `republish-pages.sh` dispatched a fresh build for `ba409e3`, and the retry read `The Eleventh Hour` off the page's own `<title>` at check 7. Then `mirror-post.sh` exited 0, so the piece reached `~/SimpleBrain` without a hand run — the reason the job called that script at all is that a hand-published article never enters `publish_article`, which is where the vault mirror lives.
+- **The earlier `not 2026-11-11 (clock says 2026-11-12)` line on 10NOV26 10:34 is the date guard doing its job, not a misfire.** The plist was installed that morning for a run the next day and was exercised immediately; the guard turned that into one log line and exit 0.
+- **The installed plist was booted out and deleted the same evening, and that is the rule rather than a tidy-up.** A one-off job is removed after it succeeds; its date guard is for the year the plist would otherwise fire again, not a reason to keep it. `launchctl print` on the service now answers "Could not find service", which is how the removal was confirmed rather than assumed. `scripts/veterans-release-runner.sh` and `scripts/com.huffmanwrites.veterans-release.plist` stay in the repo as the record, exactly as the Senate and Sagan runners did.
+- **Nothing is outstanding from the release itself.** `check-vault-currency.py` reports OK on 308 posts, which is also the answer to the two vault gaps the Monday sweep named (`the-candle-and-the-dark` and `sitrep-2026-11-08`): both are in `~/SimpleBrain/wiki/articles/` now, and the corpus has grown from 294 to 308 posts since that run.
+
 ### Ops — 11NOV26 — The bond-market report's Goldman citation was a 410, so it is now cited in prose
 
 - **Amended** `content/posts/investing/bond-market-ninety-days-2026-11-01.md`: the 4Q26 refunding sentence now attributes the forecast to Goldman Sachs Research in prose, naming the October 26 preview, and the two links to `finvaulta.com/research/goldman-sachs/4q26-treasury-refunding-preview-2026-10-26` are gone.
