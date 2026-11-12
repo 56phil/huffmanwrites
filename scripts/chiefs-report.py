@@ -36,7 +36,9 @@ Usage:
   chiefs-report.py --today 2027-03-01 # evaluate as if run on a past date
 
 Exit codes: 0 ok, 2 could not fetch or parse (the run cannot be trusted),
-3 off season (the runner skips, which is not an error).
+3 off season (not an error: the runner writes the off-season format rather than
+skipping the week — Philip, 2026-11-12, "The format may change, but I don't
+want the chiefs report to end with their season").
 """
 
 from __future__ import annotations
@@ -128,6 +130,129 @@ def fetch(url: str, timeout: float = 30.0, ua: str = "") -> dict:
         return json.loads(body)
     except ValueError as e:
         raise FetchError(f"non-JSON response from {url}: {e}") from e
+
+
+# ---------------------------------------------------------------------------
+# The league's key dates
+# ---------------------------------------------------------------------------
+# Philip, 12NOV26: "Make it year-agnostic." This URL carries no season, so the
+# league repoints it every year and the collector follows without an edit. The
+# year-bearing article slugs (`2026-27-national-football-league-important-dates`)
+# are exactly the drift this avoids: a hardcoded slug is wrong by the next
+# February and wrong quietly.
+KEY_DATES_URL = "https://www.nfl.com/news/nfl-important-dates"
+
+# nfl.com answers a default client with a stripped page, so this one endpoint is
+# read with a browser UA. That is the opposite of the ESPN rule above, and the
+# reason `fetch_text` exists rather than a second call through `fetch`.
+BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+
+_MONTHS = {name: i for i, name in enumerate(
+    "JANUARY FEBRUARY MARCH APRIL MAY JUNE JULY AUGUST SEPTEMBER OCTOBER "
+    "NOVEMBER DECEMBER".split(), 1)}
+
+
+def fetch_text(url: str, timeout: float = 45.0, ua: str = BROWSER_UA) -> str:
+    """GET an HTML page as text. Raises FetchError, never returns a partial body."""
+    req = urllib.request.Request(url, headers={"User-Agent": ua})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        raise FetchError(f"HTTP {e.code} for {url}") from e
+    except Exception as e:  # noqa: BLE001 - any transport failure is the same finding
+        raise FetchError(f"{type(e).__name__} for {url}: {e}") from e
+
+
+def _plain(fragment: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", fragment)).strip()
+
+
+def _month_year(text: str) -> "tuple[int, int] | None":
+    m = re.search(r"\b(" + "|".join(_MONTHS) + r")\b\s+(\d{4})", text.upper())
+    return (int(m.group(2)), _MONTHS[m.group(1)]) if m else None
+
+
+def _resolve_span(label: str, month_ctx: "tuple[int, int] | None") -> "tuple[date, date] | None":
+    """'MONDAY • MARCH 1 - MONDAY • MARCH 8' -> (2027-03-01, 2027-03-08).
+
+    The month comes from the label when it names one and from the surrounding
+    `<h2>` month header when it does not; the year always comes from the header.
+    A label with no readable date returns None, and the entry keeps its label
+    with an empty date rather than acquiring a guess.
+    """
+    names = "|".join(_MONTHS)
+    found = []
+    for m in re.finditer(r"(?:(\b" + names + r")\b\s+)?\b(\d{1,2})\b(?!\d)", label.upper()):
+        month = _MONTHS[m.group(1)] if m.group(1) else (month_ctx[1] if month_ctx else None)
+        year = month_ctx[0] if month_ctx else None
+        if not month or not year:
+            return None
+        try:
+            found.append(date(year, month, int(m.group(2))))
+        except ValueError:
+            return None
+    if not found:
+        return None
+    return (min(found), max(found))
+
+
+def parse_key_dates(html: str) -> "list[dict]":
+    """The league's dated milestones, read off its year-free key-dates page.
+
+    The page's shape, measured 12NOV26: one `<h2>` per month ("MARCH 2027"),
+    one `<h3>` per date or range ("MONDAY • MARCH 1 - MONDAY • MARCH 8"), and
+    `<p>` paragraphs of detail. This parses that markup rather than the prose,
+    so nothing is inferred from a sentence.
+    """
+    body = re.sub(r"<(script|style)\b.*?</\1>", " ", html, flags=re.S | re.I)
+    rows, month_ctx, current = [], None, None
+    for m in re.finditer(r"<(h2|h3|p)\b[^>]*>(.*?)</\1>", body, flags=re.S | re.I):
+        tag, text = m.group(1).lower(), _plain(m.group(2))
+        if not text:
+            continue
+        if tag == "h2":
+            month_ctx, current = _month_year(text), None
+        elif tag == "h3":
+            current = {"label": text, "detail": [], "month": month_ctx}
+            rows.append(current)
+        elif current is not None and len(current["detail"]) < 3:
+            # The page's own markup puts unrelated fragments in <p> tags after a
+            # date (measured 12NOV26: "AFC NFC" trails the Spring League Meeting
+            # entry). A short all-caps fragment is furniture, not detail.
+            if not (text.isupper() and len(text) < 16):
+                current["detail"].append(text)
+    out = []
+    for row in rows:
+        span = _resolve_span(row["label"], row["month"])
+        out.append({
+            "label": row["label"],
+            "detail": " ".join(row["detail"]),
+            "starts": span[0].isoformat() if span else "",
+            "ends": span[1].isoformat() if span else "",
+        })
+    return out
+
+
+def collect_key_dates(today: date, url: str = KEY_DATES_URL) -> dict:
+    """Fetch and parse the league's key dates. Never raises.
+
+    A source that cannot be read is a stated gap in the pack, not a dead run:
+    the same rule the daily SITREP's collector follows. What must never happen
+    is a writer filling the gap from memory, so the failure is printed.
+    """
+    block = {"url": url, "read_at": today.isoformat(), "entries": [], "error": ""}
+    try:
+        html = fetch_text(url)
+    except FetchError as e:
+        block["error"] = str(e)
+        return block
+    entries = [e for e in parse_key_dates(html) if e["starts"]]
+    entries.sort(key=lambda e: (e["starts"], e["ends"]))
+    block["entries"] = entries
+    if not entries:
+        block["error"] = "the page answered but no date could be read from it"
+    return block
 
 
 def sources(year: int | None = None) -> "dict[str, str]":
@@ -318,9 +443,16 @@ def league_calendar(payload: dict) -> "list[dict]":
 def season_state(cal: "list[dict]", today: date) -> "dict":
     """Where `today` sits in the league calendar.
 
-    'Off Season' is the only phase the job skips, and it is taken from the
-    league's own calendar rather than from a hardcoded month range, so the
-    schedule rolls over by itself next year instead of quietly going stale.
+    It is taken from the league's own calendar rather than from a hardcoded
+    month range, so the schedule rolls over by itself next year instead of
+    quietly going stale.
+
+    **Off season is a format, not a skip.** Philip, 2026-11-12: "The format may
+    change, but I don't want the chiefs report to end with their season." So the
+    phase still decides what the report is about — from February to August there
+    is no game to recap — and `in_season` is what the runner and the writer read
+    to choose between the two structures in the skill. Nothing here stops the
+    job.
     """
     for entry in cal:
         if entry["start"] <= today < entry["end"]:
@@ -1515,7 +1647,23 @@ def collect(today: date, season_year: int | None = None) -> "dict":
             "article_links": sorted(urls_in((next_summary.get("article") or {}).get("links") or {})),
         },
         "standings": division_standings(standings, TEAM) if standings else {},
+        # The league's own calendar, carried in the pack so the off-season
+        # edition can date free agency, the draft and camp without recalling
+        # them. Off season there is no game and no kickoff to write about, and
+        # the remaining dates are the whole of the week's hard material.
+        "calendar": [
+            {"label": e["label"], "type": e["type"],
+             "starts": e["start"].isoformat(), "ends": e["end"].isoformat(),
+             "periods": [{"label": p["label"],
+                          "starts": p["start"].isoformat(),
+                          "ends": p["end"].isoformat()} for p in e["periods"]]}
+            for e in cal
+        ],
         "season_stats": season_stats(stats) if stats else {},
+        # Fetched only off season: with no game, the league's dated milestones are
+        # the week's hard material. In season the game is, and a 700 KB page per
+        # Tuesday would buy nothing.
+        "key_dates": {} if state["in_season"] else collect_key_dates(today),
         "markets": collect_markets(),
         "news": recent_news(news, today) if news else [],
         "fetch_failures": failures,
@@ -1574,6 +1722,86 @@ def render(pack: dict) -> str:
         L.append("")
         L.append("**Fetch failures — say so in the report, do not paper over them:**")
         L.append(_li(pack["fetch_failures"]))
+
+    if not s.get("in_season", True):
+        # Off season is a format, not a skip (Philip, 2026-11-12). There is no
+        # game and no kickoff, so the calendar ahead is the week's hard material:
+        # it is dated, it comes from the league, and it is the one thing the
+        # writer cannot reconstruct from memory.
+        today_d = parse_date(pack["today"])
+        L.append("")
+        L.append("## Off season — the league calendar from here")
+        L.append("")
+        L.append("**The league is off season: there is no game to recap and no next "
+                 "kickoff. Write the skill's off-season format.** Every date below "
+                 "comes from the league's calendar; do not substitute a date you "
+                 "remember, and do not describe an event whose date is not here.")
+        L.append("")
+        L.append("**This phase list is not the league's key dates.** Measured "
+                 "2026-11-12: the feed's Off Season phase carries zero periods, so "
+                 "free agency, the draft and camp are not in it. They are in the "
+                 "next section, which is the league's own published list.")
+        L.append("")
+        upcoming = 0
+        for entry in pack.get("calendar") or []:
+            if entry["ends"] <= pack["today"]:
+                continue
+            days = (parse_date(entry["starts"]) - today_d).days
+            if days > 0:
+                L.append(f"- **{entry['label']}:** {entry['starts']} to {entry['ends']}"
+                         f" — starts in {days} day(s)")
+            elif days == 0:
+                L.append(f"- **{entry['label']}:** {entry['starts']} to {entry['ends']}"
+                         f" — starts today")
+            else:
+                L.append(f"- **{entry['label']}:** {entry['starts']} to {entry['ends']}"
+                         f" — running now")
+            upcoming += 1
+            for p in entry["periods"]:
+                if p["ends"] <= pack["today"]:
+                    continue
+                pd = (parse_date(p["starts"]) - today_d).days
+                suffix = (f" (in {pd} day(s))" if pd > 0
+                          else " (today)" if pd == 0 else " (running now)")
+                L.append(f"  - {p['label']}: {p['starts']} to {p['ends']}{suffix}")
+        if not upcoming:
+            L.append("- The calendar carries nothing after today, which means it has "
+                     "probably rolled over. Say that the schedule ahead is not yet "
+                     "published; do not fill the gap from memory.")
+
+    if not s.get("in_season", True):
+        kd = pack.get("key_dates") or {}
+        kd_url = kd.get("url") or KEY_DATES_URL
+        L.append("")
+        L.append("## League key dates (the NFL's own published list)")
+        L.append("")
+        if not kd.get("entries"):
+            reason = kd.get("error") or "the page carried no date this collector read"
+            L.append(f"**SOURCE UNAVAILABLE** — {kd_url} could not be used "
+                     f"({reason}). Fetch it yourself from that URL and cite it, or say "
+                     f"the dates are not yet published. Do not supply a date from "
+                     f"memory.")
+        else:
+            L.append(f"Read from {kd_url} on {kd.get('read_at') or pack['today']}. "
+                     f"Every date and description below is copied from that page: cite "
+                     f"that URL, and write no date it does not carry. These are the "
+                     f"league's dates, not projections.")
+            L.append("")
+            today_kd = parse_date(pack["today"])
+            upcoming_kd = [e for e in (kd.get("entries") or [])
+                           if e.get("ends") and e["ends"] >= pack["today"]]
+            for e in upcoming_kd[:25]:
+                span = (e["starts"] if e["starts"] == e["ends"]
+                        else f"{e['starts']} to {e['ends']}")
+                days = (parse_date(e["starts"]) - today_kd).days
+                when = (f" (in {days} day(s))" if days > 0
+                        else " (today)" if days == 0 else " (running now)")
+                detail = e["detail"]
+                if len(detail) > 280:
+                    detail = detail[:280].rstrip() + "…"
+                L.append(f"- **{span}**{when} — {e['label']}: {detail}")
+            if len(upcoming_kd) > 25:
+                L.append(f"- …and {len(upcoming_kd) - 25} later entries on that page.")
 
     lg = pack.get("last_game")
     L.append("")
@@ -1939,7 +2167,8 @@ def render(pack: dict) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser(description="Collect the week's Chiefs data.")
     ap.add_argument("--season-state", action="store_true",
-                    help="print the league phase; exit 3 when off season")
+                    help="print the league phase; exit 3 when off season "
+                         "(the runner then writes the off-season format)")
     ap.add_argument("--validate", metavar="PATH",
                     help="check an article's frontmatter before publishing "
                          "(delegates to scripts/check-report-frontmatter.py)")

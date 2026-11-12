@@ -10,8 +10,12 @@ output goes live without Philip reading it first.
   `scripts/com.huffmanwrites.chiefs-weekly-report.plist`; runner:
   `scripts/chiefs-weekly-report-runner.sh`).
 - The runner invokes Claude Code headless in this repo with this skill.
-- **Season only.** The runner reads the league's own calendar and exits without
-  doing anything during the Off Season phase. If a report for today's date
+- **Year-round, two formats.** The report publishes every Tuesday in both league
+  phases. The runner reads the league's own calendar and states which format
+  applies in the prompt; in season the report covers the game, and off season it
+  covers the roster, the calendar and the season ahead (see "The off-season
+  format" below). Philip, 2026-11-12: "The format may change, but I don't want
+  the chiefs report to end with their season." If a report for today's date
   already exists, update it in place (same-day re-run).
 
 ## The one thing that makes this job different
@@ -64,7 +68,10 @@ the opponent's last five games, both injury reports), the AFC West standings,
 the AFC seed list, the team's season statistics by category, the season-long
 prediction markets (Kalshi and Polymarket: championship, conference, division,
 playoff and MVP prices, plus the Kalshi win-total ladder), and the last two
-weeks of Chiefs-tagged coverage with its URLs.
+weeks of Chiefs-tagged coverage with its URLs. **Off season it also prints two
+dated sections** — ESPN's phase calendar from today forward, and the NFL's own
+key-dates list with each date, its label and its detail — which are the dated
+material the off-season format is built on.
 
 - `--json` for the same data structured, if you want to pull specific fields.
 - `--season-state` prints only the league phase.
@@ -235,8 +242,7 @@ themselves. Search for the week's coverage and read what carries the story:
   you cannot find and fetch the page that carries it, do not quote it — say what
   the coach said in your own words and attribute it to the press conference.
 
-### Structure
-
+### Structure (in season)
 1. **The lede** — bold **Question:** / **Answer:** pair naming the week's most
    consequential development for the team.
 2. **The game just played** — the score and the record, then what actually
@@ -281,6 +287,82 @@ a report that uses one.
 
 A bye week, a quiet week, or a week with one real story gets a shorter report
 that says so. Do not manufacture length.
+
+### The off-season format
+
+The league publishes no games from February to August, and the report does not
+stop. What changes is the subject: the week's roster and front-office news, the
+dates the league has already set, and the case the season ahead has to make.
+Everything in "House style" and "Sourcing rules" above still applies, including
+the closing attribution and the anchor rule.
+
+**Two dated sections in the pack are the week's skeleton, and they come from
+different sources.**
+
+- `## Off season — the league calendar from here` is ESPN's phase calendar: the
+  phase windows and whatever periods the feed publishes inside them, with the
+  days remaining. Measured 2026-11-12, the feed's Off Season phase carries zero
+  periods, so this section dates the *window*, not the milestones.
+- `## League key dates (the NFL's own published list)` is the league's own
+  key-dates page, read by the collector at
+  `https://www.nfl.com/news/nfl-important-dates` and printed with each date, its
+  label and its detail, plus that URL and the day it was read. **This is where
+  free agency, the Combine, the draft, the league meetings and camp come from**,
+  and it is the page to cite: write the date and link
+  `https://www.nfl.com/news/nfl-important-dates`, because the reader can open it
+  and see the same sentence. The URL carries no season, so it is correct this
+  year and next.
+
+If the pack prints `SOURCE UNAVAILABLE` for the key dates, the page could not be
+read that day. Fetch it yourself from the URL in the pack, cite it, or write
+that the dates are not yet published. Do not write a date you remember, do not
+say "sometime in April", and do not describe an event either section does not
+carry.
+
+Structure:
+
+1. **The lede** — the same bold **Question:** / **Answer:** pair, naming the
+   week's most consequential roster, coaching or calendar development.
+2. **The week that was** — what actually happened: a signing, a release, a
+   trade, a coaching or front-office change, a league rule or a schedule
+   announcement. Dates, names, terms, and a link for each. A transaction the
+   feed does not carry must come from a page you fetched; a contract figure you
+   cannot link does not appear.
+3. **Where the roster stands** — only the positions and decisions the week
+   actually changed. No depth-chart reconstruction from memory, no "the Chiefs
+   will likely" as a fact. A prediction is labelled a prediction or left out.
+4. **The calendar ahead** — the next dated milestone, when it falls, and what
+   it decides: free agency, the Combine, the league meetings, the draft, rookie
+   minicamp, camp. Take each date from the pack's league key-dates section,
+   quote it, and link `https://www.nfl.com/news/nfl-important-dates`, which is
+   where it was read. When a date is not on that page, say that it has not been
+   announced rather than supplying one.
+5. **The season ahead** — only what is published: the opponent list once the
+   league releases it, the season-long markets as the venues' prices (attributed,
+   never as this site's forecast), and the one question that will define the
+   autumn.
+6. **Sources** — every link you used.
+
+Four rules specific to this format, each of which is a way a quiet week turns
+into a fabricated one:
+
+- **Never recap a game that was not played.** The pack's "most recent completed
+  game" is last season's final. If you mention it, date it and call it last
+  season's.
+- **Never state a record, a starter, or a stat as current.** The pack's season
+  statistics are last season's. Label them so, or leave them out.
+- **The markets thin out in the off season, and that is not a story.** Quote a
+  price only when it is current by the pack's own signals (`24h vol`, `moved`),
+  attribute it to the venue, and drop the section entirely when the book is too
+  thin to mean anything. A wide spread is not a forecast.
+- **A genuinely quiet week gets a short report that says so.** "Nothing
+  happened; here is the next date that matters" is an honest off-season
+  installment. Padding it with projections is the failure this section exists to
+  prevent.
+
+Title, tags, hero plate and frontmatter are identical to the in-season format:
+the series name does not change with the phase, and the gallery card, the
+frontmatter gate and the home feed all key on them.
 
 ### Output
 
@@ -335,7 +417,7 @@ that says so. Do not manufacture length.
 End your run with a short summary the runner's log will carry:
 
 - the file you wrote and its word count;
-- the week (number, opponent, result) in one line;
+- the league phase and, in season, the week (number, opponent, result) in one line;
 - the lede's Question/Answer in one line;
 - every URL you cited that did NOT come from the briefing pack;
 - anything you could not verify and therefore left out.
@@ -347,6 +429,11 @@ Keep it under 200 words. The runner reads your file, not your prose.
 - **No game played in the window** (bye week, or the feed has not posted the
   result): write the report around the personnel news and the next game, and say
   plainly that no game was played. Do not invent a recap.
+- **The league is off season:** that is not a fallback, it is the second format.
+  Write the off-season structure above; there is no game to apologize for.
+- **The off-season calendar carries nothing after today:** it has probably rolled
+  over. Say the schedule ahead is not yet published and write the week's roster
+  news. Do not fill the dates in from memory.
 - **The pack reports fetch failures:** it prints them at the top. Say in the
   piece that the source was unreachable and write around the gap. Do not
   silently omit the section, and do not fill it from memory.

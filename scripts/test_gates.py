@@ -1435,10 +1435,11 @@ class TestQuoteNameRules(unittest.TestCase):
 
 # --------------------------------------------------------------------------
 # Chiefs weekly report. The rules that matter are the ones that decide whether a
-# thing gets PUBLISHED and whether the pack's numbers can be trusted: the
-# season guard that keeps the job silent in the off season, the assertion that
-# stops a feed from answering with the wrong season, and the frontmatter check
-# that is the only review an auto-published article gets.
+# thing gets PUBLISHED and whether the pack's numbers can be trusted: the league
+# phase, which selects the in-season or off-season structure instead of silencing
+# the job (Philip, 2026-11-12), the assertion that stops a feed from answering
+# with the wrong season, and the frontmatter check that is the only review an
+# auto-published article gets.
 # --------------------------------------------------------------------------
 ck = load("chiefs-report")
 
@@ -1460,7 +1461,12 @@ class TestChiefsReport(unittest.TestCase):
             })
         return out
 
-    def test_off_season_is_the_only_phase_the_job_skips(self):
+    def test_off_season_is_a_phase_the_report_still_covers(self):
+        # Philip, 2026-11-12: "The format may change, but I don't want the chiefs
+        # report to end with their season." The phase still decides what the
+        # piece is about, and `in_season` is the flag the runner and the writer
+        # read to choose between the two structures. Nothing here stops the job,
+        # which is why this test asserts the flag rather than a skip.
         cal = self._calendar(
             ("Regular Season", "2", "2026-09-06", "2027-01-13",
              [("Week 3", "3", "2026-09-23", "2026-09-30", "Sep 23-29")]),
@@ -2128,6 +2134,102 @@ class TestChiefsReport(unittest.TestCase):
             "chart_error": "not enough history"}))
         self.assertIn("No chart this week", no_chart)
         self.assertIn("do not reference a chart", no_chart)
+
+    def test_an_off_season_pack_dates_the_calendar_instead_of_inventing_a_game(self):
+        # The off-season edition has no game and no kickoff, so the league's own
+        # calendar is the only hard material it carries. The pack must date it,
+        # with the days remaining, because a writer without dates invents them.
+        pack = self._pack({"kalshi": [], "polymarket": [], "kalshi_win_total": [],
+                           "failures": [], "chart_series": [], "chart_path": "",
+                           "chart_url": "", "chart_error": "none"})
+        pack["today"] = "2027-03-09"
+        pack["season"] = {"phase": "Off Season", "period": "", "period_detail": "",
+                          "starts": "2027-02-16", "ends": "2027-08-01",
+                          "in_season": False}
+        pack["calendar"] = [
+            {"label": "Off Season", "type": "4", "starts": "2027-02-16",
+             "ends": "2027-08-01",
+             "periods": [{"label": "Free Agency", "starts": "2027-03-10",
+                          "ends": "2027-03-17"},
+                         {"label": "NFL Draft", "starts": "2027-04-29",
+                          "ends": "2027-05-01"},
+                         {"label": "League Meeting", "starts": "2027-01-05",
+                          "ends": "2027-01-08"}]},
+            {"label": "Preseason", "type": "1", "starts": "2027-08-01",
+             "ends": "2027-09-01", "periods": []},
+        ]
+        out = ck.render(pack)
+        self.assertIn("## Off season", out)
+        self.assertIn("off-season format", out)
+        self.assertIn("2027-03-10", out, "a dated period inside this phase")
+        self.assertIn("2027-04-29", out, "a later period in the same phase")
+        self.assertIn("in 1 day", out, "the days remaining are the pack's job")
+        self.assertIn("2027-08-01", out, "the next phase is dated too")
+        self.assertIn("This phase list is not the league's key dates", out,
+                      "the feed carries no off-season periods; a writer who takes "
+                      "this list as complete invents the draft date")
+        self.assertNotIn("2027-01-05", out, "a period already finished is not upcoming")
+
+        # In season the section is absent: the game is the material, and a
+        # calendar block bolted on would be the filler the skill forbids.
+        in_season = self._pack({"kalshi": [], "polymarket": [],
+                                "kalshi_win_total": [], "failures": [],
+                                "chart_series": [], "chart_path": "",
+                                "chart_url": "", "chart_error": "none"})
+        in_season["season"]["in_season"] = True
+        in_season["calendar"] = pack["calendar"]
+        self.assertNotIn("## Off season", ck.render(in_season))
+
+    def test_the_key_dates_url_carries_no_season(self):
+        # Philip, 12NOV26: "Make it year-agnostic." The league repoints this slug
+        # every year; a URL with the season in it (`2026-27-...-important-dates`)
+        # is wrong by the next February and wrong quietly, which is the drift
+        # this collector exists to avoid.
+        self.assertNotRegex(ck.KEY_DATES_URL, r"\b20\d\d\b")
+        self.assertIn("nfl.com", ck.KEY_DATES_URL)
+
+    def test_key_dates_are_read_off_the_leagues_markup(self):
+        # The page's shape: <h2> per month, <h3> per date or range, <p> detail.
+        # Parsing the markup rather than the prose is what keeps a date from
+        # being inferred out of a sentence.
+        html = """
+        <h2>FEBRUARY 2027</h2>
+        <div><h3>SUNDAY • FEBRUARY 14</h3><p>Super Bowl LXI at SoFi Stadium.</p></div>
+        <div><h3>WEDNESDAY • FEBRUARY 17</h3><p>Franchise designations begin.</p></div>
+        <h2>MARCH 2027</h2>
+        <div><h3>MONDAY • MARCH 1 - MONDAY • MARCH 8</h3>
+             <p>NFL Scouting Combine in Indianapolis.</p></div>
+        <div><h3>THURSDAY • MARCH 11</h3><p>The 2027 League Year begins.</p>
+             <p>AFC NFC</p></div>
+        <div><h3>NO DATE HERE</h3><p>Unreadable entry.</p></div>
+        """
+        rows = ck.parse_key_dates(html)
+        self.assertEqual(len(rows), 5)
+        self.assertEqual(rows[0]["starts"], "2027-02-14")
+        self.assertEqual(rows[2]["starts"], "2027-03-01")
+        self.assertEqual(rows[2]["ends"], "2027-03-08", "a range keeps both ends")
+        self.assertEqual(rows[3]["starts"], "2027-03-11")
+        self.assertIn("League Year", rows[3]["detail"])
+        self.assertNotIn("AFC NFC", rows[3]["detail"],
+                         "a short all-caps fragment is page furniture, not detail")
+        self.assertEqual(rows[4]["starts"], "",
+                         "an unreadable label keeps its text and acquires no date")
+
+    def test_a_key_dates_entry_the_pack_cannot_read_is_a_stated_gap(self):
+        # The pack must never be silently short: an unread source is printed.
+        out = ck.render({**self._pack({
+            "kalshi": [], "polymarket": [], "kalshi_win_total": [], "failures": [],
+            "chart_series": [], "chart_path": "", "chart_url": "", "chart_error": "x"}),
+            "season": {"phase": "Off Season", "period": "", "period_detail": "",
+                       "starts": "2027-02-16", "ends": "2027-08-01",
+                       "in_season": False},
+            "today": "2027-03-09",
+            "calendar": [],
+            "key_dates": {"url": "https://www.nfl.com/news/nfl-important-dates",
+                          "read_at": "2027-03-09", "entries": [],
+                          "error": "HTTP 503"}})
+        self.assertIn("SOURCE UNAVAILABLE", out)
+        self.assertIn("nfl.com/news/nfl-important-dates", out)
 
     def test_market_failures_default_to_empty_rather_than_a_placeholder_row(self):
         # A venue that cannot be read must yield no rows and a named failure —
@@ -3356,12 +3458,40 @@ class TestChiefsRunnerContract(unittest.TestCase):
         self.assertNotIn("git", grant)
         self.assertIn("Bash(python3 scripts/chiefs-report.py*)", grant)
 
-    def test_the_season_guard_exits_zero(self):
-        # A non-zero exit would raise the failure alert every Tuesday for six
-        # months, which is how a real alert gets learned as noise.
-        i = self.runner.find("off season, no report, exiting")
-        self.assertGreater(i, 0)
-        self.assertIn("exit 0", self.runner[i:i + 200])
+    def test_the_report_publishes_in_both_league_phases(self):
+        # Philip, 2026-11-12: "The format may change, but I don't want the chiefs
+        # report to end with their season." The old guard exited 0 from February
+        # to August; no week may be skipped now, and the phase must select the
+        # structure instead.
+        code = "\n".join(ln for ln in self.runner.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertNotIn("off season, no report, exiting", code)
+        self.assertIn('SEASON_PHASE="off season"', code)
+        self.assertIn('SEASON_PHASE="in season"', code)
+        # Exit 3 is the off-season signal. It must fall through to the writer,
+        # not exit: the only abort is exit 2 (the calendar could not be read),
+        # because guessing which report to write is how a game recap gets
+        # published in July.
+        guard = code.find('if [ "$STATE_RC" -ne 0 ] && [ "$STATE_RC" -ne 3 ]')
+        self.assertGreater(guard, 0)
+        self.assertIn('exit "$STATE_RC"', code[guard:guard + 400])
+        branch = code.find('if [ "$STATE_RC" -eq 3 ]')
+        self.assertGreater(branch, 0)
+        self.assertNotIn("exit 0", code[branch:code.find("fi", branch)])
+
+    def test_the_prompt_states_which_format_applies(self):
+        # The skill holds two structures and the writer must not have to infer
+        # which one applies. The runner states it in the prompt, the same way it
+        # states the week's numbers: the phase is a fact the runner read.
+        code = "\n".join(ln for ln in self.runner.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        self.assertIn("$FORMAT_LINE", code)
+        self.assertLess(code.find('SEASON_PHASE="off season"'), code.find("PROMPT="))
+        self.assertLess(code.find("PROMPT="), code.find("claude -p"))
+        skill = (REPO / "skills" / "chiefs-weekly-report.md").read_text(encoding="utf-8")
+        self.assertIn("### The off-season format", skill,
+                      "the skill must carry the second structure the runner names")
+        self.assertIn("Year-round, two formats", skill)
 
     def test_no_apostrophe_inside_a_default_expansion(self):
         # bash 3.2 mis-parses it and reports the damage as a syntax error far

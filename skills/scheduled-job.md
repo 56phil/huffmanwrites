@@ -47,13 +47,21 @@ the cause; a comma is normally the fix.
 ## 4. A start-date guard must exit 0 and log why
 
 A job installed before its first due date, or one with a last-run date, must exit
-0 with a line explaining the skip (the Chiefs season guard off season; before its
-plist was uninstalled on 2026-11-03, `senate-report-runner.sh` past 2026-11-02).
-A non-zero exit raises the alert every week for months, which teaches the reader
-to ignore it. `test_gates.py` (TestChiefsRunnerContract) asserts the season guard
-exits zero. **A guard is a bridge, not a retirement plan:** the Senate job's guard
-held for two days and then the plist came out, because a scheduled no-op still
-logs a line a week and still occupies a row in the table.
+0 with a line explaining the skip (before its plist was uninstalled on
+2026-11-03, `senate-report-runner.sh` past 2026-11-02). A non-zero exit raises the
+alert every week for months, which teaches the reader to ignore it.
+`test_gates.py` (TestWeeklySatireSchedule) asserts the Weekly Satire's start-date
+guard exits zero. **A guard is a bridge, not a retirement plan:** the Senate job's
+guard held for two days and then the plist came out, because a scheduled no-op
+still logs a line a week and still occupies a row in the table.
+
+**A guard is also not the only answer to a quiet season.** The Chiefs job had one
+of these until 2026-11-12, when Philip replaced the skip with a second format:
+"The format may change, but I don't want the chiefs report to end with their
+season." Where a series has enough material off season to publish honestly, the
+phase should select a structure (and `TestChiefsRunnerContract` asserts that it
+does) rather than stop the job. A guard is the right answer only when the quiet
+period has nothing true to say.
 
 ## 5. A model-calling job probes Ollama before its writer runs
 

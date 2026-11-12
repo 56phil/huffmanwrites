@@ -1,7 +1,9 @@
 #!/bin/bash
 # Weekly Kansas City Chiefs report runner.
 # Invoked by launchd (com.huffmanwrites.chiefs-weekly-report) every Tuesday at
-# 1830 CT, in season only.
+# 1830 CT, year-round. In season the report covers the game; off season it covers
+# the roster, the calendar and the season ahead. Philip, 2026-11-12: "The format
+# may change, but I don't want the chiefs report to end with their season."
 #
 # Philip, 2026-09-25: "New weekly report job: Every Tuesday, at 1830 CT, publish
 # a comprehensive report on the Kansas City Chiefs."
@@ -77,39 +79,51 @@ export CLAUDE_CODE_MAX_CONTEXT_TOKENS=1048576
 # this cost a debugging round. The default reads "the weekly Chiefs report"
 # rather than "this week's report" for that reason, not for style.
 TODAY="$(date '+%Y-%m-%d')"
-PROMPT="${CHIEFS_REPORT_PROMPT:-Read $SKILL and follow it exactly. The briefing pack is at /tmp/chiefs-pack-$TODAY.md. Write the weekly Chiefs report.}"
 
 echo "$(stamp): starting Chiefs weekly report run" >> "$OUT_LOG"
 
 cd "$REPO"
 
 # ---------------------------------------------------------------------------
-# Season guard. The NFL has no games from February to August, and a weekly
-# report with no games is a report with nothing in it — which is precisely when
-# an unattended writer invents something to fill the silence. The guard reads
-# the league's own published calendar rather than a hardcoded month range, so it
-# rolls over by itself next season instead of going quietly stale.
+# League phase. This used to be a season guard that exited 0 from February to
+# August: no games, so nothing to report, and an unattended writer with an empty
+# week is exactly the one that invents something to fill it.
 #
-# Exit 0, not non-zero: the job is simply not due, and a non-zero code here
-# would raise the failure alert every Tuesday for six months, which is how a
-# real alert gets learned as noise. Same reasoning as the docket report's start
-# guard.
+# Philip, 2026-11-12: "The format may change, but I don't want the chiefs report
+# to end with their season." So the phase no longer decides WHETHER the report
+# runs; it decides WHICH report it is. The phase is read from the league's own
+# published calendar rather than a hardcoded month range, so it rolls over by
+# itself next season instead of going quietly stale.
+#
+# Both phases publish. Exit 2 (the calendar could not be read) is the only
+# failure: it means the run cannot tell which report to write, and guessing is
+# how a mid-season piece gets written in July.
 # ---------------------------------------------------------------------------
 set +e
 STATE_OUT="$(python3 "$COLLECTOR" --season-state 2>&1)"
 STATE_RC=$?
 set -e
-if [ "$STATE_RC" -eq 3 ]; then
-  echo "$(stamp): $STATE_OUT — off season, no report, exiting" >> "$OUT_LOG"
-  exit 0
-fi
-if [ "$STATE_RC" -ne 0 ]; then
+if [ "$STATE_RC" -ne 0 ] && [ "$STATE_RC" -ne 3 ]; then
   echo "$(stamp): could not determine the league phase (exit $STATE_RC): $STATE_OUT" >> "$OUT_LOG"
   "$REPO/scripts/alert-failure.sh" "chiefs-weekly-report" "$STATE_RC" \
     "could not read the league calendar; see $OUT_LOG" || true
   exit "$STATE_RC"
 fi
-echo "$(stamp): $STATE_OUT" >> "$OUT_LOG"
+if [ "$STATE_RC" -eq 3 ]; then
+  SEASON_PHASE="off season"
+  FORMAT_LINE="The league is off season today: use the skill's off-season format, not its in-season structure."
+else
+  SEASON_PHASE="in season"
+  FORMAT_LINE="The league is in season today: use the skill's in-season structure."
+fi
+echo "$(stamp): $STATE_OUT — writing the $SEASON_PHASE format" >> "$OUT_LOG"
+
+# The prompt carries the phase because the skill holds two structures and the
+# writer must not have to infer which one applies from the pack. Same rule as
+# every other number here: the runner states it, the writer does not guess it.
+# Override for manual test runs: CHIEFS_REPORT_PROMPT="Reply with exactly: SMOKE-OK".
+# No apostrophes inside the default expansion (see the note above).
+PROMPT="${CHIEFS_REPORT_PROMPT:-Read $SKILL and follow it exactly. The briefing pack is at /tmp/chiefs-pack-$TODAY.md. $FORMAT_LINE Write the weekly Chiefs report.}"
 
 # ---------------------------------------------------------------------------
 # Briefing pack. Deterministic and read here rather than left to the agent, for
@@ -142,9 +156,10 @@ ARTICLE="content/posts/sports/chiefs-report-$TODAY.md"
 JOB="chiefs-weekly-report"
 . "$REPO/scripts/publish-report.sh"
 
-# Reachability guard: the season guard has already exited 0 off-season, so by
-# here a real report is due. Fail loudly and early if the local Ollama server
-# is down rather than mid-draft on a connection error. See scripts/ollama-probe.sh.
+# Reachability guard: the league phase has been read and a report is due in
+# either phase, so a run that reaches here will call the writer. Fail loudly and
+# early if the local Ollama server is down rather than mid-draft on a connection
+# error. See scripts/ollama-probe.sh.
 . "$REPO/scripts/ollama-probe.sh"
 ollama_require "$JOB" "$OUT_LOG" || exit 1
 
