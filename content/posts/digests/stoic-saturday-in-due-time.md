@@ -48,7 +48,7 @@ The Stoic use of a week like this one is to practice the smaller interval at hom
 
 **The eleventh.** The [Veterans Day reflection](https://www.huffmanwrites.org/posts/essays/the-eleventh-hour/) records what the date actually commemorates: the hour the firing stopped, not the victory that followed a year later. Congress moved the observance to a Monday in 1971 and gave it back in 1975, and the reason is worth keeping. A date carries a fact a long weekend cannot. The poem [Where Valor Sleeps](https://www.huffmanwrites.org/posts/essays/where-valor-sleeps/) asks the same debt in verse, and ends where the essay does: honor them not with tears, but with the work of all our years.
 
-**The board.** Equities closed lower on Thursday, with the S&P 500 at 7,592.40, down 0.35 percent, and the ten-year Treasury at 5.137 percent, up 3.4 basis points. The VIX sat at 18.23 this morning, well below the 26.78 it touched on the Thursday after the election, which suggests a market that has stopped pricing the result and started pricing something else. The morning prints put gold at $3,899.10 an ounce and front-month crude at $88.58 a barrel. These are Thursday's closes and Friday's quotes, not verdicts.
+**The board.** Equities closed lower on Thursday, with the S&P 500 at 7,592.40, down 0.35 percent, and the ten-year Treasury at 5.137 percent, up 3.4 basis points. The VIX sat at 18.23 on Friday morning, well below the 26.78 it touched on the Thursday after the election, which suggests a market that has stopped pricing the result and started pricing something else. The morning prints put gold at $3,899.10 an ounce and front-month crude at $88.58 a barrel. These are Thursday's closes and Friday's quotes, not verdicts.
 
 **The weekly reports**
 
