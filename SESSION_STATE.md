@@ -13,6 +13,16 @@
 ---
 
 
+### Tooling — 13NOV26 — `generate_image` works again, on fal.ai, through an extension
+
+- **The failure was an empty model chain, not an exhausted balance.** `generate_image` had answered "Image generation exhausted the resolved image chain" for three days. `cfg://` shows `modelRoles` with no `image` entry, and `omp models --kind image` answers "No models available. Set API keys in environment variables." This machine's only image credential is fal's (`FAL_KEY`, in the environment and `~/.secrets`, with `huffmanwrites-fal` in the keychain), and **fal exposes no OpenAI-compatible `/images/generations` endpoint** — the OpenAI-shaped gateways in the wild are third-party proxies that translate fal's queue API — so no `models.yml` provider entry can reach it. It was never a key problem, and rotating the key would not have changed the error.
+- **The fix is an extension that shadows the built-in tool**, `scripts/omp-extensions/fal-image.ts`, copied to `~/.omp/agent/extensions/fal-image.ts`. An extension tool registered under the same name takes precedence, so the model keeps calling `generate_image` and the transport underneath is fal's queue API: default `fal-ai/flux/dev`, `aspect_ratio` mapped to fal's `image_size` presets, `width`/`height` for an exact frame, one `input` reference for edits, `FAL_KEY` resolved from environment → `~/.secrets` → keychain, a 3-minute cap, and saved paths returned under `$TMPDIR`. Extension discovery runs at session start, so a session that predates the file still has the broken built-in one.
+- **Verified by running it in a fresh session, three ways.** `omp -p` with a one-line prompt returned `omp-image-…-0.jpg` at **1024×768** with no size hint; `aspect_ratio: 3:4` returned **768×1024**; `width: 1024, height: 1280` returned **1024×1280**, which is the 4:5 mobile hero exactly and removes the crop step that cut the urn's base on NN 158. Each call took 9–11 seconds.
+- **Two of these exist on purpose and must not drift.** The repo copy is canonical and the installed copy is a `cp` of it, per `skills/hero-image-workflow.md`. The repo copy is under `scripts/` rather than tracked as a site asset because it is environment plumbing: it is not content, it is not built, and no gate reads it.
+- **Do not reinstate the bespoke python gen scripts.** Two `/tmp` scripts (`gen_hero.py`, `hero_portrait.py`) existed because this tool was down; they are deleted, and the skill's generation step now names the tool.
+
+---
+
 ### Content — 13NOV26 — What Missouri locked and what Alaska kept, and why the ranked-ballot ceiling has not moved
 
 - **Added** `content/posts/essays/what-missouri-locked-what-alaska-kept.md` — 3,543 words whole-file, 16 footnotes, `draft: false`, `featuredOnHome: true`, NN 158. Live at `/posts/essays/what-missouri-locked-what-alaska-kept/`. This is the RCV piece the FLAGGED note had waited on since 15SEP26.
