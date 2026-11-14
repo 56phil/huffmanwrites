@@ -23,12 +23,19 @@ so: at that point the page cannot be live before a 06:00 send, and the note is
 the only warning before the campaign fires. Silence about a
 missing page would be the same failure the job exists to prevent, so the run is
 verification, not a fire-and-forget trigger.
+
+Once the page answers it also gives the vault its copy, through the same
+`mirror-post.sh` a hand run uses. No publish tail ever runs for a letter — it is
+published by this job and by nothing else — so until 2026-11-14 the mirror was
+whoever remembered it, and the letter of that morning reached every inbox and
+the site while `check-vault-currency.py` found the vault without it.
 """
 
 from __future__ import annotations
 
 import argparse
 import datetime as dt
+import os
 import re
 import subprocess
 import sys
@@ -129,6 +136,52 @@ def verify(article: Path) -> int:
     return done.returncode
 
 
+def mirror(article: Path) -> int:
+    """Give the vault its copy of the letter, once the page is served.
+
+    This calls `mirror-post.sh` rather than reimplementing it, so the vault gets
+    one translate/commit/push flow whether the run is scheduled or by hand, and
+    the script's own refusals — a checkout behind `origin`, a file edited after
+    its push — still speak for a letter.
+
+    The vault is checked first, because the mirror is a model session and this
+    function is reachable twice for one letter: launchd fires a missed job on
+    wake, and that second run finds the page already served and arrives here
+    again. Re-translating a piece already in the vault would cost a model run to
+    rewrite a file that is already right.
+
+    Its exit code is reported and deliberately not propagated. A refusal here
+    can only cost the vault a copy, which `check-vault-currency.py` reports on
+    the next sweep; failing the run would instead report a letter that reached
+    every reader as a failure, and the alert would name the wrong fault.
+    """
+    if in_vault(article):
+        print(f"digest-release: {article.stem} is already in the vault; not mirroring again")
+        return 0
+    done = subprocess.run(
+        [str(REPO / "scripts" / "mirror-post.sh"), str(article)],
+        text=True, capture_output=True,
+    )
+    detail = ((done.stdout or "") + (done.stderr or "")).strip().splitlines()
+    outcome = "ok" if done.returncode == 0 else "did not run"
+    print(f"digest-release: vault mirror {outcome} (exit {done.returncode})"
+          + (f" — {detail[-1]}" if detail else ""))
+    return done.returncode
+
+
+def in_vault(article: Path) -> bool:
+    """Whether the vault already holds both halves of this piece.
+
+    Both are required: `publish_simplebrain` leaves the translated entry in
+    `wiki/articles/` and the raw source in `archive/`, and a vault with only one
+    of the two is a mirror that stopped halfway, which is worth running again.
+    """
+    root = Path(os.environ.get("SIMPLEBRAIN_ROOT", Path.home() / "SimpleBrain"))
+    slug = article.stem
+    return ((root / "wiki" / "articles" / f"{slug}.md").is_file()
+            and (root / "archive" / f"{slug}.md").is_file())
+
+
 def main(argv: "list[str] | None" = None) -> int:
     ap = argparse.ArgumentParser(description="Release an embargoed Stoic Saturday page.")
     ap.add_argument("--date", help="CT date to release (YYYY-MM-DD; default today)")
@@ -166,6 +219,7 @@ def main(argv: "list[str] | None" = None) -> int:
     url = url_for(path)
     if served(url):
         print(f"digest-release: {url} already answers 200; nothing to release")
+        mirror(path)
         return 0
 
     if args.dry_run:
@@ -184,6 +238,7 @@ def main(argv: "list[str] | None" = None) -> int:
         print(f"digest-release: {url} did not answer with {fields.get('title', path.stem)!r}")
         return 1
     print(f"digest-release: released {url}")
+    mirror(path)
     return 0
 
 

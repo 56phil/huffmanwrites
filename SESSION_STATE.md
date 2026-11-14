@@ -13,6 +13,12 @@
 ---
 
 
+### Ops — 14NOV26 — The letter's release now mirrors it, because nothing else was going to
+
+- **`digest-release` releases a page and no publish tail runs for one**, so the vault copy of a Stoic Saturday was whoever remembered it. Measured this morning: campaign `3114676` sent, page serving at 05:55:25, and `check-vault-currency.py` the only thing that noticed the vault did not have it. `scripts/digest-release.py` now runs `scripts/mirror-post.sh` on the letter once the page answers — on both success paths, the verified release and the already-served re-run — and reports the exit code without propagating it.
+- **A vault guard keeps the mirror from becoming a second model session per Saturday.** `publish_simplebrain` runs `claude -p`, and launchd fires a missed job on wake, so the already-served path is reachable twice for one letter. `in_vault()` requires both halves of the mirror — `wiki/articles/<slug>.md` and `archive/<slug>.md` — and the function returns before the subprocess when both are there. Exercised end to end on today's letter: `digest-release.py --date 2026-11-14` printed `already answers 200` then `already in the vault; not mirroring again`, exit 0, no model call.
+- **Its failure is reported, not raised.** A refused mirror — a checkout behind `origin`, a file edited after its push — can only cost the vault a copy, which the next sweep names; failing the release would report a letter every reader received as a failed publish. Five tests pin it: the call happens after release, it happens on the already-served path, a refusal leaves the exit code at 0, a dry run never reaches it, and the vault guard needs both halves. `TestDigestRelease` is 21 tests; the suite is 600, OK.
+
 ### Content — 14NOV26 — A quotation that was not quite the translator's: one mark, caught online
 
 - **Corrected the epigraph** in `content/posts/summaries/self-care-for-people-with-adhd-summary.md` from `let this thought be present: I am rising` to `let this thought be present,—I am rising`. The Long rendering on the cited page puts a comma and a dash there, not a colon, so the marked-up string did not appear on the page it was cited to.
