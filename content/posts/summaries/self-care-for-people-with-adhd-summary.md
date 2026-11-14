@@ -80,7 +80,7 @@ The account of scope above rests on those records: the six domains, the entry co
 
 ---
 
-> *"In the morning when thou risest unwillingly, let this thought be present: I am rising to the work of a human being."*
+> *"In the morning when thou risest unwillingly, let this thought be present,—I am rising to the work of a human being."*
 > — Marcus Aurelius, [*Meditations* 5.1](https://en.wikisource.org/wiki/The_Thoughts_of_the_Emperor_Marcus_Aurelius_Antoninus/Book_V) (trans. George Long, 1862)
 
 ---
