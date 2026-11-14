@@ -7432,9 +7432,9 @@ class TestDigestRelease(unittest.TestCase):
         path.write_text(f'---\ntitle: "{title}"\ndate: {when}\ndraft: {str(draft).lower()}\n---\n\nBody.\n')
         return path
 
-    def run_main(self, argv, served=False, verify_rc=0, dispatch_rc=0):
+    def run_main(self, argv, served=False, verify_rc=0, dispatch_rc=0, mirror_rc=0):
         import unittest.mock as mock
-        calls = {"dispatch": 0, "verify": 0}
+        calls = {"dispatch": 0, "verify": 0, "mirror": 0, "mirrored": []}
         def fake_served(url, timeout=20):
             return served
         def fake_dispatch(branch="main"):
@@ -7443,8 +7443,12 @@ class TestDigestRelease(unittest.TestCase):
         def fake_verify(article):
             calls["verify"] += 1
             return verify_rc
+        def fake_mirror(article):
+            calls["mirror"] += 1
+            calls["mirrored"].append(article)
+            return mirror_rc
         with mock.patch.multiple(drel, served=fake_served, dispatch=fake_dispatch,
-                                 verify=fake_verify):
+                                 verify=fake_verify, mirror=fake_mirror):
             with contextlib.redirect_stdout(io.StringIO()) as out:
                 rc = drel.main(argv + ["--section", str(self.section)])
         return rc, calls, out.getvalue()
@@ -7500,6 +7504,113 @@ class TestDigestRelease(unittest.TestCase):
         self.assertEqual(rc, 0)
         self.assertEqual(calls["dispatch"], 0)
         self.assertIn("already answers", out)
+
+    def test_the_letter_reaches_the_vault_once_the_page_is_served(self):
+        # No publish tail runs for a letter: this job is what publishes it, so
+        # without this call the vault copy is whoever remembered it. On 14NOV26
+        # the letter reached every inbox and the site and the vault did not have
+        # it until check-vault-currency.py named the file.
+        self.letter()
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["mirror"], 1)
+        self.assertEqual(calls["mirrored"][0].name, "stoic-saturday-x.md")
+
+    def test_a_page_already_served_is_still_mirrored(self):
+        # The page can answer because another push deployed it, and a wake-time
+        # re-run is then the only chance the vault has.
+        self.letter()
+        rc, calls, _ = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"],
+                                     served=True)
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["mirror"], 1)
+
+    def test_a_mirror_that_refuses_does_not_fail_a_delivered_letter(self):
+        # mirror-post.sh refuses a checkout behind origin or a file edited after
+        # its push. That can only cost the vault a copy, and the Monday vault gate
+        # is what fails over it; failing here would report a letter every reader
+        # received as a failed release.
+        self.letter()
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"],
+                                       mirror_rc=1)
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["mirror"], 1)
+
+    def test_the_mirror_runs_the_hand_command_rather_than_a_copy(self):
+        # The vault gets one translate/commit/push flow whether the run is
+        # scheduled or by hand. A second implementation here is the drift the
+        # publish tail was consolidated to prevent.
+        import unittest.mock as mock
+        article = self.letter()
+        with mock.patch.object(drel.subprocess, "run") as run:
+            run.return_value = subprocess.CompletedProcess(
+                args=[], returncode=0, stdout="mirrored: x.md\n", stderr="")
+            with contextlib.redirect_stdout(io.StringIO()):
+                rc = drel.mirror(article)
+        argv = run.call_args[0][0]
+        self.assertTrue(argv[0].endswith("mirror-post.sh"), argv[0])
+        self.assertEqual(argv[1], str(article))
+        self.assertEqual(rc, 0)
+
+    def test_a_refused_mirror_is_reported_and_not_raised(self):
+        # The refusal names its own cause, and the release's exit code is what a
+        # reader-facing failure means; a vault gap is a different verdict.
+        import unittest.mock as mock
+        article = self.letter()
+        with mock.patch.object(drel.subprocess, "run") as run:
+            run.return_value = subprocess.CompletedProcess(
+                args=[], returncode=2,
+                stdout="", stderr="mirror-post: HEAD is not origin/main\n")
+            with contextlib.redirect_stdout(io.StringIO()) as out:
+                rc = drel.mirror(article)
+        self.assertEqual(rc, 2)
+        self.assertIn("did not run", out.getvalue())
+        self.assertIn("HEAD is not origin/main", out.getvalue())
+
+    def test_a_letter_already_in_the_vault_is_not_translated_again(self):
+        # The mirror is a model session, and launchd's wake-time re-run reaches
+        # this function a second time for the same letter.
+        import unittest.mock as mock
+        article = self.letter()
+        with mock.patch.object(drel, "in_vault", return_value=True), \
+             mock.patch.object(drel.subprocess, "run") as run:
+            with contextlib.redirect_stdout(io.StringIO()) as out:
+                rc = drel.mirror(article)
+        run.assert_not_called()
+        self.assertEqual(rc, 0)
+        self.assertIn("already in the vault", out.getvalue())
+
+    def test_the_vault_guard_needs_both_halves_of_the_mirror(self):
+        # A vault holding the wiki entry but not the archived raw source is a
+        # mirror that stopped halfway, and running it again is how it finishes.
+        import unittest.mock as mock
+        import os as _os
+        vault = Path(self.tmp.name) / "vault"
+        (vault / "wiki" / "articles").mkdir(parents=True)
+        (vault / "archive").mkdir()
+        article = self.letter()
+        with mock.patch.dict(_os.environ, {"SIMPLEBRAIN_ROOT": str(vault)}):
+            (vault / "wiki" / "articles" / f"{article.stem}.md").write_text("# X\n")
+            self.assertFalse(drel.in_vault(article))
+            (vault / "archive" / f"{article.stem}.md").write_text("raw\n")
+            self.assertTrue(drel.in_vault(article))
+
+    def test_a_dry_run_mirrors_nothing(self):
+        self.letter()
+        rc, calls, out = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00",
+                                        "--dry-run"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls["mirror"], 0)
+        self.assertIn("would dispatch", out)
+
+    def test_a_letter_that_is_not_due_is_not_mirrored(self):
+        # Nothing was released, so there is nothing to mirror; a mirror here
+        # would put an embargoed page's text in the vault.
+        rc, calls, _ = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:55:00"])
+        self.assertEqual(calls["mirror"], 0)
+        self.letter()
+        rc, calls, _ = self.run_main(["--date", "2026-10-31", "--now", "2026-10-31T05:00:00"])
+        self.assertEqual(calls["mirror"], 0)
 
     def test_a_draft_is_not_released(self):
         # A letter left `draft: true` is one the site will not build at all, so
