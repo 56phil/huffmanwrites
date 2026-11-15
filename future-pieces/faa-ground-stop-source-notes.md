@@ -862,6 +862,41 @@ The claim a reader will bring is "this could have been prevented with better mit
 
 **How to phrase it in the piece, once.** "The stop was the safety action; what was avoidable was doing a live cutover on the network that carries the airspace without the agency's own technicians assessing the risk, and then needing three-quarters of an hour to find the cause. Whether more redundancy would have contained it is a question the FAA has not answered, and the system that failed was the system designed to be redundant."
 
+### 18.12 The warning existed in writing, and it was not about DOGE — added 15NOV26
+
+**The document.** GAO-26-107992, *Air Traffic Control Systems: Ambitious New Modernization Effort Needs Cost and Schedule Planning*, report dated **14SEP26**, to the House Oversight Subcommittee on Government Operations. **Fetched whole 15NOV26** (`download.aopa.org/advocacy/2026/2026-09_GAO-26-107992-Air-Traffic-Control-Systems.pdf`, 10 MB, text extracted with `pdftotext`).
+
+**Why it matters to §18.11.** It moves the **method** layer from *probably supported* to **supported**, and it does so in the government's own words, two months before the outage:
+
+> "FAA has not developed an integrated master schedule for phase 1. Instead, FAA has 11,389 individual project schedules that are not integrated. As a result, individual projects are scheduled for installations at the same sites, generally without optimizing the schedules to reduce impacts to controller operations."
+
+And its own prediction of the consequence:
+
+> "…could lead to more system outages, ground stops, flight delays, and safety incidents."
+
+That is the September warning the Washington Post reported on 14NOV26 as "FAA was warned for years about repair risks leading to nationwide ground stop" — the article answered a timeout to this client, so **the GAO PDF is the citation, not the newspaper**. GAO also records the sequencing problem in the concrete: the integrator delivered a preliminary integrated master schedule in **April 2026**, and as of **May 2026** the 11,389 schedules were still unintegrated, because FAA officials said integrating them "would not be useful or helpful." An AI tool to optimise them was in testing, with no business rules and no implementation date.
+
+**Also from the report, for §4's numbers.** As of **May 2026**, FAA had replaced **2,560 of 5,170** copper connections — 49.5%. The Vought–Duffy letter put it at 68% and the contractor's own tracker at 70% by 2NOV26 (§14, §18.10). Three figures, three dates, one trend; never printed as agreement.
+
+**And the pattern, in GAO's own list:** the January 2023 NOTAM stop (≈2 hours, 1,300 cancellations, 10,000 delays); Newark's April and May 2025 failures at Philadelphia TRACON ("controllers were unable to see aircraft positions or communicate with pilots"); and **September 2025 at Dallas TRACON**, where "a telecommunications issue led to a loss of radar, frequencies, and automation equipment … ground stops and over 1,800 flight delays and cancellations as controllers reverted to manual methods." The §7 list now has a fourth citation, from an auditor rather than a newspaper.
+
+### 18.13 Can any of it be traced to DOGE? No, and the honest answer is more useful than yes
+
+Asked directly on 15NOV26. The verdict the pack already carried (§10.5: "DOGE causation is unestablished. Structural link only, and say so") survives this week's disclosures, and now has a better rival explanation.
+
+**What breaks a DOGE chain on the evidence.**
+
+1. **The work was contract work on a contract older than DOGE.** FTI is `DTFA01-02-D-03006`, awarded to Harris in **July 2002** and held ever since (§18.10). The cutover was performed under it. No fetched source places a DOGE decision anywhere in the chain from contract to router.
+2. **The money came from Congress, not from DOGE, and it went to modernisation.** $12.5B under P.L. 119-21, July 2025 (§9.1). The Verge's finding is the opposite of causation: DOGE "did not help the FAA buy or implement any major system upgrades," and "none of the $12.5 billion … goes toward personnel" (§10.4, §10.5).
+3. **The specific failure is an install or equipment fault.** Duffy: "user error or install error from L3Harris or … a faulty router," undetermined (§18.1). PASS says its technicians were not involved — the risk-assessment step — which is a **process** statement about a *protocol*, not automatically a statement about headcount.
+4. **The strongest causal document points at programme design.** GAO, September 2026: 11,389 unintegrated schedules, installations sequenced "without optimizing the schedules to reduce impacts to controller operations" (§18.12). That is a finding about how the modernisation is managed, and it implicates an administration that was in a hurry — but not the DOGE episode in particular.
+
+**The one channel that stays open, and how to state it.** Staffing may bear on the *duration* rather than the cause. The FAA's own **ATSS Workforce Plan 2026–2030** (fetched 15NOV26) says the agency is "currently unable to staff all shifts at 67 facilities"; that ATSSs averaged **115 hours of overtime each in FY 2025** "fixing aging equipment"; and that "staffing shortfalls have resulted in longer restoration times and increased reliance on second level support." **Longer restoration times** is precisely the 4 h 22 m in §3 and the ~45-minute detection window in §18.1. The plan does not mention the February 2025 terminations, and the shortfall it documents long predates them — GAO reported in September 2024 that 51 of 138 ATC systems were unsustainable and 54 more potentially so, and the understaffing was chronic before 2025.
+
+**So the defensible sentence is:** the modernisation that broke the airspace was already running behind a schedule nobody had integrated, on equipment an auditor had called unsustainable for two years, with a technician corps the agency says cannot cover every shift — and the DOGE episode neither caused that nor repaired it; it terminated roughly 350–400 people, delivered no upgrades, and left the rest to contractors. Structural link, named and bounded; causation, not established, and the paperwork now points elsewhere.
+
+**What would change this verdict:** a fetched source showing that the risk assessment was skipped *because* of the 2025 reductions, or that the cutover was accelerated to a political deadline. Neither exists in the record as of 15NOV26. Look for both in any OIG report on 13NOV26 (§18.9).
+
 ---
 
 ## 19. Daily collection log
