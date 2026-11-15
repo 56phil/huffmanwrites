@@ -8424,5 +8424,126 @@ class TestDigestCampaign(unittest.TestCase):
         self.assertIn("resolve_homes", source)
 
 
+# --------------------------------------------------------------------------
+class TestGroundStopPack(unittest.TestCase):
+    """The daily pass that keeps the ground-stop source pack current.
+
+    Philip, 15NOV26: "From now on, update the source pack daily until further
+    notice." The pack is the evidence record behind the 13NOV26 piece, and two
+    of its facts decay on a clock: the FAA advisory index keeps 15 days, and
+    FlightAware's totals are only true once the day closes.
+
+    What is asserted here is the collector's honesty, not its usefulness: that
+    it reads rows as printed, that it never confuses a US total with a
+    worldwide one, that a re-run replaces instead of duplicating, that it says
+    nothing when it read nothing, and that it writes no analysis and touches no
+    git. The prose delta (§18 of the pack) is deliberately not machine-written.
+    """
+
+    PLIST = SCRIPTS / "com.huffmanwrites.faa-ground-stop-pack.plist"
+    RUNNER = SCRIPTS / "faa-ground-stop-pack-runner.sh"
+    COLLECTOR = SCRIPTS / "faa-ground-stop-pack.py"
+
+    ADVISORIES = """
+      <table><tr>
+        <td><a
+            href="/adv/adv_otherdis?adv_date=11132026&advn=111">111</a></td>
+        <td>DCC</td><td>11/13/26</td>
+        <td>NATIONAL GROUND STOP<BR>COMMENTS: NATIONAL STOP</td>
+        <td>11/13/26 20:54</td>
+      </tr><tr>
+        <td><a href="/adv/adv_otherdis?adv_date=11132026&advn=112">112</a></td>
+        <td>DCC</td><td>11/13/26</td><td>OPERATIONS PLAN</td>
+        <td>11/13/26 21:02</td>
+      </tr></table>
+    """
+
+    TOTALS = """
+      <h3>Total delays yesterday:&nbsp;&nbsp;22,168</h3>
+      <h3>Total delays within, into, or out of the United States
+          yesterday:&nbsp;&nbsp;8,689</h3>
+      <h3>Total cancellations yesterday:&nbsp;&nbsp;7,345</h3>
+      <h3>Total cancellations within, into, or out of the United States
+          yesterday:&nbsp;&nbsp;6,692</h3>
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.mod = load("faa-ground-stop-pack")
+
+    def test_the_index_rows_are_read_as_printed(self):
+        rows = self.mod.parse_advisories(self.ADVISORIES)
+        self.assertEqual([r["num"] for r in rows], ["111", "112"])
+        self.assertEqual(rows[0]["sent"], "11/13/26 20:54")
+        self.assertEqual(rows[1]["title"], "OPERATIONS PLAN")
+        # A <BR> inside a title becomes a separator, never a lost line.
+        self.assertIn("/", rows[0]["title"])
+        self.assertIn("NATIONAL STOP", rows[0]["title"])
+
+    def test_a_ground_stop_row_is_visible_as_one(self):
+        rows = self.mod.parse_advisories(self.ADVISORIES)
+        self.assertTrue(any("GROUND STOP" in r["title"].upper() for r in rows))
+
+    def test_us_and_worldwide_totals_are_not_confused(self):
+        totals = self.mod.parse_totals(self.TOTALS)
+        self.assertEqual(totals["cancellations"]["us"], "6,692")
+        self.assertEqual(totals["cancellations"]["all"], "7,345")
+        self.assertEqual(totals["delays"]["us"], "8,689")
+        self.assertEqual(totals["delays"]["all"], "22,168")
+
+    def test_a_repeat_run_replaces_that_dates_block(self):
+        block = "### 14NOV26\n\nfirst pass\n"
+        once = self.mod.upsert("", "14NOV26", block)
+        twice = self.mod.upsert(once, "14NOV26", "### 14NOV26\n\nsecond pass\n")
+        self.assertEqual(twice.count("### 14NOV26"), 1)
+        self.assertIn("second pass", twice)
+        self.assertNotIn("first pass", twice)
+        self.assertIn(self.mod.LOG_HEADING, twice)
+
+    def test_a_second_date_does_not_replace_the_first(self):
+        text = self.mod.upsert("", "13NOV26", "### 13NOV26\n\na\n")
+        text = self.mod.upsert(text, "14NOV26", "### 14NOV26\n\nb\n")
+        self.assertIn("### 13NOV26", text)
+        self.assertIn("### 14NOV26", text)
+
+    def test_an_offline_pass_collects_nothing_and_says_so(self):
+        # The exit-3 contract: nothing read means nothing written, not an empty
+        # block that would read as a quiet day.
+        block, ok = self.mod.collect(date(2026, 11, 15), offline=True)
+        self.assertFalse(ok)
+        self.assertIn("Offline pass", block)
+
+    def test_the_collector_writes_no_analysis_and_touches_nothing(self):
+        source = self.COLLECTOR.read_text(encoding="utf-8")
+        for forbidden in ("claude", "anthropic", "git ", "SESSION_STATE"):
+            self.assertNotIn(forbidden, source.lower())
+
+    def test_the_plist_fires_once_a_day_at_eight(self):
+        import plistlib
+        plist = plistlib.loads(self.PLIST.read_bytes())
+        self.assertEqual(plist["Label"], "com.huffmanwrites.faa-ground-stop-pack")
+        self.assertEqual(plist["StartCalendarInterval"], {"Hour": 8, "Minute": 0})
+        self.assertNotIn("RunAtLoad", plist)
+        program = plist["ProgramArguments"]
+        self.assertTrue(Path(program[-1]).exists(), program[-1])
+        self.assertIn("faa-ground-stop-pack-runner.sh", program[-1])
+
+    def test_the_runner_alerts_on_failure_and_never_commits(self):
+        text = self.RUNNER.read_text(encoding="utf-8")
+        code = "\n".join(
+            line for line in text.splitlines() if not line.lstrip().startswith("#")
+        )
+        self.assertIn("alert-failure.sh", code)
+        self.assertIn("faa-ground-stop-pack.py", code)
+        for absent in ("git ", "git\t", "claude", "hugo"):
+            self.assertNotIn(absent, code)
+
+    def test_the_skill_names_the_retention_window_and_the_stop_step(self):
+        skill = (REPO / "skills" / "faa-ground-stop-pack.md").read_text(encoding="utf-8")
+        self.assertIn("15 days", skill)
+        self.assertIn("29NOV26", skill)
+        self.assertIn("launchctl bootout", skill)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])

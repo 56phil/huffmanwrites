@@ -1,6 +1,6 @@
 # Source notes — the nationwide ground stop of 13NOV26
 
-**Status:** collection complete for the first pass, 13–14NOV26. Not a draft. Nothing here is prose for publication.
+**Status:** first pass complete 13–14NOV26; **daily passes begin 15NOV26** (§18 is the first manual delta, §19 is the automated daily log). Not a draft. Nothing here is prose for publication. Philip, 15NOV26: keep this pack current daily until further notice.
 **Purpose:** every load-bearing claim in the eventual piece resolves to a page that was fetched, on a date recorded here.
 **Piece window:** Thanksgiving (26NOV26) to Christmas (25DEC26).
 
@@ -722,3 +722,148 @@ AP firings (both), The Hill, POLITICO (Feb 2025, partial), The Independent, Reut
 - **Two different FAA systems are called SMART.** The airspace AI tool and the internal vulnerability tracker (§6.1). Disambiguate every use.
 - **The FAA's own statement says "multiple" centers, not "all."**
 - **Two names for one statute:** P.L. 119-21 is the One Big Beautiful Bill Act, the "Big Beautiful Bill," and the **Working Families Tax Cut Act of 2025** — the last is what the FAA and DOT print in official documents.
+
+---
+
+## 18. Delta, 14–15NOV26 — the government states a cause
+
+The pack closed at 14NOV26 ≈03:30Z, before Saturday's DOT/FAA briefing. Everything in this section postdates it and was fetched on 15NOV26 unless the entry says otherwise. **Nothing above has been edited**; where a line here contradicts a line earlier, §18.7 names which one governs.
+
+### 18.1 The account, as the government now tells it
+
+Told at the DOT briefing on 14NOV26 by Secretary Duffy and Administrator Bedford. The transcript is on `transportation.gov/briefing-room/icymi-us-transportation-secretary-sean-p-duffy-provides-update-restoration-airspace` — that page answers **403** to this client (measured 15NOV26); the text below is the page as rendered by the search backend, and each sentence is also carried by Reuters and CNBC, fetched directly. **Label any quotation with the outlet, per §5.**
+
+The mechanism, in Duffy's words as DOT renders them:
+
+> "In at least one of our remote FAA locations, a contractor was doing routine maintenance to switch telecommunication lines from old copper wire and they were bringing it over to fiber. That contractor that does the work for us is L3Harris."
+
+> "…that router that was being replaced as we switched from copper to fiber, it started flooding other routers in our air traffic control system."
+
+> "So, specifically, we had over 1,000 connection attempts every four to five seconds. And what that did was give us issues with our communication with airplanes and it also caused some disruption with our radar feeds."
+
+Two renderings of the same line already diverge, and this is §5's transcript problem recurring inside the new account:
+
+| Outlet | Rendering of the causal question |
+|---|---|
+| DOT transcript | "whether we had incompetence, meaning was it user error or install error from L3Harris or did they install a faulty router?" |
+| CNBC, 14NOV26 | "whether we had incompetence, meaning was it user error, installator error from L3 Harris, or did they install a faulty router" |
+
+**Scope of the fault.** ABC (AU), 15NOV26: the overload hit "17 of the FAA's 22 en route centres across the country." Bedford, per CNBC: "no FAA facilities went dark," and the stop was ordered on "instability" in information feeds to the centers. The pack's §5 count of affected centers — "multiple" (FAA statement) vs "all" (Duffy's X post) — now has a third figure, from a briefing rather than an advisory. Print the figure with its outlet.
+
+**Two negatives, stated by Bedford, attributed:** "We see zero evidence of anything nefarious, and zero evidence of anything AI-related" (CNBC and ABC, identical wording). §5's AI note therefore keeps its shape: the tool was rolled out to all 22 centers on 10NOV26 and the vendor denied involvement; the government's denial is now on the record as well.
+
+**Not established, and said so at the briefing:** whether the cause was contractor error, install error, or a faulty router. L3Harris's statement (via CNBC, 14NOV26): "We are supporting the FAA in its investigation to understand the conditions that led to the Nov. 13 ground stop of our nation's air travel." It adds that it has "completed more than 70% of the planned airspace communications conversion from legacy copper wires to a fiber optic system."
+
+### 18.2 A labour fact the briefing did not mention
+
+PASS, the union representing ~11,000 FAA employees, issued a statement on 14NOV26 (via ABC):
+
+> "Historically, contractors have followed a protocol where FAA employees conduct a risk assessment and coordinate the maintenance of the system or equipment. PASS-represented technicians were not involved in the upgrades that led to the ground stop yesterday."
+
+This is the first source in the record that describes a *process* control, not a component, and it is the union's account of its own exclusion. It is not corroborated by the FAA in any fetched page. `[INFERENCE]` It also supplies the piece's strongest non-technical sentence: the maintenance that stopped the airspace was done without the agency's own technicians.
+
+### 18.3 The counts, settled
+
+FlightAware, fetched directly on 15NOV26 at 05:31 CT, US-related flights:
+
+| Day | Cancellations | Delays |
+|---|---|---|
+| Fri 13NOV26 (final) | 9,201 | 7,468 |
+| Sat 14NOV26 (final) | 6,692 | 8,689 |
+| Sun 15NOV26 (in progress at fetch) | 1,390 | 1,390* |
+
+\*The page printed the **same value for US cancellations and US delays** on Sunday, which is almost certainly a render artifact; the cancellation line agrees with the morning wire copy (AFP: "more than 1,200"; AP: "more than 800"), the delay line does not. **Re-read before printing; do not print the Sunday delay figure from this pass.** Saturday's worldwide totals were 7,345 cancellations and 22,168 delays.
+
+This supersedes §4's intraday Friday snapshots, which stop at 9:52 p.m. ET and will read low. Friday's settled figure is 9,201, not "6,828 at 9:52 p.m."
+
+### 18.4 The only forward commitment on record
+
+Bedford, 14NOV26, carried identically by ABC, CNBC and AFP: airlines "believe that they'll be able to have full schedule integrity by the close of business on Sunday." Duffy the same day, via AFP: operations were "slowly returning to normal," and "It is going to take us some time to unwind what has happened."
+
+**The deadline that matters is not Sunday.** Airlines for America, via ABC (AU), forecasts "nearly 29 million passengers … between November 20 and 30." The pack's §6–§9 material is the argument; this is the clock.
+
+### 18.5 What passengers actually hold
+
+- **Waivers, not compensation.** American extended its travel alert through **18NOV26** and capped fares on domestic and short international routes (ABC, 15NOV26). Delta is encouraging flexible passengers to move to Monday. US carriers owe a refund only where a flight was cancelled and the passenger chooses not to fly; a government-caused failure triggers no duty of care. This is the fact that makes "the airline will look after you" false, and it belongs in the piece.
+- **Crew cost.** American offered flight attendants extra pay to pick up trips; Delta offered double pay and confirmed seats to reposition crews; United offered premium pay through Sunday (CNBC, 14NOV26, from internal messages). The recovery was bought.
+
+### 18.6 Politics, 14–15NOV26
+
+AFP, 15NOV26: Governor Hochul called on Duffy to resign or be fired — "We're fortunate no lives were lost." Governor Pritzker, on X: "Cut the crap. Trump and Republicans have controlled Congress and could have funded the system." Senator Schmitt: "If today proves anything, it's that we need to update our air traffic control system & rebuild our airport infrastructure." Lawmakers called for investigations into the cause and into cyber exposure. **The President had made no public statement on the outage as of Sunday morning**, per AFP — a fact with a timestamp, so date it if used.
+
+Duffy's ask is already in §9.3 ($50B, spoken, nothing filed). AFP renders it as an appeal for "$50 billion"; §9.3's "confirmed as a spoken demand with nothing filed behind it" still holds.
+
+### 18.7 What this changes in the sections above
+
+| Section | Was | Now |
+|---|---|---|
+| §5, "There is **no** official root-cause document" | true of documents | still true of documents; **no longer true of statements.** The government has an account on the record as of 14NOV26, and it offers two candidate faults in one breath. Say "no published root-cause report; the administration's account as briefed on 14NOV26 is…" |
+| §5, Duffy "still working on the details" | 13NOV26 | now dated; do not present as current |
+| §4 | Friday snapshots to 9:52 p.m. | settled totals in §18.3 |
+| §5, centers affected | "multiple" vs "all" | add "17 of 22 en route centers" (ABC AU) |
+| §11 | carrier-requested stops after the national one lifted | unchanged, and the 15NOV26 advisory index carries no national stop — only operations plans, FCA notices and volcanic-activity bulletins |
+
+### 18.8 Perishability, measured
+
+The FAA advisory index retains **15 days** (§16, item 1), so the 13–14NOV26 advisory URLs die around **29NOV26**. Wayback's availability API answered on 15NOV26 and returned a capture of advisory 111 taken **15NOV26 09:22:20Z** — after the pack was closed, which means the URLs are being re-captured by others and the capture to cite is the latest, not the one this pack recorded. A daily pass (§19) records the capture URL for each advisory it sees, so the piece cites a snapshot that exists.
+
+### 18.9 Open items this pass closes or moves
+
+- §16 item 5 (root-cause publication): no report exists; the briefing is the substitute, and it is not a report.
+- §16 item 1 (re-archive): now mechanical, see §19.
+- New: **whether the FAA resumed the copper-to-fiber cutover work after 14NOV26**, and under what risk assessment. No fetched page answers it. Duffy, via DOT: "there'll be a reevaluation of when we do this work." That is the question the next pass should put to the FAA statements index.
+
+---
+
+## 19. Daily collection log
+
+### 15NOV26
+
+**Collected** 15NOV26 05:40 CT by `scripts/faa-ground-stop-pack.py`. Facts only: every line below was read off the page named, and nothing here is analysis.
+
+**Advisories on the index, 2026-11-15** — 17 rows, fetched 05:40 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-15&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+
+| No. | Control | Sent | Title |
+|---|---|---|---|
+| 017 | DCC | 11/15/26 10:28 | OPERATIONS PLAN |
+| 016 | DCC | 11/15/26 10:05 | ATCSCC ADVZY 016 DCC 11/15/26 FCA RQD / NAME: FCA006:ZMA_CARIBBEAN_NORTHBOUND_NO_ARS / CONSTRAINED AREA: ZMA ZJX ZDC ZNY / VALID: FCA ENTRY TIME FROM 151711 TO 151850 |
+| 015 | DCC | 11/15/26 09:41 | ATCSCC ADVZY 015 DCC 11/15/26 FCA RQD / NAME: FCA004:CAPE_LAUNCH_WEST_COAST_1_PARTIAL / CONSTRAINED AREA: ZMA ZJX ZDC ZNY / VALID: FCA ENTRY TIME FROM 151711 TO 151850 |
+| 014 | DCC | 11/15/26 09:33 | ATCSCC ADVZY 014 DCC 11/15/26 FCA RQD / NAME: FCA003:CAPE_LAUNCH_1B / CONSTRAINED AREA: ZMA ZJX ZDC ZNY / VALID: FCA ENTRY TIME FROM 151711 TO 151850 |
+| 013 | DCC | 11/15/26 09:27 | ATCSCC ADVZY 013 DCC 11/15/26 FCA RQD / NAME: FCA002:CAPE_LAUNCH_1A_PARTIAL / CONSTRAINED AREA: ZMA ZJX ZDC ZNY / VALID: FCA ENTRY TIME FROM 151711 TO 151850 |
+| 012 | DCC | 11/15/26 09:26 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 011 | DCC | 11/15/26 09:21 | ATCSCC ADVZY 011 DCC 11/15/26 FCA RQD / NAME: FCA001:NO_AR_ATLANTIC_Y-RTES_TO_MCO_TPA_RSW_AREAS / CONSTRAINED AREA: ZJX ZMA / VALID: FCA ENTRY TIME FROM 151626 TO 161850 |
+| 010 | DCC | 11/15/26 08:56 | VOLCANIC ACTIVITY BULLETIN - FUEGO |
+| 009 | DCC | 11/15/26 08:26 | VOLCANIC ACTIVITY BULLETIN - REVENTADOR |
+| 008 | DCC | 11/15/26 07:02 | VOLCANIC ACTIVITY BULLETIN - KATMAI |
+| 007 | DCC | 11/15/26 03:38 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 006 | DCC | 11/15/26 02:57 | VOLCANIC ACTIVITY BULLETIN - FUEGO |
+| 005 | DCC | 11/15/26 02:30 | VOLCANIC ACTIVITY BULLETIN - REVENTADOR |
+| 004 | DCC | 11/15/26 00:19 | OPERATIONS PLAN |
+| 003 | DCC/ZDC | 11/15/26 00:04 | ZDC NRP SUSPENSION_RQD |
+| 002 | DCC | 11/15/26 00:03 | TTCA/HOTLINE WEB PAGE TERMINATION |
+| 001 | DCC | 11/15/26 00:03 | EN ROUTE TCA/HOTLINE WEB PAGE TERMINATION |
+
+No row on this day's index is a ground-stop advisory.
+
+**Advisories, 2026-11-16** — the index returned no rows, fetched 05:40 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+
+**FlightAware totals** — fetched 05:40 CT. The date column is this pass's CT date for that page; the tracker words its own pages by weekday.
+
+| Day | Cancels (US) | Delays (US) | Cancels (all) | Delays (all) |
+|---|---|---|---|---|
+| Fri 13NOV26 | 9,201 | 7,468 | 9,938 | 25,041 |
+| Sat 14NOV26 | 6,692 | 8,723 | 7,345 | 22,210 |
+| Sun 15NOV26 | 1,390 | 1,440 | 1,620 | 9,088 |
+
+**Wayback captures** — nearest snapshot the availability API returned for each advisory, fetched 05:40 CT. The advisory index keeps 15 days; a row reading `no capture` is a document no archive holds yet.
+
+| Advisory | Captured (UTC) | Snapshot |
+|---|---|---|
+| 11132026/111 | 20261115092220 | http://web.archive.org/web/20261115092220/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111 |
+| 11132026/119 | no capture |  |
+| 11132026/120 | 20261114173544 | http://web.archive.org/web/20261114173544/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120 |
+| 11142026/1 | no capture |  |
+| 11142026/5 | 20261115112924 | http://web.archive.org/web/20261115112924/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5 |
+| 11142026/18 | 20261114032528 | http://web.archive.org/web/20261114032528/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=18 |
+| 11152026/17 | no capture |  |
+| 11152026/4 | no capture |  |

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.faa-ground-stop-pack</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/faa-ground-stop-pack-runner.sh</string>
+  </array>
+  <!-- Keeps future-pieces/faa-ground-stop-source-notes.md current, daily, until
+       Philip lifts the instruction (15NOV26: "From now on, update the source
+       pack daily until further notice").
+
+       One fire a day at 08:00 CT. The hour is chosen for the two facts that rot:
+       FlightAware's totals for the previous day are final by then, and the FAA
+       advisory index for the day is being written. It sits after the 06:00
+       SITREP and before the 09:15 and 09:30 watchers, so three network jobs do
+       not collide.
+
+       No RunAtLoad: a login is not a new day's data. No model, so no Ollama
+       probe. There is no end date, because the instruction is "until further
+       notice" and the guard for that is a line in the skill, not a comparison
+       here that would exit 0 forever and be forgotten. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>8</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/faa-ground-stop-pack.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/faa-ground-stop-pack.err.log</string>
+</dict>
+</plist>
