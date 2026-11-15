@@ -6,6 +6,10 @@ author: Philip Huffman
 lastmod: 2026-11-16T07:00:00-06:00
 draft: true
 featuredOnHome: true
+hero_desktop: "img/articles/161-blank-reason-field_16x9.webp"
+hero_mobile: "img/articles/161-blank-reason-field_4x5.webp"
+hero_alt: "A standing slab of white marble, its face ruled with fine horizontal grooves like the empty rows of a ledger, with one shallow rectangular niche low on the face glowing with warm amber light, set against deep midnight-navy darkness."
+hero_caption: "The order named no cause. The page kept the space for one, and the light found it first."
 tags:
   - civics
   - essays

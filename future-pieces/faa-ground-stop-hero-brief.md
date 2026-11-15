@@ -72,3 +72,11 @@ One essay, one hero, one gallery entry — not a series plate:
   caption: The light gathers where the reason was left out.
   link: /posts/essays/the-blank-reason-field/
 ```
+
+## Shipped — 15NOV26
+
+- **Both plates generated** through fal (`fal-ai/flux/dev`) after four compositional attempts. The model would not remove the ground plane: every prompt that forbade a floor produced a slab standing on a dark surface anyway, so the pair accepts the surface rather than fighting it, which is what plate 160 does as well ("stand on a polished marble floor"). The slab is lit as a museum object, not as an object in a room.
+- **The hairline gold seam did not render** in either frame. The lit empty niche carries the meaning alone, and nothing was retouched to add what the model would not draw.
+- **Graded as measured**, not as intended. Shadow mean before → after, against the `(19, 30, 57)` target: 16:9 `(2.7, 2.6, 1.3)` → `(18.1, 28.5, 53.9)`; 4:5 `(2.4, 2.3, 1.5)` → `(18.1, 28.6, 54.2)`. The stone keeps the light the model gave it, because the grade touches nothing above the luminance threshold.
+- **Files:** `static/img/articles/161-blank-reason-field_16x9.webp` (1536×1024) and `…_4x5.webp` (1024×1280), each copied byte-identically into `assets/img/articles/`. Frontmatter wired in the draft; `draft: true` stands until the piece is published.
+- **The gallery entry is deliberately not added yet.** A card pointing at `/posts/essays/the-blank-reason-field/` before that page exists would be a dead end dressed as a link. Add it in the same commit that publishes the essay.
