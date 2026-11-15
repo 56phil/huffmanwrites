@@ -1,10 +1,10 @@
 ---
 title: "The Blank Reason Field"
 description: "The order that stopped every departure in the country carried no stated cause, and the cause that emerged two days later was a scheduling decision nobody had integrated."
-date: 2026-11-16T07:00:00-06:00
+date: 2026-11-15T06:30:00-06:00
 author: Philip Huffman
-lastmod: 2026-11-16T07:00:00-06:00
-draft: true
+lastmod: 2026-11-15T06:30:00-06:00
+draft: false
 featuredOnHome: true
 hero_desktop: "img/articles/161-blank-reason-field_16x9.webp"
 hero_mobile: "img/articles/161-blank-reason-field_4x5.webp"
@@ -145,6 +145,8 @@ The Thanksgiving travel period opens on Friday. Airlines for America projects ne
 The blank reason field is the honest artifact of this whole affair. At 3:54 p.m. the agency stopped the country and could not say why, and at 8:19 p.m. it lifted the order and left the field empty, because the fault had been isolated but not explained. Two documents, four hours and twenty-five minutes, and no cause in either of them. What filled the blank two days later was not a villain. It was a maintenance procedure executed on a schedule nobody had put in one place, on equipment an auditor had called unsustainable for two years, with the people who normally assess the risk sitting outside the room, and a monitoring system that could see every circuit and none of the conversations.
 
 The stop was the safety system working. The question the record leaves open is narrower and harder: whether the next conversion, and the one after that, will be scheduled by someone who can see the whole calendar at once.
+
+This piece is preliminary, and it says so on purpose. Everything in it was checked against the documents cited and was current on November 15. What would change the account is still pending, and three items matter most: the agency's investigation, which may or may not name the fault; the resumption of the cutover and whatever risk assessment precedes it; and the Thanksgiving period, which tests the schedule under the heaviest load of the year. A fuller accounting follows in early December, once the first findings are in hand. The record this piece rests on will not change, which is why it was worth setting down before the conclusions became convenient.
 
 Think clearly. Live intentionally. Love deeply.
 
