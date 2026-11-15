@@ -4,7 +4,7 @@ description: "Executive summary of Raise 'Em Right: cultivating judgment, not co
 date: 2026-05-10T00:00:00Z
 author: Philip Huffman
 sort_key: "Huffman, Philip - Raisem Right"
-lastmod: 2026-10-12T00:00:00Z
+lastmod: 2026-11-15T00:00:00Z
 tags:
   - parenting
   - philosophy
@@ -75,7 +75,7 @@ The child who can think is the child who can survive, your absence included.
 
 ---
 
-Expected November 2026.
+Buy it [on Amazon](https://www.amazon.com/dp/B0HRQZPWBS).
 
 Read more about the book: [*Raise 'Em Right*](/books/raisem-right/).
 
