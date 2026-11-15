@@ -747,6 +747,38 @@ class TestPlistRules(unittest.TestCase):
             import plistlib
             plistlib.loads(p.read_bytes())
 
+    def test_every_plist_names_files_that_exist_in_the_checkout(self):
+        # 15NOV26: nine deploys failed between 11:41Z and 12:38Z, and every one
+        # of them was this rule, missing. TestGroundStopPack asserted that the
+        # absolute path in a plist's ProgramArguments existed, which is true on
+        # the machine the jobs run on and false in CI, which checks out to a
+        # different root -- so the gate step died before the build on every push
+        # for an hour, and the site served its morning state meanwhile.
+        #
+        # The plists are right to carry absolute paths; launchd requires them.
+        # The rule belongs here instead: re-root each one at this checkout and
+        # require the file it names to exist. That catches the mistake above and
+        # the likelier one, a runner renamed while its plist still names the old
+        # file, which launchd discovers at 08:00 in a log nobody reads.
+        import plistlib
+        # Greedy, so a checkout that itself contains the repo name (CI uses
+        # /home/runner/work/huffmanwrites/huffmanwrites) re-roots at the last one.
+        pattern = re.compile(r"^/(?:Users|home)/.*/huffmanwrites/(\S+)$")
+        checked = 0
+        for path in cp.repo_plists():
+            data = plistlib.loads(path.read_bytes())
+            for arg in data.get("ProgramArguments", []):
+                match = pattern.match(str(arg))
+                if not match:
+                    continue
+                checked += 1
+                with self.subTest(plist=path.name, arg=arg):
+                    self.assertTrue(
+                        (REPO / match.group(1)).exists(),
+                        f"{path.name} names a file that is not in the checkout: {match.group(1)}",
+                    )
+        self.assertGreaterEqual(checked, 15, "the plist path scan stopped matching")
+
     def test_the_ollama_app_plist_opens_the_app_and_never_a_second_server(self):
         # The durability fix (2026-10-07). Seven AI jobs call localhost:11434, the
         # Ollama app serves it, and the app's own login item did not survive a
