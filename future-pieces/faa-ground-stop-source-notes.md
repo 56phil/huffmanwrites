@@ -780,7 +780,11 @@ This supersedes §4's intraday Friday snapshots, which stop at 9:52 p.m. ET and 
 
 Bedford, 14NOV26, carried identically by ABC, CNBC and AFP: airlines "believe that they'll be able to have full schedule integrity by the close of business on Sunday." Duffy the same day, via AFP: operations were "slowly returning to normal," and "It is going to take us some time to unwind what has happened."
 
-**The deadline that matters is not Sunday.** Airlines for America, via ABC (AU), forecasts "nearly 29 million passengers … between November 20 and 30." The pack's §6–§9 material is the argument; this is the clock.
+**The deadline that matters is not Sunday.** Airlines for America (A4A), the trade association for the major US passenger and cargo carriers, **fetched at source 15NOV26** (`airlines.org/news-update/u-s-airlines-prepare-for-busy-thanksgiving-travel-period-amid-record-high-jet-fuel-costs/`, 10NOV26):
+
+> "Airlines for America (A4A) projects U.S. airlines will carry nearly 29 million passengers over the Thanksgiving holiday travel period (November 20 – 30)."
+
+The same release adds the capacity and the cost, both usable: carriers are offering "38,000 more seats daily, on average, than they did in 2025," the busiest days are expected to be **Sunday 29NOV26 and Monday 30NOV26**, and October's jet-fuel spot price averaged **$4.64 a gallon**, past September's record, with "fuel and labor combined … about 55% of an airline's operating expenses." Its membership is the piece's cast — American, Delta, United, Southwest, Alaska, JetBlue, plus Atlas Air, FedEx and UPS — which is worth knowing before quoting it as a neutral authority: it is an industry lobby, and ABC News calls it exactly that ("a trade association and lobbying group").
 
 ### 18.5 What passengers actually hold
 
@@ -812,6 +816,51 @@ The FAA advisory index retains **15 days** (§16, item 1), so the 13–14NOV26 a
 - §16 item 5 (root-cause publication): no report exists; the briefing is the substitute, and it is not a report.
 - §16 item 1 (re-archive): now mechanical, see §19.
 - New: **whether the FAA resumed the copper-to-fiber cutover work after 14NOV26**, and under what risk assessment. No fetched page answers it. Duffy, via DOT: "there'll be a reevaluation of when we do this work." That is the question the next pass should put to the FAA statements index.
+
+### 18.10 The contractor, in its own filings — added 15NOV26
+
+The piece names L3Harris, so the pack should hold what the company says about itself and what the government's own records say about the contract. All fetched 15NOV26.
+
+**Scale.** L3Harris Technologies, NYSE LHX, Melbourne, Florida, ~**45,000** employees. FY2025 revenue **$21.87B**; FY2026 guidance **$23.5–23.7B** (Q3 release, 29OCT26, which also reports quarterly revenue of $6.1B and a **record backlog of $53.2B**, book-to-bill 3.2x). Market capitalisation at the 13NOV26 close: **$50.7B** (stockanalysis.com). The company reorganised into three segments effective FY2026 — Space & Mission Systems, Communications & Spectrum Dominance, Missile Solutions — and divested its Space Technology Group to AE Industrial Partners on **3AUG26**. President and CEO: **Sam Mehta**.
+
+**The contract.** L3Harris operates the **FAA Telecommunications Infrastructure (FTI)** network as a managed service and, in its own words, "own[s] the equipment and lease[s] the telecommunications services." The scope, from its own programme page and sell sheet: **4,400+ facilities**, **29,000+ telecommunications services**, "45,000 daily flights," "over 100,000 communications devices" monitored 24/7, and a claimed availability of **99.99971%**. Its copper-to-fiber tracker read **70% of sites upgraded, 5,170 fiber connections, last updated 2NOV26** — the number Duffy and the company both cite.
+
+**Age of the arrangement.** The contract PIID is **DTFA01-02-D-03006**; the award went to **Harris Corp** in **July 2002** as FTI, "potentially worth $3.5 billion across 15 years" (Nextgov/FCW, 22JUL02). USAspending lists the recipient as **HARRIS CORPORATION** with **L3HARRIS TECHNOLOGIES, INC** as parent, potential end date **30SEP27** — the paperwork itself shows the lineage, which is why the piece can say "the same contractor since 2002" without asserting a merger date it has not fetched. A **single-source extension** was announced in September 2022 (`sam.gov`, justification notice).
+
+**The successor already exists.** In **March 2023** the FAA awarded **Verizon** the **FENS** recompete — $2.4B, a 15-year period of performance if all options are exercised — explicitly to move off the copper/TDM environment FTI runs on (Washington Technology, 28MAR23). FTI is therefore an incumbent network being replaced, extended in the meantime, which is the institutional fact behind "we're doing the switchover now."
+
+**The company has been blamed for this before, and its answer is on the record.** After a contractor cut Frontier fiber in Denton County and grounded flights at DFW in **September 2025**, the FAA and American Airlines faulted **L3Harris** for "failing to ensure redundancies in the system functioned properly." L3Harris's statement to NBC 5:
+
+> "L3Harris has successfully operated the FAA telecom network for over 20 years with a reliability of 99.999% uptime. The unfortunate outages at DFW were preventable and are a direct result of lack of U.S. government investment to replace legacy, end-of-life analog telecom circuits."
+
+The same statement says the company is "on contract to replace these legacy analog circuits (which total over 5,000) with new modern circuits," and a spokesperson gave the timeline: "modernize the legacy TDM telecom nationwide by the end of 2027." **That is the shape of this event too** — old equipment, a contractor mid-replacement, an outage — and it is the closest thing in the record to a pattern with a named party.
+
+**Two things this section does not establish, and the piece must not imply.** That the 13NOV26 router was L3Harris's own equipment rather than a vendor's — Duffy's briefing offers "contractor error" or "a faulty router" without choosing. And that the company's 99.99971% figure has been independently audited; it is the contractor's own claim, printed here as such.
+
+### 18.11 Was it avoidable? Three layers, and only two of them are evidenced — added 15NOV26
+
+The claim a reader will bring is "this could have been prevented with better mitigation." It is **partly true, and the part that is unproven is the part a network engineer would attack first**, so the piece must not make the claim in one piece. Split it.
+
+**First, fix what "avoided" modifies.** The ground stop was not the failure. Three thousand five hundred aircraft aloft, landed without loss, is the safety system working (§1.1–§1.6, §3). What may have been avoidable is the **event** — a maintenance action that destabilised the network the airspace depends on — and the **duration**, 4 h 22 m to find and isolate one device (§3).
+
+| Layer | The claim | Verdict | Evidence |
+|---|---|---|---|
+| **Process** | The cutover proceeded without the FAA's own technicians performing their normal risk assessment and coordination | **Supported.** The strongest fact in the case | PASS, 14NOV26: "Historically, contractors have followed a protocol where FAA employees conduct a risk assessment and coordinate the maintenance of the system or equipment. PASS-represented technicians were not involved in the upgrades that led to the ground stop yesterday." Uncorroborated by the FAA in any fetched page |
+| **Method** | A remote-site copper-to-fiber cutover could have been staged, isolated and reversed | **Probably supported** | Duffy's account is that remote locations were treated as low-impact and worked "during the day" (§18.1). This was not one-off surgery: the company had completed ~70% of a 5,170-connection programme (§18.10), so it was a repeated procedure with no canary described and, as it turned out, no isolation that held |
+| **Architecture** | Better redundancy design would have stopped the propagation | **Not established — do not assert it** | FTI's redundancy is built for carrier and path failure: "dual private Metro Ring solution … optical carrier protection switching across diverse telecommunications ingress and egress" at 20 ARTCCs, a multi-carrier last mile, 99.99971% claimed availability (§18.10). It **worked**: no facility went dark (§18.1). A faulty router advertising itself into routing adjacencies is a failure *inside* the redundancy, where every alternate path learns from the same broken speaker. More rings do not reach it |
+
+**Why the architecture half fails as an argument.** Redundancy is a statement about *paths*. This failure was a statement about *participants*: one device generating "over 1,000 connection attempts every four to five seconds" (Duffy, §18.1) into peers that believed it. The controls that bear on that are different in kind — control-plane rate limiting, route dampening, prefix limits, and out-of-band management so a flooding device can be reached and shut down without traversing the path it is flooding. `[INFERENCE]` Whether the legacy TDM-to-IP equipment at a remote FAA site supports any of those is **unknown from every fetched page**, and a piece that assumes it is making an engineering claim about gear it has never seen.
+
+**The detection gap is design, and it is evidenced.** Bedford, per CNBC: officials could not identify the cause "for about 45 minutes," and no facility went dark — the symptom was instability in information feeds, not a link failure (§18.1). A monitoring regime built on circuit availability is blind to that class: the circuit was up, the device was up, and the device was the fault. **Availability is the metric that hid this**, which is why the contractor's "99.999% uptime" (NBC 5, September 2025, §18.10) is a true sentence about the wrong quantity. Print the two side by side.
+
+**What would settle the architecture question**, and where to look:
+
+1. The FTI contract's technical requirements for router configuration management and out-of-band access — not public in any page this pack holds.
+2. The FAA's post-event investigation, if one is published. None exists as of 15NOV26 (§18.9).
+3. L3Harris's own account of the maintenance procedure — it has issued a statement of support, not a description of method (§18.1).
+4. Whether the same cutover method ran at the other completed sites without incident. If it did, the method is not the cause and the individual device or install is; if an incident occurred and was absorbed, that is the piece's central finding. **No fetched page answers this.**
+
+**How to phrase it in the piece, once.** "The stop was the safety action; what was avoidable was doing a live cutover on the network that carries the airspace without the agency's own technicians assessing the risk, and then needing three-quarters of an hour to find the cause. Whether more redundancy would have contained it is a question the FAA has not answered, and the system that failed was the system designed to be redundant."
 
 ---
 
