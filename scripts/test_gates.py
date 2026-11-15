@@ -729,6 +729,99 @@ class TestGalleryRules(unittest.TestCase):
 # --------------------------------------------------------------------------
 # Plist gate: the silent-schedule failure.
 # --------------------------------------------------------------------------
+# Hero generation. Hero work used to depend on a harness tool that resolves an
+# image-capable provider; this machine has none, and the extension that used to
+# substitute fal stopped loading on 15NOV26. The script that replaced it has to
+# be reproducible (seed and prompt printed), quiet about the key, and safe to
+# run in a test -- which means the dry run must be a genuine dry run.
+# --------------------------------------------------------------------------
+hi = load("hero-image")
+
+
+class TestHeroImage(unittest.TestCase):
+    SCRIPT = SCRIPTS / "hero-image.py"
+
+    def run_script(self, *args, env_extra=None, unset_key=True):
+        import subprocess
+        env = dict(os.environ)
+        if unset_key:
+            env.pop("FAL_KEY", None)
+        env.update(env_extra or {})
+        return subprocess.run(
+            [sys.executable, str(self.SCRIPT), *args],
+            capture_output=True, text=True, env=env, timeout=60,
+        )
+
+    def test_the_aspects_are_the_ones_the_site_ships(self):
+        # 1536x1024 for the desktop plate, 1024x1280 for the phone, both
+        # multiples of 16 because fal rejects anything else.
+        self.assertEqual(hi.ASPECTS["16:9"], (1536, 1024))
+        self.assertEqual(hi.ASPECTS["4:5"], (1024, 1280))
+        for width, height in hi.ASPECTS.values():
+            self.assertEqual((width % 16, height % 16), (0, 0))
+
+    def test_the_request_carries_the_seed_only_when_given(self):
+        with_seed = hi.request_body("a slab", 1024, 1280, 2611, "fal-ai/flux/dev")
+        self.assertEqual(with_seed["body"]["image_size"], {"width": 1024, "height": 1280})
+        self.assertEqual(with_seed["body"]["seed"], 2611)
+        self.assertTrue(with_seed["endpoint"].endswith("/fal-ai/flux/dev"))
+        without = hi.request_body("a slab", 1024, 1280, None, "fal-ai/flux/dev")
+        self.assertNotIn("seed", without["body"])
+
+    def test_a_dry_run_prints_the_request_and_writes_nothing(self):
+        out = tempfile.mkdtemp() + "/plate.png"
+        proc = self.run_script("--prompt", "a marble ledger page", "--aspect", "16:9",
+                               "--seed", "2611", "--out", out, "--dry-run")
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn('"seed": 2611', proc.stdout)
+        self.assertIn("1536", proc.stdout)
+        self.assertIn("prompt: a marble ledger page", proc.stdout)
+        self.assertFalse(os.path.exists(out), "a dry run wrote an image")
+
+    def test_a_dry_run_needs_no_key_and_says_so_nowhere(self):
+        # The whole point of the record line is that it can be pasted into a
+        # brief; a key in it would be a credential in a document.
+        proc = self.run_script("--prompt", "x", "--aspect", "4:5", "--out",
+                               tempfile.mkdtemp() + "/p.png", "--dry-run",
+                               env_extra={"FAL_KEY": "SUPERSECRETVALUE"})
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertNotIn("SUPERSECRETVALUE", proc.stdout + proc.stderr)
+
+    def test_no_key_is_a_setup_problem_with_a_remedy(self):
+        proc = self.run_script("--prompt", "x", "--aspect", "16:9",
+                               "--out", tempfile.mkdtemp() + "/p.png", "--no-keychain")
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn("install-secret.sh", proc.stderr)
+
+    def test_half_a_size_is_refused(self):
+        proc = self.run_script("--prompt", "x", "--width", "1024",
+                               "--out", tempfile.mkdtemp() + "/p.png", "--dry-run")
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn("together", proc.stderr)
+
+    def test_an_empty_prompt_is_refused(self):
+        proc = self.run_script("--prompt", "   ", "--aspect", "16:9",
+                               "--out", tempfile.mkdtemp() + "/p.png", "--dry-run")
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn("empty", proc.stderr)
+
+    def test_the_script_never_prints_the_key(self):
+        # A failing call is where a key leaks, because a request URL is the
+        # natural thing to print. Assert it against the real submit path with
+        # the network stubbed out.
+        stderr, stdout = io.StringIO(), io.StringIO()
+        import unittest.mock as mock
+        env = {"FAL_KEY": "SUPERSECRETVALUE"}
+        with mock.patch.dict(os.environ, env, clear=False):
+            with mock.patch.object(hi, "submit", side_effect=RuntimeError("fal failed: 401")):
+                with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                    code = hi.main(["--prompt", "x", "--aspect", "16:9",
+                                    "--out", tempfile.mkdtemp() + "/p.png"])
+        self.assertEqual(code, 3)
+        self.assertNotIn("SUPERSECRETVALUE", stdout.getvalue() + stderr.getvalue())
+
+
+# --------------------------------------------------------------------------
 class TestPlistRules(unittest.TestCase):
     def test_double_hyphen_in_a_comment_is_named_as_the_cause(self):
         # The defect that shipped: "--" is illegal inside an XML comment, so
