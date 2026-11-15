@@ -12,6 +12,15 @@
 
 ---
 
+### Ops — 15NOV26 — Hero generation moved into the repo, because the harness tool stopped loading
+
+- **Philip: "Use the second option"** — after the diagnosis that the fal extension still imports as a valid factory while `generate_image` answers from the built-in image role (`Image generation exhausted the resolved image chain`). The extension is no longer in the path; `scripts/hero-image.py` is.
+- **What the script is for is the record, not the pixels.** Six plates were generated for `161-blank-reason-field` and only the survivor's prompt survived, in a brief written after the fact. The script prints `model=`, `size=`, `seed=` and the prompt *before* it calls anything, so a failure still leaves the request in the log and a plate can be regenerated or defended later. `--seed` exists for the same reason.
+- **Contract:** `--prompt` or `--prompt-file`; `--aspect {16:9,4:5,1:1}` or an exact `--width/--height` pair (multiples of 16, refused otherwise); `--seed`; `--model`; `--out`; `--timeout` (default 300 s); `--dry-run`, which is a genuine no-op that reads no key and writes no file; `--no-keychain` for tests. Exit codes `0` wrote an image, `2` setup problem, `3` fal refused or timed out, `4` the download failed. The key is read from the login keychain (`huffmanwrites-fal`) with `FAL_KEY` as an override and is never printed, including on a 401 — asserted by `test_the_script_never_prints_the_key`, which stubs the submit call and searches both streams for the value.
+- **Proved end to end, not just in dry run:** `--aspect 16:9 --seed 42` wrote 777,059 bytes in 6.5 s and fal reported `1536x1024`. The throwaway image was in `/tmp` and is not referenced anywhere.
+- **`skills/hero-image-workflow.md` step 3 was rewritten to use the script**, with the old `generate_image` paragraph kept and prefixed as superseded, because its diagnosis (no OpenAI-compatible `/images/generations` route for fal, so no `models.yml` entry can reach it) is still the explanation. The file's em-dash count is unchanged at 13; the two dashes this edit first added were converted to commas rather than leaving the count higher than it was.
+- **622 tests, OK** (eight new in `TestHeroImage`).
+
 ### Ops — 15NOV26 — Nine deploys failed on one assertion, and the guard now covers the plists
 
 - **Philip: "I received many failure notices from GitHub this morning. Investigate and fix as needed."** There were **nine** failed runs, every one of them this workflow, and every one of them the same assertion: `11:41Z 8d65e58`, `11:52Z f55309b`, `11:56Z 7cc0a3e`, `11:59Z ab64907`, `12:03Z 193a8d1`, `12:04Z` and `12:26Z 5042d55` (push and schedule), `12:28Z 9017ba1`, `12:37Z 8e33e12`. Read from each run's failed-step log rather than from the count: `FAIL: test_the_plist_fires_once_a_day_at_eight`, `AssertionError: /Users/prh/Developer/huffmanwrites/scripts/faa-ground-stop-pack-runner.sh`. One cause, nine notifications, and no second workflow involved.
