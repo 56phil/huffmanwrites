@@ -8538,8 +8538,13 @@ class TestGroundStopPack(unittest.TestCase):
         self.assertEqual(plist["StartCalendarInterval"], {"Hour": 8, "Minute": 0})
         self.assertNotIn("RunAtLoad", plist)
         program = plist["ProgramArguments"]
-        self.assertTrue(Path(program[-1]).exists(), program[-1])
         self.assertIn("faa-ground-stop-pack-runner.sh", program[-1])
+        # launchd needs the absolute path, but asserting that path exists is a
+        # claim about this machine, and CI runs from a different root: the
+        # first version of this line failed every deploy from 12:28Z on
+        # 15NOV26 with "/Users/prh/.../faa-ground-stop-pack-runner.sh". Assert
+        # the script the plist names is in this repo instead.
+        self.assertTrue((REPO / "scripts" / Path(program[-1]).name).exists(), program[-1])
 
     def test_the_runner_alerts_on_failure_and_never_commits(self):
         text = self.RUNNER.read_text(encoding="utf-8")
