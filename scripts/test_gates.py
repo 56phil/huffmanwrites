@@ -8506,6 +8506,19 @@ class TestGroundStopPack(unittest.TestCase):
         self.assertIn("### 13NOV26", text)
         self.assertIn("### 14NOV26", text)
 
+    def test_a_hand_written_reading_survives_a_rerun(self):
+        # The daily pass rewrites its own block. If it rewrote the prose beneath
+        # it, the record would look current and be shorter, which is the worst
+        # failure this job could have.
+        once = self.mod.upsert("", "15NOV26", "### 15NOV26\n\nfirst\n")
+        once += "\n**Reading — 15NOV26** (written by hand).\n\n- kept\n"
+        twice = self.mod.upsert(once, "15NOV26", "### 15NOV26\n\nsecond\n")
+        self.assertIn("second", twice)
+        self.assertNotIn("first", twice)
+        self.assertIn("**Reading — 15NOV26**", twice)
+        self.assertIn("- kept", twice)
+        self.assertEqual(twice.count("### 15NOV26"), 1)
+
     def test_an_offline_pass_collects_nothing_and_says_so(self):
         # The exit-3 contract: nothing read means nothing written, not an empty
         # block that would read as a quiet day.

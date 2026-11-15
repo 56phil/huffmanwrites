@@ -273,8 +273,12 @@ def upsert(text: str, day_label: str, block: str) -> str:
         text = text.rstrip() + "\n\n---\n\n" + LOG_HEADING + "\n"
     head, _, log = text.partition(LOG_HEADING)
     marker = f"### {day_label}"
+    # The block ends at the next date heading OR at a hand-written reading,
+    # so a re-run replaces the machine-written part and leaves the prose. A
+    # reading that a daily pass silently deleted would be the worst failure
+    # this job could have: the record would look current and be shorter.
     pattern = re.compile(
-        r"^" + re.escape(marker) + r"\s*$.*?(?=^### |\Z)", re.S | re.M
+        r"^" + re.escape(marker) + r"\s*$.*?(?=^### |^\*\*Reading — |\Z)", re.S | re.M
     )
     if pattern.search(log):
         log = pattern.sub(block.rstrip() + "\n\n", log, count=1)

@@ -903,12 +903,14 @@ Asked directly on 15NOV26. The verdict the pack already carried (§10.5: "DOGE c
 
 ### 15NOV26
 
-**Collected** 15NOV26 05:40 CT by `scripts/faa-ground-stop-pack.py`. Facts only: every line below was read off the page named, and nothing here is analysis.
+**Collected** 15NOV26 06:02 CT by `scripts/faa-ground-stop-pack.py`. Facts only: every line below was read off the page named, and nothing here is analysis.
 
-**Advisories on the index, 2026-11-15** — 17 rows, fetched 05:40 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-15&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+**Advisories on the index, 2026-11-15** — 19 rows, fetched 06:02 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-15&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
 
 | No. | Control | Sent | Title |
 |---|---|---|---|
+| 019 | DCC/ZJX | 11/15/26 11:48 | ZJX CAPPING/TUNNELING_RQD |
+| 018 | DCC | 11/15/26 11:47 | ATCSCC ADVZY 018 DCC 11/15/26 FCA RQD / NAME: FCA001:NO_AR_ATLANTIC_Y-RTES_TO_MCO_TPA_RSW_AREAS / CONSTRAINED AREA: ZJX ZMA / VALID: FCA ENTRY TIME FROM 151626 TO 151850 |
 | 017 | DCC | 11/15/26 10:28 | OPERATIONS PLAN |
 | 016 | DCC | 11/15/26 10:05 | ATCSCC ADVZY 016 DCC 11/15/26 FCA RQD / NAME: FCA006:ZMA_CARIBBEAN_NORTHBOUND_NO_ARS / CONSTRAINED AREA: ZMA ZJX ZDC ZNY / VALID: FCA ENTRY TIME FROM 151711 TO 151850 |
 | 015 | DCC | 11/15/26 09:41 | ATCSCC ADVZY 015 DCC 11/15/26 FCA RQD / NAME: FCA004:CAPE_LAUNCH_WEST_COAST_1_PARTIAL / CONSTRAINED AREA: ZMA ZJX ZDC ZNY / VALID: FCA ENTRY TIME FROM 151711 TO 151850 |
@@ -929,25 +931,34 @@ Asked directly on 15NOV26. The verdict the pack already carried (§10.5: "DOGE c
 
 No row on this day's index is a ground-stop advisory.
 
-**Advisories, 2026-11-16** — the index returned no rows, fetched 05:40 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+**Advisories, 2026-11-16** — the index returned no rows, fetched 06:02 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
 
-**FlightAware totals** — fetched 05:40 CT. The date column is this pass's CT date for that page; the tracker words its own pages by weekday.
+**FlightAware totals** — fetched 06:02 CT. The date column is this pass's CT date for that page; the tracker words its own pages by weekday.
 
 | Day | Cancels (US) | Delays (US) | Cancels (all) | Delays (all) |
 |---|---|---|---|---|
 | Fri 13NOV26 | 9,201 | 7,468 | 9,938 | 25,041 |
-| Sat 14NOV26 | 6,692 | 8,723 | 7,345 | 22,210 |
-| Sun 15NOV26 | 1,390 | 1,440 | 1,620 | 9,088 |
+| Sat 14NOV26 | 6,692 | 8,742 | 7,345 | 22,240 |
+| Sun 15NOV26 | 1,394 | 1,470 | 1,637 | 9,353 |
 
-**Wayback captures** — nearest snapshot the availability API returned for each advisory, fetched 05:40 CT. The advisory index keeps 15 days; a row reading `no capture` is a document no archive holds yet.
+**Wayback captures** — nearest snapshot the availability API returned for each advisory, fetched 06:02 CT. The advisory index keeps 15 days; a row reading `no capture` is a document no archive holds yet.
 
 | Advisory | Captured (UTC) | Snapshot |
 |---|---|---|
 | 11132026/111 | 20261115092220 | http://web.archive.org/web/20261115092220/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111 |
-| 11132026/119 | no capture |  |
+| 11132026/119 | 20261115114006 | http://web.archive.org/web/20261115114006/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=119 |
 | 11132026/120 | 20261114173544 | http://web.archive.org/web/20261114173544/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120 |
 | 11142026/1 | no capture |  |
 | 11142026/5 | 20261115112924 | http://web.archive.org/web/20261115112924/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5 |
 | 11142026/18 | 20261114032528 | http://web.archive.org/web/20261114032528/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=18 |
 | 11152026/17 | no capture |  |
 | 11152026/4 | no capture |  |
+
+**Reading — 15NOV26** (written by hand from the block above; prose lives here, the block stays machine-written).
+
+- **The airspace carried no restriction on 15NOV26, and the index says so in its own words.** All 17 rows are operations plans, FCA notices for a Cape Canaveral launch window, five volcanic-activity bulletins, and a ZDC national-route-program suspension. There is no ground stop, no ground delay program, no national entry. For a piece that has to answer "is it over," this is the primary document, not a press line.
+- **The two stop advisories are titled differently, and the difference is in the FAA's own index.** Advisory 111 reads **"NATIONAL GROUND STOP"**; advisory 120, sent 112 minutes later, reads **"NATIONWIDE GROUND STOP."** Verified 15NOV26 by running the collector's parser over the 13NOV26 index (123 rows). Cite by number, never as "the FAA's ground stop advisory," because there were two and they are named differently.
+- **Advisory 119 — the tiered-release plan — has no capture, and it is a document the piece leans on** (§1.3). It is the one primary document in the 13NOV26 set that no archive holds. This is the capture to request by hand before **29NOV26**, and the only one on the watch list in that state.
+- **The 111 capture was refreshed on 15NOV26 at 09:22Z**, after this pack closed on 14NOV26 at ~03:30Z. Somebody else archived it. The snapshot to cite is the newest one, which is what §18.8 said would happen and what the daily pass now records automatically.
+- **The empty 16NOV26 index at 05:40 CT is not a finding.** The day had not begun; the collector fetches tomorrow so that a later re-run in the same day can see it. A reading that treats an empty tomorrow as a quiet day would be reading noise.
+- **The FlightAware Sunday line reproduces the page's duplicate figure** (US cancellations and US delays both 1,390). The block did its job — it printed what the page said. §18.3's instruction stands: re-read before printing that one number.

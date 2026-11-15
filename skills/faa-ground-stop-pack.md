@@ -65,6 +65,17 @@ exits 0, because an entry that names its gap is honest and a missing day is not.
 
 ## Reading the log
 
+**Prose goes under the block, and the block never touches it.** Each day's
+machine-written block is followed by a `**Reading — <DATE>**` subsection written
+by hand (or by an agent asked to write the delta), saying what the block means:
+whether the airspace carried a restriction, which advisory titles changed,
+which captures are missing, which numbers the page printed ambiguously. The
+collector stops its own block at that marker, so a re-run replaces the facts and
+leaves the prose — asserted by
+`test_a_hand_written_reading_survives_a_rerun`, because a daily pass that
+silently deleted the analysis would leave a record that looks current and is
+shorter.
+
 - **`no capture`** in the snapshot table is a finding, not a bug. No archive
   holds that advisory yet. The Wayback save endpoint (`web.archive.org/save/`)
   timed out at 45 s when measured on 15NOV26, which is why the job records
@@ -76,6 +87,9 @@ exits 0, because an entry that names its gap is honest and a missing day is not.
 - **The date column is CT**, this pass's date for that page. The tracker words
   its own pages by weekday, and the two have been known to disagree around
   midnight.
+- **An empty tomorrow** is not a quiet day. The collector fetches the next date
+  so that a later re-run can see it; it says nothing at 05:40 about a day that
+  has not started.
 
 ## When to stop it
 
