@@ -726,7 +726,7 @@ AP firings (both), The Hill, POLITICO (Feb 2025, partial), The Independent, Reut
 
 ---
 
-## 18. Delta, 14–15NOV26 — the government states a cause
+## 18. Delta, 14–16NOV26 — the government states a cause
 
 The pack closed at 14NOV26 ≈03:30Z, before Saturday's DOT/FAA briefing. Everything in this section postdates it and was fetched on 15NOV26 unless the entry says otherwise. **Nothing above has been edited**; where a line here contradicts a line earlier, §18.7 names which one governs.
 
@@ -897,6 +897,32 @@ Asked directly on 15NOV26. The verdict the pack already carried (§10.5: "DOGE c
 **So the defensible sentence is:** the modernisation that broke the airspace was already running behind a schedule nobody had integrated, on equipment an auditor had called unsustainable for two years, with a technician corps the agency says cannot cover every shift — and the DOGE episode neither caused that nor repaired it; it terminated roughly 350–400 people, delivered no upgrades, and left the rest to contractors. Structural link, named and bounded; causation, not established, and the paperwork now points elsewhere.
 
 **What would change this verdict:** a fetched source showing that the risk assessment was skipped *because* of the 2025 reductions, or that the cutover was accelerated to a political deadline. Neither exists in the record as of 15NOV26. Look for both in any OIG report on 13NOV26 (§18.9).
+
+### 18.14 The agency answers in writing — added 16NOV26
+
+**The document.** FAA, ["Nationwide Ground Stop: Questions and Answers"](https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers), dated **Sunday, November 15, 2026**, fourteen questions answered. Fetched 16NOV26 05:2x CT. It 403s to a client sending the pack's own User-Agent and answers a plain one; the newsroom index at `faa.gov/newsroom` loads only with `-L` after a 301.
+
+**What it establishes that no earlier page did.** Two candidate locations by name: "a radar site in Amarillo, Texas and a radio communications site in El Dorado, Arkansas." L3Harris "had been doing work at the El Dorado site, including deployment of a new router." Blocking the two sites stabilised the network, and "the broadcasting function was also disabled on all the new routers as a precaution."
+
+**The remedy's size, stated once.** "As a precaution, we disabled the same functionality on approximately 60 similar routers in the system." Duffy on ABC's *This Week* the same day puts the fleet at 69: "we have 69 of these routers in the national airspace. We've stopped their ability to broadcast" (§18.14's ABC citation below). The two counts may differ by whether the originating machines are included; no page says.
+
+**The facility count is now the agency's own.** "We began experiencing instability at 17 of our 22 Air Route Traffic Control Centers, and it spread into several Terminal Radar Approach Controls," and "Approximately 3,500 aircraft safely landed" (§1–§2 record 17 only via ABC AU).
+
+**The denial, verbatim.** "No, this is due to the legacy TDM system causing instabilities. None of the upgraded towers that received modifications from the down payment in the Working Families Tax Cuts went down." Read with the answer above it, the sentence is true of the equipment that failed and silent about the router that spoke; the piece must not present the denial as a finding.
+
+**The timing, conceded.** Asked why the replacement ran mid-day: "This disruption was a result of a routine replacement at a remote facility, which has regularly been done for decades … However, based on what happened Friday, we will reevaluate when we do replacement/maintenance work." That is the first process commitment in the record and it bears on §18.2's PASS claim, which the Q&A does not address.
+
+**Counts that do not agree.** "operators canceled approximately 12,462 flights, including 9,082 cancellations by major airlines," against FlightAware's settled 9,201 US and 9,938 worldwide (§19, 15NOV block). The agency adds: "While not all cancellations were directly caused by the nationwide ground stop."
+
+**Duffy, 15NOV26, ABC News** (`abcnews.com/Politics/transportation-secretary-duffy-atc-routers-ability-broadcast-data/story?id=138155545`, fetched 16NOV26): the router is "in the L3Harris lab down in Florida" with FAA staff on site; the FBI has offered assistance; "no indication that this was a hack"; "We don't think that someone tried to sabotage the network on the install at all. But we don't actually have the root cause." On the sequence: "When the router in that area was turned on, we saw that in Amarillo, Texas, a system we had replaced about three weeks earlier, that started to flood our system as well." On money: none of the $12.5B is "for a new architecture for telecom"; AT&T, Verizon and Lumen are "ready to start working tomorrow"; completion "by the end of 2028 or possibly the first quarter of 2029."
+
+**The appropriators' counter, same weekend** (Larsen and Carson, via ABC): "$4.3 billion but only spent $1 billion, leaving $8 billion unobligated and $11 billion unspent."
+
+**The Amarillo facility, from the ground.** ABC 7 News (KVII), 15NOV26: a "Remote Center Air/Ground Communication (RCAG)" next to Highland Park High School, unmanned, part of the Albuquerque Center, replaced about three weeks before the outage. The agency's word is "radar site"; the local report describes an RCAG. Print both, reconcile neither.
+
+**Open items this pass closes or moves.** §16 item 5 unchanged: no OIG report (the OIG's FAA page carried none at 16NOV26 05:2x CT) and no root cause (Duffy: "we don't actually have the root cause"). §16 item 1 unaffected: the advisories still die around 29NOV26. New and unanswered: what the broadcast function did, what disabling it costs the operation, whether the same cutover method ran at the other converted sites without incident, and whether the Amarillo replacement was itself a latent fault.
+
+**Index state at 16NOV26 05:30 CT:** 21 rows, no national restriction; a CDM ground stop at Las Vegas (Advisory 010) cancelled fourteen minutes later (011). The published piece is [`the-sixty-routers.md`](https://www.huffmanwrites.org/posts/essays/the-sixty-routers/).
 
 ---
 
