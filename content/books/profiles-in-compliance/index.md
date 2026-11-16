@@ -22,4 +22,4 @@ lastmod: 2026-11-16
 
 # Profiles in Compliance
 
-**Available in paperback.**
+**Available in hardcover and paperback.**
