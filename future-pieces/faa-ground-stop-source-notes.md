@@ -996,3 +996,66 @@ No row on this day's index is a ground-stop advisory.
 - **The 111 capture was refreshed on 15NOV26 at 09:22Z**, after this pack closed on 14NOV26 at ~03:30Z. Somebody else archived it. The snapshot to cite is the newest one, which is what §18.8 said would happen and what the daily pass now records automatically.
 - **The empty 16NOV26 index at 05:40 CT is not a finding.** The day had not begun; the collector fetches tomorrow so that a later re-run in the same day can see it. A reading that treats an empty tomorrow as a quiet day would be reading noise.
 - **The FlightAware Sunday line reproduces the page's duplicate figure** (US cancellations and US delays both 1,390). The block did its job — it printed what the page said. §18.3's instruction stands: re-read before printing that one number.
+
+### 16NOV26
+
+**Collected** 16NOV26 08:00 CT by `scripts/faa-ground-stop-pack.py`. Facts only: every line below was read off the page named, and nothing here is analysis.
+
+**Advisories on the index, 2026-11-16** — 27 rows, fetched 08:00 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+
+| No. | Control | Sent | Title |
+|---|---|---|---|
+| 027 | DCC | 11/16/26 13:46 | VOLCANIC ACTIVITY BULLETIN - PURACE |
+| 026 | DCC | 11/16/26 12:48 | OPERATIONS PLAN |
+| 025 | DCC/ZHU | 11/16/26 12:15 | GULF ROUTE CLOSURES_RQD |
+| 024 | DCC | 11/16/26 12:06 | EN ROUTE TCA/HOTLINE ISSUE REQUEST PAGE ACTIVATION |
+| 023 | DCC/ZMA | 11/16/26 11:56 | OCEANIC ROUTE CLOSURES_RQD |
+| 022 | DCC | 11/16/26 11:42 | VOLCANIC ACTIVITY BULLETIN - REVENTADOR |
+| 021 | DCC | 11/16/26 11:00 | ATCSCC ADVZY 021 DCC 11/16/26 FCA RQD / NAME: FCA002:LAKE_ERIE_WEST_PARTIAL / CONSTRAINED AREA: CZY / VALID: FCA ENTRY TIME FROM 161130 TO 161700 |
+| 020 | DCC | 11/16/26 10:20 | VOLCANIC ACTIVITY BULLETIN - POPOCATEPETL |
+| 019 | DCC | 11/16/26 09:56 | OPERATIONS PLAN |
+| 018 | DCC | 11/16/26 09:09 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 017 | DCC | 11/16/26 08:38 | VOLCANIC ACTIVITY BULLETIN - FUEGO |
+| 016 | DCC | 11/16/26 08:02 | VOLCANIC ACTIVITY BULLETIN - PURACE |
+| 015 | SFO/ZOA | 11/16/26 07:36 | CDM GROUND DELAY PROGRAM CNX |
+| 014 | DCC | 11/16/26 05:44 | VOLCANIC ACTIVITY BULLETIN - REVENTADOR |
+| 013 | SFO/ZOA | 11/16/26 04:12 | CDM GROUND DELAY PROGRAM |
+| 012 | DCC | 11/16/26 03:16 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 011 | LAS/ZLA | 11/16/26 03:04 | CDM GS CNX |
+| 010 | LAS/ZLA | 11/16/26 02:50 | CDM GROUND STOP |
+| 009 | DCC | 11/16/26 02:48 | VOLCANIC ACTIVITY BULLETIN - FUEGO |
+| 008 | DCC | 11/16/26 02:24 | VOLCANIC ACTIVITY BULLETIN - PURACE |
+| 007 | FCAP93 | 11/16/26 01:40 | CDM AIRSPACE FLOW PROGRAM CNX |
+| 006 | AUS/ZHU | 11/16/26 01:17 | CDM GROUND DELAY PROGRAM CNX |
+| 005 | DCC | 11/16/26 00:51 | TTCA/HOTLINE WEB PAGE TERMINATION |
+| 004 | DCC/ZDC | 11/16/26 00:32 | ZDC NRP SUSPENSION_RQD |
+| 003 | SFO/ZOA | 11/16/26 00:24 | CDM GROUND DELAY PROGRAM |
+| 002 | DCC | 11/16/26 00:22 | OPERATIONS PLAN |
+| 001 | SFO/ZOA | 11/16/26 00:13 | CDM PROPOSED GROUND DELAY PROGRAM |
+
+Ground-stop rows above, by number: 010.
+
+**Advisories, 2026-11-17** — the index returned no rows, fetched 08:00 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-17&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+
+**FlightAware totals** — fetched 08:00 CT. The date column is this pass's CT date for that page; the tracker words its own pages by weekday.
+
+| Day | Cancels (US) | Delays (US) | Cancels (all) | Delays (all) |
+|---|---|---|---|---|
+| Sat 14NOV26 | 6,700 | 9,188 | 7,355 | 22,740 |
+| Sun 15NOV26 | 2,336 | 10,957 | 2,860 | 26,677 |
+| Mon 16NOV26 | 299 | 1,405 | 612 | 10,270 |
+
+**Wayback captures** — nearest snapshot the availability API returned for each advisory, fetched 08:00 CT. The advisory index keeps 15 days; a row reading `no capture` is a document no archive holds yet.
+
+| Advisory | Captured (UTC) | Snapshot |
+|---|---|---|
+| 11132026/111 | 20261115135700 | http://web.archive.org/web/20261115135700/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111 |
+| 11132026/119 | 20261115140228 | http://web.archive.org/web/20261115140228/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=119 |
+| 11132026/120 | 20261114173544 | http://web.archive.org/web/20261114173544/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120 |
+| 11142026/1 | 20261115140330 | http://web.archive.org/web/20261115140330/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=1 |
+| 11142026/5 | 20261115231106 | http://web.archive.org/web/20261115231106/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5 |
+| 11142026/18 | no capture |  |
+| 11162026/26 | no capture |  |
+| 11162026/19 | no capture |  |
+| 11162026/10 | no capture |  |
+| 11162026/2 | no capture |  |
