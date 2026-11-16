@@ -16,10 +16,10 @@ image_mobile: "img/articles/pic-4x5.webp"
 image_alt: "A receding line of identical white marble busts of the same statesman, each on a gold-capped marble plinth, running back into a black field."
 hero_caption: "One seal. Every impression the same."
 image_caption: "A row of busts, cast from one mould."
-link: "https://www.amazon.com/dp/B0HRV3JJTC"
+link: "https://www.amazon.com/dp/B0HRXL35Y5"
 lastmod: 2026-11-16
 ---
 
 # Profiles in Compliance
 
-**Available in hardcover and paperback.**
+**Available in hardcover, paperback, and Kindle.**
