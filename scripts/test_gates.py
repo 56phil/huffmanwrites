@@ -7480,6 +7480,117 @@ class TestForkSyncJob(unittest.TestCase):
         self.assertNotIn("GITHUB_TOKEN", self.runner)
         self.assertNotIn(".gh_token", self.runner)
 
+    # -- the report's alert breakdown, added 2026-11-16 -------------------
+    #
+    # The count alone was the whole report: "141 Dependabot" is a number whose
+    # reader then opens three security tabs, filters by severity, works out
+    # whether a fix exists, and discovers GitHub had already opened eighteen
+    # pull requests. These tests pin the fields that stop that repetition.
+
+    def _alert(self, severity="high", eco="npm", pkg="left-pad", manifest="package-lock.json",
+               version="1.0.0", patched="1.0.1", advisory="GHSA-xxxx"):
+        return {"severity": severity, "ecosystem": eco, "package": pkg, "manifest": manifest,
+                "version": version, "patched": patched, "advisory": advisory}
+
+    def test_the_breakdown_counts_each_axis_and_what_has_a_fix(self):
+        rows = [self._alert("critical", advisory="GHSA-a"),
+                self._alert("high", pkg="a", advisory="GHSA-b"),
+                self._alert("high", pkg="b", eco="pip", manifest="uv.lock", patched="",
+                            advisory="GHSA-c")]
+        s = cfk.summarise_alerts(rows)
+        self.assertEqual(s["total"], 3)
+        self.assertEqual(s["severity"], {"critical": 1, "high": 2})
+        self.assertEqual(s["ecosystem"], {"npm": 2, "pip": 1})
+        self.assertEqual(s["manifest"], {"package-lock.json": 2, "uv.lock": 1})
+        # "a released fix exists" is the sentence that separates "upstream has
+        # not shipped it" from "upstream shipped it and has not taken it". An
+        # empty patched version must NOT count as fixable, or the remedy line
+        # sends the reader to ask for something that does not exist.
+        self.assertEqual(s["fixable"], 2)
+
+    def test_one_critical_advisory_counted_once_per_manifest(self):
+        # diagram-design's ten criticals are five advisories, each reported twice
+        # — once against `uv.lock` and once against `pyproject.toml`. Ten reads
+        # as ten distinct problems and is not; the dedupe is on the advisory id.
+        rows = [self._alert("critical", advisory="GHSA-a", manifest="uv.lock"),
+                self._alert("critical", advisory="GHSA-a", manifest="pyproject.toml")]
+        s = cfk.summarise_alerts(rows)
+        self.assertEqual(s["severity"]["critical"], 2)
+        self.assertEqual(len(s["criticals"]), 1)
+
+    def test_the_block_names_the_critical_ones_and_the_remedy(self):
+        row = {"repo": "o/f", "upstream": "u/f", "branch": "main", "behind": 0, "ahead": 0,
+               "state": "current", "sec_counts": {"dependabot": 1, "secret_scanning": 0},
+               "alerts": [self._alert("critical", pkg="astro", version="7.0.6", patched="7.2.8",
+                                      advisory="GHSA-26w7-cxv4-gfx2")],
+               "dep_prs": 3}
+        block = "\n".join(cfk.render_alerts(row))
+        self.assertIn("severity: critical 1", block)
+        self.assertIn("a released fix exists for 1 of 1", block)
+        self.assertIn("CRITICAL: astro 7.0.6", block)
+        self.assertIn("7.2.8", block)
+        self.assertIn("GHSA-26w7-cxv4-gfx2", block)
+        self.assertIn("pull requests open on this fork: 3", block)
+        # The remedy must name the upstream, because that is the only repository
+        # where the bump can land without breaking the sync.
+        self.assertIn("`u/f`", block)
+        self.assertIn("diverged", block)
+
+    def test_a_fork_that_is_behind_is_not_told_nothing_was_missed(self):
+        # The remedy sentence is true only of a mirror. Said over a fork that is
+        # behind, it sends the reader upstream after a fix that is already on its
+        # way through the fast-forward.
+        row = {"repo": "o/f", "upstream": "u/f", "branch": "main", "behind": 40, "ahead": 0,
+               "state": "behind", "sec_counts": {"dependabot": 1, "secret_scanning": 0},
+               "alerts": [self._alert()], "dep_prs": 0}
+        block = "\n".join(cfk.render_alerts(row))
+        self.assertNotIn("nothing has been missed", block)
+        self.assertIn("fast-forward", block)
+
+    def test_an_unreadable_breakdown_is_stated_never_blank(self):
+        # A fork counted 141 alerts whose detail could not be read must not
+        # render as a fork with nothing under its count.
+        row = {"repo": "o/f", "upstream": "u/f", "branch": "main", "behind": 0, "ahead": 0,
+               "state": "current", "sec_counts": {"dependabot": 141, "secret_scanning": 0},
+               "alerts_error": "failed to parse jq expression"}
+        block = "\n".join(cfk.render_alerts(row))
+        self.assertIn("unreadable", block)
+        self.assertIn("failed to parse jq expression", block)
+
+    def test_a_fork_with_no_alerts_renders_no_block(self):
+        self.assertEqual(cfk.render_alerts({"repo": "o/f", "sec_counts": {"dependabot": 0}}), [])
+
+    def test_the_summary_counts_distinct_criticals_not_manifest_rows(self):
+        rows = [
+            {"repo": "a/b", "upstream": "u/b", "branch": "main", "behind": 0, "ahead": 0,
+             "state": "current", "sec_counts": {"dependabot": 2, "secret_scanning": 0},
+             "alerts": [self._alert("critical", advisory="GHSA-a", manifest="uv.lock"),
+                        self._alert("critical", advisory="GHSA-a", manifest="pyproject.toml")]},
+        ]
+        report = cfk.render(rows, datetime.now().astimezone())
+        self.assertIn("2 open security alerts", report)
+        self.assertIn("1 distinct critical advisory", report)
+
+    def test_the_alert_reader_refuses_a_row_it_does_not_understand(self):
+        # A response whose shape changes must read as unreadable, not as a
+        # breakdown that quietly attributes an alert to the wrong manifest.
+        import unittest.mock as mock
+        with mock.patch.object(cfk, "gh", return_value=(0, "critical\tnpm\tpkg\n")):
+            rows, why = cfk.alert_rows("o/f")
+        self.assertIsNone(rows)
+        self.assertIn("unparseable", why)
+
+    def test_the_alert_reader_maps_seven_fields_in_order(self):
+        line = "\t".join(["high", "npm", "pkg", "package-lock.json", "1.0.0", "1.0.1",
+                          "GHSA-x"])
+        import unittest.mock as mock
+        with mock.patch.object(cfk, "gh", return_value=(0, line + "\n")):
+            rows, why = cfk.alert_rows("o/f")
+        self.assertEqual(why, "")
+        self.assertEqual(rows, [{"severity": "high", "ecosystem": "npm", "package": "pkg",
+                                 "manifest": "package-lock.json", "version": "1.0.0",
+                                 "patched": "1.0.1", "advisory": "GHSA-x"}])
+
 
 # --------------------------------------------------------------------------
 # Email renderer: the masthead every letter carries from 2026-10-31.
