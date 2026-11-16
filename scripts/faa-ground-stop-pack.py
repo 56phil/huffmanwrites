@@ -18,10 +18,32 @@ as the index prints them, and capture timestamps. No analysis, no cause, no
 model. The prose delta is written by a human or an agent reading this log, and
 `future-pieces/faa-ground-stop-source-notes.md` §18 is the shape that takes.
 
+**It creates captures, not just records them (16NOV26).** `recorded, not
+created` was the first version, on the belief that `web.archive.org/save/`
+timed out at 45 s. Measured 16NOV26, a save answered in **18.4 s** and closed
+the gap the pack had reported for two days, so the timeout was the constraint
+rather than the service. The pass now asks, verifies, and — when nothing holds
+the document — requests the save itself, within a per-pass budget.
+
+**It verifies what it records.** The availability endpoint answers with the
+*closest* capture and echoes the requested URL back, so a near-miss is
+invisible: on 15NOV26 the pack recorded `11142026/18` as captured at
+`20261114032528`, and that snapshot served **404** with nothing in the CDX
+index a day later. A capture is recorded only after the snapshot body is
+fetched and carries the wording it should; otherwise the verdict is
+`no capture` or `unverified`, which are claims about the checker.
+
 Idempotent: a block for a date is replaced, not appended twice. A source that
 fails is named as unavailable; the run stops only when nothing at all was
 collected, because a pack entry that says "unavailable" is honest and a run
 that writes an empty block is not.
+
+Exit codes:
+    0   a block was written (or printed, with --dry-run)
+    3   nothing at all was collected; no block written
+    4   a page was read but a required figure did not parse out of it; the
+        block is still written, and the runner alerts, because a selector that
+        broke is invisible in every other way
 
 Usage:
     python3 scripts/faa-ground-stop-pack.py                 # today, append
@@ -33,6 +55,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import dataclasses
 import datetime as dt
 import html as html_mod
 import pathlib
@@ -54,7 +77,16 @@ ADV_URL = (
 )
 ADV_PAGE = "https://www.fly.faa.gov/adv/adv_otherdis?adv_date={mdY}&advn={n}"
 FLIGHTAWARE = "https://www.flightaware.com/live/cancelled/{which}"
-WAYBACK = "http://archive.org/wayback/available?url={url}"
+WAYBACK = "https://archive.org/wayback/available?url={url}"
+SAVE = "https://web.archive.org/save/{url}"
+
+# A document the FAA can edit or retire, quoted verbatim in §18.14 and on no
+# other watch list. The needle is a phrase from its body, not its title.
+QA_URL = (
+    "https://www.faa.gov/newsroom/"
+    "nationwide-ground-stop-questions-and-answers"
+)
+QA_NEEDLE = "connection attempts every 4 to 5 seconds"
 
 # The event's own documents. Checked every pass so the capture recorded is the
 # newest one, not the one this pack closed with on 14NOV26.
@@ -62,7 +94,18 @@ ARCHIVE_WATCH = [
     ("11132026", 111), ("11132026", 119), ("11132026", 120),
     ("11142026", 1), ("11142026", 5), ("11142026", 18),
 ]
-ARCHIVE_CAP = 24
+
+# The day indexes nobody archived. The strongest primary source for "the
+# airspace carried no restriction on the 15th" is that day's 27-row index
+# page, and when the 15-day window closes it is the only thing that says so.
+# These three are the days before the daily pass started; every later day's
+# index is captured by that day's own pass.
+EVENT_INDEX_DAYS = ("2026-11-13", "2026-11-14", "2026-11-15")
+
+ARCHIVE_CAP = 30          # watch items checked per pass
+SAVE_BUDGET = 6           # save requests per pass: a courtesy, and a bound
+SAVE_TIMEOUT = 100        # a save answered in 18.4 s when measured; 45 s was not enough
+VERIFY_TIMEOUT = 45
 
 UA = "huffmanwrites-ground-stop-pack/1.0 (+https://www.huffmanwrites.org)"
 
@@ -78,6 +121,23 @@ TOTALS = re.compile(
     r"( within, into, or out of the United States)?"
     r" (yesterday|today|[A-Z][a-z]+day):\s*([0-9,]+)"
 )
+FIGROW = re.compile(
+    r"^\|\s*((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun) \d{2}[A-Z]{3}\d{2})\s*"
+    r"\|([^|\n]*)\|([^|\n]*)\|([^|\n]*)\|([^|\n]*)\|",
+    re.M,
+)
+
+
+@dataclasses.dataclass
+class Pass:
+    """One pass's block, and what the pass is able to claim about it."""
+
+    block: str
+    ok: bool                  # anything at all was read
+    problems: dataclasses.field(default_factory=list)  # read, but did not parse
+
+    def __bool__(self) -> bool:  # `if not collect(...)` keeps meaning "nothing read"
+        return self.ok
 
 
 def fetch(url: str, timeout: int = 30) -> str:
@@ -122,6 +182,7 @@ def parse_totals(page: str) -> "dict[str, dict[str, str]]":
 
 
 def wayback_capture(url: str) -> "dict[str, str] | None":
+    """The *closest* capture the availability API offers — which may be a miss."""
     import json
     raw = fetch(WAYBACK.format(url=urllib.parse.quote(url, safe="")), timeout=20)
     data = json.loads(raw)
@@ -129,6 +190,49 @@ def wayback_capture(url: str) -> "dict[str, str] | None":
     if not closest.get("available"):
         return None
     return {"url": closest.get("url", ""), "timestamp": closest.get("timestamp", "")}
+
+
+def verify_capture(snapshot_url: str, needles: "list[str]") -> "tuple[bool, str]":
+    """Fetch the snapshot itself and require it to carry the document's wording.
+
+    This is the half the availability API cannot do. It answers with the
+    nearest capture of *some* URL and echoes the requested URL back, so a
+    near-miss looks exactly like a hit until somebody opens it.
+    """
+    if not snapshot_url:
+        return False, "no snapshot URL"
+    try:
+        body = fetch(snapshot_url, timeout=VERIFY_TIMEOUT)
+    except Exception as exc:  # noqa: BLE001 - reported as the verdict
+        return False, f"snapshot did not serve ({type(exc).__name__})"
+    text = clean(body).lower()
+    for needle in needles:
+        if needle.lower() in text:
+            return True, ""
+    return False, "snapshot does not carry the wording"
+
+
+def save_capture(url: str, timeout: int = SAVE_TIMEOUT) -> "dict[str, str] | None":
+    """Ask the Wayback Machine to archive the page now, and return the capture.
+
+    The save endpoint answers with a redirect to the new snapshot, so the
+    final URL carries its timestamp. Measured 16NOV26: 18.4 s for the advisory
+    the pack had reported as uncapturable for two days.
+    """
+    req = urllib.request.Request(
+        SAVE.format(url=urllib.parse.quote(url, safe=":/?&=%")),
+        headers={"User-Agent": UA},
+    )
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        final = resp.geturl()
+    m = re.search(r"/web/(\d{14})/", final)
+    if not m:
+        return None
+    return {"url": final, "timestamp": m.group(1)}
+
+
+def index_needle(iso: str) -> str:
+    return f"ATCSCC ADVISORIES FOR {iso}"
 
 
 def mdY(date: dt.date) -> str:
@@ -147,13 +251,102 @@ def _table(header: "list[str]", rows: "list[list[str]]") -> "list[str]":
     out = ["| " + " | ".join(header) + " |",
            "|" + "|".join("---" for _ in header) + "|"]
     for row in rows:
-        out.append("| " + " | ".join(c.replace("|", "\\|") for c in row) + " |")
+        out.append("| " + " | ".join(row) + " |")
     return out
 
 
-def collect(day: dt.date, offline: bool = False) -> "tuple[str, bool]":
-    """Render the block for `day` and say whether anything was collected."""
-    now = dt.datetime.now(CT)
+def block_of(text: str, day_label: str) -> str:
+    """This date's machine-written block, up to its hand-written reading."""
+    if not text:
+        return ""
+    pattern = re.compile(
+        r"^### " + re.escape(day_label) + r"\s*$.*?(?=^### |^\*\*Reading — |\Z)",
+        re.S | re.M,
+    )
+    m = pattern.search(text)
+    return m.group(0) if m else ""
+
+
+def prior_state(text: str, day_label: str) -> "dict":
+    """What the previous pass of this date recorded, so a move is visible.
+
+    `upsert` replaces the day's block, which is right — the record should show
+    the settled figure, not a mid-day one. But a figure that moved between
+    passes then vanishes, and the file reads as though the number were always
+    that. Sunday's US cancellations were 1,446 at 08:00 on 15NOV26 and 2,336
+    the next morning; only the second is true, and only the pair shows that a
+    tracker settles.
+    """
+    block = block_of(text, day_label)
+    if not block:
+        return {}
+    when = ""
+    hm = re.search(r"\*\*Collected\*\*\s+\S+\s+(\d{2}:\d{2})\s+CT", block)
+    if hm:
+        when = hm.group(1)
+    figures = {}
+    for day_mark, *cells in FIGROW.findall(block):
+        figures[day_mark.strip()] = [c.strip().split(" (")[0] for c in cells]
+    return {"time": when, "figures": figures}
+
+
+def _moved(value: str, prior: "dict", day_mark: str, index: int) -> str:
+    old = (prior.get("figures") or {}).get(day_mark) or []
+    was = old[index] if len(old) > index else ""
+    if not was or was in ("—", value):
+        return value
+    when = prior.get("time") or ""
+    return f"{value} (was {was}{' at ' + when if when else ''})"
+
+
+def watch_items(day: dt.date, all_rows: "list[dict]") -> "list[tuple[str, str, list[str]]]":
+    """Every document worth a capture this pass: key, URL, wording to require."""
+    items: "list[tuple[str, str, list[str]]]" = []
+    seen = set()
+
+    def add(key: str, url: str, needles: "list[str]") -> None:
+        if url in seen:
+            return
+        seen.add(url)
+        items.append((key, url, needles))
+
+    for mdY_, n_ in ARCHIVE_WATCH:
+        add(f"{mdY_}/{n_}",
+            ADV_PAGE.format(mdY=mdY_, n=n_),
+            [f"advzy {n_:03d}", f"advzy {n_}"])
+
+    # Only documents that can carry the event: the six above, plus any row
+    # whose own title is a ground stop or an operations plan. The index also
+    # prints volcanic-activity bulletins and FCA notices, and a request on
+    # those would spend a save to learn nothing.
+    for row in all_rows:
+        key = (row["adv_date"], int(row["n"]))
+        if key in ARCHIVE_WATCH:
+            continue
+        title = row["title"].upper()
+        if "GROUND STOP" in title or "OPERATIONS PLAN" in title:
+            add(f"{row['adv_date']}/{row['n']}",
+                ADV_PAGE.format(mdY=row["adv_date"], n=row["n"]),
+                [f"advzy {int(row['n']):03d}", f"advzy {int(row['n'])}"])
+
+    # The day indexes themselves: the days before the pass existed, then this
+    # pass's own day.
+    for iso in list(EVENT_INDEX_DAYS) + [day.isoformat()]:
+        add(f"index {iso}", ADV_URL.format(date=iso), [index_needle(iso)])
+
+    add("faa-qa", QA_URL, [QA_NEEDLE])
+    return items
+
+
+def collect(
+    day: dt.date,
+    offline: bool = False,
+    prior: "dict | None" = None,
+    now: "dt.datetime | None" = None,
+) -> Pass:
+    """Render the block for `day` and say what the pass can claim about it."""
+    now = now or dt.datetime.now(CT)
+    prior = prior or {}
     lines = [f"### {label(day)}", ""]
     lines.append(
         f"**Collected** {now.strftime('%d%b%y %H:%M').upper()} CT by "
@@ -161,12 +354,14 @@ def collect(day: dt.date, offline: bool = False) -> "tuple[str, bool]":
         "off the page named, and nothing here is analysis."
     )
     lines.append("")
-    any_ok = False
-    all_rows: "list[dict]" = []
-
     if offline:
         lines += ["**Offline pass.** No source was read.", ""]
-        return "\n".join(lines), False
+        return Pass("\n".join(lines), False, [])
+
+    ok = False
+    problems: "list[str]" = []
+    all_rows: "list[dict]" = []
+    tables = 0
 
     for adv_day in (day, day + dt.timedelta(days=1)):
         url = ADV_URL.format(date=adv_day.isoformat())
@@ -176,10 +371,21 @@ def collect(day: dt.date, offline: bool = False) -> "tuple[str, bool]":
             lines += [f"**Advisories, {adv_day.isoformat()}** — SOURCE UNAVAILABLE "
                       f"({type(exc).__name__}: {exc}). `{url}`", ""]
             continue
-        any_ok = True
+        ok = True
         if not rows:
-            lines += [f"**Advisories, {adv_day.isoformat()}** — the index returned "
-                      f"no rows, fetched {now.strftime('%H:%M')} CT. `{url}`", ""]
+            if adv_day <= now.date():
+                # A day that has happened always carries operations plans and
+                # volcanic bulletins. Zero rows is a selector break, and a
+                # quiet day is the one thing it cannot be.
+                problems.append(
+                    f"advisories: the index returned no rows for {adv_day}, "
+                    "a day already past — a parse break, not a quiet day")
+                lines += [f"**Advisories, {adv_day.isoformat()}** — EMPTY, and that "
+                          f"day is past: a parse or fetch break, not a quiet day. "
+                          f"`{url}`", ""]
+            else:
+                lines += [f"**Advisories, {adv_day.isoformat()}** — the index returned "
+                          f"no rows, fetched {now.strftime('%H:%M')} CT. `{url}`", ""]
             continue
         all_rows.extend(rows)
         lines += [f"**Advisories on the index, {adv_day.isoformat()}** — "
@@ -207,21 +413,34 @@ def collect(day: dt.date, offline: bool = False) -> "tuple[str, bool]":
             lines += [f"**FlightAware, {which}** — SOURCE UNAVAILABLE "
                       f"({type(exc).__name__}: {exc}). `{url}`", ""]
             continue
-        any_ok = True
+        ok = True
         canc = totals.get("cancellations", {})
         dels = totals.get("delays", {})
+        if not canc.get("us"):
+            # The page answered. A dash in this row would read as "no
+            # cancellations", which is a claim the pass did not make.
+            problems.append(
+                f"totals: the {which} page was read and yielded no "
+                "US cancellation figure")
+            lines += [f"**FlightAware, {which}** — READ, NO FIGURE PARSED "
+                      f"(the page answered and the selector matched nothing). "
+                      f"`{url}`", ""]
+            continue
+        tables += 1
+        mark = long_label(target)
         totals_rows.append([
-            long_label(target),
-            canc.get("us", "—"),
-            dels.get("us", "—"),
-            canc.get("all", "—"),
-            dels.get("all", "—"),
+            mark,
+            _moved(canc.get("us", "—"), prior, mark, 0),
+            _moved(dels.get("us", "—"), prior, mark, 1),
+            _moved(canc.get("all", "—"), prior, mark, 2),
+            _moved(dels.get("all", "—"), prior, mark, 3),
         ])
     if totals_rows:
         lines += [
             f"**FlightAware totals** — fetched {now.strftime('%H:%M')} CT. The date "
             "column is this pass's CT date for that page; the tracker words its own "
-            "pages by weekday.",
+            "pages by weekday. A figure that moved since the previous pass of this "
+            "date is printed with the earlier reading, because the day settles.",
             "",
         ]
         lines += _table(
@@ -231,40 +450,66 @@ def collect(day: dt.date, offline: bool = False) -> "tuple[str, bool]":
         lines.append("")
 
     # Snapshots, so an advisory can still be cited after the 15-day window.
-    # Only documents that can carry the event: the six on the watch list, plus
-    # any rows whose own title is a ground stop or an operations plan. The
-    # index also prints volcanic-activity bulletins and FCA notices, and
-    # checking those would spend a request each to learn nothing.
-    watch = list(ARCHIVE_WATCH)
-    for row in all_rows:
-        key = (row["adv_date"], int(row["n"]))
-        title = row["title"].upper()
-        if key not in watch and ("GROUND STOP" in title or "OPERATIONS PLAN" in title):
-            watch.append(key)
+    # Every recorded capture is opened and checked for the wording it should
+    # carry, and a document no archive holds is captured on the spot.
+    items = watch_items(day, all_rows)
     caps = []
-    for mdY_, n_ in watch[:ARCHIVE_CAP]:
-        page = ADV_PAGE.format(mdY=mdY_, n=n_)
+    budget = SAVE_BUDGET
+    verified = saved = 0
+    for key, url, needles in items[:ARCHIVE_CAP]:
+        note = ""
+        stamp = link = ""
+        held, why = False, "no capture"
         try:
-            cap = wayback_capture(page)
+            cap = wayback_capture(url)
         except Exception as exc:  # noqa: BLE001
-            caps.append([f"{mdY_}/{n_}", f"unavailable ({type(exc).__name__})", ""])
-            continue
-        any_ok = True
-        caps.append([
-            f"{mdY_}/{n_}",
-            cap["timestamp"] if cap else "no capture",
-            cap["url"] if cap else "",
-        ])
+            cap = None
+            note = f"availability unavailable ({type(exc).__name__})"
+        if cap:
+            held, why = verify_capture(cap["url"], needles)
+            if held:
+                stamp, link = cap["timestamp"], cap["url"]
+        if not held and budget > 0:
+            budget -= 1
+            try:
+                new = save_capture(url)
+            except Exception as exc:  # noqa: BLE001
+                new = None
+                note = f"{why}; save failed ({type(exc).__name__})"
+            if new:
+                good, vwhy = verify_capture(new["url"], needles)
+                if good:
+                    stamp, link = new["timestamp"], new["url"]
+                    note = "saved this pass"
+                    saved += 1
+                else:
+                    note = f"saved this pass, {vwhy}"
+        elif not held:
+            note = f"{why}; save budget spent" if why else "save budget spent"
+        if stamp:
+            verified += 1
+            caps.append([key, stamp, link, note])
+        else:
+            caps.append([key, "no capture", "", note or why])
+
+    dropped = len(items) - min(len(items), ARCHIVE_CAP)
     if caps:
-        lines += ["**Wayback captures** — nearest snapshot the availability API "
-                  "returned for each advisory, fetched "
-                  f"{now.strftime('%H:%M')} CT. The advisory index keeps 15 days; "
-                  "a row reading `no capture` is a document no archive holds yet.",
-                  ""]
-        lines += _table(["Advisory", "Captured (UTC)", "Snapshot"], caps)
+        lines += ["**Wayback captures** — every snapshot below was fetched and "
+                  "checked for the wording it should carry; `no capture` means no "
+                  "archive holds the document, and the note says whether a save "
+                  f"was requested. Fetched {now.strftime('%H:%M')} CT. The advisory "
+                  "index keeps 15 days. "
+                  + (f"{dropped} watch item(s) fell outside this pass's cap of "
+                     f"{ARCHIVE_CAP}. " if dropped > 0 else ""), ""]
+        lines += _table(["Watch", "Captured (UTC)", "Snapshot", "Note"], caps)
         lines.append("")
 
-    return "\n".join(lines).rstrip() + "\n", any_ok
+    lines += [
+        f"coverage: {len(all_rows)} advisory rows, {tables} totals tables, "
+        f"{len(items)} watch items ({verified} verified, {saved} saved this pass)",
+        "",
+    ]
+    return Pass("\n".join(lines).rstrip() + "\n", ok, problems)
 
 
 def upsert(text: str, day_label: str, block: str) -> str:
@@ -290,27 +535,41 @@ def upsert(text: str, day_label: str, block: str) -> str:
 def main(argv: "list[str]") -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--date", help="CT date to collect (YYYY-MM-DD); default today")
+    ap.add_argument("--now", help="ISO timestamp to treat as now (CT), for tests")
     ap.add_argument("--pack", default=str(PACK))
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--offline", action="store_true")
     args = ap.parse_args(argv)
 
-    day = (dt.date.fromisoformat(args.date) if args.date
-           else dt.datetime.now(CT).date())
+    now = dt.datetime.now(CT)
+    if args.now:
+        # Injectable clock, the same shape sitrep-watchdog.py takes: a check
+        # whose answer depends on today's date can be observed but not
+        # asserted about, and a test that reads the real clock goes red the
+        # day it happens to be right.
+        now = dt.datetime.fromisoformat(args.now)
+        if now.tzinfo is None:
+            now = now.replace(tzinfo=CT)
+    day = (dt.date.fromisoformat(args.date) if args.date else now.date())
     pack = pathlib.Path(args.pack)
+    text = pack.read_text(encoding="utf-8") if pack.exists() else ""
 
-    block, any_ok = collect(day, offline=args.offline)
-    if not any_ok:
+    result = collect(day, offline=args.offline, prior=prior_state(text, label(day)),
+                     now=now)
+    if not result.ok:
         print(f"faa-ground-stop-pack: nothing collected for {day}; no block written.")
         return 3
-    if args.dry_run:
-        print(block)
-        return 0
 
-    text = pack.read_text(encoding="utf-8") if pack.exists() else ""
-    pack.write_text(upsert(text, label(day), block), encoding="utf-8")
+    for problem in result.problems:
+        print(f"faa-ground-stop-pack: {problem}")
+
+    if args.dry_run:
+        print(result.block)
+        return 4 if result.problems else 0
+
+    pack.write_text(upsert(text, label(day), result.block), encoding="utf-8")
     print(f"faa-ground-stop-pack: {label(day)} written to {pack}")
-    return 0
+    return 4 if result.problems else 0
 
 
 if __name__ == "__main__":

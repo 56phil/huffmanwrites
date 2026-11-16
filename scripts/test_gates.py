@@ -8703,6 +8703,20 @@ class TestGroundStopPack(unittest.TestCase):
           yesterday:&nbsp;&nbsp;6,692</h3>
     """
 
+    SETTLED = """### 15NOV26
+
+**Collected** 15NOV26 08:00 CT by `scripts/faa-ground-stop-pack.py`. Facts only.
+
+| Day | Cancels (US) | Delays (US) | Cancels (all) | Delays (all) |
+|---|---|---|---|---|
+| Sat 14NOV26 | 6,700 | 9,188 | 7,355 | 22,740 |
+| Sun 15NOV26 | 1,446 | 2,043 | 1,752 | 11,016 |
+
+**Reading — 15NOV26** (written by hand).
+
+- kept
+"""
+
     @classmethod
     def setUpClass(cls):
         cls.mod = load("faa-ground-stop-pack")
@@ -8758,20 +8772,27 @@ class TestGroundStopPack(unittest.TestCase):
     def test_an_offline_pass_collects_nothing_and_says_so(self):
         # The exit-3 contract: nothing read means nothing written, not an empty
         # block that would read as a quiet day.
-        block, ok = self.mod.collect(date(2026, 11, 15), offline=True)
-        self.assertFalse(ok)
-        self.assertIn("Offline pass", block)
+        result = self.mod.collect(date(2026, 11, 15), offline=True)
+        self.assertFalse(result.ok)
+        self.assertFalse(result)          # `if not collect(...)` still works
+        self.assertIn("Offline pass", result.block)
 
     def test_the_collector_writes_no_analysis_and_touches_nothing(self):
         source = self.COLLECTOR.read_text(encoding="utf-8")
         for forbidden in ("claude", "anthropic", "git ", "SESSION_STATE"):
             self.assertNotIn(forbidden, source.lower())
 
-    def test_the_plist_fires_once_a_day_at_eight(self):
+    def test_the_plist_fires_morning_and_evening(self):
         import plistlib
         plist = plistlib.loads(self.PLIST.read_bytes())
         self.assertEqual(plist["Label"], "com.huffmanwrites.faa-ground-stop-pack")
-        self.assertEqual(plist["StartCalendarInterval"], {"Hour": 8, "Minute": 0})
+        # An array of dicts is the supported form for a job with more than one
+        # daily time; the 23:30 fire is what turns an intraday figure into a
+        # settled one, so the two must stay together.
+        self.assertEqual(
+            plist["StartCalendarInterval"],
+            [{"Hour": 8, "Minute": 0}, {"Hour": 23, "Minute": 30}],
+        )
         self.assertNotIn("RunAtLoad", plist)
         program = plist["ProgramArguments"]
         self.assertIn("faa-ground-stop-pack-runner.sh", program[-1])
@@ -8781,6 +8802,147 @@ class TestGroundStopPack(unittest.TestCase):
         # 15NOV26 with "/Users/prh/.../faa-ground-stop-pack-runner.sh". Assert
         # the script the plist names is in this repo instead.
         self.assertTrue((REPO / "scripts" / Path(program[-1]).name).exists(), program[-1])
+
+    # -- captures ---------------------------------------------------------
+    #
+    # The pack reported `no capture` for two days on a document the Wayback
+    # save endpoint archived in 18.4 s on 16NOV26, and it recorded a capture
+    # for another document whose snapshot now serves 404. Both are the same
+    # defect class: a verdict about a document that nobody opened.
+
+    def test_a_near_miss_snapshot_is_not_recorded_as_a_capture(self):
+        from unittest import mock
+        # The availability API answers with the *closest* capture of some URL
+        # and echoes the requested URL back, so this body is a different
+        # document and must not count as a capture of this one.
+        page = "<html><body>ADVZY 017 DCC 11/14/2026 SOMETHING ELSE</body></html>"
+        with mock.patch.object(self.mod, "fetch", return_value=page):
+            ok, why = self.mod.verify_capture(
+                "http://web.archive.org/web/20261114032528/x", ["advzy 018", "advzy 18"])
+        self.assertFalse(ok)
+        self.assertIn("wording", why)
+
+    def test_a_snapshot_is_a_capture_only_when_it_carries_the_wording(self):
+        from unittest import mock
+        page = ("<html><body>ADVZY&nbsp;018&nbsp;DCC&nbsp;11/14/2026 "
+                "OPERATIONS PLAN</body></html>")
+        with mock.patch.object(self.mod, "fetch", return_value=page):
+            ok, why = self.mod.verify_capture(
+                "http://web.archive.org/web/20261116215302/x", ["advzy 018", "advzy 18"])
+        self.assertTrue(ok, why)
+
+    def test_a_snapshot_that_does_not_serve_is_not_a_capture(self):
+        from unittest import mock
+        with mock.patch.object(self.mod, "fetch", side_effect=OSError("404")):
+            ok, why = self.mod.verify_capture("http://web.archive.org/web/x", ["advzy 018"])
+        self.assertFalse(ok)
+        self.assertIn("did not serve", why)
+
+    def test_the_save_request_yields_the_new_timestamp(self):
+        from unittest import mock
+        resp = mock.MagicMock()
+        resp.geturl.return_value = (
+            "https://web.archive.org/web/20261116215302/"
+            "https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=18")
+        resp.__enter__ = lambda s: s
+        resp.__exit__ = lambda *a: False
+        with mock.patch.object(self.mod.urllib.request, "urlopen", return_value=resp):
+            cap = self.mod.save_capture("https://www.fly.faa.gov/adv/x")
+        self.assertEqual(cap["timestamp"], "20261116215302")
+        self.assertIn("adv_date=11142026", cap["url"])
+
+    def test_the_watch_list_holds_the_day_indexes_and_the_mutable_qa_page(self):
+        items = self.mod.watch_items(date(2026, 11, 16), [])
+        keys = [k for k, _, _ in items]
+        self.assertIn("index 2026-11-13", keys)
+        self.assertIn("index 2026-11-16", keys)   # this pass's own day
+        self.assertIn("faa-qa", keys)
+        # The needle is what proves a snapshot is the document, so a page
+        # added with an empty one would verify everything.
+        for key, _url, needles in items:
+            self.assertTrue(needles, key)
+        by_key = {k: n for k, _u, n in items}
+        self.assertIn("ATCSCC ADVISORIES FOR 2026-11-13", by_key["index 2026-11-13"][0])
+        self.assertIn("connection attempts", by_key["faa-qa"][0])
+
+    # -- settling ---------------------------------------------------------
+
+    def test_a_moved_figure_keeps_the_earlier_reading(self):
+        prior = self.mod.prior_state(self.SETTLED, "15NOV26")
+        self.assertEqual(prior["time"], "08:00")
+        moved = self.mod._moved("2,336", prior, "Sun 15NOV26", 0)
+        self.assertEqual(moved, "2,336 (was 1,446 at 08:00)")
+        steady = self.mod._moved("9,188", prior, "Sat 14NOV26", 1)
+        self.assertEqual(steady, "9,188")
+
+    def test_a_figure_already_annotated_is_read_as_its_value(self):
+        # The second pass writes "2,336 (was 1,446 at 08:00)"; a third pass
+        # must compare against 2,336, not against the whole string.
+        text = self.SETTLED.replace("| 1,446 |", "| 2,337 (was 1,446 at 08:00) |")
+        prior = self.mod.prior_state(text, "15NOV26")
+        self.assertEqual(prior["figures"]["Sun 15NOV26"][0], "2,337")
+
+    # -- parse breaks are not quiet days ----------------------------------
+
+    def _fake_fetch(self, index_rows: str, totals: str = None):
+        def fake(url, timeout=30):
+            if "adv_list" in url:
+                return index_rows
+            if "flightaware" in url:
+                return self.TOTALS if totals is None else totals
+            if "wayback" in url or "archive.org" in url:
+                return '{"archived_snapshots": {}}'
+            return "<html></html>"
+        return fake
+
+    def test_an_empty_index_for_a_past_day_is_a_problem(self):
+        from unittest import mock
+        with mock.patch.object(self.mod, "fetch", side_effect=self._fake_fetch(
+                "<html><table></table></html>")):
+            with mock.patch.object(self.mod, "save_capture", return_value=None):
+                result = self.mod.collect(date(2026, 11, 15),
+                                          now=datetime(2026, 11, 15, 8, 0))
+        self.assertTrue(result.ok)                 # something was read
+        self.assertTrue(result.problems)           # but not what it asked for
+        self.assertIn("no rows for 2026-11-15", result.problems[0])
+        self.assertIn("a parse or fetch break, not a quiet day", result.block)
+
+    def test_a_totals_page_without_a_figure_is_a_problem(self):
+        from unittest import mock
+        with mock.patch.object(self.mod, "fetch", side_effect=self._fake_fetch(
+                self.ADVISORIES, totals="<html>Total delays today: 1</html>")):
+            with mock.patch.object(self.mod, "save_capture", return_value=None):
+                result = self.mod.collect(date(2026, 11, 15),
+                                          now=datetime(2026, 11, 15, 8, 0))
+        self.assertTrue(result.problems)
+        self.assertIn("yielded no US cancellation figure", result.problems[0])
+
+    def test_a_parse_break_exits_four_and_writes_the_block(self):
+        # The block is still written: the reader has to see the break. The exit
+        # code is what makes the runner complain, because a selector that
+        # stopped matching is invisible in the block itself.
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as tmp:
+            pack = Path(tmp) / "pack.md"
+            pack.write_text("# pack\n\n" + self.mod.LOG_HEADING + "\n", encoding="utf-8")
+            with mock.patch.object(self.mod, "fetch", side_effect=self._fake_fetch(
+                    "<html><table></table></html>")):
+                with mock.patch.object(self.mod, "save_capture", return_value=None):
+                    code = self.mod.main(["--pack", str(pack),
+                                          "--now", "2026-11-15T08:00"])
+            self.assertEqual(code, 4)
+            self.assertIn("### 15NOV26", pack.read_text(encoding="utf-8"))
+
+    def test_the_block_prints_the_coverage_it_reached(self):
+        from unittest import mock
+        with mock.patch.object(self.mod, "fetch", side_effect=self._fake_fetch(
+                self.ADVISORIES)):
+            with mock.patch.object(self.mod, "save_capture", return_value=None):
+                result = self.mod.collect(date(2026, 11, 15),
+                                          now=datetime(2026, 11, 15, 8, 0))
+        self.assertRegex(result.block,
+                         r"coverage: 4 advisory rows, 3 totals tables, \d+ watch items")
+
 
     def test_the_runner_alerts_on_failure_and_never_commits(self):
         text = self.RUNNER.read_text(encoding="utf-8")

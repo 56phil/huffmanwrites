@@ -20,20 +20,29 @@ Two kinds of fact in the pack decay on a clock:
 ## What the job does
 
 `scripts/com.huffmanwrites.faa-ground-stop-pack.plist` fires
-`scripts/faa-ground-stop-pack-runner.sh` at **08:00 CT daily**, which runs
-`scripts/faa-ground-stop-pack.py`. The collector:
+`scripts/faa-ground-stop-pack-runner.sh` **twice a day, at 08:00 and 23:30 CT**,
+which runs `scripts/faa-ground-stop-pack.py`. The collector:
 
 1. reads the FAA ATCSCC advisory index for today and tomorrow, and writes every
    row as the index prints it — number, control, send time, title;
 2. reads FlightAware's three day pages (two days back, yesterday, today) and
-   writes the cancellation and delay totals for US and worldwide flights;
-3. asks the Internet Archive's availability API for the nearest capture of each
-   advisory that can carry the event — the six on the watch list plus any row
-   whose own title is a ground stop or an operations plan — and records the
-   snapshot URL.
+   writes the cancellation and delay totals for US and worldwide flights. A
+   figure that moved since the previous pass of the same date is printed with
+   the earlier reading — `2,336 (was 1,446 at 08:00)` — because the day
+   settles and `upsert` replaces the block, so the earlier number would
+   otherwise vanish;
+3. checks every document that can carry the event — the six on the watch list,
+   any row whose own title is a ground stop or an operations plan, **each day's
+   index page**, and the FAA's own Q&A page — asks the Internet Archive what it
+   holds, **opens the snapshot and requires it to carry the wording it should**,
+   and when nothing holds the document **requests the save itself**, up to six
+   saves per pass.
 
 It appends one block per date under **§19. Daily collection log**, replacing that
-date's block if it already exists, so a re-run is harmless.
+date's block if it already exists, so a re-run is harmless. Each block ends with
+a `coverage:` line — advisory rows, totals tables, watch items, verified
+captures, saves this pass — for the same reason every `check-*.py` prints one: a
+pass that inspects nothing still reports OK.
 
 ## What it does not do, and must not start doing
 
@@ -59,9 +68,24 @@ GROUND_STOP_PACK_DRY=1 scripts/faa-ground-stop-pack-runner.sh   # prove the aler
 ```
 
 Exit 3 means **nothing at all was collected** — both pages and the capture API
-failed — and the shared alert fires. A single source failing is not exit 3: the
+failed — and no block is written. A single source failing is not a failure: the
 entry says `SOURCE UNAVAILABLE` with the URL and the exception, and the run
 exits 0, because an entry that names its gap is honest and a missing day is not.
+
+Exit 4 means **a page was read and a required figure did not come out of it** —
+an empty index for a day already past, or a FlightAware page that answered with
+no cancellation count. The block is still written, so the reader can see the
+break, and the runner alerts. That distinction matters: `—` in the US
+cancellation column would read as "no cancellations", which is a claim the pass
+never made.
+
+**Two fires, and the second is the point.** At 08:00 CT the previous day's
+totals are final and the day's advisory index is being written, but the pass is
+also looking at a US traffic day that has not started; 23:30 replaces that day's
+block with one whose `today` row is nearly closed. Measured: Sunday's US
+cancellations read 1,446 at 08:00 on 15NOV26 and 2,336 by the next morning. The
+08:00 fire sits after the 06:00 SITREP and before the 09:15 and 09:30 watchers,
+so three network jobs do not collide; 23:30 is clear of everything.
 
 ## Reading the log
 
@@ -77,9 +101,28 @@ silently deleted the analysis would leave a record that looks current and is
 shorter.
 
 - **`no capture`** in the snapshot table is a finding, not a bug. No archive
-  holds that advisory yet. The Wayback save endpoint (`web.archive.org/save/`)
-  timed out at 45 s when measured on 15NOV26, which is why the job records
-  captures instead of creating them; closing a gap is a manual request.
+  holds that document, and the note column says whether a save was requested
+  this pass. **The save endpoint works and the job uses it:** `recorded, not
+  created` was the first version, on the strength of a 45-second timeout
+  measured on 15NOV26. Measured again on 16NOV26, a save answered in **18.4 s**
+  and closed the advisory the pack had reported as uncapturable for two days —
+  so the timeout was the constraint, not the service. `SAVE_BUDGET` keeps a
+  pass to six, because this is somebody else's machine.
+- **A capture is recorded only after its body is fetched and checked** for the
+  wording it should carry (`ADVZY 018`; `ATCSCC ADVISORIES FOR 2026-11-13`; for
+  the FAA Q&A page, a phrase from its answer about the data flood). The
+  availability API answers with the *closest* capture of *some* URL and echoes
+  the requested URL back, so a near-miss looks exactly like a hit: on 15NOV26
+  the pack recorded `11142026/18` as captured at `20261114032528`, and that
+  snapshot served **404** a day later. Three verdicts, and they are different
+  claims — a timestamp (the document is held and opens), `no capture` (nothing
+  holds it), and a note reading `saved this pass, snapshot does not carry the
+  wording` (something is held, and it is not the document).
+- **The day index pages are watched, not just the advisories.** The cleanest
+  proof that the airspace carried no restriction on 15NOV26 is that day's
+  27-row index page, and nothing was archiving it. The three days before the
+  daily pass existed (13–15NOV26) are captured in one go; every later day is
+  captured by that day's own pass.
 - **Duplicate values** are printed as the page prints them. On 15NOV26 the
   FlightAware today page returned the same figure for US cancellations and US
   delays; that was recorded, not corrected, and §18.3 says not to print the

@@ -20,9 +20,14 @@
 # logs a dirty tree as a NOTE and refuses only on SESSION_STATE.md, so this
 # cannot block a publishing run.
 #
-# EXIT 3 means nothing at all was collected; the alert says so. A single source
+# EXIT 3 means nothing at all was collected; the alert says so. EXIT 4 means a
+# page was read and a required figure did not parse out of it — an empty index
+# for a day already past, or a FlightAware page with no cancellation count —
+# which is a selector break and invisible in the block itself. A single source
 # failing writes `SOURCE UNAVAILABLE` into the entry and still exits 0, because
 # an entry that names its gap is honest and a day with no entry is a silent one.
+# Both 3 and 4 alert through the shared helper, which is the only path a failure
+# may take in this repo.
 set -euo pipefail
 
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"

@@ -13,23 +13,40 @@
        Philip lifts the instruction (15NOV26: "From now on, update the source
        pack daily until further notice").
 
-       One fire a day at 08:00 CT. The hour is chosen for the two facts that rot:
-       FlightAware's totals for the previous day are final by then, and the FAA
-       advisory index for the day is being written. It sits after the 06:00
-       SITREP and before the 09:15 and 09:30 watchers, so three network jobs do
-       not collide.
+       Two fires a day, and the second one is the point (16NOV26). At 08:00 CT
+       the previous day's FlightAware totals are final and the day's advisory
+       index is being written. But 08:00 also evaluates a US traffic day that
+       has not started, so the first pass of any date can only report an
+       intraday figure; the 23:30 pass replaces that day's block with one whose
+       "today" row is nearly closed, and the collector prints the earlier
+       reading beside a figure that moved. Measured: Sunday's US cancellations
+       read 1,446 at 08:00 on 15NOV26 and 2,336 the next morning.
 
-       No RunAtLoad: a login is not a new day's data. No model, so no Ollama
-       probe. There is no end date, because the instruction is "until further
-       notice" and the guard for that is a line in the skill, not a comparison
-       here that would exit 0 forever and be forgotten. -->
+       08:00 sits after the 06:00 SITREP and before the 09:15 and 09:30
+       watchers, so three network jobs do not collide. 23:30 is clear of
+       everything.
+
+       An array of dictionaries is supported for StartCalendarInterval; an
+       array as the *value* of a key is not. Do not add a RunAtLoad: a login is
+       not a new day's data. No model, so no Ollama probe. There is no end date,
+       because the instruction is "until further notice" and the guard for that
+       is a line in the skill, not a comparison here that would exit 0 forever
+       and be forgotten. -->
   <key>StartCalendarInterval</key>
-  <dict>
-    <key>Hour</key>
-    <integer>8</integer>
-    <key>Minute</key>
-    <integer>0</integer>
-  </dict>
+  <array>
+    <dict>
+      <key>Hour</key>
+      <integer>8</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+    <dict>
+      <key>Hour</key>
+      <integer>23</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+  </array>
   <key>WorkingDirectory</key>
   <string>/Users/prh/Developer/huffmanwrites</string>
   <key>StandardOutPath</key>
