@@ -55,6 +55,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import concurrent.futures as futures
 import dataclasses
 import datetime as dt
 import html as html_mod
@@ -103,9 +104,13 @@ ARCHIVE_WATCH = [
 EVENT_INDEX_DAYS = ("2026-11-13", "2026-11-14", "2026-11-15")
 
 ARCHIVE_CAP = 30          # watch items checked per pass
-SAVE_BUDGET = 6           # save requests per pass: a courtesy, and a bound
-SAVE_TIMEOUT = 100        # a save answered in 18.4 s when measured; 45 s was not enough
+DISCOVERY_CAP = 6         # index rows added per pass, so one busy day cannot fill the list
+SAVE_BUDGET = 6           # save requests per pass for the documents that matter
+SAVE_BUDGET_TAIL = 2      # ...and for a day's own airport advisories, which its index also holds
+SAVE_TIMEOUT = 45         # a save answered in 18.4 s when measured; one hung for 100 s
+SAVE_TIMEOUT_TAIL = 25    # a low-value save is not worth a long wait on somebody else's queue
 VERIFY_TIMEOUT = 45
+WORKERS = 6               # independent capture checks in flight at once
 
 UA = "huffmanwrites-ground-stop-pack/1.0 (+https://www.huffmanwrites.org)"
 
@@ -299,8 +304,21 @@ def _moved(value: str, prior: "dict", day_mark: str, index: int) -> str:
     return f"{value} (was {was}{' at ' + when if when else ''})"
 
 
-def watch_items(day: dt.date, all_rows: "list[dict]") -> "list[tuple[str, str, list[str]]]":
-    """Every document worth a capture this pass: key, URL, wording to require."""
+def watch_items(day: dt.date, all_rows: "list[dict]") -> "tuple[list[tuple[str, str, list[str]]], int]":
+    """Every document worth a capture this pass: key, URL, wording to require.
+
+    The order is the save budget's order. Measured on 16NOV26's first live
+    pass: today's own local ground stops — eight of them, each a CDM advisory
+    about one airport — came before the four day index pages, spent the whole
+    budget, and left every index page `no capture`. A transient airport
+    advisory is also on an index that is captured anyway; the index is the
+    better artifact and is what has no other home.
+
+    Returns the items and the index at which the low-value tail begins. The
+    tail is checked and can borrow two saves, because a body that says why an
+    airport stopped is worth having; it is not worth the whole budget, and on
+    16NOV26 two hung saves there cost the pass two minutes.
+    """
     items: "list[tuple[str, str, list[str]]]" = []
     seen = set()
 
@@ -310,32 +328,76 @@ def watch_items(day: dt.date, all_rows: "list[dict]") -> "list[tuple[str, str, l
         seen.add(url)
         items.append((key, url, needles))
 
+    # 1. The event's own documents.
     for mdY_, n_ in ARCHIVE_WATCH:
         add(f"{mdY_}/{n_}",
             ADV_PAGE.format(mdY=mdY_, n=n_),
             [f"advzy {n_:03d}", f"advzy {n_}"])
 
-    # Only documents that can carry the event: the six above, plus any row
-    # whose own title is a ground stop or an operations plan. The index also
-    # prints volcanic-activity bulletins and FCA notices, and a request on
-    # those would spend a save to learn nothing.
-    for row in all_rows:
+    # 2. A ground stop or operations plan on an event day, discovered from the
+    #    index. Later days are captured by their own pass, when the advisory is
+    #    hours old rather than an hour old.
+    event_days = {mdY_ for mdY_, _ in ARCHIVE_WATCH}
+    discovered = 0
+    for row in sorted(all_rows, key=lambda r: r["adv_date"]):
         key = (row["adv_date"], int(row["n"]))
-        if key in ARCHIVE_WATCH:
+        if key in ARCHIVE_WATCH or row["adv_date"] not in event_days:
             continue
-        title = row["title"].upper()
-        if "GROUND STOP" in title or "OPERATIONS PLAN" in title:
+        if not _carries_event(row["title"]):
+            continue
+        discovered += 1
+        if discovered <= DISCOVERY_CAP:
             add(f"{row['adv_date']}/{row['n']}",
                 ADV_PAGE.format(mdY=row["adv_date"], n=row["n"]),
                 [f"advzy {int(row['n']):03d}", f"advzy {int(row['n'])}"])
 
-    # The day indexes themselves: the days before the pass existed, then this
-    # pass's own day.
+    # 3. The day indexes themselves: the days before the pass existed, then
+    #    this pass's own day.
     for iso in list(EVENT_INDEX_DAYS) + [day.isoformat()]:
         add(f"index {iso}", ADV_URL.format(date=iso), [index_needle(iso)])
 
+    # 4. A page the FAA can edit and every other watch list misses.
     add("faa-qa", QA_URL, [QA_NEEDLE])
-    return items
+
+    # 5. Everything else that can carry the event, last because it can wait a
+    #    pass: an airport's ground stop is on its day's index too.
+    tail_start = len(items)
+    for row in all_rows:
+        key = (row["adv_date"], int(row["n"]))
+        if key in ARCHIVE_WATCH or row["adv_date"] in event_days:
+            continue
+        if _carries_event(row["title"]):
+            add(f"{row['adv_date']}/{row['n']}",
+                ADV_PAGE.format(mdY=row["adv_date"], n=row["n"]),
+                [f"advzy {int(row['n']):03d}", f"advzy {int(row['n'])}"])
+    return items, tail_start
+
+
+def _resolve(item: "tuple[str, str, list[str]]") -> "tuple":
+    """Ask what holds this document, and check that the answer is the document.
+
+    Runs in a thread pool: each item is an independent read, and one slow
+    snapshot must not hold up the rest.
+    """
+    key, url, needles = item
+    try:
+        cap = wayback_capture(url)
+    except Exception as exc:  # noqa: BLE001 - reported as the verdict
+        return key, url, needles, None, f"availability unavailable ({type(exc).__name__})"
+    if not cap:
+        return key, url, needles, None, "no capture"
+    ok, why = verify_capture(cap["url"], needles)
+    if ok:
+        return key, url, needles, cap, ""
+    return key, url, needles, None, why
+
+
+def _carries_event(title: str) -> bool:
+    """Only documents that can carry the event. The index also prints
+    volcanic-activity bulletins and FCA notices, and a request on those would
+    spend a save to learn nothing."""
+    upper = title.upper()
+    return "GROUND STOP" in upper or "OPERATIONS PLAN" in upper
 
 
 def collect(
@@ -452,27 +514,38 @@ def collect(
     # Snapshots, so an advisory can still be cited after the 15-day window.
     # Every recorded capture is opened and checked for the wording it should
     # carry, and a document no archive holds is captured on the spot.
-    items = watch_items(day, all_rows)
+    #
+    # The checks run concurrently because they are independent reads against a
+    # service that answers in anywhere from 0.5 s to 20 s: serially, twenty of
+    # them outlived a two-minute window on 16NOV26 and the pass wrote nothing
+    # at all. Saves stay serial, because the budget is a courtesy to somebody
+    # else's machine.
+    all_items, tail_start = watch_items(day, all_rows)
+    items = all_items[:ARCHIVE_CAP]
+    resolved = []
+    if items:
+        with futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
+            resolved = list(pool.map(_resolve, items))
+
     caps = []
-    budget = SAVE_BUDGET
+    budget, tail_budget = SAVE_BUDGET, SAVE_BUDGET_TAIL
     verified = saved = 0
-    for key, url, needles in items[:ARCHIVE_CAP]:
+    for position, (key, url, needles, cap, why) in enumerate(resolved):
         note = ""
         stamp = link = ""
-        held, why = False, "no capture"
-        try:
-            cap = wayback_capture(url)
-        except Exception as exc:  # noqa: BLE001
-            cap = None
-            note = f"availability unavailable ({type(exc).__name__})"
+        tail = position >= tail_start
+        may_save = (tail_budget > 0) if tail else (budget > 0)
         if cap:
-            held, why = verify_capture(cap["url"], needles)
-            if held:
-                stamp, link = cap["timestamp"], cap["url"]
-        if not held and budget > 0:
-            budget -= 1
+            stamp, link = cap["timestamp"], cap["url"]
+        elif may_save:
+            if tail:
+                tail_budget -= 1
+                limit = SAVE_TIMEOUT_TAIL
+            else:
+                budget -= 1
+                limit = SAVE_TIMEOUT
             try:
-                new = save_capture(url)
+                new = save_capture(url, timeout=limit)
             except Exception as exc:  # noqa: BLE001
                 new = None
                 note = f"{why}; save failed ({type(exc).__name__})"
@@ -484,15 +557,20 @@ def collect(
                     saved += 1
                 else:
                     note = f"saved this pass, {vwhy}"
-        elif not held:
+        else:
             note = f"{why}; save budget spent" if why else "save budget spent"
         if stamp:
             verified += 1
             caps.append([key, stamp, link, note])
         else:
-            caps.append([key, "no capture", "", note or why])
+            # `no capture` is a claim about the archive; a snapshot that would
+            # not open is a claim about the checker. The archive throttles a
+            # client that has just asked it for nine saves, so the two are not
+            # the same finding and must not read the same.
+            verdict = "unverified" if "did not serve" in (note or why) else "no capture"
+            caps.append([key, verdict, "", note or why])
 
-    dropped = len(items) - min(len(items), ARCHIVE_CAP)
+    dropped = len(all_items) - len(items)
     if caps:
         lines += ["**Wayback captures** — every snapshot below was fetched and "
                   "checked for the wording it should carry; `no capture` means no "
@@ -506,7 +584,7 @@ def collect(
 
     lines += [
         f"coverage: {len(all_rows)} advisory rows, {tables} totals tables, "
-        f"{len(items)} watch items ({verified} verified, {saved} saved this pass)",
+        f"{len(all_items)} watch items ({verified} verified, {saved} saved this pass)",
         "",
     ]
     return Pass("\n".join(lines).rstrip() + "\n", ok, problems)

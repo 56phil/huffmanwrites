@@ -8851,8 +8851,70 @@ class TestGroundStopPack(unittest.TestCase):
         self.assertEqual(cap["timestamp"], "20261116215302")
         self.assertIn("adv_date=11142026", cap["url"])
 
+    TODAY = """
+      <table><tr>
+        <td><a href="/adv/adv_otherdis?adv_date=11162026&advn=10">010</a></td>
+        <td>LAS/ZLA</td><td>11/16/26</td><td>CDM GROUND STOP</td>
+        <td>11/16/26 02:50</td>
+      </tr></table>
+    """
+
+    def test_the_capture_checks_run_concurrently(self):
+        # Serially, twenty checks against a service answering in 0.5-20 s
+        # outlived a two-minute window on 16NOV26 and the pass wrote nothing.
+        source = self.COLLECTOR.read_text(encoding="utf-8")
+        self.assertIn("ThreadPoolExecutor", source)
+        self.assertGreaterEqual(self.mod.WORKERS, 4)
+
+    def test_a_resolved_item_says_whether_the_document_is_held(self):
+        from unittest import mock
+        item = ("11132026/111", "https://www.fly.faa.gov/adv/x", ["advzy 111"])
+        caps = {"archived_snapshots": {"closest": {"available": True,
+                                                   "url": "http://web.archive.org/web/1/x",
+                                                   "timestamp": "1"}}}
+        def fake(url, timeout=30):
+            if "available" in url:
+                return json.dumps(caps)
+            return "<html><body>ADVZY&nbsp;111&nbsp;DCC NATIONAL GROUND STOP</body></html>"
+        with mock.patch.object(self.mod, "fetch", side_effect=fake):
+            key, _url, _n, cap, why = self.mod._resolve(item)
+        self.assertEqual(key, "11132026/111")
+        self.assertEqual(why, "")
+        self.assertEqual(cap["timestamp"], "1")
+
+        with mock.patch.object(self.mod, "fetch", return_value='{"archived_snapshots": {}}'):
+            _k, _u, _n, cap, why = self.mod._resolve(item)
+        self.assertIsNone(cap)
+        self.assertEqual(why, "no capture")
+
+    def test_the_index_pages_outrank_a_days_own_ground_stops(self):
+        # Measured on the first live pass, 16NOV26: eight airport ground stops
+        # from the current index came before the four day index pages, spent
+        # the save budget, and left every index page `no capture`. The airport
+        # advisory also sits on an index that is captured anyway; the index is
+        # the artifact with no other home.
+        rows = self.mod.parse_advisories(self.TODAY)
+        items, _tail = self.mod.watch_items(date(2026, 11, 16), rows)
+        keys = [k for k, _u, _n in items]
+        self.assertLess(keys.index("index 2026-11-15"), keys.index("11162026/10"))
+        self.assertLess(keys.index("index 2026-11-13"), keys.index("11162026/10"))
+        # The event's own six still come first of all.
+        self.assertEqual(keys[0], "11132026/111")
+
+    def test_a_days_own_ground_stops_land_in_the_low_value_tail(self):
+        rows = self.mod.parse_advisories(self.TODAY)
+        items, tail = self.mod.watch_items(date(2026, 11, 16), rows)
+        keys = [k for k, _u, _n in items]
+        self.assertLess(tail, len(items))
+        self.assertIn("11162026/10", keys[tail:])
+        self.assertNotIn("11162026/10", keys[:tail])
+        self.assertIn("index 2026-11-16", keys[:tail])
+
     def test_the_watch_list_holds_the_day_indexes_and_the_mutable_qa_page(self):
-        items = self.mod.watch_items(date(2026, 11, 16), [])
+        items, tail = self.mod.watch_items(date(2026, 11, 16), [])
+        # Every event document, index page and the Q&A page is worth a save;
+        # the tail borrows two, because its day index holds the row anyway.
+        self.assertEqual(tail, len(items))
         keys = [k for k, _, _ in items]
         self.assertIn("index 2026-11-13", keys)
         self.assertIn("index 2026-11-16", keys)   # this pass's own day
@@ -8932,6 +8994,31 @@ class TestGroundStopPack(unittest.TestCase):
                                           "--now", "2026-11-15T08:00"])
             self.assertEqual(code, 4)
             self.assertIn("### 15NOV26", pack.read_text(encoding="utf-8"))
+
+    def test_a_snapshot_that_will_not_open_is_unverified_not_absent(self):
+        # The archive throttles a client that has just asked it for nine
+        # saves, so "the snapshot did not open" and "nothing holds it" are
+        # different findings about different parties.
+        from unittest import mock
+        caps = json.dumps({"archived_snapshots": {"closest": {
+            "available": True, "url": "https://web.archive.org/web/1/x",
+            "timestamp": "1"}}})
+
+        def fake(url, timeout=30):
+            if "adv_list" in url:
+                return self.ADVISORIES
+            if "flightaware" in url:
+                return self.TOTALS
+            if "available" in url:
+                return caps
+            raise OSError("throttled")
+        with mock.patch.object(self.mod, "fetch", side_effect=fake):
+            with mock.patch.object(self.mod, "save_capture", return_value=None):
+                result = self.mod.collect(date(2026, 11, 15),
+                                          now=datetime(2026, 11, 15, 8, 0))
+        self.assertIn("| 11132026/111 | unverified |", result.block)
+        self.assertNotIn("| 11132026/111 | no capture |", result.block)
+        self.assertIn("did not serve", result.block)
 
     def test_the_block_prints_the_coverage_it_reached(self):
         from unittest import mock

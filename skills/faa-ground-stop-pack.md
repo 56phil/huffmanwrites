@@ -114,15 +114,24 @@ shorter.
   availability API answers with the *closest* capture of *some* URL and echoes
   the requested URL back, so a near-miss looks exactly like a hit: on 15NOV26
   the pack recorded `11142026/18` as captured at `20261114032528`, and that
-  snapshot served **404** a day later. Three verdicts, and they are different
-  claims — a timestamp (the document is held and opens), `no capture` (nothing
-  holds it), and a note reading `saved this pass, snapshot does not carry the
-  wording` (something is held, and it is not the document).
+  snapshot served **404** a day later. The verdicts are different claims and
+  the note column says which: a timestamp (the document is held and opens),
+  `no capture` (nothing holds it), `unverified` (something holds it and would
+  not open, which is a claim about the checker — the archive throttles a client
+  that has just asked it for nine saves), and `saved this pass, snapshot does
+  not carry the wording` (something is held, and it is not the document).
 - **The day index pages are watched, not just the advisories.** The cleanest
   proof that the airspace carried no restriction on 15NOV26 is that day's
   27-row index page, and nothing was archiving it. The three days before the
   daily pass existed (13–15NOV26) are captured in one go; every later day is
   captured by that day's own pass.
+- **The watch list is ordered by value, and the order is the save budget's
+  order.** The first live pass put the current day's eight airport ground
+  stops first, spent the budget on them, and left all four index pages
+  uncaptured. Now: the six event advisories, then event-day discoveries, then
+  the day indexes, then the FAA Q&A page, then a day's own airport advisories
+  as a tail with two saves of its own (`SAVE_BUDGET_TAIL`). Do not re-order it
+  back.
 - **Duplicate values** are printed as the page prints them. On 15NOV26 the
   FlightAware today page returned the same figure for US cancellations and US
   delays; that was recorded, not corrected, and §18.3 says not to print the
