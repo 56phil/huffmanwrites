@@ -1,66 +1,58 @@
-# Skill: the one-off release of the ground-stop conclusion, 1600Z 1 December 2026
+# Job: the ground-stop conclusion — written and published in one run, 1600Z 1DEC26
 
-Philip, 17NOV26: "Set up a one-time cronjob to publish the conclusion of the
-ground stop pieces for 1600Z on 01DEC26."
+Philip, 17NOV26: "It is my wish that the article be written as part of the act of
+publishing." So `com.huffmanwrites.ground-stop-conclusion-release` is a
+**writing job**, not a release job: at 10:00 CT on 1 December 2026 (1600Z) it
+runs the writer, then the full gate set, then the shared publish tail — commit,
+push, delivery verification, SimpleBrain mirror — in one run. A failed gate
+aborts the push. There is no review step, so the gates are the review.
 
-`com.huffmanwrites.ground-stop-conclusion-release` fires
-`scripts/ground-stop-conclusion-release-runner.sh` at **10:00 CT on 1 December
-2026** — 1600Z, because December is standard time — dispatches a Pages build,
-requires the page to answer, and hands the piece to the SimpleBrain mirror.
+The writer's brief is `skills/ground-stop-conclusion.md`. This file is the
+runner's contract.
 
-## Why a job and not a push
+## Order of work, and why the last guard is before the expensive part
 
-The piece is dated to the release minute, and Hugo builds with
-`buildFuture: false`: a page dated 1600Z is skipped by every build that runs
-before 16:00Z, silently, and appears only in a deploy that runs after it. No cron
-in `.github/workflows/hugo.yml` covers 16:00Z (the nearest are `0 13 * * *` and
-`0 5/6 * * *`), and the scheduled fires land about four hours late when they run
-at all. The next push after 16:00Z would be the next morning's SITREP. So the
-release gets a trigger that runs at the minute, the same contract
-`digest-release`, `sagan-release` and `veterans-release` keep.
-
-It mirrors as well, because a piece published this way never enters
-`publish_article`, which is where the vault mirror lives. The Sagan reflection
-went two days without a vault copy for exactly that reason.
-
-## What the piece must look like by then
-
-1. The file is at **`content/posts/essays/ground-stop-conclusion.md`**, or the
-   plist sets `GROUND_STOP_CONCLUSION_ARTICLE` to wherever it actually is. The
-   guard names whichever path it looked for, so a mismatch is a log line and an
-   alert, never a silent no-op.
-2. Frontmatter carries `date: 2026-12-01T10:00:00-06:00` (1600Z), `draft: false`,
-   `featuredOnHome: true`, and a `lastmod`.
-3. It is **committed and clean**. The deploy builds the push, not the disk, so an
-   uncommitted edit is a page that will not be there; the runner refuses it.
-
-## Guards, and why each one exists
-
-| Condition | Exit | Why |
+| Step | Failure exit | Why it is there |
 |---|---|---|
-| Today is not 2026-12-01 | 0 | launchd has no `Year` key, so `Month 12 / Day 1` fires every year. A job that alerts every December about a piece it will never publish trains its reader to ignore the alert. |
-| The article is missing | 3 | A release job that fires with nothing to release publishes nothing and says nothing. |
-| `draft: false` absent | 3 | A draft builds to no page, and the failure is a 404 an hour later. |
-| Untracked, or modified | 3 | The deploy builds the commit. Releasing a working file publishes whatever the tree held at 10:00. |
-| `gh` missing or unauthenticated | 1 | The token lives in the login keychain, which a LaunchAgent reaches only in a logged-in session; without the check it surfaces as one opaque dispatch failure. |
-| The page does not answer after the dispatch | the dispatch's code | `scripts/verify-published.py` requires the page's own `<title>` to carry the article's title. |
+| Date guard, `2026-12-01` | 0 | launchd has no `Year` key: `Month 12 / Day 1` fires every December forever. A yearly alert about a finished series trains its reader to ignore alerts. |
+| The pack exists | 3 | Nothing to write from. |
+| The pack has **§21** | 3 | The verified citation list is the only place the writer may take an archive URL. Without it the piece ships §16's stale URLs. |
+| `faa-ground-stop-pack.py --audit` | 3 | Every §21 row opens as its document. Run **before** the writer, so a dead snapshot costs a log line rather than an hour of drafting. |
+| Ollama reachable | 1 | `scripts/ollama-probe.sh` heals by reopening the app, then fails loudly. |
+| `publish_preflight` | — | Deletes any stale file at the article path, so the post-condition is binary: the file exists because this run wrote it, or the run aborts. |
+| The writer | its code | `claude -p` with the brief, the pack, web access, and the two read-only prose checkers. No hugo, no git, no gate scripts, no SESSION_STATE. |
+| Two builds | 1 | The drafts build renders what this run wrote; the production build is what the deploy will do. |
+| `run_report_gates --plate 163-ground-stop-conclusion` | 4 | The shared gate list in `scripts/publish-report.sh`, unchanged for every publishing job. |
+| `--audit --file <article>` | 4 | Series-specific: every archive URL in the piece opens as its document, and every advisory it cites has an archived copy in the piece. The FAA drops a document fifteen days after the fact, which is before this piece publishes. |
+| `publish_article` | — | SESSION_STATE entry, commit, push, push verification, delivery check, mirror. |
 
-Exit 0 also covers "the page already answers", which is what a wake after a
-missed fire looks like.
+## The article
 
-## Running it by hand
+`content/posts/essays/ground-stop-conclusion.md`, dated
+`2026-12-01T10:00:00-06:00`, `draft: false`, `featuredOnHome: true`, hero pair
+`163-ground-stop-conclusion_{16x9,4x5}.webp` in both `static/` and `assets/`
+(the plate is fixed; the writer must not generate or rename one).
+
+## Rehearsing it
 
 ```bash
-GROUND_STOP_CONCLUSION_TODAY=2026-12-01 scripts/ground-stop-conclusion-release-runner.sh
+REPORT_DRY_RUN=1 GROUND_STOP_CONCLUSION_IGNORE_GUARDS=1 \
+  GROUND_STOP_CONCLUSION_TODAY=2026-12-01 \
+  bash scripts/ground-stop-conclusion-release-runner.sh
 ```
 
-The clock is injectable for exactly this, and so a smoke run can prove the guards
-on any afternoon. A run with the real date **will** dispatch a Pages build; that
-is the release, not a rehearsal.
+Everything runs and the publish tail stops before writing to git. A smoke prompt
+(`GROUND_STOP_CONCLUSION_PROMPT="Reply with exactly SMOKE-OK. Write no file."`)
+proves the path up to the writer and then exits 3 for the missing file, which is
+the correct answer and not a failure of the job.
 
-## Uninstall it after the run
+**Rehearse after Thanksgiving, not before.** §20's ledger is the piece's spine
+for 20–30NOV26; a rehearsal on 17NOV26 can only produce a piece with an empty
+period, which the gates will happily accept.
 
-A one-off job is uninstalled after it succeeds, not left to its date guard:
+## Uninstall after the run
+
+A one-off job is removed after it succeeds, not left to its date guard:
 
 ```bash
 launchctl bootout gui/"$(id -u)"/com.huffmanwrites.ground-stop-conclusion-release
@@ -68,5 +60,4 @@ rm ~/Library/LaunchAgents/com.huffmanwrites.ground-stop-conclusion-release.plist
 ```
 
 Then remove the row from the scheduled-jobs table in `CLAUDE.md`. The repo copy
-of the plist, the runner and this skill stay as the record, as the Senate,
-Sagan and Veterans runners did.
+of the plist, the runner and both skills stay as the record.

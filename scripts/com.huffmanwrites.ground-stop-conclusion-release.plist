@@ -9,10 +9,13 @@
     <string>/bin/bash</string>
     <string>/Users/prh/Developer/huffmanwrites/scripts/ground-stop-conclusion-release-runner.sh</string>
   </array>
-  <!-- Releases the conclusion of the ground-stop series at 1600Z on 1 December
-       2026, which is 10:00 CST. The piece is dated to that minute and Hugo
-       builds with buildFuture: false, and no cron in .github/workflows/hugo.yml
-       covers 16:00Z, so the release needs a trigger that runs at the minute.
+  <!-- Writes and publishes the conclusion of the ground-stop series at 1600Z
+       on 1 December 2026, which is 10:00 CST. Philip, 17NOV26: "It is my wish
+       that the article be written as part of the act of publishing." So the
+       piece is written in this run and pushed in the same run, and a failed
+       gate aborts the push. The piece is dated to that minute and Hugo builds
+       with buildFuture: false, so it needs a trigger at the minute rather than
+       the next push or a scheduled fire that lands hours late.
 
        ONE-OFF. launchd has no Year key: this dict fires every 1 December
        forever. The runner compares today against 2026-12-01 and exits 0 on any

@@ -9273,30 +9273,28 @@ class TestGroundStopPack(unittest.TestCase):
 
 # --------------------------------------------------------------------------
 class TestGroundStopConclusionRelease(unittest.TestCase):
-    """The one-off 1600Z release of the ground-stop series' conclusion.
+    """The one-off 1600Z job that writes the ground-stop conclusion and publishes it.
 
-    Philip, 17NOV26: "Set up a one-time cronjob to publish the conclusion of the
-    ground stop pieces for 1600Z on 01DEC26." The piece is dated to that minute
-    and Hugo builds with `buildFuture: false`; no cron in the deploy workflow
-    covers 16:00Z, and the fires land hours late when they run at all. So the
-    release is a job that runs at the minute — and because launchd has no Year
-    key, the date guard is what keeps it from becoming a yearly dispatch for a
-    piece that no longer needs one.
-
-    What is asserted is the schedule, the guard, and that the run refuses to
-    release a piece that is missing, still a draft, or not the committed copy.
+    Philip, 17NOV26: "It is my wish that the article be written as part of the
+    act of publishing." So this is a WRITING job: it runs the writer, then the
+    full gate set, then the shared publish tail, in one run at 10:00 CT on
+    1 December 2026. What is asserted here is the schedule, the date guard that
+    keeps a December-1-forever fire from becoming a yearly write, the guards
+    that stop it before the writer runs when the record cannot support a piece,
+    and the wiring that makes the gates the review.
     """
 
     RUNNER = SCRIPTS / "ground-stop-conclusion-release-runner.sh"
     PLIST = SCRIPTS / "com.huffmanwrites.ground-stop-conclusion-release.plist"
+    SKILL = REPO / "skills" / "ground-stop-conclusion.md"
 
     def test_the_plist_fires_at_1600z_on_one_december(self):
         import plistlib
         plist = plistlib.loads(self.PLIST.read_bytes())
         self.assertEqual(plist["Label"],
                          "com.huffmanwrites.ground-stop-conclusion-release")
-        # 10:00 CST is 1600Z. December is standard time; a 09:00 fire would be
-        # 1500Z and a 11:00 fire 1700Z, so this number is the release.
+        # 10:00 CST is 1600Z. December is standard time, so 09:00 would be
+        # 1500Z and 11:00 would be 1700Z: this number is the release.
         self.assertEqual(plist["StartCalendarInterval"],
                          {"Month": 12, "Day": 1, "Hour": 10, "Minute": 0})
         self.assertTrue(plist["ProgramArguments"][1].endswith(
@@ -9304,8 +9302,6 @@ class TestGroundStopConclusionRelease(unittest.TestCase):
         self.assertIn("ground-stop-conclusion-release.out.log",
                       plist["StandardOutPath"])
         self.assertNotIn("RunAtLoad", plist)
-        # The plist names an absolute path launchd needs; assert the script it
-        # names is in this repo, because CI checks out to a different root.
         self.assertTrue((SCRIPTS / Path(plist["ProgramArguments"][1]).name).exists())
 
     def run_runner(self, env_extra):
@@ -9321,53 +9317,71 @@ class TestGroundStopConclusionRelease(unittest.TestCase):
     def test_any_other_day_exits_zero_and_says_so(self):
         rc, log = self.run_runner({"GROUND_STOP_CONCLUSION_TODAY": "2026-11-30"})
         self.assertEqual(rc, 0)
-        self.assertIn("nothing to release", log)
+        self.assertIn("nothing to write", log)
 
-    def test_a_missing_piece_alerts_instead_of_publishing_nothing(self):
+    def test_a_missing_pack_stops_the_run_before_the_writer(self):
         rc, log = self.run_runner({
             "GROUND_STOP_CONCLUSION_TODAY": "2026-12-01",
-            "GROUND_STOP_CONCLUSION_ARTICLE": "/nonexistent/conclusion.md"})
+            "GROUND_STOP_CONCLUSION_PACK": "/nonexistent/pack.md"})
         self.assertEqual(rc, 3)
-        self.assertIn("missing /nonexistent/conclusion.md", log)
+        self.assertIn("missing /nonexistent/pack.md", log)
 
-    def test_a_draft_is_refused_on_the_release_day(self):
+    def test_a_pack_without_a_citation_list_stops_the_run(self):
         tmp = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp, True)
-        article = tmp / "conclusion.md"
-        article.write_text("---\ntitle: x\ndraft: true\n---\n\nbody\n")
+        pack = tmp / "pack.md"
+        pack.write_text("# pack\n\n## 19. Daily collection log\n")
         rc, log = self.run_runner({
             "GROUND_STOP_CONCLUSION_TODAY": "2026-12-01",
-            "GROUND_STOP_CONCLUSION_ARTICLE": str(article)})
+            "GROUND_STOP_CONCLUSION_PACK": str(pack)})
         self.assertEqual(rc, 3)
-        self.assertIn("not draft: false", log)
+        self.assertIn("no \u00a721 citation list", log)
 
-    def test_an_untracked_piece_is_refused_because_the_deploy_builds_the_push(self):
-        tmp = Path(tempfile.mkdtemp())
-        self.addCleanup(shutil.rmtree, tmp, True)
-        article = tmp / "conclusion.md"
-        article.write_text("---\ntitle: x\ndraft: false\n---\n\nbody\n")
-        rc, log = self.run_runner({
-            "GROUND_STOP_CONCLUSION_TODAY": "2026-12-01",
-            "GROUND_STOP_CONCLUSION_ARTICLE": str(article)})
-        self.assertEqual(rc, 3)
-        self.assertIn("not tracked by git", log)
-
-    def test_the_runner_verifies_the_page_and_hands_it_to_the_vault(self):
+    def test_the_runner_writes_then_gates_then_publishes(self):
         code = "\n".join(
             line for line in self.RUNNER.read_text(encoding="utf-8").splitlines()
             if not line.lstrip().startswith("#"))
-        self.assertIn("republish-pages.sh", code)
-        self.assertIn("verify-published.py", code)
-        self.assertIn("mirror-post.sh", code)
-        self.assertIn("alert-failure.sh", code)
-        self.assertIn("git status --porcelain", code)
-        for absent in ("git push", "hugo "):
+        # The writer, with the two read-only prose checkers granted, because
+        # the skill tells it to run them and a denial is silent.
+        self.assertIn("claude -p", code)
+        self.assertIn("check-emdashes.py", code)
+        self.assertIn("check-prepositions.py", code)
+        self.assertIn("ollama_require", code)
+        # Two builds and the shared gate set, run by the runner rather than
+        # reported by the writer.
+        self.assertIn("report_build", code)
+        self.assertIn("run_report_gates", code)
+        self.assertIn("--plate 163-ground-stop-conclusion", code)
+        # The series gate: every archive URL opens as its document, and every
+        # advisory cited carries an archived copy.
+        self.assertIn("--audit --file", code)
+        # The tail, and nothing of git's own in this file.
+        self.assertIn("publish-report.sh", code)
+        self.assertIn("publish_article", code)
+        for absent in ("git push", "hugo --gc", "git commit"):
             self.assertNotIn(absent, code)
 
     def test_the_runner_says_how_to_uninstall_itself(self):
         text = self.RUNNER.read_text(encoding="utf-8")
         self.assertIn("launchctl bootout", text)
         self.assertIn("2026-12-01", text)
+
+    def test_the_skill_sets_the_sources_the_plate_and_the_publication_date(self):
+        text = self.SKILL.read_text(encoding="utf-8")
+        self.assertIn("date: 2026-12-01T10:00:00-06:00", text)
+        self.assertIn("163-ground-stop-conclusion_16x9.webp", text)
+        self.assertIn("163-ground-stop-conclusion_4x5.webp", text)
+        # The two rules that keep the piece citable after the FAA rotates the
+        # index: archive URLs from §21, and no live advisory URL without a copy.
+        self.assertIn("§21", text)
+        self.assertIn("archived copy", text)
+        self.assertIn("Do not name a root cause", text)
+
+    def test_the_hero_pair_exists_in_both_homes(self):
+        for name in ("163-ground-stop-conclusion_16x9.webp",
+                     "163-ground-stop-conclusion_4x5.webp"):
+            for home in ("static/img/articles", "assets/img/articles"):
+                self.assertTrue((REPO / home / name).exists(), f"{home}/{name}")
 
 
 if __name__ == "__main__":
