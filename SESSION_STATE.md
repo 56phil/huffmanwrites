@@ -12,6 +12,16 @@
 
 ---
 
+### Ops — 17NOV26 — A one-off release job for the ground-stop conclusion, 1600Z on 1DEC26
+
+- **Philip: "Set up a one-time cronjob to publish the conclusion of the ground stop pieces for 1600Z on 01DEC26."** Built as a launchd release job, because nothing else in this repo can hold a minute: the piece will be dated `2026-12-01T10:00:00-06:00`, Hugo builds with `buildFuture: false`, no cron in `.github/workflows/hugo.yml` covers 16:00Z, and the fires that do run land about four hours late.
+- **`com.huffmanwrites.ground-stop-conclusion-release`** fires `scripts/ground-stop-conclusion-release-runner.sh` at **10:00 CT on 1 December** (1600Z, December being standard time): dispatch a Pages build, require the page's own `<title>` to answer, then hand the piece to `scripts/mirror-post.sh`. The mirror is there because a piece published this way never enters `publish_article`, which is where the vault copy is made, and the Sagan reflection went two days without one for that reason.
+- **launchd has no `Year` key, so the date guard is the job.** `Month 12 / Day 1` fires every 1 December forever; the runner compares today against `2026-12-01` and exits **0** with a log line on any other day, because a job that alerts every December about a piece it will never publish teaches its reader to ignore the alert.
+- **The prerequisite is the piece, and each way it can be unready aborts loudly at exit 3**: missing file, `draft: true`, untracked, or tracked with uncommitted changes. The last one is the subtle one — the deploy builds the push, not the disk, so releasing a modified working file would publish nothing and say so only as a 404. `GROUND_STOP_CONCLUSION_ARTICLE` overrides the default path so the file can carry the title it earns, and the guard names whichever path it looked for.
+- **Installed and confirmed rather than assumed:** `launchctl print` shows `Month 12 / Day 1 / Hour 10 / Minute 0`; `check-plists.py` reports **21 schedules OK**, with its expected WARN that this job's log has never been created because it has never run.
+- **The job will abort, not invent, on 1 December if the piece is not written by then** — which is the correct failure and the thing to watch between Thanksgiving and that date. `skills/ground-stop-conclusion-release.md` carries the frontmatter it needs, the guard table, the by-hand run, and the `launchctl bootout` step.
+- **671 tests OK**, seven new in `TestGroundStopConclusionRelease`: the 1600Z schedule, the date guard, the missing/draft/untracked refusals, and the verify-and-mirror wiring.
+
 ### Ops — 17NOV26 — The citation handoff is generated now, and checked against the finished piece
 
 - **Philip: "Close the gap now."** The gap was that nothing forced a writer to copy from the verified list. It is closed by `--audit --file <piece>`, and the first run found a defect in a published page.

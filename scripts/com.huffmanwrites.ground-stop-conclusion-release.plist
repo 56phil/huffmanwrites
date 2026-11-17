@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.huffmanwrites.ground-stop-conclusion-release</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prh/Developer/huffmanwrites/scripts/ground-stop-conclusion-release-runner.sh</string>
+  </array>
+  <!-- Releases the conclusion of the ground-stop series at 1600Z on 1 December
+       2026, which is 10:00 CST. The piece is dated to that minute and Hugo
+       builds with buildFuture: false, and no cron in .github/workflows/hugo.yml
+       covers 16:00Z, so the release needs a trigger that runs at the minute.
+
+       ONE-OFF. launchd has no Year key: this dict fires every 1 December
+       forever. The runner compares today against 2026-12-01 and exits 0 on any
+       other day, because a job that alerts every December about a piece it will
+       never publish trains its reader to ignore the alert. After the 2026 run:
+
+         launchctl bootout gui/$(id -u)/com.huffmanwrites.ground-stop-conclusion-release
+         rm ~/Library/LaunchAgents/com.huffmanwrites.ground-stop-conclusion-release.plist
+
+       Nothing else is scheduled on the hour, so no collision. No RunAtLoad: a
+       login is not the release minute. Read skills/ground-stop-conclusion-release.md
+       before changing the date, the article path, or the guards. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Month</key>
+    <integer>12</integer>
+    <key>Day</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>10</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/prh/Developer/huffmanwrites</string>
+  <key>StandardOutPath</key>
+  <string>/Users/prh/Library/Logs/ground-stop-conclusion-release.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/prh/Library/Logs/ground-stop-conclusion-release.err.log</string>
+</dict>
+</plist>

@@ -9271,5 +9271,104 @@ class TestGroundStopPack(unittest.TestCase):
         self.assertIn("launchctl bootout", skill)
 
 
+# --------------------------------------------------------------------------
+class TestGroundStopConclusionRelease(unittest.TestCase):
+    """The one-off 1600Z release of the ground-stop series' conclusion.
+
+    Philip, 17NOV26: "Set up a one-time cronjob to publish the conclusion of the
+    ground stop pieces for 1600Z on 01DEC26." The piece is dated to that minute
+    and Hugo builds with `buildFuture: false`; no cron in the deploy workflow
+    covers 16:00Z, and the fires land hours late when they run at all. So the
+    release is a job that runs at the minute — and because launchd has no Year
+    key, the date guard is what keeps it from becoming a yearly dispatch for a
+    piece that no longer needs one.
+
+    What is asserted is the schedule, the guard, and that the run refuses to
+    release a piece that is missing, still a draft, or not the committed copy.
+    """
+
+    RUNNER = SCRIPTS / "ground-stop-conclusion-release-runner.sh"
+    PLIST = SCRIPTS / "com.huffmanwrites.ground-stop-conclusion-release.plist"
+
+    def test_the_plist_fires_at_1600z_on_one_december(self):
+        import plistlib
+        plist = plistlib.loads(self.PLIST.read_bytes())
+        self.assertEqual(plist["Label"],
+                         "com.huffmanwrites.ground-stop-conclusion-release")
+        # 10:00 CST is 1600Z. December is standard time; a 09:00 fire would be
+        # 1500Z and a 11:00 fire 1700Z, so this number is the release.
+        self.assertEqual(plist["StartCalendarInterval"],
+                         {"Month": 12, "Day": 1, "Hour": 10, "Minute": 0})
+        self.assertTrue(plist["ProgramArguments"][1].endswith(
+            "scripts/ground-stop-conclusion-release-runner.sh"))
+        self.assertIn("ground-stop-conclusion-release.out.log",
+                      plist["StandardOutPath"])
+        self.assertNotIn("RunAtLoad", plist)
+        # The plist names an absolute path launchd needs; assert the script it
+        # names is in this repo, because CI checks out to a different root.
+        self.assertTrue((SCRIPTS / Path(plist["ProgramArguments"][1]).name).exists())
+
+    def run_runner(self, env_extra):
+        home = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, home, True)
+        env = {k: v for k, v in os.environ.items() if k != "PATH"}
+        env.update(HOME=str(home), **env_extra)
+        done = subprocess.run(["/bin/bash", str(self.RUNNER)], env=env,
+                              capture_output=True, text=True, timeout=120)
+        log = home / "Library" / "Logs" / "ground-stop-conclusion-release.out.log"
+        return done.returncode, (log.read_text() if log.exists() else "")
+
+    def test_any_other_day_exits_zero_and_says_so(self):
+        rc, log = self.run_runner({"GROUND_STOP_CONCLUSION_TODAY": "2026-11-30"})
+        self.assertEqual(rc, 0)
+        self.assertIn("nothing to release", log)
+
+    def test_a_missing_piece_alerts_instead_of_publishing_nothing(self):
+        rc, log = self.run_runner({
+            "GROUND_STOP_CONCLUSION_TODAY": "2026-12-01",
+            "GROUND_STOP_CONCLUSION_ARTICLE": "/nonexistent/conclusion.md"})
+        self.assertEqual(rc, 3)
+        self.assertIn("missing /nonexistent/conclusion.md", log)
+
+    def test_a_draft_is_refused_on_the_release_day(self):
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp, True)
+        article = tmp / "conclusion.md"
+        article.write_text("---\ntitle: x\ndraft: true\n---\n\nbody\n")
+        rc, log = self.run_runner({
+            "GROUND_STOP_CONCLUSION_TODAY": "2026-12-01",
+            "GROUND_STOP_CONCLUSION_ARTICLE": str(article)})
+        self.assertEqual(rc, 3)
+        self.assertIn("not draft: false", log)
+
+    def test_an_untracked_piece_is_refused_because_the_deploy_builds_the_push(self):
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp, True)
+        article = tmp / "conclusion.md"
+        article.write_text("---\ntitle: x\ndraft: false\n---\n\nbody\n")
+        rc, log = self.run_runner({
+            "GROUND_STOP_CONCLUSION_TODAY": "2026-12-01",
+            "GROUND_STOP_CONCLUSION_ARTICLE": str(article)})
+        self.assertEqual(rc, 3)
+        self.assertIn("not tracked by git", log)
+
+    def test_the_runner_verifies_the_page_and_hands_it_to_the_vault(self):
+        code = "\n".join(
+            line for line in self.RUNNER.read_text(encoding="utf-8").splitlines()
+            if not line.lstrip().startswith("#"))
+        self.assertIn("republish-pages.sh", code)
+        self.assertIn("verify-published.py", code)
+        self.assertIn("mirror-post.sh", code)
+        self.assertIn("alert-failure.sh", code)
+        self.assertIn("git status --porcelain", code)
+        for absent in ("git push", "hugo "):
+            self.assertNotIn(absent, code)
+
+    def test_the_runner_says_how_to_uninstall_itself(self):
+        text = self.RUNNER.read_text(encoding="utf-8")
+        self.assertIn("launchctl bootout", text)
+        self.assertIn("2026-12-01", text)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2 if "-v" in sys.argv else 1, argv=[a for a in sys.argv if a != "-v"])
