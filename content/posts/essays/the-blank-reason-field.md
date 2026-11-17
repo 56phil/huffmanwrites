@@ -3,7 +3,7 @@ title: "The Blank Reason Field"
 description: "The order that stopped every departure in the country carried no stated cause, and the cause that emerged two days later was a scheduling decision nobody had integrated."
 date: 2026-11-15T06:30:00-06:00
 author: Philip Huffman
-lastmod: 2026-11-15T06:30:00-06:00
+lastmod: 2026-11-17T04:10:00-06:00
 draft: false
 featuredOnHome: true
 hero_desktop: "img/articles/161-blank-reason-field_16x9.webp"
@@ -156,7 +156,7 @@ Think clearly. Live intentionally. Love deeply.
 
 [^1]: Air Traffic Control System Command Center, Advisory 111, November 13, 2026, "NATIONAL GROUND STOP," sent 20:54Z. Text quoted from the advisory as published: `https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111`. Archived copy: `http://web.archive.org/web/20261115092220/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111`. The advisory carries no REASON field and no REMARKS field; its only causal language is "DUE TO EXTRAORDINARY CIRCUMSTANCES AND FOR REASONS OF SAFETY." The event window is `13/2053 - 14/0400`.
 
-[^2]: Advisory 005, November 14, 2026, "CNX NATIONWIDE GROUND STOP," signature `26/11/14 01:19`, effective `140119-140200`. `https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5`. Archived: `http://web.archive.org/web/20261114013716/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5`. The REASON field is present and empty. Of the two stop orders, only the re-issue, Advisory 120, carries a stated reason: `REASON: COMMUNICATIONS FAILURE`, with the agency's internal rendering labelling the same advisory `EQUIPMENT / OUTAGE`; `https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120`.
+[^2]: Advisory 005, November 14, 2026, "CNX NATIONWIDE GROUND STOP," signature `26/11/14 01:19`, effective `140119-140200`. `https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5`. Archived: `http://web.archive.org/web/20261114013716/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5`. The REASON field is present and empty. Of the two stop orders, only the re-issue, Advisory 120, carries a stated reason: `REASON: COMMUNICATIONS FAILURE`, with the agency's internal rendering labelling the same advisory `EQUIPMENT / OUTAGE`; `https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120`. Archived: `http://web.archive.org/web/20261117053101/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120`.
 
 [^3]: DOT briefing, November 14, 2026, with Secretary Sean Duffy and Administrator Bryan Bedford. The department's transcript page answers 403 to this client; the wording quoted is as the department renders it and is carried by Reuters and CNBC, fetched directly. Duffy on the mechanism: "In at least one of our remote FAA locations, a contractor was doing routine maintenance to switch telecommunication lines from old copper wire and they were bringing it over to fiber. That contractor that does the work for us is L3Harris"; the router "started flooding other routers in our air traffic control system"; "we had over 1,000 connection attempts every four to five seconds." Bedford on detection: officials could not identify the cause "for about 45 minutes," and "no FAA facilities went dark." The causal question is rendered two ways: DOT has "user error or install error from L3Harris or did they install a faulty router"; CNBC has "user error, installator error from L3 Harris, or did they install a faulty router." Quote with the outlet named.
 

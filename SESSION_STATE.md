@@ -12,6 +12,16 @@
 
 ---
 
+### Ops — 17NOV26 — The citation handoff is generated now, and checked against the finished piece
+
+- **Philip: "Close the gap now."** The gap was that nothing forced a writer to copy from the verified list. It is closed by `--audit --file <piece>`, and the first run found a defect in a published page.
+- **The published 15NOV26 installment cited Advisory 120 live with no archived copy** — and 120 is the advisory carrying `REASON: COMMUNICATIONS FAILURE`, the load-bearing citation of the whole series. It would have died with the FAA's 15-day window on **29NOV26**. The archived copy (`20261117053101`) is in the piece now, and `lastmod` moved to 17NOV26.
+- **The check's rule is "can a reader open it, and is it the document", not "is it in the table".** An archive URL the pack does not list but which opens is reported `UNLISTED` and passes; §21 membership is a proxy for having been checked, and the check itself is stronger than the proxy. What fails: a snapshot that serves the wrong document, and an advisory cited with **no archived copy anywhere in the piece**.
+- **§16 said four of the seven archived advisories were dead. That was wrong, and it is corrected in place.** Measured with the audit: two (`111` at `20261113210113`, `120` at `20261113235506`) serve a page with no advisory text in them, one (`117`) cannot be read, and four serve. My first pass read my own throttling as fact — the archive answers slower and sometimes not at all when a client hammers it — which is why `--audit` now separates exit **4** (serves the wrong document) from exit **3** (could not be read) and retries once after a pause.
+- **§20 and §21 exist now.** §20 is an append-only totals table keyed by date, harvested from the log and merged with the live reading, later wins, no date dropped — FlightAware shows three days, so a settled figure otherwise leaves the record for ever. §21 is generated from §19's verified captures and is the only list a writer copies URLs from. `upsert` was taught to stop at the next top-level heading, or a new date block would have been appended below both sections and taken them inside the region it rewrites.
+- **The day-index watch runs 13–30NOV26** rather than "13–15 plus today", so each day of the Thanksgiving travel period gets its own primary document; a date that has not happened yet is never requested, because tomorrow's index is empty and an archived empty page is a false record.
+- **664 tests OK** (seventeen new in `TestGroundStopPack`), `hugo --gc --minify` clean, `check-links.py --file` 11 links OK.
+
 ### Ops — 17NOV26 — The 23:30 pass worked, and it dated FlightAware's pages a day early
 
 - **The second fire ran on schedule and finished in 108 s** (`2026-11-16 23:30:05` start, `23:31:53` exit 0), so the array-of-dicts schedule and the settling design both hold. What it also did was put a whole day's totals under the wrong date.

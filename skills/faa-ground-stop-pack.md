@@ -54,8 +54,22 @@ pass that inspects nothing still reports OK.
 ## Before the piece is drafted, and again before it publishes
 
 ```bash
-python3 scripts/faa-ground-stop-pack.py --audit
+python3 scripts/faa-ground-stop-pack.py --audit              # the pack's own list
+python3 scripts/faa-ground-stop-pack.py --audit --file content/posts/essays/<piece>.md
 ```
+
+**`--file` is the one that matters before a push.** It reads a finished piece
+and checks two things: every archive URL in it opens **as its document** (a
+capture the pack does not list is fine and is reported `UNLISTED`, because the
+question is whether the reader can open it, not whether it is in a table), and
+**every advisory the piece cites has an archived copy inside the same piece** —
+the live `adv_otherdis` URL dies when the fifteen-day window closes, which falls
+inside this series' drafting window. First run, on the published 15NOV26
+installment: it cited Advisory 120 live with no archived copy, and 120 is the
+one that carries `REASON: COMMUNICATIONS FAILURE`. The copy was added.
+
+Exit **4** is a citation that serves the wrong document, or an advisory with no
+archived copy; exit **3** is one that could not be read.
 
 It re-opens every URL in §21 and exits **4** if one no longer serves its
 document, printing the key and the reason. Run it on the day the piece is

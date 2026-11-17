@@ -9174,6 +9174,75 @@ class TestGroundStopPack(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("1 verified, 0 unverified, 0 failed", out.getvalue())
 
+    # -- the pre-publish check on a finished piece -------------------------
+
+    PACK_FOR_PIECE = ""
+
+    def _piece_pack(self, rows):
+        return self.mod.replace_section("", self.mod.CITATIONS_HEADING,
+                                        self.mod.render_citations(rows))
+
+    SNAP = """http://web.archive.org/web/20261117053101/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111"""
+
+    def test_a_piece_citing_a_listed_capture_passes(self):
+        from unittest import mock
+        pack = self._piece_pack({"11132026/111": (self.SNAP, "1")})
+        piece = f"Cited: `{self.SNAP}` and `https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111`."
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            with mock.patch.object(self.mod, "fetch",
+                                   return_value="<html>" + "ADVZY 111 " + "x" * 400 + "</html>"):
+                code = self.mod.article_audit(pack, piece, "piece.md")
+        self.assertEqual(code, 0)
+        self.assertIn("backed by an archived copy", out.getvalue())
+
+    def test_a_capture_the_pack_does_not_list_still_passes_if_it_opens(self):
+        # The rule is that the reader can open it and it is the document, not
+        # that the URL is in a particular table.
+        from unittest import mock
+        pack = self._piece_pack({"11132026/111":
+                                 ("http://web.archive.org/web/1/x", "1")})
+        piece = "`http://web.archive.org/web/9/other`"
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            with mock.patch.object(self.mod, "fetch",
+                                   return_value="<html>" + "ADVZY 111 " + "x" * 400 + "</html>"):
+                code = self.mod.article_audit(pack, piece, "piece.md")
+        self.assertEqual(code, 0)
+        self.assertIn("UNLISTED", out.getvalue())
+
+    def test_an_advisory_with_no_archived_copy_fails(self):
+        # Advisory 120 carries REASON: COMMUNICATIONS FAILURE, the load-bearing
+        # citation of the whole series, and the published piece cited it live
+        # with no archived copy. It would have died on 29NOV26.
+        from unittest import mock
+        pack = self._piece_pack({})
+        piece = "See `https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120`."
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            with mock.patch.object(self.mod, "fetch", return_value="<html>x</html>"):
+                code = self.mod.article_audit(pack, piece, "piece.md")
+        self.assertEqual(code, 4)
+        self.assertIn("no archived copy", out.getvalue())
+        self.assertIn("advn=120", out.getvalue())
+
+    def test_a_piece_citing_a_snapshot_that_carries_the_wrong_document_fails(self):
+        from unittest import mock
+        pack = self._piece_pack({})
+        piece = f"`{self.SNAP}`"
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            with mock.patch.object(self.mod, "fetch",
+                                   return_value="<html>" + "wayback processing" + "x" * 400 + "</html>"):
+                code = self.mod.article_audit(pack, piece, "piece.md")
+        self.assertEqual(code, 4)
+        self.assertIn("FAIL snapshot does not carry the wording", out.getvalue())
+
+    def test_a_url_followed_by_a_full_stop_is_read_without_it(self):
+        self.assertEqual(
+            self.mod._trim("http://web.archive.org/web/1/x."),
+            "http://web.archive.org/web/1/x")
+
     def test_the_block_prints_the_coverage_it_reached(self):
         from unittest import mock
         with mock.patch.object(self.mod, "fetch", side_effect=self._fake_fetch(

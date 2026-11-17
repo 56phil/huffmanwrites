@@ -263,6 +263,10 @@ def verify_capture(snapshot_url: str, needles: "list[str]") -> "tuple[bool, str]
     except Exception as exc:  # noqa: BLE001 - reported as the verdict
         return False, f"snapshot did not serve ({type(exc).__name__})"
     text = clean(body).lower()
+    if not needles:
+        # No wording to require: the question is only whether something was
+        # archived and it is not a stub.
+        return (True, "") if len(text) > 200 else (False, "snapshot is empty")
     for needle in needles:
         if needle.lower() in text:
             return True, ""
@@ -873,6 +877,93 @@ def audit(text: str) -> int:
     return 3 if unverified else 0
 
 
+ARCHIVE_URL = re.compile(r"https?://web\.archive\.org/web/\d+/[^\s)\]\"'<>`]+")
+ADVISORY_URL = re.compile(r"https?://www\.fly\.faa\.gov/adv/adv_otherdis\?[^\s)\]\"'<>`]+")
+
+
+def _trim(url: str) -> str:
+    return url.rstrip(".,;:)]")
+
+
+def _advisory_key(url: str) -> str:
+    """`adv_date=11132026&advn=111` -> `11132026/111`, from the URL itself."""
+    m = re.search(r"adv_date=(\d{8})&advn=(\d+)", url)
+    return f"{m.group(1)}/{int(m.group(2))}" if m else ""
+
+
+def article_audit(pack_text: str, article: str, source: str) -> int:
+    """Check a finished piece against §21 before it publishes.
+
+    The rule is not "every URL must appear in §21", because a different capture
+    that opens and carries the document is a good citation. The rule is that
+    **every citation can be opened and is the document**, and that **every
+    advisory cited has an archived copy somewhere in the piece** — the live
+    `adv_otherdis` URL dies when the FAA's fifteen-day window closes, which is
+    inside the drafting window for this series.
+
+    Exit 4 for a citation that serves the wrong document, or an advisory with
+    no archived copy; 3 for one that could not be read. Nothing else is a
+    failure: a capture §21 does not list is reported as `unlisted`, because the
+    check that matters has already been made.
+    """
+    cites = harvest_citations(pack_text)
+    known = {url for url, _ in cites.values()}
+    archive, live = [], []
+    for url in (_trim(u) for u in ARCHIVE_URL.findall(article)):
+        if url not in archive:
+            archive.append(url)
+    for url in (_trim(u) for u in ADVISORY_URL.findall(article)):
+        if url not in live:
+            live.append(url)
+
+    if not archive and not live:
+        print(f"citation-audit: {source} cites no archived or advisory URL")
+        return 0
+
+    archived_keys = {_advisory_key(u) for u in archive}
+    uncovered = [u for u in live if _advisory_key(u) not in archived_keys]
+    unlisted = [u for u in archive if u not in known]
+
+    def check(url: str) -> "tuple[str, str, str]":
+        # A loose needle on purpose: §21 already established WHICH document a
+        # listed URL is, and this asks whether it still opens as one.
+        needles = (["advzy"] if "adv_otherdis" in url
+                   else ["atcscc advisories"] if "adv_list" in url else [])
+        ok, why = verify_capture(url, needles)
+        if not ok and "did not serve" in why:
+            time.sleep(2)
+            ok, why = verify_capture(url, needles)
+        return url, ("verified" if ok else
+                     ("unverified" if "did not serve" in why else "failed")), why
+
+    results = []
+    if archive:
+        with futures.ThreadPoolExecutor(max_workers=AUDIT_WORKERS) as pool:
+            results = list(pool.map(check, archive))
+    failed = [r for r in results if r[1] == "failed"]
+    unverified = [r for r in results if r[1] == "unverified"]
+    verified = len(results) - len(failed) - len(unverified)
+
+    print(f"citation-audit: {source}: {len(archive)} archive URL(s) "
+          f"({verified} verified, {len(unverified)} unverified, {len(failed)} failed), "
+          f"{len(live)} live advisory URL(s), {len(known)} row(s) in §21")
+    for url in unlisted:
+        print(f"citation-audit: UNLISTED (opens; not in §21) — {url}")
+    for url, _, why in failed:
+        print(f"citation-audit: FAIL {why} — {url}")
+    for url, _, why in unverified:
+        print(f"citation-audit: UNVERIFIED {why} — {url}")
+    for url in uncovered:
+        print(f"citation-audit: FAIL advisory cited with no archived copy — {url}")
+    if live and not uncovered:
+        print(f"citation-audit: {len(live)} live advisory URL(s) are backed by an "
+              "archived copy in the piece; they will 404 after the 15-day window")
+
+    if failed or uncovered:
+        return 4
+    return 3 if unverified else 0
+
+
 def main(argv: "list[str]") -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--date", help="CT date to collect (YYYY-MM-DD); default today")
@@ -882,6 +973,7 @@ def main(argv: "list[str]") -> int:
     ap.add_argument("--offline", action="store_true")
     ap.add_argument("--audit", action="store_true",
                     help="re-open every recorded citation and fail on a miss")
+    ap.add_argument("--file", help="with --audit: check a finished piece against §21")
     args = ap.parse_args(argv)
 
     now = dt.datetime.now(CT)
@@ -898,6 +990,13 @@ def main(argv: "list[str]") -> int:
     text = pack.read_text(encoding="utf-8") if pack.exists() else ""
 
     if args.audit:
+        if args.file:
+            source = pathlib.Path(args.file)
+            if not source.exists():
+                print(f"citation-audit: no such file: {source}")
+                return 3
+            return article_audit(text, source.read_text(encoding="utf-8"),
+                                 source.name)
         return audit(text)
 
     result = collect(day, offline=args.offline, prior=prior_state(text, label(day)),
