@@ -999,9 +999,9 @@ No row on this day's index is a ground-stop advisory.
 
 ### 16NOV26
 
-**Collected** 16NOV26 23:30 CT by `scripts/faa-ground-stop-pack.py`. Facts only: every line below was read off the page named, and nothing here is analysis.
+**Collected** 17NOV26 03:19 CT by `scripts/faa-ground-stop-pack.py`. Facts only: every line below was read off the page named, and nothing here is analysis.
 
-**Advisories on the index, 2026-11-16** — 82 rows, fetched 23:30 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+**Advisories on the index, 2026-11-16** — 82 rows, fetched 03:19 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
 
 | No. | Control | Sent | Title |
 |---|---|---|---|
@@ -1090,10 +1090,19 @@ No row on this day's index is a ground-stop advisory.
 
 Ground-stop rows above, by number: 079, 072, 071, 063, 056, 054, 053, 050, 049, 044, 010.
 
-**Advisories on the index, 2026-11-17** — 11 rows, fetched 23:30 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-17&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+**Advisories on the index, 2026-11-17** — 20 rows, fetched 03:19 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-17&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
 
 | No. | Control | Sent | Title |
 |---|---|---|---|
+| 020 | DCC | 11/17/26 08:23 | OPERATIONS PLAN |
+| 019 | DCC | 11/17/26 08:08 | VOLCANIC ACTIVITY BULLETIN - PURACE |
+| 018 | DCC | 11/17/26 07:53 | VOLCANIC ACTIVITY BULLETIN - FUEGO |
+| 017 | SFO/ZOA | 11/17/26 06:58 | CDM GROUND DELAY PROGRAM CNX |
+| 016 | DCC | 11/17/26 06:53 | VOLCANIC ACTIVITY BULLETIN - KATMAI |
+| 015 | DCC | 11/17/26 06:45 | VOLCANIC ACTIVITY BULLETIN - POPOCATEPETL |
+| 014 | DCC | 11/17/26 06:15 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 013 | SAN/ZLA | 11/17/26 05:59 | CDM GROUND DELAY PROGRAM CNX |
+| 012 | DCC | 11/17/26 05:42 | VOLCANIC ACTIVITY BULLETIN - REVENTADOR |
 | 011 | SFO/ZOA | 11/17/26 04:54 | SFO GROUND STOP CANCELLATION |
 | 010 | SFO/ZOA | 11/17/26 04:51 | CDM GROUND DELAY PROGRAM |
 | 009 | SFO/ZOA | 11/17/26 04:07 | CDM GROUND STOP |
@@ -1108,30 +1117,30 @@ Ground-stop rows above, by number: 079, 072, 071, 063, 056, 054, 053, 050, 049, 
 
 Ground-stop rows above, by number: 011, 009, 004.
 
-**FlightAware totals** — fetched 23:30 CT. The date column is this pass's CT date for that page; the tracker words its own pages by weekday. A figure that moved since the previous pass of this date is printed with the earlier reading, because the day settles.
+**FlightAware totals** — fetched 03:19 CT. The tracker's own day is **2026-11-17**: its pages roll at 00:00Z, so between 18:00 CT and midnight it is already on tomorrow, and the date column is read from the day word each page prints. A figure that moved since the previous pass of this date is printed with the earlier reading, because the day settles.
 
 | Day | Cancels (US) | Delays (US) | Cancels (all) | Delays (all) |
 |---|---|---|---|---|
-| Sat 14NOV26 | 2,336 (was 6,700 at 16:31) | 11,131 (was 9,188 at 16:31) | 2,860 (was 7,355 at 16:31) | 26,886 (was 22,740 at 16:31) |
-| Sun 15NOV26 | 369 (was 2,336 at 16:31) | 6,666 (was 11,128 at 16:31) | 879 (was 2,860 at 16:31) | 21,064 (was 26,883 at 16:31) |
-| Mon 16NOV26 | 16 (was 343 at 16:31) | 177 (was 4,697 at 16:31) | 242 (was 819 at 16:31) | 2,532 (was 17,821 at 16:31) |
+| Sun 15NOV26 | 2,336 (was 369 at 23:30) | 11,131 (was 6,666 at 23:30) | 2,860 (was 879 at 23:30) | 26,886 (was 21,064 at 23:30) |
+| Mon 16NOV26 | 371 (was 16 at 23:30) | 6,847 (was 177 at 23:30) | 889 (was 242 at 23:30) | 21,660 (was 2,532 at 23:30) |
+| Tue 17NOV26 | 32 | 283 | 299 | 4,844 |
 
-**Wayback captures** — every snapshot below was fetched and checked for the wording it should carry; `no capture` means no archive holds the document, and the note says whether a save was requested. Fetched 23:30 CT. The advisory index keeps 15 days. 4 watch item(s) fell outside this pass's cap of 30. 
+**Wayback captures** — every snapshot below was fetched and checked for the wording it should carry; `no capture` means no archive holds the document, and the note says whether a save was requested. Fetched 03:19 CT. The advisory index keeps 15 days. 5 watch item(s) fell outside this pass's cap of 30. 
 
 | Watch | Captured (UTC) | Snapshot | Note |
 |---|---|---|---|
-| 11132026/111 | 20261116230955 | https://web.archive.org/web/20261116230955/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111 | saved this pass |
-| 11132026/119 | 20261117053042 | https://web.archive.org/web/20261117053042/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=119 | saved this pass |
-| 11132026/120 | 20261117053101 | https://web.archive.org/web/20261117053101/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120 | saved this pass |
+| 11132026/111 | 20261117053034 | http://web.archive.org/web/20261117053034/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=111 |  |
+| 11132026/119 | 20261117053042 | http://web.archive.org/web/20261117053042/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=119 |  |
+| 11132026/120 | 20261117053101 | http://web.archive.org/web/20261117053101/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11132026&advn=120 |  |
 | 11142026/1 | 20261115140330 | http://web.archive.org/web/20261115140330/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=1 |  |
 | 11142026/5 | 20261115231106 | http://web.archive.org/web/20261115231106/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=5 |  |
 | 11142026/18 | 20261116215302 | http://web.archive.org/web/20261116215302/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=18 |  |
-| index 2026-11-13 | 20261116220749 | https://web.archive.org/web/20261116220749/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-13&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | saved this pass |
+| index 2026-11-13 | 20261117053121 | http://web.archive.org/web/20261117053121/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-13&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
 | index 2026-11-14 | 20261116220803 | http://web.archive.org/web/20261116220803/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-14&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
 | index 2026-11-15 | 20261116220823 | http://web.archive.org/web/20261116220823/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-15&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
 | index 2026-11-16 | 20261116220847 | http://web.archive.org/web/20261116220847/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
 | faa-qa | 20261116050959 | http://web.archive.org/web/20261116050959/https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers |  |
-| 11162026/79 | 20261117053128 | https://web.archive.org/web/20261117053128/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=79 | saved this pass |
+| 11162026/79 | 20261117053128 | http://web.archive.org/web/20261117053128/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=79 |  |
 | 11162026/75 | 20261116222847 | http://web.archive.org/web/20261116222847/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=75 |  |
 | 11162026/72 | 20261116221929 | http://web.archive.org/web/20261116221929/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=72 |  |
 | 11162026/71 | 20261116221001 | http://web.archive.org/web/20261116221001/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=71 |  |
@@ -1139,16 +1148,23 @@ Ground-stop rows above, by number: 011, 009, 004.
 | 11162026/61 | 20261116220020 | http://web.archive.org/web/20261116220020/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=61 |  |
 | 11162026/56 | 20261116220117 | http://web.archive.org/web/20261116220117/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=56 |  |
 | 11162026/54 | 20261116220140 | https://web.archive.org/web/20261116220140/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=54 | saved this pass |
-| 11162026/53 | no capture |  | no capture; save budget spent |
+| 11162026/53 | 20261116220243 | http://web.archive.org/web/20261116220243/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=53 |  |
 | 11162026/52 | 20261116220454 | http://web.archive.org/web/20261116220454/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=52 |  |
-| 11162026/50 | no capture |  | no capture; save budget spent |
-| 11162026/49 | 20261116221404 | http://web.archive.org/web/20261116221404/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=49 |  |
-| 11162026/44 | 20261116221424 | http://web.archive.org/web/20261116221424/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=44 |  |
-| 11162026/43 | 20261116222055 | http://web.archive.org/web/20261116222055/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=43 |  |
-| 11162026/32 | 20261116222057 | http://web.archive.org/web/20261116222057/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=32 |  |
+| 11162026/50 | 20261116221017 | https://web.archive.org/web/20261116221017/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=50 | saved this pass |
+| 11162026/49 | unverified |  | snapshot did not serve (URLError); save budget spent |
+| 11162026/44 | unverified |  | snapshot did not serve (URLError); save budget spent |
+| 11162026/43 | unverified |  | snapshot did not serve (URLError); save budget spent |
+| 11162026/32 | unverified |  | snapshot did not serve (URLError); save budget spent |
 | 11162026/26 | 20261116222117 | http://web.archive.org/web/20261116222117/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=26 |  |
-| 11162026/19 | no capture |  | no capture; save budget spent |
+| 11162026/19 | 20261116222218 | http://web.archive.org/web/20261116222218/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11162026&advn=19 |  |
 | 11162026/10 | no capture |  | no capture; save budget spent |
 | 11162026/2 | no capture |  | no capture; save budget spent |
 
-coverage: 93 advisory rows, 3 totals tables, 34 watch items (25 verified, 6 saved this pass)
+coverage: 102 advisory rows, 3 totals tables, 35 watch items (24 verified, 2 saved this pass)
+
+**Reading — 16NOV26** (written by hand, 17NOV26 03:20 CT; the block above was corrected in place at 03:19 CT).
+
+- **The 23:30 pass collected the right numbers and dated them a day early.** FlightAware rolls its pages at **00:00Z**, so at 23:30 CT on the 16th the tracker was already on the 17th: its `minus2days` page was Sunday the 15th and its `yesterday` page Monday the 16th. The pass labelled both from the CT date, recording **Sunday's 2,336 US cancellations against Saturday** and Monday's 371 against Sunday, and printing the result under a heading that read as a correction of the earlier figures. The collector now converts to UTC (`tracker_day`) and dates each page from the weekday it prints (`resolve_page_day`); a page whose word disagrees with the offset is a problem, not a silent relabel.
+- **What the corrected rows say.** Sunday 15NOV26 settled at **2,336** US cancellations and **11,131** US delays; Monday 16NOV26 at **371** and **6,847**; Tuesday 17NOV26 was **32** and **283** by 03:19 CT, with the day still open.
+- **Saturday 14NOV26 is no longer in this block, and its settled figures are recorded here so the record keeps them.** Last read at **16:31 CT on 16NOV26**, before the block was replaced: **6,700** US cancellations, **9,188** US delays, **7,355** worldwide cancellations, **22,740** worldwide delays. The tracker's three-day window means no later pass can print that day again.
+- **The lesson is the one this file keeps teaching.** An offset from "now" is an inference; the page's own word is a measurement. The same shape of error as a reconstructed URL: correct-looking, plausible by an hour or a day, and invisible to every check that is not a fetch of the thing itself.

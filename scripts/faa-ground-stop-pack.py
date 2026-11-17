@@ -186,6 +186,50 @@ def parse_totals(page: str) -> "dict[str, dict[str, str]]":
     return out
 
 
+WEEKDAYS = {
+    name: index for index, name in enumerate(
+        ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+         "Saturday", "Sunday"))
+}
+
+
+def parse_day_word(page: str) -> str:
+    """The day the page names on its own lines — "Sunday", "yesterday", "today"."""
+    text = " ".join(clean(page).split())
+    match = TOTALS.search(text)
+    return match.group(3) if match else ""
+
+
+def tracker_day(now: "dt.datetime") -> dt.date:
+    """FlightAware's own day, which is UTC and not Central.
+
+    Its pages roll at 00:00Z, so between 18:00 CT and midnight the tracker is
+    already on tomorrow. Labelling its "minus2days" page from the CT date put
+    a whole day's totals under the wrong date on the 23:30 pass of 16NOV26:
+    Sunday's 2,336 US cancellations were recorded against Saturday. The offset
+    was the assumption; UTC is the measurement.
+    """
+    return now.astimezone(dt.timezone.utc).date()
+
+
+def resolve_page_day(word: str, target: dt.date,
+                     today: dt.date) -> "tuple[dt.date, str]":
+    """The date a page is about, read from the page's own word.
+
+    Returns the date and a problem string (empty when the word is usable).
+    """
+    text = (word or "").strip()
+    if text.lower() == "today":
+        return today, ""
+    if text.lower() == "yesterday":
+        return today - dt.timedelta(days=1), ""
+    if text in WEEKDAYS:
+        back = (today.weekday() - WEEKDAYS[text]) % 7
+        return today - dt.timedelta(days=back), ""
+    return target, (f"totals: a page names `{text or 'no day'}` instead of a day, "
+                    "so its rows cannot be dated")
+
+
 def wayback_capture(url: str) -> "dict[str, str] | None":
     """The *closest* capture the availability API offers — which may be a miss."""
     import json
@@ -464,13 +508,17 @@ def collect(
             lines += ["", "No row on this day's index is a ground-stop advisory."]
         lines.append("")
 
-    # FlightAware: two days back, yesterday, today.
+    # FlightAware: two days back, yesterday, today — counted on the tracker's
+    # own clock, which is UTC, and dated from the word the page prints.
     totals_rows = []
+    today_utc = tracker_day(now)
     for offset, which in ((2, "minus2days"), (1, "yesterday"), (0, "today")):
-        target = now.date() - dt.timedelta(days=offset)
+        target = today_utc - dt.timedelta(days=offset)
         url = FLIGHTAWARE.format(which=which)
         try:
-            totals = parse_totals(fetch(url))
+            page = fetch(url)
+            totals = parse_totals(page)
+            word = parse_day_word(page)
         except Exception as exc:  # noqa: BLE001
             lines += [f"**FlightAware, {which}** — SOURCE UNAVAILABLE "
                       f"({type(exc).__name__}: {exc}). `{url}`", ""]
@@ -489,7 +537,14 @@ def collect(
                       f"`{url}`", ""]
             continue
         tables += 1
-        mark = long_label(target)
+        resolved, problem = resolve_page_day(word, target, today_utc)
+        if problem:
+            problems.append(problem)
+        elif resolved != target:
+            problems.append(
+                f"totals: the {which} page says {word or 'nothing'}, which is "
+                f"{resolved} and not {target}: the offset assumption broke")
+        mark = long_label(resolved)
         totals_rows.append([
             mark,
             _moved(canc.get("us", "—"), prior, mark, 0),
@@ -499,10 +554,12 @@ def collect(
         ])
     if totals_rows:
         lines += [
-            f"**FlightAware totals** — fetched {now.strftime('%H:%M')} CT. The date "
-            "column is this pass's CT date for that page; the tracker words its own "
-            "pages by weekday. A figure that moved since the previous pass of this "
-            "date is printed with the earlier reading, because the day settles.",
+            f"**FlightAware totals** — fetched {now.strftime('%H:%M')} CT. The "
+            f"tracker's own day is **{today_utc.isoformat()}**: its pages roll at "
+            "00:00Z, so between 18:00 CT and midnight it is already on tomorrow, "
+            "and the date column is read from the day word each page prints. A "
+            "figure that moved since the previous pass of this date is printed "
+            "with the earlier reading, because the day settles.",
             "",
         ]
         lines += _table(

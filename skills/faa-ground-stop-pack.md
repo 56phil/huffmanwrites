@@ -136,9 +136,14 @@ shorter.
   FlightAware today page returned the same figure for US cancellations and US
   delays; that was recorded, not corrected, and §18.3 says not to print the
   Sunday delay figure from it.
-- **The date column is CT**, this pass's date for that page. The tracker words
-  its own pages by weekday, and the two have been known to disagree around
-  midnight.
+- **The date column is the tracker's day, read from the page's own word.** Its
+  pages roll at **00:00Z**, so between 18:00 CT and midnight FlightAware is
+  already on tomorrow: at 23:30 CT on 16NOV26 its `minus2days` page was the
+  15th. Labelling that page from the CT date put **Sunday's 2,336 US
+  cancellations against Saturday**, and printed under a heading that read as a
+  correction of an earlier figure. `tracker_day()` converts to UTC, and
+  `resolve_page_day()` dates each page from the weekday it prints; a page whose
+  word disagrees with the offset is a problem, not a silent relabel.
 - **An empty tomorrow** is not a quiet day. The collector fetches the next date
   so that a later re-run can see it; it says nothing at 05:40 about a day that
   has not started.

@@ -8946,12 +8946,22 @@ class TestGroundStopPack(unittest.TestCase):
 
     # -- parse breaks are not quiet days ----------------------------------
 
-    def _fake_fetch(self, index_rows: str, totals: str = None):
+    # 2026-11-15 is a Sunday, so a pass at 08:00 CT on it is 14:00Z on the
+    # same day: the tracker's minus2days page is Friday, yesterday Saturday,
+    # today Sunday. Every fake page names its own day, as the real ones do.
+    URL_DAY = {"minus2days": "Friday", "yesterday": "Saturday", "today": "Sunday"}
+
+    def _fake_fetch(self, index_rows: str, totals: str = None, days: dict = None):
+        days = days or self.URL_DAY
+
         def fake(url, timeout=30):
             if "adv_list" in url:
                 return index_rows
             if "flightaware" in url:
-                return self.TOTALS if totals is None else totals
+                if totals is not None:
+                    return totals
+                word = next((w for k, w in days.items() if k in url), "Sunday")
+                return self.TOTALS.replace("yesterday", word)
             if "wayback" in url or "archive.org" in url:
                 return '{"archived_snapshots": {}}'
             return "<html></html>"
@@ -9019,6 +9029,57 @@ class TestGroundStopPack(unittest.TestCase):
         self.assertIn("| 11132026/111 | unverified |", result.block)
         self.assertNotIn("| 11132026/111 | no capture |", result.block)
         self.assertIn("did not serve", result.block)
+
+    # -- the tracker's clock is not this one ------------------------------
+
+    def test_the_tracker_day_is_utc_not_central(self):
+        # Between 18:00 CT and midnight the tracker is already on tomorrow.
+        # The 23:30 pass of 16NOV26 dated Sunday's 2,336 US cancellations as
+        # Saturday because it labelled the pages from the CT date.
+        late = datetime(2026, 11, 16, 23, 30, tzinfo=self.mod.CT)
+        self.assertEqual(self.mod.tracker_day(late), date(2026, 11, 17))
+        early = datetime(2026, 11, 16, 8, 0, tzinfo=self.mod.CT)
+        self.assertEqual(self.mod.tracker_day(early), date(2026, 11, 16))
+
+    def test_a_page_is_dated_from_its_own_word(self):
+        today = date(2026, 11, 17)
+        self.assertEqual(self.mod.resolve_page_day("Sunday", date(2026, 11, 15), today),
+                         (date(2026, 11, 15), ""))
+        self.assertEqual(self.mod.resolve_page_day("yesterday", date(2026, 11, 15), today),
+                         (date(2026, 11, 16), ""))
+        self.assertEqual(self.mod.resolve_page_day("today", date(2026, 11, 15), today),
+                         (date(2026, 11, 17), ""))
+        got, problem = self.mod.resolve_page_day("someday", date(2026, 11, 15), today)
+        self.assertEqual(got, date(2026, 11, 15))
+        self.assertIn("cannot be dated", problem)
+
+    def test_the_2329_pass_labels_the_pages_on_the_trackers_day(self):
+        from unittest import mock
+        # 23:30 CT on 16NOV26 is 05:30Z on the 17th: minus2days is Sunday the
+        # 15th, which is where the 2,336 belongs.
+        late = {"minus2days": "Sunday", "yesterday": "Monday", "today": "Tuesday"}
+        with mock.patch.object(self.mod, "fetch", side_effect=self._fake_fetch(
+                self.ADVISORIES, days=late)):
+            with mock.patch.object(self.mod, "save_capture", return_value=None):
+                result = self.mod.collect(
+                    date(2026, 11, 16),
+                    now=datetime(2026, 11, 16, 23, 30, tzinfo=self.mod.CT))
+        self.assertEqual(result.problems, [])
+        self.assertIn("The tracker's own day is **2026-11-17**", result.block)
+
+    def test_a_page_that_names_the_wrong_day_is_a_problem(self):
+        from unittest import mock
+        # At 08:00 CT on Sunday the 15th the tracker is on the 15th, so
+        # minus2days is Friday the 13th. A page that says "Sunday" is not that
+        # page, and trusting the word silently would date its rows wrongly.
+        wrong = {"minus2days": "Sunday", "yesterday": "Saturday", "today": "Sunday"}
+        with mock.patch.object(self.mod, "fetch", side_effect=self._fake_fetch(
+                self.ADVISORIES, days=wrong)):
+            with mock.patch.object(self.mod, "save_capture", return_value=None):
+                result = self.mod.collect(
+                    date(2026, 11, 15),
+                    now=datetime(2026, 11, 15, 8, 0, tzinfo=self.mod.CT))
+        self.assertTrue(any("offset assumption broke" in p for p in result.problems))
 
     def test_the_block_prints_the_coverage_it_reached(self):
         from unittest import mock

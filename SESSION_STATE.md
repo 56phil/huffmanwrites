@@ -12,6 +12,14 @@
 
 ---
 
+### Ops — 17NOV26 — The 23:30 pass worked, and it dated FlightAware's pages a day early
+
+- **The second fire ran on schedule and finished in 108 s** (`2026-11-16 23:30:05` start, `23:31:53` exit 0), so the array-of-dicts schedule and the settling design both hold. What it also did was put a whole day's totals under the wrong date.
+- **FlightAware rolls at 00:00Z, not at CT midnight.** At 23:30 CT on 16NOV26 the tracker was already on the 17th, so `minus2days` was Sunday the 15th and `yesterday` was Monday the 16th. The collector labelled both from the CT date and recorded **Sunday's 2,336 US cancellations against Saturday**, Monday's 371 against Sunday, and printed them with "was" annotations, so a mislabelling read as a correction of an earlier figure. This is the failure class the repo names everywhere: an offset from "now" is an inference, the page's own word is a measurement.
+- **Fixed at the source, not in the block.** `tracker_day()` converts `now` to UTC for the page offsets, and `resolve_page_day()` dates each page from the weekday it prints — `Sunday`, `yesterday`, `today` — with a disagreement between the word and the offset raised as a problem (exit 4) rather than silently relabelled. The block header now states the tracker's own day, so a reader can check the mapping without leaving the file.
+- **The 16NOV26 block was rewritten at 03:19 CT, and the correction is visible in it:** `Sun 15NOV26 | 2,336 (was 369 at 23:30)`, `Mon 16NOV26 | 371 (was 16 at 23:30)`. Saturday's settled totals (**6,700** US cancellations, **9,188** US delays) are no longer inside any block, because the tracker's window is three days, so they are recorded in a hand-written `**Reading — 16NOV26**` rather than lost.
+- **651 tests OK** (four new: the UTC roll, page-word dating, the 23:30 pass labelling on the tracker's day, and a page that names the wrong day). `skills/faa-ground-stop-pack.md` and `CLAUDE.md` carry the clock rule.
+
 ### Content — 16NOV26 — *The Sixty Routers*: the agency answered in writing, and the remedy reached sixty machines
 
 - **Published** `content/posts/essays/the-sixty-routers.md` — 3,520 words, 10 notes, `draft: false`, `featuredOnHome: true`, NN 162, live at `/posts/essays/the-sixty-routers/`. The second installment of the ground-stop series, written from `future-pieces/faa-ground-stop-source-notes.md` plus four pages fetched this morning. Every load-bearing claim resolves to a fetched page or to a numbered section of that pack.
