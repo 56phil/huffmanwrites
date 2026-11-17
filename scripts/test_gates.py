@@ -9081,6 +9081,99 @@ class TestGroundStopPack(unittest.TestCase):
                     now=datetime(2026, 11, 15, 8, 0, tzinfo=self.mod.CT))
         self.assertTrue(any("offset assumption broke" in p for p in result.problems))
 
+    # -- the ledger, the citation list, and the audit ----------------------
+
+    def test_upsert_leaves_the_sections_after_the_log_alone(self):
+        # The ledger and the citation list follow the log. Before this, upsert
+        # took everything after §19 as log, so a new block would have been
+        # appended below them and both sections would have fallen inside the
+        # region it rewrites.
+        text = ("# pack\n\n" + self.mod.LOG_HEADING + "\n\n### 15NOV26\n\nold\n\n"
+                + self.mod.LEDGER_HEADING + "\n\n| Date |\n|---|\n| 2026-11-14 |\n\n"
+                + self.mod.CITATIONS_HEADING + "\n\n| k | u | 1 |\n")
+        out = self.mod.upsert(text, "16NOV26", "### 16NOV26\n\nnew\n")
+        self.assertIn("### 16NOV26", out)
+        self.assertLess(out.index("### 16NOV26"), out.index(self.mod.LEDGER_HEADING))
+        self.assertIn("| 2026-11-14 |", out)
+        self.assertIn(self.mod.CITATIONS_HEADING, out)
+
+    def test_the_ledger_keeps_a_date_the_tracker_has_forgotten(self):
+        # FlightAware shows three days. Once a date scrolls out of them, the
+        # ledger is the only place its settled figures exist.
+        rows = self.mod.merge_ledger(self.SETTLED, [{
+            "date": "2026-11-16", "c_us": "371", "d_us": "6,847",
+            "c_all": "889", "d_all": "21,660", "read": "17NOV26 03:19"}])
+        self.assertIn("2026-11-14", rows)      # harvested from the block
+        self.assertIn("2026-11-16", rows)      # this pass
+        self.assertEqual(rows["2026-11-14"]["c_us"], "6,700")
+
+    def test_a_later_reading_wins_and_an_earlier_one_cannot_overwrite_it(self):
+        late = {"date": "2026-11-15", "c_us": "2,336", "d_us": "11,131",
+                "c_all": "2,860", "d_all": "26,886", "read": "16NOV26 23:30"}
+        early = dict(late, c_us="1,446", read="15NOV26 08:00")
+        rows = self.mod.merge_ledger("", [late, early])
+        self.assertEqual(rows["2026-11-15"]["c_us"], "2,336")
+
+    def test_the_index_window_runs_to_thanksgiving_and_never_into_the_future(self):
+        self.assertEqual(self.mod.index_days(date(2026, 11, 17)),
+                         ["2026-11-13", "2026-11-14", "2026-11-15",
+                          "2026-11-16", "2026-11-17"])
+        # Past the window's end it stops at 30NOV26, which is the last day of
+        # the Thanksgiving travel period.
+        self.assertEqual(self.mod.index_days(date(2026, 12, 5))[-1], "2026-11-30")
+        self.assertEqual(len(self.mod.index_days(date(2026, 12, 5))), 18)
+
+    def test_the_citation_list_is_what_the_audit_reads(self):
+        text = self.mod.replace_section("", self.mod.CITATIONS_HEADING,
+                                        self.mod.render_citations({
+                                            "11132026/111": ("http://web.archive.org/web/1/x", "1"),
+                                            "index 2026-11-15": ("http://web.archive.org/web/2/y", "2"),
+                                        }))
+        rows = self.mod.harvest_citations(text)
+        self.assertEqual(rows["11132026/111"][0], "http://web.archive.org/web/1/x")
+        self.assertEqual(self.mod.needles_for("11132026/111"), ["advzy 111", "advzy 111"])
+        self.assertEqual(self.mod.needles_for("index 2026-11-15"),
+                         ["ATCSCC ADVISORIES FOR 2026-11-15"])
+
+    def _citation_pack(self, url):
+        return self.mod.replace_section("", self.mod.CITATIONS_HEADING,
+                                        self.mod.render_citations({
+                                            "11132026/111": (url, "1")}))
+
+    def test_a_snapshot_that_will_not_open_is_unverified_and_not_a_failure(self):
+        # The archive throttles. "We could not read it" is a claim about the
+        # checker, and a writer needs to know which of the two they have.
+        from unittest import mock
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            with mock.patch.object(self.mod.time, "sleep"):
+                with mock.patch.object(self.mod, "fetch", side_effect=OSError("404")):
+                    code = self.mod.audit(self._citation_pack("http://web.archive.org/web/1/x"))
+        self.assertEqual(code, 3)
+        self.assertIn("UNVERIFIED 11132026/111", out.getvalue())
+        self.assertIn("0 verified, 1 unverified, 0 failed", out.getvalue())
+
+    def test_a_snapshot_carrying_the_wrong_document_fails(self):
+        # 200 with no advisory in it — the 13NOV26 captures do exactly this.
+        from unittest import mock
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            with mock.patch.object(self.mod, "fetch",
+                                   return_value="<html>WAYBACK MACHINE - PROCESSING</html>"):
+                code = self.mod.audit(self._citation_pack("http://web.archive.org/web/1/x"))
+        self.assertEqual(code, 4)
+        self.assertIn("FAIL 11132026/111", out.getvalue())
+
+    def test_the_audit_passes_when_every_citation_still_serves(self):
+        from unittest import mock
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            with mock.patch.object(self.mod, "fetch",
+                                   return_value="<html>ADVZY&nbsp;111 GROUND STOP</html>"):
+                code = self.mod.audit(self._citation_pack("http://web.archive.org/web/1/x"))
+        self.assertEqual(code, 0)
+        self.assertIn("1 verified, 0 unverified, 0 failed", out.getvalue())
+
     def test_the_block_prints_the_coverage_it_reached(self):
         from unittest import mock
         with mock.patch.object(self.mod, "fetch", side_effect=self._fake_fetch(

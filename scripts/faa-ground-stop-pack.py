@@ -62,6 +62,7 @@ import html as html_mod
 import pathlib
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -69,6 +70,8 @@ import urllib.request
 REPO = pathlib.Path(__file__).resolve().parent.parent
 PACK = REPO / "future-pieces" / "faa-ground-stop-source-notes.md"
 LOG_HEADING = "## 19. Daily collection log"
+LEDGER_HEADING = "## 20. Settled totals — every date read, merged and kept"
+CITATIONS_HEADING = "## 21. Verified citations — generated; do not edit by hand"
 CT = dt.timezone(dt.timedelta(hours=-6), "CT")
 
 ADV_URL = (
@@ -99,9 +102,11 @@ ARCHIVE_WATCH = [
 # The day indexes nobody archived. The strongest primary source for "the
 # airspace carried no restriction on the 15th" is that day's 27-row index
 # page, and when the 15-day window closes it is the only thing that says so.
-# These three are the days before the daily pass started; every later day's
-# index is captured by that day's own pass.
-EVENT_INDEX_DAYS = ("2026-11-13", "2026-11-14", "2026-11-15")
+# The window runs from the stop to the last day of the Thanksgiving travel
+# period, so the piece can prove each day of it separately; a date that has
+# not happened yet is never requested, because the index for tomorrow is empty
+# and capturing an empty page would be a false record.
+INDEX_WINDOW = ("2026-11-13", "2026-11-30")
 
 ARCHIVE_CAP = 30          # watch items checked per pass
 DISCOVERY_CAP = 6         # index rows added per pass, so one busy day cannot fill the list
@@ -111,6 +116,7 @@ SAVE_TIMEOUT = 45         # a save answered in 18.4 s when measured; one hung fo
 SAVE_TIMEOUT_TAIL = 25    # a low-value save is not worth a long wait on somebody else's queue
 VERIFY_TIMEOUT = 45
 WORKERS = 6               # independent capture checks in flight at once
+AUDIT_WORKERS = 3         # fewer, because the audit hammers one host and gets throttled
 
 UA = "huffmanwrites-ground-stop-pack/1.0 (+https://www.huffmanwrites.org)"
 
@@ -138,8 +144,10 @@ class Pass:
     """One pass's block, and what the pass is able to claim about it."""
 
     block: str
-    ok: bool                  # anything at all was read
-    problems: dataclasses.field(default_factory=list)  # read, but did not parse
+    ok: bool                                          # anything at all was read
+    problems: "list[str]" = dataclasses.field(default_factory=list)
+    totals: "list[dict]" = dataclasses.field(default_factory=list)
+    citations: "list[tuple]" = dataclasses.field(default_factory=list)
 
     def __bool__(self) -> bool:  # `if not collect(...)` keeps meaning "nothing read"
         return self.ok
@@ -284,6 +292,30 @@ def index_needle(iso: str) -> str:
     return f"ATCSCC ADVISORIES FOR {iso}"
 
 
+def index_days(day: dt.date) -> "list[str]":
+    """Every day index from the stop to `day`, never past the window or today."""
+    start = dt.date.fromisoformat(INDEX_WINDOW[0])
+    end = min(dt.date.fromisoformat(INDEX_WINDOW[1]), day)
+    out, cursor = [], start
+    while cursor <= end:
+        out.append(cursor.isoformat())
+        cursor += dt.timedelta(days=1)
+    return out
+
+
+def needles_for(key: str) -> "list[str]":
+    """The wording a snapshot of this document must carry to be that document."""
+    m = re.match(r"^(\d{8})/(\d+)$", key)
+    if m:
+        n = int(m.group(2))
+        return [f"advzy {n:03d}", f"advzy {n}"]
+    if key == "faa-qa":
+        return [QA_NEEDLE]
+    if key.startswith("index "):
+        return [index_needle(key[len("index "):])]
+    return []
+
+
 def mdY(date: dt.date) -> str:
     return date.strftime("%m%d%Y")
 
@@ -374,9 +406,8 @@ def watch_items(day: dt.date, all_rows: "list[dict]") -> "tuple[list[tuple[str, 
 
     # 1. The event's own documents.
     for mdY_, n_ in ARCHIVE_WATCH:
-        add(f"{mdY_}/{n_}",
-            ADV_PAGE.format(mdY=mdY_, n=n_),
-            [f"advzy {n_:03d}", f"advzy {n_}"])
+        key = f"{mdY_}/{n_}"
+        add(key, ADV_PAGE.format(mdY=mdY_, n=n_), needles_for(key))
 
     # 2. A ground stop or operations plan on an event day, discovered from the
     #    index. Later days are captured by their own pass, when the advisory is
@@ -391,13 +422,13 @@ def watch_items(day: dt.date, all_rows: "list[dict]") -> "tuple[list[tuple[str, 
             continue
         discovered += 1
         if discovered <= DISCOVERY_CAP:
-            add(f"{row['adv_date']}/{row['n']}",
-                ADV_PAGE.format(mdY=row["adv_date"], n=row["n"]),
-                [f"advzy {int(row['n']):03d}", f"advzy {int(row['n'])}"])
+            key = f"{row['adv_date']}/{row['n']}"
+            add(key, ADV_PAGE.format(mdY=row["adv_date"], n=row["n"]), needles_for(key))
 
-    # 3. The day indexes themselves: the days before the pass existed, then
-    #    this pass's own day.
-    for iso in list(EVENT_INDEX_DAYS) + [day.isoformat()]:
+    # 3. The day indexes themselves, one per day of the window that has
+    #    happened. A day's page is the proof of what that day's airspace did
+    #    or did not do, and the index drops it after fifteen days.
+    for iso in index_days(day):
         add(f"index {iso}", ADV_URL.format(date=iso), [index_needle(iso)])
 
     # 4. A page the FAA can edit and every other watch list misses.
@@ -411,9 +442,8 @@ def watch_items(day: dt.date, all_rows: "list[dict]") -> "tuple[list[tuple[str, 
         if key in ARCHIVE_WATCH or row["adv_date"] in event_days:
             continue
         if _carries_event(row["title"]):
-            add(f"{row['adv_date']}/{row['n']}",
-                ADV_PAGE.format(mdY=row["adv_date"], n=row["n"]),
-                [f"advzy {int(row['n']):03d}", f"advzy {int(row['n'])}"])
+            key = f"{row['adv_date']}/{row['n']}"
+            add(key, ADV_PAGE.format(mdY=row["adv_date"], n=row["n"]), needles_for(key))
     return items, tail_start
 
 
@@ -511,6 +541,7 @@ def collect(
     # FlightAware: two days back, yesterday, today — counted on the tracker's
     # own clock, which is UTC, and dated from the word the page prints.
     totals_rows = []
+    ledger_rows = []
     today_utc = tracker_day(now)
     for offset, which in ((2, "minus2days"), (1, "yesterday"), (0, "today")):
         target = today_utc - dt.timedelta(days=offset)
@@ -552,6 +583,16 @@ def collect(
             _moved(canc.get("all", "—"), prior, mark, 2),
             _moved(dels.get("all", "—"), prior, mark, 3),
         ])
+        # Kept separately from the block, because a block shows three days and
+        # the report needs every day of the period.
+        ledger_rows.append({
+            "date": resolved.isoformat(),
+            "c_us": canc.get("us", "—"),
+            "d_us": dels.get("us", "—"),
+            "c_all": canc.get("all", "—"),
+            "d_all": dels.get("all", "—"),
+            "read": f"{now.strftime('%d%b%y %H:%M').upper()}",
+        })
     if totals_rows:
         lines += [
             f"**FlightAware totals** — fetched {now.strftime('%H:%M')} CT. The "
@@ -585,6 +626,7 @@ def collect(
             resolved = list(pool.map(_resolve, items))
 
     caps = []
+    citation_rows = []
     budget, tail_budget = SAVE_BUDGET, SAVE_BUDGET_TAIL
     verified = saved = 0
     for position, (key, url, needles, cap, why) in enumerate(resolved):
@@ -619,6 +661,7 @@ def collect(
         if stamp:
             verified += 1
             caps.append([key, stamp, link, note])
+            citation_rows.append((key, link, stamp))
         else:
             # `no capture` is a claim about the archive; a snapshot that would
             # not open is a claim about the checker. The archive throttles a
@@ -644,14 +687,21 @@ def collect(
         f"{len(all_items)} watch items ({verified} verified, {saved} saved this pass)",
         "",
     ]
-    return Pass("\n".join(lines).rstrip() + "\n", ok, problems)
+    return Pass("\n".join(lines).rstrip() + "\n", ok, problems,
+                totals=ledger_rows, citations=citation_rows)
 
 
 def upsert(text: str, day_label: str, block: str) -> str:
-    """Replace this date's block if it exists; otherwise append it under the log."""
+    """Replace this date's block; leave any section that follows the log alone."""
     if LOG_HEADING not in text:
         text = text.rstrip() + "\n\n---\n\n" + LOG_HEADING + "\n"
-    head, _, log = text.partition(LOG_HEADING)
+    head, _, rest = text.partition(LOG_HEADING)
+    # The log ends at the next top-level section, not at the end of the file:
+    # the ledger and the citation list follow it, and a block appended after
+    # them would be outside the log and outside their reach.
+    nxt = re.search(r"^## ", rest, re.M)
+    log = rest[:nxt.start()] if nxt else rest
+    tail = rest[nxt.start():] if nxt else ""
     marker = f"### {day_label}"
     # The block ends at the next date heading OR at a hand-written reading,
     # so a re-run replaces the machine-written part and leaves the prose. A
@@ -664,7 +714,163 @@ def upsert(text: str, day_label: str, block: str) -> str:
         log = pattern.sub(block.rstrip() + "\n\n", log, count=1)
     else:
         log = log.rstrip() + "\n\n" + block.rstrip() + "\n"
-    return head + LOG_HEADING + log.rstrip() + "\n"
+    body = head + LOG_HEADING + log.rstrip() + "\n"
+    return body + ("\n" + tail if tail else "")
+
+
+def section(text: str, heading: str) -> str:
+    match = re.search(r"^" + re.escape(heading) + r"\s*$.*?(?=^## |\Z)", text, re.S | re.M)
+    return match.group(0) if match else ""
+
+
+def replace_section(text: str, heading: str, body: str) -> str:
+    block = heading + "\n\n" + body.strip() + "\n"
+    pattern = re.compile(r"^" + re.escape(heading) + r"\s*$.*?(?=^## |\Z)", re.S | re.M)
+    if pattern.search(text):
+        return pattern.sub(lambda _m: block + "\n", text, count=1).rstrip() + "\n"
+    return text.rstrip() + "\n\n---\n\n" + block
+
+
+MONTHS = {name: index for index, name in enumerate(
+    ("JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+     "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"), start=1)}
+
+
+def iso_from_mark(mark: str) -> "str | None":
+    """`Sun 15NOV26` -> `2026-11-15`. The block's own day label, not a guess."""
+    match = re.match(r"^[A-Z][a-z]{2} (\d{2})([A-Z]{3})(\d{2})$", mark.strip())
+    month = MONTHS.get(match.group(2)) if match else None
+    if not month:
+        return None
+    return f"20{match.group(3)}-{month:02d}-{int(match.group(1)):02d}"
+
+
+def _read_stamp(stamp: str) -> dt.datetime:
+    try:
+        return dt.datetime.strptime(stamp.strip(), "%d%b%y %H:%M")
+    except (ValueError, AttributeError):
+        return dt.datetime.min
+
+
+def harvest_ledger(text: str) -> "dict[str, dict]":
+    """Every totals row the log already holds, keyed by the date it describes."""
+    rows: "dict[str, dict]" = {}
+    for body in re.findall(
+            r"^### \d{2}[A-Z]{3}\d{2}\s*$.*?(?=^### |^\*\*Reading — |^## |\Z)",
+            text, re.S | re.M):
+        when = re.search(r"\*\*Collected\*\*\s+(\d{2}[A-Z]{3}\d{2} \d{2}:\d{2}) CT", body)
+        stamp = when.group(1) if when else ""
+        for mark, c_us, d_us, c_all, d_all in FIGROW.findall(body):
+            iso = iso_from_mark(mark)
+            if not iso:
+                continue
+            row = {
+                "date": iso,
+                "c_us": c_us.strip().split(" (")[0],
+                "d_us": d_us.strip().split(" (")[0],
+                "c_all": c_all.strip().split(" (")[0],
+                "d_all": d_all.strip().split(" (")[0],
+                "read": stamp,
+            }
+            current = rows.get(iso)
+            if current is None or _read_stamp(stamp) >= _read_stamp(current["read"]):
+                rows[iso] = row
+    return rows
+
+
+def merge_ledger(text: str, live: "list[dict]") -> "dict[str, dict]":
+    rows = harvest_ledger(text)
+    for row in live:
+        current = rows.get(row["date"])
+        if current is None or _read_stamp(row["read"]) >= _read_stamp(current["read"]):
+            rows[row["date"]] = dict(row)
+    return rows
+
+
+def render_ledger(rows: "dict[str, dict]") -> str:
+    lines = [
+        "Every date this job has read, merged and kept. FlightAware shows three "
+        "days at a time, so a settled figure leaves its pages for good; this "
+        "table is where it stays. A later reading replaces an earlier one for "
+        "the same date, and a date is never dropped.",
+        "",
+        "| Date | Cancels (US) | Delays (US) | Cancels (all) | Delays (all) | Last read (CT) |",
+        "|---|---|---|---|---|---|",
+    ]
+    for iso in sorted(rows):
+        row = rows[iso]
+        lines.append(f"| {iso} | {row['c_us']} | {row['d_us']} | {row['c_all']} | "
+                     f"{row['d_all']} | {row['read']} |")
+    return "\n".join(lines)
+
+
+def harvest_citations(text: str) -> "dict[str, tuple]":
+    rows: "dict[str, tuple]" = {}
+    for key, url, stamp in re.findall(
+            r"^\|\s*([^|]+?)\s*\|\s*(https?://[^|\s]+)\s*\|\s*([^|]*)\|",
+            section(text, CITATIONS_HEADING), re.M):
+        rows[key] = (url.strip(), stamp.strip())
+    return rows
+
+
+def render_citations(rows: "dict[str, tuple]") -> str:
+    lines = [
+        "Generated from §19's verified captures — **cite these URLs, not the ones "
+        "in §15 or §16, which were written by hand before the snapshots were "
+        "checked.** Every row here was fetched and had its wording checked when "
+        "it was recorded; `python3 scripts/faa-ground-stop-pack.py --audit` "
+        "re-checks all of them and exits nonzero if any stops serving its "
+        "document.",
+        "",
+        "| Document | Cite this URL | Captured (UTC) |",
+        "|---|---|---|",
+    ]
+    for key in sorted(rows):
+        url, stamp = rows[key]
+        lines.append(f"| {key} | {url} | {stamp} |")
+    return "\n".join(lines)
+
+
+def audit(text: str) -> int:
+    """Re-open every citation the pack hands a writer.
+
+    Exit 4 when a snapshot serves and does not carry its document — that is a
+    citation that would mislead a reader. Exit 3 when a snapshot could not be
+    read at all: the archive throttles, so "did not serve" is a claim about the
+    checker and not about the document, and the two must not read alike. One
+    retry after a pause, because the first failure is usually the throttle.
+    """
+    rows = harvest_citations(text)
+    if not rows:
+        print("citation-audit: no citations recorded; nothing to check")
+        return 0
+    keys = sorted(rows)
+
+    def check(key: str) -> "tuple[str, str, str, str]":
+        url = rows[key][0]
+        ok, why = verify_capture(url, needles_for(key))
+        if not ok and "did not serve" in why:
+            time.sleep(2)
+            ok, why = verify_capture(url, needles_for(key))
+        if ok:
+            return key, url, "", "verified"
+        verdict = "unverified" if "did not serve" in why else "failed"
+        return key, url, why, verdict
+
+    with futures.ThreadPoolExecutor(max_workers=AUDIT_WORKERS) as pool:
+        results = list(pool.map(check, keys))
+    failed = [r for r in results if r[3] == "failed"]
+    unverified = [r for r in results if r[3] == "unverified"]
+    print(f"citation-audit: {len(results)} citation(s), "
+          f"{len(results) - len(failed) - len(unverified)} verified, "
+          f"{len(unverified)} unverified, {len(failed)} failed")
+    for key, url, why, _ in failed:
+        print(f"citation-audit: FAIL {key}: {why} — {url}")
+    for key, url, why, _ in unverified:
+        print(f"citation-audit: UNVERIFIED {key}: {why} — {url}")
+    if failed:
+        return 4
+    return 3 if unverified else 0
 
 
 def main(argv: "list[str]") -> int:
@@ -674,6 +880,8 @@ def main(argv: "list[str]") -> int:
     ap.add_argument("--pack", default=str(PACK))
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--offline", action="store_true")
+    ap.add_argument("--audit", action="store_true",
+                    help="re-open every recorded citation and fail on a miss")
     args = ap.parse_args(argv)
 
     now = dt.datetime.now(CT)
@@ -689,6 +897,9 @@ def main(argv: "list[str]") -> int:
     pack = pathlib.Path(args.pack)
     text = pack.read_text(encoding="utf-8") if pack.exists() else ""
 
+    if args.audit:
+        return audit(text)
+
     result = collect(day, offline=args.offline, prior=prior_state(text, label(day)),
                      now=now)
     if not result.ok:
@@ -702,7 +913,14 @@ def main(argv: "list[str]") -> int:
         print(result.block)
         return 4 if result.problems else 0
 
-    pack.write_text(upsert(text, label(day), result.block), encoding="utf-8")
+    new_text = upsert(text, label(day), result.block)
+    new_text = replace_section(new_text, LEDGER_HEADING,
+                                render_ledger(merge_ledger(new_text, result.totals)))
+    cites = harvest_citations(new_text)
+    for key, url, stamp in result.citations:
+        cites[key] = (url, stamp)
+    new_text = replace_section(new_text, CITATIONS_HEADING, render_citations(cites))
+    pack.write_text(new_text, encoding="utf-8")
     print(f"faa-ground-stop-pack: {label(day)} written to {pack}")
     return 4 if result.problems else 0
 

@@ -38,11 +38,38 @@ which runs `scripts/faa-ground-stop-pack.py`. The collector:
    and when nothing holds the document **requests the save itself**, up to six
    saves per pass.
 
+4. merges the day's figures into **§20. Settled totals**, a table keyed by date
+   that is never dropped and never written backwards in time. FlightAware shows
+   three days; a settled figure that scrolls out of them leaves its pages for
+   ever, and this table is where it stays;
+5. rewrites **§21. Verified citations** — the only list a writer should copy a
+   URL from.
+
 It appends one block per date under **§19. Daily collection log**, replacing that
 date's block if it already exists, so a re-run is harmless. Each block ends with
 a `coverage:` line — advisory rows, totals tables, watch items, verified
 captures, saves this pass — for the same reason every `check-*.py` prints one: a
 pass that inspects nothing still reports OK.
+
+## Before the piece is drafted, and again before it publishes
+
+```bash
+python3 scripts/faa-ground-stop-pack.py --audit
+```
+
+It re-opens every URL in §21 and exits **4** if one no longer serves its
+document, printing the key and the reason. Run it on the day the piece is
+written and once more before the push. It exists because the hand-written lists in §15 and
+§16 had gone stale without saying so: measured 17NOV26, **two of the seven**
+archived advisories §16 told the writer to cite serve a page with **no advisory
+text in it**, and one could not be read at all. The four that do serve are the
+ones §19 verified, which is why §21 is generated from them rather than
+maintained by hand.
+Exit **4** is a snapshot that serves the wrong document; exit **3** is one that
+could not be read (the archive throttles, and an audit that hammers it turns its
+own throttle into a finding — the first version of this item claimed four of the
+seven were dead for exactly that reason). Both are failures a writer must
+resolve; only the first is a defect in the citation.
 
 ## What it does not do, and must not start doing
 
