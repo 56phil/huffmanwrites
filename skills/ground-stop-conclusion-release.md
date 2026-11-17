@@ -15,6 +15,7 @@ runner's contract.
 | Step | Failure exit | Why it is there |
 |---|---|---|
 | Date guard, `2026-12-01` | 0 | launchd has no `Year` key: `Month 12 / Day 1` fires every December forever. A yearly alert about a finished series trains its reader to ignore alerts. |
+| Guard bypass, `IGNORE_GUARDS=1` | — | Forces `REPORT_DRY_RUN=1`. The bypass exists to exercise the pipeline off its date, and it used to be the whole of the guard: on 17NOV26 a hand run with that one variable set went past the date check with publish authority intact, and only the smoke prompt kept the piece off the site. A run the schedule did not authorise cannot reach `publish_article`. |
 | The pack exists | 3 | Nothing to write from. |
 | The pack has **§21** | 3 | The verified citation list is the only place the writer may take an archive URL. Without it the piece ships §16's stale URLs. |
 | `faa-ground-stop-pack.py --audit` | 3 | Every §21 row opens as its document. Run **before** the writer, so a dead snapshot costs a log line rather than an hour of drafting. |
@@ -45,6 +46,12 @@ Everything runs and the publish tail stops before writing to git. A smoke prompt
 (`GROUND_STOP_CONCLUSION_PROMPT="Reply with exactly SMOKE-OK. Write no file."`)
 proves the path up to the writer and then exits 3 for the missing file, which is
 the correct answer and not a failure of the job.
+
+A rehearsal writes to `~/Library/Logs/ground-stop-conclusion-release.smoke.out.log`,
+never to the file the schedule writes, and `IGNORE_GUARDS=1` now sets
+`REPORT_DRY_RUN=1` by itself: the bypass is the date check, not the publish
+authority. Both halves were added 17NOV26, when the smoke left a start line in
+the schedule's log that read, played back, exactly like the job firing.
 
 **Rehearse after Thanksgiving, not before.** §20's ledger is the piece's spine
 for 20–30NOV26; a rehearsal on 17NOV26 can only produce a piece with an empty

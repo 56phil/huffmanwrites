@@ -36,8 +36,6 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL="$REPO/skills/ground-stop-conclusion.md"
 PACK="${GROUND_STOP_CONCLUSION_PACK:-$REPO/future-pieces/faa-ground-stop-source-notes.md}"
 LOG_DIR="$HOME/Library/Logs"
-OUT_LOG="$LOG_DIR/ground-stop-conclusion-release.out.log"
-ERR_LOG="$LOG_DIR/ground-stop-conclusion-release.err.log"
 
 stamp() { date '+%Y-%m-%d %H:%M:%S %Z'; }
 log()   { echo "$(stamp): $*" >> "$OUT_LOG"; }
@@ -67,12 +65,41 @@ TODAY="${GROUND_STOP_CONCLUSION_TODAY:-$(date '+%Y-%m-%d')}"
 DUE="2026-12-01"
 IGNORE_GUARDS="${GROUND_STOP_CONCLUSION_IGNORE_GUARDS:-0}"
 
+# A guard bypass is not a licence to publish. IGNORE_GUARDS exists so the
+# pipeline can be exercised off its date, and it used to be the whole of the
+# guard: a hand run with that one variable set went past the date check with
+# publish authority intact — measured 17NOV26, when only the smoke prompt
+# ("Reply with exactly SMOKE-OK. Write no file.") kept the piece off the site.
+# A run the schedule did not authorise cannot reach publish_article, so the
+# bypass now implies the dry run the shared tail already understands.
+IGNORED_GUARD=""
+if [ "$IGNORE_GUARDS" = "1" ]; then
+  export REPORT_DRY_RUN=1
+  IGNORED_GUARD="GUARDS IGNORED — GROUND_STOP_CONCLUSION_IGNORE_GUARDS=1 forced REPORT_DRY_RUN=1: this run cannot commit or push"
+fi
+
+# A dry run gets its own log file. The 17NOV26 pre-commit smoke wrote
+# "--- ground-stop-conclusion start" and "writer finished (exit 0)" into the file
+# the schedule writes, and read back afterwards that block is indistinguishable
+# from the job firing. A rehearsal is not a run, and the evidence has to say
+# which it was without the reader knowing the history.
+if [ "${REPORT_DRY_RUN:-0}" = "1" ] || [ "${CHIEFS_DRY_RUN:-0}" = "1" ]; then
+  OUT_LOG="$LOG_DIR/ground-stop-conclusion-release.smoke.out.log"
+  ERR_LOG="$LOG_DIR/ground-stop-conclusion-release.smoke.err.log"
+else
+  OUT_LOG="$LOG_DIR/ground-stop-conclusion-release.out.log"
+  ERR_LOG="$LOG_DIR/ground-stop-conclusion-release.err.log"
+fi
+
 mkdir -p "$LOG_DIR"
 cd "$REPO" || { echo "$(stamp): cannot cd to $REPO" >> "$OUT_LOG"; exit 1; }
 
 if [ "$IGNORE_GUARDS" != "1" ] && [ "$TODAY" != "$DUE" ]; then
   log "not $DUE (clock says $TODAY); nothing to write"
   exit 0
+fi
+if [ -n "$IGNORED_GUARD" ]; then
+  log "$IGNORED_GUARD"
 fi
 
 ARTICLE="content/posts/essays/ground-stop-conclusion.md"
@@ -82,7 +109,11 @@ JOB="ground-stop-conclusion"
 # `set -u` an unbound expansion dies at the SESSION_STATE line.
 . "$REPO/scripts/publish-report.sh"
 
-log "--- $JOB start"
+if report_dry_run; then
+  log "--- $JOB start (DRY RUN — nothing will be committed or pushed)"
+else
+  log "--- $JOB start"
+fi
 
 if [ ! -f "$PACK" ]; then
   log "missing $PACK, aborting"

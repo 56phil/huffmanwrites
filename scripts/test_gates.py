@@ -9304,15 +9304,22 @@ class TestGroundStopConclusionRelease(unittest.TestCase):
         self.assertNotIn("RunAtLoad", plist)
         self.assertTrue((SCRIPTS / Path(plist["ProgramArguments"][1]).name).exists())
 
-    def run_runner(self, env_extra):
+    def run_runner_files(self, env_extra):
         home = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, home, True)
         env = {k: v for k, v in os.environ.items() if k != "PATH"}
         env.update(HOME=str(home), **env_extra)
         done = subprocess.run(["/bin/bash", str(self.RUNNER)], env=env,
                               capture_output=True, text=True, timeout=120)
-        log = home / "Library" / "Logs" / "ground-stop-conclusion-release.out.log"
-        return done.returncode, (log.read_text() if log.exists() else "")
+        return done.returncode, home
+
+    def read_log(self, home, name="ground-stop-conclusion-release.out.log"):
+        path = home / "Library" / "Logs" / name
+        return path.read_text() if path.exists() else ""
+
+    def run_runner(self, env_extra):
+        rc, home = self.run_runner_files(env_extra)
+        return rc, self.read_log(home)
 
     def test_any_other_day_exits_zero_and_says_so(self):
         rc, log = self.run_runner({"GROUND_STOP_CONCLUSION_TODAY": "2026-11-30"})
@@ -9336,6 +9343,41 @@ class TestGroundStopConclusionRelease(unittest.TestCase):
             "GROUND_STOP_CONCLUSION_PACK": str(pack)})
         self.assertEqual(rc, 3)
         self.assertIn("no \u00a721 citation list", log)
+
+    def test_a_guard_bypass_forces_a_dry_run(self):
+        """17NOV26: `IGNORE_GUARDS=1` was the whole of the guard.
+
+        A hand run with that one variable set went past the date check with
+        publish authority intact; only the smoke prompt kept the piece off the
+        site. The bypass now sets REPORT_DRY_RUN, which is the same predicate
+        `publish_dry_run_stop` reads, so an off-date run cannot commit or push.
+        """
+        rc, home = self.run_runner_files({
+            "GROUND_STOP_CONCLUSION_TODAY": "2026-11-17",
+            "GROUND_STOP_CONCLUSION_IGNORE_GUARDS": "1",
+            "GROUND_STOP_CONCLUSION_PACK": "/nonexistent/pack.md"})
+        # Past the date guard — the bypass did its job — and stopped at the pack.
+        self.assertEqual(rc, 3)
+        log = self.read_log(home, "ground-stop-conclusion-release.smoke.out.log")
+        self.assertIn("GUARDS IGNORED", log)
+        self.assertIn("DRY RUN", log)
+        self.assertIn("missing /nonexistent/pack.md", log)
+
+    def test_a_rehearsal_never_writes_to_the_schedule_log(self):
+        """The 17NOV26 smoke left a start line and a writer line in the file the
+        schedule writes, and read back it was indistinguishable from the job
+        firing. A rehearsal gets its own file; the schedule's stays empty until
+        the job actually runs."""
+        rc, home = self.run_runner_files({
+            "GROUND_STOP_CONCLUSION_TODAY": "2026-12-01",
+            "REPORT_DRY_RUN": "1",
+            "GROUND_STOP_CONCLUSION_PACK": "/nonexistent/pack.md"})
+        self.assertEqual(rc, 3)
+        self.assertEqual(
+            self.read_log(home, "ground-stop-conclusion-release.out.log"), "")
+        self.assertIn("missing /nonexistent/pack.md",
+                      self.read_log(home,
+                                    "ground-stop-conclusion-release.smoke.out.log"))
 
     def test_the_runner_writes_then_gates_then_publishes(self):
         code = "\n".join(
