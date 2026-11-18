@@ -56,6 +56,27 @@ if [ -z "$FINDINGS" ] || [ "$FINDINGS" = "[]" ]; then
 fi
 
 IDS="$(printf '%s' "$FINDINGS" | python3 -c 'import json,sys; print(" ".join(f["id"] for f in json.load(sys.stdin)))')"
+
+# A finding is re-reported every morning until the count changes, so "reported"
+# is not "unamended". On 17NOV26 both triggers had already been noted (11NOV and
+# 12NOV), the runner applied them again, and the result was a SESSION_STATE entry
+# headed "Amended a published essay" and a commit named "Amend:" that changed
+# only SESSION_STATE.md. Filter first, and exit before the gates when there is
+# nothing to amend.
+set +e
+NEW_IDS="$(python3 "$CHECKER" --pending $IDS 2>>"$ERR_LOG")"
+PEND_RC=$?
+set -e
+if [ "$PEND_RC" -ne 0 ]; then
+  echo "$(stamp): could not tell which findings are unamended (exit $PEND_RC)" >> "$OUT_LOG"
+  "$ALERT" "$JOB" "$PEND_RC" "could not read the watch registry; see $ERR_LOG" || true
+  exit "$PEND_RC"
+fi
+if [ -z "$NEW_IDS" ]; then
+  echo "$(stamp): every reported trigger is already amended; nothing to do" >> "$OUT_LOG"
+  exit 0
+fi
+IDS="$NEW_IDS"
 # The essays each finding amends, read from the checker's own registry so the
 # mapping lives in one place.
 TOUCHED="$(python3 - "$REPO" $IDS <<'PY'

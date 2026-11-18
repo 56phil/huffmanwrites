@@ -8342,6 +8342,36 @@ class TestEssayWatch(unittest.TestCase):
         finally:
             shutil.rmtree(tmp)
 
+    def test_a_trigger_already_amended_is_not_pending(self):
+        # 17NOV26: both triggers had already been noted, the runner applied them
+        # again, and the record got an "Amended a published essay" entry and an
+        # "Amend:" commit that changed only SESSION_STATE.md. A finding stays
+        # reported every morning until the count moves, so the runner has to ask
+        # which ones the essay does not already carry.
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            (tmp / "content/posts/essays").mkdir(parents=True)
+            essay = tmp / "content/posts/essays/the-year-the-floor-moved.md"
+            essay.write_text(
+                "Body.\n\n"
+                f"{ew.MARKER.format('floor-ms')}\n"
+                "*PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*\n"
+            )
+            out = subprocess.run(
+                [sys.executable, str(SCRIPTS / "essay-watch.py"),
+                 "--pending", "floor-ms", "floor-ak"],
+                capture_output=True, text=True, check=True,
+                env={**os.environ, "ESSAY_WATCH_REPO": str(tmp)},
+            )
+            self.assertEqual(out.stdout.split(), ["floor-ak"])
+        finally:
+            shutil.rmtree(tmp)
+
+    def test_the_runner_amends_only_what_is_pending(self):
+        runner = (SCRIPTS / "essay-watch-runner.sh").read_text()
+        self.assertIn("--pending $IDS", runner)
+        self.assertIn("every reported trigger is already amended", runner)
+
     def test_every_watch_names_an_essay_that_exists_and_has_an_attribution(self):
         # A watch pointed at a renamed essay would never fire and nothing would
         # say so, which is the failure mode "a gate that inspects nothing reports

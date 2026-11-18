@@ -12,6 +12,16 @@
 
 ---
 
+### Ops — 18NOV26 — The watcher recorded an amendment it had not made
+
+- **17NOV26's `essay-watch` run was green and changed nothing, and its record said otherwise.** Commit `2ba53a2`, titled `Amend: content/posts/essays/the-year-the-floor-moved.md`, touched `SESSION_STATE.md` alone; the essay's last amendments are `8d5abbf` (11NOV26) and `eb85d02` (12NOV26). The entry it wrote is headed "Amended a published essay" and its first bullet reads "**Amended:** …" — a claim about the record that no diff supports, which is the class of error the prime directive names first.
+- **The cause is one variable, and it repeats daily.** The runner built `TOUCHED` from the ids the checker *reported*, not from what `--apply` appended. A finding stays reported every morning until the count moves, so once both marks were present the job would have written the same false entry, and the same empty `Amend:` commit, every day until a call landed.
+- **The fix is a question the checker answers, not a log line the runner parses.** `essay-watch.py --pending <id>…` prints only the ids whose essay does not already carry the checker's own `MARKER`; stdout carries the ids alone and the coverage count goes to stderr so the runner can read it as a list. The runner calls it before the gates and **exits 0 with `every reported trigger is already amended`** when the list is empty — before the gates, before the entry, before the commit. When it is non-empty the run is what it always was, and "Amended" is then true by construction.
+- **The wrong record is corrected in place, not deleted:** the 17NOV26 entry now says what happened (two triggers reported, neither unamended) and names the correction and its date, per the rule that a figure found wrong is fixed where it stands.
+- **676 tests OK**, two new in `TestEssayWatch`: `test_a_trigger_already_amended_is_not_pending` runs `--pending` against a throwaway tree that carries one of the two markers and requires exactly the other id back, and `test_the_runner_amends_only_what_is_pending` holds the wiring. Smoke: the runner against a fixture naming both already-noted triggers exits 0 at the new line with nothing committed, writing to a `/tmp` log directory so the schedule's own log is untouched.
+
+---
+
 ### Ops — 17NOV26 — The push wrote nothing; the guard, not the prompt, is what was missing
 
 - **Philip: "I just pushed 18c36fd which triggered a premature write of the ground stop conclusion."** The record says nothing was written, and the reasoning matters because the log looks like a firing. The block at `2026-11-17 03:59:52 CST` in `ground-stop-conclusion-release.out.log` is the **pre-commit smoke**: the Claude session it names (`d4c489e8`) carries the prompt `Reply with exactly SMOKE-OK. Write no file.` and one assistant line, `SMOKE-OK`; it is timestamped 09:59:57Z–10:00:00Z, before the commit at 10:00:27Z. `content/posts/essays/ground-stop-conclusion.md` does not exist, `HEAD == origin/main == 18c36fd`, `git status` is empty, the live URL answers **404**, and `launchctl print` reports `runs = 0`, `last exit code = (never exited)`: the job has never fired, because its only fire date is 1 December.
@@ -455,11 +465,11 @@ Auto-published by `com.huffmanwrites.chiefs-weekly-report` after every gate pass
 
 ---
 
-### Maintenance — November 17, 2026 — Amended a published essay (automated)
+### Maintenance — November 17, 2026 — essay-watch reported two triggers, neither unamended (automated)
 
-Written by `com.huffmanwrites.essay-watch` after every gate passed.
-- **Amended:** content/posts/essays/the-year-the-floor-moved.md 
-- **Triggers:** floor-ms floor-ak
+Written by `com.huffmanwrites.essay-watch`. **Corrected 18NOV26:** this entry was written as "Amended a published essay" and its first bullet as "**Amended:**", and no amendment happened on this run. Both markers were already in the essay (added 11NOV26 and 12NOV26), `essay-watch.py` logged `already amended, nothing to do` for each, and commit `2ba53a2` touched `SESSION_STATE.md` alone. The wording was the runner's, written unconditionally from the reported ids rather than from what it changed; it now filters on the checker's own marker before applying (`--pending`), and exits without a commit when there is nothing to do.
+- **No amendment:** content/posts/essays/the-year-the-floor-moved.md — both triggers were already noted.
+- **Triggers reported:** floor-ms floor-ak
 [
   {
     "id": "floor-ms",

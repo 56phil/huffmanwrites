@@ -109,11 +109,13 @@ states the event and names the person as its actor, or it does not ship.
 ## Wiring
 
 - `scripts/essay-watch.py` — the registry, the classifier, the note renderer.
-  `--list` prints the registry, `--json` the findings, `--apply <id>` writes the
-  note.
-- `scripts/essay-watch-runner.sh` — applies, runs the gates, runs both builds,
-  writes the SESSION_STATE entry, commits, pushes, and verifies delivery at the
-  essay's own URL.
+  `--list` prints the registry, `--json` the findings, `--pending <id>…` the ids
+  whose essay does not yet carry the note, `--apply <id>` writes the note.
+- `scripts/essay-watch-runner.sh` — asks `--pending` first and **exits 0 before
+  the gates when every reported trigger is already noted** (a finding is
+  re-reported daily until the count moves, so reporting is not amending), then
+  applies, runs the gates, runs both builds, writes the SESSION_STATE entry,
+  commits, pushes, and verifies delivery at the essay's own URL.
 - `scripts/com.huffmanwrites.essay-watch.plist` — one fire a day at 09:30 CT,
   after `nord-stream-watch` at 09:15 and clear of the 06:00 SITREP.
 

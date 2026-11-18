@@ -29,6 +29,7 @@ Usage:
     python3 scripts/essay-watch.py                 # report findings
     python3 scripts/essay-watch.py --list          # print the registry
     python3 scripts/essay-watch.py --json          # machine-readable findings
+    python3 scripts/essay-watch.py --pending floor-ms  # ids not yet amended
     python3 scripts/essay-watch.py --apply floor-ms [--now ISO]
 """
 
@@ -375,8 +376,33 @@ def main() -> int:
     ap.add_argument("--list", action="store_true", help="print the registry and exit")
     ap.add_argument("--json", action="store_true", help="machine-readable findings")
     ap.add_argument("--apply", metavar="ID", help="append the dated note for one finding")
+    ap.add_argument(
+        "--pending", nargs="+", metavar="ID",
+        help="print the given ids whose essay does not already carry the note "
+             "(a finding is re-reported every morning until the count changes, "
+             "so 'reported' is not 'unamended')",
+    )
     ap.add_argument("--now", help="ISO timestamp to judge staleness against (testing)")
     args = ap.parse_args()
+
+    if args.pending:
+        ids = set(args.pending)
+        for w in WATCHES:
+            if w["id"] not in ids:
+                continue
+            essay = REPO / w["essay"]
+            if not essay.exists():
+                print(
+                    f"essay-watch: {w['essay']} does not exist; "
+                    f"cannot tell whether {w['id']} is amended",
+                    file=sys.stderr,
+                )
+                return 3
+            if MARKER.format(w["id"]) not in essay.read_text():
+                print(w["id"])
+        # stdout carries only the ids, so the runner can read it as a list.
+        print(f"coverage: {len(ids & {w['id'] for w in WATCHES})} requested id(s)", file=sys.stderr)
+        return 0
 
     if args.list:
         for w in WATCHES:
