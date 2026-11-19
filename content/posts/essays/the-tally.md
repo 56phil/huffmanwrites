@@ -80,4 +80,7 @@ That is a lower and more durable achievement than being right.
 > **Update, 7 November 2026.** The war this count belongs to appears to be over: "EA on Pakistan TV: After US Elections, A Chance to End War on Iran?" ([EA WorldView, 7 November 2026](https://eaworldview.com/2026/11/iran-war-after-us-elections/)). The number above therefore records where the counting stopped.
 <!-- essay-watch:tally-iran -->
 
+> **Update, 19 November 2026.** The war this count belongs to appears to be over: "EA-Ukraine VideoCast: How Putin and Trump Are Pursuing Kyiv’s Surrender of Territory" ([EA WorldView, 19 November 2026](https://eaworldview.com/2026/11/ukraine-putin-trump-are-pursuing-kyivs-surrender-of-territory/)). The number above therefore records where the counting stopped.
+<!-- essay-watch:tally-ukraine -->
+
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

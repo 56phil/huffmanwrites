@@ -442,6 +442,33 @@
 
 
 
+
+### Maintenance — November 19, 2026 — Amended a published essay (automated)
+
+Written by `com.huffmanwrites.essay-watch` after every gate passed.
+- **Amended:** content/posts/essays/the-tally.md 
+- **Triggers:** tally-ukraine
+[
+  {
+    "id": "floor-ak",
+    "race": "Alaska Senate",
+    "headline": "With 25,000 more votes counted, Peltola, JKT and Begich near victory in Alaska election",
+    "url": "https://alaskabeacon.com/2026/11/11/with-25000-more-votes-counted-peltola-jkt-and-begich-near-victory-in-alaska-election/",
+    "date": "2026-11-11 14:00:55+00:00"
+  },
+  {
+    "id": "tally-ukraine",
+    "race": "the Ukraine day count",
+    "headline": "EA-Ukraine VideoCast: How Putin and Trump Are Pursuing Kyiv\u2019s Surrender of Territory",
+    "url": "https://eaworldview.com/2026/11/ukraine-putin-trump-are-pursuing-kyivs-surrender-of-territory/",
+    "date": "2026-11-19 10:51:51+00:00",
+    "reason": "ended"
+  }
+]
+- The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+
+---
+
 ### Maintenance — November 19, 2026 — Published the daily-sitrep report (automated)
 
 Auto-published by `com.huffmanwrites.daily-sitrep` after every gate passed.
