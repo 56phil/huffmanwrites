@@ -106,7 +106,7 @@ WATCHES = [
 # A headline that says someone won. Anything else is an order in the count.
 DECISIVE = re.compile(
     r"\b(wins?|won|victorious|victor(?:y|ies)|defeats?|defeated|prevails?|"
-    r"is elected|projected (?:the )?winner|wins? reelection|"
+    r"elect(?:ed|s)|is elected|projected (?:the )?winner|wins? reelection|"
     r"certif(?:y|ies|ied)|declared (?:the )?winner)\b",
     re.I,
 )
@@ -116,7 +116,8 @@ DECISIVE = re.compile(
 NOT_YET = re.compile(
     r"\b(separate[sd]?|separated|leads?|leading|trail(?:s|ing)?|"
     r"toss-?up|too close|uncalled|not called|await(?:s|ing)?|"
-    r"margin|count(?:ing)? continues|yet to be|no winner)\b",
+    r"margin|count(?:ing)? continues|yet to be|no winner|"
+    r"near(?:ing)?|closer to|came closer)\b",
     re.I,
 )
 # A headline that says a WAR ended, for a series watch. Narrow on purpose: the

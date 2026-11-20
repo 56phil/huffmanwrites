@@ -3,7 +3,7 @@ title: "The Year the Floor Moved"
 description: "Mississippi is separable by 43 votes and Alaska will not finish counting until November 18, but the wave was never close: the seats that should have been safe were not, and Nebraska shows why it was partisan rather than anti-incumbent."
 date: 2026-11-04T08:35:00-06:00
 author: Philip Huffman
-lastmod: 2026-11-06T07:25:00-06:00
+lastmod: 2026-11-20T04:20:00-06:00
 draft: false
 featuredOnHome: true
 hero_desktop: "img/articles/147-floor-moved_16x9.webp"
@@ -57,7 +57,7 @@ The test is not 2026. The test is whether the same seats are competitive in 2028
 
 Until then the correct posture is the one the count itself recommends: patience, and an insistence on counting every ballot from every far-flung community, because the two seats still outstanding are exactly the ones where the mechanics matter more than the message.
 
-> **Update, 11 November 2026.** The Alaska Senate count above was the figure at the time of writing, not a result. The outlet that carried the call reported it this way: "With 25,000 more votes counted, Peltola, JKT and Begich near victory in Alaska election" ([Alaska Beacon, 11 November 2026](https://alaskabeacon.com/2026/11/11/with-25000-more-votes-counted-peltola-jkt-and-begich-near-victory-in-alaska-election/)).
+> **Update, 17 November 2026.** The Alaska Senate count above was the figure at the time of writing, not a result. The call came when Peltola cleared fifty percent of first-choice votes and no ranked-choice runoff was needed: "Peltola elected to fill Alaska US Senate seat, becomes Senate’s 56th Democrat nationally" ([Alaska Beacon, 17 November 2026](https://alaskabeacon.com/2026/11/17/peltola-elected-to-fill-alaska-u-s-senate-seat-becomes-senates-56th-democrat-nationally/)).
 <!-- essay-watch:floor-ak -->
 
 > **Update, 12 November 2026.** The Mississippi Senate count above was the figure at the time of writing, not a result. The outlet that carried the call reported it this way: "For Black trailblazers in Mississippi, Colom’s Senate win is personal" ([Mississippi Today, 12 November 2026](https://mississippitoday.org/2026/11/12/for-black-trailblazers-in-mississippi-coloms-senate-win-is-personal/?utm_medium=rss)).

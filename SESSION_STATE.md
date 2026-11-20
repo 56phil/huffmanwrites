@@ -24,6 +24,17 @@
 
 ---
 
+### Audit — 20NOV26 — What else has been published that is not true
+
+Philip asked the question after the `ENDED` error was found, so this is a measured sweep of the automated surfaces, not a reassurance. Every figure below was checked against the source named, on 20NOV26.
+
+- **`essay-watch` has appended four notes in its life, and one more was false.** The two "war appears to be over" notes were retracted earlier the same morning (entry above). The third, on *The Year the Floor Moved*, said "the outlet that carried the call reported it this way" and quoted "Peltola, JKT and Begich **near victory** in Alaska election" — a count story, not a call; the cited page says Peltola had come closer, leading 48.8 to 47.1 with 84 percent counted. The real call came on 17NOV26 ("Peltola elected to fill Alaska US Senate seat, becomes Senate's 56th Democrat nationally", Alaska Beacon) and the note now carries it. Cause: `victor(?:y|ies)` matched "near victory", and `elected` was not in the decisive list, so the true call could never have fired. Both fixed, both pinned. The fourth note (Mississippi) stands: the AP called the race for Colom just before 6 p.m. ET on 11NOV26, by 4,669 votes of 962,237 counted (WTOP's account of the AP call; Mississippi Today returns 403 to a client, so its body was not re-read).
+- **The SITREP's mechanical figures are exact, and that is now measured rather than assumed.** 33 debt claims across 44 editions, each parsed with its own date and compared with FiscalData's debt-to-the-penny row: **33 of 33 to the dollar.** The 19NOV26 edition's Federal Register count reproduced exactly from the FR API (18 and 19 November: 210 documents, 22 rules, 16 proposed rules, 172 notices, 0 presidential documents). 48 curve sentences carrying decimals were checked against the Treasury row named in the sentence. Nine needed a human look and all nine were right: six quote a "day before" row the sentence does not date, and three quote CNBC live prints, which are not Treasury rows at all. The rows themselves were re-read from Treasury's CSV for 6, 7, 14, 15, 16, 28 October and 13, 16 November.
+- **Four session records claimed an amendment that never happened.** The 13, 14, 15 and 16NOV26 automated entries each say "Amended: content/posts/essays/the-year-the-floor-moved.md" and each commit (`6852b03`, `b920f76`, `999cf8e`, `3abe8e1`) carries `SESSION_STATE.md` alone. The 17NOV26 instance was corrected on 18NOV26; these four are corrected in place now, the same way and for the same reason.
+- **What this sweep cannot reach, stated as a gap rather than a clean bill.** Index closes and intraday quotes in the SITREP (CNBC serves no historical feed and no pack is retained beyond two days in `/tmp`); the world-affairs beat, which the writer fetches rather than a collector; court and docket claims beyond what the collectors produced; the Chiefs and docket reports beyond their own packs; and the Weekly Satire, whose material is selected rather than collected and whose only mechanical controls are the link and quotation gates. A figure in any of those could be wrong today with nothing in this repo able to see it.
+
+---
+
 ### Ops — 18NOV26 — The watcher recorded an amendment it had not made
 
 - **17NOV26's `essay-watch` run was green and changed nothing, and its record said otherwise.** Commit `2ba53a2`, titled `Amend: content/posts/essays/the-year-the-floor-moved.md`, touched `SESSION_STATE.md` alone; the essay's last amendments are `8d5abbf` (11NOV26) and `eb85d02` (12NOV26). The entry it wrote is headed "Amended a published essay" and its first bullet reads "**Amended:** …" — a claim about the record that no diff supports, which is the class of error the prime directive names first.
@@ -574,6 +585,7 @@ Written by `com.huffmanwrites.essay-watch` after every gate passed.
   }
 ]
 - The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+- **Corrected 20NOV26: no amendment happened on this run.** Commit `3abe8e1` carried `SESSION_STATE.md` alone. Both markers were already in the essay (written 11NOV26 and 12NOV26), so the checker logged `already amended, nothing to do` for both ids, and the "Amended:" line above was written from what it reported rather than from what it changed — the defect corrected on 18NOV26.
 
 ---
 
@@ -622,6 +634,7 @@ Written by `com.huffmanwrites.essay-watch` after every gate passed.
   }
 ]
 - The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+- **Corrected 20NOV26: no amendment happened on this run.** Commit `999cf8e` carried `SESSION_STATE.md` alone; both markers were already in the essay, the checker logged `already amended`, and the "Amended:" line above describes nothing.
 
 ---
 
@@ -658,6 +671,7 @@ Written by `com.huffmanwrites.essay-watch` after every gate passed.
   }
 ]
 - The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+- **Corrected 20NOV26: no amendment happened on this run.** Commit `b920f76` carried `SESSION_STATE.md` alone; both markers were already in the essay, the checker logged `already amended`, and the "Amended:" line above describes nothing.
 
 ---
 
@@ -706,6 +720,7 @@ Written by `com.huffmanwrites.essay-watch` after every gate passed.
   }
 ]
 - The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+- **Corrected 20NOV26: no amendment happened on this run.** Commit `6852b03` carried `SESSION_STATE.md` alone; both markers were already in the essay, the checker logged `already amended`, and the "Amended:" line above describes nothing.
 
 ---
 

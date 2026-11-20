@@ -8239,6 +8239,10 @@ class TestEssayWatch(unittest.TestCase):
             "Hyde-Smith leads Colom as counties resume counting",
             "Sullivan, Peltola await results in Alaska Senate race",
             "Alaska's US Senate race a tossup, with many absentee votes to count",
+            # "near victory" is an order in the count, and it fired floor-ak on
+            # 11NOV26: the note then claimed the outlet "carried the call" and
+            # quoted a story saying Peltola had come closer to winning.
+            "With 25,000 more votes counted, Peltola, JKT and Begich near victory in Alaska election",
         ):
             self.assertFalse(self._is_call(title), title)
 
@@ -8247,6 +8251,7 @@ class TestEssayWatch(unittest.TestCase):
             "Hyde-Smith wins Mississippi Senate seat",
             "Colom defeats Hyde-Smith in Mississippi",
             "Peltola wins Alaska Senate race after ranked-choice tabulation",
+            "Peltola elected to fill Alaska US Senate seat, becomes Senate’s 56th Democrat nationally",
         ):
             self.assertTrue(self._is_call(title), title)
 
