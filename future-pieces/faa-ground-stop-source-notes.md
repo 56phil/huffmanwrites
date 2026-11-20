@@ -1505,12 +1505,52 @@ coverage: 86 advisory rows, 3 totals tables, 29 watch items (16 verified, 3 save
 
 ### 19NOV26
 
-**Collected** 19NOV26 08:00 CT by `scripts/faa-ground-stop-pack.py`. Facts only: every line below was read off the page named, and nothing here is analysis.
+**Collected** 19NOV26 23:30 CT by `scripts/faa-ground-stop-pack.py`. Facts only: every line below was read off the page named, and nothing here is analysis.
 
-**Advisories on the index, 2026-11-19** — 34 rows, fetched 08:00 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-19&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+**Advisories on the index, 2026-11-19** — 74 rows, fetched 23:30 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-19&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
 
 | No. | Control | Sent | Title |
 |---|---|---|---|
+| 074 | SAN/ZLA | 11/19/26 23:56 | CDM GROUND STOP |
+| 073 | SAN/ZLA | 11/19/26 23:53 | SAN AIRPORT DIVERSION RECOVERY ACTIVATED |
+| 072 | DCC | 11/19/26 23:38 | VOLCANIC ACTIVITY BULLETIN - SANTA |
+| 071 | DCC/ZMA | 11/19/26 23:30 | OCEANIC ROUTE CLOSURE_RQD |
+| 070 | DCC | 11/19/26 23:21 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 069 | DCC | 11/19/26 22:22 | OPERATIONS PLAN |
+| 068 | SFO/ZOA | 11/19/26 21:44 | CDM GROUND DELAY PROGRAM |
+| 067 | DCC | 11/19/26 21:14 | REROUTE CANCELLATION |
+| 066 | AUS/ZHU | 11/19/26 20:50 | CDM GS CNX |
+| 065 | AUS/ZHU | 11/19/26 20:31 | CDM GROUND STOP |
+| 064 | DCC | 11/19/26 20:25 | OPERATIONS PLAN |
+| 063 | SAT/ZHU | 11/19/26 20:10 | SAT AIRPORT ARRIVAL DELAYS |
+| 062 | DCC | 11/19/26 19:29 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 061 | DCC | 11/19/26 19:06 | VOLCANIC ACTIVITY BULLETIN - PURACE |
+| 060 | LAS/ZLA | 11/19/26 18:50 | LAS AIRPORT ARRIVAL DELAYS |
+| 059 | DCC | 11/19/26 18:38 | OPERATIONS PLAN |
+| 058 | AUS/ZHU | 11/19/26 18:37 | CDM GROUND DELAY PROGRAM CNX |
+| 057 | DCC | 11/19/26 18:37 | ATCSCC ADVZY 057 DCC 11/19/26 FCA RQD / NAME: FCA005:MIDWEST_TO_FLORIDA_PARTIAL / CONSTRAINED AREA: ZJX / VALID: FCA ENTRY TIME FROM 191900 TO 200000 |
+| 056 | DCC | 11/19/26 18:36 | VOLCANIC ACTIVITY BULLETIN - FUEGO |
+| 055 | PHLC/ZNY | 11/19/26 18:34 | EWR AND SATELLITE AIRPORTS ARRIVAL DELAYS |
+| 054 | LAS/ZLA | 11/19/26 18:13 | CDM GROUND DELAY PROGRAM |
+| 053 | DCC | 11/19/26 17:50 | VOLCANIC ACTIVITY BULLETIN - SANTA |
+| 052 | AUS/ZHU | 11/19/26 17:18 | AUS AIRPORT ARRIVAL DELAYS |
+| 051 | DCC | 11/19/26 17:04 | OCEANIC ROUTE CLOSURE_RQD |
+| 050 | AUS/ZHU | 11/19/26 16:48 | CDM GROUND DELAY PROGRAM |
+| 049 | DCC | 11/19/26 16:41 | OPERATIONS PLAN |
+| 048 | DCC | 11/19/26 16:28 | TTCA/HOTLINE ISSUE REQUEST PAGE ACTIVATION |
+| 047 | AUS/ZHU | 11/19/26 16:27 | CDM PROPOSED GROUND DELAY PROGRAM |
+| 046 | AUS/ZHU | 11/19/26 16:04 | CDM GROUND STOP |
+| 045 | DCC | 11/19/26 15:49 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 044 | DCC | 11/19/26 15:46 | ATCSCC ADVZY 044 DCC 11/19/26 ROUTE RQD /FL / NAME: MIDWEST_TO_FLORIDA_PARTIAL / CONSTRAINED AREA: ZJX ZMA / VALID: ETD 191200 TO 191800 |
+| 043 | DEN/ZDV | 11/19/26 15:42 | DEN AIRPORT ARRIVAL DELAYS |
+| 042 | AUS/ZHU | 11/19/26 15:17 | CDM GS CNX |
+| 041 | DCC/ZMA | 11/19/26 15:03 | OCEANIC ROUTE CLOSURE_RQD |
+| 040 | DCC | 11/19/26 14:45 | US/MEXICO OUTLOOK_FYI |
+| 039 | AUS/ZHU | 11/19/26 14:39 | AUS AIRPORT DIVERSION RECOVERY ACTIVATED |
+| 038 | AUS/ZHU | 11/19/26 14:34 | CDM GROUND STOP |
+| 037 | DCC | 11/19/26 14:29 | OPERATIONS PLAN |
+| 036 | DCC/ZBW | 11/19/26 14:25 | NATOTS_RQD |
+| 035 | AUS/ZHU | 11/19/26 14:09 | CDM GROUND STOP |
 | 034 | SAN/ZLA | 11/19/26 13:54 | SAN AIRPORT ARRIVAL DELAYS |
 | 033 | SAN/ZLA | 11/19/26 13:54 | SAN AIRPORT SCHEDULING DELAYS |
 | 032 | LAX/ZLA | 11/19/26 13:53 | LAX AIRPORT SCHEDULING DELAYS |
@@ -1546,20 +1586,45 @@ coverage: 86 advisory rows, 3 totals tables, 29 watch items (16 verified, 3 save
 | 002 | DCC | 11/19/26 00:26 | VOLCANIC ACTIVITY BULLETIN - SANTA |
 | 001 | DCC | 11/19/26 00:12 | VOLCANIC ACTIVITY BULLETIN - SHEVELUCH |
 
-No row on this day's index is a ground-stop advisory.
+Ground-stop rows above, by number: 074, 065, 046, 038, 035.
 
-**Advisories, 2026-11-20** — the index returned no rows, fetched 08:00 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-20&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
+**Advisories on the index, 2026-11-20** — 21 rows, fetched 23:30 CT. `https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-20&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true`
 
-**FlightAware, minus2days** — SOURCE UNAVAILABLE (HTTPError: HTTP Error 504: Gateway Timeout). `https://www.flightaware.com/live/cancelled/minus2days`
+| No. | Control | Sent | Title |
+|---|---|---|---|
+| 021 | DCC | 11/20/26 05:14 | VOLCANIC ACTIVITY BULLETIN - SANGAY |
+| 020 | SAN/ZLA | 11/20/26 04:48 | CDM GROUND DELAY PROGRAM CNX |
+| 019 | LAS/ZLA | 11/20/26 04:19 | CDM GROUND DELAY PROGRAM CNX |
+| 018 | LAS/ZLA | 11/20/26 03:39 | CDM GROUND STOP |
+| 017 | DCC | 11/20/26 03:00 | VOLCANIC ACTIVITY BULLETIN - PURACE |
+| 016 | SFO/ZOA | 11/20/26 02:49 | CDM GROUND DELAY PROGRAM |
+| 015 | SFO/ZOA | 11/20/26 02:31 | CDM PROPOSED GROUND DELAY PROGRAM |
+| 014 | SFO/ZOA | 11/20/26 02:26 | SFO AIRPORT ARRIVAL DELAYS |
+| 013 | DCC | 11/20/26 01:11 | TTCA/HOTLINE WEB PAGE TERMINATION |
+| 012 | LAS/ZLA | 11/20/26 00:50 | LAS AIRPORT SCHEDULING DELAYS |
+| 011 | SAN/ZLA | 11/20/26 00:46 | CDM GROUND DELAY PROGRAM |
+| 010 | DCC | 11/20/26 00:45 | EN ROUTE TCA/HOTLINE WEB PAGE TERMINATION |
+| 009 | DCC | 11/20/26 00:41 | ATCSCC ADVZY 009 DCC 11/20/26 FCA RQD / NAME: FCA008:ZNY_TO_TNCM_TQPF / CONSTRAINED AREA: ZSU / VALID: FCA ENTRY TIME FROM 201400 TO 202200 |
+| 008 | DCC | 11/20/26 00:40 | ATCSCC ADVZY 008 DCC 11/20/26 FCA RQD / NAME: FCA007:ZSU_TO_TTZP / CONSTRAINED AREA: ZSU / VALID: FCA ENTRY TIME FROM 201400 TO 202200 |
+| 007 | DCC | 11/20/26 00:40 | VOLCANIC ACTIVITY BULLETIN - PURACE |
+| 006 | DCC | 11/20/26 00:40 | ATCSCC ADVZY 006 DCC 11/20/26 FCA RQD / NAME: FCA009:TTZP_TO_ZSU / CONSTRAINED AREA: ZSU / VALID: FCA ENTRY TIME FROM 201400 TO 202200 |
+| 005 | DCC | 11/20/26 00:32 | OPERATIONS PLAN |
+| 004 | SAN/ZLA | 11/20/26 00:29 | CDM PROPOSED GROUND DELAY PROGRAM |
+| 003 | DCC | 11/20/26 00:22 | VOLCANIC ACTIVITY BULLETIN - FUEGO |
+| 002 | SAN/ZLA | 11/20/26 00:02 | SAN AIRPORT ARRIVAL DELAYS |
+| 001 | DCC/ZDC | 11/20/26 00:01 | ZDC NRP SUSPENSION_RQD |
 
-**FlightAware totals** — fetched 08:00 CT. The tracker's own day is **2026-11-19**: its pages roll at 00:00Z, so between 18:00 CT and midnight it is already on tomorrow, and the date column is read from the day word each page prints. A figure that moved since the previous pass of this date is printed with the earlier reading, because the day settles.
+Ground-stop rows above, by number: 018.
+
+**FlightAware totals** — fetched 23:30 CT. The tracker's own day is **2026-11-20**: its pages roll at 00:00Z, so between 18:00 CT and midnight it is already on tomorrow, and the date column is read from the day word each page prints. A figure that moved since the previous pass of this date is printed with the earlier reading, because the day settles.
 
 | Day | Cancels (US) | Delays (US) | Cancels (all) | Delays (all) |
 |---|---|---|---|---|
-| Wed 18NOV26 | 140 | 4,487 | 734 | 20,160 |
-| Thu 19NOV26 | 55 | 707 | 422 | 10,927 |
+| Wed 18NOV26 | 142 (was 140 at 08:00) | 4,754 (was 4,487 at 08:00) | 737 (was 734 at 08:00) | 20,430 (was 20,160 at 08:00) |
+| Thu 19NOV26 | 124 (was 55 at 08:00) | 5,286 (was 707 at 08:00) | 707 (was 422 at 08:00) | 21,926 (was 10,927 at 08:00) |
+| Fri 20NOV26 | 32 | 158 | 260 | 5,091 |
 
-**Wayback captures** — every snapshot below was fetched and checked for the wording it should carry; `no capture` means no archive holds the document, and the note says whether a save was requested. Fetched 08:00 CT. The advisory index keeps 15 days. 
+**Wayback captures** — every snapshot below was fetched and checked for the wording it should carry; `no capture` means no archive holds the document, and the note says whether a save was requested. Fetched 23:30 CT. The advisory index keeps 15 days. 
 
 | Watch | Captured (UTC) | Snapshot | Note |
 |---|---|---|---|
@@ -1571,17 +1636,29 @@ No row on this day's index is a ground-stop advisory.
 | 11142026/18 | 20261116215302 | http://web.archive.org/web/20261116215302/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11142026&advn=18 |  |
 | index 2026-11-13 | 20261119053021 | http://web.archive.org/web/20261119053021/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-13&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
 | index 2026-11-14 | 20261116220803 | http://web.archive.org/web/20261116220803/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-14&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
-| index 2026-11-15 | 20261117093830 | http://web.archive.org/web/20261117093830/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-15&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
+| index 2026-11-15 | no capture |  | no capture; save failed (TimeoutError) |
 | index 2026-11-16 | 20261116220847 | http://web.archive.org/web/20261116220847/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
 | index 2026-11-17 | 20261117093837 | http://web.archive.org/web/20261117093837/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-17&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
 | index 2026-11-18 | 20261119053038 | http://web.archive.org/web/20261119053038/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-18&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
-| index 2026-11-19 | 20261119140035 | https://web.archive.org/web/20261119140035/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-19&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | saved this pass |
-| faa-qa | 20261119023710 | http://web.archive.org/web/20261119023710/https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers |  |
-| 11192026/23 | 20261119140055 | https://web.archive.org/web/20261119140055/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=23 | saved this pass |
-| 11192026/14 | 20261119140114 | https://web.archive.org/web/20261119140114/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=14 | saved this pass |
+| index 2026-11-19 | 20261119140035 | http://web.archive.org/web/20261119140035/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-19&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true |  |
+| faa-qa | 20261119184515 | http://web.archive.org/web/20261119184515/https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers |  |
+| 11192026/74 | 20261120053102 | https://web.archive.org/web/20261120053102/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=74 | saved this pass |
+| 11192026/69 | 20261120053122 | https://web.archive.org/web/20261120053122/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=69 | saved this pass |
+| 11192026/65 | no capture |  | no capture; save budget spent |
+| 11192026/64 | no capture |  | no capture; save budget spent |
+| 11192026/59 | no capture |  | no capture; save budget spent |
+| 11192026/49 | no capture |  | no capture; save budget spent |
+| 11192026/46 | no capture |  | no capture; save budget spent |
+| 11192026/38 | no capture |  | no capture; save budget spent |
+| 11192026/37 | no capture |  | no capture; save budget spent |
+| 11192026/35 | no capture |  | no capture; save budget spent |
+| 11192026/23 | 20261119140055 | http://web.archive.org/web/20261119140055/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=23 |  |
+| 11192026/14 | 20261119140114 | http://web.archive.org/web/20261119140114/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=14 |  |
 | 11192026/3 | no capture |  | no capture; save budget spent |
+| 11202026/18 | no capture |  | no capture; save budget spent |
+| 11202026/5 | no capture |  | no capture; save budget spent |
 
-coverage: 34 advisory rows, 2 totals tables, 17 watch items (16 verified, 3 saved this pass)
+coverage: 95 advisory rows, 3 totals tables, 29 watch items (17 verified, 2 saved this pass)
 
 ## 20. Settled totals — every date read, merged and kept
 
@@ -1594,8 +1671,9 @@ Every date this job has read, merged and kept. FlightAware shows three days at a
 | 2026-11-15 | 2,336 | 11,131 | 2,860 | 26,886 | 17NOV26 03:19 |
 | 2026-11-16 | 375 | 7,218 | 896 | 22,198 | 17NOV26 23:30 |
 | 2026-11-17 | 105 | 3,728 | 659 | 16,419 | 18NOV26 23:30 |
-| 2026-11-18 | 140 | 4,487 | 734 | 20,160 | 19NOV26 08:00 |
-| 2026-11-19 | 55 | 707 | 422 | 10,927 | 19NOV26 08:00 |
+| 2026-11-18 | 142 | 4,754 | 737 | 20,430 | 19NOV26 23:30 |
+| 2026-11-19 | 124 | 5,286 | 707 | 21,926 | 19NOV26 23:30 |
+| 2026-11-20 | 32 | 158 | 260 | 5,091 | 19NOV26 23:30 |
 
 ## 21. Verified citations — generated; do not edit by hand
 
@@ -1614,13 +1692,15 @@ Generated from §19's verified captures — **cite these URLs, not the ones in �
 | 11182026/23 | http://web.archive.org/web/20261118140337/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11182026&advn=23 | 20261118140337 |
 | 11182026/31 | http://web.archive.org/web/20261118140217/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11182026&advn=31 | 20261118140217 |
 | 11182026/70 | https://web.archive.org/web/20261119053124/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11182026&advn=70 | 20261119053124 |
-| 11192026/14 | https://web.archive.org/web/20261119140114/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=14 | 20261119140114 |
-| 11192026/23 | https://web.archive.org/web/20261119140055/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=23 | 20261119140055 |
-| faa-qa | http://web.archive.org/web/20261119023710/https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers | 20261119023710 |
+| 11192026/14 | http://web.archive.org/web/20261119140114/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=14 | 20261119140114 |
+| 11192026/23 | http://web.archive.org/web/20261119140055/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=23 | 20261119140055 |
+| 11192026/69 | https://web.archive.org/web/20261120053122/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=69 | 20261120053122 |
+| 11192026/74 | https://web.archive.org/web/20261120053102/https://www.fly.faa.gov/adv/adv_otherdis?adv_date=11192026&advn=74 | 20261120053102 |
+| faa-qa | http://web.archive.org/web/20261119184515/https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers | 20261119184515 |
 | index 2026-11-13 | http://web.archive.org/web/20261119053021/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-13&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | 20261119053021 |
 | index 2026-11-14 | http://web.archive.org/web/20261116220803/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-14&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | 20261116220803 |
 | index 2026-11-15 | http://web.archive.org/web/20261117093830/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-15&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | 20261117093830 |
 | index 2026-11-16 | http://web.archive.org/web/20261116220847/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-16&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | 20261116220847 |
 | index 2026-11-17 | http://web.archive.org/web/20261117093837/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-17&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | 20261117093837 |
 | index 2026-11-18 | http://web.archive.org/web/20261119053038/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-18&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | 20261119053038 |
-| index 2026-11-19 | https://web.archive.org/web/20261119140035/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-19&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | 20261119140035 |
+| index 2026-11-19 | http://web.archive.org/web/20261119140035/https://www.fly.faa.gov/adv/adv_list?whichAdvisories=ATCSCC&advisoryCategory=All&date=2026-11-19&airflow=true&ctop=true&gStop=true&gDelay=true&route=true&other=true | 20261119140035 |
