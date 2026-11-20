@@ -8273,6 +8273,48 @@ class TestEssayWatch(unittest.TestCase):
         # false in a way no gate can see, so the bar is deliberately high.
         self.assertEqual(ew.STALE_AFTER.days, 7)
 
+    def _is_ended(self, title):
+        return bool(ew.ENDED.search(title)) and not ew.NOT_ENDED.search(title)
+
+    def test_the_two_amendments_that_asserted_a_false_ending_do_not_fire(self):
+        # Both of these edited a live page to say a war "appears to be over"
+        # while the count was publishing daily (20NOV26: Ukraine Day 1,730,
+        # Iran Day 267). The trigger, not the note, was the defect.
+        for title in (
+            "EA on Pakistan TV: After US Elections, A Chance to End War on Iran?",
+            "EA-Ukraine VideoCast: How Putin and Trump Are Pursuing "
+            "Kyiv\u2019s Surrender of Territory",
+            "Trump\u2019s Taco Over US Strikes on Iran",
+            "War on Iran Has Not Ended",
+            "Ukraine War Ends Without a Deal",
+        ):
+            self.assertFalse(self._is_ended(title), title)
+
+    def test_a_war_actually_ending_is_still_detected(self):
+        # The narrowing must not make the watcher inert.
+        for title in (
+            "Ukraine War Ends After Four Years",
+            "US War on Iran Is Over",
+            "War in Ukraine Is Over",
+            "Ceasefire Reached in Ukraine",
+            "Russia Capitulates in Kharkiv",
+            "Ukrainian Forces Surrender in Mariupol",
+        ):
+            self.assertTrue(self._is_ended(title), title)
+
+    def test_every_series_watch_names_a_subject_in_its_own_series_name(self):
+        # "US War on Iran".split()[0] is "us", which is in nearly every headline
+        # on the site: the subject is explicit so it cannot drift back.
+        for watch in ew.WATCHES:
+            if watch["kind"] != "series":
+                continue
+            words = [
+                w
+                for w in re.findall(r"[a-z]+", watch["series"].lower())
+                if w not in ("us", "war", "on", "the")
+            ]
+            self.assertIn(watch["subject"], words, watch["series"])
+
     def test_the_note_lands_above_the_attribution_and_keeps_it_last(self):
         import tempfile, shutil, datetime as dt
         tmp = Path(tempfile.mkdtemp())

@@ -86,6 +86,7 @@ WATCHES = [
         "essay": "content/posts/essays/the-tally.md",
         "kind": "series",
         "series": "US War on Iran",
+        "subject": "iran",
         "label": "the Iran day count",
         "since": "2026-11-04T08:05:00-06:00",
         "feeds": ["https://eaworldview.com/author/eaworldview/feed/"],
@@ -95,6 +96,7 @@ WATCHES = [
         "essay": "content/posts/essays/the-tally.md",
         "kind": "series",
         "series": "Ukraine War",
+        "subject": "ukraine",
         "label": "the Ukraine day count",
         "since": "2026-11-04T08:05:00-06:00",
         "feeds": ["https://eaworldview.com/author/eaworldview/feed/"],
@@ -117,10 +119,25 @@ NOT_YET = re.compile(
     r"margin|count(?:ing)? continues|yet to be|no winner)\b",
     re.I,
 )
-# A headline that says a war ended, for a series watch.
+# A headline that says a WAR ended, for a series watch. Narrow on purpose: the
+# first version matched the bare words `end`, `over` and `surrender`, and both
+# amendments it produced asserted a falsehood on a live page (measured 20NOV26,
+# when both counts were still publishing daily). "A Chance to End War on Iran?"
+# matched `end`; "Kyiv's Surrender of Territory" matched `surrender` — an object
+# ceded, not a war over. A war ends in a clause about the war, so the verb has to
+# be attached to one, and `surrenders` must not be followed by `of`.
 ENDED = re.compile(
-    r"\b(ends?|ended|over|ceasefire|cease-fire|peace deal|truce|capitulat\w*|"
-    r"surrenders?|armistice)\b",
+    r"\b(?:war|conflict)\b[^.!?]{0,40}?\b(?:is|are|has|now)?\s*"
+    r"(?:over|ends?|ended|finished)\b"
+    r"|\b(?:ceasefire|cease-fire|peace deal|truce|armistice|capitulat\w*)\b"
+    r"|\bsurrenders?\b(?!\s+of\b)",
+    re.I,
+)
+# A headline that mentions an end in order to deny one. Vetoes the match: a
+# missed finding is a silent no-op, while a false one edits a published page.
+NOT_ENDED = re.compile(
+    r"\b(?:not|no|without|yet to|denies|denied|rejects?|rejected|"
+    r"fails?|failed|unlikely)\b",
     re.I,
 )
 
@@ -252,7 +269,11 @@ def check_series(watch: dict, now: datetime) -> dict | None:
                 continue
             # A headline that ends the war, naming it, and is newer than the
             # last count published: that is the trigger a day count cannot show.
-            if watch["series"].split()[0].lower() in item["title"].lower() and ENDED.search(item["title"]):
+            if (
+                watch["subject"] in item["title"].lower()
+                and ENDED.search(item["title"])
+                and not NOT_ENDED.search(item["title"])
+            ):
                 if ended is None or (item["date"] and ended["date"] and item["date"] > ended["date"]):
                     ended = item
     if latest is None:

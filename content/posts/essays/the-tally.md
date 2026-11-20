@@ -3,7 +3,7 @@ title: "The Tally"
 description: "Scott Lucas has published a dated entry for every day of two wars, and the running count is the argument: a war with a number cannot be quietly forgotten. A portrait of the method, and the one place it slips."
 date: 2026-11-04T08:05:00-06:00
 author: Philip Huffman
-lastmod: 2026-11-04T08:05:00-06:00
+lastmod: 2026-11-20T04:05:00-06:00
 draft: false
 featuredOnHome: true
 hero_desktop: "img/articles/146-scott-lucas-tally_16x9.webp"
@@ -76,11 +76,5 @@ There is a temptation, when a commentator is right about the thing you care abou
 A man who counts days is making a small promise every morning. The count will not skip, the entry will be published, and the number will not be adjusted to suit the argument. Lucas has kept that promise 1,714 times on one war and 251 on another, which is a longer record than most of the people currently explaining American politics to the world.
 
 That is a lower and more durable achievement than being right.
-
-> **Update, 7 November 2026.** The war this count belongs to appears to be over: "EA on Pakistan TV: After US Elections, A Chance to End War on Iran?" ([EA WorldView, 7 November 2026](https://eaworldview.com/2026/11/iran-war-after-us-elections/)). The number above therefore records where the counting stopped.
-<!-- essay-watch:tally-iran -->
-
-> **Update, 19 November 2026.** The war this count belongs to appears to be over: "EA-Ukraine VideoCast: How Putin and Trump Are Pursuing Kyiv’s Surrender of Territory" ([EA WorldView, 19 November 2026](https://eaworldview.com/2026/11/ukraine-putin-trump-are-pursuing-kyivs-surrender-of-territory/)). The number above therefore records where the counting stopped.
-<!-- essay-watch:tally-ukraine -->
 
 *PRH | [huffmanwrites.org](https://www.huffmanwrites.org) | © Philip Huffman*

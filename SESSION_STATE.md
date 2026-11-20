@@ -12,6 +12,18 @@
 
 ---
 
+### Ops — 20NOV26 — The watcher published "the war is over" twice, and both wars were still counting
+
+- **Two notes on the live page "The Tally" said the same false thing:** "The war this count belongs to appears to be over." They were added by `com.huffmanwrites.essay-watch` on 7NOV26 (`tally-iran`) and 19NOV26 (`tally-ukraine`), each after every gate passed, and each quoted a real headline as its licence.
+- **Neither war had ended, and the counts prove it.** Measured 20NOV26 04:00 CT against EA WorldView's own author feed: "Ukraine War, Day 1,730" (20NOV, 06:46 GMT), publishing every day from Day 1,716 on 6NOV; "UPDATES: US War on Iran, Day 267" (20NOV, 04:55 GMT), whose numbering runs unbroken from Day 249 on 2NOV. A series that publishes every day is not a series that stopped.
+- **The trigger was three bare words, and the subject test was one letter.** `ENDED` matched `end` in "A Chance to End War on Iran?" and `surrender` in "Kyiv's Surrender of Territory" (land ceded, not a war over). The series match was `series.split()[0]`, which is `us` for "US War on Iran" — a substring present in nearly every headline the site publishes. Either mistake alone would have fired eventually; together they produced a false amendment twice in thirteen days.
+- **The fix is narrower and the narrowing is pinned by tests.** `ENDED` now requires the verb attached to a war or conflict clause (`war … ends/ended/is over`), `surrenders?` must not be followed by `of`, and a `NOT_ENDED` veto (`not`, `no`, `without`, `denies`, `rejects`, `failed`) suppresses a headline that mentions an end to deny one. Each series watch carries an explicit `subject` (`iran`, `ukraine`), and a test asserts the subject appears in its own series name so it cannot drift back to a split. Six true-ending shapes are pinned as positives so the narrowing cannot leave the watcher inert.
+- **Both notes and both markers were removed from the essay**, so the checker re-evaluates those ids with the fixed trigger instead of treating them as amended; `lastmod` bumped to 20NOV26. The live check then reported no series finding (`floor-ak`, already amended, is the only remaining trigger).
+- **15 tests OK in `TestEssayWatch`**, three of them new: `test_the_two_amendments_that_asserted_a_false_ending_do_not_fire`, `test_a_war_actually_ending_is_still_detected`, `test_every_series_watch_names_a_subject_in_its_own_series_name`.
+- **The general lesson, and it is the same one as 18NOV26:** an automated editor's claim is only as true as its trigger. Every gate on the piece passed; the claim inside it was false, and no gate reads a note's argument. What the runner owed was a trigger that could not be satisfied by a headline merely containing the word.
+
+---
+
 ### Ops — 18NOV26 — The watcher recorded an amendment it had not made
 
 - **17NOV26's `essay-watch` run was green and changed nothing, and its record said otherwise.** Commit `2ba53a2`, titled `Amend: content/posts/essays/the-year-the-floor-moved.md`, touched `SESSION_STATE.md` alone; the essay's last amendments are `8d5abbf` (11NOV26) and `eb85d02` (12NOV26). The entry it wrote is headed "Amended a published essay" and its first bullet reads "**Amended:** …" — a claim about the record that no diff supports, which is the class of error the prime directive names first.
@@ -466,6 +478,7 @@ Written by `com.huffmanwrites.essay-watch` after every gate passed.
   }
 ]
 - The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+- **Corrected 20NOV26: the note was false and has been removed from the essay.** It asserted that "the war this count belongs to appears to be over" on the strength of a VideoCast headline, "Kyiv's Surrender of Territory", which is about land being ceded, not a war ending. Measured the same morning from EA WorldView's own feed, the Ukraine count was publishing daily — Day 1,716 on 6NOV through Day 1,730 on 20NOV — so the series had not stopped and the war had not ended. The trigger, not the note, was the defect: `ENDED` matched the word `surrender`. Fixed in `scripts/essay-watch.py`; see the Ops entry at the top of this file.
 
 ---
 
@@ -886,6 +899,7 @@ Written by `com.huffmanwrites.essay-watch` after every gate passed.
   }
 ]
 - The note is appended below the essay and above the closing attribution, quoting the headline that carries the news.
+- **Corrected 20NOV26: the note was false and has been removed from the essay.** It said the Iran war "appears to be over" on the strength of "A Chance to End War on Iran?", a headline about a television appearance. The count never stopped: Day 258 on 11NOV, Day 264 on 17NOV, Day 267 on 20NOV ("Houthi Missile Attacks on Saudi Arabia"). The trigger matched the bare word `end` in that headline; fixed in `scripts/essay-watch.py`.
 
 ---
 

@@ -35,6 +35,26 @@ Colom."* A margin is an order in the count. A call is a decision someone made.
 Seven days is not four: a daily column that pauses over a long weekend has not
 stopped, and a note saying it stopped would be false in a way no gate can see.
 
+**The `ended` half of the series trigger is the one that has published a false
+claim, twice, so it is the narrowest pattern here.** On 7NOV26 and 19NOV26 it
+fired on "A Chance to End War on Iran?" and "Kyiv's Surrender of Territory" and
+wrote "the war this count belongs to appears to be over" onto a live page while
+both counts were publishing daily (measured 20NOV26: Ukraine Day 1,730, Iran Day
+267). The rules now, each pinned by a test:
+
+- the end word has to be attached to a **war or conflict clause** (`war … ends`,
+  `war … is over`), not bare `end` or floating `over`;
+- `surrenders` must not be followed by `of` — a surrender *of territory* is land
+  ceded, and the war it belongs to is still running;
+- a headline that mentions an end in order to deny one (`not`, `no`, `without`,
+  `denies`, `rejects`, `failed`) is vetoed, because a missed finding is a silent
+  no-op while a false one edits a published page;
+- the conflict is named by an explicit `subject` (`iran`, `ukraine`), never by a
+  split of the series name — `"US War on Iran".split()[0]` is `us`, which is in
+  nearly every headline the site publishes.
+
+Before adding a third series watch, check that its subject word is distinctive.
+
 **`certifies` is in that verb list for a reason specific to Mississippi.**
 Mississippi provides no recount, automatic or requested, and the election code's
 Article 29 — "Election Contests" — reaches county offices and legislative seats
