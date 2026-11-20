@@ -12,6 +12,17 @@
 
 ---
 
+### Publish — 20NOV26 — Stoic Saturday: The Written Answer (21NOV26 edition)
+
+- **The letter is written, gated and committed on Friday, as the cadence requires; its page is dated 21NOV26T05:53 and `com.huffmanwrites.digest-release` puts it live at that minute.** 2,576 words. Epigraph Marcus Aurelius, *Meditations* 6.21, Long 1862, wording verified against the Wikisource Book VI page fetched 20NOV26.
+- **The reflection is on the written answer as the form a claim has to take to be checkable:** the FAA's order that stopped every departure carried no reason and its cancellation left the REASON field empty, and the page of sixteen written answers that arrived on Sunday stated two sites, seventeen centers and sixty routers where no briefing had. Set beside Judge Reyes's record, a count that closed a Senate at 56-44, and a trilateral meeting that announced no agreement, the week's common form is the document.
+- **Two items are named as this site's own errors, and they are the week's evidence rather than an aside.** The letter says the two "war appears to be over" notes published on *The Tally* were removed on Friday once the daily counts showed both wars still running, and gives the mechanism: a trigger that read "near victory" as a call. That is the same test the letter asks of the reader.
+- **Roundup covers five series.** Docket Report 14NOV26 (fifty filings, thirty in the golf case), Chiefs Report 17NOV26 (Mahomes's UCL sprain, 348 yards, 35-13 at Atlanta, 7-2), both ninety-day installments of 1NOV26, and the SITREP editions of 14–20NOV26. The Senate Race Report is recorded as ended with its 1NOV26 edition rather than linked as current.
+- **Every URL cited was fetched before it was written:** 16 site pages answered 200 with their own titles on 20NOV26, and `check-links.py --online --titles` cleared the one external link (Wikisource; self-links are excluded by that gate's `is_own`). Em-dashes 2, prepositions 0, anchors OK, content frontmatter OK across 339 files.
+- **The hero is a new plate,** `164-written-answer_16x9.webp` and `_4x5.webp`, generated with `scripts/hero-image.py` at seed 2112 (portrait) and 2115 (landscape): a marble tablet of dense gold inscriptions under a warm light. The first landscape pass and a later "gap in the ruled lines" pass were both rejected, and the caption was rewritten to the plate that was kept rather than the plate that was asked for.
+
+---
+
 ### Ops — 20NOV26 — The watcher published "the war is over" twice, and both wars were still counting
 
 - **Two notes on the live page "The Tally" said the same false thing:** "The war this count belongs to appears to be over." They were added by `com.huffmanwrites.essay-watch` on 7NOV26 (`tally-iran`) and 19NOV26 (`tally-ukraine`), each after every gate passed, and each quoted a real headline as its licence.
