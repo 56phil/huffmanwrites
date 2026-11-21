@@ -3170,10 +3170,10 @@ class TestHeroPathGate(unittest.TestCase):
         self.assertEqual(len(notes), 1, notes)
         self.assertIn("duplicated in static/", notes[0])
 
-    def test_the_same_path_on_a_post_is_fine_in_either_home(self):
-        # Only a book cover carries the assets/ requirement: a section layout
-        # emits `<img src="{{ .Params.image }}">` verbatim, which `static/`
-        # serves, so the rule must not fire for those pages.
+    def test_the_same_path_on_a_post_is_fine_in_static(self):
+        # A post's `image` is emitted verbatim by `schema_json.html` and the
+        # section lists, which `static/` serves, so the cover rule must not fire
+        # for those pages and `static/` alone must satisfy rule 3.
         p = self.file('image: "img/books/letters.jpg"')
         assets, static = self.homes(static={"img/books/letters.jpg": b"cover"})
         old = (chp.ASSETS, chp.STATIC)
@@ -3183,6 +3183,66 @@ class TestHeroPathGate(unittest.TestCase):
         finally:
             chp.ASSETS, chp.STATIC = old
         self.assertEqual(problems, [], problems)
+
+    # --- the post-image home rule (2026-11-21) -------------------------------
+    #
+    # Rule 3 is rule 2's mirror: a post image is emitted as a raw path by
+    # `single.html`, `gallery.html`, `schema_json.html` and the challenge and
+    # podcast lists, so `static/` is the home that serves it, and no layout
+    # resolves a post image through `resources.Get`. The blind spot this closes
+    # is an `assets/`-only hero, which passed the old "resolves in either home"
+    # test and rendered an empty box on a page that still returned 200.
+
+    def audit_as_post(self, fm: str, **homes_kw):
+        """Audit a non-book page against temp image homes."""
+        import unittest.mock as mock
+        p = self.file(fm)
+        assets, static = self.homes(**homes_kw)
+        old = (chp.ASSETS, chp.STATIC)
+        chp.ASSETS, chp.STATIC = assets, static
+        try:
+            with mock.patch.object(chp, "is_book", return_value=False):
+                return chp.audit_file(p)
+        finally:
+            chp.ASSETS, chp.STATIC = old
+
+    def test_a_post_hero_only_in_assets_fails(self):
+        problems, _, _ = self.audit_as_post(
+            'hero_desktop: "img/articles/164-written-answer_16x9.webp"',
+            assets={"img/articles/164-written-answer_16x9.webp": b"plate"})
+        self.assertEqual(len(problems), 1, problems)
+        self.assertIn("is in assets/ but not static/", problems[0])
+
+    def test_a_post_hero_in_static_passes_with_no_note(self):
+        problems, notes, _ = self.audit_as_post(
+            'hero_desktop: "img/articles/164-written-answer_16x9.webp"',
+            static={"img/articles/164-written-answer_16x9.webp": b"plate"})
+        self.assertEqual(problems, [], problems)
+        self.assertEqual(notes, [], notes)
+
+    def test_a_duplicated_post_hero_is_a_note_not_a_failure(self):
+        # The reader sees the static/ copy either way, so duplication is drift
+        # to clean up, never a broken page.
+        for data in (b"same", None):
+            with self.subTest(different_bytes=data is None):
+                assets = {"img/articles/x_16x9.webp": b"a"}
+                static = {"img/articles/x_16x9.webp": b"b" if data is None else data}
+                problems, notes, _ = self.audit_as_post(
+                    'hero_desktop: "img/articles/x_16x9.webp"',
+                    assets=assets, static=static)
+                self.assertEqual(problems, [], problems)
+                self.assertEqual(len(notes), 1, notes)
+                self.assertIn("duplicated in assets/", notes[0])
+
+    def test_the_two_home_rules_do_not_cross(self):
+        # The same file is correct in `assets/` for a book page and wrong for a
+        # post; a gate that answered one question twice would let one of them
+        # break silently.
+        rel = "img/articles/sg-16x9.webp"
+        book = self.audit_as_book(f'image: "{rel}"', assets={rel: b"art"})
+        post = self.audit_as_post(f'image: "{rel}"', assets={rel: b"art"})
+        self.assertEqual(book[0], [], book[0])
+        self.assertEqual(len(post[0]), 1, post[0])
 
     def test_the_runners_that_write_hero_reports_run_the_gate(self):
         # A gate nobody runs is a gate that does not exist. The corpus-wide hero
@@ -8582,16 +8642,14 @@ class TestMuskMoneyReport(unittest.TestCase):
         # both places mirrors the same piece twice (09NOV26).
         self.assertNotIn("publish_simplebrain", self.runner)
 
-    def test_the_plate_exists_in_both_homes(self):
-        # The layouts resolve one copy through resources.Get (assets/) and the
-        # challenge and podcast layouts emit the path verbatim (static/), which is
-        # why both homes are deliberate and why a missing one renders an empty box
-        # on a page that still returns 200.
+    def test_the_plate_exists_in_static(self):
+        # `single.html` emits a post hero as a raw path, so `static/` is the only
+        # home that serves it; an `assets/` copy is read by nothing and rule 3 of
+        # `check-hero-paths.py` now rejects one that resolves only there.
         for suffix in ("16x9", "4x5"):
             name = f"152-musk-money_{suffix}.webp"
-            for home in ("static", "assets"):
-                path = REPO / home / "img" / "articles" / name
-                self.assertTrue(path.exists(), f"{home}/{name} is missing")
+            self.assertTrue((REPO / "static/img/articles" / name).exists(), name)
+            self.assertFalse((REPO / "assets/img/articles" / name).exists(), name)
         self.assertIn("152-musk-money_16x9.webp", self.skill)
         self.assertIn("152-musk-money_4x5.webp", self.skill)
 
@@ -9496,11 +9554,15 @@ class TestGroundStopConclusionRelease(unittest.TestCase):
         self.assertIn("archived copy", text)
         self.assertIn("Do not name a root cause", text)
 
-    def test_the_hero_pair_exists_in_both_homes(self):
+    def test_the_hero_pair_exists_in_static(self):
+        # A post image is emitted as a raw path by `single.html`, so `static/`
+        # is the only home that serves it; an `assets/` copy would serve nothing
+        # (the duplication was removed 21NOV26 and rule 3 of
+        # `check-hero-paths.py` keeps it from coming back).
         for name in ("163-ground-stop-conclusion_16x9.webp",
                      "163-ground-stop-conclusion_4x5.webp"):
-            for home in ("static/img/articles", "assets/img/articles"):
-                self.assertTrue((REPO / home / name).exists(), f"{home}/{name}")
+            self.assertTrue((REPO / "static/img/articles" / name).exists(), name)
+            self.assertFalse((REPO / "assets/img/articles" / name).exists(), name)
 
 
 if __name__ == "__main__":

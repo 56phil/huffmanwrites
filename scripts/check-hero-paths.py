@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Every image path in frontmatter must resolve, and a book cover must live in `assets/`.
+"""Every image path must resolve, in the home its renderer reads.
 
 Why this exists, and why it is not redundant with `check-render-integrity.py`:
 
@@ -17,25 +17,28 @@ typo in it is invisible to all of them:
 So the defect ships and the first person to see it is a reader. This gate costs
 nothing and closes it.
 
-Two rules, both from a failure that shipped:
+Three rules, each from a failure that shipped, and each stated as **which home
+the renderer reads** rather than "somewhere in the repo":
 
   1. **Every path resolves somewhere.** `hero`, `hero_desktop`, `hero_mobile`,
      `image`, `image_desktop` and `image_mobile` are read by two different
      pipelines: `partials/img.html` and the book card shortcodes resolve through
-     `resources.Get`, which reads `assets/`, while a few section layouts emit
-     `<img src="{{ .Params.image }}">` verbatim, which is served from `static/`.
-     A path that resolves in NEITHER renders nothing, so the gate requires one
-     of the two homes to hold the file. It does NOT police the repo's existing
-     duplication of article heroes across both homes (345 identical files, an
-     established arrangement, because direct-`src` layouts need `static/` and the
-     processing pipeline needs `assets/`).
+     `resources.Get`, which reads `assets/`, while the post, section and gallery
+     layouts emit `<img src="{{ .Params.image }}">` verbatim, which is served
+     from `static/`. A path that resolves in NEITHER renders nothing, so the
+     gate requires one of the two homes to hold the file. This rule alone is
+     not enough, because "one of the two" is a different question from "the one
+     its renderer reads" — which is what rules 2 and 3 answer.
 
   2. **A book cover must be in `assets/`.** A book page's `image` is rendered
      only through `resources.Get`: `partials/img.html` (via
      `layouts/books/single.html`), `shortcodes/book.html` and
-     `shortcodes/book_catalog.html`. A cover placed only in `static/` therefore
-     builds green, warns once, and renders the `Cover Coming Soon` placeholder on
-     a published page. Measured 2026-10-08: the covers lived in two homes, one of
+     `shortcodes/book_catalog.html`. A cover placed only in `static/` does not
+     fail loudly in the page layout: `img.html` warns and falls back to a raw
+     `src` pointing at the file, so the page shows the **unresized source**
+     instead of the processed WebP it asks for — while `shortcodes/book.html`
+     calls `.Resize` on a nil resource and takes the whole build down. Measured
+     2026-10-08: the covers lived in two homes, one of
      them stale — `static/img/books/unstuck.jpg` and
      `assets/img/books/unstuck.jpg` had **different bytes**, so the site served
      art the build never rendered. Those copies were removed, and this rule is
@@ -43,9 +46,34 @@ Two rules, both from a failure that shipped:
      is reported: as a failure when the bytes differ (the reader can see the
      wrong image), as a note when they are identical.
 
+  3. **A post's hero, and any non-book page's image, must be in `static/`** —
+     the mirror of rule 2, in the opposite home. `layouts/_default/single.html`
+     emits `<img src="/{{ .Params.hero_desktop }}">`, `_default/gallery.html`
+     reads `$p.Params.hero_desktop`, `schema_json.html` emits
+     `{{ .Params.image | absURL }}`, and the challenge and podcast lists emit
+     `<img src="{{ .Params.image }}">` — every one of them a raw path, which
+     only `static/` publishes. **No layout resolves a post image through
+     `resources.Get`.** So a hero placed only in `assets/` passed the old
+     "resolves in either home" test and then rendered an empty box on a live
+     page, exactly the failure rule 2 exists to prevent for covers.
+
+     The second half is the finding behind the rule, measured 2026-11-21: the
+     duplication of article plates across both homes was described in this
+     repo as a requirement of "the processing pipeline", and it was not one —
+     `img.html`'s only call sites are the book cover grid and the book pages.
+     Of 230 files in `assets/img/articles/`, 22 are book heroes that
+     `resources.Get` really reads, 78 were referenced by nothing at all, and
+     130 duplicated a `static/` copy (12 of them with different bytes, the
+     `unstuck.jpg` trap in the other direction). The rule is therefore: one
+     home per image class, and an `assets/` copy of an article plate is drift.
+     A non-book page whose path exists in both homes is reported as a note, not
+     a failure: the reader sees the `static/` copy either way.
+
 Exit codes:
-  0  every path resolves and no book cover is duplicated with different bytes
-  1  at least one path resolves nowhere, or a duplicated cover differs
+  0  every path resolves, every cover is in assets/, every post image is in
+     static/
+  1  a path resolves nowhere, a cover is missing from assets/ or duplicated
+     with different bytes, or a post image is missing from static/
   2  cannot run (no content tree)
 """
 from __future__ import annotations
@@ -120,27 +148,46 @@ def audit_file(path: Path) -> tuple[list[str], list[str], int]:
             )
             continue
 
-        if field == "image" and is_book(path):
-            if "assets" not in found:
-                problems.append(
-                    f"{rel}: {field} -> {value} (a book cover must be in assets/; "
-                    f"the cover is rendered only through resources.Get, so a "
-                    f"static/ copy publishes a placeholder)"
-                )
-            elif "static" in found:
-                a = (ASSETS / value.lstrip("/")).read_bytes()
-                s = (STATIC / value.lstrip("/")).read_bytes()
-                if a != s:
+        if is_book(path):
+            if field == "image":
+                if "assets" not in found:
                     problems.append(
-                        f"{rel}: {field} -> {value} exists in assets/ and static/ "
-                        f"with different bytes (the site serves the static/ copy; "
-                        f"the build renders the assets/ one)"
+                        f"{rel}: {field} -> {value} (a book cover must be in assets/; "
+                        f"the cover is rendered only through resources.Get, so a "
+                        f"static/ copy publishes unprocessed art)"
                     )
-                else:
-                    notes.append(
-                        f"{rel}: {field} -> {value} is duplicated in static/ "
-                        f"(identical bytes; remove the static/ copy)"
-                    )
+                elif "static" in found:
+                    a = (ASSETS / value.lstrip("/")).read_bytes()
+                    s = (STATIC / value.lstrip("/")).read_bytes()
+                    if a != s:
+                        problems.append(
+                            f"{rel}: {field} -> {value} exists in assets/ and static/ "
+                            f"with different bytes (the site serves the static/ copy; "
+                            f"the build renders the assets/ one)"
+                        )
+                    else:
+                        notes.append(
+                            f"{rel}: {field} -> {value} is duplicated in static/ "
+                            f"(identical bytes; remove the static/ copy)"
+                        )
+            continue
+
+        # Rule 3. Every non-book renderer emits the path verbatim
+        # (`single.html`, `gallery.html`, `schema_json.html`, the challenge and
+        # podcast lists), so `static/` is the home that serves it and `assets/`
+        # serves nothing. An `assets/`-only path reaches the reader as an empty
+        # box on a page that still returns 200.
+        if "static" not in found:
+            problems.append(
+                f"{rel}: {field} -> {value} is in assets/ but not static/ "
+                f"(no post layout resolves images through resources.Get; the "
+                f"page emits the path verbatim, so this renders an empty box)"
+            )
+        elif "assets" in found:
+            notes.append(
+                f"{rel}: {field} -> {value} is duplicated in assets/ "
+                f"(nothing reads it there; remove the assets/ copy)"
+            )
 
     return problems, notes, checked
 
