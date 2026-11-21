@@ -12,6 +12,21 @@
 
 ---
 
+### Ops — 21NOV26 — One home per image class: "the duplication is deliberate" was a claim nothing read
+
+- **The claim, in two places, was that article plates are duplicated into `assets/` because the processing pipeline reads `assets/` while the challenge and podcast lists read `static/`.** Measured 21NOV26, the first half is false: `partials/img.html` has three call sites — `index.html:110` for the book cover grid and `books/single.html:20,23,35` for a book's hero and cover. No layout resolves a post image through `resources.Get`.
+- **Every renderer of a post image emits the path verbatim:** `_default/single.html` writes `<img src="/{{ .Params.hero_desktop }}">`, `_default/gallery.html` reads `$p.Params.hero_desktop`, `schema_json.html` emits `{{ .Params.image | absURL }}`, and the challenge and podcast lists emit `<img src="{{ .Params.image }}">`. Only `static/` publishes a raw path.
+- **The counts, measured rather than reasoned:** `static/img/articles/` 446 files (163.6 MB); `assets/img/articles/` 230 files (121.3 MB). A scan of all six image fields across `content/` found 367 static-only, 135 in both, **0 assets-only, 0 resolving nowhere**. All 170 article paths in `data/gallery.yml` exist in `static/`, and 83 of them exist nowhere else.
+- **Of the 230 `assets/` files, 22 were read:** the eleven books' `image_desktop`/`image_mobile`, which are the book-hero half of the `assets/img/books/` rule. 78 were referenced by nothing anywhere in the repo, and 130 duplicated a `static/` copy — **12 of those with different bytes**, the `unstuck.jpg` trap in the other direction.
+- **208 files (117.0 MB) removed;** `assets/img/articles/` is 22 files / 4.2 MB, `assets/` is 14 MB, and `static/img/articles/` is untouched at 446. `git log` keeps every byte.
+- **Rule 3 added to `scripts/check-hero-paths.py`, and it closes a blind spot rather than documenting one:** a non-book page's `hero*`/`image*` that resolves only in `assets/` used to pass rule 1 and render an empty box on a page that returned 200. It is now a failure; an `assets/` duplicate is a note. Coverage 515 paths.
+- **Rule 2's stated consequence was also wrong and is corrected:** a cover only in `static/` does not render a "Cover Coming Soon" placeholder — `img.html` warns and falls back to a raw `src`, so the page shows unresized art, while `shortcodes/book.html` calls `.Resize` on a nil resource and takes the build down.
+- **Tests:** five added or rewritten in `TestHeroPathGate` (an assets-only hero fails; `static/` alone passes with no note; duplication is a note at identical and at differing bytes; the two home rules do not cross), and two plate tests retargeted from both homes to `static/` only (`TestMuskMoneyReport`, `TestGroundStopConclusionRelease`). **683 tests OK.**
+- **Prose:** CLAUDE.md's `static/img/articles/` bullet rewritten with the measurements and the rule that a new plate gets no `assets/` copy; `skills/hero-image-workflow.md` step 4 no longer instructs the byte-identical copy.
+- **Verified on the built site:** `hugo --gc --minify` clean except PaperMod's pre-existing `.Language.LanguageCode` deprecation; a post hero renders `/img/articles/164-written-answer_16x9.webp` and the file is in `public/img/articles/`; a book page renders the fingerprinted `_hu_` resource, so the 22 kept `assets/` files are the live ones.
+
+---
+
 ### Publish — 20NOV26 — Stoic Saturday: The Written Answer (21NOV26 edition)
 
 - **The letter is written, gated and committed on Friday, as the cadence requires; its page is dated 21NOV26T05:53 and `com.huffmanwrites.digest-release` puts it live at that minute.** 2,576 words. Epigraph Marcus Aurelius, *Meditations* 6.21, Long 1862, wording verified against the Wikisource Book VI page fetched 20NOV26.
