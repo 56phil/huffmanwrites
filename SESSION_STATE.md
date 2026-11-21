@@ -12,6 +12,19 @@
 
 ---
 
+### Publish — 21NOV26 — The Dangerous Position (investing)
+
+- **2,596 words. The third essay in the buildout sequence, and the only one about the part a reader controls.** *The 2027 Wall* set the arithmetic and the date; *What Breaks First* set the order of an unwind; this one argues that "reduce AI exposure" names five unrelated risks and that the fringe layer is past the point of cheap repair while the portfolio decision is due now, because sizing can only be executed while the market is functioning.
+- **Its new evidence is the IPO week, 19–20NOV26**, measured rather than recalled: shares priced at $83.00, opened at $111.50, closed at $97.17 and then $88.91 against Morningstar's $92 fair value; the Nasdaq's worst week since March 2020; Nvidia at −23% for the week and −46% across seven; the VIX from about 20 to 37; 92% odds of a December hike.
+- **The load-bearing argument is the collateral question, not the drawdown.** The SEC is examining Nvidia's accounting (WSJ first on 17NOV26, Reuters establishing the focus on 20NOV26), receivables sit at 64 days of sales, the interim chief executive said the company would be more selective about industry financing deals, and Baird's Ted Mortonson named the mechanism: every circular-finance deal "is going to be put under the microscope." A share of a borrower against GPUs is not the same instrument as a share of a company that generates cash.
+- **Every figure and quotation was read off a fetched page before it was written.** 15 links, all cleared with `check-links.py --online --titles`; four quotations copied verbatim (Wood on the credit card, Mortonson on the microscope, Bessent on ten days, Smith on previous sell-offs). The online sweep caught one **redirect**: the Yahoo Finance slug resolved to `nvidia-stock-extends-...-194945274`, and the citation was corrected to the URL the site actually serves — the fabrication signature the gate exists for, caught before publication.
+- **Two stranded prepositions were caught by `check-prepositions.py` and rewritten** ("the fourth is where capital has begun to move toward", "the date on which it must be paid for"); 0 counted em-dashes. Both ratchets remain green across 377 files.
+- **The hero is a new plate, 165-** in both aspects at seed 2211: a Parian column intact above black water on a shelf of dark stone fractured into three plates, with amber light rising through the seams. Measured while wiring it: the `_16x9` suffix is a name, not a ratio — every existing plate in the house set is 1536×1024, and the new one matches, with the 4:5 pair at 1024×1280.
+- **A gallery entry was added** (`data/gallery.yml`, 171 images on the hub), following the skill's step 6, which the two earlier pieces in this sequence skipped.
+- **Gates:** links 15/15 online; attribution 331 posts; anchors 331 posts; content frontmatter OK; hero paths OK; `hugo --gc --minify` clean at 616 pages with only PaperMod's standing `.Language.LanguageCode` deprecation.
+
+---
+
 ### Ops — 21NOV26 — One home per image class: "the duplication is deliberate" was a claim nothing read
 
 - **The claim, in two places, was that article plates are duplicated into `assets/` because the processing pipeline reads `assets/` while the challenge and podcast lists read `static/`.** Measured 21NOV26, the first half is false: `partials/img.html` has three call sites — `index.html:110` for the book cover grid and `books/single.html:20,23,35` for a book's hero and cover. No layout resolves a post image through `resources.Get`.
