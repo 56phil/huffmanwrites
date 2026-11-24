@@ -4220,10 +4220,10 @@ class TestDailySitrep(unittest.TestCase):
 
 
 class TestProseCheckersAreGranted(unittest.TestCase):
-    """Every runner grants the prose checkers its own skill tells the writer to run.
+    """Every runner grants the scripts its own skill tells the writer to run.
 
     A permission denial is silent to the writer, so an allow-list that omits a
-    checker the skill names makes the instruction unenforceable and leaves the
+    command the skill names makes the instruction unenforceable and leaves the
     gate as the only reader of the rule. That cost three aborted publishes and
     three manual recoveries before it was seen: the Senate report twice and the
     Chiefs report once, every one of them a stranded preposition the writer had
@@ -4232,9 +4232,28 @@ class TestProseCheckersAreGranted(unittest.TestCase):
     run; the runner's own gate set and its log stay the authority.
 
     Derived from the runner and its SKILL, not from a list here, so a new
-    publishing job inherits the rule and a skill that starts naming a checker
+    publishing job inherits the rule and a skill that starts naming a script
     makes the omission fail.
+
+    **The scan reads every `python3 scripts/*.py` a brief names, not only
+    `check-*`.** That widening is a bug fix, measured 24NOV26. The selector
+    matched `scripts/check-` only, so `python3 scripts/hero-image.py` was
+    invisible to it, and the monthly ninety-days run was denied the one command
+    that makes its hero plates: it failed outright on 24NOV26 and graded with
+    ImageMagick on 1NOV26. A rule whose selector cannot see the command is a
+    rule that reports OK while the command is refused.
     """
+
+    # Scripts a writer may never run: their verdicts decide whether an
+    # unreviewed piece ships, so the runner must own them. Named once so the
+    # two directions of this class cannot contradict each other.
+    FORBIDDEN_GATES = (
+        "check-report-frontmatter.py", "check-content-frontmatter.py",
+        "check-quotes.py", "check-quote-names.py", "check-hero-paths.py",
+        "check-render-integrity.py", "check-series-posts.py",
+        "check-gallery-pages.py", "check-secrets.py",
+        "check-vault-currency.py", "check-plists.py",
+    )
 
     def pairs(self):
         for runner in sorted(SCRIPTS.glob("*-runner.sh")):
@@ -4247,27 +4266,43 @@ class TestProseCheckersAreGranted(unittest.TestCase):
                 continue
             yield runner.name, text, skill.read_text(encoding="utf-8")
 
+    def named_scripts(self, skill_text):
+        """Every `python3 scripts/<x>.py` the job's own brief names.
+
+        Cross-skill scanning was tried and removed the same day it was written:
+        two briefs *mention* another job's script in prose — musk-money-report
+        cites `skills/essay-watch.md`, senate-race-report cites the Chiefs
+        brief as precedent — and demanding a grant for a command the writer was
+        never told to run is a false accusation. The rule holds without it
+        because a job's brief is where the job's commands belong, which is why
+        the ninety-days brief now names `scripts/hero-image.py` itself instead
+        of pointing at a document that does.
+        """
+        return set(re.findall(r"python3 (scripts/[A-Za-z0-9_.-]+\.py)", skill_text))
+
     def test_the_scan_finds_the_publishing_runners(self):
         # A glob that stopped matching would make every assertion below vacuous.
         names = {name for name, _, _ in self.pairs()}
         for expected in ("chiefs-weekly-report-runner.sh",
                          "docket-weekly-report-runner.sh",
                          "weekly-satire-runner.sh",
-                         "daily-sitrep-runner.sh"):
+                         "daily-sitrep-runner.sh",
+                         "ninety-days-report-runner.sh"):
             with self.subTest(runner=expected):
                 self.assertIn(expected, names)
 
-    def test_every_checker_a_skill_names_is_in_the_grant(self):
+    def test_every_script_a_skill_names_is_in_the_grant(self):
         checked = 0
         for name, runner, skill in self.pairs():
-            named = set(re.findall(r"python3 (scripts/check-[A-Za-z0-9_.-]+\.py)", skill))
+            named = {s for s in self.named_scripts(skill)
+                     if s.rsplit("/", 1)[-1] not in self.FORBIDDEN_GATES}
             if not named:
                 continue
             i = runner.find("--allowedTools")
             grant = runner[i:runner.find("\n", runner.find('>> "$OUT_LOG"', i))]
             if "Bash(python3 scripts/*)" in grant:
                 # The drafting jobs grant the whole scripts directory, which
-                # subsumes every checker; testing for exact prefixes against a
+                # subsumes every script; testing for exact prefixes against a
                 # wildcard would report a denial that does not exist.
                 continue
             for script in sorted(named):
@@ -4278,6 +4313,17 @@ class TestProseCheckersAreGranted(unittest.TestCase):
                     checked += 1
         self.assertGreaterEqual(checked, 6, "the scan matched almost nothing")
 
+    def test_the_hero_pipeline_is_granted_to_the_job_that_generates_plates(self):
+        # The case the widening above exists for, pinned by name so a future
+        # narrowing of the selector cannot silently restore the defect: the
+        # ninety-days report is the one job that generates new art each run
+        # (every other writing job pins a series plate), and both halves of the
+        # pipeline live in skills/hero-image-workflow.md.
+        runner = (SCRIPTS / "ninety-days-report-runner.sh").read_text(encoding="utf-8")
+        for script in ("scripts/hero-image.py", "scripts/grade-hero-navy.py"):
+            with self.subTest(script=script):
+                self.assertIn(f"Bash(python3 {script}*)", runner)
+
     def test_the_verification_gates_are_never_granted(self):
         # The other half matters as much as the grant: a writer that could run
         # the publication gates could report a result the runner never produced,
@@ -4285,15 +4331,10 @@ class TestProseCheckersAreGranted(unittest.TestCase):
         # `check-links.py` is deliberately not on this list — the Weekly Satire
         # has no collector, so verifying its own links is how that job works —
         # and `check-docket.py` is the docket report's own reader.
-        forbidden = ("check-report-frontmatter.py", "check-content-frontmatter.py",
-                     "check-quotes.py", "check-quote-names.py", "check-hero-paths.py",
-                     "check-render-integrity.py", "check-series-posts.py",
-                     "check-gallery-pages.py", "check-secrets.py",
-                     "check-vault-currency.py", "check-plists.py")
         for name, runner, _ in self.pairs():
             i = runner.find("--allowedTools")
             grant = runner[i:runner.find("\n", runner.find('>> "$OUT_LOG"', i))]
-            for script in forbidden:
+            for script in self.FORBIDDEN_GATES:
                 with self.subTest(runner=name, script=script):
                     self.assertNotIn(script, grant,
                                      f"{name} grants a publication gate the writer must not run")

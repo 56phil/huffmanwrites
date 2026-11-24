@@ -12,6 +12,17 @@
 
 ---
 
+### Ops — 24NOV26 — The writer was denied the one command that makes the plates
+
+- **The ninety-days run filed two articles at 07:00 naming `166-` and `167-` plates that did not exist, and the alert fired at 07:08:08** (`FAILED ninety-days-report (exit 1)`). Its log reads "this run's permission gate denies python3, three attempts, including with the sandbox disabled". The drafts reached a reader only because a session generated the plates by hand before publishing them.
+- **The cause is one line in `scripts/ninety-days-report-runner.sh`.** Its `--allowedTools` granted `Bash(python3 scripts/check-emdashes.py*)` and `Bash(python3 scripts/check-prepositions.py*)` and nothing else, so `python3 scripts/hero-image.py` and `python3 scripts/grade-hero-navy.py` were refused. The same denial shaped the 1NOV26 run, which graded its plates with ImageMagick because `grade-hero-navy.py` was refused then too.
+- **The syntax is the space form this repo already uses, measured rather than assumed.** A probe with no Bash rule is refused ("This command requires approval"), with an unrelated rule refused, with `Bash(python3 -c *)` allowed and with `Bash(python3 -c:*)` allowed as well. The real grant, exactly as the runner passes it, then ran `python3 scripts/hero-image.py --prompt-file /tmp/p166-bond.txt --aspect 16:9 --out /tmp/permcheck.webp --dry-run` and printed the request, with no image written.
+- **The guard that should have caught it scanned one filename class.** `TestProseCheckersAreGranted` matched `python3 scripts/check-*` only, so both hero commands were invisible to it. It now reads every `python3 scripts/*.py` a brief names, skips the publication gates that must stay ungranted, and a new test pins the ninety-days hero grant by name. The widening is proven in both directions: with the grants removed the class reports 4 failures, with them restored 4 pass. **684 tests OK.**
+- **Cross-skill scanning was tried and removed in the same change.** Following a brief's `skills/*.md` references flagged musk-money's citation of the essay-watch brief and the Senate brief's citation of the Chiefs one, and neither tells that job to run the other's script. The fix was to put the commands in the ninety-days brief itself, which now names `hero-image.py` and `grade-hero-navy.py` instead of pointing at the workflow document plus an obsolete "crop to 1365×768, cwebp q92" step; the tool writes 1536×1024 and 1024×1280.
+- **Docs:** CLAUDE.md's allow-list bullet and `skills/scheduled-job.md` §10 record the exception (two file-writing, non-gate scripts, because this is the one writing job with fresh art per run) and the selector bug.
+
+---
+
 ### Publish — 24NOV26 — The Ninety-Day Check, both halves
 
 - **4,534 and 3,917 words, published together.** *The Bond Market's Next Ninety Days: February 22, and the Oil That Fell Without Peace* and *The S&P 500's Next Ninety Days: February 22, and the Keystone That Was Reinstated*. `com.huffmanwrites.ninety-days-report` filed both at 07:00 and neither could publish: its own permission gate denied `python3`, so `166-bond-ninety-days_*` and `167-sp500-ninety-days_*` did not exist and `check-hero-paths` and `check-render-integrity` failed on four paths. They went live at 10:35 on Philip's instruction.

@@ -160,6 +160,24 @@ run `hugo`, or touch `SESSION_STATE.md`, because the runner owns all three. Ever
 asserts the allow-list is free of `git`, `hugo`, and `SESSION_STATE`, and that
 every named script is granted.
 
+**The scan reads every `python3 scripts/*.py`, not only `check-*`, and that
+narrowing is what hid a defect for two months.** It matched `check-` only, so
+`python3 scripts/hero-image.py` was invisible to it, and the ninety-days writer
+was denied the one command that makes its hero plates: on 24NOV26 it filed two
+articles naming four plate paths that did not exist, and on 1NOV26 it graded the
+plates with ImageMagick because `grade-hero-navy.py` was denied too. Both runs
+exited 0, and the failure was visible only in the log.
+
+**Two scripts on that job's grant write files, and the exception is deliberate.**
+`scripts/hero-image.py` and `scripts/grade-hero-navy.py` are not gates: their
+output is art under `static/img/articles/`, they decide nothing, and the monthly
+ninety-days report is the one writing job that generates a fresh pair each run
+rather than pinning a series plate (§9). Every gate remains outside the grant,
+which is the half that matters. Add a grant only for a command the brief names,
+and put the command in the brief — a grant the skill never asks for is a
+permission nobody uses, and a command the brief names without a grant is a silent
+denial.
+
 ## 11. Logs and alerts have one shape
 
 The plist sets `StandardOutPath` and `StandardErrorPath` to
