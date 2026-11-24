@@ -12,6 +12,17 @@
 
 ---
 
+### Publish — 24NOV26 — The Ninety-Day Check, both halves
+
+- **4,534 and 3,917 words, published together.** *The Bond Market's Next Ninety Days: February 22, and the Oil That Fell Without Peace* and *The S&P 500's Next Ninety Days: February 22, and the Keystone That Was Reinstated*. `com.huffmanwrites.ninety-days-report` filed both at 07:00 and neither could publish: its own permission gate denied `python3`, so `166-bond-ninety-days_*` and `167-sp500-ninety-days_*` did not exist and `check-hero-paths` and `check-render-integrity` failed on four paths. They went live at 10:35 on Philip's instruction.
+- **The four plates were generated here from the run's own saved prompts** (`/tmp/p166-bond.txt`, `/tmp/p167-sp500.txt`), seeds 1661 and 1671, at 1536×1024 and 1024×1280, then graded with `grade-hero-navy.py`: shadow means (17.4, 27.2, 51.4) and (17.6, 27.6, 52.2) against the (19, 30, 57) target.
+- **One claim was replaced rather than softened.** The bond piece had JPMorgan "warning in July that dropping the phrase risked steepening the curve … much as a similar change had in August 2023." No Wayback capture of that Bloomberg article exists (CDX returns empty for it and for both Investing.com citations), it is paywalled live, and its own readable summary describes the other direction — the Treasury avoiding a guidance change before the midterms rather than signaling larger sales into an election. The sentence now says what the summary says. The same quotation stands inside quotation marks in the 1NOV26 installment, where it is published and left unchanged; it is the one citation in the series a reader cannot re-check.
+- **Six cited hosts refuse bots, and each claim was checked another way.** AP's midterm headline was read off a Wayback snapshot (`20261120080841`) whose own `<title>` is "Democrats win US House and Senate, taking full control of Congress"; H.R.6500 (`20261103142235`), the BLS December schedule (`20261115182310`), Axios's "Harsh new inflation reality" (`20261115232145`) and Forbes's "Volcker's Bear" (`20241205180810`) were verified by title the same way; the 8,638 year-end 2027 consensus was corroborated by two independent summaries of the same Bloomberg survey.
+- **Gates, measured on the files that published:** links 18/24 and 19/22 OK, with **0 dead, 0 redirecting, 0 title mismatch** (the rest 403 to bots); quotes OK; em-dashes 0; prepositions 0; hero paths 529; gallery pages 173; content frontmatter 348; attribution 337 posts; anchors 337 posts; builds OK both production and `--buildDrafts`; render OK at 749 pages.
+- **The gallery cards had shipped ahead of the pieces and now resolve.** Both went out with the plates while the posts were still `draft: true`, so the cards showed picture and caption with no link — `gallery.html` resolves `link` through `site.GetPage`, which returns nothing for a draft. With `draft: false` the Read Post anchors appear and each caption switches from the yml text to the post's own description.
+
+---
+
 ### Publish — 21NOV26 — The Dangerous Position (investing)
 
 - **2,596 words. The third essay in the buildout sequence, and the only one about the part a reader controls.** *The 2027 Wall* set the arithmetic and the date; *What Breaks First* set the order of an unwind; this one argues that "reduce AI exposure" names five unrelated risks and that the fringe layer is past the point of cheap repair while the portfolio decision is due now, because sizing can only be executed while the market is functioning.

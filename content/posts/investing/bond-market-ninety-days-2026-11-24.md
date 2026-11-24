@@ -13,7 +13,7 @@ tags:
   - markets
   - politics
   - risk
-draft: true
+draft: false
 ---
 
 ## Ninety Days From Today
@@ -81,7 +81,7 @@ November gave the claim its cleanest test yet, and the result was a draw.
 
 On **November 4** the Treasury kept its coupon auction sizes unchanged at **$58 billion** of three-year notes, **$42 billion** of ten-year notes, and **$25 billion** of thirty-year bonds, refunding about **$97 billion** and raising about **$28 billion** in new cash. It also extended its buyback capacity to **$70 billion** for liquidity support and **$25 billion** for cash management in the November-to-January quarter ([Treasury refunding statement](https://home.treasury.gov/news/press-releases/sb0678)). And it dropped the phrase "at least" from its guidance that coupon sizes would stay steady "for the next several quarters," a change that analysts read as opening the door to cutting twenty-year and thirty-year auction sizes later ([Reuters via Investing.com](https://www.investing.com/news/economy-news/us-treasury-shifts-language-opening-door-to-auction-size-changes-4999444)).
 
-The previous installment named that language change as the third and most important thing to watch, and it happened. JPMorgan had warned in July that dropping the phrase risked steepening the curve as investors demanded more term premium, much as a similar change had in August 2023 ([Bloomberg](https://www.bloomberg.com/news/articles/2026-07-29/jpmorgan-sees-treasury-avoiding-bond-sales-tweak-due-to-midterms)). The curve did not steepen. The 10s30s ended the month at 37 basis points, unchanged, and the thirty-year ended two basis points lower than it began.
+The previous installment named that language change as the third and most important thing to watch, and it happened. JPMorgan had said in July that the Treasury would avoid rattling the bond market before the midterms, holding off on any change to its auction guidance rather than signaling larger sales into an election ([Bloomberg](https://www.bloomberg.com/news/articles/2026-07-29/jpmorgan-sees-treasury-avoiding-bond-sales-tweak-due-to-midterms)). The curve did not steepen. The 10s30s ended the month at 37 basis points, unchanged, and the thirty-year ended two basis points lower than it began.
 
 So the scorecard reads: the Treasury did the supply-side thing, and the long end shrugged. That is not an argument that the program is useless. It is an argument about what the long end is currently pricing. A market that can absorb a dovish supply signal, a $70 billion buyback program, and the worst equity week since 2020 without moving its thirty-year yield is not a market waiting for the Treasury to show up. It is a market that has already decided the Treasury is not the marginal buyer. The marginal buyer, this month, was whoever was selling semiconductors.
 
