@@ -293,7 +293,10 @@ fi
 # ---------------------------------------------------------------------------
 CHIEFS_DETAIL="$(mktemp "${TMPDIR:-/tmp}/chiefs-detail-XXXXXX")"
 {
-  WEEK_LINE="$(grep -m1 '^\*\*Answer:' "$ARTICLE" | cut -c1-300 || true)"
+  # The first line of the writer's own framing, ended at a sentence rather than
+  # mid-word (`gist_line`, in publish-report.sh). The bare `cut` this replaced
+  # produced "…a division Den" in the 24NOV26 entry.
+  WEEK_LINE="$(gist_line "$ARTICLE" '^\*\*Answer:')"
   if [ -n "$WEEK_LINE" ]; then
     echo "- **The week, as the piece frames it:** $WEEK_LINE"
   fi

@@ -12,6 +12,15 @@
 
 ---
 
+### Ops — 24NOV26 — The mirror's verdict was about the vault, not about the run
+
+- **Two mirror failures in four days, one shape.** 21NOV26 09:53 (`mirror-post` exit 1) was failed by four plates left untracked by earlier sessions (`153-work-of-a-human-being_*`, `159-in-due-time_*`); 24NOV26 10:26 (exit 1) by `archive/bond-market-ninety-days-2026-11-24.md`, which the translate step described moving and did not stage — `archive/` is tracked and the raw copy is gitignored, so the move creates an untracked file rather than a rename. Both alerts read "SimpleBrain sync incomplete" about a vault the run had done its work in, and both were repaired by hand a minute later (`5631c82` for the second).
+- **`publish_simplebrain` now judges this run instead of the vault.** It records the untracked paths that existed before the agent ran, stages and commits the archived raw copy itself when the agent left it out, fails on tracked edits and on any path the run added, and writes the pre-existing ones as a `NOTE`. A bare `git status --porcelain` check is what made an old stray file a fresh failure.
+- **The SESSION_STATE quote now ends at a sentence.** `The week, as the piece frames it` was produced with a bare `cut -c1-300`, which ended the 24NOV26 entry at "…a division Den". The line comes from a new `gist_line` in `publish-report.sh`, which trims to the last sentence mark inside the window and keeps the hard cut only when the window holds no mark; the Chiefs runner calls it.
+- **Tests: `TestMirrorTreeVerdict` (3) and `TestGistLine` (4), against a scratch git vault and a stub `claude`.** The archive repair, the pre-existing-stray NOTE and the this-run-leftover failure are all exercised end to end through the shipped library; **691 tests OK.** One existing test (`test_a_simplebrain_failure_does_not_fail_the_site_publish`) anchors on the phrase "SimpleBrain sync incomplete", and a new comment quoting that phrase moved the anchor — the comment was reworded, not the test.
+
+---
+
 ### Ops — 24NOV26 — The writer was denied the one command that makes the plates
 
 - **The ninety-days run filed two articles at 07:00 naming `166-` and `167-` plates that did not exist, and the alert fired at 07:08:08** (`FAILED ninety-days-report (exit 1)`). Its log reads "this run's permission gate denies python3, three attempts, including with the sandbox disabled". The drafts reached a reader only because a session generated the plates by hand before publishing them.

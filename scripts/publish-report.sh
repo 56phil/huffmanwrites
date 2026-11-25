@@ -556,11 +556,22 @@ publish_simplebrain() {
     return 0
   fi
 
+  # What was already lying untracked in the vault before this run. A stray plate
+  # from an earlier session is not this mirror's defect: on 21NOV26 four of them
+  # (plates 153 and 159) failed a mirror that had committed everything it wrote,
+  # and the banner said the sync was incomplete about a vault the run had done
+  # its work in. The baseline is what makes the clean-tree check mean "this run
+  # left something behind" rather than "the vault is dirty".
+  local sb_baseline
+  sb_baseline="$(mktemp "${TMPDIR:-/tmp}/sb-untracked-XXXXXX")"
+  git -C "$sb" status --porcelain --untracked-files=all \
+    | sed -n 's/^?? //p' | sort > "$sb_baseline"
+
   mkdir -p "$sb/raw/content/posts/$subdir"
   cp "$REPO/$article" "$sb/raw/content/posts/$subdir/"
 
   local sb_prompt
-  sb_prompt="Read $sb/translate.md and follow it, then follow the post-commit SimpleBrain flow in $REPO/CLAUDE.md. The raw file is $sb/raw/content/posts/$subdir/$slug.md. Write the translated entry to $sb/wiki/articles/$slug.md, add a [$slug](articles/$slug.md) line to the Recent Highlights section of $sb/wiki/index.md (prune the oldest highlight if the list grows past 7), move the raw file to $sb/archive/, then commit the SimpleBrain repo. Do not push; the runner pushes."
+  sb_prompt="Read $sb/translate.md and follow it, then follow the post-commit SimpleBrain flow in $REPO/CLAUDE.md. The raw file is $sb/raw/content/posts/$subdir/$slug.md. Write the translated entry to $sb/wiki/articles/$slug.md, add a [$slug](articles/$slug.md) line to the Recent Highlights section of $sb/wiki/index.md (prune the oldest highlight if the list grows past 7), move the raw file to $sb/archive/ and git add that archived copy into the same commit (archive/ is tracked and the raw copy is gitignored, so the move alone leaves it untracked), then commit the SimpleBrain repo. Do not push; the runner pushes."
   # Resolve model auth here rather than trusting the caller's environment: a
   # hand-run recovery does not bind ANTHROPIC_API_KEY, and without it this
   # session falls back to a dead OAuth token (2026-10-06, 2026-10-11).
@@ -582,10 +593,49 @@ publish_simplebrain() {
     || { echo "$(stamp): SimpleBrain FAILED — no archived raw copy" >> "$OUT_LOG"; sb_fail=1; }
   grep -q "articles/$slug" "$sb/wiki/index.md" \
     || { echo "$(stamp): SimpleBrain FAILED — no Recent Highlights line" >> "$OUT_LOG"; sb_fail=1; }
-  if [ -n "$(git -C "$sb" status --porcelain)" ]; then
+
+  # The archive move is the step the agent reliably describes and does not always
+  # stage: archive/ is tracked and the raw file is gitignored, so moving it
+  # creates an untracked file rather than a rename. On 24NOV26 the bond
+  # ninety-days piece was moved and committed without it, and this check failed a
+  # mirror that had done its work; the copy was staged by hand a minute later.
+  # The staging is therefore done here, deterministically, and the prompt asks
+  # for it first so the agent's own commit normally carries it.
+  if [ -f "$sb/archive/$slug.md" ] \
+     && ! git -C "$sb" ls-files --error-unmatch "archive/$slug.md" >/dev/null 2>&1; then
+    if git -C "$sb" add -- "archive/$slug.md" >> "$OUT_LOG" 2>> "$ERR_LOG" \
+       && git -C "$sb" commit -q -m "wiki: archive the $slug raw piece" -- "archive/$slug.md" >> "$OUT_LOG" 2>> "$ERR_LOG"; then
+      echo "$(stamp): staged the archived raw copy the translate step left untracked" >> "$OUT_LOG"
+    else
+      echo "$(stamp): SimpleBrain FAILED — could not stage archive/$slug.md" >> "$OUT_LOG"
+      sb_fail=1
+    fi
+  fi
+
+  # Tracked edits the agent did not commit are this run's failure; an untracked
+  # path that was not there before it ran is too; a path that was already there
+  # is noted and left alone.
+  local sb_tracked sb_now sb_fresh sb_stale
+  sb_tracked="$(git -C "$sb" status --porcelain --untracked-files=no)"
+  sb_now="$(mktemp "${TMPDIR:-/tmp}/sb-untracked-XXXXXX")"
+  git -C "$sb" status --porcelain --untracked-files=all \
+    | sed -n 's/^?? //p' | sort > "$sb_now"
+  sb_fresh="$(comm -13 "$sb_baseline" "$sb_now")"
+  sb_stale="$(comm -12 "$sb_baseline" "$sb_now")"
+  rm -f "$sb_baseline" "$sb_now"
+  if [ -n "$sb_tracked" ]; then
     echo "$(stamp): SimpleBrain FAILED — uncommitted changes left behind:" >> "$OUT_LOG"
-    git -C "$sb" status --porcelain >> "$OUT_LOG"
+    printf '%s\n' "$sb_tracked" >> "$OUT_LOG"
     sb_fail=1
+  fi
+  if [ -n "$sb_fresh" ]; then
+    echo "$(stamp): SimpleBrain FAILED — this run left untracked files behind:" >> "$OUT_LOG"
+    printf '%s\n' "$sb_fresh" >> "$OUT_LOG"
+    sb_fail=1
+  fi
+  if [ -n "$sb_stale" ]; then
+    echo "$(stamp): NOTE — untracked in the vault before this run, left alone (not a failure):" >> "$OUT_LOG"
+    printf '%s\n' "$sb_stale" >> "$OUT_LOG"
   fi
 
   if [ "$sb_fail" -eq 0 ]; then
@@ -609,6 +659,29 @@ publish_simplebrain() {
   # `scripts/mirror-post.sh` needs a nonzero exit or it reports success on a vault
   # that never received the piece. Both callers, one meaning.
   return "$sb_fail"
+}
+
+# ---------------------------------------------------------------------------
+# One line of an article, shortened for the SESSION_STATE entry.
+#
+# `gist_line <file> <grep-pattern> [limit]` prints the first line matching the
+# pattern, cut to at most `limit` characters (default 300) and ending at its last
+# sentence mark rather than mid-word. Added 24NOV26: the Chiefs entry quoted the
+# piece's framing sentence as "…a division Den", because a bare `cut -c1-300`
+# has no idea where a sentence ends. A hard cut is still used when the window
+# holds no sentence mark at all, so a line without punctuation is shortened
+# rather than dropped.
+# ---------------------------------------------------------------------------
+gist_line() {
+  local file="$1" pattern="$2" limit="${3:-300}" line tail
+  line="$(grep -m1 "$pattern" "$file" 2>/dev/null | cut -c1-"$limit" || true)"
+  if [ "${#line}" -eq "$limit" ]; then
+    tail="${line##*[.!?]}"
+    if [ "${#tail}" -lt "${#line}" ]; then
+      line="${line%"$tail"}"
+    fi
+  fi
+  printf '%s' "$line"
 }
 
 # ---------------------------------------------------------------------------

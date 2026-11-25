@@ -5853,6 +5853,195 @@ class TestMirrorPost(unittest.TestCase):
 
 
 # --------------------------------------------------------------------------
+class TestMirrorTreeVerdict(unittest.TestCase):
+    """What `publish_simplebrain` says about the vault afterwards.
+
+    Two measured failures, one shape: the verdict was about the vault rather than
+    about this run. On 21NOV26 four plates left untracked by earlier sessions
+    (153, 159) failed a mirror that had committed everything it wrote, and the
+    alert read "SimpleBrain sync incomplete". On 24NOV26 the bond ninety-days
+    piece was moved into `archive/` — tracked, while the raw copy is gitignored,
+    so the move creates a new untracked file — and committed without it; the
+    mirror failed a minute before a human staged it by hand (`5631c82`).
+
+    So both directions are exercised against a scratch vault and a stub `claude`:
+    a move that was not staged is repaired and passes, a stray file from before
+    the run is noted and passes, and a file THIS run leaves behind still fails.
+    """
+
+    SLUG = "the-candle-and-the-dark"
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="sb-mirror-"))
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+        self.repo = self.tmp / "repo"
+        self.sb = self.tmp / "vault"
+        (self.repo / "scripts").mkdir(parents=True)
+        (self.repo / "content/posts/essays").mkdir(parents=True)
+        (self.repo / "content/posts/essays" / f"{self.SLUG}.md").write_text(
+            "---\ntitle: T\n---\n\nBody.\n", encoding="utf-8")
+        # The alert is a stub: a test that rang the real banner would be the defect
+        # the keychain-overwrite test was written for.
+        (self.repo / "scripts/alert-failure.sh").write_text(
+            "#!/bin/bash\necho alerted >> \"$ALERT_LOG\"\n", encoding="utf-8")
+        (self.repo / "scripts/alert-failure.sh").chmod(0o755)
+        # The real library, not a copy of its logic: a test against a reimplementation
+        # would pass while the shipped one still failed.
+        shutil.copy(SCRIPTS / "publish-report.sh",
+                    self.repo / "scripts/publish-report.sh")
+
+        for rel in ("wiki", "raw/content/posts/essays", "archive", "images"):
+            (self.sb / rel).mkdir(parents=True)
+        (self.sb / "wiki/index.md").write_text("# Index\n\n## Recent Highlights\n",
+                                               encoding="utf-8")
+        (self.sb / ".gitignore").write_text("raw/*\n", encoding="utf-8")
+        self.git("init", "-q")
+        self.git("config", "user.email", "t@example.invalid")
+        self.git("config", "user.name", "Test")
+        self.git("add", "-A")
+        self.git("commit", "-q", "-m", "seed")
+        # The mirror pushes. A bare remote keeps that step real rather than
+        # stubbed: the push is part of the verdict, and a vault with no remote
+        # would fail every test for a reason no production run can hit.
+        remote = self.tmp / "remote.git"
+        subprocess.run(["git", "init", "-q", "--bare", str(remote)], check=True)
+        self.git("remote", "add", "origin", str(remote))
+        self.git("push", "-q", "-u", "origin", "HEAD")
+
+        self.out_log = self.tmp / "run.log"
+        self.alert_log = self.tmp / "alerts.log"
+        self.out_log.touch()
+        self.alert_log.touch()
+
+    def git(self, *args):
+        subprocess.run(["git", "-C", str(self.sb), *args], check=True,
+                       capture_output=True, text=True)
+
+    def stub_claude(self, leaves=None):
+        """A `claude` that does the translate step as described in the prompt."""
+        bindir = self.tmp / "bin"
+        bindir.mkdir(exist_ok=True)
+        script = (
+            "#!/bin/bash\n"
+            f'sb="{self.sb}"\n'
+            f'slug="{self.SLUG}"\n'
+            'f="$(ls "$sb"/raw/content/posts/essays/*.md)"\n'
+            'mkdir -p "$sb/wiki/articles"\n'
+            'printf "# T\\n\\nBody.\\n" > "$sb/wiki/articles/$slug.md"\n'
+            'echo "- [$slug](articles/$slug.md)" >> "$sb/wiki/index.md"\n'
+            'mkdir -p "$sb/archive"\n'
+            'mv "$f" "$sb/archive/"\n'
+            'git -C "$sb" add wiki\n'
+            'git -C "$sb" commit -q -m "wiki: translate $slug"\n'
+        )
+        if leaves:
+            script += f'touch "$sb/{leaves}"\n'
+        path = bindir / "claude"
+        path.write_text(script, encoding="utf-8")
+        path.chmod(0o755)
+        return bindir
+
+    def run_mirror(self, leaves=None):
+        bindir = self.stub_claude(leaves)
+        driver = (
+            "set -uo pipefail\n"
+            'REPO="$1"; SB="$2"\n'
+            'OUT_LOG="$3"; ERR_LOG="$4"\n'
+            'JOB="test-mirror"\n'
+            '. "$REPO/scripts/publish-report.sh"\n'
+            'report_model_env() { :; }\n'
+            f'publish_simplebrain "content/posts/essays/{self.SLUG}.md" "$SB"\n'
+            'echo "rc=$?"\n'
+        )
+        env = dict(os.environ)
+        env["PATH"] = f"{bindir}:/usr/bin:/bin:/usr/sbin:/sbin"
+        env["ALERT_LOG"] = str(self.alert_log)
+        env.pop("REPORT_SKIP_SIMPLEBRAIN", None)
+        env.pop("REPORT_DRY_RUN", None)
+        out = subprocess.run(
+            ["/bin/bash", "-c", driver, "driver", str(self.repo), str(self.sb),
+             str(self.out_log), str(self.tmp / "run.err")],
+            capture_output=True, text=True, env=env)
+        log = self.out_log.read_text(encoding="utf-8")
+        return out, log
+
+    def test_an_archive_move_the_agent_did_not_stage_is_repaired(self):
+        out, log = self.run_mirror()
+        self.assertIn("rc=0", out.stdout, log)
+        self.assertIn("staged the archived raw copy", log)
+        subprocess.run(["git", "-C", str(self.sb), "ls-files", "--error-unmatch",
+                        f"archive/{self.SLUG}.md"], check=True,
+                       capture_output=True, text=True)
+        self.assertEqual(
+            subprocess.run(["git", "-C", str(self.sb), "status", "--porcelain"],
+                           capture_output=True, text=True).stdout.strip(), "")
+
+    def test_a_file_left_untracked_before_the_run_is_noted_not_failed(self):
+        (self.sb / "images/153-work-of-a-human-being_16x9.webp").write_text(
+            "x", encoding="utf-8")
+        out, log = self.run_mirror()
+        self.assertIn("rc=0", out.stdout, log)
+        self.assertIn("left alone (not a failure)", log)
+        self.assertNotIn("SimpleBrain FAILED", log)
+        self.assertEqual(self.alert_log.read_text(encoding="utf-8"), "")
+
+    def test_a_file_this_run_leaves_untracked_still_fails(self):
+        out, log = self.run_mirror(leaves="wiki/articles/leftover.md")
+        self.assertIn("rc=1", out.stdout, log)
+        self.assertIn("this run left untracked files behind", log)
+        self.assertIn("leftover.md", log)
+        self.assertIn("alerted", self.alert_log.read_text(encoding="utf-8"))
+
+
+# --------------------------------------------------------------------------
+class TestGistLine(unittest.TestCase):
+    """`gist_line` — the SESSION_STATE quotes end at a sentence, not mid-word.
+
+    24NOV26's Chiefs entry read "…the price of a division Den". The line it
+    quotes is the writer's own framing sentence, and the 300-character window
+    ended inside a word because `cut` has no notion of a sentence. Both
+    directions are pinned: a window that contains a sentence mark is trimmed to
+    it, and one that contains none is still shortened rather than dropped.
+    """
+
+    def gist(self, text, pattern=r"^\*\*Answer:"):
+        tmp = Path(tempfile.mkdtemp(prefix="gist-"))
+        self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
+        (tmp / "scripts").mkdir()
+        shutil.copy(SCRIPTS / "publish-report.sh", tmp / "scripts/publish-report.sh")
+        (tmp / "a.md").write_text(text, encoding="utf-8")
+        driver = (
+            "set -euo pipefail\n"
+            'REPO="$1"; OUT_LOG=/dev/null; ERR_LOG=/dev/null; JOB=test\n'
+            '. "$REPO/scripts/publish-report.sh"\n'
+            f"gist_line \"$2\" '{pattern}'\n"
+        )
+        out = subprocess.run(["/bin/bash", "-c", driver, "driver", str(tmp),
+                              str(tmp / "a.md")],
+                             capture_output=True, text=True)
+        self.assertEqual(out.returncode, 0, out.stderr)
+        return out.stdout
+
+    def test_a_long_line_ends_at_its_last_sentence_mark(self):
+        first = "Answer one sentence of framing that runs on and on. "
+        filler = "more words " * 40
+        got = self.gist(f"**Answer:** {first}{filler}tail\n")
+        self.assertTrue(got.endswith("runs on and on."), got)
+        self.assertLessEqual(len(got), 300)
+
+    def test_a_window_with_no_sentence_mark_is_still_shortened(self):
+        got = self.gist("**Answer:** " + "x" * 400 + "\n")
+        self.assertEqual(len(got), 300)
+
+    def test_a_short_line_is_returned_whole(self):
+        line = "**Answer:** Short. And complete."
+        self.assertEqual(self.gist(line + "\n"), line)
+
+    def test_a_missing_line_is_empty_and_not_a_failure(self):
+        self.assertEqual(self.gist("**Question:** something else\n"), "")
+
+
+# --------------------------------------------------------------------------
 class TestRepublishPages(unittest.TestCase):
     """Asking GitHub for one more build when the deploy has stopped.
 
