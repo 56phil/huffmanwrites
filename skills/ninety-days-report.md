@@ -8,6 +8,22 @@ Monthly companion reports on the bond market and the S&P 500, projecting the nex
 - The runner invokes Claude Code headless in this repo with this skill. Runs: the last Tuesday of every month at 07:00 CT, indefinitely (no self-disable date). The LaunchAgent fires every Tuesday and `scripts/is-last-weekday.py` admits only the last one, because launchd cannot express last-of-month; the other Tuesdays exit 0 with a line in the log.
 - If drafts for today's date already exist, update them in place (same-day re-run).
 
+## Rehearsing the pipeline
+
+A run costs a model pass and four image generations, so it is worth proving after any change to this job's allow-list or scripts — but **never in the live repo**: "update them in place" means a rehearsal on a publication date rewrites the published pieces. Do it in a scratch worktree and delete the artifacts of the run you are rehearsing:
+
+```bash
+git worktree add /tmp/nd-rehearsal HEAD
+cd /tmp/nd-rehearsal
+rm content/posts/investing/*-ninety-days-<date>.md                    # and their plates
+rm static/img/articles/<NN>-*_16x9.webp static/img/articles/<NN>-*_4x5.webp
+# drop those two `data/gallery.yml` blocks as well, or `check-gallery-pages` fails on the stubs you removed
+NINETY_DAYS_IGNORE_GUARD=1 bash scripts/ninety-days-report-runner.sh
+git -C /Users/prh/Developer/huffmanwrites worktree remove --force /tmp/nd-rehearsal
+```
+
+Removing the drafts and plates is what makes it a test: left in place, the writer reuses the existing heroes and the hero grant goes unexercised. The runner writes to the real `~/Library/Logs/ninety-days-report.out.log`, which is that series' authoritative record — close the block with a `NOTE` line saying it was a rehearsal. Rehearsed 24NOV26: exit 0, both builds and all seven gates OK, four plates generated through `hero-image.py` and graded onto the house navy.
+
 ## Mission
 
 Produce TWO fact-checked, house-style ARTICLES, each projecting the markets ninety days out under a no-improvement Iran assumption:

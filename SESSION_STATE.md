@@ -12,6 +12,15 @@
 
 ---
 
+### Ops — 24NOV26 — The ninety-days hero grant works, proven end to end
+
+- **`aadb5c1` granted the drafting job `scripts/hero-image.py` and `scripts/grade-hero-navy.py` and had never run live:** the 24NOV26 firing it was written for had already been denied them, produced two articles naming four missing plates, and was repaired by hand. Its next natural firing is the last Tuesday of December, so the grant was rehearsed instead.
+- **Rehearsal: exit 0, both builds OK, all seven gates OK.** `NINETY_DAYS_IGNORE_GUARD=1` in a scratch worktree (`/tmp/nd-rehearsal`, since removed) with the two 24NOV26 drafts, plates 166/167 and their gallery blocks deleted, so the writer had to generate rather than reuse. It rewrote both articles, ran `hero-image.py` four times and `grade-hero-navy.py` on each pair (prompt files `/tmp/p166-bond-ninety-days.txt` and the `-4x5`/`p167` siblings, raw PNGs 20:30–20:32, webp outputs dominant colour `#142034` against the house `#131E39`), and restored the gallery entries. `gate OK [check-links]`, `[check-quotes]`, `[check-emdashes]`, `[check-prepositions]`, `[check-hero-paths]`, `[check-gallery-pages]`, `[check-render-integrity]`; builds `--gc --minify` and `--buildDrafts` to a scratch destination. No permission denial appears anywhere in the log.
+- **The scratch worktree is the method, not an accident.** The skill says a same-day re-run updates drafts in place, and the 24NOV26 pieces are published, so a rehearsal in the live repo would have rewritten them. It also kept the four generations out of `static/img/articles/` where only the committed pair belongs.
+- **Everything the rehearsal made was discarded**, and its log block is closed by a `NOTE` line in `~/Library/Logs/ninety-days-report.out.log` saying it was a rehearsal — the log is the authoritative record for the series, and an unexplained block stamped 24NOV26 would read as the scheduled run. No alert fired (exit 0), so the alerts log was not touched.
+
+---
+
 ### Ops — 24NOV26 — Seven citations the archive no longer holds
 
 - **The §21 audit reported 41 rows, 33 verified and 8 unopenable**, every one a hard 404 on repeated fetches minutes apart: `11182026/23`, `11182026/31`, `11192026/14`, `11192026/23`, `11192026/74`, `11202026/28`, `11222026/128` and `index 2026-11-19`. No row served the wrong document. `ground-stop-conclusion-release-runner.sh:132` aborts before its writer on any nonzero `--audit` and `audit()` returns 3 for unverified, so the 1DEC piece could not publish.
