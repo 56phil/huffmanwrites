@@ -877,6 +877,83 @@ def audit(text: str) -> int:
     return 3 if unverified else 0
 
 
+ADVISORY_KEY = re.compile(r"^(\d{8})/(\d+)$")
+
+
+def _snapshot_gone(url: str, tries: int = 2, pause: float = 3.0) -> "tuple[bool, str]":
+    """True only when the archive says the capture is not there, i.e. HTTP 404.
+
+    A 429, a timeout or a dropped connection is a claim about the checker and is
+    never a reason to remove a citation; that is the difference the audit's
+    `unverified` verdict exists to keep. Two attempts, because the first 404 was
+    once a flake.
+    """
+    why = ""
+    for attempt in range(tries):
+        try:
+            fetch(url, timeout=VERIFY_TIMEOUT)
+            return False, ""
+        except urllib.error.HTTPError as exc:  # noqa: PERF203 - two attempts, by design
+            why = f"HTTP {exc.code}"
+            if exc.code != 404:
+                return False, why
+        except Exception as exc:  # noqa: BLE001 - reported as the reason it was kept
+            return False, type(exc).__name__
+        if attempt + 1 < tries:
+            time.sleep(pause)
+    return True, why
+
+
+def prune_dead(text: str) -> "tuple[str, list[str], list[str]]":
+    """Drop §21 rows whose snapshot the archive no longer holds (24NOV26).
+
+    Why this exists. §21 is rebuilt as `existing rows ∪ this pass's verified
+    rows`, so a row whose capture has died is never removed: the audit reports
+    it `unverified`, and the release gate that runs `--audit` before the writer
+    aborts for good. Measured 24NOV26, seven advisory rows returned 404 on
+    repeated fetches, the CDX index held nothing for either day, and the live FAA
+    database answered "no advisories match your selection criteria" for every
+    date — a citation no reader and no checker could ever open again.
+
+    Two safeguards, because deleting a citation is not a thing to do on a
+    hunch. The drop happens only on a 404 (never a throttle or a timeout), and
+    only when that advisory's own day index is in §21 and verifies: the index
+    prints the advisory's number and title, so the fact that it was issued
+    survives the row. An advisory whose index does not verify is kept and
+    reported.
+
+    Returns (new_text, dropped, kept), each line saying what and why.
+    """
+    rows = harvest_citations(text)
+    dropped: "list[str]" = []
+    kept: "list[str]" = []
+    for key in sorted(rows):
+        m = ADVISORY_KEY.match(key)
+        if not m:
+            continue
+        url, _stamp = rows[key]
+        gone, why = _snapshot_gone(url)
+        if not gone:
+            continue
+        mdY = m.group(1)
+        iso = f"{mdY[4:8]}-{mdY[0:2]}-{mdY[2:4]}"
+        idx_key = f"index {iso}"
+        idx = rows.get(idx_key)
+        if not idx:
+            kept.append(f"{key}: snapshot {why}, but there is no {idx_key} row "
+                        "to cite instead")
+            continue
+        ok, vwhy = verify_capture(idx[0], needles_for(idx_key))
+        if not ok:
+            kept.append(f"{key}: snapshot {why} and {idx_key} does not verify "
+                        f"({vwhy or 'empty'})")
+            continue
+        dropped.append(f"{key}: snapshot {why}; its day index {idx_key} verifies, "
+                       f"so cite {idx[0]}")
+        del rows[key]
+    return replace_section(text, CITATIONS_HEADING, render_citations(rows)), dropped, kept
+
+
 ARCHIVE_URL = re.compile(r"https?://web\.archive\.org/web/\d+/[^\s)\]\"'<>`]+")
 ADVISORY_URL = re.compile(r"https?://www\.fly\.faa\.gov/adv/adv_otherdis\?[^\s)\]\"'<>`]+")
 
@@ -973,6 +1050,9 @@ def main(argv: "list[str]") -> int:
     ap.add_argument("--offline", action="store_true")
     ap.add_argument("--audit", action="store_true",
                     help="re-open every recorded citation and fail on a miss")
+    ap.add_argument("--prune-dead", action="store_true",
+                    help="drop a §21 row whose snapshot is gone (HTTP 404), "
+                         "when that advisory's day index still verifies")
     ap.add_argument("--file", help="with --audit: check a finished piece against §21")
     args = ap.parse_args(argv)
 
@@ -988,6 +1068,22 @@ def main(argv: "list[str]") -> int:
     day = (dt.date.fromisoformat(args.date) if args.date else now.date())
     pack = pathlib.Path(args.pack)
     text = pack.read_text(encoding="utf-8") if pack.exists() else ""
+
+    if args.prune_dead:
+        new_text, dropped, kept = prune_dead(text)
+        for line in dropped:
+            print(f"prune-dead: DROPPED {line}")
+        for line in kept:
+            print(f"prune-dead: KEPT {line}")
+        if not dropped:
+            print("prune-dead: nothing to drop")
+            return 0
+        if args.dry_run:
+            print(f"prune-dead: dry run — {len(dropped)} row(s) would be dropped")
+            return 0
+        pack.write_text(new_text, encoding="utf-8")
+        print(f"prune-dead: {len(dropped)} row(s) dropped from §21")
+        return 0
 
     if args.audit:
         if args.file:

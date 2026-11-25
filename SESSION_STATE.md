@@ -12,6 +12,17 @@
 
 ---
 
+### Ops — 24NOV26 — Seven citations the archive no longer holds
+
+- **The §21 audit reported 41 rows, 33 verified and 8 unopenable**, every one a hard 404 on repeated fetches minutes apart: `11182026/23`, `11182026/31`, `11192026/14`, `11192026/23`, `11192026/74`, `11202026/28`, `11222026/128` and `index 2026-11-19`. No row served the wrong document. `ground-stop-conclusion-release-runner.sh:132` aborts before its writer on any nonzero `--audit` and `audit()` returns 3 for unverified, so the 1DEC piece could not publish.
+- **Nothing could be re-captured.** CDX answered `[]` for both days at exact and `matchType=prefix` scope; the live FAA database answered "NO ADVISORIES MATCH YOUR SELECTION CRITERIA" — byte-identical 12,737-byte pages — for 2026-11-18, -22, -23 and -24, and `adv_otherdis` for three of the seven returned the same 8,269-byte shell. The same database had served 16 rows for 24NOV at 08:00 that morning, so the emptying happened during the day and is recorded in the day's block.
+- **A pass can add a citation and replace one, but never remove one**, because `main()` rebuilds §21 as `existing rows ∪ this pass's verified rows`. A dead row therefore stayed for ever and the release gate failed with no path back — the defect the seven exposed.
+- **`--prune-dead` added and run: §21 is 34 rows, and the seven are gone.** A row is dropped only on **404** (never a 429 or a timeout, which are claims about the checker) and only when that advisory's own day index is in §21 and verifies, so the fact that it was issued survives on a page a reader can open. The guard worked as designed on the first run: `11192026/23` was kept because its index fetch timed out, and a second run dropped it once the index answered. Every drop prints the index URL to cite instead.
+- **One repair came with it.** The 18:45 pass re-captured `index 2026-11-19` at `20261125005027`, which is now the substitute for three of the dropped advisories.
+- **Tests:** five in `TestGroundStopPack` — the drop with a verified index, the 429/503/OSError cases that must keep the row, no index row at all, an index that does not carry its wording, a live row untouched, and the CLI's dry run writing nothing. **696 tests OK.** CLAUDE.md's pack bullet and `skills/faa-ground-stop-pack.md` record the command and its two safeguards.
+
+---
+
 ### Ops — 24NOV26 — The mirror's verdict was about the vault, not about the run
 
 - **Two mirror failures in four days, one shape.** 21NOV26 09:53 (`mirror-post` exit 1) was failed by four plates left untracked by earlier sessions (`153-work-of-a-human-being_*`, `159-in-due-time_*`); 24NOV26 10:26 (exit 1) by `archive/bond-market-ninety-days-2026-11-24.md`, which the translate step described moving and did not stage — `archive/` is tracked and the raw copy is gitignored, so the move creates an untracked file rather than a rename. Both alerts read "SimpleBrain sync incomplete" about a vault the run had done its work in, and both were repaired by hand a minute later (`5631c82` for the second).

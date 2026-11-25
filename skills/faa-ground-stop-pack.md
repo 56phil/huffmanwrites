@@ -105,8 +105,22 @@ the day's entry with it.
 ```bash
 python3 scripts/faa-ground-stop-pack.py --dry-run          # print, write nothing
 python3 scripts/faa-ground-stop-pack.py --date 2026-11-14  # backfill a date
+python3 scripts/faa-ground-stop-pack.py --prune-dead --dry-run  # what it would drop
+python3 scripts/faa-ground-stop-pack.py --prune-dead            # drop it from §21
 GROUND_STOP_PACK_DRY=1 scripts/faa-ground-stop-pack-runner.sh   # prove the alert path
 ```
+
+**`--prune-dead` is the only way a row leaves §21 (24NOV26).** A pass can add a
+citation and replace one; it cannot remove one, because §21 is rebuilt as
+`existing rows ∪ this pass's verified rows`. So when a capture stops serving, the
+row stays, `--audit` reports it `unverified`, and `ground-stop-conclusion-release`
+aborts before its writer for good. The command removes a row only when all three
+hold: the snapshot answers **404** twice (a 429 or a timeout is a claim about the
+checker and is never a reason to delete a citation), that advisory's own day
+index is in §21, and that index verifies — the index prints the advisory's number
+and title, so the fact that it was issued survives on a page a reader can open.
+Anything else is kept and printed with the reason it was kept. It is explicit and
+never runs as part of a daily pass; run it, then re-run `--audit` and expect 0.
 
 Exit 3 means **nothing at all was collected** — both pages and the capture API
 failed — and no block is written. A single source failing is not a failure: the

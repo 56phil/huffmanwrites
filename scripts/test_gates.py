@@ -9635,6 +9635,135 @@ class TestGroundStopPack(unittest.TestCase):
         self.assertIn("29NOV26", skill)
         self.assertIn("launchctl bootout", skill)
 
+    # -- a citation the archive no longer holds (24NOV26) -----------------
+
+    def _pack_with(self, rows: dict) -> str:
+        return ("# pack\n\n" + self.mod.CITATIONS_HEADING + "\n\n"
+                + self.mod.render_citations(rows) + "\n")
+
+    DEAD = ("https://web.archive.org/web/1/dead", "1")
+    INDEX = ("https://web.archive.org/web/2/idx", "2")
+
+    def test_a_dead_advisory_is_dropped_when_its_day_index_verifies(self):
+        from unittest import mock
+        import urllib.error
+        text = self._pack_with({"11182026/23": self.DEAD,
+                                "index 2026-11-18": self.INDEX})
+
+        def fake(url, timeout=30):
+            if url == self.DEAD[0]:
+                raise urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+            return "ATCSCC ADVISORIES FOR 2026-11-18"
+
+        with mock.patch.object(self.mod, "fetch", side_effect=fake), \
+             mock.patch.object(self.mod.time, "sleep", return_value=None):
+            new_text, dropped, kept = self.mod.prune_dead(text)
+        self.assertEqual(len(dropped), 1, kept)
+        self.assertIn("11182026/23", dropped[0])
+        self.assertIn("index 2026-11-18", dropped[0])
+        self.assertNotIn("11182026/23", new_text)
+        self.assertIn("index 2026-11-18", new_text)
+        self.assertEqual(kept, [])
+
+    def test_only_a_404_is_a_reason_to_drop_a_citation(self):
+        # A throttle or a dropped connection is a claim about the checker. The
+        # audit already keeps the two apart ("unverified"), and deleting a
+        # citation needs the archive saying the capture is not there.
+        from unittest import mock
+        import urllib.error
+        text = self._pack_with({"11182026/23": self.DEAD,
+                                "index 2026-11-18": self.INDEX})
+        failures = [
+            urllib.error.HTTPError(self.DEAD[0], 429, "Too Many Requests", {}, None),
+            urllib.error.HTTPError(self.DEAD[0], 503, "Unavailable", {}, None),
+            OSError("connection reset"),
+        ]
+        for exc in failures:
+            with self.subTest(exc=type(exc).__name__, code=getattr(exc, "code", None)):
+                def fake(url, timeout=30, _exc=exc):
+                    if url == self.DEAD[0]:
+                        raise _exc
+                    return "ATCSCC ADVISORIES FOR 2026-11-18"
+                with mock.patch.object(self.mod, "fetch", side_effect=fake), \
+                     mock.patch.object(self.mod.time, "sleep", return_value=None):
+                    new_text, dropped, kept = self.mod.prune_dead(text)
+                self.assertEqual(dropped, [])
+                self.assertIn("11182026/23", new_text)
+
+    def test_an_advisory_is_kept_when_nothing_verifies_in_its_place(self):
+        from unittest import mock
+        import urllib.error
+
+        def dead(url, timeout=30):
+            raise urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+
+        # No day index row at all: the fact of the advisory would be lost.
+        with mock.patch.object(self.mod, "fetch", side_effect=dead), \
+             mock.patch.object(self.mod.time, "sleep", return_value=None):
+            new_text, dropped, kept = self.mod.prune_dead(
+                self._pack_with({"11182026/23": self.DEAD}))
+        self.assertEqual(dropped, [])
+        self.assertIn("no index 2026-11-18 row", kept[0])
+        self.assertIn("11182026/23", new_text)
+
+        # An index row that does not carry its own wording: still no substitute.
+        def fake(url, timeout=30):
+            if url == self.DEAD[0]:
+                raise urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+            return "<html>a page that is not the index</html>"
+
+        with mock.patch.object(self.mod, "fetch", side_effect=fake), \
+             mock.patch.object(self.mod.time, "sleep", return_value=None):
+            new_text, dropped, kept = self.mod.prune_dead(
+                self._pack_with({"11182026/23": self.DEAD,
+                                 "index 2026-11-18": self.INDEX}))
+        self.assertEqual(dropped, [])
+        self.assertIn("does not verify", kept[0])
+        self.assertIn("11182026/23", new_text)
+
+    def test_a_live_row_is_left_alone(self):
+        from unittest import mock
+        text = self._pack_with({"11182026/23": self.DEAD,
+                                "index 2026-11-18": self.INDEX})
+        with mock.patch.object(self.mod, "fetch",
+                               return_value="ATCSCC ADVZY 023 - NATIONAL GROUND STOP"):
+            new_text, dropped, kept = self.mod.prune_dead(text)
+        self.assertEqual((dropped, kept), ([], []))
+        self.assertEqual(new_text.strip(), text.strip())
+
+    def test_the_command_drops_the_rows_and_a_dry_run_writes_nothing(self):
+        from unittest import mock
+        import urllib.error
+        with tempfile.TemporaryDirectory() as tmp:
+            pack = Path(tmp) / "pack.md"
+            pack.write_text(self._pack_with({"11182026/23": self.DEAD,
+                                             "index 2026-11-18": self.INDEX}),
+                            encoding="utf-8")
+
+            def fake(url, timeout=30):
+                if url == self.DEAD[0]:
+                    raise urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+                return "ATCSCC ADVISORIES FOR 2026-11-18"
+
+            with mock.patch.object(self.mod, "fetch", side_effect=fake), \
+                 mock.patch.object(self.mod.time, "sleep", return_value=None):
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    code = self.mod.main(["--pack", str(pack), "--prune-dead",
+                                          "--dry-run"])
+                self.assertEqual(code, 0)
+                self.assertIn("11182026/23", pack.read_text(encoding="utf-8"))
+                self.assertIn("would be dropped", out.getvalue())
+
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    code = self.mod.main(["--pack", str(pack), "--prune-dead"])
+            self.assertEqual(code, 0)
+            written = pack.read_text(encoding="utf-8")
+            self.assertNotIn("11182026/23", written)
+            self.assertIn("index 2026-11-18", written)
+            self.assertIn("prune-dead: DROPPED 11182026/23", out.getvalue())
+
 
 # --------------------------------------------------------------------------
 class TestGroundStopConclusionRelease(unittest.TestCase):
