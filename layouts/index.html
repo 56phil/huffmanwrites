@@ -104,7 +104,7 @@
     <h2>The Library</h2>
     <div class="cover-grid">
       {{ with .Site.GetPage "books" }}
-        {{ range .Pages.ByWeight.Reverse }}
+        {{ range .Pages.ByPublishDate.Reverse }}
           <a href="{{ .Permalink }}" class="cover-item">
             {{ with .Params.image }}
               {{- safeHTML (partial "img.html" (dict "path" . "size" "300x webp" "alt" (printf "%s cover" $.Title) "loading" "lazy")) -}}

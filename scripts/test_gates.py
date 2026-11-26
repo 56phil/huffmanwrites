@@ -7181,7 +7181,8 @@ class TestContentFrontmatterGate(unittest.TestCase):
         'hero_caption: "hero line"\n'
         'image_caption: "cover line"\n'
         'link: "https://example.org/buy"\n'
-        'lastmod: 2026-01-01'
+        'lastmod: 2026-01-01\n'
+        'published: 2026-01-01'
     )
 
     def setUp(self):
@@ -7231,11 +7232,27 @@ class TestContentFrontmatterGate(unittest.TestCase):
 
     def test_a_book_field_the_layout_reads_is_required(self):
         for field in ("title", "image", "image_desktop", "image_mobile",
-                      "image_alt", "hero_caption", "image_caption", "lastmod"):
+                      "image_alt", "hero_caption", "image_caption", "lastmod",
+                      "published"):
             with self.subTest(field=field):
                 out = self.problems("books/slug/index.md", self.without(field))
                 self.assertEqual(len(out), 1, out)
                 self.assertIn(f"R3 book field '{field}'", out[0])
+
+    def test_a_book_that_has_not_shipped_needs_no_publication_date(self):
+        # The catalogue, the home library and the prev/next navigation all sort
+        # on `published`, so a released book without one files itself at the
+        # bottom of every list and nothing else fails. A forthcoming book has no
+        # date to give, and requiring one would fail it from the day it was
+        # announced — the exemption is the same one `link` carries.
+        forthcoming = 'availability: "Expected: early 2027."\n' + "\n".join(
+            l for l in self.BOOK.split("\n")
+            if l.split(":", 1)[0].strip() not in ("link", "published"))
+        self.assertEqual(self.problems("books/slug/index.md", forthcoming), [])
+        # With a purchase URL it is released, and the date becomes required.
+        out = self.problems("books/slug/index.md", self.without("published"))
+        self.assertEqual(len(out), 1, out)
+        self.assertIn("'published'", out[0])
 
     def test_link_is_required_only_of_a_released_book(self):
         # `raisem-right` is announced for early 2027 and has no purchase URL; the

@@ -1,7 +1,6 @@
 ---
 title: "By What Standard?"
 subtitle: "The Office and the Record"
-weight: 11
 published: 2026-10-31
 description: |
   The question in the title is asked of every office: by what standard does the person holding it act, and who can hold them to that standard? A standard, in the sense this book uses the word, is a public claim about the limits of one's own power. It has to be stated so that it can be found, general so that it applies to allies as well as opponents, and binding on the person who stated it. Without those three properties it is a preference dressed as a principle.

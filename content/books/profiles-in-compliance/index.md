@@ -1,7 +1,6 @@
 ---
 title: "Profiles in Compliance"
 subtitle: "The Standard and Who Pays for It"
-weight: 10
 published: 2026-11-16
 availability: "Now available."
 description: |

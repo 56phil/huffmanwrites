@@ -1,7 +1,7 @@
 <div class="phbooks">
   {{- $books := where .Site.Pages "Section" "books" }}
-  {{- /* weight is release order, 1 oldest; the catalogue reads newest first */}}
-  {{- $books = $books.ByWeight.Reverse }}
+  {{- /* newest first, by the publication date each listing gave */}}
+  {{- $books = $books.ByPublishDate.Reverse }}
   {{- range $books }}
     {{- if .Params.image }}
     <div class="phbooks-book">

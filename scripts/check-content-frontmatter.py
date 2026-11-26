@@ -62,10 +62,11 @@ POSTS = CONTENT / "posts"
 SUMMARIES = POSTS / "summaries"
 BOOKS = CONTENT / "books"
 
-# The ten fields `layouts/books/single.html` reads off a book page.
+# The eleven fields `layouts/books/single.html` reads off a book page.
 BOOK_FIELDS = (
     "title", "subtitle", "image", "image_desktop", "image_mobile",
     "image_alt", "hero_caption", "image_caption", "link", "lastmod",
+    "published",
 )
 
 
@@ -128,6 +129,14 @@ def audit_file(path: Path) -> list[str]:
                 if field_value(fm, "subtitle") == "":
                     problems.append(f"{r}: R3 book field 'subtitle' present but empty")
                 continue
+            if f == "published":
+                # A book with no purchase URL has not shipped yet and cannot
+                # have a publication date. Every released book must carry one:
+                # the catalogue, the home library and the prev/next navigation
+                # all sort on `published` now, so a missing date would file a
+                # book at the bottom of every list without failing anything.
+                if not field_value(fm, "link"):
+                    continue
             if not field_value(fm, f):
                 problems.append(f"{r}: R3 book field {f!r} missing or empty")
         hero = field_value(fm, "hero_caption")

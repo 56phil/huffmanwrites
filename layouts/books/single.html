@@ -67,7 +67,7 @@
 
     {{ $currentPage := . }}
     {{ $books := where .Site.RegularPages "Section" "books" }}
-    {{ $books = $books.ByWeight }}
+    {{ $books = $books.ByPublishDate.Reverse }}
     {{ $count := len $books }}
 
     {{ $currentIndex := -1 }}
@@ -77,15 +77,16 @@
       {{ end }}
     {{ end }}
 
-    {{ $prevIndex := mod (sub (add $currentIndex $count) 1) $count }}
-    {{ $nextIndex := mod (add $currentIndex 1) $count }}
-    {{ $prev := index $books $prevIndex }}
-    {{ $next := index $books $nextIndex }}
+    {{/* newest first, so the older book is the next index and the newer one wraps back */}}
+    {{ $olderIndex := mod (add $currentIndex 1) $count }}
+    {{ $newerIndex := mod (sub (add $currentIndex $count) 1) $count }}
+    {{ $older := index $books $olderIndex }}
+    {{ $newer := index $books $newerIndex }}
 
-    {{ if and $prev $next }}
+    {{ if and $older $newer }}
     <div class="book-navigation">
-       <a href="{{ $prev.RelPermalink }}" class="book-nav-btn prev">← {{ $prev.Title }}</a>
-       <a href="{{ $next.RelPermalink }}" class="book-nav-btn next">{{ $next.Title }} →</a>
+       <a href="{{ $older.RelPermalink }}" class="book-nav-btn prev">← {{ $older.Title }}</a>
+       <a href="{{ $newer.RelPermalink }}" class="book-nav-btn next">{{ $newer.Title }} →</a>
     </div>
     {{ end }}
 

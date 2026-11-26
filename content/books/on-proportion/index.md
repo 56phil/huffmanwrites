@@ -8,7 +8,6 @@ description: |
   The book treats proportion not as moderation but as judgment — the capacity to sense the true size of an event and to resist the distortions of urgency, outrage, and habit. Against the backdrop of a superpower's machinery of overreaction, it traces how a generation was trained to respond to everything, and how that training outlived the era that produced it.
 
   Written for anyone who has felt the pull to answer everything and the cost of doing so, On Proportion offers a way to tell the urgent from the important — and to choose silence when silence is the better instrument.
-weight: 8
 published: 2026-05-23
 image: "img/books/proportion.jpg"
 summary: "The lost discipline of matching response to scale, learned growing up in the shadow of the Cold War."

@@ -1,7 +1,6 @@
 ---
 title: "A Life Made Whole"
 subtitle: "Essays on Inner Strength and Resilience"
-weight: 2
 published: 2025-11-15
 description: |
   A Life Made Whole examines the long process of integration — not the dramatic breakthroughs, but the daily work of holding together what experience threatens to fragment. The essays trace the Stoic virtues not as ideals to achieve, but as practices to maintain under pressure, loss, and the slow erosion of circumstance.

@@ -1,6 +1,5 @@
 ---
 title: "The Stoic Citizen"
-weight: 3
 published: 2025-11-23
 description: |
   The Stoic Citizen applies ancient philosophy to the actual conditions of modern civic life: polarization, institutional distrust, and the erosion of shared reality. It argues that Stoicism is not a private consolation but a public discipline — a way of maintaining integrity under systems that reward fragmentation and outrage.

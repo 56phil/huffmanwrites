@@ -1,7 +1,6 @@
 ---
 title: "Stoic Backgammon"
 subtitle: "A Profitable Pastime"
-weight: 7
 published: 2026-04-20
 description: |
   Stoic Backgammon treats the ancient game as a practice of philosophy — not metaphorically, but literally. Each chapter pairs a phase of play with a Stoic principle, demonstrating that the board enforces what the *Enchiridion* describes: some things are up to us, others are not. The dice are not; the move is.
