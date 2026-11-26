@@ -2,6 +2,7 @@
 title: "Unstuck"
 subtitle: "Brutal Guidance for Getting Out of Your Own Way"
 weight: 1
+published: 2025-04-13
 description: |
   Unstuck is not a gentle book. It is a direct challenge to the habits of delay, justification, and self-deception that keep capable people from moving forward. Drawing on Stoic discipline and decades of lived experience, it argues that most obstacles are not external — they are internal negotiations we have learned to accept.
 
@@ -16,7 +17,7 @@ image_alt: "A solitary classical figure moving through a stark, light-filled doo
 hero_caption: "The first step out of stasis: choosing movement over negotiation."
 image_caption: "The discipline of movement after too much waiting."
 link: "https://www.amazon.com/Unstuck-Brutal-Guidance-Getting-Your-ebook/dp/B0DYL1G7HQ/"
-lastmod: 2026-10-12
+lastmod: 2026-11-26
 ---
 Read the [summary and review of *Unstuck*](/posts/summaries/unstuck-summary/).
 

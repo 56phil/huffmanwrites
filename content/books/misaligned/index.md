@@ -2,6 +2,7 @@
 title: "Misaligned"
 subtitle: "Right Subject, Wrong Adjective, Disastrous Result"
 weight: 5
+published: 2026-02-05
 description: |
   Misaligned begins with a personal diagnosis received late in life and follows its implications outward: through a first marriage that ended in miscommunication rather than malice, through a career built on containment, and through the slow recognition that many strengths become liabilities when context changes. The book treats the gap between internal experience and external expectation as a structural problem, not a personal failure.
 
@@ -16,7 +17,7 @@ image_alt: "A dissonant sea of gold-leaf parchment maps shifting in a navy void,
 hero_caption: "A sea of shifting maps, one compass needle holding its direction."
 image_caption: "Navigating the gap between intention and outcome."
 link: "https://www.amazon.com/Misaligned-Subject-Adjective-Disastrous-Result/dp/B0GLX9JS3V/"
-lastmod: 2026-10-12
+lastmod: 2026-11-26
 ---
 Read the [summary and review of *Misaligned*](/posts/summaries/misaligned-summary/).
 

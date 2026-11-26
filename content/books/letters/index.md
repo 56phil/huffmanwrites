@@ -2,6 +2,7 @@
 title: "Letters"
 subtitle: "Truth Without Outcome"
 weight: 6
+published: 2026-02-05
 description: |
   Letters collects correspondence on the difficult topics that most public discourse avoids: what it means to speak the truth when outcomes are uncertain, how conscience functions under pressure, and whether interior strength has any public value. The essays are written as letters — direct, addressed, unguarded — because the subject matter demands intimacy rather than performance.
 
@@ -16,7 +17,7 @@ image_alt: "An ascending spiral of floating ancient papyrus scrolls with glowing
 hero_caption: "Scrolls ascending through the void — a dialogue across time."
 image_caption: "A timeless dialogue with the ghosts of history."
 link: "https://www.amazon.com/Letters-Without-Outcome-Philip-Huffman/dp/B0GLNWT4N7/"
-lastmod: 2026-11-08
+lastmod: 2026-11-26
 ---
 Read the [summary and review of *Letters*](/posts/summaries/letters-summary/).
 

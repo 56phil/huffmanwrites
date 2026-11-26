@@ -1,6 +1,7 @@
 ---
 title: "The Stoic Citizen"
 weight: 3
+published: 2025-11-23
 description: |
   The Stoic Citizen applies ancient philosophy to the actual conditions of modern civic life: polarization, institutional distrust, and the erosion of shared reality. It argues that Stoicism is not a private consolation but a public discipline — a way of maintaining integrity under systems that reward fragmentation and outrage.
 
@@ -15,7 +16,7 @@ image_alt: "A cinematic portrait of Marcus Aurelius in Parian marble, highlighte
 hero_caption: "Marcus Aurelius in marble and gold — the steady gaze of public virtue."
 image_caption: "The enduring discipline of the public man."
 link: "https://www.amazon.com/Stoic-Citizen-Philip-Huffman-ebook/dp/B0G3LTQ8B6/"
-lastmod: 2026-10-12
+lastmod: 2026-11-26
 ---
 Read the [summary and review of *The Stoic Citizen*](/posts/summaries/the-stoic-citizen-summary/).
 

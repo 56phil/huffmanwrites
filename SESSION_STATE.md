@@ -12,6 +12,17 @@
 
 ---
 
+### Content — 26NOV26 — Every book page now states its publication date
+
+- **`published:` added to all eleven `content/books/*/index.md` and rendered beside the blurb** — "Published April 13, 2025." — with a `.book-published` rule in `assets/css/phbooks.css` and one line in `layouts/books/single.html`, in both the image and the image-less blurb block. The field is a real date, not a string, so `.Format` renders it and a future sort can read it.
+- **The dates are read from the listings, not recalled.** Each is the **Publication date** on the Amazon page the book's own *Buy on Amazon* button opens, fetched 26NOV26, so any reader can check the claim by clicking the button the page already carries. Five are the Kindle edition (*Unstuck*, *A Life Made Whole*, *The Stoic Citizen*, *Profiles in Compliance*, *By What Standard?*) and six the hardcover; Amazon dates each format separately, so the same title has other dates on other editions.
+- **Nine of the eleven months first written from Philip's recollection were wrong.** The four earliest were out by nine to twelve months — *Unstuck* remembered as June 2024, published April 13, 2025; *A Life Made Whole* November 2024 against November 15, 2025; *The Stoic Citizen* January 2025 against November 23, 2025; *The Stoic CGM* March 2025 against December 28, 2025 — which would have dated four books to months before they existed. The recent four were out by about a month either way. *Stoic Backgammon*, the flagged case, is **April 20, 2026**: neither the May of recollection nor the July in `projects/book-projects.md`.
+- **KDP's "Submitted on" is not publication.** The eleven timestamps Philip supplied are submission times, which precede publication except on *Misaligned*, where the hardcover lists February 5, 2026 against a submission of February 6 — a submission timestamp records the last submission, so it can postdate the release.
+- **The catalogue order departs from the record in one place, and the record did not change it.** Weight order matches publication order for the first eight titles, with *Misaligned* and *Letters* tied on February 5, 2026. The last three do not: *By What Standard?* published October 31, *Raise 'Em Right'* November 15, *Profiles in Compliance* November 16, while the weights put them in the order *Raise 'Em Right*, *Profiles in Compliance*, *By What Standard?* — so the catalogue lists the oldest of the three first, the newest second, and the middle one last, which is neither chronological nor reverse-chronological. `weight` remains the ordering key because it is the author's order; the vault's author note records the discrepancy.
+- **Gates:** `check-content-frontmatter` OK (352 files), build OK. The vault's `wiki/people/philip-huffman.md` carries the eleven dates with their sources, the correction, and the ordering finding.
+
+---
+
 ### Content — 26NOV26 — *Betrayed* enters the summary library
 
 - **Published `content/posts/summaries/betrayed-summary.md`, 1,376 words**, a summary and review of *Betrayed: America Didn't Vote for This* (Common Sense Coalition, May 2026), edited by Ira Shapiro and Anne Kim. Twelve chapters of roughly 3,000 words, 176 pages, 643 endnotes, about four dozen contributors. `sort_key: "Shapiro, Ira - Betrayed"` shelves it between Sagan and Sullivan on page 8 of the hub.

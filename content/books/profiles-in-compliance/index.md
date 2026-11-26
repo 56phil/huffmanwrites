@@ -2,6 +2,7 @@
 title: "Profiles in Compliance"
 subtitle: "The Standard and Who Pays for It"
 weight: 10
+published: 2026-11-16
 availability: "Now available."
 description: |
   John F. Kennedy's *Profiles in Courage* named the only two directions a person can move when pressure arrives: courage, or compliance. He set the words against each other and left them there, because there is no third one. This book is about the second, and about what happened to the price.
@@ -17,7 +18,7 @@ image_alt: "A receding line of identical white marble busts of the same statesma
 hero_caption: "One seal. Every impression the same."
 image_caption: "A row of busts, cast from one mould."
 link: "https://www.amazon.com/dp/B0HRXL35Y5"
-lastmod: 2026-11-16
+lastmod: 2026-11-26
 ---
 
 # Profiles in Compliance

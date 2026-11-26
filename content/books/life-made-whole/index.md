@@ -2,6 +2,7 @@
 title: "A Life Made Whole"
 subtitle: "Essays on Inner Strength and Resilience"
 weight: 2
+published: 2025-11-15
 description: |
   A Life Made Whole examines the long process of integration — not the dramatic breakthroughs, but the daily work of holding together what experience threatens to fragment. The essays trace the Stoic virtues not as ideals to achieve, but as practices to maintain under pressure, loss, and the slow erosion of circumstance.
 
@@ -16,7 +17,7 @@ image_alt: "A shattered Parian marble sphere floating in a navy and gold void, i
 hero_caption: "Kintsugi in marble: fragments fused with gold into a new whole."
 image_caption: "Integration through resilience: the art of becoming whole."
 link: "https://www.amazon.com/Life-Made-Whole-Strength-Resilience-ebook/dp/B0G2GLKKCQ/"
-lastmod: 2026-10-12
+lastmod: 2026-11-26
 ---
 Read the [summary and review of *A Life Made Whole*](/posts/summaries/a-life-made-whole-summary/).
 

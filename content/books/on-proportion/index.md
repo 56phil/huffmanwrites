@@ -9,6 +9,7 @@ description: |
 
   Written for anyone who has felt the pull to answer everything and the cost of doing so, On Proportion offers a way to tell the urgent from the important — and to choose silence when silence is the better instrument.
 weight: 8
+published: 2026-05-23
 image: "img/books/proportion.jpg"
 summary: "The lost discipline of matching response to scale, learned growing up in the shadow of the Cold War."
 link: "https://www.amazon.com/dp/B0H2QSF22C"
@@ -17,7 +18,7 @@ image_mobile: "img/articles/op-4x5.webp"
 image_alt: "Intricate gold-filigree vines and flowers climbing and blooming across a massive, oppressive Cold War-era brutalist concrete wall."
 hero_caption: "Gold filigree vines climb a brutalist wall — the organic against the rigid."
 image_caption: "The organic growth of the spirit against the cold architecture of an era."
-lastmod: 2026-10-12
+lastmod: 2026-11-26
 ---
 Read the [summary and review of *On Proportion*](/posts/summaries/on-proportion-summary/).
 

@@ -38,6 +38,7 @@
         {{ with .Params.description }}
         <div class="book-blurb">
            {{ with $.Params.availability }}<p class="book-availability">{{ . }}</p>{{ end }}
+           {{ with $.Params.published }}<p class="book-published">Published {{ .Format "January 2, 2006" }}.</p>{{ end }}
            {{ . | markdownify }}
         </div>
         {{ end }}
@@ -46,6 +47,7 @@
 
    {{ if and .Params.description (not .Params.image) }}
    <div class="book-blurb">
+      {{ with .Params.published }}<p class="book-published">Published {{ .Format "January 2, 2006" }}.</p>{{ end }}
       {{ .Params.description | markdownify }}
    </div>
    {{ end }}

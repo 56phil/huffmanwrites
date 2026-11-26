@@ -2,6 +2,7 @@
 title: "Stoic Backgammon"
 subtitle: "A Profitable Pastime"
 weight: 7
+published: 2026-04-20
 description: |
   Stoic Backgammon treats the ancient game as a practice of philosophy — not metaphorically, but literally. Each chapter pairs a phase of play with a Stoic principle, demonstrating that the board enforces what the *Enchiridion* describes: some things are up to us, others are not. The dice are not; the move is.
 
@@ -17,7 +18,7 @@ hero_caption: "An obsidian board in the void, one checker balanced on its edge."
 image_caption: "Finding the still point in a game of chance."
 link: "https://www.amazon.com/dp/B0GXW6KRDH/"
 author: "Philip Huffman"
-lastmod: 2026-10-12
+lastmod: 2026-11-26
 ---
 
 Read the [summary and review of *Stoic Backgammon*](/posts/summaries/stoic-backgammon-summary/).
