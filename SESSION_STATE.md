@@ -12,6 +12,17 @@
 
 ---
 
+### Content — 26NOV26 — *Betrayed* enters the summary library
+
+- **Published `content/posts/summaries/betrayed-summary.md`, 1,376 words**, a summary and review of *Betrayed: America Didn't Vote for This* (Common Sense Coalition, May 2026), edited by Ira Shapiro and Anne Kim. Twelve chapters of roughly 3,000 words, 176 pages, 643 endnotes, about four dozen contributors. `sort_key: "Shapiro, Ira - Betrayed"` shelves it between Sagan and Sullivan on page 8 of the hub.
+- **Two books, one author, four years apart, and the search result set is dominated by the earlier one.** *The Betrayal: How Mitch McConnell and the Senate Republicans Abandoned America* (Rowman & Littlefield, 2022) is Shapiro's third Senate history; *Betrayed* is the 2026 coalition volume he edited with Anne Kim. Only the phrase "Editors of Betrayed" on `commonsensecoalition.net/about-csc/` separated them, and the 2022 book's praise page is what the query returned first. Recorded because the next request to summarise either title will meet the same collision.
+- **The critique is methodological, which is what the section's format can carry.** The subtitle's claim about voter intent is not something a damage assessment can establish, and twelve chapters written by people who already hold the conclusion is a prosecutor's brief: an unusually high evidentiary floor, no adversarial testing, and a prescription that stops at an appendix playbook and a call to vote.
+- **Five sources, every one fetched before it was cited**: Jill Lawrence in *The Bulwark* (chapter structure, chapter lengths, quotations from the book and from Shapiro), Colin Robertson in *Policy* (the institutional reading and the *Regime Change* comparison), Kent M. Harrington (the tariff, bankruptcy and deficit figures, and the book's closing paragraph), Josh Cowen's interview with Kim (the 643 figure, the Paine model, the contracting argument), and the coalition's own page. The closing epigraph is the book's last paragraph as Harrington quotes it, linked there because the book's text is not online.
+- **Gates:** build OK (626 pages); `check-content-frontmatter` OK (352 files); `check-quotes` OK; `check-emdashes` OK (2 counted, both in the citation apparatus); `check-prepositions` OK; `check-hero-paths` OK (535 paths); `check-render-integrity` OK (756 pages, 342 related blocks); `check-links --online --titles` 5 links, 0 dead, 0 redirecting, 0 mismatched.
+- **No plate and no gallery entry.** Summaries carry no hero image and no `data/gallery.yml` block; the eight gallery links under `/posts/summaries/` are the books whose plates exist, not a requirement for the section.
+
+---
+
 ### Ops — 24NOV26 — The ninety-days hero grant works, proven end to end
 
 - **`aadb5c1` granted the drafting job `scripts/hero-image.py` and `scripts/grade-hero-navy.py` and had never run live:** the 24NOV26 firing it was written for had already been denied them, produced two articles naming four missing plates, and was repaired by hand. Its next natural firing is the last Tuesday of December, so the grant was rehearsed instead.
