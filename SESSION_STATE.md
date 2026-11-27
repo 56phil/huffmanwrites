@@ -12,6 +12,17 @@
 
 ---
 
+### Content — 27NOV26 — Stoic Saturday: The Interval
+
+- **The 28NOV26 letter is drafted and published ahead of its send**, 2,728 words, at `pending/stoic-saturday-the-interval.md` and `content/posts/digests/stoic-saturday-the-interval.md`, dated `2026-11-28T05:53:00-06:00` so `com.huffmanwrites.digest-release` lifts the embargo. **The SendFox campaign has not been created**, so `digest-campaign.py --check --date 2026-11-28` still exits 3: the letter is waiting on Philip's read, and scheduling an unreviewed draft would freeze the body before he can edit it.
+- **Epigraph Marcus Aurelius, *Meditations* 4.7 (trans. George Long, 1862)**, verified word for word against Wikisource Book IV before it was written in: "Take away thy opinion, and then there is taken away the complaint…" The reflection is four paragraphs on the seam between an event and a judgement, and its position is that this week's institutions each proposed to shorten one, while the two judges held theirs open.
+- **The week, as the letter reads it:** the S&P 500 closed at 6,910.39 on 20NOV (down 3.70 percent, seventh straight loss) and at 7,237.17 on 23NOV (up 4.73 percent) with no new earnings between the two closes; what changed was who ran Nvidia, and the stock rose 31 percent and added roughly a trillion dollars of value after the board reinstated Jensen Huang. Against that: Executive Order 14439 at 91 FR 76627, the capital-sentencing memorandum at 91 FR 76953, and the TXSE and Nasdaq rule changes for 23-hour trading.
+- **Every figure was read off a published installment of this site, not recalled.** Two in-repo contradictions were found and avoided rather than repeated: the SITREP of 24NOV gives Monday's Dow close as 49,690.20 (+1.21 percent) where the S&P report of the same date says 49,595.31 (+3.01 percent), so the letter cites the Dow nowhere; and the Epstein appeal number (26-5389 in the Docket Report, against the consolidated 26-5299/26-5334 the SITREPs name) is used as the docket entry states it.
+- **Plate 168-interval** is a Parian clepsydra with a single drop of molten gold suspended above the dry bowl, generated with seed 2826 and graded to the house navy: shadow mean (3.0, 3.9, 5.7) → (17.6, 27.7, 52.6) at 16:9, (3.3, 3.8, 8.2) → (17.6, 27.7, 52.7) at 4:5. No gallery entry, matching the three letters before it, which carry none.
+- **Gates:** `check-emdashes` 2 counted (the sign-off dash and one in the epigraph), `check-prepositions` OK (two stranded prepositions fixed in the Practice), `check-quotes` OK (1 attribution), `check-links --online --titles` 13 external links 0 dead, all 13 own-site citation URLs fetched and each served its own `<title>`, `check-content-frontmatter` OK (354 files), `check-hero-paths` OK (539 paths), `check-report-frontmatter --anchors-corpus` OK (343 posts), builds OK (627 pages; the page itself needs `--buildFuture` until 05:53 on 28NOV, which was run to `/tmp/hugo-future` and rendered its title and both hero images).
+
+---
+
 ### Content — 26NOV26 — The catalogue is ordered by the record, not by hand
 
 - **`weight` is retired from all eleven book pages.** The books page's shortcode list, the home library grid (`layouts/index.html`) and `book_catalog.html` now read `.ByPublishDate.Reverse`, and `layouts/books/single.html`'s prev/next navigation follows the same order with its arrows re-pointed at older (left) and newer (right) — the old ascending `ByWeight` made index−1 the older book, so switching the sort without the arrows would have reversed their meaning while looking correct.
